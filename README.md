@@ -7,13 +7,14 @@
 1. `START_HERE.md` — 新对话/新工作入口。
 2. `current/CURRENT_STATE.md` — 当前理论、当前 Case21 状态、当前未闭合项。
 
-## 目录职责
+## 四个工作层
 
 - `current/`：当前仍有效、会直接影响下一步计算/推导的文件。
 - `governance/`：证据等级、恢复、同步、来源摘录和项目优先级规则。
 - `evidence/`：原始来源定位、有效原文摘录、材料证据、来源数据与审计台账。
-- `history/`：被替代、失败、回滚、历史求解器、D/G/R/UCFT 路线与原始历史定位。
-- `archive/`：迁移过程、旧全文镜像、R2 快照等；默认不要读取。
+- `history/`：被替代、失败、回滚、历史求解器、D/G/R/UCFT 路线与原始历史/恢复定位。
+
+迁移期全文镜像、旧 checkpoint、R2 snapshot 等已从当前 `main` 删除，避免 GitHub 搜索污染；如确需恢复，使用 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 指向的历史 commit。
 
 ## 使用原则
 
