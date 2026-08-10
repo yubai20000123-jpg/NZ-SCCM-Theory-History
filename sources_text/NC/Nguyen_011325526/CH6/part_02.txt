@@ -1,0 +1,331 @@
+finite e1ement method is used. Differing from the stability analysis of perfectly-
+
+straight reinforced concrete walls, the stress distribution which is not constant but
+
+varies non-linearly through the thickness of the wall due to out-of-plane bending.
+
+For the buckling analysis presented in Chapter 4, the 16-degrees-of-freedom
+
+rectangular concrete element and beam elements were used to model the concrete
+
+and the reinforcement, respectively.      In this chapter, these same finite element
+
+models will be used to analyse walls with out-of-plane initial imperfections and load
+
+eccentricities.   In order to analyse reinforced concrete walls with out-of-plane
+
+bending it is usual to use a layered shell e1ement which can fully describe the non-
+
+linear stress-strain relationship over the wall thickness (see the brief literature review
+
+below). However, the elements used in Chapter 4 can be used but with some
+
+limitations. As previously stated, one of the main aims of this thesis is to determine
+
+the magnitude of the amplification of initial moments (Warner et al 1989; Attard
+
+1995) and out-of-plane displacements caused by the second-order effect of the in-
+
+plane stresses.   By focusing on the effects of these on the design, rather than
+
+undertaking a full study of the behaviour of a wall under in-plane and out-of-plane
+
+loading, the complexity of the analysis may be simplified. This can be achieved if
+
+the initial eccentricities and out-of-plane imperfections do not cause any bending
+
+which creates out-of-plane cracking. This will be discussed further later.
+
+
+
+
+                                                                                      194
+6.3.1 Layered Elements
+
+
+
+Hand et al (1973) used a layered element with 20 degrees of freedom to· analyse
+
+reinforced concrete walls under out-of-plane bending. The stress-s~ relationship
+
+of concrete was assumed to be bilinear elastic-plastic in compression and linear with
+
+limited strength in tension, while the steel was considered to be an elastic-plastic
+
+material. In each layer, the stress-strain relationship of concrete was assumed to be
+
+unchanged over the layer thickness, and the failure criterion for plain concrete in
+
+biaxial stress states proposed by Kupfer, Hilsdorf, and Rusch (1969) was used with
+
+slight modification. The second-order effects of the in-plane stresses of the wall and
+
+shells were not considered.
+
+
+
+
+Wanchoo and May (1975) also used the layered element to model reinforced
+
+concrete walls. They examined the out-of-plane bending behaviour of walls, and the
+
+cracks caused by tension due to the bending of concrete were considered. The
+
+concrete was modelled as being elastic-cracked in tension, and elastic-plastic in
+
+compression.    The reinforcing steel was modelled by a two-dimensional layer
+
+obeying the von Mises yieJd criterion and the associated flow law. Perfect shear
+
+bond was assumed between layers and the transverse shearing deformation was
+
+neglected. Like Hand et al (1973), the second-order effects of the in-plane stresses
+
+were not considered.
+
+
+
+
+                                                                                  195
+In this section, by using the procedure of Hand et al. (1973) for the derivation of
+
+constitutive relations for a layered e1ement, the finite element formulation will be
+
+derived for the layered elements considering the second-order effect.
+
+
+
+The solution to the reinforced concrete bending problem for any transverse loading
+
+can be obtained by using a layered element where the inplane and out-of-plane
+
+displacements are coup1ed (Hand et al. 1973). From equation (6.7), using the plate
+
+forces defined in Chapter 2, the virtual work may be written as
+
+
+
+
+                              Wm,x O Wm,y] [Wo,x 0
+        +[6wm,x 6wm,y ] [       O Wm,y O + 0 W ,y
+                                                        0
+
+
+
+
+                                                                              (6.10)
+
+
+or            6V = 6W* + 6W** - l: Ti 6 Ui                                    (6.11)
+
+where 6W* is the linear part of the virtual work created by the in-plane and out-of-
+
+plane internal forces, and 6W** is the contribution of the second-order effect of the
+
+in-plane internal forces.
+
+
+
+                                                                                 196
+Fll'Stly, the. wall is divided into layers. Figure 6.2 shows the layers of the wall
+
+element, and the strain and stress distribution over the thickness of the wall. The
+
+following assumptions are made:
+
+            • The stresses are assumed to vary linearly over the layer thickness ;
+
+            • Perfect shear bond is assumed between layers;
+
+            • Cracking is assumed over the layer thickness.
+
+
+
+Constitutive Relation
+
+
+
+In each layer, for example in layer i, the state of concrete must satisfy the two-
+
+dimensional stress state of concrete as stated in Chapter 3.   Then for layer i the
+
+relationship between the stress and strain of the concrete can be written for the
+
+principal coordinates as follows (see equation 3.23):
+
+
+                                                                            (6.12)
+
+
+
+ or                                                                          (6.13)
+
+In equation (6.13), matrix Dmi is determined as in Chapter 3 and depends on
+
+whether the concrete in the layer is undamaged, cracked, crushed, etc.
+
+
+
+
+                                                                                 197
+                         layer 1                         ltayeri+l j
+
+
+
+
+t                                                                      Pla&e middle
+                                                                          surface
+
+
+
+
+t
+    --------------------------~---
+
+
+
+
+          Wall Section             Strain Distribution       Stress Distribution
+
+
+
+                 figure 6,2 A Layered Element
+
+
+
+
+                                                                             198
+The stresses in the x-y coonlinate system may be determined from
+
+
+
+                                                                                      (6.14)
+
+
+
+
+     or                                                                               (6.15)
+
+
+
+where Ti is the transformation matrix determined in Chapter 3 (see equation (3.28),
+
+Di is the relation matrix of stresses and strains in the x-y coordinate system, and "i"
+
+is the layer number.
+
+
+
+
+The stresses Sij and strains £ij are taken at the middle surface of the i-th layer.
+
+Hence the wall forces can be determined as
+
+
+                          Nxx] = ~n fh· Dun [£11] dz
+                         [Nyy                    £22                                  (6.16)
+                           N        1=lb,_
+                                        1 1
+                                                 £
+                               xy                 12
+
+
+where "n" is the number of layers.
+
+
+
+Assuming that for the constitutive relation, only the linear part of the strain
+
+functions (equation (6.3)) is considered (see section 3.4 of Chapter 3), and by
+
+substituting equation (6.3) into equation (6.16) we may derive
+
+
+
+
+                                                                                      (6.17)
+
+
+
+
+                                                                                         199
+The wall moments also can be determined by
+
+
+
+                   [M:u]    h [£11] zdz
+                    Myy = ~ J Dun
+                    M
+                                 n
+
+                                  e
+                                 1=lh,_
+                                       1
+                                              £22                            (6.18)
+                                       1
+                       xy            1         12
+
+Substituting the strains from equation (6.3) ignoring the non-linear displacement
+
+terms in equation (6.18), we also can derive
+
+
+
+
+                                                                             (6.19)
+
+
+
+
+Equation (6.12) can be rewritten as
+
+
+
+
+        [;}=1-:~
+            1
+                        V2E1
+                            E1
+
+
+                            0
+                                     vtE2
+                                     E2
+
+                                      0
+                                            1
+                                                    0
+                                                    0
+                                            -0 (1-Vi~)
+                                            2
+                                                         [~~l                (6.20)
+
+
+
+
+ or        <Ji =   D-
+                    JD1 ei                                                   (6.21)
+
+Hence equation (6.15) can also be written by
+
+
+
+                                                                             (6.22)
+
+
+where                                                                        (6.23)
+
+Considering equation (6.22), equations (6.17) and (6.19) can be written as
+
+
+
+
+                                                                             (6.24)
+
+
+
+
+                                                                                200
+and
+
+
