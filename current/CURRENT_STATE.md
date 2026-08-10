@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 22:20 +08:00  
+**Updated:** 2026-08-10 22:25 +08:00  
 **Purpose:** 唯一当前工作入口。详细推导、历史偏离/恢复、失败 compiler 与执行证据留在 canonical governance/theory/history/evidence 文件中。
 
 ## 0. 最高优先级：EXPLICIT END-TO-END CAPACITY
@@ -9,9 +9,10 @@ Canonical current files:
 
 - `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
 - `governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md`
+- `governance/R09A_TENSION_SENSITIVITY_DECISION_20260810.md`
 - `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md`
-- `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_results.json`
-- `history/NZ_SCCM/R08_USER_SKETCH_SMOOTH_AND_RC_CASE21_20260810.md`
+- `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_20260810.md`
+- `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_results.json`
 
 User highest requirement:
 
@@ -53,35 +54,7 @@ KINEMATICS = NGUYEN_SECOND_ORDER
 
 ---
 
-## 2. 材料处理原则 — R08 用户草图修正
-
-R07R 的 rational material curve 虽然全局连续，但 tensile side 出现了人为的 `overshoot -> dip -> rebound`。该形状不再接受为目标。
-
-当前 preferred material-data processing：
-
-```text
-source/measured sharp local feature
--> deliberately do not use the full sharp feature
--> replace it by one low-parameter shape-preserving smooth cap
--> keep important material landmarks explicit
--> then inspect structural consequence
-```
-
-Tension prototype must have:
-
-- one monotone rise from origin;
-- one rounded retained peak;
-- one monotone decay to residual;
-- zero tangent at retained peak and residual onset;
-- no secondary undershoot;
-- no rebound;
-- no oscillation introduced only by the regression family.
-
-This is a data-processing choice, not an attempt to reproduce every sharp source feature.
-
----
-
-## 3. MATERIAL-NATIVE DOMAIN GOVERNANCE
+## 2. MATERIAL-NATIVE DOMAIN GOVERNANCE
 
 ```text
 PRIMARY_DOMAIN   = MATERIAL_ADMISSIBLE_SPECTRAL_DOMAIN Lambda_M
@@ -101,9 +74,7 @@ UHPC must derive its own `Lambda_M`; NC numerical bounds must not be copied into
 
 ---
 
-## 4. R08 explicit user-sketch NC scalar target
-
-Compression:
+## 3. Compression-side NC target — retained from R08
 
 ```text
 lambda < -10         : residual -0.10 fc
@@ -111,57 +82,78 @@ lambda < -10         : residual -0.10 fc
 -1 <= lambda < 0     : Saenz compression
 ```
 
-Tension:
+The R06 C2 postpeak closure remains PASS.
+
+The compression branch is currently treated as the primary direct-load carrier and is NOT modified by R09A.
+
+---
+
+## 4. R08 tensile prototype — retained as baseline only
+
+R07R rational tensile regression is rejected because it created artificial `overshoot -> dip -> rebound`.
+
+R08 replaced it by a shape-preserving rounded peak:
 
 ```text
-0 <= lambda <= lambda_p : quintic Hermite monotone rise
-lambda_p < lambda <= lambda_r : quintic Hermite monotone decay
-lambda > lambda_r : residual 0.03 fc
+one monotone rise -> one rounded peak -> monotone decay -> residual
 ```
 
-Landmarks:
+with
 
 \[
 \lambda_p=x_{cr}=0.049987179454,
-\quad
-u(\lambda_p)=0.09,
+\quad u(\lambda_p)=0.09,
 \]
 
 \[
 \lambda_r=10x_{cr}=0.49987179454,
-\quad
-u(\lambda_r)=0.03.
+\quad u(\lambda_r)=0.03.
 \]
 
-Rise polynomial in local `tau`:
-
-\[
-0+0.1\tau+0\tau^2+0.3\tau^3-0.55\tau^4+0.24\tau^5.
-\]
-
-Fall polynomial:
-
-\[
-0.09-0.6\tau^3+0.9\tau^4-0.36\tau^5.
-\]
-
-Executed shape audit:
-
-```text
-rise monotone = PASS
-fall monotone = PASS
-peak = 0.09 fc
-residual = 0.03 fc
-slope at origin = kappa
-slope at peak = 0
-slope at residual = 0
-```
-
-`R07R_RATIONAL_TENSILE_OSCILLATION = REJECTED_AS_UNNECESSARY`.
+R08 remains a valid smooth baseline but is no longer the only preferred tensile shape after R09A.
 
 ---
 
-## 5. Case21 reinforcement — analytic same-equation coupling
+## 5. R09A simple monotone tensile-saturation family
+
+The user proposed an even more aggressive simplification: because axial-compression response is expected to be compression dominated, remove the distinct tensile peak/softening history and use a simple monotone saturation law.
+
+R09A tested
+
+\[
+u_t(\lambda)=u_\infty\frac{r}{1+r},
+\qquad r=\frac{\kappa\lambda}{u_\infty},
+\qquad \lambda\ge0,
+\]
+
+with explicit derivative
+
+\[
+u_t'(\lambda)=\frac{\kappa}{(1+\kappa\lambda/u_\infty)^2}.
+\]
+
+Properties:
+
+- `u_t(0)=0`;
+- `u_t'(0)=kappa`;
+- monotone;
+- no sharp peak;
+- no dip/rebound;
+- one retained tensile-capacity parameter `u_inf`.
+
+Predeclared sensitivity brackets:
+
+```text
+SAT03: u_inf = 0.03 fc
+SAT05: u_inf = 0.05 fc
+SAT07: u_inf = 0.07 fc
+```
+
+None was selected from Case21 experimental Pu.
+
+---
+
+## 6. Case21 reinforcement — analytic same-equation coupling
 
 Source mapping:
 
@@ -199,7 +191,7 @@ R_s=
 \right].
 \]
 
-The total equations are solved as
+The total equations are always solved as
 
 \[
 P=P_c+P_s,
@@ -213,145 +205,109 @@ then
 L=P_D R_q-P_qR_D=0.
 \]
 
-No `Pu = Pu,c + As fy` post-addition is permitted.
+No post-addition `As fy` is permitted.
 
 ---
 
-## 6. R08 explicit whole-structure target and mandatory refinement
+## 7. R09A executed Case21 RC sensitivity
 
-A first coarse degree-(11,11) target on
+All candidates use the same compression branch, geometry, reinforcement and explicit limit equations.
 
-```text
-D in [0.35,1.30]
-q in [0.001,0.030]
-```
+Results:
 
-was **rejected** because the `Rc` off-grid/root residual error was too large. Its apparent `Pu=335.047660 kN` is deprecated and must not be used.
+| candidate | tensile identity | D_u | q_u | Pc (kN) | Ps (kN) | Pu (kN) |
+|---|---|---:|---:|---:|---:|---:|
+| R08 | rounded 0.09 peak -> 0.03 residual | 0.706185 | 0.0165438 | 317.3033 | 18.2991 | 335.6024 |
+| SAT03 | `u_inf=0.03` | 0.674303 | 0.0166825 | 305.3951 | 17.0068 | 322.4019 |
+| SAT05 | `u_inf=0.05` | 0.732368 | 0.0175027 | 316.3733 | 18.4497 | 334.8230 |
+| SAT07 | `u_inf=0.07` | 0.789742 | 0.0182769 | 325.9317 | 19.8795 | 345.8111 |
 
-The low-q equilibrium branch was then mechanically located from the same material + reinforcement equations, without using the experimental load. A local explicit target was frozen on
+SAT03–SAT07 spread:
 
-```text
-D in [0.60,0.84]
-q in [0.012,0.0215]
-```
+\[
+\Delta P_u=23.409173\ \mathrm{kN},
+\]
 
-Degree sequence `12,14,16,18` was executed. Degree 18 was retained.
+\[
+\frac{\Delta P_u}{\overline P_u}=7.001495\%.
+\]
 
-Retained validation:
-
-```text
-Pc max abs = 0.087275 kN
-Pc P95     = 0.059938 kN
-Rc max abs = 15.9990 kN mm
-Rc P95     = 10.8955 kN mm
-```
-
-At the final explicit stationary root, the independent underlying-material audit gives
-
-```text
-P_total_audit = 335.585377 kN
-R_total_audit = -1.021793 kN mm
-P_explicit - P_audit = +0.004406 kN
-```
+All explicit stationary roots pass same-root audit residual checks and all reinforcement remains elastic.
 
 ---
 
-## 7. R08 final explicit RC Case21 result
+## 8. R09A physical conclusion
 
-\[
-D_u=0.708108615160,
-\]
-
-\[
-q_u=0.0166001000745,
-\qquad
-A_u=20.252122\ \mathrm{mm}.
-\]
-
-\[
-P_c=317.266522\ \mathrm{kN},
-\qquad
-P_s=18.323261\ \mathrm{kN},
-\]
-
-\[
-\boxed{P_u=335.589783\ \mathrm{kN}}.
-\]
-
-Experiment:
-
-\[
-P_f=368.312750\ \mathrm{kN}.
-\]
-
-Error:
-
-\[
-\boxed{-8.884560\%}.
-\]
-
-Reinforcement at this state remains fully elastic:
+The user's compression-dominance intuition is **partly correct**:
 
 ```text
-y-rebar strain range = [-0.00147995, +0.00028949]
-x-rebar strain range = [+0.00026639, +0.00203583]
-yield strain          = 0.00265
+COMPRESSION_DOMINATES_DIRECT_LOAD = PASS
 ```
 
-This is the current **minimal scalar current-surface + analytic reinforcement** Case21 diagnostic result.
+At every stationary root, concrete compression carries roughly 305–326 kN, versus steel 17–20 kN.
 
----
+However:
 
-## 8. Interpretation of the remaining deficiency
+```text
+TENSILE_CAPACITY_LEVEL_IS_NEGLIGIBLE = FAIL
+```
 
-The ~8.9% underprediction is NOT a reason to restore the deleted sharp tensile peak or the R07R rational oscillation.
+Changing only `u_inf` from `0.03` to `0.07` changes Pu by about 7%.
 
-The next physical question is whether the minimal scalar surface is missing a **small source-grounded multiaxial compression / tension-compression enhancement**.
+Reason: the tensile law changes `D_u,q_u`, which changes the compression-side `Pc` itself. Therefore “tension carries little direct axial load” does NOT imply “the tensile constitutive branch has little influence on the coupled limit state”.
 
-Any next correction must be smaller and simpler than the historical full CC/TC/TT operator, and must be added only because it repairs an identified mechanical deficiency.
+The important positive result is:
+
+```text
+TENSILE_SHAPE_CAN_BE_STRONGLY_SIMPLIFIED = PASS
+```
+
+The project does not need to restore the sharp source tensile peak, Foster transition details, or any oscillatory regression. A one-parameter monotone explicit law is sufficient as a shape family.
+
+But its retained capacity level must be defined independently from structural experiment.
 
 ---
 
 ## 9. Formal-status boundary
 
-R08 runtime `P,R,L` evaluation is finite and explicit.
+R09A runtime `P,R,L` evaluation is finite and explicit.
 
-However, the retained local `Pc(D,q),Rc(D,q)` coefficients were identified offline using high-accuracy full-halfwave numerical integration.
+Concrete local `Pc(D,q),Rc(D,q)` coefficients were identified offline using high-accuracy full-halfwave numerical integration, as in R08/R07R proof-of-concept.
 
 Therefore:
 
 ```text
-USER_SKETCH_TENSION_SHAPE = PASS
+R09A_TENSION_SATURATION_SENSITIVITY = PASS_DIAGNOSTIC
 ANALYTIC_REINFORCEMENT_COUPLING = PASS
-RC_CASE21_EXPLICIT_LIMIT = PASS_DIAGNOSTIC
+EXPLICIT_P_R_L = PASS_DIAGNOSTIC
 FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
 ```
 
-This proof-of-concept identity is not silently relabeled as the older pure-D15 zero-quadrature production identity.
+This is not silently relabeled as the older pure-D15 production identity.
 
 ---
 
-## 10. Old tool identity
+## 10. Multiaxial correction status
 
-```text
-G18/G27 invariant current map = RETAINED TOOL
-G20/G21 smooth conservative philosophy = RETAINED
-G26 D15 = RETAINED ANALYTIC TOOL
-G28/G30 P,Rq,L kernel = RETAINED
-R03 exact rank<=4 = RETAINED TOOL
-R04 Appell/Carlson = RETAINED KERNEL LIBRARY
-R05/R06 compactification evidence = RETAINED EVIDENCE
-R07R rational tensile shape = DEMOTED / oscillatory local shape rejected
-R08 user-sketch smooth cap + analytic reinforcement = CURRENT
-```
+R08 had recommended jumping directly to a minimum source-grounded multiaxial correction.
+
+R09A changes the order:
+
+**do not add multiaxial correction yet.**
+
+First freeze the single retained tensile-capacity level from material evidence or an explicit conservative material rule.
+
+Only after that tensile scalar level is fixed independently of Case21/Swartz Pu should the project ask whether a small CC/TC multiaxial correction is still required.
 
 ---
 
-## 11. UHPC / Swartz24
+## 11. UHPC implication
 
-UHPC: `fc=141.1 MPa` remains the user-forced value. Its arbitrary multiaxial current surface is still open. UHPC may use the same shape-preserving under-use philosophy, but must derive its own source landmarks and material-native domain.
+The R09A simplification philosophy is transferable to UHPC, but not the NC numerical plateau.
 
-Swartz24 production remains paused until the NC explicit RC chain and the minimum multiaxial correction are frozen.
+UHPC may also use a simple monotone explicit tension law if material evidence permits, but `u_inf,UHPC` must come from UHPC sources / a declared conservative UHPC rule and its own material-native domain.
+
+NC `0.03/0.05/0.07` values are sensitivity brackets only and must not be copied into UHPC.
 
 ---
 
@@ -359,17 +315,17 @@ Swartz24 production remains paused until the NC explicit RC chain and the minimu
 
 ```text
 CURRENT_RECOMMENDED_NEXT_TASK
-= R09_MINIMUM_SOURCE_GROUNDED_MULTIAXIAL_CORRECTION
+= R09B_SOURCE_GROUNDED_TENSION_CAPACITY_LEVEL
 ```
 
-R09 must:
+R09B must:
 
-1. keep the R08 monotone user-sketch tensile cap;
-2. keep the exact analytic Case21 reinforcement coupling;
-3. add only one minimal source-grounded multiaxial correction candidate;
-4. recompute the same explicit `P,R,L` chain;
-5. determine whether the remaining ~8.9% Case21 deficiency is plausibly a missing multiaxial effect;
-6. not tune the correction directly to the experiment and not restore the full historical CC/TC/TT complexity.
+1. keep the current compression branch fixed;
+2. keep the simple monotone saturation tensile family;
+3. derive/freeze one NC tensile-capacity level from material-source evidence or an explicitly declared conservative material convention;
+4. not use Case21/Swartz Pu to select that level;
+5. rerun the same explicit `P,R,L` chain only after the material-level decision;
+6. then decide whether the minimum multiaxial correction remains necessary.
 
 ---
 
@@ -378,9 +334,9 @@ R09 must:
 1. `current/CURRENT_STATE.md`
 2. `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
 3. `governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md`
-4. `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md`
-5. `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_results.json`
-6. `history/NZ_SCCM/R08_USER_SKETCH_SMOOTH_AND_RC_CASE21_20260810.md`
-7. Case21 reinforcement source/baseline files
+4. `governance/R09A_TENSION_SENSITIVITY_DECISION_20260810.md`
+5. `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_20260810.md`
+6. `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_results.json`
+7. R08 user-sketch + reinforcement files
 8. R07R, then R06/R05/R04/R03/R02/R01 history/evidence
 9. Case21 invariant exact-moment foundation
