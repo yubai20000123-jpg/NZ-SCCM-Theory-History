@@ -1,0 +1,16 @@
+index,id,origin,component,current_status,can_enter_formal_zero_quadrature_core,retained_use,excluded_boundary,evidence
+0,MR01,D15,Exact trigonometric-thickness moment compiler,PASS_RETAIN,YES,Formal matrix engine,No material identity implied,D15 original report and D15R independent rebuild
+1,MR02,D15,UHPC a3..a6 numeric coefficients,NOT_FOUND_ORIGINAL_PENDING,NO,,Do not recreate from panel loads,D15 original gate
+2,MR03,D15,UHPC source constraint registry,RECOVERED_SOURCE_LOCKED,NO,Source/constraint registry only,Not a coefficient table,D15_UHPC_SOURCE_CONSTRAINT_REGISTRY.csv
+3,MR04,Post-D15 lock,UHPC-L0 single-axis material identity,REJECTED,NO,Historical regression only,No permanent beta=0 or loss of full states,Later full-state lock
+4,MR05,R16-R20 Nguyen N-module,Uncracked TT route,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle,Not direct production under zero-integration lock,Nguyen Eq.3.21-3.23 and Appendix-B route 3
+5,MR06,R16-R20 Nguyen N-module,Uncracked TC equivalent-uniaxial route,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle with 1 local secant unknown,No generic fitted replacement,Nguyen Eq.3.18-3.19; 3.21-3.23; 3.39-3.42
+6,MR07,R16-R20 Nguyen N-module,Uncracked CC equivalent-uniaxial route,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle with 2 local secant unknowns,No total-strain substitution,Nguyen Eq.3.17; 3.21-3.23; 3.39-3.42
+7,MR08,R16-R20 Nguyen N-module,Cracked/crushed TC TT CC TCX branches,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle and state equations,Not a finite zero-quadrature operator yet,Nguyen Eq.3.43-3.80
+8,MR09,R16-R20 Nguyen N-module,U-to-cracked source handoff,HISTORICAL_PASS_SOURCE_JUMP,CONDITIONAL,Exact event/source-jump reference,No artificial smoothing,Nguyen Eq.3.48-3.68; Appendix-B stmodtc/stmodtt
+9,MR10,R16-R20 Nguyen N-module,TC-to-TCX handoff,HISTORICAL_PASS_CONTINUOUS,CONDITIONAL,Exact transition reference,,Nguyen Eq.3.77-3.80
+10,MR11,R16-R20 Nguyen N-module,Material-domain and natural-path audits,HISTORICAL_PASS_EVIDENCE,NO,Verification evidence,Not rerun in this stage; not a zero-integration proof,1056 points; 96 paths; R20 registry
+11,MR12,D19,Liu 2023 UHPC TC compression scalar branch,RECOVERED_PARTIAL_PASS,CONDITIONAL,UHPC TC compression reference,Not full 2D TC/TCX,Liu Eqs.10-13
+12,MR13,D19,Exact state-front topology and derivative,RECOVERED_PASS,YES,State-boundary audit core,Outer 1D quadrature excluded,D19 event system
+13,MR14,UHPC source registry,Hu uniaxial compression/tension,RECOVERED_SOURCE_LOCKED,CONDITIONAL,Uniaxial source reference,Not a full-state material operator,Hu Wenxu locked UCFT module
+14,MR15,UHPC source registry,Zhou DP and Wang WW constraints,RECOVERED_REFERENCE,CONDITIONAL,CC/C3 envelope constraints,Not complete stress-strain/tangent operators,Zhou Jun and Wang Shunan
