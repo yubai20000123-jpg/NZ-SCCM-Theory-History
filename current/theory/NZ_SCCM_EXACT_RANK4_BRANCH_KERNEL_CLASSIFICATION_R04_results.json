@@ -1,0 +1,54 @@
+{
+  "stage": "R04",
+  "identity": "EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION",
+  "status": "PASS_WITH_NEGATIVE_SPECIAL_FUNCTION_RESULT",
+  "material_domain_governance": {
+    "primary_domain": "MATERIAL_ADMISSIBLE_SPECTRAL_DOMAIN",
+    "secondary_domain": "STRUCTURAL_REACHABLE_SUBDOMAIN",
+    "swartz24_as_production_spectral_domain": "REJECT",
+    "uhpc_transfer": "same compiler architecture; UHPC obtains its own material-native spectral range"
+  },
+  "exact_algebra": {
+    "Pi_eta_relation": "4 eta^4 p^2 + 8 eta^2 p^2 z^2 - 4 eta^2 p z^3 - eta^2 z^4 + 4 p^2 z^4 - 4 p z^5 = 0",
+    "H_relation": "hbar^2-(r-r0)hbar-eta_r^2/4=0",
+    "scalar_degree_upper_bounds": {
+      "C(lambda)": 2,
+      "T(lambda)": 8,
+      "T(lambda)^8": 8,
+      "U(lambda)": 8
+    },
+    "after_lambda_pm_structural_degree_upper_bounds": {
+      "U(lambda_plus)": 16,
+      "C_plus^2_C_minus": 8,
+      "C_plus_T_minus": 32,
+      "T_plus_T_minus^8": 128
+    }
+  },
+  "named_kernel_gate": {
+    "finite_polynomial_D15": "PASS_DIRECT",
+    "bilinear_sin2_denominator_Appell_F1": "PASS_DIRECT",
+    "small_parameter_derivative_Appell_family": "PASS_CONDITIONAL",
+    "single_quartic_or_cubic_sqrt_Carlson": "PASS_CONDITIONAL",
+    "full_Pi_H1_H10_tower_Appell": "FAIL_GENERIC",
+    "full_Pi_H1_H10_tower_Carlson": "FAIL_GENERIC",
+    "large_PF_Gauss_Manin_ODE": "FAIL_PRODUCTION"
+  },
+  "source_domain_facts": {
+    "Nguyen_equivalent_uniaxial_framework": true,
+    "Saenz_strength_applicability": "up to 70 MPa as stated by Nguyen",
+    "tension_transition": "eps_cr to alpha1*eps_cr, alpha1=10, then residual plateau",
+    "postcrush_transition": "eps_p to gamma2*eps_p, then residual plateau; project source audit gamma2=10",
+    "final_NC_lambda_bounds": "NOT_FROZEN"
+  },
+  "decision": {
+    "EXACT_RANK4_SEPARABILITY": "PASS_RETAIN",
+    "MATERIAL_NATIVE_DOMAIN_GOVERNANCE": "PASS_PROMOTE",
+    "FULL_SOURCE_EXACT_APPELL_CLOSURE": "FAIL_GENERIC",
+    "FULL_SOURCE_EXACT_CARLSON_CLOSURE": "FAIL_GENERIC",
+    "MATRIX_FUNCTION_DIVIDED_DIFFERENCE": "PASS_SUPPORT",
+    "ROUTE_SWITCH": "NO",
+    "CASE21_PU": "NOT_RUN",
+    "SWARTZ24_PU": "NOT_RUN",
+    "NEXT": "MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05"
+  }
+}
