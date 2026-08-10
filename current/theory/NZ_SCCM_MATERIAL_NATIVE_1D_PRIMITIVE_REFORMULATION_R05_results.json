@@ -1,0 +1,57 @@
+{
+  "status": "PASS_DOMAIN_AND_COMPACTIFICATION_SCREEN__HOLD_FINAL_NC_SCALAR",
+  "domain_contract": {
+    "coordinate": "lambda = equivalent-uniaxial strain / eps_peak_compression, compression negative",
+    "symbolic_active_domain": "[-gamma2, alpha1*(rho/kappa)]",
+    "gamma2": 10.0,
+    "alpha1": 10.0,
+    "alpha2_project": 0.3,
+    "rho_ft_over_fc": 0.1,
+    "kappa_E0eps0_over_fc": 2.0005129533678754,
+    "xcr_rho_over_kappa": 0.04998717945397425,
+    "numeric_active_domain_for_current_NC_instance": [-10.0, 0.49987179453974245],
+    "status": "MATERIAL_SOURCE_NATIVE_ACTIVE_TRANSITION_DOMAIN_FROZEN_FOR_R05",
+    "structural_domain_role": "verification only after material qualification"
+  },
+  "postpeak_incompatibility": {
+    "lambda": -10.0,
+    "Saenz_continuation_sigma_over_fc": -0.1980605304506671,
+    "source_postcrush_residual_sigma_over_fc": -0.1,
+    "Saenz_magnitude_over_source_residual_magnitude": 1.980605304506671,
+    "decision": "pure Saenz continuation cannot define the final deep-postpeak material-native NC scalar target"
+  },
+  "candidate_metrics": [
+    {"candidate":"GLOBAL_CHEB_LAMBDA","degree":16,"stress_p95_abs_over_fc":0.020003648790507825,"stress_max_abs_over_fc":0.0841549847719022,"tangent_p95_abs_over_initial":0.1349489684781103,"tangent_max_abs_over_initial":0.5695339759391751},
+    {"candidate":"GLOBAL_CHEB_LAMBDA","degree":24,"stress_p95_abs_over_fc":0.009285801384994907,"stress_max_abs_over_fc":0.054155185247934584,"tangent_p95_abs_over_initial":0.06904155041769082,"tangent_max_abs_over_initial":0.7181336773254198},
+    {"candidate":"GLOBAL_CHEB_LAMBDA","degree":32,"stress_p95_abs_over_fc":0.006004310007142966,"stress_max_abs_over_fc":0.04039508984978507,"tangent_p95_abs_over_initial":0.06471799407494801,"tangent_max_abs_over_initial":0.8458617043335133},
+    {"candidate":"SOFTSIGN_CHEB_CHI_DELTA1","degree":16,"stress_p95_abs_over_fc":0.004117532357147735,"stress_max_abs_over_fc":0.02413430289905874,"tangent_p95_abs_over_initial":0.035922754869953236,"tangent_max_abs_over_initial":0.45308040052338566},
+    {"candidate":"SOFTSIGN_CHEB_CHI_DELTA1","degree":24,"stress_p95_abs_over_fc":0.0012764954701481868,"stress_max_abs_over_fc":0.015626766460405103,"tangent_p95_abs_over_initial":0.023530630771365274,"tangent_max_abs_over_initial":1.364619551434169},
+    {"candidate":"SOFTSIGN_CHEB_CHI_DELTA1","degree":32,"stress_p95_abs_over_fc":0.0006920794758508986,"stress_max_abs_over_fc":0.011274229087195747,"tangent_p95_abs_over_initial":0.019273952284580363,"tangent_max_abs_over_initial":0.7172193791489347},
+    {"candidate":"LANDMARK_HERMITE_CHI_DEG9","degree":9,"stress_p95_abs_over_fc":2.788711787644239,"stress_max_abs_over_fc":6.376294517409079,"tangent_p95_abs_over_initial":8.394681215916801,"tangent_max_abs_over_initial":13.002805805794642,"predicted_min_sigma_over_fc":-2.857961157676364,"predicted_max_sigma_over_fc":5.657605847651861}
+  ],
+  "preferred_candidate_definition": {
+    "chi": "lambda/sqrt(lambda^2+1)",
+    "z": "affine map from chi(active-domain endpoints) to [-1,1]",
+    "U24": "sum_j=0^24 a_j T_j(z)",
+    "identity": "benchmark representation only; not final NC production law"
+  },
+  "preferred_candidate_coefficients_n24": [-0.38049750626801876,0.46214650922308365,0.16581119072094055,-0.29885874435694976,0.06595966423250248,-0.007932761229459124,0.04809867363422755,-0.015510262890830547,-0.0009227675022769609,-0.017198305779106214,0.007239746262201731,0.002654531018208474,0.008264778907591685,-0.0038280445595166098,-0.002091827649876472,-0.003822952548261491,0.0030487174840213623,0.0022965627142429892,0.002470546046856801,-0.0017322946952345714,-0.0012636996252178288,-0.0007135708194736261,0.0020709420416114193,0.001625585937042219,0.0015281764663161055],
+  "algebraic_complexity": {
+    "softsign_scalar_field_degree_upper": 2,
+    "softsign_after_lambda_plus_minus_degree_upper": 4,
+    "old_source_shaped_U_scalar_degree_upper": 8,
+    "old_source_shaped_U_after_lambda_plus_minus_degree_upper": 16
+  },
+  "decision": {
+    "material_native_domain_contract": "PASS",
+    "final_NC_scalar_U": "OPEN",
+    "global_lambda_polynomial": "NOT_PREFERRED",
+    "landmark_Hermite": "FAIL_SHAPE_OSCILLATION",
+    "softsign_delta1_n24": "PREFERRED_MATERIAL_SCREEN_CANDIDATE_NOT_PRODUCTION",
+    "softsign_delta1_n32": "DIAGNOSTIC_UPPER_ORDER_ONLY",
+    "next_task": "NC_POSTPEAK_SCALAR_CLOSURE_AND_SOFTSIGN_D15_KERNEL_PRECHECK_R06",
+    "case21_Pu_run": false,
+    "swartz24_Pu_run": false,
+    "route_switch": false
+  }
+}
