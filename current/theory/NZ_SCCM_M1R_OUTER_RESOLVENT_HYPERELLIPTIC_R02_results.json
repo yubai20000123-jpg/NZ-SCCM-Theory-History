@@ -1,0 +1,50 @@
+{
+  "status": {
+    "M1R_R02_RESOLVENT_CANONICALIZATION": "PASS_EXACT",
+    "M1R_R02_ACTUAL_S_FACTORS": "QUADRATIC_ONLY",
+    "M1R_R02_ENDPOINT_ALGEBRA": "PASS_EXACT",
+    "M1R_R02_GENERIC_OUTER_CLASS_A": "FAIL",
+    "M1R_R02_GENERIC_ORDINARY_ELLIPTIC": "INSUFFICIENT",
+    "M1R_R02_GENERIC_SIMPLE_APPELL": "NOT_GENERAL",
+    "M1R_R02_OUTER_PERIOD_CLASS": "HYPERELLIPTIC_RELATIVE / PICARD_FUCHS",
+    "FORMAL_WHOLE_HALFWAVE_GATE_A": "HOLD"
+  },
+  "canonical_block_counts": {
+    "scalar_poles_total": 27,
+    "single_pole_blocks_consolidated_max": 27,
+    "pair_C2_C": 16,
+    "pair_C_T": 40,
+    "pair_T_V": 50,
+    "pair_total": 106,
+    "constant_plus_single_plus_pair_complex_blocks_max": 134
+  },
+  "pole_audit": {
+    "U": {"degree":4,"quotient_constant":-0.32418130781023313,"min_pole_separation":0.35498050732354464,"real_poles":[],"partial_fraction_reconstruction_max_abs":1.5543122344752192e-15},
+    "C": {"degree":4,"quotient_constant":0.32371098593682607,"min_pole_separation":0.3398959528141976,"real_poles":[],"partial_fraction_reconstruction_max_abs":2.4424906541753444e-15},
+    "C2": {"degree":4,"quotient_constant":0.010965034466663403,"min_pole_separation":0.8030814802350523,"real_poles":[],"partial_fraction_reconstruction_max_abs":2.1094237467877974e-15},
+    "T": {"degree":10,"quotient_constant":0.013740124457360166,"min_pole_separation":0.016936786573013864,"real_poles":[],"partial_fraction_reconstruction_max_abs":1.5265566588595902e-14},
+    "V": {"degree":5,"quotient_constant":0.023293753073503284,"min_pole_separation":0.04240563139709518,"real_poles":[1.9861419915007628],"partial_fraction_reconstruction_max_abs":2.9976021664879227e-15}
+  },
+  "symbolic_audit": {
+    "pair_resolvent_A_identity": true,
+    "pair_resolvent_B_identity": true,
+    "Delta_r_degree_s": 2,
+    "endpoint_plus_identity": true,
+    "endpoint_minus_identity": true,
+    "E_total_degree_xy": 2,
+    "O_total_degree_xy": 1,
+    "endpoint_product_total_degree_xy": 4,
+    "Gamma_degree_x": 3,
+    "Gamma_degree_y": 3,
+    "Gamma_total_degree": 4,
+    "Gamma_term_count": 11,
+    "Gamma_x3_coefficient": "M**2*y",
+    "Gamma_y3_coefficient": "M**2*x",
+    "genus_witness_Gamma": "(225*x**3 + 1950*x**2 - 10031*x + 7920)/675",
+    "genus_witness_P5": "-x*(x - 1)*(225*x**3 + 1950*x**2 - 10031*x + 7920)/675",
+    "genus_witness_degree": 5,
+    "genus_witness_gcd_degree": 0,
+    "genus_witness_discriminant": "7162455748218191872/3503151123046875",
+    "genus_witness_genus": 2
+  }
+}
