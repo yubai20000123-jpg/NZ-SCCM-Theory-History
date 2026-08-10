@@ -3,13 +3,13 @@
 **Updated:** 2026-08-10  
 **Purpose:** 唯一当前工作入口。历史 PASS、旧路线、迁移期文件不得覆盖本文件。
 
-## 1. 不可改变的正式目标与边界
+## 1. 不可改变的结构目标与空间边界
 
 ```text
 finite analytic kinematics
 -> finite strain invariants
 -> strong nonlinear material law
--> exact analytic material/structural contraction
+-> direct exact analytic material/structural contraction
 -> P, Rq, analytic tangent, L
 ```
 
@@ -37,18 +37,26 @@ GAUSS_SIMPSON_ADAPTIVE = PROHIBITED_IN_FORMAL_OPERATOR
 COLLOCATION_AS_FORMAL_OPERATOR = PROHIBITED
 ```
 
-允许 finite named special functions、finite algebraic covers、finite de-Rham/twisted bases、finite coefficient matrices、finite Gauss–Manin/Picard–Fuchs/holonomic systems；这些对象只能解析表示同一个完整半波积分，不得成为隐藏空间/材料点离散。
+2026-08-10 自检后进一步冻结：
+
+```text
+N_auxiliary_numerical_quadrature = 0
+N_auxiliary_ODE_steps = 0
+NO hidden initial-value integration
+NO large connection system as production operator
+```
+
+finite differential / Gauss-Manin / Picard-Fuchs systems仍可作为数学分类或可行性审计，但不再因为“有限维”自动获得 production 身份。
 
 当前治理锁：
 
 - `governance/PF1_PATH_INVARIANTS_LOCK_20260810.md`
 - `governance/PF1_R05_GOAL_RELEVANCE_CHECKPOINT_20260810.md`
+- `governance/PF1_R06_PRODUCTION_COMPLEXITY_SELF_AUDIT_20260810.md`
 
-后者要求：所有数学工作必须直接减少 actual M1R `P/Rq/L` whole-halfwave kernel。若只得到脱离物理 kernel 的 generic mathematics，应停在 HOLD/FAIL。
+## 2. Case21 结构—不变量基础继续有效
 
-## 2. 结构—不变量基础
-
-当前 foundation：
+保留：
 
 - `current/theory/NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md`
 - `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
@@ -69,20 +77,46 @@ I2=-nu D^2 + D M K + B D(nu-1)W
    + B M W(2-u^2-v^2)+B^2 z^2(u^2+v^2-1)
 ```
 
-`I2` 中 `M^2` 项严格抵消。材料架构必须同时通过：
+`I2` 中 `M^2` 项严格抵消；`I1,I2` 为有限 analytic polynomial field。
+
+这部分没有被本次纠偏否定。
+
+## 3. 三个材料/解析门禁
+
+以后材料 compiler 必须同时通过：
 
 ```text
-Gate A = exact analytic / finite special-function closure
+Gate A = exact analytic direct closure
 Gate B = concrete nonlinear adequacy
+Gate C = production analytic complexity
 ```
 
-## 3. M1 淘汰；M1R 为当前解析材料架构
+### Gate C 当前硬要求
+
+```text
+1. original x/y/z numerical quadrature = 0
+2. auxiliary numerical quadrature = 0
+3. auxiliary ODE stepping = 0
+4. no hidden numerical initialization
+5. no branch-by-branch spatial/material state propagation
+6. P, Rq and derivatives must reduce to direct finite formulas
+7. named special functions are allowed only as direct evaluable functions
+8. auxiliary matrix >3x3 is presumptive FAIL unless analytically eliminated
+9. complexity may scale with a finite material basis only
+10. canonical theory must expose actual formulas, not only a script regenerating a huge symbolic object
+```
+
+## 4. M1 与 M1R-R01 的当前身份
+
+旧 M1 simple additive structured polynomial：
 
 ```text
 M1_R01_SIMPLE_ADDITIVE_STRUCTURED_POLYNOMIAL = FAIL_SCREEN
 ```
 
-M1R-R01 保留 frozen-NC source-shaped biaxial algebra，只编译：
+该失败只针对旧 M1 的具体二维结构，不代表所有 source-shaped finite polynomial primitive representation 都失败。
+
+M1R-R01 保留 frozen-NC source-shaped biaxial algebra：
 
 ```text
 U
@@ -92,9 +126,9 @@ T
 V=T^8
 ```
 
-53 个 material-only rational coefficients；二维 fitted interaction coefficients=0。
+53 个 material-only rational coefficients，二维 fitted interaction coefficients=0。
 
-frozen-NC screen：
+frozen-NC material screen：
 
 ```text
 global P95 = 0.018261
@@ -102,7 +136,7 @@ global max = 0.036742
 TC P95     = 0.023137
 ```
 
-身份：
+身份继续保持：
 
 ```text
 M1R_R01_FROZEN_NC_ORACLE_REGRESSION = PASS_SCREEN
@@ -110,236 +144,28 @@ FINAL_NC_SOURCE_CALIBRATION = NOT_YET_DONE
 FINAL_GATE_B = NOT_YET_FROZEN
 ```
 
-frozen NC 仅为 regression/material oracle，不是 final NC truth。
-
-## 4. s-inner 与 resolvent canonicalization
-
-Case21 exact coordinate：
+但经过 PF1-R06 自检，必须新增：
 
 ```text
-s=I1
-z=(s-a)/(2Buv)
-s±=a±2Buv
+M1R_RATIONAL_PRIMITIVE_PRODUCTION_COMPILER = HOLD_NOT_ACCEPTED
 ```
 
-`I2(s;u,v)` 对 `s` 严格二次。
+原因不是材料拟合误差，而是 whole-halfwave production complexity。
+
+## 5. R02-R06：保留为数学可行性审计，不再作为 production mainline
+
+R02 rational resolvent audit：
 
 ```text
-M1R_R01_S_INNER_INTEGRATION = PASS_CLASS_A
-N_s_quadrature = 0
-```
-
-R02：
-
-```text
-R_r=(X-rI)^(-1)=[(I1-r)I-X]/Delta_r
-Delta_r=I2-rI1+r^2
-R_r^oth=(X-rI)/Delta_r
-```
-
-当前 five primitives 共 27 scalar poles；stress 最多：
-
-```text
-1 constant
-+ 27 consolidated single-pole
-+ 106 pair-pole analytic blocks
-```
-
-```text
+27 scalar poles
+1 constant + 27 consolidated single-pole + 106 pair-pole analytic blocks
 M1R_R02_RESOLVENT_CANONICALIZATION = PASS_EXACT
 M1R_R02_ACTUAL_S_FACTORS = QUADRATIC_ONLY
 ```
 
-这些是解析 block counts，不是空间点/材料点/DOF。
+R03-R05 找到的 genus-2 / Phi / common rational driver exact identities仍然有效；它们说明 rational primitive representation 的解析结构可以被系统研究。
 
-## 5. R03/R04：数学分类已收敛到 physical Phi kernel
-
-R03 对 unsymmetrized genus-2 family 建立 4D de-Rham/Gauss–Manin exact audit：
-
-```text
-PF1_R03_GENUS2_ABSOLUTE_DERHAM_BASIS = PASS_EXACT
-PF1_R03_FIXED_9X9_GRIFFITHS_HERMITE_REDUCTION = PASS_EXACT
-PF1_R03_ABSOLUTE_X_GAUSS_MANIN = PASS_EXACT
-```
-
-R03 只保留为 independent analytic audit，不再是 production bottleneck。
-
-R04 对 physical symmetric s-endpoint 得到：
-
-```text
-Phi(z)=atanh(sqrt(z))/sqrt(z)=2F1(1/2,1;3/2;z)
-```
-
-并 exact 证明：
-
-```text
-PF1_R04_PHYSICAL_RELATIVE_X_EXACT_TERM = PASS_EXACT
-PF1_R04_ENDPOINT_B_OVER_W = VANISHES_EXACTLY
-PF1_R04_LOG_ATANH_SYMMETRIC_KERNEL = PASS_EXACT
-PF1_R04_ALPHA_ZERO = REMOVABLE_ANALYTIC_LIMIT
-PF1_R04_PAIR_S_ENDPOINT_KERNEL_FAMILY = FINITE_PHI_FAMILY
-PF1_R04_SPATIAL_QUADRATURE = 0
-```
-
-因此不再扩张 generic third-kind/log-divisor basis。
-
-## 6. R05：Phi layer → common rational driver
-
-R05 exact identity：
-
-```text
-2 z Phi'(z)+Phi(z)=1/(1-z)
-```
-
-令纯解析系数参数：
-
-```text
-tau=B(q)^2
-```
-
-`tau` 不是结构 DOF、加载变量或材料变量。
-
-定义：
-
-```text
-h=x+y-1
-E_tau=E0+tau h
-K_tau=E0-tau h
-ell=D(nu-1)+M(2-x-y)-2r
-```
-
-得到：
-
-```text
-D_r(tau)=E_tau^2-tau*x*y*ell^2
-        =K_tau^2-tau*Gamma_r
-```
-
-两个 physical Phi kernel：
-
-```text
-(2 tau d/dtau+1) F_L = ell*K_tau/(2 D_r)
-(2 tau d/dtau+1) F_J = E_tau/D_r
-```
-
-```text
-PF1_R05_PHI_FIRST_ORDER_IDENTITY = PASS_EXACT
-PF1_R05_COMMON_TAU_DRIVER_IDENTITY = PASS_EXACT
-PF1_R05_LOG_KERNEL_TAU_ODE = PASS_EXACT
-PF1_R05_RECIPROCAL_KERNEL_TAU_ODE = PASS_EXACT
-```
-
-actual common driver：
-
-```text
-degree_x = 3
-degree_y = 3
-total_degree = 4
-monomial count = 11
-```
-
-固定 `(y,tau)` 的 x integral 由 arcsine resolvent identity 精确消去：
-
-```text
-Integral_0^1 dx/[sqrt(x(1-x))(x-rho)]
-= -pi/sqrt(rho(rho-1))
-```
-
-```text
-PF1_R05_X_ARCSINE_RESOLVENT_ELIMINATION = PASS_CLASS_A
-N_x_quadrature = 0
-PF1_R05_Y_ALGEBRAIC_TRACE_RESULTANT = PASS_FINITE_ALGEBRAIC
-```
-
-R05 twisted critical quotient witness 为 19 monomials，但当时未宣称 final master dimension。
-
-## 7. R06 latest：endpoint-compatible IBP 实际把 19 降为 15 masters
-
-当前 canonical R06：
-
-- `current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_20260810.md`
-- `current/theory/nz_sccm_pf1_endpoint_ibp_master_connection_r06.py`
-- `current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_results.json`
-
-定义：
-
-```text
-hx=x(1-x)
-hy=y(1-y)
-I[N]=∫∫ N/[sqrt(hx hy) D_r] dxdy
-```
-
-endpoint-compatible exact IBP identity：
-
-```text
-Q =
-D_r R
-+ D_r(hx A_x + hx'/2 A + hy B_y + hy'/2 B)
-- hx A D_r,x
-- hy B D_r,y
-```
-
-则：
-
-```text
-∫∫ Q/[sqrt(hx hy) D_r^2] dxdy = I[R]
-```
-
-边界 certificate 因 `sqrt(hx)` / `sqrt(hy)` 在 0,1 消失，不需要 endpoint cells。
-
-```text
-PF1_R06_ENDPOINT_COMPATIBLE_IBP_IDENTITY = PASS_EXACT
-```
-
-使用 total-degree<=5 certificates：
-
-```text
-coefficient equations = 62
-unknowns = 57
-```
-
-R05 的 19 monomial quotient 存在 4 个独立 exact period relations；三组 rational parameter witnesses 上 relation rank 都为 4。
-
-选择 15-master basis：
-
-```text
-1
-y
-y^2
-y^3
-y^4
-y^5
-x
-xy
-xy^2
-xy^3
-xy^4
-x^2
-x^2 y
-x^2 y^2
-x^3 y
-```
-
-消去：
-
-```text
-x^2 y^3
-x^3
-x^4
-x^5
-```
-
-正式身份：
-
-```text
-PF1_R06_R05_19_MONOMIAL_QUOTIENT = OVERCOMPLETE_FOR_PERIOD_BASIS
-PF1_R06_PERIOD_RELATION_RANK_WITNESS = 4
-PF1_R06_MASTER_PERIOD_DIMENSION_WITNESS = 15
-```
-
-## 8. R06：explicit symbolic tau connection 已生成
-
-在 exact rational witness：
+R06 又在 exact witness：
 
 ```text
 D=1
@@ -349,129 +175,135 @@ r=2
 tau=symbolic
 ```
 
-15 master periods满足：
+得到：
 
 ```text
-dI/dtau = Omega_tau(tau) I
-Omega_tau in Q(tau)^(15x15)
+19 critical monomials
+-> 4 exact IBP period relations
+-> 15 master periods
+-> 15x15 symbolic tau connection
+-> 211/225 nonzero entries
+-> symbolic entry characters about 2.68e5
 ```
 
-实际 connection：
+R06 代码使用 exact polynomial coefficient matching / rational-function linear algebra；它本身不是空间数值积分。
+
+但是当前正式重新定级为：
 
 ```text
-shape = 15x15
-nonzero = 211/225
-```
-
-脚本生成全部 symbolic entries；其 symbolic output 总字符量约 `2.68e5`。`tau=1/7` 时与独立 exact rational coefficient matching 做 225/225 逐元素一致校验。
-
-```text
-PF1_R06_TAU_CONNECTION_MATRIX_WITNESS = PASS_EXACT_SYMBOLIC_15X15
-```
-
-chosen witness basis 的 denominator LCM 给出有限 candidate singular locus；这些候选必须继续区分 physical singularities 与 apparent/gauge singularities。物理路径始终：
-
-```text
-tau(q)=B(q)^2=[pi^2/(2 eps0)*(t/b)*q]^2 >=0
-```
-
-## 9. R06：D/M/B/q derivatives 仍落在同一个 system
-
-对：
-
-```text
-Q_D=-m_j D_r,D
-Q_M=-m_j D_r,M
-```
-
-同一 15-master / degree-5 certificate system 在 exact witness point `tau=1/7` 对全部 15 列均唯一闭合：
-
-```text
-PF1_R06_D_CONNECTION_WITNESS_POINT = PASS_EXACT_15X15
-PF1_R06_M_CONNECTION_WITNESS_POINT = PASS_EXACT_15X15
-```
-
-因为 `B` 只通过 `tau=B^2`：
-
-```text
-Omega_B = 2 B Omega_tau
-```
-
-Case21：
-
-```text
-M_q=alpha(q0+q)
-B_q=beta
-tau_q=2 B B_q
-```
-
-所以：
-
-```text
-Omega_q=M_q Omega_M+2 B B_q Omega_tau
-```
-
-```text
-PF1_R06_B_Q_CHAIN_RULE = PASS_ANALYTIC
-```
-
-没有新增空间积分器或材料点 differentiation。
-
-## 10. 当前准确停点与 Gate
-
-R06 已证明：R05 的 common rational driver 不是“只存在抽象 finite system”，而是已经能在 actual endpoint-compatible IBP 架构下形成 15-master explicit tau connection witness。
-
-但 production-level 仍缺：
-
-```text
-generic/current (D,M,nu,r) connection generator audit
-branch-consistent analytic initial values
-physical tau=B(q)^2 branch/basis patch rules
-stable no-x/y-quadrature evaluator
-27 single-pole / 106 pair-block production reuse audit
-```
-
-因此必须保持：
-
-```text
-PF1_R06_GENERIC_DMRT_CONNECTION = HOLD
-PF1_R06_BRANCH_INITIAL_VALUE_EVALUATOR = HOLD
+PF1_R03_GENUS2_GAUSS_MANIN = RETAIN_AUDIT_ONLY
+PF1_R04_PHI_ENDPOINT_REDUCTION = RETAIN_AUDIT_ONLY
+PF1_R05_COMMON_RATIONAL_DRIVER = RETAIN_AUDIT_ONLY
+PF1_R06_15X15_CONNECTION_WITNESS = RETAIN_AUDIT_ONLY
+PF1_R06_PRODUCTION_ACCEPTANCE = FAIL_COMPLEXITY_GATE
+PF1_R07 = CANCELLED
 FORMAL_WHOLE_HALFWAVE_GATE_A = HOLD
 ```
 
-这不是 route failure，也不能据此转向 generic GKZ mathematics。
+## 6. 为什么 R06 不再继续生产化
 
-## 11. 当前唯一下一任务：PF1-R07
+### 6.1 它不是 current actual generic closed form
 
-```text
-R07 = actual production evaluator closure
-```
+15x15 symbolic connection 只在一个 rational witness 上生成；`D/M` connection也只在 witness point 验证。
 
-只允许：
+### 6.2 公式透明度不合格
 
-1. 参数化 R06 coefficient-matching generator 到 actual `(D,M,nu,r)`；
-2. 选择并证明 safe analytic initial-value prescription；
-3. 建立 physical `tau=B(q)^2` branch/basis patch rule；
-4. 同一 master system 返回 rational-driver periods 与 `D,q` derivatives；
-5. 审计 27 single-pole / 106 pair-block 组装；
-6. 全部通过后才讨论 `FORMAL_WHOLE_HALFWAVE_GATE_A = PASS_CLASS_B`。
+完整 symbolic matrix 总规模约 2.68e5 字符；canonical result 只冻结 shape、density、common denominator和cross-check，没有把全部可读公式逐项冻结。
 
-禁止：
+### 6.3 隐藏 numerical propagation 风险
+
+若继续用：
 
 ```text
-generic GKZ detour
-new material fit
-Case21 Pu
-Swartz24
-UHPC production fit
-shell/Y production solve
-spatial numerical quadrature
-auxiliary numerical quadrature as formal operator
-material-point integration
-route switch
+dI/dtau = Omega_tau I
 ```
 
-## 12. 其他材料/结构边界不变
+做 production evaluator，则仍需：
+
+```text
+analytic initial values
+branch continuation
+singular/basis patch
+physical tau=B(q)^2 propagation
+```
+
+如果 initial values 来自 x/y numerical integration，则直接违反零数值积分；如果沿 tau 做 numerical ODE stepping，则虽然不是空间 quadrature，也已经偏离本项目要求的直接解析、低维、可手算审计路线。
+
+### 6.4 复杂度已经失控
+
+仅 single-pole bookkeeping 就有潜在：
+
+```text
+27 pole families x 15 master periods = 405 master-period components
+```
+
+pair block虽然可复用 single-pole families，但仍有106个assembly couplings，再叠加 D/M/q derivative 与 branch patch。继续R07预计只会放大该问题。
+
+## 7. 真正的路线错误位置
+
+问题不是 R06 的 IBP 恒等式错误，而是更早的 compiler 设计顺序：
+
+```text
+先按材料拟合精度选 rational primitives
+-> 再试图救 whole-halfwave exact integration
+```
+
+正确顺序应改为：
+
+```text
+source-shaped material physics
+-> choose material primitive basis under BOTH material-accuracy and direct-integrability constraints
+-> only then compile to exact moments
+```
+
+也就是说，**whole-halfwave direct integrability / production complexity 必须与材料精度同时成为硬门禁**。
+
+## 8. 当前回退范围
+
+不回退：
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+Nguyen second-order kinematics
+I1/I2 invariant foundation
+source-shaped biaxial material algebra
+D15/exact-moment philosophy
+Gate B nonlinear material target
+```
+
+只回退：
+
+```text
+rational primitive representation as production compiler
+```
+
+## 9. 当前唯一建议下一任务
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK = M1R_P2_INTEGRABILITY_FIRST_PRIMITIVE_COMPILER_SCREEN
+```
+
+P2 只允许做一个小规模 fail-fast screen：
+
+```text
+same source-shaped U/C/C2/T/V algebra
++ finite 1D polynomial or orthogonal-polynomial primitive representations
++ direct composition with Case21 finite invariants
++ direct D15/Beta exact moments
+```
+
+这不是恢复旧 M1 2D polynomial fit，也不是重开材料物理；只是在同一 source-shaped physics 下重新选择 compiler basis。
+
+P2 的硬停止条件：
+
+```text
+如果合理一维阶次仍无法同时满足材料误差和 Gate C，立即 FAIL/STOP；
+不得再通过更高维 master systems、parameter ODE 或 large matrices 强行救活。
+```
+
+本轮纠偏不自动开始 P2 计算。
+
+## 10. 其他材料/结构边界不变
 
 旧 NC + reinforcement operator 仍仅为 regression/reference。钢筋必须在 root solve 前进入：
 
@@ -492,30 +324,29 @@ M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE
 
 PBL 继续作为强局部边界/子板分隔，不自动作为独立轴向承载项或显式 spring energy。
 
-## 13. 当前明确未执行
+## 11. 当前明确未执行
 
 ```text
+NO PF1-R07
 NO new Case21 Pu solve
 NO Swartz24 solve
 NO UHPC production fit
 NO shell/Y production solve
 NO structural Pu calibration
 NO spatial numerical quadrature
-NO auxiliary numerical quadrature as formal operator
+NO auxiliary numerical quadrature
+NO auxiliary ODE stepping
 NO endpoint cells
 NO material-point integration
 NO route switch
 ```
 
-## 14. 后续恢复优先读取
+## 12. 后续恢复优先读取
 
 1. `current/CURRENT_STATE.md`
-2. `governance/PF1_PATH_INVARIANTS_LOCK_20260810.md`
-3. `governance/PF1_R05_GOAL_RELEVANCE_CHECKPOINT_20260810.md`
-4. `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
-5. `current/theory/NZ_SCCM_M1R_SOURCE_SHAPED_RATIONAL_PRIMITIVE_SCREEN_R01_20260810.md`
-6. `current/theory/NZ_SCCM_M1R_OUTER_RESOLVENT_HYPERELLIPTIC_CLASSIFICATION_R02_20260810.md`
-7. `current/theory/NZ_SCCM_PF1_RELATIVE_ENDPOINT_HYPERGEOMETRIC_CLOSURE_R04_20260810.md`
-8. `current/theory/NZ_SCCM_PF1_HYPERGEOMETRIC_DRIVER_REDUCTION_R05_20260810.md`
-9. `current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_20260810.md`
-10. `evidence/stability/STEEL_NONDISCRETIZATION_SEMIANALYTIC_REFERENCE_MAP_20260810.md`
+2. `governance/PF1_R06_PRODUCTION_COMPLEXITY_SELF_AUDIT_20260810.md`
+3. `governance/PF1_PATH_INVARIANTS_LOCK_20260810.md`
+4. `governance/PF1_R05_GOAL_RELEVANCE_CHECKPOINT_20260810.md`
+5. `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
+6. `current/theory/NZ_SCCM_M1R_SOURCE_SHAPED_RATIONAL_PRIMITIVE_SCREEN_R01_20260810.md`
+7. `current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_20260810.md`
