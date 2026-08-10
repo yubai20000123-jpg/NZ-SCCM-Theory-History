@@ -1,8 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 19:47 +08:00  
-**Purpose:** 唯一当前工作入口；详细推导留在 canonical theory/history/evidence 文件中。  
-**Canonical recovery:** `governance/FULL_STARTUP_RECOVERY_CHECKPOINT_20260810.md`
+**Updated:** 2026-08-10 20:00 +08:00  
+**Purpose:** 唯一当前工作入口；详细推导留在 canonical theory/history/evidence 文件中。
 
 ## 0. 主线身份
 
@@ -16,13 +15,7 @@ P2R = CANCELLED
 ROUTE_SWITCH = NO
 ```
 
-此前局部恢复导致的主线偏离及恢复已记录于：
-
-- `history/NZ_SCCM/MAINLINE_DEVIATION_AND_RECOVERY_20260810.md`
-- `history/NZ_SCCM/R03_DIMENSION_REDUCTION_SADDLE_AND_SPECIAL_FUNCTION_REFRAME_20260810.md`
-- `history/NZ_SCCM/R04_MATERIAL_DOMAIN_AND_NAMED_KERNEL_REFRAME_20260810.md`
-
-任何 compiler failure 不得无证据升级为 current-map architecture failure。
+此前局部恢复导致的主线偏离及恢复已记录；R03-R05 继续沿恢复后的同一主线推进。
 
 ---
 
@@ -74,15 +67,16 @@ G18/G27 unified coaxial architecture：
 
 一致切线必须从同一个 stress map 解析求导。G20/G21 允许 C1/C2 regularization、平滑保守 CC/TC/TT target、current/rotating principal surface、保守 tension stiffening 与 smooth postpeak compression；不恢复 runtime TT/TC/CC material-state machine。
 
+Production grammar 不要求永久保留旧 source-shaped `C,T,T^8` primitives；它们可继续作为 benchmark/reference。当前优先闭合一维 scalar master `U`，随后再闭合低参数 `A,B` interaction layer。
+
 ---
 
-## 3. MATERIAL-NATIVE SPECTRAL DOMAIN — R04 新治理锁
+## 3. MATERIAL-NATIVE DOMAIN GOVERNANCE
 
-Canonical governance：
+Canonical：
 
 - `governance/MATERIAL_NATIVE_SPECTRAL_DOMAIN_RULE_20260810.md`
-
-生产材料谱域不得再由 Case21/Swartz24 几何定义：
+- `governance/MATERIAL_NATIVE_SCALAR_DOMAIN_CONTRACT_R05_20260810.md`
 
 ```text
 PRIMARY_DOMAIN   = MATERIAL_ADMISSIBLE_SPECTRAL_DOMAIN Lambda_M
@@ -90,216 +84,173 @@ SECONDARY_DOMAIN = STRUCTURAL_REACHABLE_SUBDOMAIN Lambda_R
 MANDATORY         = Lambda_R subset of Lambda_M
 ```
 
-含义：
+材料 compiler 必须先在所选本构自身定义的谱域上通过 Gate B/C。Case21/Swartz reachable spectra 只作后验结构验证和可选效率诊断，不允许由 Pu 或样本反向缩小材料谱域。
 
-1. 材料 compiler 首先必须在所选本构自身允许/需要覆盖的谱域内通过 stress+tangent+shape+complexity gate；
-2. Case21/Swartz reachable spectra 只作后验结构验证和可选加速；
-3. 不允许由结构 Pu 或 Swartz 样本反向缩小材料谱域；
-4. NC 与 UHPC 可以有不同 `Lambda_M`，但共享完全相同的 Eu/J1/J2、2x2 matrix-function、rank/separable compilation、D15 与 P/Rq/L 架构。
-
-普通混凝土来源锚点：Nguyen Chapter 3 equivalent-uniaxial framework；Saenz Eq.3.39 在 Nguyen 中注明适用于强度不超过 70 MPa 的混凝土；Foster/Nguyen tension transition 从 `eps_cr` 到 `alpha1 eps_cr`, `alpha1=10` 后进入 residual plateau；source post-crushing 从 `eps_p` 到 `gamma2 eps_p` 再进入 residual plateau，项目 G21 source audit 记录 `gamma2=10`。这些只定义 domain interface；最终 NC `lambda_min/lambda_max` 尚未冻结，因为 compact production NC operator 尚未冻结。
-
-UHPC 后续必须由最终选择的 UHPC 本构来源自己给出 `Lambda_M_UHPC`；严禁继承 NC 数字谱域。
+NC 与 UHPC 可以有不同 `Lambda_M`，但共享 Eu/J1/J2、2x2 matrix-function、separable/invariant compilation、D15 与 P/Rq/L 架构。UHPC 禁止继承 NC 数字谱域。
 
 ---
 
-## 4. D15 / exact moment mainline
+## 4. R05 — MATERIAL-NATIVE 1D PRIMITIVE REFORMULATION
+
+Canonical：
+
+- `current/theory/NZ_SCCM_MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05_20260810.md`
+- `current/theory/NZ_SCCM_MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05_results.json`
+- `history/NZ_SCCM/R05_MATERIAL_NATIVE_DOMAIN_AND_COMPACTIFICATION_20260810.md`
+
+### 4.1 NC material-native scalar landmarks
+
+采用等效单轴归一化坐标
+
+\[
+\lambda=\varepsilon_u/\varepsilon_{p,c}
+\]
+
+（压缩为负）。来源/项目保留的材料尺度：
+
+```text
+compression residual scale : lambda = -gamma2
+compression peak           : lambda = -1
+origin                     : lambda = 0
+tension cracking           : lambda_cr = rho/kappa
+tension residual onset     : lambda = alpha1*rho/kappa
+```
+
+当前 ordinary-concrete source choices：
+
+```text
+gamma2 = 10
+alpha1 = 10
+alpha2 = 0.30  # project-conservative residual tension
+```
+
+因此 R05 正式冻结 source-native **active transition interval**：
+
+\[
+\boxed{
+\Lambda_{M,NC}^{active}=[-\gamma_2,\ \alpha_1\rho/\kappa]
+}
+\]
+
+当前 NC material instance：
+
+```text
+rho = 0.10
+kappa = 2.0005129533678754
+lambda_cr = 0.04998717945397425
+Lambda_M,NC^active = [-10, 0.49987179453974245]
+```
+
+这不是 Swartz24 谱域。
+
+### 4.2 Material blocker newly exposed
+
+纯 Saenz continuation 在 `lambda=-10` 给出
+
+\[
+\sigma/f_c=-0.1980605304506671,
+\]
+
+而 Nguyen source postcrush residual landmark 约为
+
+\[
+\sigma/f_c=-0.10.
+\]
+
+因此纯 Saenz 延拓不能作为完整 material-native deep-postpeak scalar target。G21 已允许 smooth conservative postpeak replacement，但该一维 postpeak closure 现在必须在材料层显式冻结。
+
+```text
+FINAL_NC_SCALAR_U = OPEN
+```
+
+### 4.3 Compactification screen
+
+Candidate A：one-global Chebyshev in `lambda` — NOT PREFERRED。
+
+Candidate B：
+
+\[
+\boxed{
+\chi(\lambda)=\frac{\lambda}{\sqrt{\lambda^2+1}}
+}
+\]
+
+以及
+
+\[
+U_n(\lambda)=\sum_{j=0}^{n}a_jT_j(z(\chi)).
+\]
+
+`delta=1` 取自归一化 compression-peak material scale，不由 Case21/Swartz Pu 调参。
+
+对 frozen smooth benchmark `U` 的 executed metrics：
+
+```text
+n=16: stress P95 0.4118% fc, max 2.4134% fc; tangent P95 3.5923%
+n=24: stress P95 0.1276% fc, max 1.5627% fc; tangent P95 2.3531%
+n=32: stress P95 0.0692% fc, max 1.1274% fc; tangent P95 1.9274%
+```
+
+`n=24` 仅保留为 preferred material representation screen candidate，不是 production coefficient set。`n=32` 仅作 upper-order diagnostic。
+
+Candidate C：degree-9 landmark Hermite in `chi` — FAIL SHAPE；stress max 约 `6.376 fc`，出现严重振荡。
+
+### 4.4 Algebraic complexity advantage
+
+`chi=lambda/sqrt(lambda^2+1)` 仅引入一个 quadratic extension；任意有限 `P_n(chi)` 仍属于 scalar algebraic degree `<=2`。
+
+`lambda±=mu±sqrt(Q)` 后 generic structural field degree `<=4`。
+
+R04 旧 source-shaped `U=Pi+H1+H10...` 的 corresponding upper bounds 是 scalar `<=8`、structural `<=16`。
+
+因此 compactification 是真实 algebraic complexity reduction；但其 D15/small-named-kernel closure 尚未通过 Gate C。
+
+### 4.5 R05 status
+
+```text
+MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05
+= PASS_DOMAIN_AND_COMPACTIFICATION_SCREEN__HOLD_FINAL_NC_SCALAR
+
+MATERIAL_NATIVE_DOMAIN_CONTRACT = PASS
+GLOBAL_LAMBDA_POLYNOMIAL = NOT_PREFERRED
+LANDMARK_HERMITE_CHI_DEG9 = FAIL_SHAPE_OSCILLATION
+SOFTSIGN_DELTA1_N24 = PREFERRED_MATERIAL_SCREEN_CANDIDATE_NOT_PRODUCTION
+SOFTSIGN_DELTA1_N32 = DIAGNOSTIC_UPPER_ORDER_ONLY
+FINAL_NC_SCALAR_U = OPEN
+CASE21_PU = NOT_RUN
+SWARTZ24_PU = NOT_RUN
+ROUTE_SWITCH = NO
+```
+
+---
+
+## 5. R01-R04 retained conclusions
+
+R01：three narrow tensile transition ridges at `lambda≈0`, `xcr≈0.05`, `10xcr≈0.50`；characteristic width `≈0.00249936`。
+
+R02：mild widening helps but cannot solve representation alone；`k=1.25` optional, not frozen。
+
+R03：source-shaped principal surface exact separated rank `<=4`; saddle-like patches exist locally but no single global saddle function identity. Swartz spectral separation result is structural diagnostic only.
+
+R04：full `Pi+H1+H10` source tower is not generic direct Appell/Carlson; Appell/Carlson retained as small named-kernel library only when actual reduced integrand matches. Large PF/Gauss-Manin/ODE remains non-production.
+
+---
+
+## 6. D15 / structural mainline retained
 
 G26：
 
 \[
-\boxed{continuous\ material\to moment\!-\!first\ contraction\to D15\ exact\ moments}
+continuous\ material\to moment\!-\!first\ contraction\to D15\ exact\ moments.
 \]
 
-```text
-NAIVE_EXPAND_THEN_INTEGRATE = REJECTED
-MOMENT_FIRST_D15 = ACTIVE
-```
+G28/G30：same analytic kernel -> `P,Rq,L`; no second Pu solver or load-stepping identity.
 
-G28/G30 已确认 `M(epsilon) -> analytic representation -> D15 -> P,Rq,L`；Pu 不另造 load stepping/arclength solver。
-
-```text
-LATEST_FULLY_DELIVERED_STAGE = G30
-LATEST_OPERATIONALLY_ACCEPTED_STAGE = G30
-LATEST_EXECUTED_ARTIFACT_STAGE = G31
-G31_FINAL_VISIBLE_DELIVERY = ABSENT
-G31_USER_ACCEPTANCE = UNRESOLVED
-```
-
-G31 `Pu≈476.936 kN` 只是不考虑裂化的 chain validation，不是 validated RC Pu。
+Case21 invariant foundation remains finite polynomial in `I1,I2`; `I2` all `M^2` terms cancel exactly.
 
 ---
 
-## 5. Case21 invariant foundation
-
-```text
-q=A/b
-M=pi^2/eps0*(q0*q+q^2/2)
-B=pi^2/(2eps0)*(t/b)*q
-H=u^2+v^2-2u^2v^2
-K=nu*u^2-v^2+(1-nu)u^2v^2
-W=uvz
-```
-
-\[
-I_1=(\nu-1)D+MH+2BW,
-\]
-
-\[
-I_2=-\nu D^2+DMK+BD(\nu-1)W+BMW(2-u^2-v^2)+B^2z^2(u^2+v^2-1).
-\]
-
-`I2` 中全部 `M^2` 项严格抵消；`I1,I2` 为有限 polynomial field。
-
----
-
-## 6. 已失败/限制的 compiler
-
-```text
-M1 simple polynomial = FAIL
-M1R rational = material regression good / production HOLD
-PF1 R02-R06 = exact mathematics AUDIT ONLY
-PF1 R06 15x15 connection = FAIL production complexity
-PF1 R07 = CANCELLED
-P2A one-global primitive polynomial <=16 = FAIL
-```
-
-P2A max normalized error：`U≈2.43%`, `C≈2.44%`, `C2≈0.51%`, `T≈32.58%`, `T8≈43.28%`。
-
----
-
-## 7. R01/R02 — current-target ridge diagnosis
-
-R01 定位三条 narrow tensile transition ridge：
-
-```text
-lambda≈0
-lambda≈xcr≈0.05
-lambda≈10*xcr≈0.50
-```
-
-characteristic width `≈0.00249936`。
-
-R02：适度展宽有物理帮助但不能单独解决解析复杂度：
-
-```text
-k=1.25: curvature reduction ~19.8%; TC tangent P95 change ~4.38%
-k=1.50: curvature reduction ~33.0%; TC tangent P95 change ~9.73%
-k>=1.75: HOLD
-PURE_WIDTH_WIDENING = INSUFFICIENT_AS_SOLE_SOLUTION
-K_1P25 = OPTIONAL, NOT FROZEN
-```
-
----
-
-## 8. R03 — spectral reduction / saddle / exact rank-4
-
-Canonical：
-
-- `current/theory/NZ_SCCM_SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03_20260810.md`
-- `current/theory/NZ_SCCM_SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03_results.json`
-- `evidence/mathematics/NZ_SCCM_SPECIAL_FUNCTION_AND_SADDLE_SURFACE_RESEARCH_R03_20260810.md`
-
-R03 证明在其明确 diagnostic box 内 Swartz24 geometries 有正谱间隙；该结论现在正式定级为**结构诊断**，不再作为 production material spectral domain。
-
-Reference principal stress surface 局部确有 saddle-like patches，但并非单一 global hyperbolic paraboloid。
-
-最重要：source-shaped principal surface 精确 separated rank <=4：
-
-\[
-s_+=U(\lambda_+)-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
-\]
-
-\[
-s_-=U(\lambda_-)-a_{cc}C_-^2C_+ +C_-T_+-\rho a_tT_-T_+^8.
-\]
-
-```text
-EXACT_RANK4_PRINCIPAL_FACTORIZATION = RETAINED
-GENERIC_2D_SURFACE_FIT = NOT_NEEDED_FOR SOURCE-SHAPED REFERENCE
-```
-
-R03 的 Appell F1 master 与 Carlson research 保留为 named-kernel library；只有 actual reduced kernel 匹配时才能获得 production 身份。
-
----
-
-## 9. R04 — exact rank-4 branch kernel classification
-
-Canonical：
-
-- `current/theory/NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_20260810.md`
-- `current/theory/NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_results.json`
-- `evidence/mathematics/NZ_SCCM_R04_NAMED_KERNEL_AND_MATRIX_FUNCTION_EVIDENCE_20260810.md`
-
-### 9.1 Exact scalar algebra
-
-消去 `R=sqrt(z^2+eta^2)` 后，`p=Pi_eta(z)` 满足二次代数关系：
-
-```text
-4 eta^4 p^2 + 8 eta^2 p^2 z^2 - 4 eta^2 p z^3
-- eta^2 z^4 + 4 p^2 z^4 - 4 p z^5 = 0
-```
-
-而 Foster H 在去掉固定归一化常数后满足：
-
-```text
-hbar^2-(r-r0)hbar-eta_r^2/4=0
-```
-
-故 generic scalar field degree upper bounds：
-
-```text
-C(lambda)   <=2
-T(lambda)   <=8
-T(lambda)^8 <=8
-U(lambda)   <=8
-```
-
-这些是上界，不声称 irreducible degree。
-
-### 9.2 Structural spectral substitution complexity
-
-`lambda±=mu±sqrt(Q)` 后的 generic algebraic extension upper bounds：
-
-```text
-U(lambda+)   <=16
-C+^2 C-      <=8
-C+ T-        <=32
-T+ T-^8      <=128
-```
-
-因此当前 source-shaped exact tension tower 的真正难点已经被定位为**一维材料 primitive 本身的 nested radical complexity**，而不是二维 surface rank，也不是 D15 本身。
-
-### 9.3 Named special-function result
-
-```text
-finite polynomial / D15 Beta moments         = PASS DIRECT
-bilinear sin^2 denominator / Appell F1       = PASS DIRECT
-small derivative Appell family               = PASS CONDITIONAL
-single cubic/quartic sqrt / Carlson RF/RD/RJ = PASS CONDITIONAL
-full Pi+H1+H10 source tower / Appell          = FAIL GENERIC
-full Pi+H1+H10 source tower / Carlson         = FAIL GENERIC
-large PF/Gauss-Manin/ODE connection           = FAIL PRODUCTION
-```
-
-因此“曲面像马鞍”并不能直接把完整 frozen source oracle 变成一个简单 Appell/Carlson 积分。Appell/Carlson 仍然是有价值的小型 kernel library，但不是 full-source magic wrapper。
-
-R04 正式：
-
-```text
-EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04 = PASS_WITH_NEGATIVE_SPECIAL_FUNCTION_RESULT
-MATERIAL_NATIVE_SPECTRAL_DOMAIN_GOVERNANCE = PASS
-FULL_SOURCE_EXACT_APPELL_CLOSURE = FAIL_GENERIC
-FULL_SOURCE_EXACT_CARLSON_CLOSURE = FAIL_GENERIC
-SWARTZ24_AS_PRODUCTION_SPECTRAL_DOMAIN = REJECT
-ROUTE_SWITCH = NO
-CASE21_PU = NOT_RUN
-SWARTZ24_PU = NOT_RUN
-```
-
----
-
-## 10. Gate A/B/C
+## 7. Gate A/B/C
 
 ```text
 Gate A = exact/engineering-analytic direct structural closure
@@ -309,27 +260,27 @@ Gate C = production analytic complexity
 
 Gate C：zero formal x/y/z quadrature；zero auxiliary quadrature/ODE；no runtime TT/TC/CC state propagation；`P,Rq` and derivatives -> direct finite formulas；large auxiliary systems != production。
 
+Any future production formula must be exposed directly; scripts are reproducibility tools, not theory identities.
+
 ---
 
-## 11. Material/structure status
+## 8. Material/structure production status
 
-Ordinary concrete：Nguyen/Foster = primary source/benchmark；final compact production scalar/current closure OPEN。
+Ordinary concrete：Nguyen/Foster primary source/benchmark；material-native active scalar domain frozen in R05；final compact postpeak scalar/current closure OPEN。
 
-Reinforcement：
+Reinforcement must enter before root solve：
 
 \[
-P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}
+P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}.
 \]
 
-必须在 root solve 前进入。
+UHPC：only `fc=141.1 MPa` user-forced; final strong multiaxial production operator OPEN；its `Lambda_M,UHPC` must come from chosen UHPC source/model, not NC.
 
-UHPC：仅 `fc=141.1 MPa` 用户强制冻结；final strong multiaxial production operator OPEN；其 material-native spectral domain 必须由最终 UHPC source/model 独立定义。
-
-Steel shell/Y：`M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE`。PBL 保持强局部边界/子板分隔身份。
+Steel shell/Y：`M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE`。PBL retains strong local-boundary/subpanel-segmentation identity.
 
 ---
 
-## 12. Case21 / Swartz24 production status
+## 9. Case21 / Swartz24 status
 
 ```text
 Case21 = analytic benchmark; no new final RC Pu frozen
@@ -338,40 +289,36 @@ G31 476.936 kN = uncracked chain validation only
 Swartz24 production Pu = PAUSED
 ```
 
-结构 Pu 不得反标材料、material-native domain、平滑量、compiler order 或 root selection。
+No structural Pu may tune material domain, postpeak law, compactification order or root selection.
 
 ---
 
-## 13. 当前唯一下一理论任务
+## 10. 当前唯一下一理论任务
 
 ```text
-CURRENT_RECOMMENDED_NEXT_TASK = MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05
+CURRENT_RECOMMENDED_NEXT_TASK
+= NC_POSTPEAK_SCALAR_CLOSURE_AND_SOFTSIGN_D15_KERNEL_PRECHECK_R06
 ```
 
-R05 不是新的二维 surface fit，也不是新的空间积分理论。它必须：
+R06 必须先于任何 Pu 计算完成：
 
-1. 先选定/冻结普通混凝土 production target 的 **material-native scalar domain contract**；
-2. 将 NC scalar branches 分成物理必须保留的 landmarks（origin tangent、peak、cracking transition、residual/postpeak behavior）与可允许的 C1/C2 conservative regularization；
-3. 在该 material domain 上建立极少数一维 compact primitive candidates；
-4. 优先要求 finite polynomial/Beta-D15；若使用 rational/algebraic basis，则必须在拟合前证明只产生 small Appell/Carlson/other named kernels；
-5. stress + same-map tangent + shape + source-validity 同时过 Gate B；
-6. 保留 exact rank<=4 / invariant reconstruction；
-7. 结构 reachable spectra 只在材料版本冻结后作 verification；
-8. UHPC 后续沿同一 R05 interface，用自己的 material-native domain 和 scalar source 替换 NC，不改 structural theory。
-
-禁止：再用 Swartz24 spectrum 定义 production material range；blind degree escalation；generic 2D fitting；large PF/ODE rescue；Case21/Swartz Pu calibration。
+1. 在 R05 material-native NC domain 内冻结一个 low-parameter、C1/C2、smooth-conservative compression postpeak scalar closure，保留 peak/residual material landmarks；
+2. 不用 Swartz/Case21 Pu 调参；
+3. 将 `P_n(lambda/sqrt(lambda^2+1))` 直接代入 Case21 invariant/spectral algebra，判定 structural field degree<=4 是否真正能化为 finite D15/Beta 或 small Carlson/Appell/other named kernels；
+4. 如果仍需要 large PF/ODE/master-state system，softsign candidate 立即 FAIL Gate C；
+5. 只有 R06 material + kernel 双门通过后，才允许继续 `A,B` multiaxial compact closure 或恢复 Case21 Pu。
 
 ---
 
-## 14. 恢复读取顺序
+## 11. 恢复读取顺序
 
 1. `current/CURRENT_STATE.md`
-2. `governance/MATERIAL_NATIVE_SPECTRAL_DOMAIN_RULE_20260810.md`
-3. `current/theory/NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_20260810.md`
-4. `current/theory/NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_results.json`
-5. `history/NZ_SCCM/R04_MATERIAL_DOMAIN_AND_NAMED_KERNEL_REFRAME_20260810.md`
-6. R03 canonical theory/results/evidence
-7. R01/R02 canonical reports
-8. `governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md`
-9. Case21 invariant derivation
-10. explicit NC/rebar source operator + Nguyen Chapter 3 source
+2. `governance/MATERIAL_NATIVE_SCALAR_DOMAIN_CONTRACT_R05_20260810.md`
+3. `current/theory/NZ_SCCM_MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05_20260810.md`
+4. `current/theory/NZ_SCCM_MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05_results.json`
+5. `history/NZ_SCCM/R05_MATERIAL_NATIVE_DOMAIN_AND_COMPACTIFICATION_20260810.md`
+6. R04 canonical theory/results + material-native spectral-domain governance
+7. R03 exact-rank4/saddle/special-function evidence
+8. R01/R02 ridge/regularization reports
+9. `governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md`
+10. Nguyen Chapter 3 / Appendix-B source evidence and Case21 invariant derivation
