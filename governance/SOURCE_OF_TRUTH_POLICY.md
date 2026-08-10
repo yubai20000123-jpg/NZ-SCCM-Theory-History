@@ -6,12 +6,12 @@
 
 1. 原始 PDF / 正式出版物 / 规范原文；
 2. 带明确 provenance 的有效原文摘录（来源文件、SHA、File ID/URL，尽量带页码/行号）；
-3. archive 中由原始 PDF 机械提取的全文 TXT 镜像；
+3. 必要时从 Git 历史定点恢复的机械全文镜像；
 4. evidence note / 公式整理；
 5. 项目理论解释；
 6. stage summary / handoff / model memory。
 
-若摘录/TXT 与 PDF 的符号、图表、版式或上下文冲突，以 PDF 为准。
+若摘录/历史 TXT 与 PDF 的符号、图表、版式或上下文冲突，以 PDF 为准。
 
 ## 2. 项目历史
 
@@ -30,7 +30,7 @@
 - `current/` 决定“现在下一步该用什么”。
 - `evidence/` 决定“这个事实/公式/来源由什么支持”。
 - `history/` 说明“以前做过什么、为什么被保留/替代/否决”。
-- `archive/` 只保存迁移期冗余资产，默认不参与裁决。
+- `archive/` 只保存 pre-clean Git 历史指针，默认不参与裁决。
 
 历史文件中的 `PASS/HOLD/READY` 不自动覆盖 `current/CURRENT_STATE.md`。
 
@@ -53,11 +53,9 @@
 
 ### FULL_TEXT_MIRROR / NORMALIZED_TEXT_COPY
 
-聊天/connector UTF-8 复制可能改变 CRLF、Unicode、末尾换行或转义，因此只能作为检索镜像。现有全文镜像集中在：
+聊天/connector UTF-8 复制可能改变 CRLF、Unicode、末尾换行或转义，因此只能作为检索镜像。迁移期建立的全文镜像已从当前 `main` 删除；若确需恢复，从 `archive/PRE_CLEAN_POINTER.md` 指向的 pre-clean commit 定点读取。
 
-`archive/fulltext_mirrors_20260810/`
-
-正常工作不应优先读取这些文件。
+正常工作不应优先依赖这些旧镜像。
 
 ## 6. 原始信息优先
 
