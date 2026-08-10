@@ -1,0 +1,113 @@
+随着钢纤维体积掺量的增加,峰值应力和轴向峰值                                       mechanical properties and shrinkage of ultra-high
+应变增长趋势不明显。 围压对三轴受压力学性能的                                      performance concrete: influence of steel fiber content
+
+240
+      and shape[ J] . Composites Part B: Engineering, 2019,        [16] PRABHA S L, DATTATREYA J K, NEELAMEGAM
+      174: 107021.                                                      M. Stress strain behaviour of ultra high performance
+[6]   WANG D H, SHI C J, WU Z M, et al. A review on                     concrete under uniaxial compression [ J] . International
+      ultra high performance concrete: part II: hydration,              Journal of Civil Engineering and Technology, 2014, 5
+      microstructure and properties [ J ] . Construction and            (3) : 187-194.
+      Building Materials, 2015, 96: 368-377.                       [17] 陈倩, 徐礼华,吴方红,等. 钢-聚丙烯混杂纤维增强
+[7]   WILLE K, EL-TAWIL S, NAAMAN A E. Properties of                    超高性能混凝土强度试验研究 [ J] . 硅酸盐通报,
+      strain hardening ultra high performance fiber reinforced          2020, 39(3) : 740-748. ( CHEN Qian, XU Lihua, WU
+      concrete ( UHP-FRC) under direct tensile loading[ J] .            Fanghong, et al. Experimental investigation on strength
+      Cement and Concrete Composites, 2014, 48 ( 2 ) : 53-              of steel-polypropylene hybrid fiber reinforced ultra high
+      66.                                                               performance concrete [ J ] . Bulletin of the Chinese
+[8]   YOO D Y, KIM S, KIM J J, et al. An experimental                   Ceramic Society,2020,39(3) :740-748. ( in Chinese) )
+      study on pullout and tensile behavior of ultra-high-         [18] 张文华, 张仔祥,刘鹏宇,等. 多尺度纤维增强超高
+      performance concrete reinforced with various steel fibers         性能混凝土的轴心抗拉和抗压行为[ J] . 硅酸盐学
+      [J] . Construction and Building Materials, 2019, 206:             报, 2020, 48 ( 8 ) : 1155-1167. ( ZHANG Wenhua,
+      46-61.                                                            ZHANG Zixiang, LIU Pengyu, et al. Uniaxial tensile
+[9]   ZHOU Z D, QIAO P Z. Tensile behavior of ultra-high                and compressive stress-strain behavior of multi-scale
+      performance     concrete:     analytical    model     and         fiber-reinforced ultra-high performance concrete [ J ] .
+      experimental validation[ J] . Construction and Building           Journal of the Chinese Ceramic Society, 2020, 48(8) :
+      Materials, 2019, 201: 842-851.                                    1155-1167. ( in Chinese) )
+[10] 胡翱翔, 梁兴文,于婧,等. 超高性能混凝土轴心受                                     [19] 焦楚杰, 孙伟,周云. 钢纤维混凝土准静态单轴受压
+      拉力学性能试验研究[ J] . 湖南大学学报( 自然科学                                      力学性能[ J] . 重庆建筑大学学报, 2006, 28 (2) :
+      版) , 2018, 45 ( 9 ) : 30-37. ( HU Aoxiang, LIANG                  56-58. ( JIAO Chujie, SUN Wei, ZHOU Yun. Quasi-
+      Xingwen, YU Jing, et al.          Experimental study of           static mechanical properties of SFRC under uniaxial
+      uniaxial tensile characteristics of ultra-high performance        compression [ J ] .    Journal of Chongqing Jianzhu
+      concrete [ J ] . Journal of Hunan University ( Natural            University, 2006, 28(2) : 56-58. ( in Chinese) )
+      Sciences) , 2018, 45(9) : 30-37. ( in Chinese) )             [20] 管品武, 涂雅筝,张普,等. 超高性能混凝土单轴拉
+[11] 杨简, 陈宝春,沈秀将,等. UHPC 单轴拉伸试验狗                                        压本构关系研究[ J] . 复合材料学报, 2019, 36(5) :
+      骨试件优化设计[ J] . 工程力学, 2018, 35(10) : 37-                            1295-1305. ( GUAN Pinwu, TU Yazheng, ZHANG Pu,
+      46. ( YANG Jian, CHEN Baochun, SHEN Xiujiang,                     et al. A review on constitutive relationship of ultra-high-
+      et al. The optimized design of dog-bones for tensile test         performance concrete under uniaxial compression and
+      of ultra-high performance concrete [ J ] . Engineering            tension[ J] . Acta Materiae Compositae Sinica, 2019,
+      Mechanics, 2018, 35(10) : 37-46. ( in Chinese) )                  36(5) : 1295-1305. ( in Chinese) )
+[12] 张哲, 邵旭东,李文光,等. 超高性能混凝土轴拉性                                     [21] 郭晓宇, 亢景付,朱劲松. 超高性能混凝土单轴受压
+      能试验[ J] . 中国公路学报, 2015, 28 (8) : 50-58.                           本构关系[ J] . 东南大学学报( 自然科学版) , 2017,
+      ( ZHANG Zhe, SHAO Xudong, LI Wenguang, et al.                     47(2) : 369-376. ( GUO Xiaoyu, KANG Jingfu, ZHU
+      Axial tensile behavior test of ultra high performance             Jinsong.    Constitutive     relationship   of   ultrahigh
+      concrete[ J] . China Journal of Highway and Transport,            performance concrete under uni-axial compression[ J] .
+      2015, 28(8) : 50-58. ( in Chinese) )                              Journal of Southeast University ( Natural Science
+[13] AL-TIKRITE A, HADI M N S. Mechanical properties                    Edition) , 2017, 47(2) : 369-376. ( in Chinese) )
+      of reactive powder concrete containing industrial and        [22 ] SOVJÁK R, VOGEL F, BECKMANN B. Triaxial
+      waste steel fibres at different ratios under compression          compressive strength of ultra high performance concrete
+      [J] . Construction and Building Materials, 2017, 154:             [ J] . Acta Polytechnica, 2013, 53(6) : 901-905.
+      1024-1034.                                                   [23] VOGEL F, SOVJÁK R, JOGL M. Experimental tests of
+[14] GRAYBEAL B A. Compressive behavior of ultra-high-                  the UHPC in triaxial compression [ J ] .          Applied
+      performance    fiber-reinforced   concrete [ J ] .   ACI          Mechanics and Materials, 2013, 486: 78-83.
+      Materials Journal, 2007, 104(2) : 146-152.                   [24] WANG Y Z, WANG Y B, ZHAO Y Z, et al.
+[15] PRABHA S L, DATTATREYA J K, NEELAMEGAM                             Experimental study on ultra-high performance concrete
+      M, et al. Study on stress-strain properties of reactive           under triaxial compression [ J ] .      Construction and
+      powder concrete under uniaxial compression [ J ] .                Building Materials, 2020, 263: 120225.
+      International Journal of Engineering Science and             [25] REN G M, WU H, FANG Q, et al.                      Triaxial
+      Technology, 2010, 2(11) : 6408-6416.                              compressive behavior of UHPCC and applications in the
+
+                                                                                                                            241
+       projectile impact analyses [ J ] .        Construction and      [35] 仵鹏涛. 三向应力状态下超高性能混凝土材料静态
+       Building Materials, 2016, 113: 1-14.                                 力学性能研究[ D] . 天津:天津大学, 2019: 83-88.
+[26] 周俊, 韦建刚,吴庆雄,等. 等围压约束下超高性能                                              ( WU Pengtao. Study of static mechanical properties of
+       混凝土本构模型[ J] . 福州大学学报( 自然科学版) ,                                       ultra-high performance concrete under triaxial stress
+       2020, 48 (4) : 505-510. ( ZHOU Jun, WEI Jiangang,                    states[ D] . Tianjin: Tianjin University, 2019: 83-88.
+       WU Qingxiong, et al. Ultra-high performance concrete                 ( in Chinese)
+       constitutive   relationship    under     confining   pressure   [36] 周俊, 韦建刚,艳杨,等. UHPC 三轴受压力学性能
+       constraint[ J] . Journal of Fuzhou University ( Natural              研究 [ J ] . 工 程 力 学, 2022. DOI: 10. 6052 / j. issn.
+       Science Edition ) , 2020, 48 ( 4 ) : 505-510. ( in                   1000-4750. 2022. 03. 0259. ( ZHOU Jun, WEI
+       Chinese) )                                                           Jiangang, YANG Yan, et al. Research on mechanical
+[27] YOO D Y, KIM M J. High energy absorbent ultra-high-                    properties of ultra-high performance concrete under
+       performance concrete with hybrid steel and polyethylene              triaxial compression [ J ] .   Engineering Mechanics,
+       fibers[ J] . Construction and Building Materials, 2019,              2022. DOI:10. 6052 / j. issn. 1000-4750. 2022. 03. 0259.
+       209: 354-363.                                                        ( in Chinese) )
+[28] 池寅, 尹从儒,徐礼华,等. 钢-聚丙烯混杂纤维增强                                        [37] ASTM C469 / C469M. Standard test method for static
+       超高性能混凝土单轴循环受压力学性能[ J] . 硅酸                                           modulus of elasticity and Poisson’ s ratio of concrete in
+       盐学报, 2021, 49 (11) : 2331-2345. ( CHI Yin, YIN                       compression[ S] . Pennsylvania: American Society for
+       Congru, XU Lihua, et al. Compressive mechanical                      Testing and Materials, 2014.
+       properties of steel-polypropylene hybrid fiber reinforced       [38] 余自若, 秦鑫,安明喆. 活性粉末混凝土的常规三轴
+       ultrahigh-performance         concrete      under      cyclic        压缩性能试验研究 [ J] . 中国铁道科学, 2012, 33
+       compression [ J ] . Journal of the Chinese Ceramic                   (2 ) : 38- 42. ( YU Ziruo, QIN Xin, AN Mingzhe.
+       Society, 2021, 49(11) : 2331-2345. ( in Chinese) )                   Experimental research on the conventional triaxial
+[29] WANG S N, XU L H, YIN C R, et al. Experimental                         compressive properties of reactive powder concrete[ J] .
+       investigation on the damage behavior of ultra-high                   China Railway Science, 2012, 33 ( 2 ) : 38- 42. ( in
+       performance concrete subjected to cyclic compression                 Chinese) )
+       [ J] . Composite Structures, 2021, 267: 113855.                 [39] 宋玉普, 赵国藩,彭放,等. 三向应力状态下钢纤维
+[30] 颜燕祥, 徐礼华,蔡恒,等. 高强方钢管超高性能混                                              混凝土的强度特性及破坏准则[ J] . 土木工程学报,
+       凝土短柱轴压承载力计算方法研究[ J] . 建筑结构                                           1994, 27 (3) : 14-23. ( SONG Yupu, ZHAO Guofan,
+       学报, 2019, 40(12) : 128-137. ( YAN Yanxiang, XU                       PENG Fang, et al. Strength behavior and failure
+       Lihua, CAI Heng, et al. Calculation methods of axial                 criterion of steel fibre concrete under triaxial stresses
+       bearing capacity of short square UHPC filled high                    [ J] . China Civil Engineering Journal, 1994, 27 (3) :
+       strength steel tubular columns[ J] . Journal of Building             14-23. ( in Chinese) )
+       Structures, 2019, 40(12) : 128-137. ( in Chinese) )             [40] WILLIAM K J, WARNKE E P. Constitutive model for
+[31] 纤维混凝土结构技术规程: CECS 38:2004 [ S] . 北                                     the triaxial behaviour of concrete [ C ] ∥ Seminar on
+       京:中国 计 划 出 版 社, 2005. ( Technical specification                      Concrete Structures Subjected to Triaxial Stresses.
+       for fiber reinforced concrete structures: CECS 38:2004               Bergamo, Italy: International Association for Bridge and
+       [ S] . Beijing:China Planning Press,2005. (in Chinese))              Structural Engineering, 1974: 1-30.
+[32] FENG G Y, WANG X Y, ZHANG D T, et al. A                           [41] CHI Y, XU L H, YU H S. Plasticity model for hybrid
+       comparative study on mechanical properties of surface                fiber-reinforced concrete under true triaxial compression
+       modified polypropylene ( PP) fabric reinforced concrete              [ J ] . Journal of Engineering Mechanics, 2014, 140
+       composites[ J] . Construction and Building Materials,                (2) : 393-405.
+       2017, 157: 372-381.                                             [42] CURBACH M, SPECK K. Zweiaxiale druckfestigkeit
+[33] WU Z M, SHI C J, HE W, et al. Effects of steel fiber                   von    ultrahochfestem    beton    [ J ].     Beton-Und
+       content and shape on mechanical properties of ultra high             Stahlbetonbau, 2007, 102(10) : 664-673.
+       performance concrete [ J ] . Construction and Building          [43] CURBACH M, SPECK K.               UHPC concrete under
+       Materials, 2016, 103: 8-14.                                          biaxial compression [ C ] ∥ Ultra High Performance
+[34] XU S C, WU P T, WU C Q. Calibration of KCC                             Concrete ( UHPC ) : Proceedings of the Second
+       concrete model for UHPC against low-velocity impact                  International Symposium on Ultra High Performance
+       [ J ] . International Journal of Impact Engineering,                 Concrete. Kassel, Germany: Kassel University Press
+       2020, 144: 103648.                                                   GmbH, 2008: 477-484.
+
+
+
+ 242
+
