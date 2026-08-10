@@ -1,0 +1,297 @@
+                                    12 (l-~)
+
+Using the results of tests on 24 panels, Swartz et al. (1974) proposed a formula for
+
+the buckling stress as follows:
+
+
+                        fer =0.425f'c e(-B+~4+B2 )                              (3.12)
+
+
+
+where                   B-          7t 2
+                          - 6£0 (1.0- p)
+                                                ( 1.0 + 12
+                                                  I
+                                                             j(..!. j
+                                                                b
+                                                                                (3.13)
+
+
+                        I = a/b     if a/b < 1.0
+
+                         I= 1.0      if a/b ~ 1.0
+
+                        a and b are the length and width of the plate, respectively.
+
+
+
+The Swartz and Rosebraugh method is limited to perfectly straight, simply
+
+supported plates under uniform in-plane compression with no loading eccentricities.
+
+Possib1e cracking of concrete was not considered, and the stress-strain relationship
+
+of concrete was that for uniaxial loading. It was shown, however, that a sJenderness
+
+ratio above 30 could be used under the conditions specified.
+
+
+
+Sabeb and Desayi (1990) carried out research on reinforced concrete wall panels on
+
+both one-way bending panels and two-way bending panels. Two formulae were
+
+                                                                                       74
+proposed for predicting the ultimate load capacity of reinforced concrete wall
+
+panels, which are simply supported along four edges and subjected to uniform, in-
+
+plane vertical loads.      Twenty-four reinforced concrete panels were tested to
+
+investigate the influence of the slenderness ratio H/t (H is the height of the wall, t is
+
+the wall thickness), the aspect ratio H/b (b is the wall width), and the thinness ratio
+
+bit, and the vertical and horiz.ontal steel on the ultimate load capacity of the two-
+
+way panels.
+
+
+
+For the panels under two way bending at buckling, the tested panels were hinged on
+
+all sides to simulate simple supports. 1be vertical load was applied with a constant
+
+eccentricity of t/6, and two layers of reinforcement were used. The height of the
+
+tested walls varied from 0.45m to 1.35m, while the width varied from 0.3m to 0.9m.
+
+The panel thickness was 50.0mm, and the cube compressive strength of the concrete
+
+was between 20.17 and 25.17MPa.
+
+The following is a summary of their conclusions and recommendations:
+
+    •   The crack patterns under load of the panels cJearly showed that two-way
+
+        behaviour had occurred.
+
+    •   The capacity of the two-way bending wall panels reduced when the
+
+        slenderness ratio was increased.
+
+    •   The ultimate strength of the two-way bending wall panels showed a linear
+
+        increase with increase in the aspect ratio.
+
+    •   An increase in the vertical steel reinforcement ratio caused a linear increase
+
+        in the strength of the wall, while the effect of the horiz.ontal steel ratio was
+
+        not significant.
+
+
+                                                                                      15
+         shrinkage and temperature effects.
+
+
+
+Attard ( 1994) suggested a formula for the buckling load of a rectangular simply-
+
+supported concrete walls under uniform-compression due to in-plane loading. The
+
+panel was assumed to be perfectly straight, with no eccentricities of loading. The
+
+concrete was assumed to be fully in compression, so that the stress-strain
+
+relationship of concrete could be taken as the uniaxial compression stress-strain
+
+relationship. The contribution.of reinforcement was ignored. The buckling load Nc:r
+
+was determined through the slenderness ratio bit (b is the panel width and t is the
+
+panel thickness), see Figure 3.1.
+
+
+
+In the Attard derivation, the tangent modulus theory was used and, as for the
+
+Swartz et al. (1974) method, the bending equation for orthottopic plates was solved
+
+for the buckling of plates. However, the modulus in the unstressed direction (the y-
+
+direction) was treated differently to that of Swartz et al. (1974). In the work of
+
+Attard ( 1994), the tangent modulus Eyt was taken as 0.4Ec because it was assumed
+
+that the section was cracked in this direction while Swartz et al. (1974) took Ey to
+
+be equal to Ee. In addition, the buckling load obtained by Attard (1994)'s method
+
+is for concrete strengths between 20 to 120MPa. Out-of-plane initial imperfections
+
+of plates was also considered by Attard (1994) and the secondary moments were
+
+also estimated. The results of Attard ( 1994) showed good agreement with the test
+
+data of Swartz at al. (1974) (see Figure 3.1), and the equation is easy to apply to the
+
+design of simply supported walls. However, because the loading eccentricity is
+
+
+
+
+                                                                                    77
+Two equations were developed to predict the nltiroate strength of walls supported
+
+along four edges. The first equation is purely empirical and was derived from a
+
+regression analysis of the experiment data. The ultimate strength of the w~ Pu, is
+
+given by:
+
+
+                                                                              (3.14)
+
+
+This equation is valid when 0.5 < H/b < 2.0, bit < 60 , and e < t/6 •
+
+
+
+The second equation is semi-empirical and was developed by using a modification of
+
+the buckling strength of thin rectangular metal plates suggested by Timoshenko and
+
+Gere (1961). The equation was:
+
+
+                                                                              (3.15)
+
+
+                                                     b
+where                                            for -S60                     (3.16)
+                                                     t
+
+Because the derivation of the two equations was based on the test results, the
+
+following limitations were given when applying these equations (Saheb and Desayi
+
+1990):
+
+- The load is uniform compression,
+
+- The eccentricity is not greater than t/6,
+
+- The aspect ratio H/b is between 0.5 and 2.0,
+
+- The maximum limit of the slenderness ratio is 60, and
+
+- A minimum amount of steel has to be provided in both directions to resist
+
+
+
+                                                                                  76
+     asswned to be O.OSt rather than t/6, the results do not match the tests of Saheb and
+
+     Desayi. ( 1990).
+
+
+
+
+      1 -+.-: -----: -+--, ,----, ---~- -.,.-- -r--~ :----,
+    a.9   I · •!
+               t+
+    a.a +---+- ~__;_. .;...,.-~ ~~ft'll ll!r+-- ......,:. .---+-- --r---,
+               +
+    0.7 +---+ ---+. ---+~ ~~~~ "+--- -,---~ -;---- --1
+!   0.6 +---+ --__; ,...+- i----+ --~~E i--~~ -~~-r ---1
+u
+:. 0.5 +---- -if--- -+--- -+--- ~~~- __,;~ ---1- ----1
+-.. ~--+ --~- --4- -4-- ~~~ ~+- -~~ --;
+~   0.4
+    0.3 ~--,! ..---i ----'" ----1 ---..- ~~~.....~+----- --,
+
+    0.2 +---+--+---+--.J---+---,f--=:...;;;:::::=-Fii!::::::::~
+    0.1 ~--.l .---i- ---+- ----1 ---..- --+-- -+--- ----,
+     o~--. 1.--- -4--- +---- -1--- ..---+ ---t-- ----1
+          0      10          20   30        40       so       60        70      80
+
+                                          b /tw
+
+
+          -o- f'e = 20 MPa                       ~ re = 50 MPa
+
+          ~ r e =80MPa                        -A-re=- lOOMPa
+           x Swartz et al (1974) re: 17-27 MPa + Saheb & Oesav (1990)
+
+
+
+
+              Figure 3.1 Buckling Load for a Simply Supported Concrete Wall
+
+                                       (Attard 1994)
+
+
+
+
+                                                                                      78
+3.4 CONSTITUTIVE RELATIONSIIlP FOR CONCRETE
+
+
+As stated in Chapter 2, in order to fully establish the buckling formu1ation for walls
+
+(equation 2.108), the elements of the tangential matrix Dr (equation 2.88), which
+
+expresses the relationship between the first variation of stresses and the first
+
+variation of strains under the out-of-plane perturbation of displacements, must be
+
+known, as well as the initial stress fie]d Sij. In this study, the stability analysis of
+
+concrete and reinforced concrete walls is considered under any biaxial Joading,
+
+which includes compression, in-plane eccentric Joading and shears. Therefore, the
+
+stress-strain relationship depends on the Joading state of concrete, including
+
+undamaged, crack or crushed.
+
+
+
+The following assumptions will be made regarding the buckling of reinforced
+
+concrete walls:
+
+       •   The wall is perfectly straight before buckling and there is no out-of-plane
+
+           eccentricity of in-plane Joading.    This means that before buckling or
+
+           before any small out-of-plane perturbations there is only the in-plane
+
+           stress field in the wall; and only
+
+       •   Bifurcation type buckling is considered;
+
+
+
+From the above assumptions it may be seen that the initial stress fie]d as well as the
+
+tangential matrix Dr can be determined by an in-plane analysis.
+
+
+
+
+                                                                                     79
+In this section, the stress-strain relationship of concrete under different states before
+
+buckling will be described. These states of concrete are the undamaged state, the
+
+cracked in tension-compression, the cracked in tension-tension, and the crushed in
+
+compression-compression.
+
+
+
+Failure Envelope
+
