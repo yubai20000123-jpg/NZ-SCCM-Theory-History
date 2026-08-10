@@ -1,200 +1,221 @@
 # CURRENT STATE — NZ-SCCM
 
 **Updated:** 2026-08-10  
-**Purpose:** 唯一的当前工作入口。历史文件、旧 PASS、旧路线名称不得覆盖本文件的当前身份。
+**Purpose:** 唯一当前工作入口。历史 PASS、旧路线和迁移期文件不得覆盖本文件。
 
-## 1. 当前优先级
+## 1. 当前主线
 
-当前主线已经进一步明确为两级：
+当前工作分成两个层级：
 
-1. Case21 旧 benchmark 只做短收口，不再继续投入大量研究资源追求 theorem-level tight remainder certificate；
-2. 新的正式理论主线转入“保留结构目标 P/Rq/L，重建材料 operator → 有限解析材料矩 → 结构目标函数”的体系。
+1. 旧 Case21 Nguyen/Foster benchmark 只做短收口，不再继续扩展 theorem-level strict remainder 工具链；
+2. 新正式主线是：
 
-新的不可退让积分边界是：正式结果必须来自**一个连续完整代表半波上的解析积分 / 精确矩闭合**，不是 element integration，也不是把 Gauss/cells/collocation/material points 换名字重新引入。
+```text
+finite analytic kinematics
+-> finite strain invariants
+-> strong nonlinear material law
+-> exact analytic material/structural contraction
+-> P, Rq, analytic tangent, L
+```
 
-新主线设计文件：
+结构目标继续保留：
 
-`current/theory/NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md`
+```text
+P(D,q)
+Rq(D,q)=0
+L(D,q)=P_,D Rq_,q-P_,q Rq_,D=0
+```
 
-治理依据仍包括：`governance/PRIORITY_RESET_20260810.md`。
+不因旧 integrand 难积分而改变结构力学问题。
 
-## 2. 正式空间身份
+## 2. 不可退让的积分身份
 
 ```text
 DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
-FORMAL_INTEGRATION = ANALYTIC_EXACT_MOMENTS
+FORMAL_INTEGRATION = ANALYTIC_EXACT
 ELEMENT_INTEGRATION = PROHIBITED
+MATERIAL_POINT_GRID = PROHIBITED
 ```
 
-空间 cells、Gauss/Simpson、自适应积分、Chebyshev collocation、材料点网格只能做独立数值审计，不能作为正式理论 operator。
+允许引入辅助积分变量或更高维 representation，但 production formula 必须把辅助变量解析消元，或最终只保留有限、明确、可解析求导的 closed special functions。对辅助变量做 numerical quadrature 仍然不具有正式理论身份。
 
-## 3. 结构目标函数与解析矩当前身份
+## 3. Case21 不变量/精确矩层已经闭合
 
-不因旧 integrand 难积分而改变结构力学问题本身。Case21 继续保留：
+当前推导：
 
-- 轴向承载力 `P(D,q)`；
-- 幅值方向平衡 `Rq(D,q)=0`；
-- 极限点条件
+- `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
+- `current/theory/nz_sccm_case21_invariant_exact_moments_v1.py`
 
-`L(D,q)=P_,D Rq_,q - P_,q Rq_,D = 0`。
-
-重建的是中间链：
+对冻结 Nguyen 二阶运动学，令
 
 ```text
-finite analytic kinematics
--> finite invariants
--> compact nonlinear material law
--> finite analytic material moments
--> P, Rq, derivatives/tangent, L
+u = sin X
+v = sin Y
+z = zeta
+M = Cm(q)
+B = Cb(q)
 ```
 
-当前 V1 首选二维各向同性同轴表示骨架：
+则：
 
-`sigma_hat = A(I1,I2) I + B(I1,I2) X`
-
-但这里的 `A/B` 只是 tensor representation，不代表“低阶自由二维多项式”已经足够描述混凝土。
-
-### 3.1 Case21 不变量精确展开已完成
-
-当前推导文件：
-
-`current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
-
-透明符号核验代码：
-
-`current/theory/nz_sccm_case21_invariant_exact_moments_v1.py`
-
-对冻结 Nguyen 二阶运动学，令 `u=sin X, v=sin Y, z=zeta, M=Cm(q), B=Cb(q)`，则两个归一化应变不变量可严格写成有限 `u,v,z` 多项式。尤其：
-
+- `I1=tr(X)` 是有限 `u,v,z` 多项式；
 - `I2=det(X)` 中全部 `M^2` 项严格抵消；
-- 利用 `cos^2=1-sin^2` 后，`I1,I2` 均不再显式含 `cos X,cos Y`；
-- `P/Rq` 所需积分可以进一步缩成 `sin^a X sin^b Y zeta^h` 的有限解析矩。
+- `I1,I2` 均可消去显式 `cos X, cos Y`；
+- polynomial material law 时，P/Rq 可归结为 `sin^a X sin^b Y zeta^h` 的有限 Beta/Gamma/有理精确矩。
 
-当前四族核心 exact moments 为：
+四族基本结构矩仍为：
 
 ```text
 J_P^A(m,n) = Mcal[I1^m I2^n]
 J_P^B(m,n) = Mcal[I1^m I2^n Xyy]
 J_q^A(m,n) = Mcal[I1^m I2^n I1,q]
-J_q^B(m,n) = Mcal[I1^m I2^n (I1 I1,q - I2,q)]
+J_q^B(m,n) = Mcal[I1^m I2^n (I1 I1,q-I2,q)]
 ```
 
-其中 `Mcal` 是完整半波上的解析积分泛函，不是数值 quadrature。
+其中 `Mcal` 是完整连续半波上的解析积分泛函，不是 quadrature。
 
-## 4. 混凝土强非线性是当前硬门禁，不允许后置
+## 4. 混凝土强非线性是硬门禁
 
-用户已明确修正：由于目标是极限承载力，混凝土强非线性不能在“数学流程做通”以后再补。
-
-因此新增：
-
-`current/theory/NZ_SCCM_CONCRETE_NONLINEARITY_GATE_V1_20260810.md`
-
-以及 diagnostic-only 可复现实验：
-
-`current/theory/nz_sccm_frozen_nc_invariant_surface_screen_r01.py`
-
-正式身份：
-
-```text
-LOW_ORDER_GENERIC_MATERIAL = ALGEBRA_UNIT_TEST_ONLY
-LOW_ORDER_GENERIC_MATERIAL != ARCHITECTURE_FEASIBILITY_PROOF
-```
-
-新材料 operator 至少必须在材料级证据上覆盖：初始刚度、压缩非线上升、峰值、峰后下降、拉伸开裂后响应、CC 增强、TC coupling，以及与同一 law 一致的 tangent。
-
-已经用 frozen NC current operator 做了一个纯材料空间 stress-test：在归一化主应变 `[-2,0.6]^2` 上，naive total-degree invariant A/B surface 到 degree 10–12 仍有明显误差且条件数快速恶化。因此**低/中阶自由 A/B surface 已被否定为新架构可行性的充分证明**。这不是对所有 finite analytic concrete laws 的否定；下一步应比较 structured matrix polynomial 与 shape-constrained global invariant polynomial/Bernstein 等强非线性解析骨架。
-
-任何最终候选仍必须同时通过：
+当前材料架构必须同时通过：
 
 ```text
 Gate A = exact analytic integration
 Gate B = concrete nonlinear adequacy
 ```
 
-失败时只能重构材料解析表示或有限全局 internal-variable architecture，不能退回 element/material-point integration。
+低阶 generic material 只能做 algebra unit test，不能证明极限承载力材料架构可行。
 
-## 5. 当前 NC + reinforcement benchmark
+材料级至少应覆盖：初始刚度、压缩非线上升、峰值、峰后、拉伸峰值及软化/硬化、CC 增强、TC coupling，以及同一 law 的解析 tangent；若材料证据最终要求 history，必须采用有限全局 internal-variable representation，不能回到材料点状态机。
 
-旧 benchmark 仍保留用于回归/比较：
+门禁文件：
+
+`current/theory/NZ_SCCM_CONCRETE_NONLINEARITY_GATE_V1_20260810.md`
+
+## 5. M1 simple structured matrix polynomial 已首轮 FAIL-screen
+
+新增：
+
+- `current/theory/NZ_SCCM_M1_STRUCTURED_MATRIX_POLYNOMIAL_SCREEN_R01_20260810.md`
+- `current/theory/nz_sccm_m1_structured_matrix_polynomial_screen_r01.py`
+
+测试形式：
+
+`s_i = p(e_i) + A_c(mu,r^2) + B_c(mu,r^2)e_i`
+
+其中 `p(e)` 用高阶单变量 polynomial 表达强 tension/compression 主形状，`A_c/B_c` 表达多轴 interaction。
+
+在 frozen NC material oracle 的宽材料域 `[-2,0.6]^2` 上，单变量主曲线不能显著降低 TC interaction 所需二维复杂度。`p-degree=12`、interaction degree 从 4 提到 12 时，95% `sigma/fc` 绝对误差约从 0.245 降到 0.109，但 independent coefficients 从 38 增到 182，condition number 从约 `1.2e3` 恶化到 `1.8e8`；TC ratio path 仍明显最差。
+
+正式身份：
+
+```text
+M1_R01_SIMPLE_ADDITIVE_STRUCTURED_POLYNOMIAL = FAIL_SCREEN
+```
+
+这不等于所有 structured analytic law 失败；它否定的是“强一维曲线 + 很弱低阶二维修正”这一简单架构。
+
+## 6. 新数学突破：s=I1 不变量坐标精确变换
+
+新增：
+
+- `current/theory/NZ_SCCM_INVARIANT_COORDINATE_LIFT_EXACT_REDUCTION_R01_20260810.md`
+- `current/theory/nz_sccm_invariant_coordinate_lift_r01.py`
+
+Case21 有特殊结构：
+
+```text
+I1 = a(u,v;D,q) + 2 B u v z
+```
+
+所以 I1 对厚度坐标 z 严格 affine。可精确换元：
+
+```text
+s = I1
+z = (s-a)/(2Buv)
+ds = 2Buv dz
+s± = a ± 2Buv
+```
+
+代入后 `I2(s;u,v)` 对 s 仅为二次多项式。该恒等式已经用 SymPy exact check。
+
+因此，对 rational invariant material law
+
+```text
+A(I1,I2)=P_A/Q_A
+B(I1,I2)=P_B/Q_B
+```
+
+固定 `(u,v)` 后，P/Rq 的“材料方向” integrand 成为 s 的有限 rational function，可用 partial fractions/Hermite reduction 精确积分；不需要在材料强非线性上先做高阶全局 polynomial surrogate。
+
+这一步只消去一维，尚未证明剩余 `(u,v)` 二维积分全部闭合。
+
+## 7. 高维/辅助变量路线的当前身份
+
+用户提出通过 4D/更高维 representation 简化原三重积分。该方向正式纳入当前数学路线，但原则是：
+
+```text
+higher dimension is useful only if it lowers algebraic complexity
+and the added variables can be analytically eliminated.
+```
+
+当前比较：
+
+- Laplace/Gamma lift：可消除分母，但通常产生 `exp(-t Q(u,v,z))`，不自动进入有限 moment algebra；仅升维不足以 PASS；
+- auxiliary-field / algebraic-delta lift：只有 level-set/fiber geometry 变简单时才有价值；
+- coarea/pushforward：可把 `F(I1,I2)` 与 kinematic density 分离，是值得保留的后续路线；
+- Case21 `s=I1` exact coordinate transform：目前比一般 4D/5D lift 更直接，已得到实质性解析降维。
+
+正式禁止：
+
+```text
+3D hard integral -> add auxiliary t -> numerical quadrature in t
+```
+
+## 8. 当前最高优先级材料候选
+
+M1-R01 simple polynomial 不再继续堆阶。新的优先候选为：
+
+```text
+M1R = source-shaped rational/algebraic material primitives
+      + invariant/tensor basis
+      + s=I1 exact inner elimination
+```
+
+原因：Saenz 型压缩本身已经证明强非线性可以由低阶 rational primitive 表达；若 tension、CC/TC/TT interaction 也能构造为材料来源约束的低参数 rational/algebraic law，则有机会同时满足强非线性与解析积分，而不需要几百个二维自由 polynomial coefficients。
+
+下一执行任务：选取一个材料级、非结构反标的 rational/invariant prototype，分别对 P 与 Rq 完成 `s=I1` exact inner integration，再检查剩余 `(u,v)` integrals 是 Class A（elementary/Beta/Gamma/log/atan）还是有限 Class B（elliptic/Appell/hypergeometric/GKZ）。
+
+## 9. 旧 NC + reinforcement benchmark
+
+仍保留用于 regression/reference：
 
 - `current/theory/NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`
 - `current/theory/nz_sccm_current_operator_explicit_v1.py`
 
-材料链：
+它是 benchmark，不再是永久 final material law。钢筋仍必须在 root solve 前进入 P 与 Rq；禁止 `Pu=Pu,concrete+As fy`。
 
-```text
-engineering strain
-→ equivalent-uniaxial tensor
-→ principal coordinates
-→ Saenz compression + algebraic Foster tension
-→ biaxial interaction
-→ spectral return
-→ sigma = M_NC(epsilon)
-```
+## 10. UHPC / shell 当前边界
 
-这是 benchmark/reference operator，不再作为永久最终普通混凝土理论。正式 benchmark tension branch 为 algebraic Foster，不是历史 tanh/sigmoid 变体。
+UHPC 不能只替换 NC 的 `fc`；仅 `fc=141.1 MPa` 为用户强制冻结值。UHPC 与 NC 可共享 invariant/tensor-basis + exact analytic architecture，但 scalar laws、内部变量和参数必须使用各自材料证据。
 
-## 6. Case21 benchmark 当前生产入口
+最终 production shell operator 仍未冻结：
 
-读取：
+`M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE`。
 
-- `current/case21/NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md`
-- `current/case21/NEXTSTEP_EXECUTION_REPORT.md`
-- `current/case21/results_nextstep.json`
+PBL 继续作为强局部边界/子板分隔，不自动作为独立轴向承载项或显式弹簧能量。
 
-结构未知量为 `D` 与 `q=A/b`。Nguyen 二阶连续半波运动学；钢筋必须在求根前同时进入 `P` 与 `Rq`：
+## 11. 后续恢复读取
 
-```text
-P = Pc + Ps
-Rq = Rq,c + Rq,s
-Rq(D,q)=0
-L(D,q)=P_,D Rq_,q - P_,q Rq_,D = 0
-```
-
-禁止使用 `Pu = Pu,concrete + As fy` 作为正式 RC Pu。
-
-历史高精度数值参考约为 concrete 338.3184 kN、RC 342.3339 kN；实验 failure load 约 368.3128 kN。它们只能做 audit/reference，不得用于选阶、选根、拟合材料或校准模型。
-
-## 7. 旧 Case21 final-attempt 的新身份
-
-旧单域 Nguyen/Foster 路线仍可按 engineering analytic convergence 做一次短收口，但不再继续扩展 strict certificate 数学工具链。其任务是形成稳定 benchmark 身份，而不是阻断新的 target-function/material-moment 理论。
-
-## 8. UHPC 当前身份
-
-UHPC 不允许通过只替换普通混凝土 `fc` 得到。
-
-当前有效材料证据集中在 `evidence/materials/UHPC/`，包括 Hiew direct tension、Liu planar biaxial/path effect、Lee 与 Leutbecher TC、Shen TT、周俊/王淑楠三轴证据，以及历史状态/闭合台账。
-
-当前仍未由文献直接闭合：完整二维应力向量更新、任意加载历史、TCX/history loop、一致 tangent 等。历史 UHPC-C0 仅为 calculable baseline，不是 production multiaxial operator。
-
-用户强制冻结的 UHPC 参数目前只有 `fc = 141.1 MPa`；Ec、epsc0、ft、nu 等可根据正式材料模型和来源重新确定。
-
-新主线要求：UHPC 与 NC 可共享 invariant/tensor-basis + analytic moment architecture，但 UHPC 的 scalar laws、内部变量与参数必须由 UHPC 材料级证据独立确定，而且同样必须同时通过 exact-moment Gate A 和 nonlinear material Gate B。
-
-## 9. steel shell / Y / PBL 当前身份
-
-最终 production shell operator 尚未冻结：
-
-```text
-M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE
-```
-
-有效来源见 `evidence/steel_shell/`。PBL 长期建模边界仍是强局部边界/子板分隔，不自动作为独立轴向承载项，也不自动加入显式弹簧能量；历史来源中的弹簧/有效宽度等表达必须按其 source/historical 身份处理。
-
-## 10. 历史真实性
-
-TURN 0001–0148 是共享对话连续基线；TURN 0148 为中断，不能虚构不存在的 D20 用户可见 final。历史恢复时读 `history/RAW_HISTORY_REGISTRY.md`、`history/recovery/` 和对应 D/G/R/UCFT 路线。
-
-## 11. 后续工作读取原则
-
-默认先读：
+新对话优先读取：
 
 1. 本文件；
-2. `current/theory/NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md`；
-3. `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`；
-4. `current/theory/NZ_SCCM_CONCRETE_NONLINEARITY_GATE_V1_20260810.md`。
+2. `NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md`；
+3. `NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`；
+4. `NZ_SCCM_CONCRETE_NONLINEARITY_GATE_V1_20260810.md`；
+5. `NZ_SCCM_M1_STRUCTURED_MATRIX_POLYNOMIAL_SCREEN_R01_20260810.md`；
+6. `NZ_SCCM_INVARIANT_COORDINATE_LIFT_EXACT_REDUCTION_R01_20260810.md`。
 
-`history/` 只在追溯理由、核查旧路线或来源 provenance 时进入。迁移期全文镜像/旧 checkpoint/R2 snapshot 已从当前 `main` 移除；如极少数情况下确需恢复，使用 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 定点访问 pre-clean Git commit。
+历史只在追溯 provenance/路线裁决时进入 `history/`。
