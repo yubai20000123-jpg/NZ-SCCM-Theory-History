@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 23:38 +08:00  
+**Updated:** 2026-08-10 23:58 +08:00  
 **Purpose:** 唯一当前工作入口。
 
 ## 0. Highest-priority contract
@@ -14,184 +14,274 @@ N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
 ```
 
-Final capacity must come from explicit formulas and explicit derivatives of the same formulas. Numerical root finding of already-explicit finite equations is allowed.
+Final production capacity must come from explicit formulas and explicit derivatives of the same formulas. Numerical root solving of already explicit finite equations is allowed.
 
-Formal production still prohibits spatial Gauss/Simpson/adaptive quadrature, material-point grids, moving TT/TC/CC spatial cells, whole-structure surfaces fitted from spatial numerical integration, panel-load calibration, and finite-difference production derivatives.
+Formal production prohibits spatial Gauss/Simpson/adaptive quadrature, material-point grids, moving spatial TT/TC/CC cells, whole-structure P/R/U surfaces fitted from spatial numerical integration, structural-load calibration of material parameters, and finite-difference production derivatives.
 
 ---
 
-## 1. Critical correction: global energy-potential gate revoked
+## 1. Current material architecture
+
+The active route is NOT a global material-energy-potential fit.
+
+The active route is
+
+\[
+\text{multidimensional/current NC operator}
+\rightarrow
+(\lambda_+,\lambda_-)
+\rightarrow
+\text{1D scalar master law}
+\rightarrow
+\text{same multiaxial interaction/spectral return}.
+\]
+
+Energy is used only to regularize the sharp one-dimensional tensile scalar feature.
+
+The previous global-energy-potential gate remains revoked as the wrong route test.
 
 Canonical correction:
 
 - `governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md`
 
-The recent test
+---
+
+## 2. Latest executed stage: R10
+
+Canonical files:
+
+- `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md`
+- `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_results.json`
+- `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
+- `evidence/NZ_SCCM_R10_ARTIFACT_HASHES_20260810.md`
+
+R10 performs:
 
 ```text
-NC_ENERGY_POTENTIAL_AND_D15_FEASIBILITY_GATE = FAIL__STOP_AT_GATE
+source Foster 1D tensile scalar
+→ C2 material-energy smoothing
+→ SAME U/C/T + CC/TC/TT + spectral current map
+→ same-execution Case21 audit
 ```
 
-is **not a governing blocker**. It tested whether the complete scalar material response could be replaced by one low-order global energy polynomial. That was not the user's intended route.
+No multidimensional interaction refit is performed.
 
-Its numerical results remain historical evidence only.
+---
+
+## 3. Frozen R10 one-dimensional energy smoothing
+
+The current Foster scalar entering the NC operator is
+
+\[
+u_{t,src}(t)=\rho T_{Foster}(t),\qquad t=\Pi_\eta(\lambda).
+\]
+
+The retained interval is
+
+\[
+0\le t\le10x_{cr},
+\qquad
+x_{cr}=0.04998717945397425.
+\]
+
+Source material work:
+
+\[
+\boxed{W_{src}=0.031741235181249904}.
+\]
+
+Source peak:
+
+\[
+\max u_{t,src}=0.09867291206823792.
+\]
+
+R10 replaces only this 1D scalar by two C2 quintic pieces preserving:
+
+- origin stress and tangent;
+- zero origin curvature;
+- a rounded stationary peak at \(t=x_{cr}\);
+- residual \(0.03\) at \(10x_{cr}\);
+- zero first/second derivatives at peak and residual onset;
+- the full retained 1D scalar work exactly.
+
+Energy equality
+
+\[
+\int_0^{10x_{cr}}u_{sm}(t)dt
+=
+\int_0^{10x_{cr}}u_{t,src}(t)dt
+\]
+
+fixes the peak uniquely:
+
+\[
+\boxed{h=0.09799750427197301}.
+\]
+
+Peak reduction is only
+
+\[
+0.6844916017\%.
+\]
+
+No Case21/Swartz capacity is used to determine \(h\).
+
+---
+
+## 4. Multiaxial reinsertion
+
+Only
+
+\[
+T_i\to T_i^{R10}=u_{sm}(t_i)/\rho
+\]
+
+changes.
+
+The same current master remains
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i,
+\]
+
+and the same multiaxial interaction remains
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_--\rho a_tT_+T_-^8,
+\]
+
+\[
+s_-=U_--a_{cc}C_-^2C_++C_-T_+-\rho a_tT_-T_+^8.
+\]
+
+Then the same spectral return generates \(\sigma_x,\sigma_y,\tau_{xy}\).
 
 ```text
-NC_GLOBAL_ENERGY_POTENTIAL_GATE = REVOKED_AS_WRONG_ROUTE_TEST
+MULTIAXIAL_ARCHITECTURE_CHANGED = NO
+FREE_MULTIDIMENSIONAL_FITTING = NO
 ```
 
 ---
 
-## 2. Correct material architecture restored
+## 5. R10 same-execution Case21 audit
 
-The current route is:
+Both the source Foster and energy-smoothed versions are recomputed in the same execution using the same structure and reinforcement evaluator.
 
-\[
-\text{multidimensional/current material relation}
-\rightarrow
-(\lambda_+,\lambda_-)
-\rightarrow
-\text{1D scalar master material functions}
-\rightarrow
-\text{low-parameter multidimensional interaction/spectral return}.
-\]
+Final audit uses one 48×48×28 full-halfwave Gauss evaluator for both D and q reclosure.
 
-For the explicit NC operator this architecture is already visible through
-
-\[
-(\varepsilon_x,\varepsilon_y,\gamma_{xy})
-\to \mathbf X
-\to(\lambda_+,\lambda_-)
-\to(c_\pm,t_\pm)
-\to(C_\pm,T_\pm,U_\pm)
-\to(s_+,s_-)
-\to(\sigma_x,\sigma_y,\tau_{xy}).
-\]
-
-The hard material-approximation problem is therefore localized to one-dimensional scalar functions, especially the narrow cracking/peak boundary layer. It is **not** a reason to rebuild the whole 2D/4D material relation as one global potential.
-
----
-
-## 3. Energy method has a narrow role
-
-Energy is used only to smooth/regularize the sharp one-dimensional scalar feature.
-
-For a selected scalar interval \([\lambda_a,\lambda_b]\), an admissible rule is
-
-\[
-\int_{\lambda_a}^{\lambda_b}u_{smooth}(\lambda)d\lambda
-=\eta_E
-\int_{\lambda_a}^{\lambda_b}u_{source}(\lambda)d\lambda,
-\]
-
-with additional physical anchors such as initial tangent, retained compression peak, monotonicity and derivative continuity.
-
-This does **not** create a new global material potential and does **not** replace the existing multidimensional interaction architecture.
-
-R09B's tensile-work observation remains useful material evidence, but it is only one possible scalar smoothing constraint.
-
----
-
-## 4. Historical evidence supporting this route
-
-### G19 localization
-
-G19 already concluded that the remaining ordinary-concrete difficulty was the **one-dimensional cracking-axis boundary layer**, not the 2D interaction surface. It explicitly prohibited repairing that issue by increasing 2D interaction degree.
-
-### Case21 zero-spatial analytic success
-
-The zero-spatial analytic-series Case21 execution already demonstrated the end-to-end feasibility of
+### Source Foster baseline
 
 ```text
-explicit current material operator
- -> finite analytic scalar/structural series
- -> exact monomial/moment integration
- -> parameter-space root solve
+D_u  = 0.7057271404732661
+q_u  = 0.0021940477872221006
+A_u  = 2.6767383004109626 mm
+Pc   = 316.6306821397406 kN
+Ps   = 25.7033473236443 kN
+Pu   = 342.3340294633849 kN
+R    = 1.4210854715202004e-12 kN mm
 ```
 
-with
+### Energy-smoothed R10 audit
 
 ```text
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
+D_u  = 0.843270404668947
+q_u  = 0.0017832151821667267
+A_u  = 2.1755225222434067 mm
+Pc   = 337.8632691214933 kN
+Ps   = 30.860195005805895 kN
+Pu   = 368.7234641272992 kN
+R    = -1.924968273669947e-08 kN mm
 ```
 
-and the reinforced Case21 central result approximately
+Experiment, used only after material freeze:
 
 \[
-D_u\approx0.70538385,
-\quad q_u\approx0.0021930282,
+P_f=368.312750\ \mathrm{kN}.
 \]
+
+R10 audit error:
 
 \[
-P_c\approx316.6423\ \mathrm{kN},
-\quad P_s\approx25.6909\ \mathrm{kN},
-\quad P_u\approx342.3332\ \mathrm{kN}.
+\boxed{+0.1115123295\%}.
 \]
 
-The unresolved tight remainder certificate did not invalidate the central analytic solution.
+Same-execution material-change consequence:
+
+\[
+\boxed{\Delta P_u=+26.389434664\ \mathrm{kN}}.
+\]
+
+This agreement is not a calibration basis and must not be used to modify the frozen R10 scalar.
 
 ---
 
-## 5. Correct forward chain
+## 6. Formal-production boundary
+
+The R10 Case21 structural evaluator uses spatial Gauss integration **for audit only**.
+
+Therefore:
 
 ```text
-STEP 1  keep the accepted/current multidimensional NC current architecture
-STEP 2  recover its 1D scalar master branch(es)
-STEP 3  locate only the sharp scalar peak/kink interval
-STEP 4  smooth that interval by material-energy equivalence + physical derivative/shape anchors
-STEP 5  reinsert the smoothed scalar function into the same multidimensional interaction/spectral map
-STEP 6  audit the reconstructed 2D/4D material surface and tangent
-STEP 7  substitute Nguyen continuous second-order strain field
-STEP 8  use the proven zero-spatial analytic/D15 contraction to obtain P(D,q), Rq(D,q)
-STEP 9  differentiate the same explicit representation to obtain P_D, P_q, Rq_D, Rq_q
-STEP 10 solve Rq=0 and L=P_D Rq_q-P_q Rq_D=0
-STEP 11 include analytic reinforcement before root solving and report Pu
+R10_1D_ENERGY_SMOOTHING     = PASS
+MULTIAXIAL_REINSERTION      = PASS
+CASE21_SAME_EXECUTION_AUDIT = PASS
+STRUCTURAL_CALIBRATION      = NO
+SWARTZ24                     = NOT_STARTED
+
+FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
 ```
 
-No whole-structure target surface is fitted.
+R10 does NOT promote the 368.723464 kN audit value to formal zero-spatial production yet.
 
 ---
 
-## 6. Current prohibitions specific to this correction
-
-- do not replace the full multidimensional material law by one global energy polynomial;
-- do not increase 2D interaction degree to repair a 1D scalar kink;
-- do not introduce large banks of free material coefficients;
-- do not fit the scalar smoothing to Case21/Swartz Pu;
-- do not use spatial numerical integration to generate production P/R/U coefficients;
-- do not restore runtime spatial material-state partitioning.
-
----
-
-## 7. Current recommended next task
+## 7. Frozen next task
 
 ```text
 CURRENT_RECOMMENDED_NEXT_TASK
-= R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21
+= R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND
 ```
 
-R10 must stop before Swartz24. It must first show:
+R10B is a compiler/integration task only. It must make no material retuning.
 
-1. exact identity of the one-dimensional scalar branch being modified;
-2. exact interval/feature being smoothed;
-3. original vs adopted scalar work;
-4. smoothing formula and all physically meaningful inputs;
-5. stress/derivative/monotonicity audit;
-6. unchanged multidimensional interaction reconstruction;
-7. reconstructed 3D surface + coordinate-plane projections;
-8. zero-spatial analytic/D15 Case21 integration trace;
-9. all explicit equilibrium/limit derivatives;
-10. reinforced Case21 root and comparison only after the material target is frozen.
+Required chain:
+
+```text
+frozen R10 u_sm(t)
+→ existing 1D material compiler
+→ SAME multidimensional current map
+→ Nguyen second-order continuous halfwave
+→ nested-D15 / exact analytic moments
+→ explicit P(D,q), Rq(D,q)
+→ same-expression P_D, P_q, Rq_D, Rq_q
+→ Rq=0 and L=0
+→ reinforced Case21 Pu
+```
+
+R10B must stop before Swartz24.
 
 ---
 
-## 8. Recovery read order
+## 8. Prohibitions after R10
+
+- do not adjust \(h\) because R10 is close to the Case21 experiment;
+- do not alter the R10 smoothing endpoints/energy rule to improve capacity;
+- do not introduce free scalar coefficients;
+- do not refit the multidimensional interaction;
+- do not replace R10B by production Gauss integration;
+- do not fit whole-structure P/R/U from spatial numerical data;
+- do not start Swartz24 until R10B formal zero-spatial closure passes.
+
+---
+
+## 9. Recovery read order
 
 1. `current/CURRENT_STATE.md`
-2. `governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md`
-3. G19 one-dimensional boundary-layer diagnosis
-4. `NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`
-5. `NZ_SCCM_CASE21_EXPLICIT_ALGEBRAIC_ZERO_SPATIAL_SERIES_RESULT.md`
-6. R09A/R09B scalar-smoothing evidence
-7. revoked global-potential gate as historical negative evidence only
+2. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
+3. `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md`
+4. `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_results.json`
+5. `evidence/NZ_SCCM_R10_ARTIFACT_HASHES_20260810.md`
+6. `governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md`
+7. frozen explicit NC current operator + Case21 nested-D15 baseline
+8. G19/G20 scalar-boundary-layer historical evidence
