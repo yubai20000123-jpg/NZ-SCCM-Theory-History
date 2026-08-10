@@ -1,0 +1,37 @@
+[87] 张士红, 邵旭东, 黄细军, 等. 轻型组合桥面板中小栓钉连接件的静力及疲劳性能[J]. 公路交通
+    科技, 2016, 33(11): 111-119.
+[88] 赵浩然. 高强双钢板-UHPC 组合剪力墙栓钉连接件受剪性能研究 [D]. 福州: 福州大学, 2021.
+[89] 武芳文, 冯彦鹏, 戴君, 等. 钢-UHPC 组合结构中栓钉剪力键力学性能研究[J]. 工程力学, 2022,
+    39(2): 222-234, 243.
+[90] Su Q, Yang G, Bradford M. Static behavior of multi-row stud shear connectors in high-strength
+    concrete [J]. Steel Composite Structures, 2014, 17(6): 967-980.
+[91] Johnson R P, May I M. Partial-interaction design of composite beams [J]. Structure Engineering,
+    1975, 53(8): 305-311.
+[92] 日本鋼構造協会. 頭付きスタッドの押拔き試験方法(案)とスタッドに関する研究の現状[S].
+    日本鋼構造協会, 1996.
+[93] 周安, 戴航, 刘其伟. 栓钉连接件极限承载力及剪切刚度的试验[J]. 工业建筑, 2007, 37(10): 84-
+    87.
+[94] 蔺钊飞, 刘玉擎. 大直径焊钉连接件抗剪性能试验[J]. 同济大学学报(自然科学版), 2015,
+    43(12): 1788-1793.
+[95] 张大斌, 李宇峙, 张平. 钢桥面铺装粘结剂的高温稳定性能[J]. 中外公路, 2012, 32(4): 281-284.
+[96] JGJ/T 70-2009. 建筑砂浆基本性能试验方法[S]. 北京: 中国建筑工业出版社. 2009.
+[97] GBT 17671-1999. 水泥胶砂强度检验方法(ISO 法)[S]. 北京: 中国标准出版社. 1999.
+[98] JC/T5 47-2017. 陶瓷砖胶粘剂[S]. 北京: 中国建材工业出版社. 2017.
+[99] 李聪, 陈宝春, 韦建刚. 粗集料 UHPC 收缩与力学性能[J]. 交通运输工程学报, 2019, 19(5): 11-
+    20.
+[100]Bisschop J, Mier J. Effect of aggregates on drying shrinkage microcracking in cement-based
+    composites[J]. Materials and Structures, 2002, 35(8): 452-461.
+[101]刘健. 高温后新老混凝土粘结的劈拉强度试验研究[J]. 工业建筑, 2001, (2): 15-17.
+[102]Han Q, Wang Y, Xu J, et al. Static behavior of stud shear connectors in elastic concrete–steel
+    composite beam s[J]. Journal of Constructional Steel Research, 2015, 113: 115-126.
+[103]李曙光, 冯鹏, 叶列平, 等. FRP 板胶栓混接研究综述[C]// 第七届全国建设工程 FRP 应用学术
+    交流会论文集. 2011.
+[104]Jiang X, Kolstein M, Bijlaard F. Experimental and numerical study on mechanical behavior of an
+    adhesively-bonded joint of FRP-steel composite bridge under shearloading [J]. Composite
+    Structures, 2014, 108: 387-399.
+
+
+
+
+                                                  97
+
