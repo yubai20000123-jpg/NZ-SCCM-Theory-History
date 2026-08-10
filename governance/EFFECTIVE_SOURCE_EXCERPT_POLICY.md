@@ -11,11 +11,7 @@
 - 不把大段背景综述纳入默认工作区；
 - 不因“来源存在”自动把历史经验公式/数值实现升格为当前理论。
 
-此前已经建立的全文镜像已移至：
-
-`archive/fulltext_mirrors_20260810/`
-
-它们只作历史检索备份，默认不读取。
+此前建立的全文镜像已经从当前 `main` 移除，以免污染正常 GitHub 检索。它们仍可通过 `archive/PRE_CLEAN_POINTER.md` 指向的 pre-clean commit 在 Git 历史中恢复。
 
 ## 2. 有效部分的判定
 
@@ -67,15 +63,13 @@ evidence/
 
 ## 5. 证据等级
 
-`原始 PDF / 正式出版原文 > 有 provenance 的有效摘录 > archive 中的机械全文镜像 > evidence note > 项目总结`。
+`原始 PDF / 正式出版原文 > 有 provenance 的有效摘录 > Git 历史中的机械全文镜像 > evidence note > 项目总结`。
 
 涉及符号、图表、精确数值或上下文歧义时必须回原 PDF。
 
-## 6. 已有全文镜像的处理
+## 6. 历史全文镜像的处理
 
-周俊、王淑楠、胡文旭、Attard、张宁、云露以及 Nguyen 已建立的全文/章节镜像没有从 Git 历史中丢失，但已经整体移出正常工作区到 `archive/fulltext_mirrors_20260810/`。
-
-后续正常恢复只使用 `evidence/` 中的 source map / effective excerpt；只有证据不足时才进入 archive 或原 PDF。
+周俊、王淑楠、胡文旭、Attard、张宁、云露以及 Nguyen 曾建立的全文/章节镜像没有丢失，但**不再存在于当前工作树**。如某个 effective excerpt 缺少必要上下文，应优先回原 PDF/File Library；只有原件暂时不可用时，才通过 `archive/PRE_CLEAN_POINTER.md` 从 Git 历史定点恢复旧镜像中的相关片段。
 
 ## 7. 完成条件
 
