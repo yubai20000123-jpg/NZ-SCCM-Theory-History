@@ -11,7 +11,7 @@
 - 不把大段背景综述纳入默认工作区；
 - 不因“来源存在”自动把历史经验公式/数值实现升格为当前理论。
 
-此前建立的全文镜像已经从当前 `main` 移除，以免污染正常 GitHub 检索。它们仍可通过 `archive/PRE_CLEAN_POINTER.md` 指向的 pre-clean commit 在 Git 历史中恢复。
+此前建立的全文镜像已经从当前 `main` 移除，以免污染正常 GitHub 检索。它们仍可通过 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 指向的 pre-clean commit 在 Git 历史中恢复。
 
 ## 2. 有效部分的判定
 
@@ -69,7 +69,7 @@ evidence/
 
 ## 6. 历史全文镜像的处理
 
-周俊、王淑楠、胡文旭、Attard、张宁、云露以及 Nguyen 曾建立的全文/章节镜像没有丢失，但**不再存在于当前工作树**。如某个 effective excerpt 缺少必要上下文，应优先回原 PDF/File Library；只有原件暂时不可用时，才通过 `archive/PRE_CLEAN_POINTER.md` 从 Git 历史定点恢复旧镜像中的相关片段。
+周俊、王淑楠、胡文旭、Attard、张宁、云露以及 Nguyen 曾建立的全文/章节镜像没有丢失，但**不再存在于当前工作树**。如某个 effective excerpt 缺少必要上下文，应优先回原 PDF/File Library；只有原件暂时不可用时，才通过 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 从 Git 历史定点恢复旧镜像中的相关片段。
 
 ## 7. 完成条件
 
