@@ -41,7 +41,9 @@ The original thesis contents identify the following Chapter 3 sections:
 - 3.5 Constitutive Relationship for Reinforcement
 - 3.6 Summary
 
-This is why Chapter 3 is migrated first.
+The high-priority material core `3.4–3.6` is now fully present as four searchable parts under `CH3_MATERIAL_CORE/`. Its frozen local source slice is 30488 bytes with SHA-256 `ceef5ad5f3c6c0cbc96dc63a6fabe861782693e0a4d98739cba628bb6d64ec51`; the directory README records exact-versus-normalized chunk status.
+
+The broader Chapter-3 mirror has also started under `CH3/`; `part_01.txt` is present. The full Chapter-3 frozen source identity remains the 57186-byte SHA shown above until all seven planned chunks are migrated.
 
 ## Historical-project boundary
 
@@ -51,10 +53,11 @@ Similarly, later project current-state operators derived from Nguyen/Foster are 
 
 ## Migration order
 
-1. `CH3/` — material source equations first;
-2. `CH4/` — stability FE source formulation;
-3. `CH6/` — initial-imperfection / second-order formulation;
-4. `APPENDIX_B/` — original program provenance;
-5. remaining thesis text if useful.
+1. `CH3_MATERIAL_CORE/` — **COMPLETE searchable mirror (4/4; transfer audit recorded)**;
+2. `CH3/` — full chapter, **IN PROGRESS (1/7)**;
+3. `CH4/` — stability FE source formulation;
+4. `CH6/` — initial-imperfection / second-order formulation;
+5. `APPENDIX_B/` — original program provenance;
+6. remaining thesis text if useful.
 
-Status at initialization: `SOURCE_IDENTITY_AND_CHAPTER_MAP_LOCKED; CH3_MIGRATION_STARTED`.
+Current status: `SOURCE_IDENTITY_AND_CHAPTER_MAP_LOCKED; CH3_MATERIAL_CORE_COMPLETE; FULL_CH3_1_OF_7`.
