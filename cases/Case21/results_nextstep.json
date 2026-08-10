@@ -1,0 +1,53 @@
+{
+  "formal_contract": {
+    "one_continuous_complete_halfwave": true,
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "analytic_cells_revoked": true
+  },
+  "independent_diagnostic_state": {"D": 0.75, "q": 0.002},
+  "scalar_material_chebyshev_tail_last20": {
+    "1024": {"C": 0.0004359, "T": 0.0001965, "U": 0.0004556},
+    "1536": {"C": 0.00000925, "T": 0.00000533, "U": 0.00000978},
+    "2048": {"C": 1.85e-7, "T": 1.38e-7, "U": 1.99e-7}
+  },
+  "naive_l1_tail_diagnostic_Nsp20": {
+    "Savg_finite_l1_norm": 2.2363,
+    "Savg_tail_bound": 0.005493,
+    "Dcal_finite_l1_norm": 5.1468,
+    "Dcal_tail_bound": 0.013409,
+    "sigy_tail_bound": 0.23138,
+    "fR_tail_bound": 45.05,
+    "Pc_kN": 335.141710,
+    "Pc_bound_kN": 5.448,
+    "Rq": 39678.3,
+    "Rq_bound": 2704700.0,
+    "status": "REJECTED_AS_TOO_PESSIMISTIC"
+  },
+  "anisotropic_global_one_domain": [
+    {"degree": [16,16,24], "Pc_kN": 335.162825, "Rq": 38597.504},
+    {"degree": [18,18,28], "Pc_kN": 335.144074, "Rq": 38951.033},
+    {"degree": [20,20,28], "Pc_kN": 335.143957, "Rq": 38971.238},
+    {"degree": [22,22,30], "Pc_kN": 335.144506, "Rq": 38628.621},
+    {"degree": [18,18,32], "Pc_kN": 335.131144, "Rq": 39505.127}
+  ],
+  "audit_only_reference_at_D075_q002": {"Pc_kN": 335.13308, "Rq": 38988.58},
+  "spectral_bounds_at_D075_q002": {
+    "lambda_plus_audit_only_approx": [-0.0911, 0.0911],
+    "lambda_minus_audit_only_approx": [-0.8411, -0.6589],
+    "lambda_plus_analytic_bound": [-0.1051, 0.13584],
+    "lambda_minus_analytic_bound": [-0.86569, -0.62473]
+  },
+  "broad_parameter_box": {"D": [0.5,0.9], "q": [0.0,0.003], "delta_min_analytic_lower_bound": 0.22599},
+  "direct_pair_radical_iteration": {
+    "status": "REJECTED_NOT_CERTIFIED",
+    "reason": "low-order truncated global fields lost positivity of positive radicands, causing Newton/Zolotarev-like radical iteration to diverge"
+  },
+  "padded_nonlinear_interaction": {
+    "status": "REJECTED",
+    "reason": "padding nonlinear products without supplying the missing true high input modes amplified spurious high-high feedback"
+  },
+  "current_blocker": "structured global coefficient-tail validation for nonlinear functional calculus, especially Rq; no spatial subdivision is permitted",
+  "new_case21_roots_published": false
+}
