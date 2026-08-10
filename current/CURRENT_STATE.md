@@ -106,4 +106,4 @@ TURN 0001–0148 是共享对话连续基线；TURN 0148 为中断，不能虚�
 
 ## 9. 后续工作读取原则
 
-默认只读本文件和任务对应的最小文件集。`archive/` 不参与正常理论工作；`history/` 只在追溯理由、核查旧路线或来源 provenance 时进入。
+默认只读本文件和任务对应的最小文件集。`history/` 只在追溯理由、核查旧路线或来源 provenance 时进入。迁移期全文镜像/旧 checkpoint/R2 snapshot 已从当前 `main` 移除；如极少数情况下确需恢复，使用 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 定点访问 pre-clean Git commit。
