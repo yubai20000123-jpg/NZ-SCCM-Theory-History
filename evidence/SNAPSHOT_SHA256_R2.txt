@@ -1,0 +1,12 @@
+# Expected SHA-256 for local R2 transfer snapshot originals
+# These hashes identify the local files used to seed the GitHub normalized-text snapshot.
+# GitHub copies created through UTF-8 connector are NOT automatically byte-exact originals.
+
+f8a3191086727a94bfe3ab8cbc4e7c06e4149ad3d56e216550ab07ed1f9b07cf  00_R2_完整思想历史总纲.md
+af35c56276a26ce0b2fc64c10b297336aecd2ce776054a1f1e206a12281e1eb0  01_R2_材料研究证据总账.md
+35e818c13bdd1d2aba29c543d90b57a5d070d48a5948bdf2926f95b719ce9f21  02_R2_历史路径裁决矩阵.md
+97af2ad9f348b1284e0a960932761731a520a93a4bb7252a6f960d02af8cef6d  03_R2_历史与材料资料强制恢复清单.md
+752a614e083cc09edc74b04f11ce24945ae501e12d0a50af703eb55fe067d6e2  04_R2_新对话首条指示词.md
+0e22487dd6b444ba0ba6fc0cdda416d354e2094d9616e445e4485384c1de29c8  05_R2_FINAL_ATTEMPT_OR_NEW_OPERATOR.md
+b18f9d6b9a18716c886d0fe2a0d2d24eb01b42b7e758a74657194d5fa55eda69  06_R2_明确未知项与未统一项.md
+4ca7c4545925abef969aa14bef14a54735a006bc38f70420a0c380a56c198ae3  README_R2_使用方法.md
