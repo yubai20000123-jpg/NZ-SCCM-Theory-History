@@ -1,0 +1,44 @@
+{
+  "identity": "UHPC-C0-DIRECT-SERIES-CALCULABLE-BASELINE",
+  "common_structural_kernel": "continuous Nguyen half-wave -> continuous strain -> M(epsilon) -> analytic series -> D15 -> P,RA,L",
+  "parameters": {
+    "fc_MPa": 141.1,
+    "Ec_MPa": 43400.0,
+    "eps_c0": 0.0035,
+    "nu": 0.2,
+    "Vsf": 0.02,
+    "ft_cr_MPa": 9.7677,
+    "ft_peak_MPa": 10.7348,
+    "ft_loc_MPa": 10.348,
+    "eps_t_cr": 0.00042,
+    "eps_t_peak": 0.0038,
+    "eps_t_loc": 0.0069,
+    "eps_t_lim": 0.00759
+  },
+  "compression": {
+    "source": "Zhang-2023 equations in project D16 register",
+    "prepeak": "sigma/fc = r*x/(r-1+x^r)",
+    "r": 14.064814814814795,
+    "postpeak": "sigma/fc = 0.18 + 0.82/[1+n(x-1)^2]",
+    "n": 0.6666666666666666
+  },
+  "tension": {
+    "source": "Hiew et al. 2024; project 2%-fibre anchor set",
+    "shape": "elastic -> strain-hardening -> peak -> localization -> exponential softening",
+    "postlocalization": "Hiew Eq.(17): cubic factor multiplied by exponential decay; C1,C2 taken from matching 2% fibre family, never from structural load fitting"
+  },
+  "multiaxial": {
+    "current_stress_baseline": "spectral scalar UHPC-C0, immediately calculable",
+    "strength_audit": "Wang Willam-Warnke and Zhou DP retained as separate material-level utilization/failure boundaries",
+    "note": "No ordinary-concrete Saenz compression law is copied into UHPC."
+  },
+  "analytic_series": {
+    "prepeak_compression": "binomial/Taylor/Chebyshev expansion of noninteger-power rational law",
+    "postpeak_compression": "rational geometric/Chebyshev expansion",
+    "tension_to_localization": "finite linear/polynomial pieces",
+    "postlocalization": "Taylor expansion of polynomial*exp",
+    "formal_spatial_points": 0,
+    "formal_gauss_points": 0
+  },
+  "historical_status_note_20260810": "EXECUTED_CALCULABLE_BASELINE_ONLY; not a final production multiaxial/path-dependent UHPC operator. Current-state authority is CURRENT_STATE.md and later governance."
+}
