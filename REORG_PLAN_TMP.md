@@ -1,1 +1,0 @@
-This temporary file exists only to checkpoint the reorganization before the atomic tree rewrite. It will be removed in the final rewrite.
