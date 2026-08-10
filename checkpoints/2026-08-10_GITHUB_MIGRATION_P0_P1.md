@@ -19,9 +19,11 @@ Repository now has the recovery skeleton required for a new conversation:
 - current Case21 global-audit/next-step state;
 - Path-A / UCFT Layer-0 / v5 historical locators and source boundaries.
 
-## P1 exact/complete text copies now archived
+## P1 text/artifact archival completed in this checkpoint
 
 ### D-series / R-series
+
+Archived exact/full text where available:
 
 - `history/D_series/BASELINE_GATE_STATUS.json`
 - `history/D_series/D12/D12_CANDIDATE_GATE_SUMMARY.csv`
@@ -53,21 +55,57 @@ These preserve both positive results and blockers. In particular: D19R is not al
 
 These are retained as historical evidence. Their PASS/HOLD labels do not silently override the later explicit-current-operator/direct-analytic/single-domain/2026-08-10 priority-reset governance.
 
-### Case21 analytical-route history
+## Case21 analytical-route history now preserved
+
+Archived:
 
 - one-shot direct-analytic report + complete SymPy source;
 - multi-backend direct-analytic result;
+- Sage/FriCAS zero-spatial execution report;
+- `case21_zero_spatial_analytic.sage` historical source;
+- nested-D15 full audit;
+- nested-D15 reproducibility closure R1;
 - material-compiler R5 report;
-- common-policy R2 report;
+- Swartz24 common-policy Case21 gate R2 report;
 - analytic-spatial-subdivision revocation notice;
+- explicit algebraic zero-spatial series historical result as a clearly marked **NORMALIZED_MIRROR**;
 - global one-domain handoff + `NEXTSTEP_EXECUTION_REPORT.md` + `results_nextstep.json`;
-- nested-D15 and G31 provenance locators.
+- G31 provenance locator.
 
-The archived local original of `NZ_SCCM_CASE21_MULTI_BACKEND_DIRECT_ANALYTIC_RESULT(1).md` had SHA-256:
+The explicit-algebraic-series local source had SHA-256:
 
-`e19b8dbc2c4c1835ed2ce36d8e9d027c3d6fd7e6aed2b4d9eaabcfa83cf5c55f`
+`1b045d3a248564d69bd063a765bd5a757d3c42db8b918a71c638e8179e50f655`
 
-Other local pending exact-text hashes are registered separately before copy.
+Its historical local text contained five form-feed corruption sequences preceding `rac`; the GitHub version normalizes those into LaTeX `\frac` and therefore does **not** claim byte-exact identity.
+
+The Sage/FriCAS source is archived as historical source evidence without silently repairing source-code behavior; if a corrected runnable copy is later needed, it must be added as a separate derived file.
+
+## UHPC source-text mirrors
+
+A searchable `sources_text/UHPC/` layer now exists, subordinate to the authoritative PDFs.
+
+### Fully migrated
+
+1. 周俊 — `UHPC三轴受压力学性能研究_周俊.pdf`
+   - PDF SHA-256: `37531c8f73765fea9192bef094a88edd7d7eacc5756b51640a7353b65ed72e59`
+   - extracted TXT SHA-256: `dad0fe2521e0d79a037dac540d4d75603a45c2d723b98a86a1da57706b671097`
+   - GitHub: 6 ordered parts, `FULL_TEXT_MIRROR_MIGRATED`.
+
+2. 王淑楠 — `超高性能混凝土三轴受压力学性能及破坏准则_王淑楠.pdf`
+   - PDF SHA-256: `e6e24cf47b21b1faa09f13ceb97a599321283c154578da92ef844b5d8e5c27dd`
+   - extracted TXT SHA-256: `5f962ddbbfe307c25e1514b9b521b690a2ad55c04d84e98116e370d97f6b3139`
+   - GitHub: 4 ordered parts, `FULL_TEXT_MIRROR_MIGRATED`.
+
+### In progress
+
+3. 胡文旭 — `钢-预制UHPC开孔板组合桥面板界面抗剪性能研究_胡文旭.pdf`
+   - PDF SHA-256: `a554649f440bdb5d6523dc174aab68e1128aa6e4f9d19ebb9b67a9e19b544909`
+   - extracted TXT SHA-256: `cfd0ed0378554f57e3e58373ca10eb619aa772ab5f1c44da53e44c248b8bbf13`
+   - local extraction has been split into 10 ordered chunks;
+   - GitHub currently contains `part_01.txt` and `part_02.txt` only;
+   - status remains `PARTIAL_TEXT_MIRROR_MIGRATION 2/10` until all 10 are present and recombination is checked.
+
+This partial status is deliberate: a missing GitHub search hit must not be interpreted as absence from the Hu thesis until all parts are migrated.
 
 ## UCFT v5 history
 
@@ -89,10 +127,10 @@ A future true binary upload/git-push channel must place byte-exact originals und
 
 ## Remaining P1/P2 targets
 
-1. copy remaining Case21 local readable reports: Sage/FriCAS result, explicit algebraic-series result, nested-D15 full audit, reproducibility-closure R1;
-2. copy/split the three existing UHPC PDF extracted-text mirrors under `sources_text/UHPC/`, with manifest and explicit subordinate-to-PDF status;
-3. recover remaining D16/D17/D18 and selected R16–R20 source/audit artifacts where File Library has complete text;
-4. append discoveries to `MASTER_SOURCE_INVENTORY.csv` rather than deleting old rows;
+1. finish Hu extracted-text mirror `part_03..10`, then recombine/check against `cfd0ed...bf13`;
+2. recover remaining D16/D17/D18 and selected R16–R20 source/audit artifacts where File Library has complete text;
+3. append discoveries/status changes to inventory without deleting old rows;
+4. build searchable mirrors/locators for Hiew, Liu, Lee, Leutbecher and other File-Library-only UHPC originals;
 5. byte-exact PDF/ZIP migration when a proper binary upload channel exists.
 
 ## Governing rule
