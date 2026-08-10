@@ -1,0 +1,53 @@
+{
+  "stage": "R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND",
+  "status": "PASS_ENGINEERING",
+  "formal_counts": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1
+  },
+  "search_box": {
+    "D": [0.78, 0.90],
+    "q": [0.0015, 0.0021]
+  },
+  "spectral_certificate": {
+    "gap_lower": 0.7501654769239635,
+    "lambda_plus": [-0.09565912065225385, 0.10294575178516358],
+    "lambda_minus": [-1.0029457517851634, -0.6843408793477461],
+    "compiler_lambda_plus": [-0.10, 0.105],
+    "compiler_lambda_minus": [-1.01, -0.68]
+  },
+  "N48_formal_root": {
+    "material_degree": 48,
+    "spatial_cheb_degree": 28,
+    "D_u": 0.8449505,
+    "q_u": 0.001779254542005754,
+    "A_u_mm": 2.1706905412470197,
+    "Pc_kN": 337.39660909142,
+    "Ps_kN": 30.922943404456966,
+    "Pu_kN": 368.31955249587696,
+    "R_kNmm": -2.2383016926141863e-05,
+    "P_D": 106.58759351383472,
+    "P_q": -75105.39767023241,
+    "R_D": -1376.335532846137,
+    "R_q": 969815.5988960797,
+    "L": 83.31643116474152,
+    "L_normalized": 4.029999719717427e-07,
+    "equilibrium_branch_dP_dD": 8.590955977567161e-05,
+    "Pf_exp_kN": 368.31275,
+    "error_kN": 0.006802495876968351,
+    "error_percent": 0.0018469346708655486
+  },
+  "N96_engineering_order_check": {
+    "D_fixed": 0.8449505,
+    "q_equilibrium": 0.0017855282237914806,
+    "P_kN": 368.50804285212683,
+    "R_kNmm": 0.021212151265274315,
+    "difference_from_N48_kN": 0.1884903562498721,
+    "difference_from_N48_percent": 0.05117576706764219,
+    "identity": "equilibrium/order audit only; D not reoptimized"
+  },
+  "structural_calibration_to_Pf": false,
+  "Swartz24_started": false,
+  "next_task": "R11_SWARTZ24_COMMON_SPECTRAL_DOMAIN_AND_ZERO_SPATIAL_BATCH_PRECHECK"
+}
