@@ -171,3 +171,40 @@ FULL_RECOVERY = COMPLETE_FOR_CONTINUATION
 ROUTE_SWITCH = NO
 CURRENT_CONTINUATION = SAME_ROUTE_TARGET_SURFACE_REGULARIZATION
 ```
+
+## 9. R02 continuation — why the recovered mainline matters
+
+`TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02` was executed after the recovery specifically to avoid another compiler detour.
+
+R02 tested physical corridor widening first, then directly compared that benefit with a same-route representation/domain reduction.
+
+Key result:
+
+```text
+mild k=1.25 widening -> about 19.8% mean curvature reduction
+                     -> TC stress P95 change about 0.210% fc
+                     -> TC tangent P95 change about 4.38% of initial normalized tangent
+
+k=2 widening        -> about 49.5% curvature reduction
+                     -> TC tangent P95 change about 23.1%
+```
+
+Therefore large physical widening cannot be the main solution without materially changing the tangent surface.
+
+More importantly, widening alone barely changes the single-global-polynomial difficulty on the historical full lambda interval, whereas using the already observed separated Case21 principal spectral intervals reduces the same degree-32 `T(lambda)` max normalized error from about 31.8% to about 2.28% on the active `lambda+` branch; the compression `lambda-` branch is numerically trivial at very low degree.
+
+This establishes the next continuation as **spectral/reachable-domain reduction inside the same recovered invariant current-map architecture**, not a new material route and not a return to PF/compiler-family hopping.
+
+Canonical R02 file:
+
+```text
+current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_20260810.md
+```
+
+Current continuation after R02:
+
+```text
+ROUTE_SWITCH = NO
+PURE_WIDTH_WIDENING = INSUFFICIENT_AS_SOLE_SOLUTION
+NEXT = SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03
+```
