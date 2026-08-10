@@ -1,0 +1,177 @@
+                                                               其中,tr( ) 为张量的迹,det( ) 为张量的行列式,s 为偏
+                                                               应力张量。 破坏面参数如图 13 所示。
+                                                                      单轴受压强度和常规三轴受压强度对应的应力
+                                                               状态,处于受压子午线上。 基于此,对受压子午线轨
+                                                               迹进行拟合,如图 14 所示,结果表明,当子午线为抛
+                                                               物线形式时对强度拟合程度较好。 因此,抛物线形
+                                                               式可 作 为 文 中 研 究 的 破 坏 面 函 数 形 式。 Willam-
+                 图 12
+                                                               Warnke [40] 所 提 出 的 五 参 数 模 型 ( Willam-Warnke 模
+                        弹性模量与围压的关系
+ Fig. 12    Relation between elastic modulus and pressure
+                                                               型,简称为 W-W 模型) 形式满足这一要求,且具有对
+                                                                                                                 237
+                                                                                                     图 15     破坏面子午线 [40]
+           图 13         Willam-Warnke 五参数破坏面                                                   Fig. 15   Meridian of failure surface [40]
+       Fig. 13        Failure surface of Willam-Warnke five
+                            parameters model                                  午线的偏应力,ρ t 、ρ c 分别为素 UHPC 破坏面的拉、压
+                                                                              子午线的偏应力,k t 、k c 分别为考虑纤维引入的拉、压
+                                                                              增强系数,可通过破坏面从试验结果中标定。
+                                                                              3. 2     破坏面拉压子午线确定
+                                                                                      UHPC 破坏面受 压 子 午 线 的 纤 维 增 强 系 数 k c
+                                                                              是通过将破坏包络线与单轴 受 压 试 验 数 据 拟 合 确
+                                                                              定,以确保 受 压 子 午 线 通 过 UHPC 破 坏 时 的 应 力
+                                                                              值,即 UHPC 单轴抗 压 强 度,如 图 16 a 所 示。 单 轴
+                                                                              压应力状态为 ( σ 1 , σ 2 ,σ 3 ) = ( 0 ,0 , - f f ) , 指 定 受
+                                                                              压为负,受拉为正。 由塑性理论 可 知,单 轴 受 压 的
+                                                                              应 力 状 态 点 位 于 受 压 子 午 线 上, UHPC 不 同 单 轴
+                     图 14       试验所测受压子午线                                     抗压强度将对 应 不 同 的 静 水 应 力 值, 及 相 对 应 的
+        Fig. 14        Test results of compressive meridian                   偏应力值为:
+
+
+称、外凸、 光 滑 可 导 等 优 势。 选 用 W-W 模 型 定 义
+UHPC 的破坏包络面,其形式为:
+ ρ hf ( ξ,θ) = [2ρ cf ( ρ2cf - ρ2tf ) cosθ + ρ cf (2ρ tf - ρ cf ) ×
+            4( ρ2cf - ρ2tf ) cos2 θ + 5ρ2tf - 4ρ tf ρ cf ]
+           [4( ρ2cf - ρ2tf ) cos2 θ + (2ρ tf - ρ cf ) 2 ]              (8)
+式中,ρ hf ( ξ,θ) 代表静水应力为 ξ 且 Lode 角为 θ 时所
+对应的极径,其限制了 UHPC 的极限强度。
+     极径通 过 受 拉 子 午 线 ( θ = 0°) 和 受 压 子 午 线
+( θ = 60°) 插值得到,如图 15 所示,受压、受拉子午线
+表达式分别为:
+              ξt
+                    ( kf ρ ) + a kf ρ + a
+                                              2
+                   = a2          t        t           t        t
+                                                                       (9)
+              f cu                   cu
+                                                  1
+                                                      cu
+                                                                   0
+
+
+              ξ       kρ         kρ           2
+                = b (
+                 c
+                           ) +b  c
+                                      +b  c           c        c
+                                                                       (10)
+              f  cu    f
+                            2
+                                  f
+                                 cu
+                                                  1
+                                                          cu
+                                                                   0
+
+
+式中:f cu 为素 UHPC 单轴抗压强度;a0 、a1 、a2 、b0 、b1 、
+b2 为材料常数。 根据课题组前期研究 [41] ,上述参数
+取 值 为: a0 = b0 = 0. 177 5, a1 = - 1. 455 4, a2 =                                        图 16       纤维增强系数计算及对屈服面影响
+- 0. 157 6,b1 = - 0. 780 6,b2 = - 0. 176 3;定义 ρ tf =                                 Fig. 16     Calculation of fiber reinforcement coefficient
+k t ρ t 、ρ cf = k c ρ c , ρ tf 、ρ cf 分别为 UHPC 破坏面的拉、压子                                             and its effect on yield surface
+
+ 238
+                        ξ = - ff / 3                           (11)          将式(15) 代入 W-W 模型式(8) 中,可得到相应
+                                                                      素 UHPC 破坏面在受拉子午线上的偏应力值,即
+                                   2
+                        ρ cf =       f                         (12)
+                                   3 f                                                                           2 fb
+式中,f f 为 UHPC 单轴抗压强度。
+                                                                                     - a1 -             (
+                                                                                              a21 - 4a2 a0 +
+                                                                                                                  3 f cu
+                                                                                                                           )
+                                                                              ρt =                                             f cu (17)
+    将式(11) 代入 W-W 模型( 式(8) ) 中,可得到相                                                               2a2
+应素 UHPC 破坏面在受压子午线上的偏应力值:                                                     结合式(16) 和式(17) ,受拉纤维增强系数 k t =
+                                                                      ρ tf / ρ t 。 不考虑聚丙烯纤维作用,通过试验结果回归分
+                                           1 ff
+               - b1 -                  (
+                          b21 - 4b2 b0 +
+                                           3 f cu
+                                                    )                 析,可得到 k t 为:
+      ρc =                                              f cu   (13)                     k t = 1 + 0. 025 7λ sf                     (18)
+                                 2b2
+    结合式(12) 和式(13) ,求得受压纤维增强系数                                               受拉子午线随 k t 的变化规律如图 16b 所示。 同
+k c = ρ cf / ρ c 。 引入纤维特征值,通过多元线性回归分                                  样地,随着混杂纤维加入,受拉子午线表现出扩张规
+析,可得 k c 为:                                                           律,且纤维对受压子午线扩张幅度的影响程度高于
+                                                                      对受拉子午线的。 当无纤维加入时,k t = 1,退化到素
+             k c = 1 + 0. 055λ sf + 0. 118λ pf                 (14)
+                                                                      UHPC 状态的破坏面。
+其中:λ sf 为钢纤维特征值, λ sf = V sf ·l sf / d sf ,V sf 为钢                    3. 3   破坏准则验证
+纤维体积掺量, l sf / d sf 为钢纤维长径比;λ pf 为聚丙烯纤维特                               为验证所提受压和受拉子午线的纤维增强系数
+纤维特征值, λ pf = V pf ·l pf / d pf , V pf 为聚丙烯纤维体积                       的准确性,将本文及文献[24-25,35,43] 中的试验结
+掺量, l pf / d pf 为聚丙烯纤维长径比。                                            果与预测结果进行对比分析,见图 18 和图 19。 其
+    同时,随着混杂纤维的掺入,k c 不断增大,由此引                                         中,图 18a 为本文单轴受压试验结果与受压子午线的
+起受压子午线不断扩张( 图 16b) 。 在相同静水应力                                          对比,图 18b 为本文三轴受压试验结果与对应的预
+下,掺入混杂纤维的 UHPC 较素 UHPC 能够承受更大                                         测偏应力值的对比。 由图可知,单轴受压试验结果
+的偏应力,且 UHPC 极限强度随着混杂纤维掺入而                                             均分布在受压子午线上,预测精度较高,三轴试验的
+明显提高。 当纤维掺量为 0% 时,k c = 1,式(14) 退化                                    预测值 与 试 验 测 得 的 偏 应 力 值 偏 差 较 小。 图 18c、
+至素 UHPC 状态的破坏面。                                                       18d 为相关文献中三轴受压试验与采用文中所提模
+    类似地,通过对素 UHPC 破坏面的受拉子午线                                           型的预测结果对比,可以看出,试验结果基本位于预
+进行旋转,确保偏应力轨迹通过等双轴受压试验点,                                               测的子午线上,仅在围压过大时存在较少偏差。 图
+如图 16a 所 示。 等 双 轴 压 应 力 状 态 ( σ1 ,σ2 ,σ3 ) =                          19 为受拉子午线纤维增强系数预测结果与文献[43]
+(0, - f b , - f b ) ,位于拉子午线上,相应的静水应力和                                 中双轴受压试验结果对比,可以发现,分散的双轴受
+偏应力值为:                                                                压试验点与对应的预测子午线相当接近,预测精度
+                        ξ = - 2f b / 3                         (15)   较高。
+
+                                   2
+                        ρ tf =       f
+                                   3 b
+                                                               (16)   4      结论
+其中,f b 为 UHPC 等 双 轴 抗 压 极 限 强 度, 其 值 采 用
+Curbach 等 [42] 的测试结果,见图 17。                                                  1) 常规三轴受压下 UHPC 的破坏形态呈现剪切
+                                                                      型,完整性较好。 围压对 UHPC 裂缝形成和分布影响
+                                                                      最为显著,钢纤维体积掺量的影响次之,钢纤维长径
+                                                                      比和聚丙烯纤维体积掺量的影响不明显。
+                                                                             2) UHPC 三轴受压全过程曲线分为线弹性段、
+                                                                      非线性硬化段和应变软化段三部分。 围压能显著增
+                                                                      强 UHPC 的强度和变形能力。 随着围压增加,应力-
+                                                                      应变曲线的弹性段延长,峰值应力增大,峰值应力后
+                                                                      软化程度降低,延性提高;随着钢纤维掺量增加,峰
+                                                                      值应力前 曲 线 斜 率 和 延 性 均 呈 现 出 先 增 后 减 的 现
+                                                                      象;随着聚丙烯纤维体积掺量增加,峰值应力后延性
+                                                                      呈现波动性变化规律。
+                 图 17     双轴抗压强度 [42]
+     Fig. 17    Strength under biaxial compression      [42]                 3) UHPC 峰值应力和峰值应变随着围压增加而
+                                                                      增大。 当围压从 0 MPa 增大至 40 MPa 时,峰值应力
+                                                                                                                                   239
+                                                                     图 19      拉子午线对比验证 [43]
+                                                               Fig. 19    Verification of tensile meridian [43]
+
+
+                                                       影响最大,钢纤维体积掺量的影响次之,聚丙烯纤维
+                                                       体积掺量的影响最小。
+                                                             4) 基于 W-W 模型建立了考虑纤维特征参数的
+                                                       UHPC 破坏准则。 对比验证结果显示,所建立的破坏
+                                                       准则 能 较 好 地 预 测 不 同 应 力 状 态 下 UHPC 的 多 轴
+                                                       强度。
+                                                             5) 所提出的 UHPC 破坏准则能较好地预测钢纤
+                                                       维特征值在 0 ~ 1. 8 之间、聚丙烯纤维特征值在 0 ~
+                                                       0. 56 之间的 UHPC 在复杂应力状态下的多轴强度。
+                                                                            参      考     文     献
+                                                       [1]   XUE J Q, BRISEGHELLA B, HUANG F Y, et al.
+                                                             Review of ultra-high performance concrete and its
+                                                             application in bridge engineering[ J] . Construction and
+                                                             Building Materials, 2020, 260: 119844.
+                                                       [2]   余睿, 范定强,水中和,等. 基于颗粒最紧密堆积理
+                                                             论的超高性能混凝土配合比设计[ J] . 硅酸盐学报,
+                                                             2020, 48(8) : 1145-1154. ( YU Rui, FAN Dingqiang,
+                                                             SHUI Zhonghe, et al.          Mix design of ultra-high
+                                                             performance concrete based on particle densely packing
+                                                             theory [ J ] . Journal of the Chinese Ceramic Society,
+                                                             2020, 48(8) : 1145-1154. ( in Chinese) )
+                                                       [3]   ZHOU M, WU Z M, OUYANG X, et al. Mixture
+                                                             design methods for ultra-high-performance concrete: a
+                                                             review[ J] . Cement and Concrete Composites, 2021,
+                                                             124: 104242.
+                                                       [4]   欧阳雪, 史才军,史金华,等. 超高性能混凝土受压
+                                                             力学性能 及 其 弹 性 模 量 预 测 [ J ] . 硅 酸 盐 学 报,
+                                                             2021, 49(2) : 296-304. ( OUYANG Xue, SHI Caijun,
+                                                             SHI Jinhua, et al. Compressive mechanical properties
+                                                             and prediction for elastic modulus of ultra-high
+                                                             performance concrete [ J ] . Journal of the Chinese
+                                                             Ceramic Society, 2021, 49 ( 2 ) : 296-304. ( in
+                                                             Chinese) )
+                                                       [5]   WU Z M, SHI C J, KHAYAT K H. Investigation of
