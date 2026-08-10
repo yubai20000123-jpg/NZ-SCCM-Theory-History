@@ -1,342 +1,281 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 22:25 +08:00  
-**Purpose:** 唯一当前工作入口。详细推导、历史偏离/恢复、失败 compiler 与执行证据留在 canonical governance/theory/history/evidence 文件中。
+**Updated:** 2026-08-10 23:09 +08:00  
+**Purpose:** 唯一当前工作入口。详细推导、失败路线、历史证据与审计结果保留在 governance / current/theory / evidence / history。
 
-## 0. 最高优先级：EXPLICIT END-TO-END CAPACITY
-
-Canonical current files:
-
-- `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
-- `governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md`
-- `governance/R09A_TENSION_SENSITIVITY_DECISION_20260810.md`
-- `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md`
-- `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_20260810.md`
-- `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_results.json`
-
-User highest requirement:
+## 0. 最高优先级
 
 ```text
-最终极限承载力必须由显式公式及同一公式的显式导数得到。
+FINAL_THEORY_MUST_PRODUCE_ULTIMATE_CAPACITY_FROM_EXPLICIT_FORMULAS
+AND_EXPLICIT_DERIVATIVES_OF_THE_SAME FORMULAS.
 ```
 
-允许使用 4D stress-strain manifold、invariant/spectral current map、whole-structure global target、低秩面、polynomial/rational/algebraic formula、named special functions、局部 analytic patch、显式 piecewise smooth function 等。
-
-材料 pointwise regression error 不是首要目标。允许 deliberate under-use / smoothing / trimming 局部尖峰；必须透明说明削弱/增强的力学后果。
-
----
-
-## 1. 最终容量方程
-
-\[
-P(D,q),\qquad R_q(D,q)=0,
-\]
-
-\[
-L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0,
-\]
-
-\[
-P_u=P(D^*,q^*).
-\]
-
-`P,Rq,P_,D,P_,q,Rq_,D,Rq_,q` 必须来自同一显式数学表示。
-
-结构层继续保留：
+结构层固定：
 
 ```text
 DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
 ACTIVE_MODE = m=1
 KINEMATICS = NGUYEN_SECOND_ORDER
+N_formal_spatial_quadrature = 0
+N_formal_spatial_sampling = 0
+N_formal_spatial_subdomains = 1
 ```
 
-数值求根可用于求已经显式得到的有限方程。
+正式理论禁止：空间 Gauss / Simpson / adaptive quadrature、material-point grid、moving TT/TC/CC spatial cells、offline spatial integration 后拟合 production `P/R/U`、有限差分导数、结构试验反标材料参数。
+
+数值求根仍可用于最终已经显式得到的有限方程。
 
 ---
 
-## 2. MATERIAL-NATIVE DOMAIN GOVERNANCE
+## 1. 当前能量路线
+
+用户已将当前主线修正为：
 
 ```text
-PRIMARY_DOMAIN   = MATERIAL_ADMISSIBLE_SPECTRAL_DOMAIN Lambda_M
-SECONDARY_DOMAIN = STRUCTURAL_REACHABLE_SUBDOMAIN Lambda_R
-MANDATORY        = Lambda_R subset of Lambda_M
+材料层：energy-first / current-work pseudo-potential
+结构层：不拟合 whole-structure target
+结构内功必须由材料势 + Nguyen 应变 + D15/解析积分直接生成
 ```
 
-Case21/Swartz24 cannot define the production material domain.
-
-NC source-active landmark interval remains recorded as
+理想链：
 
 \[
-\Lambda_{M,NC}^{active}=[-10,0.49987179453974245].
+\psi_m(\varepsilon)
+\rightarrow
+\sigma=\partial\psi_m/\partial\varepsilon
+\rightarrow
+C_t=\partial^2\psi_m/\partial\varepsilon^2
 \]
 
-UHPC must derive its own `Lambda_M`; NC numerical bounds must not be copied into UHPC.
+\[
+\varepsilon=\varepsilon(D,q,x,y,z)
+\rightarrow
+\mathcal U(D,q)=\int_\Omega\psi_m\,dV+\mathcal U_s
+\]
+
+\[
+R_q=\mathcal U_{,q}=0,
+\]
+
+\[
+\mathcal U_{,DD}\mathcal U_{,qq}-\mathcal U_{,Dq}^2=0,
+\]
+
+\[
+P_u=\mathcal U_{,D}(D^*,q^*)/c_D.
+\]
+
+`integrate-then-differentiate` 与 `differentiate-then-integrate` 必须最终逐项一致。
+
+材料势可有少量具有明确物理意义的材料参数以及由材料锚点/能量条件唯一确定的派生代数常数；禁止大量 generic free fitting coefficients。
 
 ---
 
-## 3. Compression-side NC target — retained from R08
+## 2. R09B material-energy observation retained
+
+当前 NC 参数：
 
 ```text
-lambda < -10         : residual -0.10 fc
--10 <= lambda < -1   : R06 C2 source-faithful postpeak target
--1 <= lambda < 0     : Saenz compression
+fc = 21.23 MPa
+E0 = 20321 MPa
+eps0 = 0.00209
+nu = 0.18
+kappa = E0 eps0 / fc = 2.0005129533678754
 ```
 
-The R06 C2 postpeak closure remains PASS.
+R08 tensile reference work over
 
-The compression branch is currently treated as the primary direct-load carrier and is NOT modified by R09A.
+\[
+0\le\lambda\le10x_{cr}=0.49987179453974245
+\]
+
+is
+
+\[
+E_{t,R08}=0.029742371775134682.
+\]
+
+For the simple monotone saturation potential
+
+\[
+\phi_t(\lambda)=u_\infty\lambda-
+\frac{u_\infty^2}{\kappa}
+\ln\left(1+\frac{\kappa\lambda}{u_\infty}\right),
+\]
+
+preserving the R08 material tensile work gives
+
+\[
+u_\infty=0.07422110763929314.
+\]
+
+This is a material-energy result only; it is not selected from Case21/Swartz Pu and is not yet a final full NC multiaxial production operator.
 
 ---
 
-## 4. R08 tensile prototype — retained as baseline only
+## 3. R09C structural global-potential fit remains STOPPED
 
-R07R rational tensile regression is rejected because it created artificial `overshoot -> dip -> rebound`.
-
-R08 replaced it by a shape-preserving rounded peak:
+The proposal to generate numerical whole-structure energy data and then fit a global `U(D,q)` was stopped because coefficient identification would contain hidden offline spatial numerical quadrature.
 
 ```text
-one monotone rise -> one rounded peak -> monotone decay -> residual
+R09C_ENERGY_POTENTIAL_STRUCTURAL_TARGET = STOP_NOT_EXECUTED
 ```
 
-with
-
-\[
-\lambda_p=x_{cr}=0.049987179454,
-\quad u(\lambda_p)=0.09,
-\]
-
-\[
-\lambda_r=10x_{cr}=0.49987179454,
-\quad u(\lambda_r)=0.03.
-\]
-
-R08 remains a valid smooth baseline but is no longer the only preferred tensile shape after R09A.
+No structural global potential may be fitted from numerical spatial integration and then relabelled as zero-quadrature production theory.
 
 ---
 
-## 5. R09A simple monotone tensile-saturation family
+## 4. Latest executed gate: NC ENERGY POTENTIAL + D15 FEASIBILITY
 
-The user proposed an even more aggressive simplification: because axial-compression response is expected to be compression dominated, remove the distinct tensile peak/softening history and use a simple monotone saturation law.
+Canonical files:
 
-R09A tested
+- `governance/NC_ENERGY_POTENTIAL_D15_GATE_DECISION_20260810.md`
+- `current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md`
+- `current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_results.json`
+- `evidence/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_GATE_metrics_20260810.csv`
+
+### 4.1 D15 exact mathematical closure
+
+For finite polynomial material potential `p_N(Eu)`:
 
 \[
-u_t(\lambda)=u_\infty\frac{r}{1+r},
-\qquad r=\frac{\kappa\lambda}{u_\infty},
-\qquad \lambda\ge0,
+\Psi_N=f_c\varepsilon_0\operatorname{tr}[p_N(E_u)].
 \]
 
-with explicit derivative
+For 2x2 `Eu`, Cayley-Hamilton gives
 
 \[
-u_t'(\lambda)=\frac{\kappa}{(1+\kappa\lambda/u_\infty)^2}.
+E_u^2-J_1E_u+J_2I=0.
 \]
-
-Properties:
-
-- `u_t(0)=0`;
-- `u_t'(0)=kappa`;
-- monotone;
-- no sharp peak;
-- no dip/rebound;
-- one retained tensile-capacity parameter `u_inf`.
-
-Predeclared sensitivity brackets:
-
-```text
-SAT03: u_inf = 0.03 fc
-SAT05: u_inf = 0.05 fc
-SAT07: u_inf = 0.07 fc
-```
-
-None was selected from Case21 experimental Pu.
-
----
-
-## 6. Case21 reinforcement — analytic same-equation coupling
-
-Source mapping:
-
-```text
-rho_x = rho_y = 0.00375
-Es = 200000 MPa
-fy = 530 MPa
-eps_y = 0.00265
-```
 
 Let
 
 \[
-S=q_0q+\frac12q^2,
-\qquad
-C_m=\frac{\pi^2S}{\varepsilon_0}.
+s_n=\operatorname{tr}(E_u^n).
 \]
 
-Exact loading-direction steel load:
+Then
 
 \[
-P_s=
-\frac{\rho_y t b E_s\varepsilon_0}{1000}
-\left(D-\frac{C_m}{4}\right).
+s_0=2,\qquad s_1=J_1,\qquad
+s_n=J_1s_{n-1}-J_2s_{n-2}.
 \]
 
-Exact steel amplitude residual:
-
-\[
-R_s=
-\frac{\rho_y tE_s\pi^2(q_0+q)b\ell}{1000}
-\left[
-\frac{\varepsilon_0D(\nu-1)}4
-+\frac{9\pi^2S}{32}
-\right].
-\]
-
-The total equations are always solved as
-
-\[
-P=P_c+P_s,
-\qquad
-R=R_c+R_s=0,
-\]
-
-then
-
-\[
-L=P_D R_q-P_qR_D=0.
-\]
-
-No post-addition `As fy` is permitted.
-
----
-
-## 7. R09A executed Case21 RC sensitivity
-
-All candidates use the same compression branch, geometry, reinforcement and explicit limit equations.
-
-Results:
-
-| candidate | tensile identity | D_u | q_u | Pc (kN) | Ps (kN) | Pu (kN) |
-|---|---|---:|---:|---:|---:|---:|
-| R08 | rounded 0.09 peak -> 0.03 residual | 0.706185 | 0.0165438 | 317.3033 | 18.2991 | 335.6024 |
-| SAT03 | `u_inf=0.03` | 0.674303 | 0.0166825 | 305.3951 | 17.0068 | 322.4019 |
-| SAT05 | `u_inf=0.05` | 0.732368 | 0.0175027 | 316.3733 | 18.4497 | 334.8230 |
-| SAT07 | `u_inf=0.07` | 0.789742 | 0.0182769 | 325.9317 | 19.8795 | 345.8111 |
-
-SAT03–SAT07 spread:
-
-\[
-\Delta P_u=23.409173\ \mathrm{kN},
-\]
-
-\[
-\frac{\Delta P_u}{\overline P_u}=7.001495\%.
-\]
-
-All explicit stationary roots pass same-root audit residual checks and all reinforcement remains elastic.
-
----
-
-## 8. R09A physical conclusion
-
-The user's compression-dominance intuition is **partly correct**:
+Hence every finite polynomial potential reduces to a finite polynomial in `J1,J2`; after inserting the frozen Nguyen second-order kinematics, every term becomes a finite trigonometric-thickness polynomial and is exactly D15-integrable.
 
 ```text
-COMPRESSION_DOMINATES_DIRECT_LOAD = PASS
+D15_POLYNOMIAL_EXACT_CLOSURE = PASS
+FORMAL_SPATIAL_QUADRATURE = 0
 ```
 
-At every stationary root, concrete compression carries roughly 305–326 kN, versus steel 17–20 kN.
+### 4.2 Minimum anchor-exact global polynomial
 
-However:
+A degree-7 stress polynomial was fixed only by material anchors / material tensile work. No free material coefficients were introduced.
+
+It nevertheless developed catastrophic interior oscillation:
 
 ```text
-TENSILE_CAPACITY_LEVEL_IS_NEGLIGIBLE = FAIL
+minimum stress ≈ -12965.289 fc
+at lambda ≈ -7.2363
 ```
-
-Changing only `u_inf` from `0.03` to `0.07` changes Pu by about 7%.
-
-Reason: the tensile law changes `D_u,q_u`, which changes the compression-side `Pc` itself. Therefore “tension carries little direct axial load” does NOT imply “the tensile constitutive branch has little influence on the coupled limit state”.
-
-The important positive result is:
-
-```text
-TENSILE_SHAPE_CAN_BE_STRONGLY_SIMPLIFIED = PASS
-```
-
-The project does not need to restore the sharp source tensile peak, Foster transition details, or any oscillatory regression. A one-parameter monotone explicit law is sufficient as a shape family.
-
-But its retained capacity level must be defined independently from structural experiment.
-
----
-
-## 9. Formal-status boundary
-
-R09A runtime `P,R,L` evaluation is finite and explicit.
-
-Concrete local `Pc(D,q),Rc(D,q)` coefficients were identified offline using high-accuracy full-halfwave numerical integration, as in R08/R07R proof-of-concept.
 
 Therefore:
 
 ```text
-R09A_TENSION_SATURATION_SENSITIVITY = PASS_DIAGNOSTIC
-ANALYTIC_REINFORCEMENT_COUPLING = PASS
-EXPLICIT_P_R_L = PASS_DIAGNOSTIC
-FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
+ANCHOR_EXACT_LOW_PARAMETER_GLOBAL_POLYNOMIAL = FAIL
 ```
 
-This is not silently relabeled as the older pure-D15 production identity.
+### 4.3 Energy-first low-order global potential
 
----
+A single global energy potential was tested at `N=8,10,12` only. Energy values were fitted at material level; origin/peak/residual/tensile-work conditions were imposed exactly.
 
-## 10. Multiaxial correction status
-
-R08 had recommended jumping directly to a minimum source-grounded multiaxial correction.
-
-R09A changes the order:
-
-**do not add multiaxial correction yet.**
-
-First freeze the single retained tensile-capacity level from material evidence or an explicit conservative material rule.
-
-Only after that tensile scalar level is fixed independently of Case21/Swartz Pu should the project ask whether a small CC/TC multiaxial correction is still required.
-
----
-
-## 11. UHPC implication
-
-The R09A simplification philosophy is transferable to UHPC, but not the NC numerical plateau.
-
-UHPC may also use a simple monotone explicit tension law if material evidence permits, but `u_inf,UHPC` must come from UHPC sources / a declared conservative UHPC rule and its own material-native domain.
-
-NC `0.03/0.05/0.07` values are sensitivity brackets only and must not be copied into UHPC.
-
----
-
-## 12. Current recommended next task
+At `N=12`:
 
 ```text
-CURRENT_RECOMMENDED_NEXT_TASK
-= R09B_SOURCE_GROUNDED_TENSION_CAPACITY_LEVEL
+potential max abs error ≈ 0.231823
+stress max abs error    ≈ 0.879333 fc
+stress P95 abs error    ≈ 0.405728 fc
+tangent max abs error   ≈ 9.918593
+spurious compression in tension ≈ 0.810240 fc
 ```
 
-R09B must:
+Thus fitting the energy much better did NOT make its first/second derivatives mechanically acceptable.
 
-1. keep the current compression branch fixed;
-2. keep the simple monotone saturation tensile family;
-3. derive/freeze one NC tensile-capacity level from material-source evidence or an explicitly declared conservative material convention;
-4. not use Case21/Swartz Pu to select that level;
-5. rerun the same explicit `P,R,L` chain only after the material-level decision;
-6. then decide whether the minimum multiaxial correction remains necessary.
+No degree escalation beyond `N=12` was attempted.
+
+```text
+ENERGY_FIRST_LOW_ORDER_GLOBAL_POTENTIAL_N8_N10_N12 = FAIL
+```
+
+### 4.4 Overall gate
+
+```text
+NC_ENERGY_POTENTIAL_AND_D15_FEASIBILITY_GATE
+= FAIL__STOP_AT_GATE
+```
+
+Interpretation:
+
+```text
+ENERGY_POTENTIAL_PHILOSOPHY = RETAINED
+D15_FINITE_POLYNOMIAL_CLOSURE = PASS
+CURRENT_LOW_ORDER_GLOBAL_POLYNOMIAL_GRAMMAR = REJECTED
+```
+
+No Case21 calculation and no Swartz24 calculation followed this failure.
 
 ---
 
-## 13. Recovery read order
+## 5. Current formal prohibitions after the gate
+
+The following may NOT be used to rescue this failed grammar without explicit user approval:
+
+- simply raising global polynomial/Chebyshev degree;
+- adding large banks of unconstrained coefficients;
+- using Case21/Swartz Pu to tune the material potential;
+- returning to TT/TC/CC runtime spatial classification;
+- using numerical spatial integration to identify `U(D,q)`, `P(D,q)` or `Rq(D,q)`;
+- hiding a numerical compiler behind an explicit runtime polynomial;
+- finite-difference tangent/Jacobian.
+
+---
+
+## 6. What remains open
+
+The project still needs a **different low-parameter material-potential grammar** that simultaneously satisfies:
+
+1. few physically meaningful material parameters;
+2. energy-based material simplification;
+3. explicit stress and tangent from the same potential;
+4. no runtime spatial material partition;
+5. zero-spatial-quadrature closure proven BEFORE any structural calculation;
+6. no high-degree/global coefficient inflation;
+7. sufficient NC compression/tension/multiaxial behavior.
+
+A non-polynomial compact potential may be considered only if its complete halfwave integral and required derivatives admit a genuine analytic closed form; otherwise it fails the zero-numerical gate.
+
+UHPC remains later-stage: NC numerical parameters/domains must not be copied into UHPC, and the UHPC full multiaxial current-work potential remains OPEN.
+
+---
+
+## 7. Current recommended action
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK = NONE_AUTOMATIC
+STATUS = WAIT_FOR_USER_REVIEW_AFTER_GATE_FAILURE
+```
+
+The failed global-polynomial energy grammar must not be automatically replaced by another route. The next material-potential grammar requires explicit user approval first.
+
+---
+
+## 8. Recovery read order
 
 1. `current/CURRENT_STATE.md`
-2. `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
-3. `governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md`
-4. `governance/R09A_TENSION_SENSITIVITY_DECISION_20260810.md`
-5. `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_20260810.md`
-6. `current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_results.json`
-7. R08 user-sketch + reinforcement files
-8. R07R, then R06/R05/R04/R03/R02/R01 history/evidence
-9. Case21 invariant exact-moment foundation
+2. `governance/NC_ENERGY_POTENTIAL_D15_GATE_DECISION_20260810.md`
+3. `current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md`
+4. `current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_results.json`
+5. `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
+6. energy-potential governance / R09B / R09C-stop records
+7. R09A / R08 / R07R evidence
+8. Case21 invariant exact-moment foundation
