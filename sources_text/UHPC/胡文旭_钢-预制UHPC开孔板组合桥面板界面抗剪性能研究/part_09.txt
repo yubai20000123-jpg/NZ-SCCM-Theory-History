@@ -1,0 +1,338 @@
+  由于 BC 段承载力完全由栓钉提供，因此可用 2.5 小节提出的栓钉连接件抗剪滑
+移模型式（2-19）来拟合各组合试件的 BC 段的荷载-滑移曲线，拟合结果如图 4-29
+所示。可见，用式（2-19）能较好预测组合试件的 BC 的荷载-滑移曲线。
+
+
+
+
+       （a）SA-Ⅱ-13 组                         （b）SA-Ⅱ-16 组
+
+
+
+
+       （c）SA-Ⅲ-13 组                     （d）SA-Ⅲ-16 组
+
+
+
+
+                                88
+                 钢-预制 UHPC 开孔板组合桥面板界面抗剪性能研究
+
+
+
+
+       （e）SA-Ⅱ-W-13 组                                   （f）SA-Ⅱ-W-16 组
+                            图 4-29 组合试件 BC 段拟合
+
+  结合 4.5.3 小节知，当 N A /N s  0.3 时，将第一峰值荷载作为组合试件的极限承
+载力，因此其滑移模型仅考虑 OA 段。
+  当 N A /N s  0.3 时，仅出现一个峰值荷载（第二峰值荷载），因此其滑移模型需
+考虑 OA 段、AB 段和 BC 段。对于 AB 段，考虑该阶段由于粘结剂失效引起的滑移
+量突变和荷载上升幅度均较小，因此可用常数 m 代替。由 4.5.2 小节知，第一峰值
+荷载所对应的滑移量 S1 可取 0.011mm，因此可代入式（4-8）计算得 m=0.94。
+  综上分析，可得到组合连接件的抗剪滑移模型，见式（4-9）和式（4-10）。
+
+                (1 − e−65.1S )0.094       OA段
+            P 
+              = 0.94 P1 / Pu              AB段 N A / N S  0.3
+            Pu         −26.8 S / d S 0.47
+                                                                         （4-9）
+                (1 − e              )     BC段
+
+            P
+               = (1 − e−26.8 S / dS )0.47        N A / N S  0.3         （4-10）
+            Pu
+
+
+4.7 本章小结
+
+  通过栓钉与粘结剂组合连接件界面抗剪推出试验和受力全过程有限元分析，得
+到如下主要结论：
+  （1）组合试件中栓钉均在根部发生剪断破坏，而粘结剂大致沿剪力槽下缘撕裂
+成两半；与栓钉试件相似，当栓钉直径为 13 mm 时，UHPC 板表面无裂缝，当栓钉
+直径为 16 mm 时，在剪力槽区域的表面出现开裂，裂缝宽度超过 0.04 mm；在预制
+板与湿接缝交界处、预制板与剪力槽交界处均出现了横向裂缝，裂缝宽度同样超过
+0.04 mm，因此需对界面采用合理的构造措施增强。
+  （2）组合试件的荷载-滑移曲线由弹性段、突降段、弹塑性段和下降段组成。
+加载前期，粘结剂与栓钉组合抗剪，以粘结剂受力为主，受力行为与粘结剂试件相
+
+                                            89
+                       福州大学硕士学位论文
+
+
+
+似；粘结剂失效后，后期滑移过程与栓钉试件相似。与粘结剂和栓钉试件的不同之
+处在于，粘结剂失效时，组合试件出现了第二个荷载峰值，且荷载小幅度下降，降
+幅为 3.1%~9.5%。
+   （3）栓钉的抗剪承载力高于粘结剂的抗剪承载力，在粘结剂失效前，能与粘结
+剂协同受力，存在一定的组合作用；粘结剂失效引起的刚度退化和荷载突变对栓钉
+的损伤较小，后期栓钉的抗剪强度仍能完全发挥。粘结剂能显著提高组合连接件的
+早期抗剪刚度，是栓钉试件抗剪刚度的 2.6 倍以上。
+   （4）组合连接件的受力性能与粘结剂抗剪承载力 NA 与栓钉抗剪承载力 NS 的比
+值（NA/NS ）有关。当 N A /N s  0.3 时，粘结剂失效会引起抗剪刚度退化，但荷载并
+不会下降，因此可忽略其影响，承载力由栓钉控制；当 0.3  N A /Ns  0.9 ，粘结剂
+失效后荷载小幅度下降且滑移量小幅度增大，出现的第一峰值荷载值小于第二峰值
+荷载；当 N A /Ns  0.9 时，粘结剂失效后荷载大幅度下降，出现的第一峰值荷载将大
+于第二峰值荷载，承载力由粘结剂控制。因此本文建议组合连接件应控制
+N A /N s  0.3 ，确保粘结剂失效后不会出现荷载小幅下降的现象，避免刚度退化对栓
+钉造成影响。
+   （5）本文提出了组合连接件抗剪承载力计算方法，当 N A /N s  0.3 时，抗剪承
+载力完全由栓钉提供，可按照栓钉连接件的抗剪承载力计算；当 N A /N s  0.3 时，抗
+剪承载力应考虑粘结剂和栓钉的组合作用，栓钉抗剪承载力折减系数可取 0.15。在
+此基础上，分别建立了 N A /N s  0.3 和 N A /N s  0.3 两种条件下的抗剪-滑移模型，能
+较好预测组合连接件的荷载-滑移性能。
+
+
+
+                             90
+               钢-预制 UHPC 开孔板组合桥面板界面抗剪性能研究
+
+
+
+                      结论与展望
+
+
+结论
+
+  本文以 SS-CA-GS 连接的组合板为研究对象，进行了群钉连接件、水泥基粘结
+剂连接件、组合连接件的抗剪推出试验，开展了精细化有限元计算和理论分析，研
+究了各界面抗剪性能包括滑移、刚度和承载力，主要研究结论如下：
+  （1）钢-UHPC 组合板采用群钉连接件时，荷载-滑移曲线可归纳为 3 个阶段，
+即弹性段、弹塑性段和下降段。当栓钉间距均为 50 mm 时，直径 13 mm 栓钉发生根
+部剪断破坏，UHPC 板表面不出现裂缝；直径 16 mm 栓钉同样发生根部剪断破坏，
+但在 UHPC 板表面出现横向贯穿裂缝。由于群钉效应以及 UHPC 开裂，16 mm 栓钉
+的极限承载力实测值仅比 13 mm 栓钉的增大 37.8%，低于现有未考虑群钉效应的理
+论公式的计算值。
+  （2）钢-UHPC组合板栓钉抗剪有限元模型中应考虑焊缝的作用，否则计算结果
+过于保守；栓钉抗剪承载力受直径和间距的影响显著。随着栓钉直径的增大和间距
+的减小，群钉效应加剧，且推出试件的破坏模式会从栓钉剪断破坏向UHPC板破坏
+转变。钢-UHPC组合板中栓钉的最小间距与其直径有关，以不出现UHPC破坏为原
+则，建议直径13 mm的栓钉间距不宜小于2.5 ds，16 mm和19 mm栓钉间距不宜小于
+3.5 ds。栓钉承载力考虑群钉效应的折减系数 G 可取0.93。
+  （3）现有规范未考虑栓钉焊缝对抗剪承载力的贡献，计算的栓钉抗剪承载力值
+偏低，而本文修正的栓钉抗剪承载力计算公式考虑了焊缝贡献（焊缝尺寸通过栓钉
+直径表示）以及群钉效应，能更准确预测栓钉连接件的抗剪承载力。本文提出的栓
+钉抗剪-滑移模型、抗剪刚度的计算方法，能较好预测 UHPC 中栓钉的滑移性能和抗
+剪刚度。
+  （4）钢-UHPC 组合板采用水泥基粘结剂（HPCA）时，常温条件下，其破坏模
+式以粘结层内聚破坏（B 类）为主，试件的平均抗剪强度为 2.61 MPa；短期和长期
+高温条件下破坏模式为粘结层和 UHPC 板界面脱粘破坏（C 类）为主，平均抗剪强
+度大于 1.0 MPa。
+  （5）钢-UHPC 组合板采用栓钉和水泥基粘结剂（HPCA）的组合连接件，荷载
+-滑移曲线经历了弹性段、突降段、弹塑性段和下降段等四个阶段，破坏模式为栓钉
+剪断，粘结剂大致沿剪力槽下缘撕裂成两半，在预制板与湿接缝交界处以及预制板
+与剪力槽交界处均出现了横向裂缝，裂缝宽度超过 0.04 mm。
+  （6）由于栓钉的抗剪承载力高于粘结剂，组合试件存在两个峰值荷载。在粘结
+剂失效前，栓钉能与粘结剂协同受力，以粘结剂受力为主；在粘结剂失效后，承载
+
+                           91
+                       福州大学硕士学位论文
+
+
+
+力完全由栓钉提供。由于粘结剂失效引起的刚度退化和荷载突变对栓钉的损伤较小，
+因此，第二个峰值荷载与栓钉试件的峰值荷载基本一致。粘结剂使组合试件的早期
+抗剪刚度，相比栓钉试件，提高 2.6 倍以上，且随栓钉直径增大，提高幅度会增加。
+   （7）钢-UHPC 组合板组合连接件抗剪有限元分析结果表明，粘结剂抗剪承载
+力 NA 与栓钉抗剪承载力 NS 的比值（NA/NS）对组合连接件的受力性能有显著影响。
+当 N A /N s  0.3 时，粘结剂失效后，刚度退化但荷载并不会下降，可不计其影响；当
+0.3  N A /Ns  0.9 ，粘结剂失效后荷载小幅度下降，出现的第一峰值荷载值小于第
+二峰值荷载；当 N A /Ns  0.9 时，粘结剂失效后荷载大幅度下降，出现的第一峰值荷
+载将大于第二峰值荷载。建议组合连接件应控制 N A /N s  0.3 ，避免刚度退化对结构
+受力的不利影响。
+   （8）建立了组合连接件抗剪承载力计算公式。当 N A /N s  0.3 时，可按照栓钉
+连接件的抗剪承载力计算；当 N A /N s  0.3 时，抗剪承载力应考虑粘结剂和栓钉的组
+合作用。在此基础上，分别建立了 N A /N s  0.3 和 N A /N s  0.3 两种条件下的抗剪-滑
+移模型，能较好预测组合连接件的荷载-滑移性能。
+
+展望
+
+   为更深入了解上述钢-预制 UHPC 开孔板组合桥面板方案的受力性能，并在实际
+工程中安全、合理地推广应用，今后可对如下问题作开展进一步的研究：
+   （1）连接件不仅需要承受和传递 UHPC 和钢板间的水平剪力，还需抵抗竖向
+掀起力。因此还需开展组合连接件抗拉和抗拉-剪共同作用的试验研究。
+   （2）连接件的疲劳性能是钢-UHPC 组合桥面板疲劳设计的关键问题，因此需
+开展组合连接件的疲劳试验，对组合连接件的疲劳受力特性和疲劳寿命进行分析。
+   （3）本文未开展钢-预制 UHPC 组合桥面板足尺节段试验和有限元分析。今后
+可开展相关研究，探究各工况荷载作用下的预制区域的粘结层、湿接缝和剪力槽内
+栓钉以及 UHPC 层受力状况以及提出关键的技术指标。
+
+
+
+
+                             92
+                             钢-预制 UHPC 开孔板组合桥面板界面抗剪性能研究
+
+
+
+                                          参考文献
+
+[1] 邵旭东, 胡建华. 钢-超高性能混凝土轻型组合桥梁结构[M]. 北京: 人民交通出版社, 2015.
+[2] 王春生, 冯亚成. 正交异性钢桥面板的疲劳研究综述[J]. 钢结构, 2009, 24(9): 10-13, 32.
+[3] 黄卫, 刘振清. 大跨径钢桥面铺装设计理论与方法研究[J]. 土木工程学报, 2005(1): 51-59.
+[4] Pfeil M S，Battista R C，Mergulhao A J R . Stress concentration in steel bridge orthotropic
+    decks[J]. Journal of Constructional Steel Research, 2005, 61(8): 1172-1184.
+[5] 陈宝春, 季韬, 黄卿维, 等. 超高性能混凝土研究综述[J]. 建筑科学与工程学报, 2014, 31(3): 1-
+    24.
+[6] 陈宝春, 韦建刚, 黄卿维, 等. 超高性能混凝土应用进展[J]. 建筑科学与工程学报, 2019, 36(2):
+    10-20.
+[7] 邵旭东, 曹君辉, 易笃韬, 等. 正交异性钢板-薄层 RPC 组合桥面基本性能研究[J]. 中国公路学
+    报, 2012, 25(2): 40-45.
+[8] 曹君辉. 钢-薄层超高性能混凝土轻型组合桥面结构基本性能研究[D]. 长沙: 湖南大学, 2016.
+[9] 郑楷柱, 何海, 梁立农, 等. 佛陈大桥(扩建)正交异性钢桥面板铺装耐久性设计[C]// 第十七届中
+    国科协年会, 2015．
+[10] 宋忠进. 天津海河大桥老桥维修加固工程关键技术[J]. 建筑机械, 2017(6): 30-33+4.
+[11] 钢-STC 轻型组合桥面技术部分应用实桥.详见 http://ce.hnu.edu.cn/info/1065/3525.htm
+[12] 朱春东, 范永根, 陈飞, 等. 公路钢桥梁桥面加固技术应用实例及分析[J]. 中外公路, 2018, 38(5):
+    120-123.
+[13] 裴必达, 李立峰, 邵旭东, 等. 钢-UHPC 轻型组合桥面板实桥试验研究[J]. 湖南大学学报(自然
+    科学版), 2019, 46(1): 81-89．
+[14] 董宇辉, 周志敏. 礐石大桥轻型组合桥面结构应用概述[J]. 公路交通科技(应用技术版), 2017,
+    13(5): 211-213.
+[15] 吴纯奇, 徐安东. 超高韧性混凝土在赤石大桥的施工应用研究[J]. 福建建筑, 2017(11): 71-75.
+[16] 杨明. 正交异性钢-UHPC 组合桥面板弯曲力学性能与计算方法研究[D]. 福州: 福州大学. 2017.
+[17] 詹健. 大跨径柔性桥梁钢-UHPC 轻型组合桥面受力性能研究[D]. 长沙: 湖南大学, 2019.
+[18] 冀振龙. UHPC 超高性能混凝土钢桥面复合铺装体系的优化和应用[J]. 建筑科技, 2020, 4(2):
+    54-56.
+[19] 欧键灵, 曹志光, 宁平华. 广东清远北江四桥工程主桥超高性能混凝土-钢组合桥面板结构设计
+    [J]. 城市道桥与防洪, 2016(8): 4.
+[20] 钟波. STC 超高韧性混凝土配合比的研究与应用[J]. 四川水力发电, 2019, 38(5): 41-43, 52.
+[21] 周立兵, 张刚, 王敏. 军山长江大桥钢-UHPC 组合桥面改造效果研究[J]. 桥梁建设, 2020, 50(2):
+    49-54.
+[22] 吴念. 铁路钢桥面铺装材料现状和前景分析[J]. 云南水力发电, 2019, 35(6): 84-86.
+[23] 赵学民. 超高韧性混凝土(STC)组合桥面施工关键技术研究[J]. 北方交通, 2020(2): 24-26.
+                                                 93
+                                        福州大学硕士学位论文
+
+
+[24] 魏林. 超高性能混凝土在沪通长江大桥上的应用[J]. 铁道工程学报, 2019, 36(5): 85-89.
+[25] 谢智荣. 超高性能混凝土在钢箱梁桥面铺装中的技术问题研究[J]. 交通世界, 2020(18): 112-
+    113.
+[26] 叶奋, 宋卿卿. 实桥加载下钢桥面超高性能混凝土铺装力学响应[J]. 同济大学学报(自然科学
+    版), 2020, 48(7): 982-989.
+[27] 陈宝春, 李聪, 黄伟, 等. 超高性能混凝土收缩综述[J]. 交通运输工程学报, 2018, 18(1): 12-28.
+[28] 李聪. 钢-预制 UHPC 组合桥面板界面受力性能研究[D]. 福州: 福州大学, 2020.
+[29] Cao J , Shao X , Zhang Z , et al. Retrofit of an orthotropic steel deck with compact reinforced
+    reactive powder concrete[J]. Structure and Infrastructure Engineering, 2015, 12(3): 1-19.
+[30] 赵辛玮, 肖汝诚, 孙斌, 等. 常温养护型超高性能混凝土组合桥面板收缩性能研究[J]. 中外公路,
+    2020, 40(3): 100-108.
+[31] 赵秋, 陈平, 陈宝春, 等. 装配式钢-UHPC 组合桥面板试设计及性能研究[J]. 桥梁建设, 2018,
+    48(1): 94-99.
+[32] Ziad H, Marco N, Claude S, et al. Innovative solution for strengthening orthotropic decks using
+    UHPFRC: the Illzach bridge [C]// In Proceeding of Symposium on Ultra-High Performance Fibre-
+    Reinforced Concrete, Marseille, France, 2013, 117-126．
+[33] Champenoy D , Genereux G, Hajar Z, et al. Repair and Strengthening of an Orthotropic Slab with
+    UHPFRC Wearing Course Bridge at Illzach in France: First Return from Experience[J]. Iabse
+    Symposium Report, 2013, 99(8): 1601-1608.
+[34] Champenoy D , Grégory G, Hajar Z, et al. Illzach Bridge: Innovative Repair of Orthotropic Deck
+    Using Ultra-High-Performance Fibre-Reinforced Concrete-Return After 5 Years[J]. Structural
+    Engineering International, 2019: 1-6.
+[35] 邵旭东, 曹君辉. 面向未来的高性能桥梁结构研发与应用[J]. 建筑科学与工程学报, 2017, 34(5):
+    41-58.
+[36] 邓鸣, 张建仁, 王蕊, 等. UHPC 铺装加固斜拉桥正交异性钢桥面板[J]. 长安大学学报(自然科学
+    版), 2018, 38(1): 67-74.
+[37] 谢泽豪. 钢-预制 UHPC 组合桥面板试设计与抗剪界面性能研究[D]. 福州: 福州大学, 2020.
+[38] 李萌, 邵旭东, 曹君辉, 等. UHPC 中短栓钉抗剪性能试验及理论分析研究[J]. 中国公路学报,
+    2021, 34(8): 191-204.
+[39] Dieng L, Marchand P, Gomes F, et al. Use of UHPFRC overlay to reduce stresses in orthotropic
+    steel decks[J]. Journal of Constructional Steel Research, 2013, 89(5): 30-41.
+[40] Kim J S, Kwark J, Joh C, et al. Headed stud shear connector for thin ultrahigh-performance
+    concrete bridge deck[J]. Journal of Constructional Steel Research, 2015, 108(5): 22-30.
+[41] Cao J, Shao X. Finite element analysis of headed studs embedded in thin UHPC[J]. Journal of
+    Constructional Steel Research, 2019, 161: 355-368.
+[42] Luo Y, Hoki K, Hayasbi K, et al. Behavior and strength of headed stud-SFRCC shear connection，
+    I: Experimental study[J]. Journal of Structural Engineering, 2016, 142(2): 4015112-1-4015112-10.
+
+                                                    94
+                           钢-预制 UHPC 开孔板组合桥面板界面抗剪性能研究
+
+
+[43] Luo Y, Hoki K, Hayashi K, et al. Behavior and strength of headed stud-SFRCC shear connection,
+    II: Strength evaluation[J]. Journal of Structural Engineering, 2016, 142(2): 04015113.1-
+    04015113.10.
+[44] 邵林海, 李志峰, 贺志启, 等. 不同剪力连接度下装配式钢-混组合箱梁受力性能试验研究[J].
+    交通科技, 2020(2): 1-6.
+[45] 苏庆田, 李雨. 高强度砂浆群钉连接件抗剪承载力试验[J]. 同济大学学报(自然科学版), 2015,
+    43(5): 699-705.
+[46] Hu Y, Meloni M, Cheng Z, et al. Flexural performance of steel-UHPC composite beams with shear
+    pockets[J]. Structures, 2020, 27: 570-582.
+[47] Wang J, Qi J, Tong T, et al. Static Behavior of Large Stud Shear Connectors in Steel-UHPC
+    Composite Structures[J]. Engineering Structures, 2018, 178: 534-542.
+[48] Wang J, Xu Q, Yao Y, et al. Static behavior of grouped large headed stud-UHPC shear connectors
+    in composite structures[J]. Composite Structures, 2018, 206: 202-214.
+[49] 肖亚鑫, 鲁乃唯, 陈方怀. 钢-超高性能混凝土组合板连接件的抗剪性能[J]. 交通科学与工程,
+    2020, 36(1): 44-49.
+[50] 谢宏伟. 钢-超高性能混凝土组合结构大直径栓钉的抗剪性能研究[D]. 成都: 西南交通大学,
+    2019.
+[51] 占玉林, 李贵峰, 赵人达, 等. 非金属剪力键界面黏结-滑移本构关系[J]. 中国公路学报, 2016,
+    29(11): 116-121.
+[52] Larbi A S, Ferrier E, Jurkiewiez B, et al. Static behaviour of steel concrete beam connected by
+    bonding[J]. Engineering Structures, 2007, 29(6): 1034-1042.
+[53] Meaud C, Jurkiewiez B, Ferrier E. Steel–concrete bonding connection: An experimental study and
+    non-linear finite element analysis[J]. International Journal of Adhesion & Adhesives, 2014, 54:
+    131-142.
+[54] 石磊, 葛学贵, 杨中洲, 等. 我国胶粘剂技术现状、发展趋势和应用前景[J]. 中国胶粘剂,
+    2005(8): 44-47, 51.
+[55] Berthet J F, Yurtdas I, Delmas Y, et al. Evaluation of the adhesion resistance between steel and
+    concrete by push out test[J]. International Journal of Adhesion and Adhesives, 2011, 31(2): 75-83．
+[56] 占玉林, 李贵峰, 赵人达, 等. 有机聚合物剪力键的破坏机理及承载能力研究[J]. 西南交通大学
+    学报, 2017, 52(3):8.
+[57] Jurkiewiez B, Meaud C, Michel L. Non linear behaviour of steel-concrete epoxy bonded composite
+    beams [J]. Journal of Constructional Steel Research, 2011, 67(3): 389-397．
+[58] 马熙伦, 陈宝春, 黄卿维, 等. 德国加特纳普拉兹超高性能混凝土人行桥[J]. 中外公路, 2017,
+    37(2): 86-90.
+[59] Schmidt M, Nat R, Dipl T, et al. Fügen von Bauteilen aus UHPC durch Kleben.
+    Voruntersuchungen und Anwendung bei der Gärtnerplatzbrücke in Kasse[J]. Beton-und
+    Stahlbetonbau, 2007, 102(10)： 681-690．
+
+
+                                                 95
+                                        福州大学硕士学位论文
+
+
+[60] 孙启力, 路新瀛, 聂鑫, 等. 非蒸养 UHPC-钢板结构界面的受拉和剪切性能试验研究[J]. 工程力
+    学, 2017, 34(9): 167-174, 192.
+[61] 喻莹, 谢青山, 赵伟. 钢-混凝土组合结构环氧树脂砂浆界面破坏研究[C]// 全国现代结构工程
+    学术研讨会. 2018.
+[62] Hashemi S, Al-Mahaidi R. Investigation of Bond Strength and Flexural Behavior of FRP
+    Strengthened RC Beams Using Cement-Based Adhesives. ASCE, 2010: 689-700.
+[63] Hassan K E, Brooks J J, Al-Alawi L. Compatibility of repair mortars with concrete in a hot-dry
+    environment[J]. Cement and Concrete Composites, 2001, 23(1): 92-101.
+[64] 张德明, 王永超. 水泥混凝土路面快速修补材料综述[J]. 公路交通科技(应用技术版), 2015,
+    11(4): 85-86, 89.
+[65] 卢邵斌. 超高性能砂浆制备及其石砌体受压承载力研究[D]. 福州: 福州大学, 2021.
+[66] 陈宝春, 杨简, 吴香国, 等. UHPC 力学性能的多指标分级[J]. 中国公路学报, 2021, 34(8): 22-34.
+[67] 唐俊福. 钢-混凝土组合梁复合粘结锚固抗剪连接力学性能研究[D]. 厦门: 华侨大学, 2020.
+[68] 陈平. 装配式-UHPC 组合桥面板受力性能研究[D]. 福州: 福州大学, 2017.
+[69] CECS 226: 2007. 栓钉焊接技术规程[S]. 北京: 中国计划出版社, 2007.
+[70] GB/T 31387-2015. 活性粉末混凝土[S]. 北京: 中国标准出版社, 2015.
+[71] d, 陈宝春, 沈秀将, 等. UHPC 单轴拉伸试验狗骨试件优化设计[J].工程力学, 2018, 35(10): 37-
+    46, 55.
+[72] GB/T 228.1-2010. 金属材料拉伸试验 第 1 部分:室温试验方法[S]. 北京: 中国标准出版社, 2010.
+[73] 丁发兴, 倪鸣, 龚永智, 等. 栓钉剪力连接件滑移性能试验研究及受剪承载力计算[J]. 建筑结构
+    学报, 2014, 35(9): 98-106.
+[74] Kim S E, Nguyen H T. Finite element modeling and analysis of a hybrid steel-PSC beam
+    connection [J]. Engineering Structures, 2010, 32(9): 2557-2569.
+[75] 杨剑, 方志. 超高性能混凝土单轴受压应力-应变关系研究[J]. 混凝土, 2008(7): 11-15.
+[76] 杨简. 基于钢纤维增强作用的 UHPC 基本材性预测研究 [D]. 福州: 福州大学, 2021.
+[77] GB/T 10432-2002. 电弧螺柱焊用圆柱头焊钉[S]. 北京: 中国标准出版社, 2002.
+[78] Nguyen H T, Kim S E. Finite element modeling of push-out tests for large stud shear connectors[J].
+    Journal of Constructional Steel Research, 2009, 65: 1909-1920.
+[79] JTG/T D64-01-2015. 公路钢混组合桥梁设计与施工规范[S]. 北京: 中国标准出版社, 2015.
+[80] GB 50917-2013. 钢-混凝土组合桥梁设计规范 [S]. 北京: 中国标准出版社, 2013.
+[81] 陈宝春, 杨简, 黄卿维, 等. 超高性能混凝土形状与尺寸效应分析[J]. 福州大学学报: 自然科学
+    版, 2019, 47(3): 391-397.
+[82] EN 1994-1-1:2004, Eurocode 4: Design of composite and concrete structures Part 1-1: General
+    rules and rules for buildings [S]. European Committee for Standardization, 2004.
+[83] ASHTO. AASHTO LRFD bridge design specifications. U.S.A: American Association of State
+    Highway and Transportation Officials, 2012: 1-43.
+
+
+                                                    96
+                            钢-预制 UHPC 开孔板组合桥面板界面抗剪性能研究
+
+
+[84] AISC 360-10. Speciﬁcation for structural steel buildings, Chicago. 2010.
+[85] GB 50017-2017. 钢结构设计规范[S]. 北京: 中国标准出版社, 2017.
+[86] Zhao Q, Huang G, Xu C, et al. Push-Out Behavior of Short Headed Stud Connectors in Steel-Ultra
+    High Performance Concrete Composite Deck[J]. KSCE Journal of Civil Engineering, 2021: 1-11.
