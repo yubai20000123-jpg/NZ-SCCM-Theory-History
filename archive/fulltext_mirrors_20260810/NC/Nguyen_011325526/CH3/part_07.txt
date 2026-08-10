@@ -1,12 +1,0 @@
-described above prepares for the stability analysis of reinforced concrete walls and
-
-the development of a finite element formulation to carry out this analysis as detailed
-
-in the preceding chapters.
-
-
-
-
-                                                                                  IOS
-            CHAPTER4
-
