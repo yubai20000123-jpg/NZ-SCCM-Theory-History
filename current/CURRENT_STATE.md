@@ -1,79 +1,117 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 20:18 +08:00  
+**Updated:** 2026-08-10 20:56 +08:00  
 **Purpose:** 唯一当前工作入口。详细推导、失败路线和执行历史留在 canonical theory/history/evidence 文件中。
 
-## 0. 主线身份
+## 0. 最高优先级：EXPLICIT END-TO-END CAPACITY
+
+Canonical governance：
+
+- `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
+- `history/NZ_SCCM/EXPLICIT_CAPACITY_PRIORITY_AND_MATERIAL_UNDERUSE_RESET_20260810.md`
+
+用户最新澄清覆盖此前对 compiler/current-map 形式的过度执着：
 
 ```text
-G18/G27 invariant current-map architecture = ACTIVE
-G20/G21 smooth conservative material philosophy = RETAINED
-G26 moment-first D15 architecture = RETAINED
-G28/G30 direct analytic P,Rq,L kernel = RETAINED
-M1R/PF1/P2A = compiler/representation experiments, not architecture replacements
-P2R = CANCELLED
-ROUTE_SWITCH = NO
+唯一最高要求 = 最终极限承载力必须由显式公式及同一公式的显式导数得到。
 ```
 
-此前“局部恢复 -> 误把既有 current-map 当新路线 -> 完整恢复”的过程已写入 history。R01-R06 均属于恢复后的同一 current-map 主线。
+允许的中间数学表示不再预先锁死。可以使用：
+
+- 4D `(eps1,eps2,sigma1,sigma2)` stress-strain manifold；
+- invariant current map；
+- principal/spectral representation；
+- whole-domain/global target function；
+- low-rank/separable surface；
+- polynomial/rational/algebraic formula；
+- named special functions with explicit derivatives；
+- local analytic patches；
+- 其他能够显式传播到最终容量方程的数学表示。
+
+材料曲面中的局部尖峰、切口、脊线、过窄 transition、局部振荡不再要求逐点复现。允许像处理试验尖峰一样，**有意不使用全部峰值/局部尖锐能力**，通过简单显式曲线/曲面做 controlled under-use / smoothing / contraction。每次简化必须报告其力学后果：压缩降低、拉伸降低、TT/TC 降低、增强或 mixed，以及导数变化。
+
+材料拟合的目标不再是最小 pointwise regression error，而是：
+
+```text
+物理可控 + 透明 + 导数显式 + 最终容量显式 + 结构验证可接受
+```
 
 ---
 
-## 1. 固定结构目标与零空间离散边界
+## 1. 最终结构目标
+
+当前容量方程仍采用：
 
 \[
 P(D,q),\qquad R_q(D,q)=0,
 \]
 
 \[
-L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0.
+L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0,
 \]
+
+最终：
+
+\[
+P_u=P(D^*,q^*)
+\]
+
+其中 `(D*,q*)` 必须来自显式平衡/驻值方程的 admissible real root。`P,Rq` 及 `P_,D,P_,q,Rq_,D,Rq_,q` 必须从同一显式数学表示解析获得。
+
+结构层仍保留：
 
 ```text
 DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
 ACTIVE_MODE = m=1
 KINEMATICS = NGUYEN_SECOND_ORDER
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-N_auxiliary_numerical_quadrature = 0
-N_auxiliary_ODE_steps = 0
-MATERIAL_POINT_GRID = PROHIBITED
-SPATIAL_CELLS = PROHIBITED
-NO hidden initial-value integration
-NO large connection system as production operator
 ```
 
-工程解析允许内部解析收敛 + 独立 audit；audit 不得选阶、调参或选根。
+正式 production operator 不得依赖隐藏的 material-point propagation、黑箱 numerical differentiation 或黑箱 numerical integral。数值求根可用于求解已经显式得到的有限方程，但不能替代公式本身。
 
 ---
 
-## 2. 当前 unified material grammar
+## 2. 旧主线的当前身份
 
-\[
-\mathbf E_u=\frac{(1-\nu)\mathbf E+\nu\,\mathrm{tr}(\mathbf E)\mathbf I}{1-\nu^2},
-\qquad J_1=\mathrm{tr}\mathbf E_u,
-\qquad J_2=\det\mathbf E_u.
-\]
+以下均保留为工具/证据，不再拥有“必须继续使用”的排他身份：
 
-G18/G27：
+```text
+G18/G27 invariant current-map architecture = RETAINED TOOL
+G20/G21 smooth conservative material philosophy = RETAINED
+G26 moment-first D15 architecture = RETAINED TOOL
+G28/G30 direct analytic P,Rq,L kernel = RETAINED
+R03 exact rank<=4 spectral factorization = RETAINED TOOL
+R04 Appell/Carlson classification = RETAINED KERNEL LIBRARY
+R05 softsign compactification = CANDIDATE ONLY
+R06 direct polynomial / Möbius head-to-head = CANDIDATE EVIDENCE ONLY
+```
 
-\[
-\boxed{\boldsymbol\sigma=U(\mathbf E_u)+J_2[A(J_1,J_2)\mathbf I+B(J_1,J_2)\mathbf E_u]}
-\]
-
-一致切线必须由同一 stress map 解析求导。G20/G21 允许 C1/C2 regularization、smooth conservative postpeak/TC/TT/CC target；禁止恢复 runtime TT/TC/CC state machine。
-
-旧 source-shaped `C,T,T^8` 继续保留 benchmark/reference 身份，但不是必须永久保留的 production grammar。
+此前 compiler failure 不得再升级为 material/current-map architecture failure；反之，也不得为了保留某个 compiler 而增加材料面复杂度。
 
 ---
 
-## 3. MATERIAL-NATIVE DOMAIN GOVERNANCE
+## 3. 材料数据处理新原则
 
-Canonical：
+一个 source/experiment feature 可以分成：
 
-- `governance/MATERIAL_NATIVE_SPECTRAL_DOMAIN_RULE_20260810.md`
-- `governance/MATERIAL_NATIVE_SCALAR_DOMAIN_CONTRACT_R05_20260810.md`
+1. **HARD LANDMARKS**：必须保留或明确给出 deliberate reduction；例如初始切线、主要压缩峰、主要拉伸峰、残余水平、关键多轴强度锚点；
+2. **OPTIONAL SHARP FEATURES**：局部尖口、脊线、过窄 transition、测得但不希望完全利用的峰值；
+3. **ANALYTIC PATCHES**：用简单显式曲线/曲面替代 optional feature；
+4. **MECHANICAL CONSEQUENCE LABEL**：明确该 patch 对 CC/TC/TT、压缩/拉伸、切线和容量的影响。
+
+允许 deliberately under-use material peak，例如：
+
+```text
+measured/source peak = 1.00
+analytic design target = 0.95
+```
+
+只要这种降低是明确、可解释并在结构验证中评估，而不是隐藏调参。
+
+结构试验结果只能在材料 target 冻结以后用于 validation；不得用 Pu 反向决定局部 patch 的隐蔽参数。
+
+---
+
+## 4. MATERIAL-NATIVE DOMAIN GOVERNANCE 保留
 
 ```text
 PRIMARY_DOMAIN   = MATERIAL_ADMISSIBLE_SPECTRAL_DOMAIN Lambda_M
@@ -81,249 +119,77 @@ SECONDARY_DOMAIN = STRUCTURAL_REACHABLE_SUBDOMAIN Lambda_R
 MANDATORY        = Lambda_R subset of Lambda_M
 ```
 
-材料 compiler 先在材料本构自己的适用/活动谱域通过 Gate B/C。Case21/Swartz24 只作后验结构验证与可选效率诊断，禁止反向定义或缩小 production material domain。
+Case21/Swartz24 不能定义 production material domain。NC 与 UHPC 可以有不同 `Lambda_M` 和不同 surface/patch 参数，但最终必须能通过同一类 explicit-capacity workflow 输出 `P,Rq,L,Pu`。
 
-NC 与 UHPC 可有不同 `Lambda_M`，但共享 Eu/J1/J2、matrix-function、invariant/separable compilation、D15 和 P/Rq/L 架构。UHPC 禁止继承 NC 数字谱域。
-
-R05 NC active transition interval：
+当前 NC source-active interval 仍保留为材料来源尺度参考：
 
 \[
-\boxed{\Lambda_{M,NC}^{active}=[-\gamma_2,\alpha_1\rho/\kappa]}
+\Lambda_{M,NC}^{active}=[-\gamma_2,\alpha_1\rho/\kappa]
+=[-10,0.49987179453974245].
 \]
 
-当前普通混凝土 source instance：
+这不是禁止更简单 target 的拟合域，而是来源 landmark 的材料尺度记录。
 
-```text
-gamma2 = 10
-alpha1 = 10
-alpha2 = 0.30
-rho = 0.10
-kappa = 2.0005129533678754
-lambda_cr = 0.04998717945397425
-Lambda_M,NC^active = [-10, 0.49987179453974245]
-```
+UHPC 禁止继承 NC 数值谱域；必须由 UHPC source/model 独立定义。
 
 ---
 
-## 4. R01-R05 retained conclusions
+## 5. R06 仍然有效的材料结果
 
-```text
-R01: three narrow tensile current-map ridges located
-R02: mild widening helps but is insufficient alone; k=1.25 optional, not frozen
-R03: source-shaped principal surface exact separated rank <=4; Swartz spectral range only structural diagnostic
-R04: full Pi+H1+H10 tower not generic direct Appell/Carlson; material-native spectral governance frozen
-R05: material-native NC domain frozen; pure Saenz continuation conflicts with 10% source postcrush residual
-```
-
-R05 compactification screen showed material-coordinate compression is useful, but final NC scalar remained open because the deep-postpeak target was not yet explicitly closed.
-
----
-
-## 5. R06 — NC POSTPEAK C2 SCALAR CLOSURE
-
-Canonical：
-
-- `governance/NC_POSTPEAK_C2_SCALAR_TARGET_RULE_20260810.md`
-- `current/theory/NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_20260810.md`
-- `current/theory/NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_results.json`
-- `history/NZ_SCCM/R06_POSTPEAK_C2_AND_COMPILER_HEADTOHEAD_20260810.md`
-
-Nguyen source postcrush branch: linear from peak to `0.1 sigma_p` at `gamma2 eps_p`, then zero-tangent residual plateau. To remove the source tangent jumps without restoring a state machine, R06 freezes a C2 endpoint regularization of that material target.
-
-Define
-
-```text
-s=(-lambda-1)/9
-sigma/fc=-1+0.9 q(s)
-```
-
-with source `q=s`. R06 bridge:
+R06 已建立 NC 压缩峰后的 source-faithful C2 endpoint regularization：
 
 ```text
 g(tau)=3 tau^5-8 tau^4+6 tau^3
 delta_s=0.05
-Delta_lambda=0.45 per endpoint
-```
-
-Material-only width gate: local extra compression relative to source <=1% fc.
-
-Executed:
-
-```text
-max extra compression = 0.888889% fc
-max conservative reduction = 0.888889% fc
+max local extra compression vs source = 0.888889% fc
 U(-1)=-1, U'(-1)=0
 U(-10)=-0.1, U'(-10)=0
 ```
 
-Formal status：
-
 ```text
-NC_POSTPEAK_C2_SCALAR_TARGET = PASS
+NC_POSTPEAK_C2_SCALAR_TARGET = PASS AS ONE ACCEPTABLE DATA-PROCESSING OPTION
 ```
 
-The target is used by a unified compiler; it does not create runtime crushing subdomains.
+但它不再是唯一允许的 postpeak representation；若后续得到更简单且同样透明的 explicit patch，可替代。
 
 ---
 
-## 6. R06 compiler head-to-head
+## 6. 3D/4D 可视化规则
 
-### 6.1 Direct polynomial in lambda
+讨论材料面形状、局部尖口和平滑后果时，优先使用：
 
-Degree 64 executed material screen：
+1. `sigma1(eps1,eps2)` 三维曲面 + `eps1-eps2 / eps1-sigma1 / eps2-sigma1` 三正交投影；
+2. `sigma2(eps1,eps2)` 同样格式；
+3. baseline vs patched difference surface；
+4. CC/TC/TT 区域机械后果标签。
 
-```text
-stress max = 1.981970% fc
-stress P95 = 0.185018% fc
-tangent P95 = 3.365831% initial tangent
-local tangent max = 185.101% in narrow transition neighborhoods
-```
-
-Formal integration identity is solved: finite scalar polynomial -> Cayley-Hamilton invariant polynomial -> Beta/D15 exact moments.
-
-But generic degree-64 invariant footprint is large：
-
-```text
-A(J1,J2) unique pairs = 1025
-B(J1,J2) unique pairs = 1056
-union unique pairs     = 1088
-A+B pair count         = 2081
-```
-
-```text
-GLOBAL_LAMBDA_N64 = PASS_MATERIAL_SCREEN / HOLD_GATE_C
-```
-
-### 6.2 Softsign
-
-`chi_s=lambda/sqrt(1+lambda^2)`，degree 48：
-
-```text
-stress max = 0.988210% fc
-tangent P95 = 1.991297%
-```
-
-Algebraic kernel smaller than old source tower but exact direct D15 closure remains unproved：
-
-```text
-SOFTSIGN_N48 = PASS_MATERIAL_SCREEN / HOLD_KERNEL
-```
-
-### 6.3 Möbius compactification
-
-\[
-\chi_M(\lambda)=\frac{\lambda}{1-\lambda}.
-\]
-
-For the 2x2 tensor：
-
-\[
-\boxed{\chi_M(E)=E(I-E)^{-1}=\frac{E-J_2I}{1-J_1+J_2}}
-\]
-
-so the only scalar denominator is
-
-\[
-\boxed{\Delta_M=1-J_1+J_2=(1-\lambda_+)(1-\lambda_-)}.
-\]
-
-NC material-domain pole safety：
-
-```text
-lambda_p=1 > lambda_M,max=0.49987179454
-Delta_M >= 0.250128221897 on the full NC material square
-```
-
-Material screens：
-
-```text
-n=24: stress max 2.081055% fc; tangent P95 4.417013%
-n=48: stress max 0.984912% fc; tangent P95 2.369704%
-```
-
-After Case21 substitution：
-
-\[
-\Delta_M=1-I_1+I_2=A_0(s,t)+A_1(s,t)\zeta+A_2(s,t)\zeta^2.
-\]
-
-Fixed-`s,t` thickness integration of integer powers `Delta_M^{-m}` is elementary-recursive; however the remaining 2D master is not yet proven to reduce to a small Beta/Appell/Carlson kernel.
-
-```text
-MOBIUS_COMPACTIFICATION = PROMOTED_FOR_KERNEL_SCREEN
-MOBIUS_D15_KERNEL = HOLD_NOT_YET_CLOSED
-```
+UHPC 当前完整 `(eps1,eps2)->(sigma1,sigma2)` operator 尚未冻结，禁止为了图形完整性虚构正式 UHPC surface。
 
 ---
 
-## 7. R06 formal decision
+## 7. Gate 重新解释
 
-```text
-R06 = PASS_POSTPEAK_C2__HOLD_FINAL_COMPILER
-NC_POSTPEAK_C2_SCALAR_TARGET = PASS
-GLOBAL_LAMBDA_N64 = PASS_MATERIAL_SCREEN / HOLD_GATE_C
-SOFTSIGN_N48 = PASS_MATERIAL_SCREEN / HOLD_KERNEL
-MOBIUS_N24_N48 = PROMISING / HOLD_KERNEL
-FINAL_NC_COMPILER = OPEN
-CASE21_PU = NOT_RUN
-SWARTZ24_PU = NOT_RUN
-ROUTE_SWITCH = NO
-```
+### Gate A — END-TO-END EXPLICITNESS
 
-Important interpretation：
-
-```text
-Direct polynomial = integration solved / representation footprint high
-Compactified maps = representation smaller / structural kernel unresolved
-```
-
-No compiler may be selected from material error alone.
-
----
-
-## 8. D15 / structural mainline retained
-
-G26：
+必须得到显式：
 
 \[
-continuous\ material\to moment\!-\!first\ contraction\to D15\ exact\ moments.
+\sigma(\varepsilon),\quad \partial\sigma/\partial\varepsilon,
+\quad P(D,q),\quad R_q(D,q),
+\quad P_{,D},P_{,q},R_{q,D},R_{q,q},L(D,q).
 \]
 
-G28/G30：same analytic kernel -> `P,Rq,L`; no second Pu solver/load stepping identity.
+### Gate B — MATERIAL ADEQUACY
 
-Case21 invariant foundation remains finite polynomial in `I1,I2`; all `M^2` terms in `I2` cancel exactly.
+不是追求 source pointwise minimum error，而是保留/明确降低关键材料 landmarks，确保 patch 后的压缩、拉伸、TT/TC 后果可解释并在允许误差内。
 
----
+### Gate C — FORMULA COMPLEXITY
 
-## 9. Gate A/B/C
-
-```text
-Gate A = exact/engineering-analytic direct structural closure
-Gate B = concrete nonlinear/material adequacy
-Gate C = production analytic complexity
-```
-
-Gate C：zero formal x/y/z quadrature；zero auxiliary quadrature/ODE；no runtime TT/TC/CC state propagation；`P,Rq` and derivatives -> direct finite formulas；large auxiliary systems != production。
+显式公式必须足够透明和可审计。大 PF/Gauss-Manin/隐藏 ODE/黑箱积分仍不应成为 production operator。named special functions 可接受的前提是公式及导数身份直接、有限、稳定。
 
 ---
 
-## 10. Material/structure status
-
-Ordinary concrete：material-native active domain = PASS；NC postpeak C2 target = PASS；full compact scalar compiler = OPEN；multiaxial `A,B` final closure follows only after scalar compiler decision。
-
-Reinforcement must enter root solve before ultimate state：
-
-\[
-P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}.
-\]
-
-UHPC：only `fc=141.1 MPa` user-forced；UHPC material-native domain and scalar/multiaxial law must come from UHPC sources, but reuse the same compiler/kernel architecture after NC proves it.
-
-Steel shell/Y：`M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE`；PBL remains strong local boundary/subpanel segmentation.
-
----
-
-## 11. Case21 / Swartz24 status
+## 8. Case21 / Swartz24 / UHPC status
 
 ```text
 Case21 = analytic benchmark; no new final RC Pu frozen
@@ -332,44 +198,46 @@ G31 476.936 kN = uncracked chain validation only
 Swartz24 production Pu = PAUSED
 ```
 
-No Pu may tune material domain, postpeak target, compactification, compiler order or root selection.
+NC：允许 deliberate material under-use / smoothing；下一步先做 explicit surface simplification，再进入 capacity validation。
+
+UHPC：`fc=141.1 MPa` 用户强制保留；完整多轴 current surface 仍 OPEN。UHPC 后续也允许相同“source peak != 必须全部利用”的 data-processing philosophy，但必须从 UHPC source landmarks 自己建立 target。
+
+Reinforcement 仍必须在 root solve 前进入：
+
+\[
+P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}.
+\]
 
 ---
 
-## 12. 当前唯一下一理论任务
+## 9. 当前下一任务
 
 ```text
 CURRENT_RECOMMENDED_NEXT_TASK
-= R07_HEAD_TO_HEAD_KERNEL_COMPLEXITY_DECISION_GLOBAL_POLY64_VS_MOBIUS24
+= EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R
 ```
 
-R07 **禁止再引入新的材料函数族**。只比较已执行的两个候选：
+不再把 `GLOBAL_POLY64 vs MOBIUS24` 当唯一下一任务。新的 R07R 先做：
 
-1. `GLOBAL_LAMBDA_N64`：给出不经 naive full expansion 的 exact recurrence、实际 D15 moment/operation count，并判断 1088 invariant-pair footprint 是否可接受；
-2. `MOBIUS_N24`：对 `Delta_M^{-m}` 做 exact thickness elimination + parity/symmetry reduction，并硬判剩余 2D master 是否属于 small named kernel。
+1. NC current surface 上识别少数真正需要处理的局部尖峰/切口/脊线；
+2. 对每个 feature 只给 2-3 个低参数显式 patch（例如 polynomial/Hermite/Bernstein/logistic/saddle-like/global surface 等）；
+3. 明确 patch 对 `fc/ft/CC/TC/TT/tangent` 的影响方向和幅值；
+4. 只保留导数显式且能够直接传播到 `P,Rq,L` 的候选；
+5. 选择材料 target 后再做 Case21 -> Swartz24 structural validation；
+6. UHPC 在 source-complete 后沿同一显式容量方法建立自己的 surface target。
 
-Fail-fast：
-
-```text
-Möbius -> PF/large ODE/master system       => FAIL
-Direct polynomial -> auditable finite recurrence with acceptable Gate-C cost => PREFER DIRECT
-Both fail Gate C                          => HOLD and return to material target
-```
-
-不得 blind degree escalation，不得 Case21/Swartz Pu 选 compiler。
+禁止：为了极小 material regression error 再制造高复杂度 compiler；禁止在材料 target 未冻结前用 Pu 隐蔽调参。
 
 ---
 
-## 13. 恢复读取顺序
+## 10. 恢复读取顺序
 
 1. `current/CURRENT_STATE.md`
-2. `governance/NC_POSTPEAK_C2_SCALAR_TARGET_RULE_20260810.md`
-3. `current/theory/NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_20260810.md`
-4. `current/theory/NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_results.json`
-5. `history/NZ_SCCM/R06_POSTPEAK_C2_AND_COMPILER_HEADTOHEAD_20260810.md`
-6. R05 material-native domain/compactification canonical files
-7. R04 material-native spectral-domain governance + kernel classification
-8. R03 exact-rank4/saddle/special-function evidence
-9. R01/R02 ridge/regularization evidence
-10. `governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md`
-11. Nguyen Ch.3/Appendix-B source evidence + Case21 invariant derivation
+2. `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
+3. `history/NZ_SCCM/EXPLICIT_CAPACITY_PRIORITY_AND_MATERIAL_UNDERUSE_RESET_20260810.md`
+4. `governance/MATERIAL_NATIVE_SPECTRAL_DOMAIN_RULE_20260810.md`
+5. R06 NC postpeak/representation evidence
+6. R03-R05 dimensional-reduction / special-function evidence
+7. 3D current-map visualization evidence
+8. `governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md`
+9. Case21 invariant derivation + Nguyen Ch.3 source evidence
