@@ -1,0 +1,220 @@
+c             program to <>brain element suesses and tangent moduli from
+c             the concrete element for input to the stability analysis
+C             program
+C
+c......................................................................
+
+              subroutine stab_conc(d,ul,xl,ix,d,s,p,ndf,ndm,nst,istale,epscr,
+      &                   emod4,fl5,firsl,fl4,emax,epsmax,estore,
+      &                   epsstore,epslcr,isw)
+
+              implicit real*8(a-h,o-z)
+              logical tll ,fl2,tl3,tl4,fl5,firsl
+              character* 1 Sll ,812
+              commonm(l)
+              common/dev/in,io,inio
+              common/cdata/o,head(20),numnp,numel,nUllll1l8l,Den,neq,ngp,
+ipr
+              common/eldaaa/dm,n,ma,mel,iel,nel
+              common/sttes.1_seuwatise1110,nodc_dala(l0,2)
+              dimension d(l),ul(ndf,1),xl(ndm,1),ix(l),d(l),s(nSl,l),p(l),
+      &                 shp(3,9),sg(9),tg(9),wg(9),sig(6).eps(6),wd(2),
+      &                istale(3,ngp,numel),epscr(ngp,numel),
+      &                emod4(3 ,ngp,numel),emax(3,ngp,numel),
+      &                epsmax(3,ngp,numel),estore(3,ngp,numel),
+      &                epsstore(3,ngp,numel),epslcr(ngp,numel)
+              data wd/'RESS ', 'RAIN'I
+
+c....         set constants
+
+              fc      =d(6)
+              ft = d(7)
+              eO =d(9)
+              xnu =d(lO)
+              thic =d(ll)
+              epscu = d(12)
+              epstf = d(13)
+              epscf = d(l4)
+              alpbal = d(lS)
+
+
+
+                                                                                312
+        alpha2 = d(l6)
+        betal = d(l 7)
+        beta2 = d(l8)
+        beta3 = d(l9)
+        gammal = d(20)
+        gamma2 = d(21)
+        isopt = inl(d(22))
+
+
+        l=d(S)
+        call e3pgauss(1Jint.sg,tg,wg)
+
+        dol=lJint
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c.... calculale tangent moduli
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c....     compute element shape functions
+
+          call e3sbape(sg(l),tg(l),xl,shp,xsj,ndm,nel,ix,.false.)
+
+c.... compute strains
+          do 310i=l,3
+310       eps(i)=().OdO
+          do 320 j=l,nel
+          eps(l )=eps(l)+shp(l J)*ul(l J)
+          eps(3)=eps(3)+sbp(2j)*ul(2j)
+320       eps(2)=eps(2)+sbp(lj)*ul(2j)+sbp(2J)*ul(lj)
+
+c....     compute principal strains
+
+          eps(2)=eps(2)/l.OdO
+          call e3pstres(eps,eps(4),eps(5),sig(6))
+          eps(2)=eps(2)*2.0dO
+
+c....     compute axial moduli (el,e2)
+
+          sig(4)=d(l)•(estore(l,l,n)•eps(4)+xnu•estore(2J,n)•eps(5))
+          sig(S)=d(l)•(estore(2,l,n)•eps(S)+xnu•estore(lJ,n)•eps(4))
+
+c....     ttansfer to appropriate stress/strain model to calculale moduli
+
+315       continue
+
+          if(eps(4).eq.0.0.and.eps(S).eq.O.O)lben
+            el=eO
+            e2=eO
+            sig(6)=().0dO
+          else if(istate(l J,n).eq. l .and.eps(S).ge. O.O)tben
+            call Sbnodtt(eps(4).eps(5),epstf,ft.e(),el,e2,istate(2,l,n),
+    &                alpbal,alpba2,l)
+          else if(istate(lJ,n).eq. l .and.eps(S).ILO.O)tben
+
+
+
+                                                                            313   •
+                 call stmodtc(eps(4),eps(5),epscu,epscr(l.n).epslcr(l.n),
+    &                    epscf,epstf,ft,fc,e0,el,e2,alpbal,alpha2,
+    &                    gammal .gamma2,.true.,istare(2J,n), l ,nJ)
+            else
+                 call stmoduc(d,sig(4),.1ig(5),epscu,eps(4),eps(5),e0,el,
+    &                    e2,xnu,fc,ft,epsa(l,n),istare(1J,n),
+    &                    istate(2J,n).gamma2, 1,nJ)
+
+            endif
+
+        elt=el
+        e2t=e2
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c.... calculate eJemmt stresses
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c....       compute element shape functions
+
+            call e3shape(sg(l),tg(l),xl,sbp,xsj,ndm,nel,ix,.false.)
+
+c....       compute strains
+
+            do401 i=l.3
+401         eps(i)=0.0
+            do 402 j= 1,nel
+              eps(l)=eps(l)+shp(lJ)*ul{lJ)
+              eps(3)=eps(3)+sbp(2j)*ul(2j)
+402           eps(2)=eps(2)+shp(lj)•ul(2J)+shp(2j)•ul(1J)
+
+c....       compute principal strains
+
+            eps(2)=eps(2)/l.OdO
+            call e3psUes(eps,eps(4),eps(5),.1ig(6))
+            eps(2)=eps(2)*2.0dO
+
+c....       compute axial moduli (el,e2)
+
+            sig(4)=d(t)•(estore(1J.n)•eps(4)+xnu•estore(2J.n)•eps(5))
+            sig(5)=d(t)•(estore(2J.n)•eps(5)+xnu•estore(tJ.n)•eps(4))
+
+c....       transfer to appropriate stress/strain model to calculate moduli
+
+        el=emod4(1J,n)
+        e2=emod4(2J,n)
+
+c....       compute strains and coordinates
+
+            do410i=l,3
+410         eps(i)=().OdO
+            xx=O.OdO
+            yy=O.OdO
+            do 420 j=l,nel
+            xx=xx+shp(3j)*x1(1J)
+
+
+                                                                              314
+                 yy=yy+sbp(3j)*xl(2j)
+                 eps(l)=eps(l)+sbp(lj)*ul(lJ)
+                 eps(3)=eps(3)+sbp(2j)*ul(2J)
+420              eps(2)=eps(2)+sbp(lj)*ul(2J)+sbp(2J)*ul(l J)
+
+c....            calculate principal strains
+
+                 eps(2)=eps(2)/l.OdO
+                 call e3pstres(eps.eps(4),eps(S),eps(6))
+                 eps(2)=eps(2)*2.0dO
+
+c....            compute streaes
+
+c....            if element cracked use modified constilutive matrix else
+c....            use matrix as defined by darwin and pecknold
+
+                 if(istale(l,1,n).eq.l) then
+
+c....              calculate shear retention factor
+
+                   if(istale(2,l,n).eq. l) then
+                     beta=O.ldO
+                   else
+                     call e3sbret(beta,betal,beta2,beta3,epsa(l,n),eps(4))
+                   endif
+
+                   dll=el
+                   dl2=0.0dO
+                   d22=e2
+                   d33=beta*e2*0.5dO/{l.OdO+xnu)
+                 else
+                   el2=sign(dsqrt(el *e2),e2)
+                   di l=d{l)*el
+                   dl2=d(2)*el2
+                   d22=d(l)*e2
+                   d33=d(3)*{el+e2-2.0dO*xnu*el2)
+                   beta=l.O
+                 endif
+
+c....            transform d matrix to the global co-ordinate system
+
+                 call e3dtrans(dl l,dl2,dl3,d22,d23,d33,sig(6))
+
+c....            calculate global stresses
+
+                 sig(l)=dll*eps(l)+dl2*eps(3)+dl3*eps(2)
+                 sig(3)=dl2*eps(l)+d22*eps{3)+d23*eps(2)
+                 sig(2)=dl3*eps(l)+d23*eps(3)+d33*eps(2)
+                 call e3pstres(sig,sig(4),sig(5),sig(6))
+
+c....            print stability data to scrarch file
+
+            write(inio)sig(l),sig(2),sig(3),sig(6),thic,xnu,elt,e2t,bela
+
+        end do
+
+
+
+
+                                                                             315
+        return
+        end
