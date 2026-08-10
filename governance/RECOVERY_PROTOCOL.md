@@ -93,7 +93,7 @@
 
 若极少数情况下确需这些资料：
 
-1. 读 `archive/PRE_CLEAN_POINTER.md`；
+1. 读 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md`；
 2. 从其中记录的 pre-clean Git commit 定点读取所需文件；
 3. 只恢复当前问题需要的片段，不要把整套旧目录重新合并到 `main`。
 
