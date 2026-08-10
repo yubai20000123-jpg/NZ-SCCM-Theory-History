@@ -1,0 +1,328 @@
+                                                                 0. 4 Esec
+                                                                    Ec
+                                                                           1    q
+                                                                                                                 (31)
+                       M   b N x 0. 0025t w 
+                          *
+                          yy
+                                                         2
+                                                             l 1  q
+If the upper limit on the amplified eccentricity in the x direction is tw/6, then for the
+assumption of no tension to apply, the amplification factor should be restricted to
+
+
+                                42.16         Ec
+                       b 
+                                 b g
+                               2 1         Esec                                                               (32)
+
+
+When checking the design capacity of the wall, the design actions N x* and M xx* need to be
+compared to the wall ultimate capacity by way of a column interaction diagram. The design
+moment in the y direction M yy* must be less than the yield moment. Note that the minimum
+
+steel required for high strength concrete members is higher than specified in AS3600. For
+moderate crack control the minimum percentage of tensile steel pmin in AS3600 is given by
+1.0/ fsy where fsy is the yield stress of the tensile reinforcement To calculate an approximate
+formula for the minimum percentage tensile steel, the condition that the ultimate moment Mu
+must be greater than 1.2 times the cracking moment Mcr can be used. For a rectangular section
+b wide and effective depth d with tensile steel of area Ast we can write
+
+
+
+
+                                                                                                                   11
+                                                                                 Buckling of Reinforced Concrete Walls
+
+
+
+                                Mu  1. 2 M cr
+
+                       Ast f sy 0. 9d  1. 2  0. 6 f
+                                                      b 1.1d
+                                                        c
+                                                         '        b g   2
+
+                                                                                                                (33)
+                                                          6
+                                           0.165 f c'
+                              pmin                               ( SI Units )
+                                               f sy
+
+
+Figure 10 compares the above formula with the code requirement for walls. It is seen that the
+code requirement is too small for high strength concrete. The yield moment capacity per unit
+width for a rectangular section is given by
+                                                             FG
+                                 M yield   Ast f sy d 1  k
+                                                                   1    IJ
+                                                              H    3     K
+                               with       k    bnpg 2np np
+                                                    2
+                                                                                                                (34)
+                                               Es                 Ast
+                                          n            p
+                                               Ec                 bd
+
+
+where Es is the elastic modulus for steel. The strength reduction factor  for pure bending is
+0.8. If minimum steel is used according to Eqn 33 and Ec is set to 5056 f c and 400 MPa
+grade reinforcement is used, Eqn 34 simplifies to
+
+
+                        M yield   bd 2 0.156 f c               ( SI Units)                         (35)
+
+
+
+
+5. EXAMPLE OF A SLENDER HIGH STRENGTH REINFORCED CONCRETE
+   CORE WALL
+
+
+Consider a diaphragm type wall in a multistorey building where b = 8000 mm, the thickness
+is 300 mm and a >> b. The concrete strength is 100 MPa. The loading is predominantly due to
+gravity type loads with a design axial force of 4500 N/mm. Lets assume for this example that
+the wall can be considered to be simply supported on all four sides (other boundary conditions
+could be examined following the same procedure). The slenderness of this wall is 8000/300 =
+27. From Fig. 9 the buckling load is
+
+
+
+
+                                                                                                                  12
+                                                                            Buckling of Reinforced Concrete Walls
+
+
+
+
+                       Ncr  0.81 f c' t w  0.81  100  300  24300 N mm
+
+
+Since the majority of the loading is gravity type sustained load let  d be one. The
+amplification factor is therefore
+                                       1
+                       b                     1.59
+                              F      2  4500   I
+                              H   1
+                                      24300     K
+The stress ratio f/f'c is 4500/(100x300) = 0.15 and therefore from Fig. 8 the secant modulus is
+equal to the elastic modulus. The upper limit on the amplification factor is therefore
+
+
+                               42.16
+                       b            3.56  OK !
+                               1 
+                                  2
+                                      b g
+The design amplified moments are therefore
+                                                              2
+                       M xx*  1. 59  4500  0. 05  300          1. 2  0. 4
+                                                               8
+                               100 kNm / m
+                                                              2
+                       M yy*  1.59  4500  0. 02  300           1. 2
+                                                              8
+                               64 kNm / m
+
+
+The load eccentricity being 100000/4500 = 22.3 mm = 0.07 tw. Inspection of the wall
+interaction diagram ignoring any reinforcement showed that the design actions N x* and M xx*
+were well within the safe zone. The M yy* should not exceed the yield moment capacity and
+
+hence reinforcement should be provided to meet this requirement. The minimum steel
+according to Eqn 34 using 400 MPa steel is pmin = 0.004125. The yield capacity with
+minimum steel based on Eqn 35 is
+
+
+                                            b        g
+                        M yield  0.8  0. 9  300 0.156 100
+                                                         2
+
+
+                                       91 kNm / m  64 kNm / m
+
+
+The wall thickness could be reduced keeping in mind that the reinforcement in the x direction
+(vertical steel) has been ignored and the distribution of axial loading through the building has
+
+
+                                                                                                             13
+                                                                      Buckling of Reinforced Concrete Walls
+
+
+
+also been ignored. Table 1 contains further calculations for the amplified moments with
+various wall thickness. The buckling load estimate would increase if the long edges are
+considered fully fixed and this would further reduce the amplification factor.
+
+
+6. CONCLUSIONS
+
+
+The present design methods for reinforced concrete walls are generally for walls in one-way
+bending. Core walls in multi-storey structures have boundary conditions such that any
+bending induced by the presence of imperfections or load eccentricity will involve two-way
+bending. The application of design formulae for walls in one-way bending to walls in two-
+way bending are very conservative. As with columns in the lower storeys, economic benefits
+can be gained by reducing the core wall thickness through the use of high strength concrete.
+Reducing the wall thickness however, results in walls of greater slenderness which require an
+assessment of the amplification effects of buckling. The limit on the slenderness ratio of walls
+in most codes is generally 30. To take full advantage of the use of high strength concrete, a
+more detailed assessment of the effects of buckling are required incorporating the two-way
+nature of bending in core walls.
+
+
+This paper has presented an approximate analysis for the buckling load for simply supported
+reinforced concrete walls. The buckling load is then used to estimate the amplified moments
+in the longitudinal and transverse directions. The derivations have assumed that the axial load
+eccentricity can be taken as 0.05 times the wall thickness as is used for columns in AS3600.
+This is different to what is assumed for walls in one-way bending where the initial
+eccentricity is taken as 0.167 times the wall thickness. An upper limit on the amplification
+factor is determined. Formulae for the minimum percentage reinforcement and yield moment
+capacity for bending in the transverse direction are derived. It is found that the critical
+direction for capacity is not necessarily in the direction of loading since the moment capacity
+is increased due to the presence of the axial load.
+
+
+
+
+                    Table 1 : Amplified Moments versus Wall Thickness
+
+
+
+
+                                                                                                       14
+                                                                   Buckling of Reinforced Concrete Walls
+
+
+
+
+                         tw (mm)        300    275    250    225     200
+                           b/ tw         27    29     32     36       40
+                            b          1.59   1.72   1.92   2.6      5.5
+                      Mxx (kNm/m)       100    100    101    123     232
+                      Myy (kNm/m)       63.5   63     64     78      147
+                         Myield         91    76.5   63.2   51       40
+                         (kNm/m)
+
+
+7.   REFERENCES
+
+
+1.   AS3600 (1988), "Concrete Structures Code", Standard Association of Australia.
+2.   Attard, M.M. (1994), "Design of Reinforced Concrete Columns and Core Walls”,
+     Chapter 10, Short Course on High Performance Concrete, University of New South
+     Wales, May.
+3.   Kripanarayanan, K.M., (1977) “Interesting Aspects of the Empirical Wall Design
+     Equation”, ACI Structural Journal, Vol. 74, No. 5, pp 204-207.
+4.   Mendis, P.A., Karantzas, V., and Fragomeni, S. (1993), "Efficient Design of Concrete
+     Cores", Proceedings of the 18th Conference on Our World in Concrete and Structures,
+     Aug.
+5.   Pillai, S. U. and Parthasarathy C.V., (1977) “Ultimate Strength and Design of Concrete
+     Walls”, Building and Environment, Vol. 12, pp25-29.
+6.   Saheb, S.M. and Desayi, P., (1990), "Ultimate Strength of R.C. Wall Panels in Two-Way
+     In-Plane Action", ASCE Journal of Structural Engineering, Vol. 116, ST5, pp 1384-
+     1402.
+7.   Swartz, S.E. and Rosebraugh, V.H. (1974), "Buckling of Reinforced Concrete Plates",
+     ASCE Journal of Structural Engineering, Vol. 100, ST1, pp 195-208.
+8.   Timoshenko, S.P, and Gere, J.M. (1963), Theory of Elastic Stability, McGraw-Hill
+     International Book Company.
+
+
+
+
+                                                                                                    15
+                                    Buckling of Reinforced Concrete Walls
+
+
+
+
+  Figure 1 Example of Core Wall Layout
+
+
+
+
+Figure 2 AS3600 Wall Axial Capacity Curve
+
+
+
+
+                                                                     16
+                                                            Buckling of Reinforced Concrete Walls
+
+
+
+
+               Figure 3 Axial Capacity at an Eccentricity of 0.167 tw
+
+
+
+
+Figure 4 Compares the AS3600 Formula against Experimental Results for Walls Under
+                                 Two-Way Action
+
+
+
+
+                                                                                             17
+                                                 Buckling of Reinforced Concrete Walls
+
+
+
+
+Figure 5 Simply Supported Wall Loaded By Uniform Axial Forces
+
+
+
+
+        Figure 6 Stress-Strain Relationship for Concrete
+
+
+
+
+                                                                                  18
+                                  Buckling of Reinforced Concrete Walls
+
+
+
+
+Figure 7 Tangent Modulus for Concrete
+
+
+
+
+                                                                   19
+                                  Buckling of Reinforced Concrete Walls
+
+
+
+
+Figure 8 Secant Modulus for Concrete
+
+
+
+
+                                                                   20
+                                              Buckling of Reinforced Concrete Walls
+
+
+
+
+Figure 9 Buckling Load for a Simply Supported Concrete Wall
+
+
+
+
+                                                                               21
+                                  Buckling of Reinforced Concrete Walls
+
+
+
+
+Figure 10 Minimum Percentage Reinforcement
+
+
+
+
+                                                                   22
+
