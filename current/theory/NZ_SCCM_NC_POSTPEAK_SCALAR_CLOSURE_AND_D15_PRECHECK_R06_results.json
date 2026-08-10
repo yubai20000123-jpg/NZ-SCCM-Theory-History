@@ -1,0 +1,66 @@
+{
+  "status": "PASS_POSTPEAK_C2__HOLD_FINAL_COMPILER",
+  "source_landmarks": {
+    "gamma2": 10.0,
+    "alpha1": 10.0,
+    "xcr": 0.04998717945397425,
+    "material_native_domain": [-10.0, 0.49987179453974245]
+  },
+  "postpeak_C2": {
+    "bridge_polynomial": "3*tau^5 - 8*tau^4 + 6*tau^3",
+    "delta_s": 0.05,
+    "bridge_width_lambda": 0.45,
+    "max_extra_compression_vs_source_over_fc": 0.00888888879999783,
+    "max_conservative_reduction_vs_source_over_fc": 0.008888888799997718,
+    "peak_endpoint": {"U": -1.0, "dU_dlambda": 0.0},
+    "residual_endpoint": {"U": -0.1, "dU_dlambda": 0.0}
+  },
+  "selected_candidates": {
+    "GLOBAL_LAMBDA_N64": {
+      "stress_p95_over_fc": 0.0018501811031416,
+      "stress_max_over_fc": 0.0198197023240438,
+      "tangent_p95_over_initial": 0.0336583139794768,
+      "tangent_max_over_initial": 1.851013858333645,
+      "kernel": "FINITE_POLYNOMIAL_D15_DIRECT",
+      "A_unique_invariant_pairs": 1025,
+      "B_unique_invariant_pairs": 1056,
+      "union_unique_invariant_pairs": 1088,
+      "status": "PASS_MATERIAL_SCREEN_HOLD_GATE_C"
+    },
+    "SOFTSIGN_N48": {
+      "stress_max_over_fc": 0.0098821038900422,
+      "tangent_p95_over_initial": 0.0199129653999401,
+      "kernel": "ALGEBRAIC_DEGREE4_NOT_CLOSED",
+      "status": "PASS_MATERIAL_SCREEN_HOLD_KERNEL"
+    },
+    "MOBIUS_N24": {
+      "stress_max_over_fc": 0.0208105530874105,
+      "tangent_p95_over_initial": 0.0441701317868899,
+      "kernel": "RATIONAL_INVARIANT_DENOMINATOR",
+      "status": "PROMISING_HOLD_KERNEL"
+    },
+    "MOBIUS_N48": {
+      "stress_max_over_fc": 0.0098491172020195,
+      "tangent_p95_over_initial": 0.0236970425125294,
+      "kernel": "RATIONAL_INVARIANT_DENOMINATOR",
+      "status": "PASS_MATERIAL_SCREEN_HOLD_KERNEL"
+    }
+  },
+  "mobius_identity": {
+    "scalar": "chi=lambda/(1-lambda)",
+    "matrix": "chi(E)=(E-J2 I)/(1-J1+J2)",
+    "Delta_M": "1-J1+J2=(1-lambda_plus)(1-lambda_minus)",
+    "material_square_lower_bound": 0.25012822189689765,
+    "Case21_form": "Delta_M=1-I1+I2=A0+A1*zeta+A2*zeta^2",
+    "thickness_integral": "elementary-recursive for integer denominator powers",
+    "remaining_2D_master": "NOT_YET_SMALL_NAMED_KERNEL_CLOSED"
+  },
+  "decision": {
+    "NC_POSTPEAK_C2_SCALAR_TARGET": "PASS",
+    "FINAL_NC_COMPILER": "OPEN",
+    "CASE21_PU": "NOT_RUN",
+    "SWARTZ24_PU": "NOT_RUN",
+    "ROUTE_SWITCH": false,
+    "NEXT": "R07_HEAD_TO_HEAD_KERNEL_COMPLEXITY_DECISION_GLOBAL_POLY64_VS_MOBIUS24"
+  }
+}
