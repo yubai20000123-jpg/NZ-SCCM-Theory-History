@@ -1,0 +1,311 @@
+ANALYSIS OF REINFORCED CONCRETE PANELS
+
+
+
+
+                                         61
+3.1 INTRODUCTION
+
+
+
+The load capacity of walls under in-plane loads depends on the strength of the
+
+concrete, the amount and position of reinforcement, wall imperfections, the load
+
+eccentricity and the wall slenderness ratio. Apart from these, the wall load capacity
+
+is also related to the ratio of the width and height of the wall, the boundary
+
+conditions of the wall sides, and the loading such as uniform compression,
+
+compression with in-plane eccentricity or shear loading. The investigation of all the
+
+factors affecting the wall load capacity, therefore, requires the study of many
+
+parameters. The current Australian standard, AS 3600, restricts the wall by its
+
+slenderness (Hwe I tw < 30, where tw is the wall thickness, and Hwe is the effective
+
+height of the wall). Slenderness is therefore an important factor in wall design.
+
+Attard (1994) showed that AS 3600 is very conservative for walls in two-way
+
+bending. Since experimental work although essential is an expensive undertaking
+
+especially with regard to the study of the buckling of walls, an analytical formulation
+
+based on the finite element method will be developed in this thesis.
+
+
+
+In this chapter, a brief literature review of practical wall design and the buckling of
+
+concrete walls is reported. The constitutive models for concrete and reinforcement
+
+under different states are also discussed here. These are important for the finite
+
+element formulations developed in Chapter 4 and Chapter 6 for stability analysis of
+
+reinforced concrete walls.
+
+
+
+
+                                                                                    62
+3.2 WALL DESIGN ACCORDING TO CURRENT BUILDING
+
+CODES
+
+
+
+AS 3600-1988 (Australian Standard)
+
+
+
+Section 11 of AS 3600-1988 deals with the design of walls. Paragraph 11.4 gives a
+
+simplified design method for braced walls subject to vertical in-plane forces only.
+
+The out-of-plane loading eccentricity of the wall is restricted by AS 3600 that "the
+
+design of a wall shall take account of the actual eccentricity of the vertical forces but
+
+in no case shall the design bending, M*, be taken as Jess than N* (the axial force)
+
+times 0.05tw"·     The slenderness ratio (the ratio of effective height to thickness),
+
+
+Hwe I tw, must not be greater than 30.0 except that for walls in which the axial
+
+force, N*, does not exceed      o.osroAg (where r is the compressive strength of
+                                                    C
+
+
+
+
+concrete, and Ag is a gross area of the wall section), the ratio may be increased to
+
+50.0. The design axial strength of a braced wall is determined according to clause
+
+11.4.4 as follows:
+
+      The design axial strength per unit Jength of a braced wall in compression
+
+      shall be taken as , Nu , where
+
+
+                 , = 0.6 ; and
+
+                 Nu= (tw - 1.2 e - 2 ea) 0.6 f'c                                   (3.1)
+
+
+      where      Nu = the ultimate strength per unit length of wall,
+
+
+
+
+                                                                                      63
+                  e = the eccentricity of the load measured at right angles to the
+
+                        plane of the wall, determined in accordance with Oause
+
+                        11.4.1 of AS 3600,
+
+                  ea= an additional eccentricity taken as 'llwe)2 / 2500tw, and
+
+                  f' c = the compressive strength of concrete.
+
+
+
+
+The effective height, Hwe , of a braced wall is taken as follows (according to AS
+
+3600):
+
+     " (a) Where restrained against rotation at both ends by
+
+            (i) flex>rs •••••••••••••••••••••••••••••••••••••• 0.75 Hwu; or-
+
+
+            (ii) intersecting walls or similar members, 0. 15L1 •
+
+            whichever is the lesser.
+
+         (b) Where not restrained against rotation at both ends by
+
+            (i) flex>rs ••••••••••.•••••.••••••••••••••••••••• 1.0 Hwu ; or
+
+
+            (ii) intersecting walls or similar members, l.OL1 •
+
+            whichever is the lesser.
+
+            where
+
+             Hwu = the unsupported height of the wall.
+
+
+             L1      = the horizontal distance between centres of lateral restrainL "
+
+H e is taken as 0.05tw equation 3.1 for the ultimate strength of the wall becomes
+
+
+                   cl> Nu   = cl> 0.564 f'c tw (1 - (Hwe / 34.3tw>11               (3.2)
+
+
+
+                                                                                        64
+which is very similar to the ACI 318-1989 wall design formula.
+
+
+
+
+ACI 318-1989 (American Standard)
+
+
+
+
+In Chapter 14 of ACI 318-1989, an empirical design formula is given to calculate
+
+the axial strength of walls subjected to axial loads. The formulae is given by
+
+
+                     +Pnw= O.SS +f',A 1 [           !-(:;~J]                                (3.3)
+
+
+where                   P nw = nominal axial load strength of wall,
+
+                         cl>    = strength reduction factor (0. 7),
+
+                        Ag = gross area of the wall section,
+
+                         h = overall thickness of member,
+
+                         le = vertical distance between supports,
+
+                          k = effective length factor .
+
+The effective length factork is determined by (ACI 318-1989):
+
+         "For walls braced top and bottom against lateral translation and
+
+                        (a) restrained against rotation at one or both ends
+
+                               (top and/or bottom) .............................   0.8
+
+                        (b) unrestrained against rotation at both ends 1.0
+
+          For walls not braced against lateral translation .....                    2.0 "
+
+The thickness of a bearing wall must not be less than 1/25 the supported height or
+
+length. The minimum thickness is 100 mm, and the minimum reinforcement ratios
+
+are Pv   = 0.0015 for vertical reinforcement and                   p,a = 0.0025 for horizontal
+
+
+                                                                                               65
+reinforcement. The maximum eccentricity allowed in the ACI formulae is h/6 . In
+
+the ACI 318-1989 wall design equation, only walls in one-way bending are
+
+considered.
+
+
+
+
+German Code DIN 104S
+
+
+
+
+The German Code, DIN 1045 " Structural Use of Concrete", gives a more detailed
+
+design method for walls. The code offers a method for determining the effective
+
+lengths of walls restrained on two, three and four sides. This aspect is neither
+
+mentioned in the Australian Standard AS 3600, nor the American Code ACI 318-
+
+1989. The method involves a buckling analysis. Only the method for determining
+
+the effective height of the wall is described here.
+
+
+
+The effective height, Hwe, is equal to the product of the wall height, H, and a
+
+parameter k where 'k' depends on the boundary conditions of the wall and can be
+
+determined from the following (see Fragomeni et al. (1994)):
+
+              a) Fork =1.0, for simply supported at top and bottom sides only; and
+
+                     k = 0.85, for walls restrained against rotation on top and bottom
+
+                        sides, other sides free;
+
+
+              b) k = - - (1-8-J- ~   03, for walls restrained on three sides;
+                      l+ 3d
+
+
+
+
+                                                                                   66
+                        1
+             c) k = - ( -  H-J-, for HS d ,and
+                    1+ -
+                           d
+
+                     d
+                k = 2 H , for H > d and walls restrained on all four sides
+
+
+In the above formulas, d is the width of the wall.
+
+
+
+
+A detailed discussion and comparison of the wall design formulae according to AS
+
+3600, ACI 318-1989 and DIN 1045 can be found in Fragomeni, Mend.is and
+
+Grayson (1994) and Raviskanthan, Sanjayan and Al-Mahadi (1995). Fragomeni et
+
+al. (1994) showed that the wall design practice in the United States involving the use
+
+of the standard ACI 318-1989 is intended for load-bearing walls restrained at the
+
+top and bottom edges. The code fails to recognise any contribution to load capacity
+
+from restraint on the side edges. These boundary conditions are common for walls
+
+in core walls. In AS 3600, the contribution to the load capacity from the side edges
+
+is taken into account through the effective height of the wall. 'The wall effective
+
+height in the AS 3600 design formu1a depends on the restraint condition of the
+
+edges, and the wall height or the wall width whichever is critical. However, both
+
+the formu1as in ACI 318-1989 and AS 3600 are based on one-way bending. In the
+
+German Code, DIN 1045, the determination of the effective Jength of walls
+
+restrained on two, three, and four sides depends on a reduction factor k . Fragomeni
+
+et al. (1994) showed that by using the ACI 318-1989 formula with the German
+
+Code effective Jength factor for walls supported on three or four sides, the increase
+
+in strength gained is significant. This increase also depends on the sJendemess ratio
+
+of the walls, and it is concluded that there is a need for more research in this area to
+
+                                                                                     67
+improve the ACI wall equation as well as the AS 3600 formula (Fragomeni et al.
+
+1994).
+
+
