@@ -339,6 +339,7 @@ where D is the bending rigidity. Substituting this equation into Eqn 30 gives
 
 
 
+
 The initial moment Mo is equal to the design axial force times the minimum eccentricity. If
 the wall was designed as a column the minimum eccentricity would be 0.05tw and Eqn 30
 becomes :
