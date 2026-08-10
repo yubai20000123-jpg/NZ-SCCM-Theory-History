@@ -29,8 +29,7 @@
 
 - `current/` 决定“现在下一步该用什么”。
 - `evidence/` 决定“这个事实/公式/来源由什么支持”。
-- `history/` 说明“以前做过什么、为什么被保留/替代/否决”。
-- `archive/` 只保存 pre-clean Git 历史指针，默认不参与裁决。
+- `history/` 说明“以前做过什么、为什么被保留/替代/否决”，并保存 pre-clean repository recovery pointer。
 
 历史文件中的 `PASS/HOLD/READY` 不自动覆盖 `current/CURRENT_STATE.md`。
 
@@ -53,7 +52,7 @@
 
 ### FULL_TEXT_MIRROR / NORMALIZED_TEXT_COPY
 
-聊天/connector UTF-8 复制可能改变 CRLF、Unicode、末尾换行或转义，因此只能作为检索镜像。迁移期建立的全文镜像已从当前 `main` 删除；若确需恢复，从 `archive/PRE_CLEAN_POINTER.md` 指向的 pre-clean commit 定点读取。
+聊天/connector UTF-8 复制可能改变 CRLF、Unicode、末尾换行或转义，因此只能作为检索镜像。迁移期建立的全文镜像已从当前 `main` 删除；若确需恢复，从 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 指向的 pre-clean commit 定点读取。
 
 正常工作不应优先依赖这些旧镜像。
 
