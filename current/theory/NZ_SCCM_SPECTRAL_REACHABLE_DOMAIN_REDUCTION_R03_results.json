@@ -1,0 +1,67 @@
+{
+  "identity": "SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03",
+  "r_convention": "r=ell/b",
+  "diagnostic_contract": {
+    "D": [0.6, 0.78],
+    "q": [0.0001, 0.006],
+    "status": "DIAGNOSTIC_NOT_FINAL_SWARTZ_PRODUCTION_BOX"
+  },
+  "analytic_spectral_separation": {
+    "all_24_certified_in_diagnostic_contract": true,
+    "worst_case": 11,
+    "worst_certified_gap_lower": 0.2785023279580049,
+    "worst_D_sep_threshold_at_qmax": 0.3214976720419951
+  },
+  "audit": {
+    "minimum_observed_gap": 0.31793295086792606,
+    "case_at_minimum": 11,
+    "lambda_plus_union": [-0.47928466072035325, 0.47928466072035325],
+    "lambda_minus_union": [-1.1234666851099888, -0.2521594728711599]
+  },
+  "saddle_diagnostic": {
+    "s1_hessian_negative_fraction": 0.3062030738221214,
+    "s1_convex_like_fraction": 0.6854421768707483,
+    "s1_concave_like_fraction": 0.00835474930713026,
+    "conclusion": "LOCAL_SADDLE_PATCHES_EXIST_BUT_SURFACE_IS_NOT_A_SINGLE_GLOBAL_HYPERBOLIC_PARABOLOID"
+  },
+  "low_rank": {
+    "exact_rank_upper_bound": 4,
+    "full_square_rank_for_1e-3_frobenius": 3,
+    "reachable_rectangle_rank_for_1e-3_frobenius": 2,
+    "full_square_rank_for_1e-4_frobenius": 3,
+    "reachable_rectangle_rank_for_1e-4_frobenius": 2
+  },
+  "negative_branch": {
+    "max_abs_T_minus": 0.00012379927723702558,
+    "bound_splus_C_times_Tminus": 0.00009650650771533321,
+    "bound_splus_Tplus_Tminus8": 4.51855838699712e-34,
+    "bound_sminus_Tminus_Tplus8": 9.233359737095038e-07,
+    "all_U_C_T_T8_degree_for_0p1pct_max_error": 8
+  },
+  "positive_branch": {
+    "U_first_degree_for_1pct_max_error": 32,
+    "C_first_degree_for_1pct_max_error": 48,
+    "T_first_degree_for_1pct_max_error_up_to_96": null,
+    "T8_first_degree_for_1pct_max_error_up_to_96": null
+  },
+  "appell_demo": {
+    "formal_Appell_F1_value": 6.611588675823622,
+    "audit_Gauss_value": 6.611588675823635,
+    "relative_difference": 1.880712561758503e-15,
+    "formal_spatial_quadrature_count": 0,
+    "audit_only_quadrature_order": 120
+  },
+  "decision": {
+    "R03": "PASS_DIAGNOSTIC",
+    "global_two_branch_separation_in_this_contract": "CERTIFIED",
+    "final_Swartz24_production_Dq_box": "OPEN",
+    "exact_rank4_principal_coordinate_factorization": "PROMOTED",
+    "two_dimensional_surface_fit_needed": "NO_FOR_SOURCE_SHAPED_REFERENCE",
+    "next_representation_focus": "1D_BRANCH_PRIMITIVES_PLUS_EXACT_RANK4_CONTRACTION",
+    "coalescence_safe_2x2_matrix_function": "PROMOTED",
+    "special_function_kernel": "APPELL_F1_CARLSON_WHEN_REDUCED_DENOMINATOR_MATCHES",
+    "route_switch": false,
+    "case21_Pu_run": false,
+    "swartz24_Pu_run": false
+  }
+}
