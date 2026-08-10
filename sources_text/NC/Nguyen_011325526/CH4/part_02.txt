@@ -1,0 +1,319 @@
+to study the buckling of plates under parabolic membrane loads.              The results
+
+obtained compared well with analytical buckling loads.
+
+
+
+
+                                                                                         112
+                                      y
+
+
+
+
+               4                                          3
+
+
+
+                                                                            X
+
+
+
+
+               1                                           2
+
+
+
+
+             Degrees of freedom at node:     w • w .x • w ;y • and w ;,.y
+
+
+
+          Figure 4.2 The 16-Degrees-of- Freedom Rectangular Element
+
+
+
+Recently Issa (1995) used a 20-degrees-of-freedom plate bending element with
+
+bubble functions to solve the buckling of isotropic elastic plates.             The results
+
+obtained were generally better when compared to those given by using the 16-
+
+degrees-of-freedom rectangular element.
+
+
+
+The bending analysis of reinforced concrete walls using finite elements, can be found
+
+in many articles such as Jofriet and McNeice (1971). Hand et al. (1973). Wanchoo
+
+et al. (1975) etc. These references focused mainly on plate bending or the analysis
+
+of shells where the deformation was assumed to be small                 The constitutive
+
+relationships for reinforced concrete was idealised by two basic approaches. Jofriet
+
+and McNeice (1971) using Clough-Felippa (1968) four-node, 12-degrees-of-
+
+freedom elements, analysed reinforced concrete slabs. The rigidity of a cracked
+
+
+                                                                                         113
+region of a reinforced concrete slab was based on a bilinear moment-curvature
+
+relationship for each subregion or eJement of the slab. The resuhs obtained ·were
+
+compared with their experiments.      Hand et al. (1973) called this approach the
+
+"modified Er' approach. The second approach is based on the idealisation of the
+
+stress-strain relationship for concrete and steel regarding the compatibility of
+
+deformation between the two constituent materials.       Layered eJements with 16-
+
+degrees-of-freedom (displacements, slopes, and twist) were used .to model a
+
+reinforced concrete slab (Wanchoo et al. 1975). The steel was assumed to be ideally
+
+elasto-plastic while the stress-strain relationship of concrete was assumed to have a
+
+bi-linear behaviour. Wanchoo et al. (1975) used the envelope for biaxial stresses in
+
+plain concrete proposed by Kupfer, Hilsdorf, and Rusch (1969) to determine the
+
+state of concrete for each layer.
+
+
+
+Successful applications of the finite eJement method to the non-linear analysis of
+
+plates in flexure include Marcal et el (1968), Armen et al. (1968), Whang (1969),
+
+Kann (1985), etc.     However, these references focused on metallic plates and
+
+specifically to metals that satisfy the von Mises criterion and the Prandtl-Reuss type
+
+relationships.
+
+
+
+Attard et al. ( 199S) carried out a buckling analysis of reinforced concrete walls
+
+under in-plane compression by using the 16-degrees-of-freedom rectangular eJement
+
+and a constitutive relationship for concrete based on the equivaJent uniaxial strain
+
+approach outlined Foster (1992). The results obtained showed good agreement
+
+with the experiments of Swartz et al. (1974) and the analytical solutions of Swartz
+
+
+
+                                                                                  114
+and Rosebraugh (1974) and the results obtained by the method of Attard (1994).
+
+The current project extends the work of Attard et aL ( 1995) by including any in-
+
+plane loading distribution and the effects of in-plane cracking and/or crushing of
+
+concrete.
+
+
+
+
+                                                                              115
+4.3 FINITE ELEMENT FORMULATION FOR THE OUT-OF-
+
+PLANE STABILITY OF REINFORCED CONCRETE WALLS
+
+
+
+There are two methodologies in the finite eJement analysis of reinforced concrete
+
+structures. The first is to use discrete elements for the reinforcement and concrete,
+
+with the steel being modelled using beam elements and the concrete being modelled
+
+using plate bending elements (Wanchoo et al. 1975, Foster 1992 etc.). In the
+
+second methodology, the steel is uniformly smeared across the concrete to give a
+
+single constitutive relationship (for example Iofriet and McNeice 1971).
+
+
+
+Both methods have their disadvantages and advantages. Using discrete elements to
+
+model concrete and steel provides more latitude in the location of reinforcement, for
+
+example, in the case when the wall has openings. However, as the beam elements
+
+can only be placed at the boundaries of the plate elements, more elements may be
+
+required than for the smeared method. The smeared approach works well when the
+
+reinforcement is placed uniformly along the orthogonal axes. For the case of walls
+
+with openings or with concentrated in-plane loading (for exampJe, loads transferred
+
+through columns to the wall) the smeared approach may give inadequate results (see
+
+Foster 1992 for the analysis of reinforced concrete deep beams).
+
+
+
+In this study the discrete element approach is used to model the concrete and
+
+reinforcement. Concrete is modelled by 4-node, rectangular 16-degrees-of-freedom
+
+eJements, whiJe the reinforcing steel is modelled by 2-node, 4-degrees-of-freedom
+
+beam elements.
+
+                                                                                 116
+4.3.1 Four-Node 16-Degrees-of-Freedom Concrete Element
+
+
+Figure 4.3 shows the four-node, 16-degrees-of-freedom concrete element with a
+
+tbiclrnc$S "t", a width "b" and a Jength "a" . This element is used to analyse the
+
+out-of-plane buckling of reinforced concrete walls.                The assumed out-of-plane
+
+displacement function of any middle surface point with coordinates (x, y) (see
+
+Figure 4.3) for this element is:
+
+   w(x, y) = a1 +a2 x + a3 y +a. x2 + as x y + 86 ,J + a1 x3 + aa ~ y + 89 x ,J + a10 y3
+
+               + a u x3 y + a12 ~ ,J + &13 x y1 + a1.- x3 ,J + &15 x 2y1
+
+               + &16X3 y3                                                              (4.3)
+
+where a1 ... a16 are unknown constants.
+
+
+
+In matrix fonn the displacement function w (x, y) can be written as:
+
+           w(x,y) = [ 1 x y x 2 x y y2 x3 x2 y x ,J                          y3 x3y
+                                    x 2 ,f x y3         x3 ,J x2 y3      x3 y3 ] . a   (4.4)
+
+where a is a vector of undetennined parameters which can be related to the
+
+generalised displacements at the nodes (of the element to which the point (x,y)
+
+belongs) q. by using the expression below:
+
+               a= C -1 q.                                                              (4.5)
+
+where q. is the vector of unknown displacements of the element nodes and is as
+
+follows:
+
+           q? = [ W1 W1.ll         W1.y   W1.llY   W2    W2,Jl   W2.y   Wl,llJ
+
+
+
+
+                                                                                         117
+                                          ,
+                                     ,/
+                                0 L - - - - ..,,.,..---~ _ _,,..._
+
+
+
+
+                    a/2    I/
+                          /I
+
+        a) Four-Node Rectangular Concrete Element
+
+
+
+
+                                b)DegreesofFreedom
+
+    1
+
+
+
+
+Figure 4.3 The Four-Node, 16-Degrees-of-Freedom Concrete Element
+
+
+
+
+                                                                     118
+for which wi denotes the displacement at node i of the eJement, i = 1 to 4 , and C is
+
+the connectivity matrix given in Appendix A.
+
+From equation (4.4) the slopes about the coordinate axes can be written as
+
+
+                   w . yx] =
+                 [ W            82. a                                           (4.7)
+
+
+where matrix 82 is
+
+
+    O 1 0 2x y O 3x 2 2xy y 2 0 3x2 y 2xy 2 y 3 3x 2 y 2 -2xy 3 3x 2 y 3 ]
+[
+    0 0 1 0 x 2y 0    x 2 2xy 3y 2 x 3 2x 2 y 3xy 2 2x 3 y 3x 2 y 2 3x3 y 2
+
+
+
+                   w ] ,x               I
+or                [W ,y =       82 . C- • qc                                    (4.8)
+
+
+By the same procedure the curvatures, and the twist can be derived from w(x,y) as
+
+follows
+
+
+
+                                   1                                            (4.9)
+                  [ ::::] = 81 . C- • qc
+                     W,xy
+
+
+where matrix 81 is
+
+
+  0 0 0 2 0 0 6x 2y O O 6xy 2y 2 0 6xy 2 2y 3 6xy 3 ]
+[ 00000 2 0 0 2x 6y O 2x 2 6xy 2x 3 6x 2 y 6x 3 y
+ 0 0 0 0 2 0 0 4x 4y O 6x 2 8xy 6y 2 12x 2 y 12xy2 18x2 y 2
+
+The first variations of the slopes of the out-of-plane displacement permrbations are:
+
+
+               [~w.x]
+                ~w.y
+                                   1
+                            = 82. C- . ~c                                     (4.10)
+
+
+and the first variations of the curvature, and twist of the middle surface can be
+
+expressed as
+
+
+
+                                                                                  119
+                   6w,xx]
+                 [ 6w,yy  = 81 . C-1 • &re                                      (4.11)
+                  26w,xy
+
+where vector &re is a vector of the first variations of nodal generalised freedoms,
+
+and is written as
+
+
+
+
+By substituting the constitutive relationship for concrete stated in section 3.4 of
+
+Chapter 3 into the second variation of the real work equation (2.108) in Chapter 2
