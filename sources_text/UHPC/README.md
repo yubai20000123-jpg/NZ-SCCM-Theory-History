@@ -10,26 +10,31 @@
 
 ## 当前三份本地 PDF 文本镜像
 
-| source | authoritative PDF | PDF SHA-256 | extracted TXT SHA-256 | GitHub layout |
+| source | authoritative PDF | PDF SHA-256 | extracted TXT SHA-256 | GitHub status/layout |
 |---|---|---|---|---|
-| 周俊 | `UHPC三轴受压力学性能研究_周俊.pdf` | `37531c8f73765fea9192bef094a88edd7d7eacc5756b51640a7353b65ed72e59` | `dad0fe2521e0d79a037dac540d4d75603a45c2d723b98a86a1da57706b671097` | `周俊_UHPC三轴受压力学性能研究/part_01.txt`, `part_02.txt` |
-| 王淑楠 | `超高性能混凝土三轴受压力学性能及破坏准则_王淑楠.pdf` | `e6e24cf47b21b1faa09f13ceb97a599321283c154578da92ef844b5d8e5c27dd` | `5f962ddbbfe307c25e1514b9b521b690a2ad55c04d84e98116e370d97f6b3139` | `王淑楠_超高性能混凝土三轴受压力学性能及破坏准则/part_01.txt`, `part_02.txt` |
-| 胡文旭 | `钢-预制UHPC开孔板组合桥面板界面抗剪性能研究_胡文旭.pdf` | `a554649f440bdb5d6523dc174aab68e1128aa6e4f9d19ebb9b67a9e19b544909` | `cfd0ed0378554f57e3e58373ca10eb619aa772ab5f1c44da53e44c248b8bbf13` | `胡文旭_钢-预制UHPC开孔板组合桥面板界面抗剪性能研究/part_01..03.txt` |
+| 周俊 | `UHPC三轴受压力学性能研究_周俊.pdf` | `37531c8f73765fea9192bef094a88edd7d7eacc5756b51640a7353b65ed72e59` | `dad0fe2521e0d79a037dac540d4d75603a45c2d723b98a86a1da57706b671097` | **FULL_TEXT_MIRROR_MIGRATED**: `周俊_UHPC三轴受压力学性能研究/part_01.txt` … `part_06.txt` |
+| 王淑楠 | `超高性能混凝土三轴受压力学性能及破坏准则_王淑楠.pdf` | `e6e24cf47b21b1faa09f13ceb97a599321283c154578da92ef844b5d8e5c27dd` | `5f962ddbbfe307c25e1514b9b521b690a2ad55c04d84e98116e370d97f6b3139` | PENDING_TEXT_MIRROR_MIGRATION |
+| 胡文旭 | `钢-预制UHPC开孔板组合桥面板界面抗剪性能研究_胡文旭.pdf` | `a554649f440bdb5d6523dc174aab68e1128aa6e4f9d19ebb9b67a9e19b544909` | `cfd0ed0378554f57e3e58373ca10eb619aa772ab5f1c44da53e44c248b8bbf13` | PENDING_TEXT_MIRROR_MIGRATION |
 
 ## 分块规则
 
 分块只是 GitHub connector 文本写入与后续检索的工程处理：按原提取文本顺序在换行边界附近切分，不改写正文，不重新总结。重组顺序严格按 `part_01 -> part_02 -> ...`。
 
-### chunk SHA-256
+### 周俊已迁移 chunk SHA-256
 
 ```text
-ZHOU part_01  2aa62f24253baab209135c16bff8a722a20b1b080436df630f91a83aca6b9a69
-ZHOU part_02  8d07e5373937710058a898b17c37284cb6a4507bffe1d763969f034ffd269083
-WANG part_01  5a539f0316c3843b5dd666ec5b162d5c00dc429f6637b151cc5b7301668b2ee8
-WANG part_02  b09eeafcbf9c352026ca308b991b022cdaa5890a2aa335467006c8284af05029
-HU   part_01  d51205d10d92b55b4a0082ff8f6d0511d50ec8dd614bc0ced6e95f2e9c864bbd
-HU   part_02  1cdbda4d9b0b47ce62c84ca3fc1002fd7c2181db4346e7fbe4ed50e4b16413a0
-HU   part_03  b6cba3840bedec5674d6126d7b6720ab4b0cc9c1aa7db60f8ea907b8dde6ed64
+part_01  a8d0ded9fc9564a2e727592706155510339c3e48e3a840634e2eb7982cf5200e
+part_02  11f5712f1f2e142ab984e533ce30cbfbbb0477c1ab50770b4daafa0f731018f6
+part_03  2f918d9c48e2446cbf7b38023652ba681344759e4ee20ebe4e259b4a7f70a1c9
+part_04  50957ae64839435b7c342ef9a21c6673a04bbe2be0c925cfe79a1f33779fc020
+part_05  18fc864f594f3e16eedfe2f29100cc06e0f40357083376e2a42b8055ec5f5be2
+part_06  45d06c523b6f74f81bffc43c78a679ed7f5c81a06efcd9d9b1783c01a0485911
 ```
 
-这些 chunk SHA 只校验 GitHub 分块文本；PDF byte identity 仍由上表 PDF SHA 控制。
+这些 chunk SHA 校验本地分块输入；PDF byte identity 仍由 PDF SHA 控制。GitHub contents API 会保存 UTF-8 文本，但 extracted text 本身不等于 PDF byte-exact original。
+
+## 重要边界
+
+- 周俊文本镜像已经可从 GitHub 全文检索，但若需要核对图、公式排版、上下标或原始页码，仍必须回到 `UHPC三轴受压力学性能研究_周俊.pdf`。
+- 王淑楠、胡文旭原始 PDF 和 extracted-text SHA 已登记；其全文文本镜像将在后续批次继续迁移。
+- Hiew、Liu、Lee、Leutbecher 等目前以 File Library ID + bibliographic/public-source locator 为主，不能因尚未迁入全文镜像而从 UHPC 来源链中省略。
