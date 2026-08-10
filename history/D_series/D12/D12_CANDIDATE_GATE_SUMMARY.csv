@@ -1,0 +1,7 @@
+index,candidate,material_rule,primary_branch_limit_kN,status,reason
+0,DAEM-P4-v0.1,axial-direction P4 nonlinear potential only,514.268712,RETAIN_DIAGNOSTIC_BASELINE,connected to origin; exact analytical integration; but +23.076% vs D4
+1,TC5 peak-tangent,same fifth-order stress polynomial in x and y; zero tangent at compression and tension peaks,11.266487,REJECT,first origin-connected limit occurs at 11.266 kN; 325.773 kN root is disconnected
+2,TS5 alpha2=0.3,compression peak plus tension-stiffening endpoint anchors,373.229309,REJECT,tensile stress overshoots to 9.474 MPa = 4.463 ft
+3,TS5 alpha2=0.5,compression peak plus tension-stiffening endpoint anchors,375.36464,REJECT,tensile stress overshoots to 9.548 MPa = 4.497 ft
+4,TS5 alpha2=0.7,compression peak plus tension-stiffening endpoint anchors,377.529988,REJECT,tensile stress overshoots to 9.623 MPa = 4.533 ft
+5,Chebyshev source projection,"single global source-projected polynomial, nominal alpha2=0.5",320.393–427.310 within valid orders,REJECT,plate peak does not converge with polynomial order; some orders leave certified strain domain
