@@ -1,0 +1,1 @@
+D19 tests: PASS (178 topology intervals, 45 analytic root derivatives, 80 Liu tangent checks, 1 full front-moment derivative)
