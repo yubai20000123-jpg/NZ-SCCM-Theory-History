@@ -1,0 +1,482 @@
+        subroutine
+stmodcc(gamma2,epsl.eps2,eps lp.eps2p,siglp,sig2p,
+   &               eO,el ,e2,xnu.d,iopt)
+
+c....        subroutine to determine modulus along principal axes
+c....        post crushing for compression/compression state
+
+c....        eps lp= major principal axis equivalent uniuial aushiog strain
+c....        eps2p= minor principal axis equivalent uniaxia1 crushing strain
+c....        eps 1 = major principal strain
+c....        eps2 = minor principa 1 strain
+c....        siglp= stress in coocretc along major principal axis at aushiog
+c....        sig2p= stress in concrete along minor principal axis at crushing
+c....        iopt = 1,2 calculate taogent,secant modulus
+c....        eO = initial modulus
+c....        el = modulus along major principal axis
+c....        e2 = modulus along minor principal axis
+
+             implicit rea1•8(a-h,o-z)
+             dimension d(l)
+
+             ebarl=siglp/epslp
+             ebar2=sig2p/eps2p
+c            sigbarl=d(l)•(ebarl *epsl+xou•ebar2•eps2)
+c            sigbar2=d(l)•(ebar2•eps2+xou•ebarl •epsl)
+
+c---------------
+c.... corrections to code 14/12.,94
+
+             temp=xou*sqrt(abs(ebarl •ebar2))
+             temp=sigo(temp,ebarl)
+             sigbarl=d(l)•(ebarl *epsl+temp•eps2)
+             sigbar2=d(l)•(ebar2*eps2+temp•epsl)
+c-------------------
+             epslu=sigbarl/ebarl
+             eps2u=sigbar2/ebar2
+
+c....        11'811Sfer to option
+
+             goto(l,2),iopt
+
+c....        compute tangent modulus
+
+1            if(epslu.gt.0.0) thea
+               el=-eOl1.0d6
+             elseif(epslu.gt.gamma2•epslp) then
+               el=-0.9dO*siglp/(epslp•(gamma2-t.OdO))
+             else
+               el=-e0/l.Od6
+             eodif
+
+
+
+                                                                                316
+          if(eps2u.gt.gamma2•eps2p) then
+            e2=-0.9dO•sig2pl(eps2p•(gamma2- t .OdO))
+          else
+            e2=-e0/l .Od6
+          endif
+
+          return
+
+c....     compute secant moduli
+
+2         if(epslu.gt.gamma2•epstp) then
+            sigl=sigtp•(l.Od0-0.9dO•(epsl u-epslp)/epslp/(gamma2-
+1.0d0))
+          else
+           sig 1=0. tdO•sig 1p
+          endif
+
+          if(eps2u.gt.gamma2•eps2p) then
+            sig2=sig2p•(t.Od0-0.9dO*(eps2u-eps2p)/eps2p/(gamma2-
+1.0dO))
+          else
+            sig2=0.tdO•sig2p
+          endif
+
+          el=sigl/epslu
+          e2=sig2/eps2u
+
+          if(el.gt.ebarl) el=ebarl
+          if(e2.gt.ebar2) e2=ebar2
+          if(el.lLe0/1000.0dO) el=e0/1000.0dO
+          if(e2.1Le0/1000.0dO) e2=e0/1000.0dO
+
+          return
+          end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+          subroutine stmodtc(epsl.eps2,epscu,epsa,epslcr,epscf,epstfJt,
+    &                 fc,e0,el,e2,alpbal,alpba2,gammal,gamma2,
+    &                 first,ist2,iopt,nJ)
+
+c....     subroutine to determine modulus along principal axes
+c....     post cracking for tension/compression state
+
+c....     epsl = major principal sttain
+c....     eps2 = minor principal sttain
+c....     epsa = sttain at which first cracking took place
+c....     epslcr = sttain in major principal direction at which crushing
+c....           took place
+c....     epscu = sttain at die ullimalc stress (prior to yield)
+c....     epscf = compression failure strain
+c....     epstf = tension failure sttain
+c....     epsa = sttain at change point for decending branch
+c....     fc = concrete compressive strength
+
+
+                                                                           317
+c....   ft  = concrete tensile strength
+c....   iopt = 1,2 calcularc tangent,secant modulus
+c....   eO = initial modulus
+c....   el = modulus along major principal axis
+c....   e2 = modulus along minor principal axis
+
+        implicit real *8(a-b,o-z)
+        logical first
+        common/cdalWo,bead(20),numnp,numel,nUIIUIUlt,Dal,neq,ngp,
+ipr
+
+c....   if epsl is negative due to excessive out of balance forces
+c....   during iteration then resuain epsl to equal zero
+
+        if(epsl.lL0.0) epsl=O.OdO
+
+c....   check for aushing
+
+        if(isl2.ne.2) then
+          call e3elcrack(dwn.eps2,dum.epscu.dwn,dum,dwn,ist2, 1,n,l)
+          if(ist2.eq.2) epslcr--epsl
+        endif
+
+c....   calcularc major principal axis stress
+
+        fcl=e3tenstr(alpbal,alpba2,epsl,epstf,ft,e:O*epscr)
+
+c....   calculate minor principal axis stress
+
+        if(isl2.ne.2) then
+          epslc=epsl
+        else
+         epslc=epslcr
+        endif
+
+        gamma3=1.0d0/(0.8d0-0.34dO*epslc/epscu)
+        gamma=max(gamma1 .gamma3)
+        f3=gamma*fc
+        fc2max=max(f3Jc)
+
+        if (isl2.ne.2) then
+          fc2=fc2max*(2.0dO*eps2/epscu-(eps2/epscu)**2.0dO)
+        else if (eps2.gtgamma2*epscu) tbm
+          fc2=fc2max*(l.Od0-0.9dO*(eps2-epscu)/((gamma2-
+1.0dO)*epscu))
+        else
+          fc2=0.ldO*fc2max
+        endif
+
+c....   ttansfer to appropriale option
+
+        goto(l,2),iopt
+
+c....   calcularc tangmt modulus
+
+1       epsa=(alpbal-(alpbal-1.0dO)*(epscr*eO,'ft-alpba2))*epstf
+
+
+                                                                       318
+        if((epsl.le.epsa).or.(epsl.ge.alpbal •epstt·)) then
+          el=O.OdO
+        else
+          el=ft•(I.OdO-alpba2}/epstf/(l.OdO-alpbal)
+        endif
+
+        if(eps2.gt.epscu) then
+          e2=fc2max-2.0dO*(l .OdO-eps2/epscu)/epscu
+        elseif(eps2.gt.gamma2•epscu) then
+          e2=0.9dO•fc2mu/epscu/(l.OdO-gamma2)
+        else
+          e2=0.0dO
+        endif
+
+        return
+
+c....   calculate secant modulus
+
+2       if(epsl.eq.0.0.or.fc l .Je.O.O)then
+          el=eO
+        else
+          el=fcl/epsl
+           if(el.gt.eO) el=eO
+           if(elJLe0/100(>.0) el=e0/1000.0dO
+        endif
+
+        e2=fc2/eps2
+
+        return
+        end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+        subroutine stmodU(epsl,eps2,epstf,ft,eO,el,e2,ist2,alphal,
+    &               alpha2,iopt)
+
+c....   subroutine to determine modulus along principal axes
+c....   post crushing for tension/teDsion stale
+
+c....   epsl = major principal slrain
+c....   eps2 = minor principal strain
+c....   epslf = tension failure strain
+c....   ft = concrete tensile sttengtb
+c....   iopt = 1,2 cak:ulale tangen~t modulus
+c....   eO = initial modulus
+c....   el = modulus along major principal axis
+c....   e2 = modulus along minor principal axis
+
+        implicit reat•8(a-b~z)
+
+        if(eps2.1LO.O)eps2=0.ld-20
+
+c....   transfer to appropriate segment
+
+        goto(l,2),iopt
+
+
+
+                                                                     319
+c....    calculate tangent modulus
+
+l        if(epsl.lLepstt) then
+           el=eO
+         elseif(eps ULalphal •epsU) then
+           e l=ft•( l .OdO-alpba2)/epstf/(l.OdO-alpbal)
+         else
+           el=O.OdO
+         endif
+
+         if(eps2.1Lepstt) then
+           e2=e0
+         elseif(eps2JLalpbal •epsU) then
+           e2=ft•(l.OdO-alpha2)/epstf/(l.OdO-alpbal)
+         else
+           e2=0.0dO
+         endif
+
+         return
+
+c....    calculate secant modulus
+
+2        continue
+
+c....    on convergence check for cracking in minor principal direction
+
+         if(iopt.eq.2.and.eps2.ge.epstf) ist2=1
+
+         fcl=e3tensU(alpbal,alpba2.epsl.epstf,ft,ft)
+         el=fcl/epsl
+         if(ist2.eq. l) then
+           fc2=e3tensU(alphal.alpba2.eps2,epstf,ft,ft)
+           e2=fc2Jeps2
+         else
+           e2=e0
+         endif
+
+         return
+         end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+        subroutine
+stmoduc(d,sig l ,ag2.epscu,eps l.eps2,e0,cl ,c2,xnu,fc,
+   &                 ft,epscr,istl ,isl2,gamma2,iopt,n,l)
+
+c....    subroutine to calculate the moduli along the principal
+c....    axes for the uncracked concrae element
+
+         implicit real*8(a-h,o-z)
+         dimension d(l)
+
+c....    iopt = 1,2 calcularc the tangent,secant moduli
+c....    irout = 1    element in biaxial compression
+
+
+                                                                          320
+c....   irout = 2   element in tension/compression
+c....   irout = 3   element in biaxial tension
+
+c....   calculate sttess ratio
+
+        if(abs(sig2).ge. ld-12) then
+          alpha=sig l/sig2
+        else
+          alpha=sign(sig l/ld-12,.1ig2)
+        endif
+
+
+c....   detennine element sttess state
+
+        irout=2
+        if(sigl.lLO.O)irout=l
+        if(sig2.ge.O.O)irout=3
+
+c....   transfer to appropriate segment depending on stress state
+
+        goto(l,2,3).irout
+
+c....   biaxial compression
+
+1       continue
+
+c....   calculate peak stresses
+
+        sig2p=((l .Od0+3.65dO*alpba)/(1.0dO+alpba)**2.0dO)*fc
+        siglp=alpha*sig2p
+
+c....   calculate strains corresponding to peak stresses
+
+        sigip=sigl p
+        do 100 i=l,2
+        if(sigip.lt.fc)then
+          epsip=epscu*(3.0dO*sigip/fc-2.0dO)
+        else
+          sf=sigiplfc
+          epsip=epscu*(0.35dO*sf+2.25dO*sf*sf-1.6dO*sf**3.0dO)
+        endif
+        if(epsip.gL(2.0dO*sigip/e0)) epsip=2.0dO*sigip/eO
+        if(i.eq.1) epslp=epsip
+        if(i.eq.2) eps2p=epsip
+100     sigip=sig2p
+
+c....   calculate principal stresses by iteration
+
+        if(iopt.eq.2) then
+          call e3itstress(sigl,sig2,epsl.eps2,.1iglp,sig2p,epslp.eps2p,
+    &                 xnuJc,eO,d(l).irout)
+        endif
+
+c....   calculate equivalent uniaxial strains
+
+        call e3equni(e0,fc,sigl,siglplfc,epslp,epslu)
+
+
+
+                                                                          321
+        call e3equni(e0,fc,sig2,sig2p/fc,eps2p,eps2u)
+
+c....   calcuJar.e element moduli (el,e2)
+
+        if(iopt.eq.1.and.eps2u/eps2pJL 1.0) then
+           e l=suanmod(eO,eps 1u/epslp,sig 1p/epslp)
+          e2=suanmod(e0,eps2u/eps2p,sig2p/eps2p)
+        elseif(iopt.eq.1) then
+          call stmodcc(gamma2,epsl ,eps2.epsl p,eps2p,sig 1p,sig2p,
+    &              e0,el,e2,xnu,d,1)
+        elseif(eps2u/eps2p.1L 1.0) then
+          el=stsecmod(eO,epslu/epslp,siglp/epslp)
+          e2=stsecmod(e0,eps2u/eps2p,sig2p/eps2p)
+        else
+          call stmodcc(gamma2,epsl,eps2.epslp,eps2p,siglp,sig2p,
+    &              e0,el,e2,xnu,d,2)
+        endif
+
+        return
+
+c....   tension/compres.,ion
+
+2       continue
+
+c....   calcuJar.e peak stresses
+
+        if(alpha.le.O.7SdO*ft/fc) then
+           sig 1p=fc/(alpha*fc/ft+0.5dO)*alpha
+        else
+           siglp=3.0dO*fc/(alpha*fc/ft+3.0dO)*alpba
+        endif
+        if(alpha.gL-0.2dO) then
+           sig2p=((l.Od0+-3.28dO*alpba)/(1.0dO+-alpba)**2.0dO)*fc
+        else
+         sig2p=0.5375dO*fc
+        endif
+
+c....   calculate strains corresponding to peak stresses
+
+        epslp=siglp/eO
+        sf=sig2p/fc
+        eps2p=epscu*(0.3SdO*sf+2.25dO*sf*sf-1.6dO*sf**3.0dO)
+        if(eps2p.gL(2.0dO*sig2p/e0)) eps2p=2.0dO*sig2p/eO
+
+c....   calculate principal stresses by iteration
+
+        if(iopt.eq.2) then
+          call e3itstteu(sigl ,sig2,eps 1,eps2,sigl p,sig2p,eps lp,eps2p,
+    &                xnu,fc,eO,d(l),irout)
+        endif
+
+c....   calculate equivalent uniaxial strains
+
+        call e3equni(e0,fc,sig2,sig2p/fc,eps2p,eps2u)
+
+c....   calculate element moduli (el,e2)
+
+
+                                                                            322
+        el=eO
+        if(iopt.eq. l )then
+          e2=suanmod(e0,eps2u/eps2p,sig2p,'eps2p)
+          esec=stsecmod(e0,eps2u/eps2p,sig2p/eps2p)
+        else
+          e2=stsecmod(e0.eps2u/eps2p,sig2p/eps2p)
+          esec=e2
+        endif
+
+c....   calculate principal suesses (sl,s2) for current strain stale
+
+        sl=d(l)*el*epsl+d(2)*dsqrt(el*esec)*eps2
+        s2=esec•eps2u
+
+        return
+
+c....   biaxial tension
+
+3       el=eO
+        e2=eO
+
+c....   calculate peak suesses
+
+        siglp=ft
+        sig2p=ft
+
+c....   calculate strain conespooding to peak SlreSS on I-axis
+
+        epslp=siglp/eO
+c....   calculate principal suesses for current strain stale
+
+        sl=d(t)•eO*epsl+d(2)•eO•eps2
+        s2=d(2)•eO•epst +d(t)•eO*eps2
+        return
+        end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+        function stsecmod(eO,eip,es)
+
+c....   function to calculate the secant modulus for
+c....   concrete in compression
+
+        implicit rea1•8(a-h.o-z)
+
+        stsecmod=eO/(l.OdO+(eO/es-2.0dO)*eip+eip*eip)
+        if(stsecmodJLe0/1000.0dO) stsecmod=e0/1000.0dO
+
+        return
+        end
+
+
+
+
+                                                                       323
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+              function suanmod{eO,eip,es)
+
+c....         function to calculate the tangent modulus fOI'
+c....         concrete in compression
+
+              implicit rea1•8(a-h,o-z)
+
+              e=eO•(t .OdO-eip•eip)
+              sttanmod=e/{(1.0dO+{eO/es-2.0dO)*eip+eip*eip)**2.0dO)
+              if{suanmod.lt.e0/1000.0dO) sttanmod=e0/1000.0dO
+
+              return
+              end
+
+c......................................................................
+C
