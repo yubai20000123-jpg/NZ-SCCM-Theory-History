@@ -1,12 +1,14 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 18:31 +08:00  
+**Updated:** 2026-08-10 19:01 +08:00  
 **Purpose:** 唯一当前工作入口。历史 PASS、旧路线、迁移期文件不得覆盖本文件。  
 **Canonical full-recovery checkpoint:** `governance/FULL_STARTUP_RECOVERY_CHECKPOINT_20260810.md`
 
-## 0. FULL STARTUP RECOVERY 与主线纠偏
+## 0. FULL STARTUP RECOVERY 与主线身份
 
-近期一度只沿 `M1R -> PF1 -> P2A` 局部恢复，导致把“平滑二维强度域 + invariant current map”误解成新路线。FULL_STARTUP_RECOVERY 已重新接回 G18/G20/G21/G26/G27/G28/G30/G31 及 D/G/R 历史身份。
+近期曾因局部只恢复 `M1R -> PF1 -> P2A` 而把既有“平滑二维强度域 + invariant current map”误判成新路线。该错误已经通过 FULL_STARTUP_RECOVERY 纠正，并独立登记：
+
+- `history/NZ_SCCM/MAINLINE_DEVIATION_AND_RECOVERY_20260810.md`
 
 当前正式身份：
 
@@ -15,27 +17,23 @@ G18/G27 invariant current-map architecture = ACTIVE
 G20/G21 smooth conservative material philosophy = RETAINED
 G26 moment-first D15 architecture = RETAINED
 G28/G30 direct analytic P,Rq,L kernel = RETAINED
-M1R/PF1/P2A = LATER COMPILER EXPERIMENTS, NOT ARCHITECTURE REPLACEMENTS
+M1R/PF1/P2A = COMPILER/REPRESENTATION EXPERIMENTS, NOT ARCHITECTURE REPLACEMENTS
 P2R = CANCELLED
 ROUTE_SWITCH = NO
 ```
 
-最近的偏离与恢复过程已单独登记：
-
-- `history/NZ_SCCM/MAINLINE_DEVIATION_AND_RECOVERY_20260810.md`
-
-后续任何 compiler failure 都必须先判定为“表示/编译失败”，不得无证据升级为“current-map architecture 失败”。
+任何 compiler failure 只能先定级为表示/编译失败，不得无证据升级为 current-map architecture 失败。
 
 ---
 
-## 1. 不可改变的结构目标与正式空间边界
+## 1. 固定结构目标与正式空间边界
 
 ```text
 finite analytic kinematics
 -> finite strain invariants
 -> unified strong nonlinear current material law
 -> consistent tangent from same map
--> moment-first exact analytic contraction
+-> moment-first exact/engineering-analytic contraction
 -> P, Rq, L
 -> all-real-root physical branch decision
 ```
@@ -57,7 +55,6 @@ KINEMATICS = NGUYEN_SECOND_ORDER / CURRENT CASE21 FINITE ANALYTIC KINEMATICS
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
-FORMAL_INTEGRATION = ANALYTIC_EXACT / ENGINEERING-ANALYTIC AS GOVERNED
 ELEMENT_INTEGRATION = PROHIBITED
 MATERIAL_POINT_GRID = PROHIBITED
 SPATIAL_CELLS = PROHIBITED
@@ -69,11 +66,11 @@ NO hidden initial-value integration
 NO large connection system as production operator
 ```
 
-`governance/PRIORITY_RESET_20260810.md` 已把 theorem-level tight remainder certificate 降为可选方法学附录；这不改变零正式空间积分身份。工程解析收口可采用内部解析收敛 + 事后独立 audit，但 audit 不得选阶、调参或选根。
+`governance/PRIORITY_RESET_20260810.md` 已把 theorem-level tight remainder certificate 降为可选数学附录；工程解析可采用内部解析收敛 + 事后独立 audit，audit 不得选阶、调参或选根。
 
 ---
 
-## 2. 当前正式材料表示骨架：G18 -> G27 连续继承
+## 2. 当前正式材料表示骨架：G18 -> G27
 
 Equivalent-uniaxial tensor：
 
@@ -87,7 +84,7 @@ J_1=\mathrm{tr}\mathbf E_u,
 J_2=\det\mathbf E_u.
 \]
 
-当前统一同轴 current-map architecture：
+统一同轴 current-map architecture：
 
 \[
 \boxed{
@@ -107,47 +104,40 @@ s_1=U(x)+xy[A(J_1,J_2)+B(J_1,J_2)x],
 s_2=U(y)+xy[A(J_1,J_2)+B(J_1,J_2)y].
 \]
 
-当 `J2=0` 时 interaction 自动消失，单轴轴线严格退化为 `U`。一致切线必须由同一 stress map 解析微分获得，禁止独立拟合 tangent。
+当 `J2=0` 时 interaction 自动消失；一致切线必须由同一 stress map 解析微分获得，禁止独立拟合 tangent。
 
 历史语法身份：
 
 ```text
 G12 U+xyD = diagnostic only
 G16 total-Poisson TC semantics = fail
-G16R signed/excess = partial pass, D source non-unique
+G16R signed/excess = partial pass
 G17 U+xyD mandatory grammar = retired
 G18 invariant architecture = pass
-G19 q4/q6 coefficients = fail, architecture retained
+G19 q4/q6 fitted coefficients = fail, architecture retained
 G27 invariant architecture = explicitly restored
 ```
 
 ---
 
-## 3. G20/G21：平滑、保守二维材料目标是既有主线
+## 3. G20/G21：平滑保守二维目标是既有主线
 
-G20 已建立：
+G20/G21 已建立/允许：
 
 ```text
 CC = smooth conservative biaxial-compression envelope
-TT = p=8 smooth superellipse
+TT = p=8 smooth superellipse reference
 TC = C1 Bernstein connection with axis tangent matching
-source jumps/cracking-axis corners = C1/C2 regularized where project permits
-```
-
-强度包络只规定允许强度域/峰值几何，不等于完整 current stress surface，也不能用包络斜率产生材料 tangent。
-
-G21 已锁定 ordinary-concrete project approximations：
-
-```text
-current/rotating principal surface instead of fixed-crack history
-no independent Nguyen beta shear-retention state
-C1/C2 regularization instead of source finite jumps
-alpha2=0.3 conservative tension-stiffening
+source jumps/cracking-axis corners = C1/C2 regularized where permitted
+current/rotating principal surface
+conservative tension-stiffening
 smooth conservative post-peak compression
 no independent TCX history state
 ```
 
-材料验收同时看：
+强度包络只规定允许强度域/峰值几何，不等于完整 current stress surface，也不能用包络斜率产生 tangent。
+
+材料验收必须同时看：
 
 ```text
 stress
@@ -156,31 +146,11 @@ shape
 full-domain boundedness
 ```
 
-因此允许存在材料面拟合误差、允许 TC/TT 合理向内保守收缩，是**当前既有路线内部的 target regularization**，不是 route switch。
+允许 TC/TT 合理向内保守收缩属于同一路线的 target regularization，不是 route switch。
 
 ---
 
-## 4. G22/G26/G28/G30 的正确身份
-
-G22 曾得到统一 global current target：
-
-```text
-sigma_i/fc = K180(e_i)*U70[(e_i+nu e_j)/(1-nu^2)]*M90(e_j)+H180(e_i)
-```
-
-历史 certificate：
-
-```text
-stress RMS  = 0.000655 fc
-stress P95  = 0.001635 fc
-tangent RMS = 0.021726
-tangent P95 = 0.053346
-D15 compatibility = PASS
-```
-
-它证明“统一 continuous current target + same-map tangent + finite polynomial D15”存在；但 524 个编译系数、最高总代数次数约 340，不符合今天 Gate C，而且 G27 已恢复 invariant production grammar。因此 G22 是存在性/历史证据，不是 final production grammar。
-
-G23-G25 point/material surrogate 只能作性能对照，正式拒绝。
+## 4. D15 / P-Rq-L 内核
 
 G26 保留：
 
@@ -203,17 +173,17 @@ NAIVE_EXPAND_THEN_INTEGRATE = REJECTED
 MOMENT_FIRST_D15 = ACTIVE COMPILER ARCHITECTURE
 ```
 
-G28/G30 已确认：
+G28/G30 已确认同一内核：
 
 \[
 \mathbf E(X,Y,\zeta;D,A)
 \to\boldsymbol\sigma=\mathcal M(\mathbf E)
 \to\text{analytic representation}
 \to\text{D15 exact moments}
-\to P(D,A),R_A(D,A),L(D,A)
+\to P(D,A),R_A(D,A),L(D,A).
 \]
 
-使用同一 analytic kernel + all-real-root isolation；Pu 不需要另造 load stepping/arclength/second solver。
+Pu 不需要 load stepping/arclength/second solver。
 
 历史身份：
 
@@ -225,13 +195,13 @@ G31_FINAL_VISIBLE_DELIVERY          = ABSENT
 G31_USER_ACCEPTANCE                 = UNRESOLVED
 ```
 
-G31 `Pu ~= 476.936 kN` 是故意忽略裂化的 Case21 mathematical-chain validation，不是 validated RC Pu；UHPC-C0 仅为 executed calculable baseline。
+G31 `Pu ~= 476.936 kN` 是故意忽略裂化的 chain validation，不是 validated RC Pu；UHPC-C0 只属于 executed calculable baseline。
 
 ---
 
-## 5. Case21 exact invariant foundation
+## 5. Case21 invariant foundation
 
-保留：
+Canonical：
 
 - `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
 
@@ -257,71 +227,45 @@ I_2=-\nu D^2+DMK+BD(\nu-1)W
 }
 \]
 
-`I2` 中所有 `M^2` 项严格抵消。`I1,I2` 属有限 polynomial field；这一结构没有被任何后续 compiler failure 否定。
+`I2` 中全部 `M^2` 项严格抵消；`I1,I2` 为有限 polynomial field。
 
 ---
 
-## 6. 2026-08-09~10 compiler 实验当前定级
+## 6. Compiler 实验当前定级
 
 Frozen source-shaped NC regression/reference 使用 `U,C,C2,T,T^8`；它是 benchmark/oracle，不是 final source truth。
 
-M1R rational screen 材料误差较小，但 production 会产生：
-
 ```text
-27 scalar poles
-106 pair blocks
-algebraic periods / PF systems
+M1 simple polynomial = FAIL
+M1R rational = good material regression, production HOLD
+PF1 R02-R06 exact mathematics = audit only
+PF1 R06 15x15 connection = FAIL production complexity
+PF1 R07 = CANCELLED
+P2A degree<=16 single-global primitive polynomial = FAIL
 ```
 
-PF1 R02-R06 exact mathematics 保留 audit only：
+P2A 的主要失败量：
 
 ```text
-R02 rational resolvents
-R03 genus-2 de-Rham/Gauss-Manin
-R04 Phi endpoint reduction
-R05 common rational driver
-R06 15x15 witness connection, 211/225 nonzero, ~2.68e5 chars
-PF1_R06_PRODUCTION_ACCEPTANCE = FAIL_COMPLEXITY_GATE
-PF1_R07 = CANCELLED
+U  ~= 2.43% max normalized error
+C  ~= 2.44%
+C2 ~= 0.51%
+T  ~= 32.58%
+V=T^8 ~= 43.28%
 ```
 
-P2A `degree<=16` one-global-polynomial primitive compiler：
-
-```text
-U max normalized error  ~= 2.43%
-C                       ~= 2.44%
-C2                      ~= 0.51%
-T                       ~= 32.58%
-V=T^8                   ~= 43.28%
-```
-
-因此：
-
-```text
-M1R_P2A_GLOBAL_POLYNOMIAL_PRIMITIVE_COMPILER = FAIL
-```
-
-只否定该 compiler family，不等于统一 current-map architecture 失败，也不等于 `T^8` 必须永久保留为 production representation。
+这些只否定具体 compiler family，不否定 current-map architecture。
 
 ---
 
-## 7. R01 已执行：current-target 几何正则化诊断
+## 7. R01：current-target 几何诊断
 
 Canonical：
 
 - `current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.md`
 - `current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_results.json`
-- `current/theory/nz_sccm_current_target_geometric_regularization_r01.py`
 
-### 7.1 核心新发现
-
-旧判断“全局 lambda 宽约 3.17，而主要 tension transition 宽约 0.05”不完整。当前 reference map 中真正高曲率的局部层宽约为
-
-\[
-\eta_\Pi=\eta_r x_{cr}=0.0024993589727.
-\]
-
-主要存在三条 strain-space transition ridge：
+R01 定位出三条高曲率 tensile transition ridge：
 
 ```text
 lambda ~= 0          sign split
@@ -329,85 +273,132 @@ lambda ~= xcr        Foster r=1
 lambda ~= 10*xcr     Foster r=10
 ```
 
-历史 qualification interval：
+局部 characteristic width：
 
 \[
-[-2.4390243902,0.7317073171],\qquad\Delta\lambda=3.1707317073.
+\eta_\Pi=\eta_r x_{cr}=0.0024993589727.
 \]
 
-因此尺度比：
+历史 qualification interval 宽约 `3.17073`，尺度比约 `1268.62:1`。
 
-\[
-\boxed{3.1707317073/0.00249935897\approx1268.62}.
-\]
-
-R01 结论：
+R01 sector 决策：
 
 ```text
-PRIMARY_COMPLEXITY_SOURCE = THREE_THIN_TENSILE_CURRENT_MAP_TRANSITION_LAYERS
-```
-
-这比“普通混凝土一般非线性太强”更精确。G20 已经消除了 strength-envelope 的主要几何尖角；现在的困难主要是完整 `(epsilon1,epsilon2)->(sigma1,sigma2)` current surface 中的窄高曲率 ridge。
-
-### 7.2 R01 实际曲率定位
-
-```text
-zero-split peak: lambda ~= 0.000684, d2T/dlambda2 ~= +1.1583e4
-r=1 peak:        lambda ~= 0.050080, d2T/dlambda2 ~= -4.3300e3
-r=10 peak:       lambda ~= 0.499882, d2T/dlambda2 ~= +3.1128e2
-```
-
-这些只是材料坐标诊断，不是 formal structural spatial quadrature。
-
-### 7.3 sector 决策
-
-CC 保留：
-
-\[
-\boxed{c_i^*=c_i(1+a_{cc}c_1c_2)},\qquad a_{cc}=0.1072329249362415.
-\]
-
-TC/CT 保留既有保守目标：
-
-\[
-\boxed{c^*=c(1-\tau)},
-\]
-
-拉向分量不放大。
-
-TT：G20 `p=8` 仍是当前 outer reference；R01 只授权更简单的 inner candidates 做 material-only screen：
-
-```text
-p=8: equal biaxial = 0.917004 ft
-p=4: equal biaxial = 0.840896 ft, reduction vs p8 = 8.2996%
-p=2: equal biaxial = 0.707107 ft, reduction vs p8 = 22.8895%
-```
-
-当前：
-
-```text
-TT_P4 = AUTHORIZED_FOR_MATERIAL_ONLY_SCREEN
-TT_P2 = LOWER_BOUND_DIAGNOSTIC_ONLY
-NEW_TT_P_FROZEN = NO
-```
-
-### 7.4 R01 gate
-
-```text
-TARGET_SURFACE_REFORMULATION_R01 = PASS_DIAGNOSTIC
-ROUTE_SWITCH = NO
 CC = RETAIN
-TC = RETAIN_EXISTING_CONSERVATIVE_TARGET
-PRIMARY_REFORMULATION_TARGET = TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR
-CASE21_PU = NOT_RUN
-SWARTZ24 = NOT_RUN
+TC = RETAIN EXISTING CONSERVATIVE TARGET
+TT p=8 = OUTER REFERENCE
+TT p=4 = MATERIAL-ONLY SCREEN AUTHORIZED
+TT p=2 = LOWER-BOUND DIAGNOSTIC ONLY
+PRIMARY_REFORMULATION_TARGET = TENSILE CURRENT-MAP TRANSITION CORRIDOR
 ```
-
-只缩 TT/TC strength envelope **不能**消除 lambda-space thin layers；下一步必须直接处理 current-map transition corridor。
 
 ---
 
-## 8. 三个正式门禁
+## 8. R02：transition-corridor 实际执行结果
+
+Canonical：
+
+- `current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_20260810.md`
+- `current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_results.json`
+- `current/theory/nz_sccm_tensile_current_map_transition_corridor_r02.py`
+
+R02 首先实际执行 common-width `k=1,2,4,8`。`k>=4` 虽大幅降低曲率，但 TC/CC stress drift 明显，因此 fail-fast 收缩到 `1<k<=2`。
+
+refined screen：
+
+```text
+k=1.25:
+  mean three-peak curvature ratio = 0.8023
+  TC stress P95 change           = 0.002103 fc
+  TC tangent P95 change          = 0.04384 kappa
+
+k=1.50:
+  mean curvature ratio           = 0.6704
+  TC stress P95 change           = 0.004029 fc
+  TC tangent P95 change          = 0.09734 kappa
+
+k=1.75:
+  TC tangent P95 change          = 0.16006 kappa
+
+k=2.00:
+  mean curvature ratio           = 0.5054
+  TC tangent P95 change          = 0.23131 kappa
+```
+
+因此：
+
+```text
+K_1P25 = RETAIN MODERATE MATERIAL CANDIDATE, NOT FROZEN
+K_1P5  = RETAIN STRONGER DIAGNOSTIC
+K_GE_1P75 = HOLD DUE TANGENT DISTURBANCE
+```
+
+### 8.1 R02 关键负结果：合理展宽本身不足以解决解析复杂度
+
+在完整历史 qualification interval 上，同一 degree-32 `T(lambda)` global polynomial screen：
+
+```text
+k=1 baseline max normalized error ~= 31.806%
+k=2 widened  max normalized error ~= 31.324%
+```
+
+即使曲率峰约减半，global compiler difficulty 几乎没有改变。
+
+正式：
+
+```text
+PURE_WIDTH_WIDENING = INSUFFICIENT_AS_SOLE_SOLUTION
+```
+
+### 8.2 R02 关键正结果：spectral/reachable-domain reduction 的收益远大于展宽
+
+沿用既有 Case21 zero-spatial diagnostic state `D=0.75,q=0.002` 的分离主谱：
+
+\[
+\lambda_+\in[-0.1051,0.13584],
+\qquad
+\lambda_-\in[-0.86569,-0.62473].
+\]
+
+这些区间当前只作 diagnostic，不是 Swartz-family production bounds。
+
+对同一个 baseline `T(lambda)`：
+
+```text
+full historical interval, degree 32:
+  max normalized error ~= 31.806%
+
+lambda+ diagnostic interval, degree 32:
+  max normalized error ~= 2.283%
+
+lambda- diagnostic interval, degree 6:
+  max absolute error ~= 5.19e-12
+```
+
+因此 R02 将下一主动作从“继续物理展宽”转向：
+
+```text
+SPECTRAL_REACHABLE_DOMAIN_REDUCTION
+```
+
+这仍属于同一个 invariant current-map / D15 路线。
+
+---
+
+## 9. “降维”的允许身份
+
+`(epsilon1,epsilon2,sigma1,sigma2)` 是一个 2->2 current map 的图，不是四个独立输入。允许的降维/降复杂度方式：
+
+1. **Invariant reduction — 已 active**：以 `(J1,J2)` 和固定 tensor basis 表示同轴 current map。
+2. **Spectral-branch reduction**：若在目标结构参数盒内可证明 `lambda+`、`lambda-` 存在正 spectral gap，则可在两个互不重叠的谱区间上分别构造同一材料函数的 scalar analytic representation；这不是空间/material-state partition。
+3. **Reachable-domain reduction**：只对由结构运动学和参数边界解析可达的 material-state union 做 production qualification，不再默认覆盖过大的 oracle square；不得用试验 Pu 缩域。
+4. **Low-rank invariant representation**：在 reachable `(J1,J2)` domain 上检查 `A(J1,J2),B(J1,J2)` 是否可用少量 separated polynomial terms 表示，并保持 D15-compatible。
+
+禁止把“降维”理解为删除一个主应力、忽略双轴耦合，或重新启用 TT/TC/CC runtime state partition。
+
+---
+
+## 10. 三个正式门禁
 
 ```text
 Gate A = exact/engineering-analytic direct structural closure
@@ -428,20 +419,11 @@ large auxiliary connection system is not production
 actual formulas must be exposed, not hidden behind scripts
 ```
 
-`governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md` 继续有效：任何执行/PASS必须在聊天中真实展示公式、中间量、误差和复杂度。
+`governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md` 继续有效。
 
 ---
 
-## 9. ordinary concrete / reinforcement / UHPC / shell 当前身份
-
-### Ordinary concrete
-
-```text
-Nguyen/Foster exact/history material = PRIMARY SOURCE / BENCHMARK
-G18/G27 invariant current architecture = ACTIVE
-G20/G21 smooth conservative target philosophy = ACTIVE CONSTRAINT
-final compact A_NC(J1,J2),B_NC(J1,J2) closure = OPEN
-```
+## 11. Other components
 
 ### Reinforcement
 
@@ -453,11 +435,11 @@ P=P_c+P_s,
 R_q=R_{q,c}+R_{q,s}.
 \]
 
-禁止 `Pu=Pu,c+As fy` 事后相加。
+禁止 concrete Pu 后事后加 `As fy`。
 
 ### UHPC
 
-仅 `fc=141.1 MPa` 为用户强制冻结。Hiew/Liu/Leutbecher/周俊/王淑楠等材料证据已保留；UHPC-C0 不是 production；final strong multiaxial current operator = OPEN。
+仅 `fc=141.1 MPa` 为用户强制冻结；final strong multiaxial current operator = OPEN；UHPC-C0 不是 production。
 
 ### Steel shell / Y / PBL
 
@@ -465,11 +447,9 @@ R_q=R_{q,c}+R_{q,s}.
 M_shell = UNSPECIFIED BY CURRENT LOCKED SOURCE
 ```
 
-Yun Lu/Zhang Ning/Sun Lipeng evidence 已保留；production Y/shell 未开始。PBL 继续作为强局部边界/子板分隔，不自动作为独立轴向承载项或显式 spring energy。
+Yun Lu/Zhang Ning/Sun Lipeng evidence retained；PBL 继续作为强局部边界/子板分隔，不自动作为独立轴向承载项或显式 spring energy。
 
----
-
-## 10. Case21 / Swartz24 当前生产状态
+### Case21 / Swartz24
 
 ```text
 Case21 = analytic/structural benchmark; no new final RC Pu frozen
@@ -478,57 +458,27 @@ G31 476.936 kN = uncracked chain validation only
 Swartz24 production = PAUSED
 ```
 
-结构 Pu 不得反标材料参数、TC/TT 收缩程度、平滑宽度或 compiler order。
-
----
-
-## 11. 当前明确淘汰/限制
-
-```text
-U+xyD(x,y) mandatory production grammar
-G18 q4/q6 specific fitted coefficients
-panel-level Chebyshev/proxy production
-material-point/grid/Gauss production
-D15 UHPC Layer-0 material identity
-naive expand-then-integrate
-G23/G25 point-cloud material surrogate
-Pu second load-step/arclength solver
-PF1 large connection production
-P2A degree<=16 single-global primitive compiler
-blind compiler-family hopping
-```
+结构 Pu 不得反标材料参数、平滑宽度、reachable domain 或 compiler order。
 
 ---
 
 ## 12. 当前唯一下一理论任务
 
 ```text
-CURRENT_RECOMMENDED_NEXT_TASK = TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02
+CURRENT_RECOMMENDED_NEXT_TASK = SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03
 ```
 
-R02 不是新 compiler search，也不是 route switch。它只允许在同一 G18/G20/G27 current-map target 内，构造**极少数明确 C2 conservative transition-corridor candidates**，并在进入 D15 以前做材料级门禁。
+R03 不是 route switch，也不是重新做 polynomial/rational/PF family search。只允许：
 
-固定要求：
+1. 从 Case21/Swartz 运动学与明确的 `(D,q,geometry,material parameter)` production box 推导 `lambda+`、`lambda-` 的解析/严格保守范围；
+2. 证明或否证整个 production box 上的正 spectral gap；
+3. 将可达状态映射到 `(J1,J2)` reachable domain；
+4. 在分离谱区间和 reachable invariant domain 上重新测量需要的 polynomial/separated-rank 复杂度；
+5. 决定是否仍需要 `k=1.25` mild physical regularization；
+6. 禁止用 Case21/Swartz Pu 选择范围、阶数或材料参数；
+7. 正式结构空间 sampling/quadrature/subdomain 继续为 `0/0/1`。
 
-```text
-preserve sigma(0,0)=0
-preserve initial elastic tangent
-preserve uniaxial ft axis anchor
-never increase stress above accepted material target
-stress and tangent from same map
-no runtime TT/TC/CC state partition
-no structural Pu calibration
-compare material stress + tangent + surface shape + algebraic complexity
-```
-
-优先比较：
-
-1. G20/current narrow ridge reference；
-2. 一个 moderate widened C2 transition corridor；
-3. 必要时一个 stronger conservative bound；
-4. TT p=8 vs p=4 同步作为 material-only geometry comparison；p=2 只作 lower-bound diagnostic。
-
-若 moderate regularization 不能显著降低 target curvature/representation complexity 而不破坏 material stress+tangent gate，则停在 R02，不再重新进入大函数族/PF 扩张。
+R03 fail-fast：如果没有可证明的 branch gap，或 Swartz family reachable domain 仍覆盖历史宽域的大部分，则必须直接报告，而不是靠人工缩域。
 
 ---
 
@@ -538,19 +488,21 @@ compare material stress + tangent + surface shape + algebraic complexity
 FULL_STARTUP_RECOVERY = PASS_FOR_PROJECT_CONTINUATION
 ROUTE_SWITCH = NO
 TARGET_SURFACE_REFORMULATION_R01 = PASS_DIAGNOSTIC
+TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02 = PASS_DIAGNOSTIC_WITH_REFRAME
+PURE_WIDTH_WIDENING = INSUFFICIENT_AS_SOLE_SOLUTION
 RECOVERY_BASELINE_HEAD = 22b3d39e74972ffcc66abede9691d65ba1732f22
 ```
 
-后续恢复优先读取：
+后续优先读取：
 
 1. `current/CURRENT_STATE.md`
 2. `governance/FULL_STARTUP_RECOVERY_CHECKPOINT_20260810.md`
 3. `history/NZ_SCCM/MAINLINE_DEVIATION_AND_RECOVERY_20260810.md`
-4. `current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.md`
-5. `current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_results.json`
-6. `current/theory/nz_sccm_current_target_geometric_regularization_r01.py`
-7. `governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md`
-8. `governance/PRIORITY_RESET_20260810.md`
-9. `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
-10. `current/theory/NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`
+4. `current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_20260810.md`
+5. `current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_results.json`
+6. `current/theory/nz_sccm_tensile_current_map_transition_corridor_r02.py`
+7. `current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.md`
+8. `current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md`
+9. `governance/EXPLICIT_EXECUTION_EVIDENCE_RULE_20260810.md`
+10. `governance/PRIORITY_RESET_20260810.md`
 11. G20/G21/G22 historical evidence and File Library G27/G28/G30/G31 when historical identity is questioned.
