@@ -1,26 +1,27 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 21:02 +08:00  
+**Updated:** 2026-08-10 22:20 +08:00  
 **Purpose:** 唯一当前工作入口。详细推导、历史偏离/恢复、失败 compiler 与执行证据留在 canonical governance/theory/history/evidence 文件中。
 
 ## 0. 最高优先级：EXPLICIT END-TO-END CAPACITY
 
-Canonical：
+Canonical current files:
 
 - `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
-- `governance/EXPLICIT_SURFACE_GLOBAL_TARGET_R07R_RULE_20260810.md`
-- `current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md`
-- `current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_results.json`
-- `current/theory/NZ_SCCM_R07R_EXPLICIT_GLOBAL_P_RQ_COEFFICIENTS.json`
-- `history/NZ_SCCM/R07R_EXPLICIT_SURFACE_AND_CAPACITY_CHAIN_20260810.md`
+- `governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md`
+- `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md`
+- `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_results.json`
+- `history/NZ_SCCM/R08_USER_SKETCH_SMOOTH_AND_RC_CASE21_20260810.md`
 
-用户当前最高要求：
+User highest requirement:
 
 ```text
 最终极限承载力必须由显式公式及同一公式的显式导数得到。
 ```
 
-允许使用 4D stress-strain manifold、invariant/spectral current map、whole-structure global target、低秩面、polynomial/rational/algebraic formula、named special functions、局部 analytic patch 等。材料 pointwise regression error 不再是首要目标；允许 deliberate under-use / smoothing / trimming 局部尖峰，只要后果透明、导数显式、最终结构验证可审计。
+允许使用 4D stress-strain manifold、invariant/spectral current map、whole-structure global target、低秩面、polynomial/rational/algebraic formula、named special functions、局部 analytic patch、显式 piecewise smooth function 等。
+
+材料 pointwise regression error 不是首要目标。允许 deliberate under-use / smoothing / trimming 局部尖峰；必须透明说明削弱/增强的力学后果。
 
 ---
 
@@ -48,27 +49,35 @@ ACTIVE_MODE = m=1
 KINEMATICS = NGUYEN_SECOND_ORDER
 ```
 
-正式 production operator 不得依赖隐藏 material-point propagation、黑箱 numerical differentiation 或黑箱 numerical integral。数值求根可用于求已经显式得到的有限方程。
+数值求根可用于求已经显式得到的有限方程。
 
 ---
 
-## 2. 材料处理原则
+## 2. 材料处理原则 — R08 用户草图修正
 
-材料 source/experiment feature 分成：
+R07R 的 rational material curve 虽然全局连续，但 tensile side 出现了人为的 `overshoot -> dip -> rebound`。该形状不再接受为目标。
 
-1. `HARD LANDMARKS`：初始切线、主要压缩/拉伸峰、残余水平、必要多轴锚点；
-2. `OPTIONAL SHARP FEATURES`：局部尖峰、切口、脊线、过窄 transition、局部振荡；
-3. `ANALYTIC UNDER-USE/PATCH`：可主动削低、圆滑或替代 optional feature；
-4. `MECHANICAL CONSEQUENCE`：必须报告压缩降低、拉伸降低、TC/TT 改变、enhancement 或 mixed 及导数影响。
-
-允许例如：
+当前 preferred material-data processing：
 
 ```text
-source/measured peak = 1.00
-explicit analytic target = 0.95
+source/measured sharp local feature
+-> deliberately do not use the full sharp feature
+-> replace it by one low-parameter shape-preserving smooth cap
+-> keep important material landmarks explicit
+-> then inspect structural consequence
 ```
 
-结构试验值只能在材料 target 先冻结以后用于 validation，禁止隐蔽反标局部 patch。
+Tension prototype must have:
+
+- one monotone rise from origin;
+- one rounded retained peak;
+- one monotone decay to residual;
+- zero tangent at retained peak and residual onset;
+- no secondary undershoot;
+- no rebound;
+- no oscillation introduced only by the regression family.
+
+This is a data-processing choice, not an attempt to reproduce every sharp source feature.
 
 ---
 
@@ -80,154 +89,249 @@ SECONDARY_DOMAIN = STRUCTURAL_REACHABLE_SUBDOMAIN Lambda_R
 MANDATORY        = Lambda_R subset of Lambda_M
 ```
 
-Case21/Swartz24 不能定义 production material domain。NC 与 UHPC 可有不同 `Lambda_M`、不同 surface/patch 参数，但最终必须进入同一类 explicit-capacity workflow。
+Case21/Swartz24 cannot define the production material domain.
 
-NC source-active landmark interval 仍记录为：
+NC source-active landmark interval remains recorded as
 
 \[
 \Lambda_{M,NC}^{active}=[-10,0.49987179453974245].
 \]
 
-UHPC 禁止继承 NC 数值谱域。
+UHPC must derive its own `Lambda_M`; NC numerical bounds must not be copied into UHPC.
 
 ---
 
-## 4. R07R — 显式低参数材料面
+## 4. R08 explicit user-sketch NC scalar target
 
-R07R 不再超贴合旧 `Pi/H/T/T^8` 尖锐结构。采用最小 scalar spectral family：
-
-\[
-u(\lambda)=\lambda\frac{N_5(\lambda)}{D_6(\lambda)},
-\]
-
-\[
-N_5=\kappa+a_1\lambda+a_2\lambda^2+a_3\lambda^3+a_4\lambda^4+a_5\lambda^5,
-\]
-
-\[
-D_6=1+b_1\lambda+b_2\lambda^2+b_3\lambda^3+b_4\lambda^4+b_5\lambda^5+b_6\lambda^6.
-\]
-
-显式导数：
-
-\[
-u'(\lambda)=\frac{(N+\lambda N')D-\lambda ND'}{D^2}.
-\]
-
-最小 current surface：
-
-\[
-\boxed{\boldsymbol\sigma=f_c\,u(\mathbf E_u)}.
-\]
-
-没有 runtime TT/TC/CC state machine；没有额外 `J2/CC/TC` enhancement。后者不是永久删除，而是只有当结构验证证明缺失时才允许最小补充。
-
-R07R 三个候选在查看 Case21 实验值之前冻结：
+Compression:
 
 ```text
-A_FC100_FT90 : compression peak 100%, tension peak 90%
-B_FC97_FT90  : compression peak 97%,  tension peak 90%
-C_FC95_FT80  : compression peak 95%,  tension peak 80%
+lambda < -10         : residual -0.10 fc
+-10 <= lambda < -1   : R06 C2 source-faithful postpeak target
+-1 <= lambda < 0     : Saenz compression
 ```
 
-执行材料结果：
+Tension:
 
 ```text
-A: min compression = -1.000300 fc ; max tension = +0.091368 fc
-B: min compression = -0.970283 fc ; max tension = +0.091388 fc
-C: min compression = -0.950244 fc ; max tension = +0.081494 fc
+0 <= lambda <= lambda_p : quintic Hermite monotone rise
+lambda_p < lambda <= lambda_r : quintic Hermite monotone decay
+lambda > lambda_r : residual 0.03 fc
 ```
 
-三个候选在材料识别区间内 denominator 均保持正值，无 pole crossing。
+Landmarks:
+
+\[
+\lambda_p=x_{cr}=0.049987179454,
+\quad
+u(\lambda_p)=0.09,
+\]
+
+\[
+\lambda_r=10x_{cr}=0.49987179454,
+\quad
+u(\lambda_r)=0.03.
+\]
+
+Rise polynomial in local `tau`:
+
+\[
+0+0.1\tau+0\tau^2+0.3\tau^3-0.55\tau^4+0.24\tau^5.
+\]
+
+Fall polynomial:
+
+\[
+0.09-0.6\tau^3+0.9\tau^4-0.36\tau^5.
+\]
+
+Executed shape audit:
+
+```text
+rise monotone = PASS
+fall monotone = PASS
+peak = 0.09 fc
+residual = 0.03 fc
+slope at origin = kappa
+slope at peak = 0
+slope at residual = 0
+```
+
+`R07R_RATIONAL_TENSILE_OSCILLATION = REJECTED_AS_UNNECESSARY`.
 
 ---
 
-## 5. R07R — whole-structure 显式 P/Rq target
+## 5. Case21 reinforcement — analytic same-equation coupling
 
-对每个已冻结材料候选建立：
-
-\[
-\boxed{P(D,q)=\sum_{i=0}^{10}\sum_{j=0}^{10}p_{ij}T_i(\xi_D)T_j(\xi_q)}
-\]
-
-\[
-\boxed{R_q(D,q)=\sum_{i=0}^{10}\sum_{j=0}^{10}r_{ij}T_i(\xi_D)T_j(\xi_q)}
-\]
+Source mapping:
 
 ```text
-D in [0.35,1.40]
-q in [0.003,0.033]
-P coefficient count  = 121
-Rq coefficient count = 121
+rho_x = rho_y = 0.00375
+Es = 200000 MPa
+fy = 530 MPa
+eps_y = 0.00265
 ```
 
-完整 coefficient matrices 已存：
+Let
 
-`current/theory/NZ_SCCM_R07R_EXPLICIT_GLOBAL_P_RQ_COEFFICIENTS.json`
+\[
+S=q_0q+\frac12q^2,
+\qquad
+C_m=\frac{\pi^2S}{\varepsilon_0}.
+\]
 
-`P_,D,P_,q,Rq_,D,Rq_,q` 均由同一 Chebyshev arrays 解析求导；随后直接形成 `L`。
+Exact loading-direction steel load:
 
-独立 off-grid 验证：
+\[
+P_s=
+\frac{\rho_y t b E_s\varepsilon_0}{1000}
+\left(D-\frac{C_m}{4}\right).
+\]
+
+Exact steel amplitude residual:
+
+\[
+R_s=
+\frac{\rho_y tE_s\pi^2(q_0+q)b\ell}{1000}
+\left[
+\frac{\varepsilon_0D(\nu-1)}4
++\frac{9\pi^2S}{32}
+\right].
+\]
+
+The total equations are solved as
+
+\[
+P=P_c+P_s,
+\qquad
+R=R_c+R_s=0,
+\]
+
+then
+
+\[
+L=P_D R_q-P_qR_D=0.
+\]
+
+No `Pu = Pu,c + As fy` post-addition is permitted.
+
+---
+
+## 6. R08 explicit whole-structure target and mandatory refinement
+
+A first coarse degree-(11,11) target on
 
 ```text
-A: P max abs 3.709 kN; P95 1.644 kN; Rq max 0.448 kN
-B: P max abs 3.758 kN; P95 1.619 kN; Rq max 0.455 kN
-C: P max abs 3.559 kN; P95 1.906 kN; Rq max 0.421 kN
+D in [0.35,1.30]
+q in [0.001,0.030]
+```
+
+was **rejected** because the `Rc` off-grid/root residual error was too large. Its apparent `Pu=335.047660 kN` is deprecated and must not be used.
+
+The low-q equilibrium branch was then mechanically located from the same material + reinforcement equations, without using the experimental load. A local explicit target was frozen on
+
+```text
+D in [0.60,0.84]
+q in [0.012,0.0215]
+```
+
+Degree sequence `12,14,16,18` was executed. Degree 18 was retained.
+
+Retained validation:
+
+```text
+Pc max abs = 0.087275 kN
+Pc P95     = 0.059938 kN
+Rc max abs = 15.9990 kN mm
+Rc P95     = 10.8955 kN mm
+```
+
+At the final explicit stationary root, the independent underlying-material audit gives
+
+```text
+P_total_audit = 335.585377 kN
+R_total_audit = -1.021793 kN mm
+P_explicit - P_audit = +0.004406 kN
 ```
 
 ---
 
-## 6. R07R Case21 concrete-only 显式驻值根
-
-从同一显式 `P,Rq,L` 直接求：
-
-| candidate | D* | q* | A* (mm) | Pu explicit (kN) | independent material-surface audit P (kN) |
-|---|---:|---:|---:|---:|---:|
-| A_FC100_FT90 | 0.914265 | 0.0210447 | 25.6745 | 317.4186 | 317.8396 |
-| B_FC97_FT90  | 0.912204 | 0.0211055 | 25.7487 | 309.8781 | 310.2823 |
-| C_FC95_FT80  | 0.886755 | 0.0206359 | 25.1758 | 306.1928 | 306.6491 |
-
-Case21 RC 实验值：
+## 7. R08 final explicit RC Case21 result
 
 \[
-P_f=368.312750\ \text{kN}.
+D_u=0.708108615160,
 \]
-
-该实验值是在三个材料候选冻结之后才用于 scale comparison；没有用于选择 peak retention。
-
-R07R 结果是 **concrete-only diagnostic**，不能标成最终 RC `Pu`。钢筋必须在 root solve 前进入：
 
 \[
-P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}.
+q_u=0.0166001000745,
+\qquad
+A_u=20.252122\ \mathrm{mm}.
 \]
 
-历史 G31 crack-free concrete-only 基线为 476.935634 kN；因此 deliberate under-use/smoothing 本身已经把 concrete-only stationary capacity 降到约 306–318 kN。说明材料面简化不是 cosmetic change，而会显著改变结构容量。
+\[
+P_c=317.266522\ \mathrm{kN},
+\qquad
+P_s=18.323261\ \mathrm{kN},
+\]
 
----
+\[
+\boxed{P_u=335.589783\ \mathrm{kN}}.
+\]
 
-## 7. R07R 最重要的 HOLD 边界
+Experiment:
 
-R07R whole-structure `P/Rq` coefficient identification 使用了高精度 full-halfwave numerical integration **offline**。
+\[
+P_f=368.312750\ \mathrm{kN}.
+\]
 
-运行时/最终候选公式本身完全是有限显式多项式及显式导数，但该 coefficient-identification 步骤与此前 pure-D15 zero-quadrature derivation 不同。
+Error:
 
-因此：
+\[
+\boxed{-8.884560\%}.
+\]
+
+Reinforcement at this state remains fully elastic:
 
 ```text
-R07R = PASS_PROOF_OF_CONCEPT_EXPLICIT_END_TO_END_CHAIN
-FORMAL_ZERO_QUADRATURE_PRODUCTION_STATUS = HOLD
+y-rebar strain range = [-0.00147995, +0.00028949]
+x-rebar strain range = [+0.00026639, +0.00203583]
+yield strain          = 0.00265
 ```
 
-下一阶段必须明确二选一：
-
-1. 接受 offline identification of explicit global target 作为类似材料数据处理/拟合的合法步骤；或
-2. 用 analytic D15 / named-kernel 重新生成同一类 `P/Rq` coefficients。
-
-该差异不得隐藏。
+This is the current **minimal scalar current-surface + analytic reinforcement** Case21 diagnostic result.
 
 ---
 
-## 8. 旧工具身份
+## 8. Interpretation of the remaining deficiency
+
+The ~8.9% underprediction is NOT a reason to restore the deleted sharp tensile peak or the R07R rational oscillation.
+
+The next physical question is whether the minimal scalar surface is missing a **small source-grounded multiaxial compression / tension-compression enhancement**.
+
+Any next correction must be smaller and simpler than the historical full CC/TC/TT operator, and must be added only because it repairs an identified mechanical deficiency.
+
+---
+
+## 9. Formal-status boundary
+
+R08 runtime `P,R,L` evaluation is finite and explicit.
+
+However, the retained local `Pc(D,q),Rc(D,q)` coefficients were identified offline using high-accuracy full-halfwave numerical integration.
+
+Therefore:
+
+```text
+USER_SKETCH_TENSION_SHAPE = PASS
+ANALYTIC_REINFORCEMENT_COUPLING = PASS
+RC_CASE21_EXPLICIT_LIMIT = PASS_DIAGNOSTIC
+FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
+```
+
+This proof-of-concept identity is not silently relabeled as the older pure-D15 zero-quadrature production identity.
+
+---
+
+## 10. Old tool identity
 
 ```text
 G18/G27 invariant current map = RETAINED TOOL
@@ -236,48 +340,47 @@ G26 D15 = RETAINED ANALYTIC TOOL
 G28/G30 P,Rq,L kernel = RETAINED
 R03 exact rank<=4 = RETAINED TOOL
 R04 Appell/Carlson = RETAINED KERNEL LIBRARY
-R05/R06 softsign/Mobius/global-poly = CANDIDATE EVIDENCE
-R07R rational scalar + global target = CURRENT PROOF-OF-CONCEPT
+R05/R06 compactification evidence = RETAINED EVIDENCE
+R07R rational tensile shape = DEMOTED / oscillatory local shape rejected
+R08 user-sketch smooth cap + analytic reinforcement = CURRENT
 ```
 
-不得为了保留任何历史 compiler 而重新增加不必要的材料面复杂度。
+---
+
+## 11. UHPC / Swartz24
+
+UHPC: `fc=141.1 MPa` remains the user-forced value. Its arbitrary multiaxial current surface is still open. UHPC may use the same shape-preserving under-use philosophy, but must derive its own source landmarks and material-native domain.
+
+Swartz24 production remains paused until the NC explicit RC chain and the minimum multiaxial correction are frozen.
 
 ---
 
-## 9. UHPC / Swartz24
-
-UHPC：`fc=141.1 MPa` 仍为用户强制值；完整 arbitrary multiaxial current surface 尚未冻结。UHPC 可采用与 NC 相同的 deliberate under-use + explicit-capacity philosophy，但必须从自己的 source landmarks / material-native domain 建立 target。
-
-Swartz24 production Pu 继续暂停，直到 NC explicit RC chain 完成并冻结。
-
----
-
-## 10. 当前唯一下一任务
+## 12. Current recommended next task
 
 ```text
 CURRENT_RECOMMENDED_NEXT_TASK
-= R08_EXPLICIT_REINFORCEMENT_AND_MINIMUM_MULTAXIAL_CORRECTION
+= R09_MINIMUM_SOURCE_GROUNDED_MULTIAXIAL_CORRECTION
 ```
 
-顺序：
+R09 must:
 
-1. 把 Case21 钢筋显式写入同一 `P,Rq`，不得在 concrete-only `Pu` 后加 `As fy`；
-2. 从新的显式 RC `P,Rq,L` 求 Case21 RC root；
-3. 比较结构验证结果；
-4. 只有存在明确 deficiency 时，才加入一个最小、source-grounded 的 multiaxial correction；
-5. 不得自动恢复旧 CC/TC/TT 复杂度。
+1. keep the R08 monotone user-sketch tensile cap;
+2. keep the exact analytic Case21 reinforcement coupling;
+3. add only one minimal source-grounded multiaxial correction candidate;
+4. recompute the same explicit `P,R,L` chain;
+5. determine whether the remaining ~8.9% Case21 deficiency is plausibly a missing multiaxial effect;
+6. not tune the correction directly to the experiment and not restore the full historical CC/TC/TT complexity.
 
 ---
 
-## 11. 恢复读取顺序
+## 13. Recovery read order
 
 1. `current/CURRENT_STATE.md`
 2. `governance/EXPLICIT_END_TO_END_CAPACITY_DOCTRINE_20260810.md`
-3. `governance/EXPLICIT_SURFACE_GLOBAL_TARGET_R07R_RULE_20260810.md`
-4. `current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md`
-5. `current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_results.json`
-6. `current/theory/NZ_SCCM_R07R_EXPLICIT_GLOBAL_P_RQ_COEFFICIENTS.json`
-7. `history/NZ_SCCM/R07R_EXPLICIT_SURFACE_AND_CAPACITY_CHAIN_20260810.md`
-8. G31 Case21 analytic-chain history + reinforcement note
-9. R06/R05/R04/R03/R02/R01 evidence
-10. Case21 invariant exact-moment derivation + Nguyen Ch.3 source evidence
+3. `governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md`
+4. `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md`
+5. `current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_results.json`
+6. `history/NZ_SCCM/R08_USER_SKETCH_SMOOTH_AND_RC_CASE21_20260810.md`
+7. Case21 reinforcement source/baseline files
+8. R07R, then R06/R05/R04/R03/R02/R01 history/evidence
+9. Case21 invariant exact-moment foundation
