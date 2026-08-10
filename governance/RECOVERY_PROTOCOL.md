@@ -1,6 +1,6 @@
 # RECOVERY PROTOCOL — 跨对话按需恢复
 
-本文件规定新 ChatGPT / Work / Codex 对话如何从重构后的仓库恢复 NZ-SCCM。原则是**最小读取集**，禁止一次性加载全部历史或 `archive/`。
+本文件规定新 ChatGPT / Work / Codex 对话如何从重构后的仓库恢复 NZ-SCCM。原则是**最小读取集**，禁止一次性加载全部历史。
 
 ## 0. 固定前置
 
@@ -85,22 +85,23 @@
 - `evidence/catalog/MASTER_SOURCE_INVENTORY.csv`
 - `evidence/catalog/INVENTORY_CHAIN.md`
 
-这些目录保存 File Library ID、SHA、URL、历史身份。若目录中旧的迁移状态/path 与当前树不同，以当前 `README/START_HERE` 和 Git tree 为准；catalog 主要承担“原件是否存在/如何找回”的职责。
+这些目录保存 File Library ID、SHA、URL、历史身份。若其中旧的 migration path/status 与当前树不同，以 `START_HERE.md`、`current/CURRENT_STATE.md` 和当前 Git tree 为准；catalog 的主要职责是“原件是否存在/如何找回”。
 
-## 7. archive 规则
+## 7. 已移出的迁移期大文件
 
-`archive/` 默认不读取。它包含此前的全文 TXT 镜像、R2 恢复快照、迁移 checkpoint 和迁移元数据。
+此前的全文 TXT 镜像、R2 恢复快照、GitHub 迁移 checkpoint 和 migration metadata **不再存在于当前 `main`**，以避免搜索污染。
 
-只有以下情况进入：
+若极少数情况下确需这些资料：
 
-- 当前 evidence excerpt 丢失关键上下文；
-- 需要历史法证；
-- 需要恢复被重构删除的迁移期文件；
-- 原 PDF 暂时无法访问而 archive 中恰有全文检索镜像。
+1. 读 `archive/PRE_CLEAN_POINTER.md`；
+2. 从其中记录的 pre-clean Git commit 定点读取所需文件；
+3. 只恢复当前问题需要的片段，不要把整套旧目录重新合并到 `main`。
+
+优先仍应回原 PDF / File Library，而不是依赖旧全文镜像。
 
 ## 8. 证据冲突
 
-文献事实：原始 PDF/正式来源 > 有 provenance 的有效摘录 > 机械全文镜像 > evidence note > summary。
+文献事实：原始 PDF/正式来源 > 有 provenance 的有效摘录 > Git 历史中的机械全文镜像 > evidence note > summary。
 
 项目历史：原始 user-assistant dialogue / 原始用户指示 > 原始执行工件 > audit/ledger > handoff/summary > memory。
 
