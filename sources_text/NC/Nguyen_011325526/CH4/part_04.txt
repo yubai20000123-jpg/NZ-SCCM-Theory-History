@@ -1,0 +1,309 @@
+                            51  10       51        10
+                             1  21        1          1
+                           -10 -15      --
+                                         10
+                                                  --I
+                                                    30
+       S, = Sn. A,.           6    1        6        1                         (4.37)
+
+                             51
+                                --10    51
+                                                  --10
+                                          1
+                           -10 - -1I
+                             1
+                                        --
+                                         10
+                                                  1:..1
+                                                   15
+                                 30
+
+Finally equation (4.35) can be written as
+
+           r,2vSx = .! 6q.T K,, 6q.                                            (4.38)
+                       2
+
+where K1, is the sum of K 1 and S 1 and is the tangential stiffness matrix.
+
+For reinforcing steel in the y-direction, the element tangent stiffness matrix and the
+
+element stability matrix are determined using the procedure as for the reinforcement
+
+in the x-direction.
+
+
+
+Assembling the second variation of the total real work for the whole structure which
+
+includes both concrete and reinforcing element is:
+
+                                                                               (4.39)
+
+
+
+
+                                                                                  126
+where q is the vector of generalised freedoms for the whole wall, and KT is the
+
+tangential stiffness matrix. Instability occurs when the determinant of KT becomes
+
+zero (Mikhlin 1957; Attard 1984).
+
+
+
+
+4.3.3 Solution Method
+
+
+
+The solution method used to calculate the buckling load is as follows:
+
+        1. The loading is divided into the load steps.
+
+       2. At each load step, the in-plane analysis is done to obtain the tangential
+
+          moduli and the corresponding stresses at the Gauss points of the
+
+          concrete elements and the reinforcing elements.
+
+       3. The element tangential stiffness matrix and the element stability matrix
+
+          are then obtained for both the concrete and the reinforcement, after
+
+          which the structure tangential matrix is calculated.
+
+      4. The critical load is obtained when the determinant of the structure
+
+          tangential matrix approximately equal to zero.
+
+
+
+Figure 4.5 shows a diagram of the procedure used to search for the critical load.
+
+The solution was deemed to be acceptable if the error measure between consecutive
+
+load steps was 0.5% .
+
+
+
+
+                                                                                  127
+Given that at the load step Pi the corresponding det(KT) > 0, and that at the next
+
+load step Pi+l the det(KT) < O, then the first approximate critical load Pa-1 is
+
+between Pi and Pi+1 and may be detennined as
+
+
+
+                                                                                   (4.40)
+
+
+where           deli = Detenninant of KT at the load P1, and
+
+               det i+i = Detenninant of KT at the load Pi+t .
+
+The corresponding error is calculated by
+
+                          APerl
+                error= - - 100%                                                    (4.41)
+                           Perl
+
+If the error < 0.5% (in this study) the critical load is obtained. If this criteria is not
+
+satisfied, then at the load P c:d the determinant of the structure tangential stiffness
+
+matrix is calculated approximately, assuming that during the small load step between
+
+Pi and Pi+1, the tangent moduli and stresses in the concrete and reinforced steel vary
+
+linearly. This step may be called the second step for finding the critical load. Lets
+
+                detcr1 = Detenninant of the structure tangential matrix
+
+                         approximately corresponding to the loading Perl·
+
+
+
+
+If detcr1 > 0 then the second approximate critical load is detennined by
+
+
+                             (
+              Pea= Perl+ 1'+1-Perl
+                                         )I I I I I I
+                                                 deterl
+                                                                                  (4.42)
+                                            deterl + deti+l
+
+else
+
+
+
+
+                                                                                      128
+                                                                         (4A3>
+
+
+and the error of P a2 is determined by
+
+                         llPcr2
+                  error= - - 100                                         (4.44)
+                          Pcr21
+
+
+where          l!Pcr2 = Pi+l - Perl      if deter1 > 0                   (4.45)
+
+
+or             l!Pcr2 = Perl - Pi        if deter1 < 0                   (4.46)
+
+
+The critical load is obtained by Pa=Pcr2 if the error<0.5%. Hthe error>0.5%, the
+
+above procedure is carried out for a third or more approximate load steps. The
+
+calculating process stops when the error<0.5%.
+
+
+
+
+                                                                             129
+              u_ (in-plane displacement)
+
+
+
+
+         0                                                     p (Load factor)
+
+
+                           k Ml I,
+                           "    '
+Determinant
+   of KT
+
+
+
+
+          0                                                    P (Load factor)
+
+
+
+
+              Figure 4,5   Process Used to Find the Critical Load
+
+
+
+
+                                                                             130
+4.4 BUCKLED MODE .
+
+
+
+The solution technique given in section 4.3 is an approximate solution for the non-
+
+linear problems. The error for the critical load which satisfies
+
+                                                                             (4.47)
+
+is Jess than 0.5%.      One character of the buckling of the structure is the mode
+
+corresponding to the critical load. H a constraint on the siz.e of the perturbation is
+
+set as (Attard 1984):
+
+
+                                                                             (4.48)
+
+
+then to ascertain equation (4.47) is equivalent to finding the solution of the
+
+following equation
+
+                                                                             (4.49)
+
+where).. is the load factor. Hopper and Williams (1977) gave successful techniques
+
+for mode-finding in non-linear problems of vibration and buckling.        Figure 4.6
+
+shows the convergence on the assumed 'exact value Ai• and the closest approximate
+
+value (good estimate value) A.t of equation (4.47) using the solution procedure given
+
+in section 4.3.3. Lets call the exact mode &ii which corresponds to the exact load
+
+factor Ai and let &it correspond to A.t • Instead of finding the mode corresponding to
+
+&ii we will find the mode corresponding to&it·
+Hopper and Williams (1977) showed that good estimates of the eigenvectors
+
+(modes) of the non-linear structural problem (equation 4.49) can usually be obtained
+
+by solving the simultaneous equations
+
+
+
+                                                                                  131
+                                              At (the closest value)
+
+
+
+
+             Figure 4.6     Convergence on Ai by Linear Interpolation
+                                 (Hopper and Williams 1977)
+
+
+
+
+                                                                              (4.50)
+
+with PRT set to a random force vector.
+
+Hence, the buckled shape corresponding to the critical load may be obtained by
+
+solving the following equation
+
+                                                                             (4.51)
+
+where KT is the structure tangential stiffness matrix calculated at the approximate
+
+critical load (see section 4.3), q, is the vector of the approximate buckled mode and
+
+PRT is a vector of random numbers.
+
+
+
+
+Based on this formulation, a computer program module STABILITY which was
+
+aided to program RECAP (Foster 1992) was written to find the critical load and the
+
+corresponding buckled shape in the FORTRAN language (see Appendix B).
+
+Examples are presented in the following chapter.
+
+
+
+
+                                                                                 132
+4.5 CONCLUSION
+
+
+
+In this chapter, the finite element formulation for the buckling analysis of reinforced
+
+concrete walls was presented, as well as a technique for finding the critical load and
+
+the buckled mode with acceptable error. In this finite eJement solution, the non-
+
+linear material behaviour of concrete was considered in addition to the non-linear
+
+geometry of the out-of-plane dispJacement terms. The numerical exampJes are
+
+presented in Chapter 5 of this thesis.
+
+
+
+
+                                                                                   133
+           CHAPTERS
+
