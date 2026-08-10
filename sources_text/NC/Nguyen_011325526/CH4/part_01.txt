@@ -1,0 +1,297 @@
+  FINITE ELEMENT FORMULATION FOR
+
+OUT-OF-PLANE BUCKLING OF REINFORCED
+
+         CONCRETE WALLS
+
+
+
+
+                                      106
+4.1 INTRODUCTION
+
+
+
+Concrete and reinforced concrete walls are different to elastic or steel plates because
+
+of the complexity of the stress-strain relationships. The relationship becomes very
+
+complex when cracking occurs due to the contribution of such factors as concrete-
+
+steel interaction, aggregate interlock, tension stiffening, dowel affects etc.       A
+
+number of methods can be used for the study of buckling of reinforced concrete
+
+walls (Sanjayan et al 1995; Attard et al 1995; Attard 1994; Saheb and Desayi
+
+1990; Aghayere and MacGregor 1988; Swartz et al 1974 etc.).             The solutions
+
+depend on the type of loading and the boundary conditions. Among these, the three
+
+following approaches are briefly mentioned here.
+
+
+
+The first approach is the analytical method (Swartz et al 1974; Attard 1994). As
+
+stated in Chapter 2 of this thesis, the analytical method is the integration of
+
+differential equations established on the basis of the assumed buclrled shape. Swartz
+
+and Rosebraugh (1974) and Attard (1994), as summarised in Chapter 3 of this
+
+thesis, used an analytical approach to propose a formula for the buckling load of
+
+simply-supported, reinforced concrete walls under in-plane uniform compression
+
+loads. The solutions of the differential equations can be chosen from sinusoidal
+
+functions for simply-supported conditions at all sides, and a combination of sine
+
+functions, cosine functions and hyperbolic sine and cosines functions for other types
+
+of boundary conditions.     In some cases, the analytical method can give what is
+
+termed the closed form solution. The closed form solution implies a solution which
+
+satisfies all of the boundary conditions as well as the differential equations.
+
+
+                                                                                   107
+However, for highly non-linear materials such as concrete and reinforced concrete,
+
+difficulties are met when establishing the buckling equations which are capable of
+
+modelling the full material behaviour of concrete or finding solutions which satisfy
+
+both the differential equations and the boundary conditions.
+
+
+
+The second approach is that of prototype or model testing (Saheb and Desayi 1990;
+
+Swartz et al. 1974 etc.).   Model testing is a very effective tool for non-linear
+
+mechanics, especially when the stress-strain relationship cannot be modelled
+
+mathematically. Model testing can be used as a sample solution to check the validity
+
+of the results from other methods. Some practical empirical design formuJae are
+
+based on test results as reviewed in Chapter 3 of this thesis.    Experiments can
+
+sometimes be used to modify theoretical solutions and semi-empirical formulas may
+
+then be proposed (Swartz et al. 1974, Saheb and Desayi 1990 etc.). However,
+
+because of the labour-intensive nature of the work and the specialised facilities
+
+required, model testing is always a expensive method especially in the structural
+
+engineering fie]d The other limitation is that the experiments cannot usually be
+
+performed for all different concrete or reinforced concrete wall types with varying
+
+loading or boundary conditions. Hence experiments are usually only performed on
+
+specimens with the typical configurations used in design.
+
+
+
+The third approach involves the use of numerical methods. With the advent of high-
+
+speed, high-memory-capacity and affordable personal computers, numerical
+
+methods such as the finite difference method, the finite element method, the finite
+
+strip method and the finite boundary element method have been used as effective
+
+
+
+                                                                                108
+tools in structural analysis. The earliest numerical method in plate bending problems
+
+was the finite difference method in which the differential operators              were
+approximated by values at a series of discrete points inside the plate· media
+
+(Timoshenko and Woinowsky-Krieger 1959;           Sanjayan et al. 1995).    The finite
+
+difference method can overcome the problems of finding solutions which satisfy the
+
+boundary conditions and differential equations for which an analytical does form
+
+solution cannot be found. However, there is sometimes a difficulty in solving for
+
+general boundary conditions. The finite element method is more general and can be
+
+used for more general boundary conditions.
+
+
+
+The finite element method was introduced in the early sixties with the term "Fmite
+
+Element" coined by Clough ( 1960). The use of finite elements as an analytical tools
+
+for engineers and scientists has rapidly developed in structural analysis and
+
+engineering. It may be said that at present, the finite element technique is one of the
+
+most effective tools for the analysis of simple and complex structures and to which
+
+no other methods can be compared. Nowadays, many computer programs for the
+
+analysis of structures for educational and commercial purposes have been written on
+
+the basis of the finite element method (STRAND6 1993; ANSYS V.5 etc.).
+
+
+
+Because of its effectiveness, the finite element method was used in this project to
+
+find the buckling load of reinforced concrete walls under in-plane loading.       The
+
+finite element formulation and solution for out-of-plane buckling of reinforced
+
+concrete walls is presented in this chapter.
+
+
+
+
+                                                                                   IO'J
+4.2 FINITE ELEMENT MODELS FOR THE BUCKLING OF
+
+WALLS
+
+
+
+There is a vast amount of literature regarding finite element models for the analysis
+
+of plates.   In this section, a brief literature review is presented on the buckling of
+
+plates and the plate bending problem applied to reinforced concrete walls using the
+
+finite element method. Only the rectangular element type is considered for plate
+
+modelling because the current research project was limited to the investigation of
+
+rectangular walls.
+
+
+
+The 12-Degrees-of- Freedonw Rectangular Element
+
+
+
+Kapur and Hartz (1966) showed that the finite element method couJd be used to
+
+determine the critical buckling load for thin elastic rectangular plates.            The 12-
+
+degrees-of-freedoms rectangular element shown in Figure 4.1 was used for a
+
+stability analysis of plates under in-plane loading.           The assumed out-of-plane
+
+deflection w(x,y) used was
+
+        w(x, y) = a1 + a2 x + a3 y + 3.4 x2 + as x y + 86 y'- + a, x3 + aa x2 y + 39 x y'-
+
+                  + a 10 y3 + au x3 y + a12 x y1                                       (4.1)
+
+where a1 ... a12 are the unknown constant and x, y are the coordinate system as
+
+shown in Figure 4.1. The degrees of freedom w, w.x and w3 were specified at each
+
+node.
+
+
+
+
+                                                                                             110
+                                             y
+
+
+
+
+                         4
+                                                                    3
+
+
+
+
+                                                                                X
+
+
+
+
+                     1                                             2
+
+
+
+                    Freedoms. at node are w ;    w .., and w 3
+
+
+
+
+           Figure 4,1 The 12-Degrees-of-Freedom Rectangular Element
+
+
+
+
+This 12-degrees-of-freedom polynomial deflection function was first proposed by
+
+Melosh (1963). The stiffness and stability matrix were obtained using the energy
+
+method. The lower bound for the buckling load found by using this element type
+
+was slightly better than that obtained by Anderson et al ( 1968) who used triangular
+
+elements. However, Carson and Newton (1969) showed that the Melosh deflection
+
+function provides displacement continuity, but not normal slope continuity, along
+
+inter-element boundaries.
+
+
+
+
+                                                                                111
+The 16-Degrees-of-Freedom Rectangular Element
+
+
+
+Borgner et al (1966) showed that the convergence of the 12-degrees-of-freedom
+
+rectangular element was non-monotonic.          To overcome this problem, a fourth
+
+freedom w.xy was specified at each of the four comer nodes producing a 16-degrees-
+
+of-freedom rectangular element.       Figure 4.2 shows the 16-degrees-of-freedom
+
+element with a transverse out-of-plane displacement w, and two slopes w~ and w.,,
+
+and the twist w,.,., freedom at each of the four comer nodes.              The assumed
+
+displacement function for this element was as follows
+
+       w(x, y) = a1 + a2 x + 83 y + a. x2 + as x y + 16 y2 + a1 x3 + aa x2 y + 89 x y2
+
+                 + a 10 y3 + au x3 y + a12 ~ y2 + a13 x y3
+
+                 + a u x3 y2 + a15 x 2y3 + a1, x3 y3                               (4.2)
+
+where a1 ... a1, are unknown constants.
+
+
+
+This displacement function provides continuity of the normal slope along edges
+
+between elements. Carson and Newton (1969) used this element to solve for plate
+
+buckling (elastic) under in-plane, constant and uniformly-distributed loads.             The
+
+results obtained were better than the results found by using the 12-degrees-of-
+
+freedom rectangular element.
+
+
+
+Chan and Kabaila (1973) also used the 16-degrees-of-freedom rectangular element
