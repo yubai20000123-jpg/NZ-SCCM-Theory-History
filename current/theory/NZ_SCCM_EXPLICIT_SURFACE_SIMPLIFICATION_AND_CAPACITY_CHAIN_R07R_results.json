@@ -1,0 +1,56 @@
+{
+  "identity": "EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R",
+  "material_family": {
+    "formula": "u(lambda)=lambda*N5(lambda)/D6(lambda)",
+    "N5": "kappa+a1 lambda+a2 lambda^2+a3 lambda^3+a4 lambda^4+a5 lambda^5",
+    "D6": "1+b1 lambda+b2 lambda^2+b3 lambda^3+b4 lambda^4+b5 lambda^5+b6 lambda^6",
+    "derivative": "u'=[(N+lambda N')D-lambda N D']/D^2",
+    "stress_map": "sigma=fc*u(Eu) by the 2x2 spectral/matrix-function definition",
+    "candidate_anchors": {
+      "A_FC100_FT90": {"compression_peak_retention": 1.0, "tension_peak_retention": 0.9},
+      "B_FC97_FT90": {"compression_peak_retention": 0.97, "tension_peak_retention": 0.9},
+      "C_FC95_FT80": {"compression_peak_retention": 0.95, "tension_peak_retention": 0.8}
+    },
+    "material_coefficients": {
+      "A_FC100_FT90": {
+        "a1_to_a5": [-21.60951652650123,65.17163361856788,-35.17003915779724,9.37209898252596,0.9073313825179325],
+        "b1_to_b6": [-13.335214680245512,101.47763381103519,197.8314085197898,273.30773818467605,67.3894640178561,8.672290867373826]
+      },
+      "B_FC97_FT90": {
+        "a1_to_a5": [-21.892101557071744,66.28499697243461,-36.56946949360141,10.06800644584206,0.9305366625262373],
+        "b1_to_b6": [-13.343616944285818,99.42528836334657,192.78419168180844,282.81558151250397,73.33786772230195,9.778913016428326]
+      },
+      "C_FC95_FT80": {
+        "a1_to_a5": [-17.85917556964468,50.827221181764955,-27.574577623746542,7.446294942317058,0.6918502435643061],
+        "b1_to_b6": [-8.253716953622826,78.06783785035147,138.464396365054,208.85979709270293,54.36153487112089,7.279411458248072]
+      }
+    }
+  },
+  "global_capacity_target": {
+    "P_formula": "sum_{i=0}^{10} sum_{j=0}^{10} p_ij T_i(xi_D) T_j(xi_q)",
+    "Rq_formula": "sum_{i=0}^{10} sum_{j=0}^{10} r_ij T_i(xi_D) T_j(xi_q)",
+    "xi_D": "(2D-(0.35+1.4))/(1.4-0.35)",
+    "xi_q": "(2q-(0.003+0.033))/(0.033-0.003)",
+    "derivatives": "analytic Chebyshev derivatives from the same coefficient arrays",
+    "L": "P_D Rq_q - P_q Rq_D"
+  },
+  "validation": [
+    {"candidate":"A_FC100_FT90","P_validation_max_abs_kN":3.709120176493883,"P_validation_p95_abs_kN":1.6441432838411174,"Rq_validation_max_abs_kN":0.4481128350363499,"Rq_validation_p95_abs_kN":0.24197763709958142,"P_coefficient_count":121,"Rq_coefficient_count":121},
+    {"candidate":"B_FC97_FT90","P_validation_max_abs_kN":3.758449186835776,"P_validation_p95_abs_kN":1.618576742778771,"Rq_validation_max_abs_kN":0.45474307821435533,"Rq_validation_p95_abs_kN":0.2491868125182073,"P_coefficient_count":121,"Rq_coefficient_count":121},
+    {"candidate":"C_FC95_FT80","P_validation_max_abs_kN":3.5593608892111774,"P_validation_p95_abs_kN":1.9059088226324548,"Rq_validation_max_abs_kN":0.42076802727139484,"Rq_validation_p95_abs_kN":0.2781348866091031,"P_coefficient_count":121,"Rq_coefficient_count":121}
+  ],
+  "capacity": [
+    {"candidate":"A_FC100_FT90","root_success":true,"D_star":0.9142646422375108,"q_star":0.021044685814798254,"A_star_mm":25.67451669405387,"Pu_explicit_global_target_kN_concrete_only":317.4185750884934,"Rq_at_explicit_root_kN":-4.206412995699793e-12,"L_at_explicit_root":-1.7619458958506584e-07,"audit_material_surface_P_kN_at_same_root":317.8395862789432,"audit_material_surface_Rq_kN_at_same_root":0.08123376679698775,"P_global_minus_audit_kN":-0.4210111904498035,"lambda_plus_min_audit":-0.8960144984729633,"lambda_plus_max_audit":1.4772073287005043,"lambda_minus_min_audit":-1.8123144299228895,"lambda_minus_max_audit":0.5461183889055127,"Case21_experiment_RC_kN_for_scale_only":368.31275,"concrete_only_minus_RC_experiment_percent":-13.81819524616147},
+    {"candidate":"B_FC97_FT90","root_success":true,"D_star":0.9122035994036376,"q_star":0.021105480704515428,"A_star_mm":25.74868645950882,"Pu_explicit_global_target_kN_concrete_only":309.8780565012432,"Rq_at_explicit_root_kN":-2.042366276100438e-11,"L_at_explicit_root":-1.3078097254037857e-06,"audit_material_surface_P_kN_at_same_root":310.2823016825137,"audit_material_surface_Rq_kN_at_same_root":0.07844696463927502,"P_global_minus_audit_kN":-0.40424518127053943,"lambda_plus_min_audit":-0.8985307379819243,"lambda_plus_max_audit":1.4842651476638882,"lambda_minus_min_audit":-1.8127919627614932,"lambda_minus_max_audit":0.5545353335364065,"Case21_experiment_RC_kN_for_scale_only":368.31275,"concrete_only_minus_RC_experiment_percent":-15.865509271334432},
+    {"candidate":"C_FC95_FT80","root_success":true,"D_star":0.8867549199836908,"q_star":0.02063590100853973,"A_star_mm":25.17579923041847,"Pu_explicit_global_target_kN_concrete_only":306.19278380597854,"Rq_at_explicit_root_kN":2.1402879468723768e-11,"L_at_explicit_root":-1.6350531950592995e-06,"audit_material_surface_P_kN_at_same_root":306.6490569329974,"audit_material_surface_Rq_kN_at_same_root":0.08882085342326404,"P_global_minus_audit_kN":-0.4562731270188465,"lambda_plus_min_audit":-0.8790390485039206,"lambda_plus_max_audit":1.4301878607000185,"lambda_minus_min_audit":-1.767772439309823,"lambda_minus_max_audit":0.5291698136391618,"Case21_experiment_RC_kN_for_scale_only":368.31275,"concrete_only_minus_RC_experiment_percent":-16.866091709836674}
+  ],
+  "status": {
+    "R07R": "PASS_PROOF_OF_CONCEPT_EXPLICIT_END_TO_END_CHAIN",
+    "MATERIAL_PEAK_UNDERUSE": "EXECUTED_BEFORE_STRUCTURAL_VALIDATION",
+    "CASE21_RESULTS": "CONCRETE_ONLY_DIAGNOSTIC_NOT_FINAL_RC",
+    "STEEL": "NOT_INCLUDED",
+    "MULTIAXIAL_EXTRA_ENHANCEMENT": "NOT_INCLUDED_IN_THIS_MINIMAL_R07R",
+    "GLOBAL_TARGET_IDENTIFICATION": "OFFLINE_HIGH_ACCURACY_QUADRATURE_USED_FOR_COEFFICIENT_IDENTIFICATION; production evaluation itself is explicit polynomial",
+    "FORMAL_ZERO_QUADRATURE_PRODUCTION_STATUS": "HOLD_PENDING_USER_ACCEPTANCE_OF_GLOBAL_TARGET_IDENTIFICATION_ROUTE"
+  }
+}
