@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-10 23:58 +08:00  
+**Updated:** 2026-08-11 00:31 +08:00  
 **Purpose:** 唯一当前工作入口。
 
 ## 0. Highest-priority contract
@@ -14,274 +14,288 @@ N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
 ```
 
-Final production capacity must come from explicit formulas and explicit derivatives of the same formulas. Numerical root solving of already explicit finite equations is allowed.
+Final production capacity must come from explicit finite formulas/analytic coefficient algebra and explicit derivatives of the same representation. Numerical root solving of already explicit finite equations is allowed.
 
-Formal production prohibits spatial Gauss/Simpson/adaptive quadrature, material-point grids, moving spatial TT/TC/CC cells, whole-structure P/R/U surfaces fitted from spatial numerical integration, structural-load calibration of material parameters, and finite-difference production derivatives.
-
----
-
-## 1. Current material architecture
-
-The active route is NOT a global material-energy-potential fit.
-
-The active route is
-
-\[
-\text{multidimensional/current NC operator}
-\rightarrow
-(\lambda_+,\lambda_-)
-\rightarrow
-\text{1D scalar master law}
-\rightarrow
-\text{same multiaxial interaction/spectral return}.
-\]
-
-Energy is used only to regularize the sharp one-dimensional tensile scalar feature.
-
-The previous global-energy-potential gate remains revoked as the wrong route test.
-
-Canonical correction:
-
-- `governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md`
+Formal production prohibits spatial Gauss/Simpson/adaptive quadrature, material-point grids, moving spatial TT/TC/CC cells, whole-structure P/R/U fits from spatial numerical integration, structural-load calibration of material parameters, and finite-difference production derivatives.
 
 ---
 
-## 2. Latest executed stage: R10
+## 1. Active material architecture
+
+The active route remains
+
+```text
+multidimensional/current NC operator
+-> lambda+, lambda-
+-> 1D scalar master law
+-> R10 energy smoothing only of the sharp 1D tensile feature
+-> SAME U/C/T + CC/TC/TT interaction
+-> same spectral return
+```
+
+No global material-energy-potential fit is active.
+
+The frozen R10 scalar is unchanged in R10B:
+
+```text
+W_source = W_smooth = 0.031741235181249904
+h = 0.09799750427197301
+```
+
+No Case21/Swartz capacity was used to choose `h`.
+
+---
+
+## 2. Latest executed stage: R10B
 
 Canonical files:
 
-- `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md`
-- `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_results.json`
-- `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
-- `evidence/NZ_SCCM_R10_ARTIFACT_HASHES_20260810.md`
+- `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
+- `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json`
+- `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
+- `evidence/NZ_SCCM_R10B_ARTIFACT_HASHES_20260811.md`
 
-R10 performs:
+Decision:
 
 ```text
-source Foster 1D tensile scalar
-→ C2 material-energy smoothing
-→ SAME U/C/T + CC/TC/TT + spectral current map
-→ same-execution Case21 audit
+R10B_ZERO_SPATIAL_CASE21 = PASS_ENGINEERING
 ```
 
-No multidimensional interaction refit is performed.
+R10B is a compiler/integration stage only. It changes no material parameter.
 
 ---
 
-## 3. Frozen R10 one-dimensional energy smoothing
+## 3. Case21-local analytic spectral contract
 
-The current Foster scalar entering the NC operator is
-
-\[
-u_{t,src}(t)=\rho T_{Foster}(t),\qquad t=\Pi_\eta(\lambda).
-\]
-
-The retained interval is
+R10B freezes the search box
 
 \[
-0\le t\le10x_{cr},
-\qquad
-x_{cr}=0.04998717945397425.
+D\in[0.78,0.90],\qquad q\in[0.0015,0.0021].
 \]
 
-Source material work:
+For Case21 `ell/b=1`, the analytic separation inequality gives
 
 \[
-\boxed{W_{src}=0.031741235181249904}.
+X_{11}-X_{22}\ge D-\frac{M}{1+\nu}.
 \]
 
-Source peak:
+At `qmax=0.0021`:
+
+```text
+Mmax = 0.035204737229723046
+Bmax = 0.07844047893484817
+certified gap lower = 0.7501654769239635
+```
+
+The certified principal intervals are
 
 \[
-\max u_{t,src}=0.09867291206823792.
+\lambda_+\in[-0.0956591207,0.1029457518],
 \]
-
-R10 replaces only this 1D scalar by two C2 quintic pieces preserving:
-
-- origin stress and tangent;
-- zero origin curvature;
-- a rounded stationary peak at \(t=x_{cr}\);
-- residual \(0.03\) at \(10x_{cr}\);
-- zero first/second derivatives at peak and residual onset;
-- the full retained 1D scalar work exactly.
-
-Energy equality
 
 \[
-\int_0^{10x_{cr}}u_{sm}(t)dt
-=
-\int_0^{10x_{cr}}u_{t,src}(t)dt
+\lambda_-\in[-1.0029457518,-0.6843408793].
 \]
 
-fixes the peak uniquely:
+R10B uses safe-margin compiler intervals
 
-\[
-\boxed{h=0.09799750427197301}.
-\]
+```text
+lambda+ : [-0.10, 0.105]
+lambda- : [-1.01,-0.68]
+```
 
-Peak reduction is only
-
-\[
-0.6844916017\%.
-\]
-
-No Case21/Swartz capacity is used to determine \(h\).
+inside one scalar polynomial hull. This is a spectral-domain reduction and does not create a spatial material-state partition.
 
 ---
 
-## 4. Multiaxial reinsertion
+## 4. Zero-spatial coefficient algebra
 
-Only
+The 1D material-coordinate compiler generates finite Chebyshev representations of the frozen scalar functions. These are derived compiler coefficients, not material fitting parameters.
 
-\[
-T_i\to T_i^{R10}=u_{sm}(t_i)/\rho
-\]
-
-changes.
-
-The same current master remains
+The equivalent tensor is mapped to
 
 \[
-U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i,
+Y=aI+bE_u,
 \]
 
-and the same multiaxial interaction remains
+with invariants
 
 \[
-s_+=U_+-a_{cc}C_+^2C_-+C_+T_--\rho a_tT_+T_-^8,
+K_1=\operatorname{tr}Y,\qquad K_2=\det Y.
+\]
+
+Cayley-Hamilton pair algebra:
+
+\[
+F(Y)=A(K_1,K_2)I+B(K_1,K_2)Y,
 \]
 
 \[
-s_-=U_--a_{cc}C_-^2C_++C_-T_+-\rho a_tT_-T_+^8.
+(A,B)(C,D)=(AC-BDK_2,\ AD+BC+BDK_1).
 \]
 
-Then the same spectral return generates \(\sigma_x,\sigma_y,\tau_{xy}\).
+The frozen R10 interaction is reconstructed algebraically:
+
+\[
+CC=\det(C)C,
+\]
+
+\[
+TC=C[\operatorname{tr}(T)I-T],
+\]
+
+\[
+TT=\det(T)[\operatorname{tr}(T^7)I-T^7],
+\]
+
+\[
+S=U-a_{cc}CC+TC-\rho a_tTT.
+\]
+
+All spatial fields are finite tensor-Chebyshev coefficient arrays in `(sin X,sin Y,zeta)`. FFT is only a coefficient-index convolution accelerator; there are no physical-space sample points.
+
+Exact moments:
+
+\[
+\int_0^\pi T_n(\sin X)dX=\pi\ (n=0),\quad 2\sin(n\pi/2)/n\ (n\ge1),
+\]
+
+\[
+\int_{-1}^{1}T_k(\zeta)d\zeta=0\ (k\ odd),\quad 2/(1-k^2)\ (k\ even).
+\]
+
+Thus
 
 ```text
-MULTIAXIAL_ARCHITECTURE_CHANGED = NO
-FREE_MULTIDIMENSIONAL_FITTING = NO
+N_formal_spatial_sampling   = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
 ```
 
 ---
 
-## 5. R10 same-execution Case21 audit
+## 5. Same-expression derivative gate
 
-Both the source Foster and energy-smoothed versions are recomputed in the same execution using the same structure and reinforcement evaluator.
+Forward chain-rule jets are propagated through the same retained coefficient algebra.
 
-Final audit uses one 48×48×28 full-halfwave Gauss evaluator for both D and q reclosure.
+No finite-difference production derivative is used.
 
-### Source Foster baseline
+At the N48 root:
 
 ```text
-D_u  = 0.7057271404732661
-q_u  = 0.0021940477872221006
-A_u  = 2.6767383004109626 mm
-Pc   = 316.6306821397406 kN
-Ps   = 25.7033473236443 kN
-Pu   = 342.3340294633849 kN
-R    = 1.4210854715202004e-12 kN mm
+P_D = 106.58759351383472
+P_q = -75105.39767023241
+R_D = -1376.335532846137
+R_q = 969815.5988960797
+L   = 83.31643116474152
+L_normalized = 4.029999719717427e-07
 ```
 
-### Energy-smoothed R10 audit
+Along the explicit equilibrium branch
+
+\[
+\frac{dP}{dD}=\frac{L}{R_q},
+\]
+
+which equals `8.590955977567161e-05 kN` at the selected state.
+
+---
+
+## 6. Current formal Case21 zero-spatial result
 
 ```text
-D_u  = 0.843270404668947
-q_u  = 0.0017832151821667267
-A_u  = 2.1755225222434067 mm
-Pc   = 337.8632691214933 kN
-Ps   = 30.860195005805895 kN
-Pu   = 368.7234641272992 kN
-R    = -1.924968273669947e-08 kN mm
+material degree = 48
+spatial Chebyshev degree = 28
+D_u  = 0.8449505
+q_u  = 0.001779254542005754
+A_u  = 2.1706905412470197 mm
+Pc   = 337.39660909142 kN
+Ps   = 30.922943404456966 kN
+Pu   = 368.31955249587696 kN
+R    = -2.2383016926141863e-05 kN mm
 ```
 
 Experiment, used only after material freeze:
 
-\[
-P_f=368.312750\ \mathrm{kN}.
-\]
-
-R10 audit error:
-
-\[
-\boxed{+0.1115123295\%}.
-\]
-
-Same-execution material-change consequence:
-
-\[
-\boxed{\Delta P_u=+26.389434664\ \mathrm{kN}}.
-\]
-
-This agreement is not a calibration basis and must not be used to modify the frozen R10 scalar.
-
----
-
-## 6. Formal-production boundary
-
-The R10 Case21 structural evaluator uses spatial Gauss integration **for audit only**.
-
-Therefore:
-
 ```text
-R10_1D_ENERGY_SMOOTHING     = PASS
-MULTIAXIAL_REINSERTION      = PASS
-CASE21_SAME_EXECUTION_AUDIT = PASS
-STRUCTURAL_CALIBRATION      = NO
-SWARTZ24                     = NOT_STARTED
-
-FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
+Pf = 368.312750 kN
+error = +0.006802495877 kN = +0.001846934671 %
 ```
 
-R10 does NOT promote the 368.723464 kN audit value to formal zero-spatial production yet.
+The close agreement must not be used to retune R10.
 
 ---
 
-## 7. Frozen next task
+## 7. Engineering order sensitivity
+
+At the N48 stationary D, a separate zero-spatial N96 equilibrium check gives
+
+```text
+q_eq = 0.0017855282237914806
+P    = 368.50804285212683 kN
+R    = 0.021212151265274315 kN mm
+```
+
+Difference from the N48 formal root:
+
+```text
+Delta P = 0.18849035625 kN = 0.0511757671 %
+```
+
+N96 was not separately reoptimized in D, so this is an order-sensitivity audit, not a second stationary root.
+
+The previously required theorem-level tight remainder certificate is not an engineering hard gate. The observed 0.051% order sensitivity is accepted for continued development.
+
+---
+
+## 8. Formal status
+
+```text
+R10_1D_ENERGY_SMOOTHING                    = PASS
+R10B_1D_MATERIAL_RECOMPILE                 = PASS
+SAME_MULTIAXIAL_CURRENT_MAP                = PASS
+CASE21_SPECTRAL_DOMAIN_CERTIFICATE         = PASS
+EXACT_COMPLETE_HALFWAVE_MOMENT_CONTRACTION = PASS
+SAME_EXPRESSION_DERIVATIVES                = PASS
+CASE21_N48_LIMIT_ROOT                       = PASS
+N96_ENGINEERING_ORDER_CHECK                = PASS
+STRUCTURAL_Pu_CALIBRATION                   = NO
+SWARTZ24                                   = NOT_STARTED
+
+R10B_ZERO_SPATIAL_CASE21 = PASS_ENGINEERING
+```
+
+---
+
+## 9. Current prohibitions
+
+- do not change `h` or the R10 smoothing because Case21 agrees with experiment;
+- do not use Case21/Swartz Pu to choose material/compiler parameters;
+- do not replace coefficient algebra by spatial numerical quadrature;
+- do not fit whole-structure P/R/U from spatial samples;
+- do not use finite-difference production derivatives;
+- do not copy the Case21 spectral compiler intervals directly into Swartz24.
+
+---
+
+## 10. Current recommended next task
 
 ```text
 CURRENT_RECOMMENDED_NEXT_TASK
-= R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND
+= R11_SWARTZ24_COMMON_SPECTRAL_DOMAIN_AND_ZERO_SPATIAL_BATCH_PRECHECK
 ```
 
-R10B is a compiler/integration task only. It must make no material retuning.
-
-Required chain:
-
-```text
-frozen R10 u_sm(t)
-→ existing 1D material compiler
-→ SAME multidimensional current map
-→ Nguyen second-order continuous halfwave
-→ nested-D15 / exact analytic moments
-→ explicit P(D,q), Rq(D,q)
-→ same-expression P_D, P_q, Rq_D, Rq_q
-→ Rq=0 and L=0
-→ reinforced Case21 Pu
-```
-
-R10B must stop before Swartz24.
+R11 is a precheck only. Before any 24-panel Pu batch, it must establish the common/panel-governed analytic D-q search domain, spectral separation/bounds, material compiler domain and expected analytic order for all 24 source panels. It must not start the batch until those gates pass.
 
 ---
 
-## 8. Prohibitions after R10
-
-- do not adjust \(h\) because R10 is close to the Case21 experiment;
-- do not alter the R10 smoothing endpoints/energy rule to improve capacity;
-- do not introduce free scalar coefficients;
-- do not refit the multidimensional interaction;
-- do not replace R10B by production Gauss integration;
-- do not fit whole-structure P/R/U from spatial numerical data;
-- do not start Swartz24 until R10B formal zero-spatial closure passes.
-
----
-
-## 9. Recovery read order
+## 11. Recovery read order
 
 1. `current/CURRENT_STATE.md`
-2. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
-3. `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md`
-4. `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_results.json`
-5. `evidence/NZ_SCCM_R10_ARTIFACT_HASHES_20260810.md`
-6. `governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md`
-7. frozen explicit NC current operator + Case21 nested-D15 baseline
-8. G19/G20 scalar-boundary-layer historical evidence
+2. `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
+3. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
+4. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json`
+5. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
+6. R10 theory/results
+7. frozen current operator + exact-moment foundation
+8. historical nested-D15 and G19/R03 evidence
