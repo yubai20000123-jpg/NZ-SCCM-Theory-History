@@ -1,0 +1,11 @@
+source,role,production_identity,notes
+Hu thesis 2% fiber UHPC,project material identity/parameter scale,SOURCE_MATERIAL_ANCHOR,"2% steel fiber; historical axial fc 136.9 MPa, ft 7.2 MPa, E 45.1 GPa; later project governance reopens all except user-required fc=141.1 MPa"
+Hiew 2024,uniaxial tensile shape and strain anchors,SOURCE_EXPLICIT_UNIAXIAL,"2% SL/HL/hybrid direct tension; amplitude transfer must be declared"
+Liu 2023,TC compression-softening comparison,SOURCE_EXPLICIT_TC,"zeta_sigma and zeta_epsilon relations; sequential/precracked evidence"
+Diab & Ferche 2026,smooth current TC interaction oracle,SOURCE_SYNTHESIS_ORACLE,"historical beta=(1+2500 eps_t)^(-0.20); floor handling must remain explicit"
+Leutbecher 2020 + Data S1,TC strength/stiffness validation,EXTERNAL_VALIDATION,"31 biaxial tests"
+Lee 2017,TC magnitude/shape validation,EXTERNAL_VALIDATION,"fibre-UHPC softening-magnitude check; 30 panel specimens"
+Liu 2024 CC/TT,biaxial peak stress + peak-strain qualification,SOURCE_BIAXIAL_PEAK_QUALIFICATION,"four PBET loading groups; prior missing-strain statement was retracted in historical G12"
+Liu 2024 proportional/sequential TC,loading-path effect and envelope validation,PATH_DEPENDENT_VALIDATION_ONLY,"not exact identity rows for a path-independent current map"
+Shen 2020,equi-biaxial tension ratio/strain evidence,EXTERNAL_VALIDATION,"different material/fibre system; ratio/trend evidence"
+FHWA HRT-23-077,qualification/design-domain boundary,DESIGN_BOUNDARY,"mixture-specific qualification; not a replacement for biaxial experiments"
