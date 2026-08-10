@@ -1,0 +1,360 @@
+            I                              I
+
+
+
+
+      Figure 3.6 Shear Retention Factor P (Foster 1992)
+
+
+
+
+                                                                    96
+3.4.3 Cracked Concrete in Tension - Tension
+
+
+
+When the biaxial strength envelope is breached in the third quadrant (tension-
+
+tension), cracking will occur along both major principal axes. Figure 3.7 shows the
+
+cracks in both principal directions.   As for the major (tension) direction in the
+
+tension-compression state of concrete described in section 3.4.2, the tension
+
+stiffening parameter, r, is used here to maintain some stiffness due to bond effects
+
+with the reinforcement (Foster 1992). The stress-strain relationship of concrete in
+
+tension-tension is given as
+
+                                                                             (3.(,())
+
+
+where i = l, 2 .
+
+The tension stiffening parametern is determined by
+
+
+
+
+                                        S 1                                  (3.61)
+
+
+
+         r. = a2 r; s 1                                                      (3.62)
+          i     fer.
+                   1
+
+
+
+
+The secant modulus of concrete is determined by
+
+                       E ___
+                           G·l
+                                                                             (3.63)
+                        1-
+                             £i
+
+The tangent modulus is then determined by differentiating equation (3.(J()) with
+
+respect to the strain £i , that is:
+
+
+                                                                             (3.64)
+
+
+
+
+                                                                                   97
+                                       y
+
+
+
+
+                                                                       X
+
+
+
+
+Figure 3.7 Average Strains in Concrete Cracked in Both Principal Directions
+
+
+
+
+                                                                           98
+For the tension-tension case the shear retention factor 13 is greatly reduced and taken
+
+to be equal to 0.1 for this study (Foster 1992). When cracks occur in both principal
+
+directions it is assumed that there is no dilation effect.    Hence the stress-strain
+
+relationship can be written in matrix form as
+
+
+
+                                                                               (3.65)
+
+
+where   E1 , E2 are the secant moduli determined from equations (3.63). G is the
+
+shear modulus at the cracking point and is determined by
+
+                       G = 0.1 G     precracking                              (3.66)
+
+and G precracking obtained from equation (3.37).
+
+The vector oo* can be expressed through the vector &* as
+
+
+
+
+                    [EH1: ~ ~I~J                                               (3.67)
+
+
+
+or                   aa•    =      DmT     •   &*                             (3.68)
+
+
+
+
+3.4.4 Crushed Concrete in Compression - Compression
+
+
+Crushing of concrete occurs when the strains corresponding to the peak
+
+compressive stresses are reached for undamaged elements in a state of biaxial
+
+compression, or for damaged elements in a tension-compression state. From an in-
+
+
+
+
+                                                                                    99
+plane analysis. the bi-linear relationship in the post-crushing state was adopted as
+
+shown in Figure 3.8 (see Foster 1992).
+
+
+
+
+                                             I
+                                             I
+                                             I
+                                             I
+                                             I
+                                             I
+                                             I
+                                             I
+                                             I
+                                             I
+                                  I          I
+
+                          ------~------t----------~------
+                                  1
+                                  I
+                                             I
+                                             I
+                                  I          I
+                                  I          I
+                                  I          I
+                                  I          I
+                                  I          I
+                                  I          I
+                                  I          I
+                                  I          I
+
+
+
+
+  Figure 3.8 The Bi-Linear Relationship of Concrete in the Post-Crushing State
+                                      (Foster 1992)
+
+
+
+The stress-strain relationship is given by (Foster and Gilbert 1990)
+
+
+                                                      for                   (3.69)
+
+
+               a-1 =O.la-lp                           for                   (3.70)
+
+
+
+
+                                                                                100
+where Gip is the peak stress de~ by the biaxial envelope, i = 1, 2, and "'tJ. is the
+
+material constant which controls the slope of the post crushing curve (see Figure
+
+3.8).
+
+The secant modulus can be calculated from
+
+                   ~ =                                                       (3.71)
+
+
+and the tangential modulus is determined by
+
+
+                                                                             (3.72)
+
+
+
+               Ef=UO                   for                                   (3.73)
+
+
+
+
+The relationship between stress and strain in the principal coordinates, in matrix
+
+form, can be written as
+
+
+                                                                             (3.74)
+
+
+
+
+The relationship between the first variation of stresses and the vector of first
+
+variation of strains in the principle coordinates is given by
+
+
+                                                                             (3.75)
+
+
+
+or           6a* =                                                           (3.76)
+
+
+
+
+                                                                                101
+3.4.S Crushing of Cracked Concrete
+
+
+
+The crushing of cracked concrete can occur in the tension-compression zone.
+
+Crushing occurs when the magnitude of the strain in the minor (compression)
+
+direction reaches the peak compressive strain f.o • After crushing, the bi-linear
+
+stress-strain relationship is adopted as for compression-compression and is shown in
+
+Figure 3.8. The stress-strain relationship in the minor direction is calculated by
+
+
+                                           for     leol S ~21 < I'Y2 £2pl      (3.77)
+
+
+                                          for            I
+                                                  ~I~ 'Y2 £2pl                 (3.78)
+
+where G2p is a peak compressive stress determined from the biaxial envelope.
+
+
+
+The tangent modulus in the minor direction is calculated as
+
+
+                                                                               (3.79)
+
+
+       E~ = 0.0                     for                                        (3.80)
+
+
+
+The secant modulus and the tangent modulus in the major principal directions are as
+
+determined in the section 3.4.2. The shear modulus is also determined as for the
+
+tension-compression state through the shear retention factor Pand the precracking
+
+shear modulus. The tangent shear modulus is calculated in a similar manner as that
+
+discussed in section 3.4.2.
+
+
+
+
+                                                                                     102
+3.5 CONSTITUTIVE RELATIONSIDP FOR
+
+REINFORCEMENT
+
+
+
+The reinforcing steel is modelled by using a bilinear stress-strain relationship as
+
+shown in Figure 3.9. As perfect bond is assumed, the secant modulus and the
+
+tangent modulus is equal to Eo prior to yieJd.      The secant modulus E1 and the
+
+tangent modulus ET of the steel reinforcement is given by
+
+                            E ,=Eo                                           (3.81)
+
+                                                                             (3.82)
+
+                            if     £<£,
+
+At the post-yield state, the tangential modulus is equal to Ew (see Figure 3.9), and
+
+the secant modulus is calculated by
+
+                                                                             (3.83)
+
+
+where 0 1 and Es are the stress and the strain in the reinforcemenL
+
+
+
+In this study, at the post-yield state, the tangential modulus Ew is assumed to be
+
+equal to 2:ero.
+
+
+
+
+                                                                                103
+    FI)'   -----------
+
+
+
+
+                  Eo
+
+
+
+
+                                                             £
+
+
+
+
+Figure 3.9 Stress-Strain Relationship of Reinforcing Steel
+
+
+
+
+                                                                 104
+3.6 SUMMARY
+
+
+
+A brief literature review on the design of walls and buckling of reinforced concrete
+
+walls was presented in this chapter. The stress-strain relationship of concrete under
+
+different in-plane states such as undamaged, cracked in tension-tension, cracked in
+
+tension-compression, crushed in compression-compression, and crushed in tension-
+
+compression was discussed for biaxial loading. The procedures for determining the
+
+in-plane tangential modulus of concrete under any loading state, as well as the
+
+stress-strain relationship of reinforcing steel were also presented.       The work
