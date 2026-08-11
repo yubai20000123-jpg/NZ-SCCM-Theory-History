@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 17:12 +08:00  
+**Updated:** 2026-08-11 20:30 +08:00  
 **Purpose:** 唯一当前工作入口；保持主线简单。
 
 ## 0. Highest-priority contract
@@ -254,7 +254,52 @@ These are dimensional/conjugacy clarifications only; the R10 material target, N4
 
 ---
 
-## 5. Status
+## 5. Canonical calculation process template — COMPLETE
+
+The fresh Case21 closure is now frozen as the calculation-process template for subsequent panels:
+
+- `current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md`
+
+The template fixes the execution order:
+
+```text
+INPUT
+-> R10
+-> continuous spectral certificate
+-> N48 regenerate
+-> Nguyen continuous kinematics
+-> Cayley-Hamilton current-map
+-> D15 exact moments
+-> steel branch check
+-> Rq=0 equilibrium branch
+-> L=0 limit state
+-> final self-check
+-> experiment-only comparison
+```
+
+Every future panel must deliver the same 11-part audit package:
+
+```text
+INPUT
+R10
+SPECTRAL
+N48
+KINEMATICS
+D15
+STEEL
+EQUILIBRIUM
+LIMIT
+CHECKS
+EXPERIMENT
+```
+
+Case21 is a process/output-format exemplar only. Its numerical root, load or error is prohibited as a target or guide for another panel.
+
+If a future panel has \(\ell/b\neq1\), use the same frozen Nguyen second-order kinematics in its general \(\ell/b\) form; do not mechanically copy the Case21-specific \(\ell=b\) simplification. This is geometry substitution, not theory reopening.
+
+---
+
+## 6. Status
 
 ```text
 R10_CLOSED_PARAMETER_FORMULA = GOVERNING
@@ -263,6 +308,7 @@ N112_REQUIREMENT = SUPERSEDED
 LONG_DECIMAL_COEFFICIENT_TABLE_IN_THEORY = PROHIBITED
 R10_N48_D15_PAPER_STYLE_DERIVATION = COMPLETE
 CASE21_FRESH_R10_N48_D15_CLOSURE = PASS
+CASE21_CALCULATION_PROCESS_TEMPLATE = COMPLETE
 HISTORICAL_CASE21_COMPUTED_RESULTS_USED_IN_FRESH_CLOSURE = NO
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
@@ -275,10 +321,10 @@ SWARTZ24 = NOT_STARTED
 
 ---
 
-## 6. Current execution boundary
+## 7. Current execution boundary
 
-Case21 is now closed under the current paper-style R10 → N48 → D15 chain. No automatic material change, compiler-order escalation or historical-result reconciliation is authorized.
+Case21 itself is no longer to be reopened. The next numerical panel, when selected, must be executed through the canonical calculation-process template above.
 
 ```text
-CURRENT_NEXT_TASK = USER_DIRECTED
+CURRENT_NEXT_TASK = APPLY_TEMPLATE_TO_NEXT_USER_SELECTED_PANEL
 ```
