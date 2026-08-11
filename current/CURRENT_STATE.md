@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 22:25 +08:00  
+**Updated:** 2026-08-11 22:55 +08:00  
 **Purpose:** 唯一当前工作入口；保持主线简单。
 
 ## 0. Highest-priority contract
@@ -170,23 +170,68 @@ Full-sample statistics after blind prediction freeze:
 | Case 9–16 | ~38.3 | -13.23% | 15.45% | 108.29 kN |
 | Case 17–24 | ~63.1 | -2.07% | 8.06% | 41.25 kN |
 
-These group differences are diagnostic evidence only and do not authorize retuning R10, N48, q0, reinforcement parameters, or panel-specific material quantities.
+---
+
+## 5. Primary-source Swartz24 mechanism audit — COMPLETE
+
+Canonical files:
+
+- `current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_TABLE_20260811.csv`
+- `current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_20260811.md`
+
+The original Swartz Table 1 and Table 2 were digitized panel-by-panel and merged with the already frozen fresh blind Pu values. Added diagnostic fields include actual b/t, Pcr, Pf, Pf/Pcr, fcr/fcyl, reinforcement ratio, layer count, buckling location and Pcr measurement method.
+
+Current diagnostic ranking:
+
+```text
+STRONGEST_TESTED_DIAGNOSTIC = fcr/fcyl
+Spearman(error, fcr/fcyl) = -0.753
+Spearman(error, fcr/fcyl; excluding Southwell Cases 1 and 4) = -0.819
+Spearman(error, Pf/Pcr) = -0.548
+Spearman(abs_error, b/t) = -0.462
+FULL_SAMPLE_STEEL_RATIO_EFFECT = WEAK
+LAYER_COUNT_EFFECT = WEAK_AND_CONFOUNDED
+BUCKLING_LOCATION_LABEL_EFFECT = WEAK
+```
+
+Interpretation boundary:
+
+- `fcr/fcyl` is the strongest tested diagnostic: panels buckling closer to the concrete material peak tend to be underpredicted more severely by the current Pu model.
+- `Pf/Pcr` supports a post-buckling-reserve hypothesis, but shares Pf with the error definition and therefore is not independent causal proof.
+- Pcr method is not uniform: Cases1/4 use Southwell, Cases5/6 deflection profiles, most others surface-strain criterion.
+- Reinforcement has weak full-sample correlation with error, but this does not negate its ultimate/post-buckling role; within Case17–24 the signed error changes strongly with steel ratio.
+
+No calibration is authorized from these correlations.
 
 ---
 
-## 5. Source-based interpretation boundary
+## 6. Supplemental source review — COMPLETE
 
-Nguyen's analysis of the Swartz series reports average critical-stress ratios of about 0.795, 0.93 and 0.618 for the b/t≈48, 38.3 and 63.1 groups. Panels 17–24 showed two sinusoidal half waves and behavior close to elastic/tangent-orthotropic plate buckling; the b/t≈48 and 38 groups showed approximately one half wave and buckled at stresses much closer to the material peak. Nguyen also reports that reinforcement ratio/layer count had only a small effect on Swartz-series buckling loads.
+Canonical file:
 
-This source evidence may be used only to diagnose the current failure-load error structure, not to calibrate the model.
+- `evidence/literature/NZ_SCCM_SWARTZ_ATTARD_OTHER3_SOURCE_REVIEW_20260811.md`
 
-Detailed diagnostic:
+Source identities and retained uses:
 
-- `current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_OBSERVATIONS_AND_GROUP_ERROR_MECHANISM_20260811.md`
+1. **Swartz/Rosebraugh/Rogacki, A Method...** — primary experimental-method supplement: finite-stiffness frame/support details, load redistribution after buckling, one/two bulge patterns, Southwell limitations, preferred strain-based Pcr criterion.
+2. **Attard 1994** — primary analytical tangent-stability supplement: orthotropic tangent plate equation, loaded-direction tangent modulus, transverse-stiffness approximation, closed buckling/slenderness expressions, and moment amplification from imperfections. Use only as an independent stability benchmark/diagnostic; do not import `Eyt=0.4Ec` into current R10.
+3. **Doh/Fragomeni/Kim review** — secondary literature map: one-way/two-way scope, eccentricity/support/load-control distinctions, Saheb-Desayi ultimate-strength trends, and validation-data limitations. Use as future validation-matrix guide, not a primary formula source.
+
+New evidence-based diagnostic priorities:
+
+```text
+P1 = tangent-state / fcr-fc regime audit
+P2 = post-buckling membrane redistribution audit
+P3 = support-stiffness / observed-mode sensitivity audit
+P4 = reinforcement-postbuckling interaction audit
+P5 = external validation matrix segmented by eccentricity/boundary/load-control
+```
+
+These are diagnostics only. R10, N48, q0 and the current zero-spatial architecture remain frozen.
 
 ---
 
-## 6. Independent reproducibility audit package — READY
+## 7. Independent reproducibility audit package — READY
 
 Three representative panels were selected across the three source groups:
 
@@ -206,7 +251,7 @@ The blind input intentionally contains no final D, q, Pu or experiment loads. An
 
 ---
 
-## 7. Status
+## 8. Status
 
 ```text
 R10_CLOSED_PARAMETER_FORMULA = GOVERNING
@@ -218,12 +263,14 @@ CASE21_FRESH_R10_N48_D15_CLOSURE = PASS
 CASE21_CALCULATION_PROCESS_TEMPLATE = COMPLETE
 SWARTZ24_FRESH_BLIND_THEORY = 24/24 PASS
 SWARTZ24_EXPERIMENT_COMPARISON = COMPLETE
+SWARTZ24_PRIMARY_TABLE1_TABLE2_DIGITIZATION = COMPLETE
+SWARTZ24_PRIMARY_MECHANISM_AUDIT = COMPLETE
+SUPPLEMENTAL_OTHER3_SOURCE_REVIEW = COMPLETE
 HISTORICAL_CASE_COMPUTED_RESULTS_USED_IN_SWARTZ24_SOLVE = NO
 THREE_PANEL_INDEPENDENT_REPRO_PACKAGE = READY
-SWARTZ24_SOURCE_ERROR_MECHANISM_DIAGNOSIS = COMPLETE
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
 STRUCTURAL_Pu_CALIBRATION = NO
-CURRENT_NEXT_TASK = RUN_INDEPENDENT_BLIND_REPRODUCTION_AUDIT
+CURRENT_NEXT_TASK = USER_DIRECTED_MECHANISM_DIAGNOSTIC_OR_INDEPENDENT_BLIND_REPRODUCTION_AUDIT
 ```
