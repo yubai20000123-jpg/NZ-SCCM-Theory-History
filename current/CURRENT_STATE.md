@@ -1,139 +1,110 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 22:55 +08:00  
+**Updated:** 2026-08-11 23:27 +08:00  
 **Purpose:** 唯一当前工作入口；保持主线简单。
 
 ## 0. Highest-priority contract
 
 ```text
-DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+DOMAIN = ONE_CONTINUOUS COMPLETE HALFWAVE
 ACTIVE_MODE = m=1
 KINEMATICS = NGUYEN_SECOND_ORDER
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
+STRUCTURAL_CALIBRATION = NO
 ```
 
-No spatial Gauss/Simpson/adaptive quadrature, material-point grid, moving TT/TC/CC cells, whole-structure P/R fitting, structural-load material calibration, or finite-difference production derivatives.
+Formal production continues to prohibit spatial Gauss/Simpson/adaptive quadrature, spatial Chebyshev collocation, material-point grids/cells, whole-structure P/R fitting and experiment-driven material tuning.
 
 ---
 
-## 1. Material theory — closed R10 formula
-
-The governing material chain is
+## 1. Governing material target — R10 unchanged
 
 ```text
 source Foster current relation
--> R10 one-dimensional energy-smoothed scalar
+-> R10 1D energy-smoothed tensile scalar
 -> SAME U/C/T + CC/TC/TT multidimensional current map
 ```
 
-Define
+Core parameters:
 
 \[
-\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad x_{cr}=\frac{\rho}{\kappa},
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad
+x_{cr}=\frac{\rho}{\kappa},\qquad
+\rho=0.1.
+\]
+
+R10 peak parameter:
+
+\[
+W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)dr,
 \]
 
 \[
-W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr,
+h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right).
 \]
 
-\[
-\boxed{h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)}.
-\]
-
-Rise branch:
-
-\[
-\boxed{u_1(\tau)=\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5}.
-\]
-
-Fall branch:
-
-\[
-\boxed{u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)}.
-\]
-
-The multidimensional relation remains
-
-\[
-U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i,
-\]
-
-\[
-s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
-\]
-
-\[
-s_-=U_- -a_{cc}C_-^2C_+ + C_-T_+ -\rho a_tT_-T_+^8.
-\]
-
-No new material route is active.
+No P1 result authorizes any change to R10.
 
 ---
 
-## 2. N48 analytic compiler
+## 2. Current finite analytic material representation — N48
 
 \[
-\boxed{N_M=48}.
+N_M=48.
 \]
 
 For \(F\in\{U,C,T,T^7\}\),
 
 \[
-\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi)},
+F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi),
 \]
 
 \[
-\theta_j=\frac{(j+\tfrac12)\pi}{49},\qquad \lambda_j=\lambda_c+\lambda_h\cos\theta_j,
+\theta_j=\frac{(j+\tfrac12)\pi}{49},\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
 \]
 
 \[
-\boxed{a_n^{(F)}=\frac{2-\delta_{n0}}{49}\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),\qquad n=0,\ldots,48.}
+a_n^{(F)}=\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j).
 \]
 
-No long decimal coefficient table is part of the theory.
+N48 remains the frozen representation used in the completed fresh calculations. However, P1 has now separated **value representation identity** from **first-derivative/tangent fidelity**; see Section 6.
 
 ---
 
-## 3. Paper-style derivation, Case21 closure and canonical workflow
+## 3. Closed Case21 workflow
 
-Canonical derivation:
+Canonical files:
 
 - `current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md`
-
-Case21 fresh closure:
-
 - `current/theory/NZ_SCCM_CASE21_FRESH_R10_N48_D15_CLOSURE_20260811.md`
-- `current/theory/NZ_SCCM_CASE21_FRESH_R10_N48_D15_CLOSURE_results.json`
-- `governance/CASE21_FRESH_R10_N48_D15_CLOSURE_DECISION_20260811.md`
-
-Canonical workflow:
-
 - `current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md`
 
-Execution chain:
+Workflow:
 
 ```text
 INPUT
 -> R10
--> continuous spectral certificate
+-> spectral certificate
 -> N48 regenerate
 -> Nguyen continuous kinematics
 -> Cayley-Hamilton current-map
 -> D15 exact moments
--> steel branch check
--> Rq=0 equilibrium branch
--> L=0 limit state
+-> steel contribution
+-> Rq=0
+-> L=0
 -> final self-check
 -> experiment-only comparison
 ```
 
-Case21 is a process exemplar only; its numerical result is not a target for other panels.
+Case21 remains a process exemplar only; its numerical answer is not a target for another panel.
 
 ---
 
-## 4. Swartz 24-panel fresh blind calculation — COMPLETE
+## 4. Swartz24 fresh blind value calculation — COMPLETE
 
 Canonical files:
 
@@ -141,136 +112,203 @@ Canonical files:
 - `current/results/NZ_SCCM_SWARTZ24_FRESH_THEORY_VS_EXPERIMENT_20260811.csv`
 - `current/results/NZ_SCCM_SWARTZ24_FRESH_R10_N48_D15_REPORT_20260811.md`
 
-The blind theory table was committed before the experiment-comparison table. The solve did not use historical Case roots, historical Case loads, historical load paths, historical FE results, or experiment loads.
+Blind theory was frozen before experiment comparison.
 
 ```text
-SWARTZ24_FRESH_THEORY_PREDICTIONS = 24/24 PASS
-BLIND_THEORY_FREEZE_BEFORE_EXPERIMENT = PASS
-EXPERIMENTAL_COMPARISON = COMPLETE
-STRUCTURAL_CALIBRATION = NO
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-MATERIAL_COMPILER_ORDER = 48
+SWARTZ24_FRESH_THEORY_PREDICTIONS = 24/24 COMPLETE
+HISTORICAL_CASE_ROOTS_OR_LOADS_USED = NO
+EXPERIMENT_USED_IN_SOLVE = NO
 COMPILER_DOMAIN_CERTIFICATE = 24/24 PASS
 STEEL_BRANCH_CHECK = 24/24 ELASTIC
-SAME_EXPRESSION_LIMIT_CONDITION = 24/24 PASS
+FORMAL_SPATIAL_QUADRATURE = 0
 ```
 
-Full-sample statistics after blind prediction freeze:
+Post-freeze statistics:
 
 - mean theory/experiment = 0.9638;
 - mean signed error = -3.62%;
 - MAPE = 12.06%;
 - RMSE = 79.26 kN.
 
-| Group | Approx. b/t | Mean error | MAPE | RMSE |
-|---|---:|---:|---:|---:|
-| Case 1–8 | ~48 | +4.43% | 12.66% | 73.60 kN |
-| Case 9–16 | ~38.3 | -13.23% | 15.45% | 108.29 kN |
-| Case 17–24 | ~63.1 | -2.07% | 8.06% | 41.25 kN |
+| Group | Approx. b/t | Mean error | MAPE |
+|---|---:|---:|---:|
+| Case 1–8 | ~48 | +4.43% | 12.66% |
+| Case 9–16 | ~38.3 | -13.23% | 15.45% |
+| Case 17–24 | ~63.1 | -2.07% | 8.06% |
+
+These values remain preserved as the completed blind **value-closure record**. P1 does not recalibrate them.
 
 ---
 
-## 5. Primary-source Swartz24 mechanism audit — COMPLETE
+## 5. Primary Swartz mechanism audit — COMPLETE
 
 Canonical files:
 
 - `current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_TABLE_20260811.csv`
 - `current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_20260811.md`
-
-The original Swartz Table 1 and Table 2 were digitized panel-by-panel and merged with the already frozen fresh blind Pu values. Added diagnostic fields include actual b/t, Pcr, Pf, Pf/Pcr, fcr/fcyl, reinforcement ratio, layer count, buckling location and Pcr measurement method.
-
-Current diagnostic ranking:
-
-```text
-STRONGEST_TESTED_DIAGNOSTIC = fcr/fcyl
-Spearman(error, fcr/fcyl) = -0.753
-Spearman(error, fcr/fcyl; excluding Southwell Cases 1 and 4) = -0.819
-Spearman(error, Pf/Pcr) = -0.548
-Spearman(abs_error, b/t) = -0.462
-FULL_SAMPLE_STEEL_RATIO_EFFECT = WEAK
-LAYER_COUNT_EFFECT = WEAK_AND_CONFOUNDED
-BUCKLING_LOCATION_LABEL_EFFECT = WEAK
-```
-
-Interpretation boundary:
-
-- `fcr/fcyl` is the strongest tested diagnostic: panels buckling closer to the concrete material peak tend to be underpredicted more severely by the current Pu model.
-- `Pf/Pcr` supports a post-buckling-reserve hypothesis, but shares Pf with the error definition and therefore is not independent causal proof.
-- Pcr method is not uniform: Cases1/4 use Southwell, Cases5/6 deflection profiles, most others surface-strain criterion.
-- Reinforcement has weak full-sample correlation with error, but this does not negate its ultimate/post-buckling role; within Case17–24 the signed error changes strongly with steel ratio.
-
-No calibration is authorized from these correlations.
-
----
-
-## 6. Supplemental source review — COMPLETE
-
-Canonical file:
-
 - `evidence/literature/NZ_SCCM_SWARTZ_ATTARD_OTHER3_SOURCE_REVIEW_20260811.md`
 
-Source identities and retained uses:
-
-1. **Swartz/Rosebraugh/Rogacki, A Method...** — primary experimental-method supplement: finite-stiffness frame/support details, load redistribution after buckling, one/two bulge patterns, Southwell limitations, preferred strain-based Pcr criterion.
-2. **Attard 1994** — primary analytical tangent-stability supplement: orthotropic tangent plate equation, loaded-direction tangent modulus, transverse-stiffness approximation, closed buckling/slenderness expressions, and moment amplification from imperfections. Use only as an independent stability benchmark/diagnostic; do not import `Eyt=0.4Ec` into current R10.
-3. **Doh/Fragomeni/Kim review** — secondary literature map: one-way/two-way scope, eccentricity/support/load-control distinctions, Saheb-Desayi ultimate-strength trends, and validation-data limitations. Use as future validation-matrix guide, not a primary formula source.
-
-New evidence-based diagnostic priorities:
+Strongest prior experimental diagnostic:
 
 ```text
-P1 = tangent-state / fcr-fc regime audit
-P2 = post-buckling membrane redistribution audit
-P3 = support-stiffness / observed-mode sensitivity audit
-P4 = reinforcement-postbuckling interaction audit
-P5 = external validation matrix segmented by eccentricity/boundary/load-control
+Spearman(error, fcr/fcyl) = -0.753
+Spearman(error, fcr/fcyl; excluding Southwell Case1/4) = -0.819
+Spearman(error, Pf/Pcr) = -0.548
 ```
 
-These are diagnostics only. R10, N48, q0 and the current zero-spatial architecture remain frozen.
+This established that panels buckling closer to the material peak tend to be more underpredicted, but did not yet identify which theoretical layer caused the discrepancy.
 
 ---
 
-## 7. Independent reproducibility audit package — READY
+## 6. P1 current-tangent audit — COMPLETE; tangent fidelity warning frozen
 
-Three representative panels were selected across the three source groups:
+Canonical files:
+
+- `current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_20260811.md`
+- `current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_COMPACT_20260811.csv`
+- `evidence/literature/NZ_SCCM_ZHOU_ATTARD_TANGENT_STABILITY_INTERPRETATION_20260811.md`
+
+### 6.1 Audit identity
+
+The 24 frozen ultimate states \((D_u,q_u,P_u)\) were held fixed. No material, root, Pu, q0 or experimental quantity was tuned.
+
+At the complete-halfwave center,
+
+\[
+X=Y=\pi/2,\qquad \zeta=0,
+\]
+
+so
+
+\[
+\lambda_+=0,\qquad \lambda_-=-D_u.
+\]
+
+This gives a clean material-state location for comparing the exact R10 target tangent, the N48 derivative, Attard orthotropic tangent ideas and a Zhou-form \(D_x-D_y-H\) stiffness decomposition.
+
+### 6.2 Hard material-anchor finding
+
+The closed R10 target has the exact zero-state anchors
+
+\[
+C(0)=T(0)=T^7(0)=0,
+\]
+
+\[
+C'(0)=T'(0)=(T^7)'(0)=0.
+\]
+
+The current N48 representation does not preserve these first-derivative identities. Across the 24 panel-specific compiler intervals:
 
 ```text
-Case 1  -> b/t ~ 48 group
-Case 14 -> b/t ~ 38 group
-Case 21 -> b/t ~ 63 group
+T48(0) range       = -0.001473 ... +0.059057
+T48'(0) range      = +8.689 ... +11.364      (R10 target = 0)
+normal-tangent asymmetry inflation vs R10 target = 23.1 ... 31.1 times
 ```
 
-Canonical audit files:
+### 6.3 Loaded-direction tangent regime
+
+Group means at the center state:
+
+| Group | mean Du | R10 target E_parallel,t/E0 | N48 E_parallel,t/E0 |
+|---|---:|---:|---:|
+| Case 1–8 | 1.042 | -0.0195 | 0.9928 |
+| Case 9–16 | 1.083 | -0.0360 | 0.9362 |
+| Case 17–24 | 0.902 | +0.0599 | 0.9659 |
+
+The R10 target therefore preserves the expected near-peak tangent collapse and distinguishes the three material regimes. N48 first derivatives largely erase that distinction and return the loaded tangent to approximately elastic magnitude.
+
+### 6.4 Zhou-form stiffness decomposition
+
+Zhou Siming's source theory emphasizes that simply-supported orthotropic axial stability is jointly contributed by directional bending stiffnesses and torsional/Poisson coupling, not by one loaded-direction modulus alone.
+
+P1 uses that source concept only as an audit mapping:
+
+\[
+D_x^{eq}=C_{xx,t}t^3/12,
+\qquad
+D_y^{eq}=C_{yy,t}t^3/12,
+\]
+
+\[
+D_\mu^{eq}=\frac{C_{xy,t}+C_{yx,t}}{2}\frac{t^3}{12},
+\qquad
+D_{66}^{eq}=G_tt^3/12,
+\]
+
+\[
+H^{eq}=D_\mu^{eq}+2D_{66}^{eq}.
+\]
+
+Results:
+
+```text
+N48/R10 equivalent H inflation = 4.72 ... 6.79 times; mean 6.21
+N48/R10 center stability-margin inflation = 3.28 ... 4.42 times; mean 3.97
+```
+
+Approximate contribution structure:
+
+```text
+R10 target: Dx ~47–50%, 2H ~46–51%, Dy ~-2%...+3%, steel small
+N48 tangent: Dx ~12–13%, 2H ~75%, Dy ~11%, steel small
+```
+
+Thus the first-derivative representation issue changes the full directional stiffness composition, especially the H contribution.
+
+### 6.5 Attard diagnostic
+
+Attard is retained only as an orthotropic tangent benchmark. His transverse approximation \(E_{trans}\approx0.4E_c\) is NOT imported into R10.
+
+Under the R10 target tangent, Case3–16 have non-positive loaded-direction center tangent at the frozen Pu state, so a positive-tangent Attard perturbation formula is already beyond its direct applicability there. Case17–24 remain positive but have Attard margins below unity at Pu, consistent with a perfect branch that has already bifurcated before a finite-amplitude ultimate state.
+
+N48, in contrast, makes the loaded tangent positive and near elastic for all panels, materially changing this diagnostic identity.
+
+### 6.6 P1 decision
+
+```text
+R10_MATERIAL_TARGET = NOT_CHANGED
+SWARTZ24_PU_VALUES = NOT_RECALIBRATED
+P1_CURRENT_TANGENT_AUDIT = COMPLETE
+N48_VALUE_REPRESENTATION = PRESERVED_AS_HISTORICAL_CURRENT_VALUE_CLOSURE
+N48_TANGENT_FIDELITY_AT_LAMBDA_ZERO = FAIL_DIAGNOSTIC
+FIRST_CLEAR_MECHANICAL_DEVIATION = R10_TARGET -> N48_FIRST_DERIVATIVE
+ATTARD_COMPARISON = DIAGNOSTIC_ONLY
+ZHOU_Dx_Dy_H_DECOMPOSITION = DIAGNOSTIC_MAPPING_ONLY
+CURRENT_LIMIT_TANGENT_INTERPRETATION = PENDING_TANGENT_REPRESENTATION_REVIEW
+```
+
+This FAIL does **not** authorize a new material model or an automatic order escalation. It means the project must not attribute the Swartz24 pattern to missing concrete physics or missing post-buckling structural freedom before the existing R10-to-N48 first-derivative fidelity is resolved.
+
+---
+
+## 7. Independent three-panel reproduction package
+
+Canonical files:
 
 - `current/audits/NZ_SCCM_CASE1_CASE14_CASE21_FULL_REPRODUCTION_AUDIT_PACKAGE_20260811.md`
 - `current/audits/NZ_SCCM_CASE1_CASE14_CASE21_BLIND_INPUT_20260811.md`
 - `current/audits/NZ_SCCM_CASE1_CASE14_CASE21_BLANK_CHAT_PROMPT_20260811.txt`
 
-The blind input intentionally contains no final D, q, Pu or experiment loads. An independent chat must regenerate R10, N48, Cayley-Hamilton, D15, steel contributions and solve Rq=L=0 before any answer comparison.
+These remain available for an independent blank-chat reproduction test.
 
 ---
 
-## 8. Status
+## 8. Current status and next gate
 
 ```text
-R10_CLOSED_PARAMETER_FORMULA = GOVERNING
+R10_CLOSED_PARAMETER_FORMULA = GOVERNING_AND_UNCHANGED
 MATERIAL_COMPILER_ORDER = 48
-N112_REQUIREMENT = SUPERSEDED
-LONG_DECIMAL_COEFFICIENT_TABLE_IN_THEORY = PROHIBITED
-R10_N48_D15_PAPER_STYLE_DERIVATION = COMPLETE
-CASE21_FRESH_R10_N48_D15_CLOSURE = PASS
-CASE21_CALCULATION_PROCESS_TEMPLATE = COMPLETE
-SWARTZ24_FRESH_BLIND_THEORY = 24/24 PASS
-SWARTZ24_EXPERIMENT_COMPARISON = COMPLETE
-SWARTZ24_PRIMARY_TABLE1_TABLE2_DIGITIZATION = COMPLETE
+CASE21_VALUE_CLOSURE = COMPLETE_RECORD
+SWARTZ24_FRESH_BLIND_VALUE_CLOSURE = 24/24 COMPLETE_RECORD
 SWARTZ24_PRIMARY_MECHANISM_AUDIT = COMPLETE
-SUPPLEMENTAL_OTHER3_SOURCE_REVIEW = COMPLETE
-HISTORICAL_CASE_COMPUTED_RESULTS_USED_IN_SWARTZ24_SOLVE = NO
-THREE_PANEL_INDEPENDENT_REPRO_PACKAGE = READY
+P1_CURRENT_TANGENT_AUDIT = COMPLETE
+N48_TANGENT_FIDELITY = FAIL_DIAGNOSTIC
+STRUCTURAL_Pu_CALIBRATION = NO
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
-STRUCTURAL_Pu_CALIBRATION = NO
-CURRENT_NEXT_TASK = USER_DIRECTED_MECHANISM_DIAGNOSTIC_OR_INDEPENDENT_BLIND_REPRODUCTION_AUDIT
+CURRENT_NEXT_TASK = REVIEW_N48_TANGENT_REPRESENTATION_WITHOUT_CHANGING_R10
 ```
+
+The next gate is therefore narrow: preserve R10 and the zero-spatial architecture, and determine the simplest analytic representation that preserves both the R10 material values and the required first-derivative/tangent anchors. No new material route is authorized.
