@@ -1,5 +1,5 @@
 # NZ-SCCM R10B transparent material-coordinate coefficient generator
-# Frozen 2026-08-11. No spatial sampling/quadrature is used here.
+# Current governing default: N=48. No spatial sampling/quadrature is used here.
 import numpy as np
 
 FC = 21.23
@@ -34,8 +34,8 @@ def u_sm(t):
         + (6*H - 3*RHO)*tau**5
     )
     fall = ~rise
-    tau_f = (t[fall] - XCR) / (9*XCR)
-    out[fall] = H + (UR-H) * (10*tau_f**3 - 15*tau_f**4 + 6*tau_f**5)
+    s = (t[fall] - XCR) / (9*XCR)
+    out[fall] = H + (UR-H) * (10*s**3 - 15*s**4 + 6*s**5)
     return out
 
 def C(lam):
@@ -75,7 +75,7 @@ def evaluate(a, lam):
     return np.polynomial.chebyshev.chebval(xi, a)
 
 if __name__ == "__main__":
-    N = 112
+    N = 48
     for name, f in FUNCTIONS.items():
         a = coefficients(N, f)
         print(name, len(a), np.max(np.abs(a)))
