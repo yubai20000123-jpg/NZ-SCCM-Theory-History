@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 00:31 +08:00  
+**Updated:** 2026-08-11 14:28 +08:00  
 **Purpose:** 唯一当前工作入口。
 
 ## 0. Highest-priority contract
@@ -43,6 +43,49 @@ h = 0.09799750427197301
 ```
 
 No Case21/Swartz capacity was used to choose `h`.
+
+### 1A. Governing interpretation clarification — R10 vs R10B
+
+Current governing clarification:
+
+- `governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md`
+
+Use the following identities strictly:
+
+```text
+SOURCE FOSTER -> R10
+= material-target modification
+
+R10 -> R10B
+= finite analytic compilation / reintegration only
+```
+
+R10 acts on the internal tensile scalar coordinate
+
+\[
+t=\Pi_\eta(\lambda)
+\]
+
+and the executed R10 formula reconstructs the retained tensile interval
+
+\[
+0\le t\le10x_{cr}
+\]
+
+with two C2 quintic branches while preserving source work and the frozen physical/C2 anchors. Therefore R10 should not be described merely as an infinitesimal local `lambda` patch.
+
+R10B changes no material parameter or multidimensional interaction coefficient. It may, however, have finite-order material-representation and spatial-coefficient truncation error. Exactness in R10B means exact coefficient algebra and exact complete-halfwave moment contraction **after** the retained finite representation is fixed.
+
+Interpret the R10B orders as
+
+```text
+N_M = 48 = 1D material-coordinate analytic representation order
+N_S = 28 = structural spatial coefficient-representation order
+```
+
+They are not material-parameter counts, material-point counts, spatial integration-point counts, or inferred totals such as `147`.
+
+The exact historical R10B coefficient-generation convention remains unresolved because the current repository does not contain the byte-exact original compiler core/coefficient arrays. DCT-I, DCT-II, continuous projection, least-squares weighting, or any particular coefficient-array count must not be asserted as historical R10B fact without original evidence.
 
 ---
 
@@ -274,7 +317,10 @@ R10B_ZERO_SPATIAL_CASE21 = PASS_ENGINEERING
 - do not replace coefficient algebra by spatial numerical quadrature;
 - do not fit whole-structure P/R/U from spatial samples;
 - do not use finite-difference production derivatives;
-- do not copy the Case21 spectral compiler intervals directly into Swartz24.
+- do not copy the Case21 spectral compiler intervals directly into Swartz24;
+- do not reinterpret `N_M=48` as a material-parameter count or an inferred total coefficient count;
+- do not assert a historical R10B DCT/least-squares coefficient generator without original compiler evidence;
+- do not conflate the R10 material-target change with the R10B finite-representation approximation.
 
 ---
 
@@ -287,15 +333,31 @@ CURRENT_RECOMMENDED_NEXT_TASK
 
 R11 is a precheck only. Before any 24-panel Pu batch, it must establish the common/panel-governed analytic D-q search domain, spectral separation/bounds, material compiler domain and expected analytic order for all 24 source panels. It must not start the batch until those gates pass.
 
+### 10A. Active recovery prerequisite for R10B coefficient reconstruction
+
+If the immediate task is to recover/publish the R10B coefficient-generation process, the required order is now frozen as:
+
+```text
+1. audit the frozen R10 material target itself;
+2. audit R10B representation fidelity to that frozen target;
+3. recover the historical coefficient generator from original evidence,
+   or explicitly freeze a new transparent reproducibility convention;
+4. only then generate/publish coefficient tables.
+```
+
+This recovery prerequisite does not itself supersede the production-stage R11 recommendation; it governs any continued R10/R10B reproducibility work.
+
 ---
 
 ## 11. Recovery read order
 
 1. `current/CURRENT_STATE.md`
-2. `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
-3. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
-4. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json`
-5. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
-6. R10 theory/results
-7. frozen current operator + exact-moment foundation
-8. historical nested-D15 and G19/R03 evidence
+2. `governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md`
+3. `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
+4. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
+5. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json`
+6. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
+7. R10 theory/results
+8. frozen current operator + exact-moment foundation
+9. historical nested-D15 and G19/R03 evidence
+10. recovery notes only after the governing files above
