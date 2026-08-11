@@ -47,16 +47,14 @@ h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)}.
 Rise branch, \(\tau=t/x_{cr}\):
 
 \[
-\boxed{
-u_1(\tau)=
+\boxed{u_1(\tau)=
 \rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5}.
 \]
 
 Fall branch, \(s=(t-x_{cr})/(9x_{cr})\):
 
 \[
-\boxed{
-u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)}.
+\boxed{u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)}.
 \]
 
 The theory shall use symbolic parameter combinations such as \(10h-6\rho\), not long decimal constants.
