@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-12 01:29 +08:00  
+**Updated:** 2026-08-12 01:52 +08:00  
 **Purpose:** 唯一当前工作入口；只保留当前有效状态和下一门禁，详细过程由 canonical files 承担。
 
 ## 0. Highest-priority contract
@@ -158,27 +158,34 @@ The last item is recorded as a degree-48 representation-capacity boundary, not a
 
 ---
 
-## 4. Canonical updated paper-style derivation — COMPLETE
+## 4. Canonical updated paper-style derivations — COMPLETE
 
-The current paper-readable derivation is now:
+The current paper-readable derivations are now:
 
 - `current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md`
+- `current/theory/NZ_SCCM_R10_N48C1MM_D15_EQUATION_BY_EQUATION_DERIVATION_20260812.md`
 - `governance/R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_DECISION_20260812.md`
 
-It formally expands
+The second file is the full equation-by-equation version. It contains 149 numbered equations and, immediately after every equation or equation group, a paper-style `式中，...表示...` definition of every new symbol. It covers:
 
 ```text
 material parameters
 -> closed R10
+-> Foster source energy
+-> R10 rise/fall branches
 -> direct N48 base coefficient formula
 -> strict-C1 coefficient correction
 -> T strict-C1 constrained minimax coefficient identity
 -> Cayley-Hamilton 2D lift
 -> CC/TC/TT current-map reconstruction
--> same-expression tangent
--> D15 coefficient contraction
--> Pc / Rq,c
+-> Nguyen general complete-halfwave kinematics
+-> D15 exact moments
+-> explicit per-N48-term D15 entry identity
+-> Pc / Rq,c / steel contributions
+-> same-expression derivatives
+-> Rq=0 and L=0
 -> Zhou Dx-Dy-H tangent-stability acceptance gate
+-> complete symbol glossary
 ```
 
 The explicit per-term D15 identity is
@@ -207,10 +214,10 @@ Thus the current canonical term chain is
 }
 \]
 
-The canonical derivation includes equation-by-equation symbol definitions and a complete symbol table.
-
 ```text
 UPDATED_PAPER_STYLE_DERIVATION = COMPLETE
+EQUATION_BY_EQUATION_DERIVATION = COMPLETE
+EQUATION_COUNT = 149
 SYMBOL_DEFINITIONS = COMPLETE
 ```
 
@@ -249,5 +256,6 @@ Do not automatically:
 R10 = FROZEN
 N48_ORDER = 48
 UPDATED_N48_C1_MM_D15_DERIVATION = CANONICAL
+EQUATION_BY_EQUATION_VERSION = CANONICAL_SUPPORTING_DERIVATION
 CURRENT_NEXT_TASK = USER_DIRECTED
 ```
