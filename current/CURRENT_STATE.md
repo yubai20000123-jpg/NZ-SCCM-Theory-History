@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 16:01 +08:00  
+**Updated:** 2026-08-11 16:05 +08:00  
 **Purpose:** 唯一当前工作入口。
 
 ## 0. Highest-priority contract
@@ -14,7 +14,7 @@ N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
 ```
 
-Final production capacity must come from explicit finite formulas/analytic coefficient algebra and explicit derivatives of the same representation. Numerical root solving of already explicit finite equations is allowed.
+Final production capacity must come from explicit finite formulas / analytic coefficient algebra and explicit derivatives of the same representation. Numerical root solving of already explicit finite equations is allowed.
 
 Formal production prohibits spatial Gauss/Simpson/adaptive quadrature, material-point grids, moving spatial TT/TC/CC cells, whole-structure P/R/U fits from spatial numerical integration, structural-load calibration of material parameters, and finite-difference production derivatives.
 
@@ -46,8 +46,6 @@ No Case21/Swartz capacity was used to choose `h`.
 
 ### 1A. Governing identity — R10 vs R10B
 
-Use the following identities strictly:
-
 ```text
 SOURCE FOSTER -> R10
 = material-target modification
@@ -62,27 +60,16 @@ R10 acts on the internal tensile scalar coordinate
 t=\Pi_\eta(\lambda).
 \]
 
-R10B changes no material parameter or multidimensional interaction coefficient. It may have finite-order material-representation and spatial-coefficient truncation error. Exactness in R10B means exact coefficient algebra and exact complete-halfwave moment contraction after the retained finite representation is fixed.
-
-Interpret the R10B orders as
-
-```text
-N_M = 48 = 1D material-coordinate analytic representation order
-N_S = 28 = structural spatial coefficient-representation order
-```
-
-They are not material-parameter counts, material-point counts, spatial integration-point counts, or inferred totals such as `147`.
-
-The exact historical R10B coefficient-generation convention remains unresolved. DCT-I, DCT-II, continuous projection, least-squares weighting, or any particular coefficient-array count must not be asserted as historical R10B fact without original evidence.
+R10B changes no material parameter or multidimensional interaction coefficient. It may have finite-order material-representation and spatial-coefficient truncation error. Exactness means exact coefficient algebra and exact complete-halfwave moment contraction after the retained finite representation is fixed.
 
 ### 1B. R10 material-target audit — COMPLETE
 
-Canonical audit files:
+Canonical files:
 
 - `current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md`
 - `governance/R10_MATERIAL_TARGET_INTENT_AUDIT_DECISION_20260811.md`
 
-The audit establishes that the executed R10 is **not** mathematically a tiny local source patch. It replaces the whole retained tensile interval
+The audit establishes that the executed R10 replaces the retained tensile interval
 
 \[
 0\le t\le10x_{cr}
@@ -90,7 +77,7 @@ The audit establishes that the executed R10 is **not** mathematically a tiny loc
 
 with two C2 quintic branches while preserving selected physical/C2 anchors and total source work.
 
-Material-coordinate audit finds approximately:
+Material-coordinate audit:
 
 ```text
 max |u_R10-u_source|                         ~= 0.01831
@@ -99,9 +86,7 @@ positive relocated work / source work        ~= 4.95 %
 first-moment shift of tensile work           ~= -5.90 %
 ```
 
-This corrects the mathematical description of the executed R10 target. It does **not** authorize creation of a new material target during recovery.
-
-Current audit status:
+Status:
 
 ```text
 R10_EXECUTED_FORMULA_RECOVERY                 = PASS
@@ -115,38 +100,145 @@ NEW_R10_TARGET_SELECTED_DURING_RECOVERY        = NO
 STRUCTURAL_Pu_CALIBRATION                      = NO
 ```
 
-The previously introduced `R10A_MATERIAL_TARGET_INTENT_RECONCILIATION` detour has been revoked and removed from current `main` as recovery overreach.
+No new R10A material route is active.
+
+### 1C. R10B representation-fidelity audit — COMPLETE
+
+Canonical file:
+
+- `current/theory/NZ_SCCM_R10B_REPRESENTATION_FIDELITY_AUDIT_20260811.md`
+
+Archived historical N48 material-coordinate errors:
+
+| scalar | max abs error | p95 abs error |
+|---|---:|---:|
+| U | 0.000200 | 0.000138 |
+| C | 0.002895 | 0.000712 |
+| T | 0.027887 | 0.006928 |
+| T^7 | 0.027497 | 0.017399 |
+
+Historical structural order evidence changes material and spatial orders together, so it cannot isolate the two truncation sources. The N96 fixed-D equilibrium reclosure differs from the N48 stationary result by
+
+```text
+0.18849035625 kN = 0.0511757671 %
+```
+
+and is engineering sensitivity evidence, not a full N96 stationary-root certificate.
+
+Decision:
+
+```text
+R10B_REPRESENTATION_FIDELITY_AUDIT
+= PASS_ENGINEERING_WITH_REPRODUCIBILITY_GAP
+
+HISTORICAL_COEFFICIENT_GENERATOR = UNRECOVERED
+HISTORICAL_COEFFICIENT_ARRAYS    = UNRECOVERED
+```
+
+The missing historical generator must not be invented retroactively.
+
+### 1D. Coefficient-generation rule — RE-FROZEN
+
+Canonical files:
+
+- `current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md`
+- `current/theory/r10b_coefficient_generator_v1.py`
+- `current/theory/NZ_SCCM_R10B_N112_MATERIAL_COEFFICIENTS_20260811.csv`
+- `evidence/NZ_SCCM_R10B_CHEB_ROOT_DCT_ORDER_AUDIT_20260811.csv`
+- `governance/R10B_FIDELITY_AND_COEFFICIENT_REFREEZE_DECISION_20260811.md`
+
+The new transparent reproducibility convention is explicitly **not** claimed to be the byte-exact historical R10B generator.
+
+Compiler hull:
+
+\[
+\lambda_a=-1.01,\qquad \lambda_b=0.105,
+\]
+
+\[
+\lambda_c=-0.4525,\qquad \lambda_h=0.5575,
+\]
+
+\[
+\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_h}
+=\frac{400\lambda+181}{223}.
+\]
+
+For order \(N\):
+
+\[
+\theta_j=\frac{(j+\tfrac12)\pi}{N+1},
+\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
+\]
+
+\[
+F_N(\lambda)=\sum_{n=0}^{N}a_n^{(F)}T_n[\xi(\lambda)],
+\]
+
+\[
+\boxed{
+a_n^{(F)}
+=
+\frac{2-\delta_{n0}}{N+1}
+\sum_{j=0}^{N}F(\lambda_j)\cos(n\theta_j)
+},
+\qquad
+F\in\{U,C,T,T^7\}.
+\]
+
+This is direct formula-to-formula compilation; no least-squares weights, SVD/rcond, regularization coefficient, or structural-test data are involved.
+
+Using the archived N48 material error table only as a material-fidelity floor, the first tested order in `48,56,...` that passes all four historical max and p95 ceilings is
+
+\[
+\boxed{N_M^{repro}=112}.
+\]
+
+At N=112:
+
+| scalar | max abs error | p95 abs error |
+|---|---:|---:|
+| U | 7.3352195900e-05 | 4.1632950383e-05 |
+| C | 2.0457015200e-03 | 6.0108850303e-04 |
+| T | 1.6385185836e-02 | 3.7906918519e-03 |
+| T^7 | 2.8889305301e-03 | 5.2677094828e-04 |
+
+Machine coefficients are stored with 17 significant digits.
+
+Therefore:
+
+```text
+COEFFICIENT_GENERATION_CONVENTION = CHEBYSHEV_ROOT_DCT_V1
+MATERIAL_REPRODUCTION_ORDER       = 112
+HISTORICAL_N48_ORDER              = RETAINED_REFERENCE_ONLY
+FORMAL_N112_COEFFICIENT_TABLE     = SAVED
+```
 
 ---
 
-## 2. Latest executed structural stage: R10B
+## 2. Latest executed structural stage: historical R10B Case21
 
-Canonical files:
+Canonical historical execution files:
 
 - `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
 - `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json`
 - `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
 - `evidence/NZ_SCCM_R10B_ARTIFACT_HASHES_20260811.md`
 
-Decision:
+Historical decision:
 
 ```text
 R10B_ZERO_SPATIAL_CASE21 = PASS_ENGINEERING
 ```
 
-R10B is a compiler/integration stage only. It changes no material parameter.
+This remains the valid result record for the original R10B compiler execution, but the exact old coefficient generator is not independently reproducible from retained artifacts.
 
 ---
 
 ## 3. Case21-local analytic spectral contract
 
-R10B freezes the search box
-
-\[
-D\in[0.78,0.90],\qquad q\in[0.0015,0.0021].
-\]
-
-For Case21 `ell/b=1`, the certified principal intervals are
+Historical R10B certified
 
 \[
 \lambda_+\in[-0.0956591207,0.1029457518],
@@ -156,20 +248,20 @@ For Case21 `ell/b=1`, the certified principal intervals are
 \lambda_-\in[-1.0029457518,-0.6843408793].
 \]
 
-R10B uses safe-margin compiler intervals
+Safe-margin compiler intervals:
 
 ```text
 lambda+ : [-0.10, 0.105]
 lambda- : [-1.01,-0.68]
 ```
 
-inside one scalar polynomial hull. This is a spectral-domain reduction and does not create a spatial material-state partition.
+inside the single scalar hull `[-1.01,0.105]`.
+
+This is a spectral-domain reduction and does not create a spatial material-state partition.
 
 ---
 
-## 4. Zero-spatial coefficient algebra
-
-The 1D material-coordinate compiler generates finite Chebyshev representations of the frozen scalar functions. These are derived compiler coefficients, not material fitting parameters.
+## 4. Zero-spatial coefficient algebra retained
 
 The equivalent tensor is mapped to
 
@@ -177,23 +269,25 @@ The equivalent tensor is mapped to
 Y=aI+bE_u,
 \]
 
-with invariants
+with
 
 \[
 K_1=\operatorname{tr}Y,\qquad K_2=\det Y.
 \]
 
-Cayley-Hamilton pair algebra:
+For
 
 \[
 F(Y)=A(K_1,K_2)I+B(K_1,K_2)Y,
 \]
 
+pair multiplication is
+
 \[
 (A,B)(C,D)=(AC-BDK_2,\ AD+BC+BDK_1).
 \]
 
-The frozen R10 interaction is reconstructed algebraically:
+The same multidimensional interaction is reconstructed algebraically:
 
 \[
 CC=\det(C)C,
@@ -211,19 +305,25 @@ TT=\det(T)[\operatorname{tr}(T^7)I-T^7],
 S=U-a_{cc}CC+TC-\rho a_tTT.
 \]
 
-All spatial fields are finite tensor-Chebyshev coefficient arrays in `(sin X,sin Y,zeta)`. FFT is only a coefficient-index convolution accelerator; there are no physical-space sample points.
-
-Exact moments:
+All formal structural fields remain finite coefficient objects. Exact complete-halfwave moments remain
 
 \[
-\int_0^\pi T_n(\sin X)dX=\pi\ (n=0),\quad 2\sin(n\pi/2)/n\ (n\ge1),
+\int_0^\pi T_n(\sin X)dX
+=
+\pi\ (n=0),
+\quad
+2\sin(n\pi/2)/n\ (n\ge1),
 \]
 
 \[
-\int_{-1}^{1}T_k(\zeta)d\zeta=0\ (k\ odd),\quad 2/(1-k^2)\ (k\ even).
+\int_{-1}^{1}T_k(\zeta)d\zeta
+=
+0\ (k\ {\rm odd}),
+\quad
+2/(1-k^2)\ (k\ {\rm even}).
 \]
 
-Thus
+Therefore:
 
 ```text
 N_formal_spatial_sampling   = 0
@@ -233,13 +333,13 @@ N_formal_spatial_subdomains = 1
 
 ---
 
-## 5. Same-expression derivative gate
+## 5. Same-expression derivative architecture retained
 
-Forward chain-rule jets are propagated through the same retained coefficient algebra.
+Forward chain-rule jets through the same retained coefficient algebra remain required.
 
-No finite-difference production derivative is used.
+No finite-difference production derivative is allowed.
 
-At the N48 root:
+Historical N48 derivative values:
 
 ```text
 P_D = 106.58759351383472
@@ -250,9 +350,11 @@ L   = 83.31643116474152
 L_normalized = 4.029999719717427e-07
 ```
 
+These remain evidence for the historical R10B representation and must be regenerated under the N112 reproducibility baseline.
+
 ---
 
-## 6. Current formal Case21 zero-spatial result
+## 6. Historical R10B Case21 result
 
 ```text
 material degree = 48
@@ -266,20 +368,20 @@ Pu   = 368.31955249587696 kN
 R    = -2.2383016926141863e-05 kN mm
 ```
 
-Experiment, used only after material freeze:
+Experiment was introduced only after material freeze:
 
 ```text
 Pf = 368.312750 kN
 error = +0.006802495877 kN = +0.001846934671 %
 ```
 
-The close agreement must not be used to retune R10.
+The agreement must not be used to alter R10 material physics or compiler coefficients.
 
 ---
 
-## 7. Engineering order sensitivity
+## 7. Historical N96 engineering sensitivity
 
-At the N48 stationary D, a separate zero-spatial N96 equilibrium check gives
+At the N48 stationary D:
 
 ```text
 q_eq = 0.0017855282237914806
@@ -287,31 +389,31 @@ P    = 368.50804285212683 kN
 R    = 0.021212151265274315 kN mm
 ```
 
-Difference from the N48 formal root:
+Difference from N48 stationary result:
 
 ```text
 Delta P = 0.18849035625 kN = 0.0511757671 %
 ```
 
-N96 was not separately reoptimized in D, so this is an order-sensitivity audit, not a second stationary root.
+This is an order-sensitivity audit, not a second stationary root.
 
 ---
 
 ## 8. Formal status
 
 ```text
-R10_MATERIAL_TARGET_AUDIT                    = PASS_COMPLETE
-R10_EXECUTED_TARGET_RECORD                   = PASS
-R10B_1D_MATERIAL_RECOMPILE                   = PASS_FOR_EXECUTED_R10_TARGET
-R10B_REPRESENTATION_FIDELITY_AUDIT           = NEXT
-SAME_MULTIAXIAL_CURRENT_MAP                  = PASS
-CASE21_SPECTRAL_DOMAIN_CERTIFICATE           = PASS
-EXACT_COMPLETE_HALFWAVE_MOMENT_CONTRACTION   = PASS
-SAME_EXPRESSION_DERIVATIVES                  = PASS
-CASE21_N48_LIMIT_ROOT                         = PASS
-N96_ENGINEERING_ORDER_CHECK                  = PASS
-STRUCTURAL_Pu_CALIBRATION                    = NO
-SWARTZ24                                     = NOT_STARTED
+R10_MATERIAL_TARGET_AUDIT                         = PASS_COMPLETE
+R10B_REPRESENTATION_FIDELITY_AUDIT                = PASS_ENGINEERING_WITH_REPRODUCIBILITY_GAP
+HISTORICAL_COEFFICIENT_GENERATOR                   = UNRECOVERED
+HISTORICAL_COEFFICIENT_ARRAYS                      = UNRECOVERED
+R10B_COEFFICIENT_GENERATION_CONVENTION             = CHEBYSHEV_ROOT_DCT_V1
+MATERIAL_REPRODUCTION_ORDER                        = 112
+FORMAL_N112_COEFFICIENT_TABLE                      = SAVED
+R10_R10B_RECOVERY_SEQUENCE_THROUGH_COEFFICIENTS    = COMPLETE
+ZERO_SPATIAL_D15_ARCHITECTURE                      = RETAINED
+SAME_MULTIAXIAL_CURRENT_MAP                        = RETAINED
+STRUCTURAL_Pu_CALIBRATION                          = NO
+SWARTZ24                                           = NOT_STARTED
 ```
 
 ---
@@ -320,55 +422,64 @@ SWARTZ24                                     = NOT_STARTED
 
 - do not invent/select a new R10 material law during recovery;
 - do not use Case21/Swartz Pu to alter R10 material physics;
-- do not reinterpret `N_M=48` as a material-parameter count or inferred total coefficient count;
-- do not assert a historical R10B DCT/least-squares coefficient generator without original compiler evidence;
+- do not retroactively label `CHEBYSHEV_ROOT_DCT_V1` as the historical R10B generator;
+- do not reinterpret N=112 as a material parameter count;
 - do not replace coefficient algebra by spatial numerical quadrature;
 - do not fit whole-structure P/R/U from spatial samples;
 - do not use finite-difference production derivatives;
-- do not start Swartz24 during the active R10/R10B reproducibility recovery.
+- do not start Swartz24 until the reproducible N112 material baseline is recompiled and Case21 is reclosed.
 
 ---
 
-## 10. Agreed recovery sequence
+## 10. Agreed recovery sequence — CLOSED THROUGH COEFFICIENT TABLE
 
 ```text
 1. audit the R10 material target;                         DONE
-2. audit R10B representation fidelity to that R10 target; NEXT
-3. recover or explicitly re-freeze the coefficient-generation rule;
-4. output the formal coefficient table and full derivation.
+2. audit R10B representation fidelity to that R10 target; DONE
+3. recover or explicitly re-freeze coefficient rule;      DONE
+4. output formal coefficient table and derivation;        DONE
 ```
+
+No additional material-recovery stage is authorized.
 
 ### 10.1 Immediate next task
 
 ```text
 CURRENT_RECOVERY_NEXT_TASK
-= R10B_REPRESENTATION_FIDELITY_AUDIT
+= RECOMPILE_N112_MATERIAL_BASELINE_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND
 ```
 
-This task is an audit only. It must compare the frozen executed R10 scalar/current-map objects with the retained R10B finite analytic representation and N48/N96 evidence. It must not modify R10 material physics or introduce another R-stage material route.
+This is not a new theory route. It must:
 
-### 10.2 Production-stage task after recovery
+1. use the frozen N112 coefficient table;
+2. reuse the existing Cayley-Hamilton/D15 backend;
+3. determine the smallest structural spatial coefficient order meeting the engineering order gate;
+4. regenerate P,R and same-expression derivatives;
+5. reclose the Case21 stationary root;
+6. compare with the historical R10B result only after the new reproducible chain is complete.
+
+### 10.2 Production-stage task after reclosure
 
 ```text
 CURRENT_PRODUCTION_NEXT_TASK
 = R11_SWARTZ24_COMMON_SPECTRAL_DOMAIN_AND_ZERO_SPATIAL_BATCH_PRECHECK
 ```
 
-R11 remains deferred until the R10/R10B reproducibility chain is closed.
+R11 remains deferred until the reproducible R10B Case21 chain is reclosed.
 
 ---
 
 ## 11. Recovery read order
 
 1. `current/CURRENT_STATE.md`
-2. `governance/R10_MATERIAL_TARGET_INTENT_AUDIT_DECISION_20260811.md`
-3. `current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md`
-4. `governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md`
-5. `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
-6. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
-7. `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json`
-8. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
-9. R10 theory/results
+2. `governance/R10B_FIDELITY_AND_COEFFICIENT_REFREEZE_DECISION_20260811.md`
+3. `current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md`
+4. `current/theory/NZ_SCCM_R10B_REPRESENTATION_FIDELITY_AUDIT_20260811.md`
+5. `current/theory/r10b_coefficient_generator_v1.py`
+6. `current/theory/NZ_SCCM_R10B_N112_MATERIAL_COEFFICIENTS_20260811.csv`
+7. `governance/R10_MATERIAL_TARGET_INTENT_AUDIT_DECISION_20260811.md`
+8. `current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md`
+9. historical R10/R10B theory/results
 10. frozen current operator + exact-moment foundation
-11. historical nested-D15 and G19/R03 evidence
-12. recovery notes only after the governing files above
+11. original conversation evidence
+12. recovery notes only after governing/current files above
