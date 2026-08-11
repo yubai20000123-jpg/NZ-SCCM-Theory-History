@@ -1,151 +1,155 @@
 # NZ-SCCM R10B COEFFICIENT-GENERATION CONTRACT V1
 
-**Date:** 2026-08-11 16:05 +08:00  
-**Identity:** NEW TRANSPARENT REPRODUCIBILITY CONVENTION. This file does not claim to be the byte-exact historical R10B generator and changes no R10 material parameter.
+**Updated:** 2026-08-11 16:31 +08:00  
+**Status:** CURRENT GOVERNING SIMPLE CONTRACT
 
-## 1. Why a new convention is frozen
+## 1. Principle
 
-The exact historical coefficient generator and coefficient arrays are not recoverable from the retained R10B execution package. The project therefore freezes one explicit deterministic convention so that every coefficient is reproducible from the frozen R10 formulas alone.
+The material theory is the closed R10 scalar/current relation itself. Chebyshev coefficients are only a finite analytic compiler for D15; they are not material parameters and are not to be printed as long decimal coefficient lists in the theory.
 
-The convention is deliberately not a least-squares fit and has no hidden weights, regularization parameters, or structural-load calibration.
-
-## 2. Compiler hull
-
-Retain the Case21 safe scalar hull
+The project restores the already successful engineering order
 
 \[
-\lambda_a=-1.01,\qquad \lambda_b=0.105.
+\boxed{N_M=48}.
 \]
+
+No N112 requirement is governing. The previous N112 re-freeze is superseded by this simplicity decision.
+
+## 2. Closed R10 material formula
 
 Define
 
 \[
-\lambda_c=\frac{\lambda_a+\lambda_b}{2}=-0.4525,
-\qquad
-\lambda_h=\frac{\lambda_b-\lambda_a}{2}=0.5575,
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad x_{cr}=\frac{\rho}{\kappa}.
 \]
 
-and
+For the source Foster tensile scalar
 
 \[
-\boxed{\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_h}
-=\frac{400\lambda+181}{223}}.
+T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10),\qquad r=t/x_{cr},
 \]
 
-## 3. Scalar objects
+let
 
-Compile exactly the four scalar objects already audited by R10B:
+\[
+W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr.
+\]
+
+The R10 peak parameter is obtained directly from the work condition:
+
+\[
+\boxed{
+h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)
+}.
+\]
+
+Rise branch, with \(\tau=t/x_{cr}\):
+
+\[
+\boxed{
+u_1(\tau)=
+\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5
+}.
+\]
+
+Fall branch, with \(s=(t-x_{cr})/(9x_{cr})\):
+
+\[
+\boxed{
+u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)
+}.
+\]
+
+Thus the material law is already a compact parameter formula. In the theory, write \(10h-6\rho\), \(8\rho-15h\), \(6h-3\rho\), etc.; do not replace them by long decimal constants.
+
+The multidimensional current map remains exactly the same:
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i,
+\]
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
+\]
+
+\[
+s_-=U_- -a_{cc}C_-^2C_+ + C_-T_+ -\rho a_tT_-T_+^8.
+\]
+
+## 3. N48 compiler formula
+
+Use the same scalar hull
+
+\[
+\lambda\in[\lambda_a,\lambda_b]=[-1.01,0.105],
+\]
+
+\[
+\lambda_c=\frac{\lambda_a+\lambda_b}{2},\qquad
+\lambda_h=\frac{\lambda_b-\lambda_a}{2},\qquad
+\xi=\frac{\lambda-\lambda_c}{\lambda_h}.
+\]
+
+For each scalar object
 
 \[
 F\in\{U,C,T,T^7\},
 \]
 
-where every source value is evaluated from the frozen R10 material formulas, not from experimental data.
-
-## 4. Unique coefficient rule
-
-For material order \(N\), use the \(N+1\) roots of \(T_{N+1}\):
+write only
 
 \[
-\boxed{\theta_j=\frac{(j+\tfrac12)\pi}{N+1}},
-\qquad j=0,\ldots,N,
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}T_n(\xi)}.
 \]
+
+The complete coefficient formula is
 
 \[
-\boxed{\xi_j=\cos\theta_j},
-\qquad
-\boxed{\lambda_j=\lambda_c+\lambda_h\cos\theta_j}.
+\theta_j=\frac{(j+\tfrac12)\pi}{49},\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
 \]
-
-Evaluate the frozen material formula:
-
-\[
-f_j^{(F)}=F(\lambda_j).
-\]
-
-The finite representation is
-
-\[
-\boxed{F_N(\lambda)=\sum_{n=0}^{N}a_n^{(F)}T_n[\xi(\lambda)]}.
-\]
-
-The coefficients are fixed by the discrete Chebyshev transform
 
 \[
 \boxed{
-a_n^{(F)}
-=
-\frac{2-\delta_{n0}}{N+1}
-\sum_{j=0}^{N}
-F(\lambda_j)\cos(n\theta_j)
-},
-\qquad n=0,\ldots,N.
+a_n^{(F)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),
+\qquad n=0,\ldots,48.
+}
 \]
 
-This is a direct formula-to-formula analytic compilation. It is not constitutive calibration.
+This one formula defines every one of the 49 coefficients. The theory does not need to print 49 decimal values.
 
-## 5. Why this convention is preferred for reproducibility
-
-This rule has:
-
-- no least-squares weighting;
-- no SVD/rcond choice;
-- no branch-dependent sample count;
-- no regularization coefficient;
-- no material or structural test data;
-- one explicit hull and one explicit coefficient formula;
-- stable coefficient magnitudes;
-- exact interpolation of the source values at the \(N+1\) Chebyshev-root nodes up to floating-point roundoff.
-
-## 6. Material-order re-freeze
-
-The historical N48 error table is used only as a **material-fidelity floor**, not as a structural calibration target.
-
-The deterministic validation set is:
-
-```text
-100001 equally spaced lambda values on [-1.01,-0.68]
-100001 equally spaced lambda values on [-0.10, 0.105]
-```
-
-Orders \(N=48,56,\ldots\) are checked. The first tested order for which all four objects simultaneously satisfy both historical N48 max-error and p95-error ceilings is:
+Equivalent continuous-projection notation may be used in derivations:
 
 \[
-\boxed{N_M^{repro}=112}.
+a_0^{(F)}=\frac1\pi\int_0^\pi F[\lambda(\theta)]d\theta,
 \]
 
-At N=112:
+\[
+a_n^{(F)}=\frac2\pi\int_0^\pi F[\lambda(\theta)]\cos(n\theta)d\theta,\qquad n\ge1,
+\]
 
-| scalar | max abs error | p95 abs error | historical N48 ceiling passed |
-|---|---:|---:|---|
-| U | 7.3352195900e-05 | 4.1632950383e-05 | YES |
-| C | 2.0457015200e-03 | 6.0108850303e-04 | YES |
-| T | 1.6385185836e-02 | 3.7906918519e-03 | YES |
-| T^7 | 2.8889305301e-03 | 5.2677094828e-04 | YES |
+with
 
-The maximum interpolation residual at the N=112 compiler nodes is about \(2.1\times10^{-14}\) for U/C and below \(4\times10^{-15}\) for T/T^7 in IEEE double evaluation.
+\[
+\lambda(\theta)=\lambda_c+\lambda_h\cos\theta.
+\]
+
+The discrete N48 expression is the production compiler rule; the continuous expression is the compact theoretical definition.
+
+## 4. Engineering acceptance
+
+Historical R10B already achieved a complete N48 zero-spatial Case21 stationary root. The archived N96 fixed-D audit differed by about 0.051%, which is accepted as an engineering truncation scale and is far below the material/model uncertainty relevant to the project.
 
 Therefore:
 
 ```text
-COEFFICIENT_GENERATION_CONVENTION = CHEBYSHEV_ROOT_DCT
-MATERIAL_REPRODUCTION_ORDER       = 112
-HISTORICAL_N48_ORDER              = RETAINED_REFERENCE_ONLY
+MATERIAL_COMPILER_ORDER = 48
+N112_REQUIREMENT = SUPERSEDED
+LONG_DECIMAL_COEFFICIENT_TABLE_IN_THEORY = PROHIBITED
+MATERIAL_FORM = CLOSED_PARAMETER_FORMULA
+COEFFICIENTS = DERIVED_BY_ONE_GENERAL_FORMULA
 ```
 
-N=112 is a compiler/reproducibility order, not a material-model order and not a material parameter count.
-
-## 7. Numerical storage rule
-
-- theory: use the generating formulas above;
-- machine coefficient table: store 17 significant decimal digits for IEEE-double round-trip;
-- optional high-precision audit may regenerate from the formula with higher precision;
-- do not hand-enter or manually tune coefficients.
-
-## 8. Structural boundary
-
-This contract freezes only the 1D material-coordinate coefficient generator and its material fidelity floor.
-
-It does **not** yet re-freeze a structural spatial order \(N_S\), because the historical N48/N96 order study changed \(N_M\) and \(N_S\) together.
-
-Next structural action is simply to feed the N=112 material coefficients into the already retained zero-spatial Cayley-Hamilton/D15 backend, then determine the smallest \(N_S\) meeting the engineering order gate. No material retuning is allowed.
+If a future material law cannot be compiled adequately at N48, the first response is to recover/use a simpler already-closed material law, not to escalate the compiler order without user approval.
