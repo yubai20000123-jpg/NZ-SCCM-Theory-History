@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 16:31 +08:00  
+**Updated:** 2026-08-11 16:38 +08:00  
 **Purpose:** 唯一当前工作入口；保持主线简单。
 
 ## 0. Highest-priority contract
@@ -28,17 +28,16 @@ source Foster current relation
 -> SAME U/C/T + CC/TC/TT multidimensional current map
 ```
 
-The R10 scalar is already a compact closed formula. Define
+Define
 
 \[
-\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad x_{cr}=\frac{\rho}{\kappa},
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad
+x_{cr}=\frac{\rho}{\kappa},
 \]
 
 \[
 W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr,
 \]
-
-and
 
 \[
 \boxed{
@@ -60,7 +59,7 @@ Fall branch, \(s=(t-x_{cr})/(9x_{cr})\):
 u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)}.
 \]
 
-Therefore the theory shall use symbolic parameter combinations such as \(10h-6\rho\), not long decimal constants.
+The theory shall use symbolic parameter combinations such as \(10h-6\rho\), not long decimal constants.
 
 The multidimensional relation remains
 
@@ -80,15 +79,11 @@ No new material route is active.
 
 ---
 
-## 2. R10B compiler — restore the successful N48 order
-
-R10B is only the analytic compiler needed by D15. The governing order is
+## 2. R10B compiler — successful N48 order is governing
 
 \[
 \boxed{N_M=48}.
 \]
-
-The previous N112 re-freeze is superseded. The N112 coefficient table has been removed from `current/`.
 
 For
 
@@ -99,17 +94,17 @@ F\in\{U,C,T,T^7\},
 write
 
 \[
-\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}T_n(\xi)}.
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi)},
 \]
 
-Use
+where \(\mathcal C_n\) denotes the first-kind Chebyshev polynomial and
 
 \[
 \theta_j=\frac{(j+\tfrac12)\pi}{49},\qquad
-\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j.
 \]
 
-and the single general coefficient formula
+All 49 coefficients are defined by the single formula
 
 \[
 \boxed{
@@ -119,24 +114,99 @@ a_n^{(F)}=
 \qquad n=0,\ldots,48.}
 \]
 
-This is the complete calculation rule for all 49 coefficients. The theory does not print 49 long decimal numbers.
-
-Equivalent theoretical projection form:
-
-\[
-a_0^{(F)}=\frac1\pi\int_0^\pi F[\lambda(\theta)]d\theta,
-\]
-
-\[
-a_n^{(F)}=\frac2\pi\int_0^\pi F[\lambda(\theta)]\cos(n\theta)d\theta,
-\quad n\ge1.
-\]
-
-Historical R10B already achieved a complete N48 zero-spatial Case21 stationary root. The N96 fixed-D order audit differed by about 0.051%, which is accepted for engineering continuation; near-zero compiler error is not a project objective.
+No long decimal coefficient table is part of the theory.
 
 ---
 
-## 3. Status
+## 3. Paper-style R10 → N48 → D15 derivation — COMPLETE
+
+Canonical derivation:
+
+- `current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md`
+
+This file now gives the complete theory in paper-style form, including:
+
+1. every material parameter and its physical meaning;
+2. equivalent-uniaxial tensor and principal equivalent strains;
+3. Foster source scalar and source work;
+4. derivation of the R10 rise-branch coefficients from six endpoint/C2 conditions;
+5. derivation of the R10 fall branch;
+6. derivation of the energy equation and the closed formula for \(h\);
+7. reinsertion into the unchanged U/C/T + CC/TC/TT current operator;
+8. the one-formula N48 coefficient rule;
+9. Cayley–Hamilton reduction of every material term to \(A_nI+B_nY\);
+10. explicit recurrences for \(A_n,B_n\);
+11. algebraic reconstruction of CC, TC and TT;
+12. one continuous complete-halfwave coordinates and Jacobian;
+13. the exact D15 moment rule for every spatial analytic term;
+14. compact D15 expressions for \(P_c\) and \(R_{q,c}\);
+15. a complete symbol/parameter table.
+
+The central term-by-term chain is frozen as
+
+\[
+\boxed{
+a_n^{(F)}
+\rightarrow
+(A_n,B_n)
+\rightarrow
+\mathbf F_{48}
+\rightarrow
+\mathbf S
+\rightarrow
+c_{ijk}
+\rightarrow
+c_{ijk}M_iM_jZ_k.}
+\]
+
+No Case21 numerical closure was performed in this step.
+
+---
+
+## 4. D15 exact-moment identity retained
+
+For any retained finite spatial analytic quantity
+
+\[
+Q(X,Y,\zeta)
+=\sum_{i,j,k}c_{ijk}
+\mathcal C_i(\sin X)
+\mathcal C_j(\sin Y)
+\mathcal C_k(\zeta),
+\]
+
+D15 uses
+
+\[
+\boxed{
+\mathscr D[Q]
+=\sum_{i,j,k}c_{ijk}M_iM_jZ_k,
+}
+\]
+
+with
+
+\[
+M_n=
+\begin{cases}
+\pi,&n=0,\\
+2\sin(n\pi/2)/n,&n\ge1,
+\end{cases}
+\]
+
+\[
+Z_k=
+\begin{cases}
+0,&k\text{ odd},\\
+2/(1-k^2),&k\text{ even}.
+\end{cases}
+\]
+
+Thus formal spatial integration remains exactly zero-quadrature.
+
+---
+
+## 5. Status
 
 ```text
 R10_MATERIAL_TARGET_AUDIT = COMPLETE
@@ -147,27 +217,21 @@ CURRENT_TRANSPARENT_COEFFICIENT_FORMULA = FROZEN
 MATERIAL_COMPILER_ORDER = 48
 N112_REQUIREMENT = SUPERSEDED
 LONG_DECIMAL_COEFFICIENT_TABLE_IN_THEORY = PROHIBITED
+R10_N48_D15_PAPER_STYLE_DERIVATION = COMPLETE
 ZERO_SPATIAL_D15_ARCHITECTURE = RETAINED
 STRUCTURAL_Pu_CALIBRATION = NO
+CASE21_RECLOSURE_IN_THIS_STEP = NO
 SWARTZ24 = NOT_STARTED
 ```
 
 ---
 
-## 4. Immediate next task
+## 6. Current execution boundary
+
+The requested theory-writing step is complete. No automatic new material stage, no automatic order escalation, and no Case21 calculation is authorized by this update.
 
 ```text
-CURRENT_NEXT_TASK
-= WRITE_THE_N48_MATERIAL_AND_COEFFICIENT_DERIVATION_IN_PAPER_STYLE
+CURRENT_NEXT_TASK = USER_DIRECTED
 ```
 
-The next task is **not** Case21 reclosure. It is to present, in Zhou-style theory-derivation form:
-
-1. source material parameters -> \(W_{src}\) -> \(h\);
-2. \(u_1,u_2\) in symbolic form;
-3. \(U,C,T,T^7\) definitions;
-4. the single N48 coefficient formula;
-5. how each term \(a_nT_n\) enters the current-map algebra;
-6. then how these finite terms enter D15 exact moments.
-
-Keep the derivation formula-based and compact. Do not list long decimal coefficient arrays.
+When numerical work is later requested, it must use the paper-style formula chain above directly rather than reopen the material model.
