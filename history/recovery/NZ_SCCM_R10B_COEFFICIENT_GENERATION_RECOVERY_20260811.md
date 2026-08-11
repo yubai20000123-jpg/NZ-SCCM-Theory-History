@@ -1,65 +1,49 @@
-# NZ-SCCM R10B 系数生成链完整恢复
+# NZ-SCCM R10B 系数生成链恢复与可重复性边界
 
 **日期：2026-08-11**  
-**身份：RECOVERY / REPRODUCIBILITY NOTE；不改变当前 R10/R10B 理论状态，不重构或替代原执行核心。**
+**身份：RECOVERY / REPRODUCIBILITY NOTE；不改变 R10/R10B 当前理论与 Case21 已冻结结果。**
 
-## 0. 恢复结论
+## 0. 重要更正
 
-当前 GitHub 可以完整恢复 R10B 的**数学系数生成谱系**，但不能恢复原 `07_R10B_zero_spatial_compiler_core.py` 的 byte-identical 实现，也不能恢复当次 N48 的实际 coefficient arrays。原执行包只在 artifact manifest 中保留哈希。
+上一版将 `N=48` 进一步统计为 `3×49=147` 个所谓“一级材料编译系数”。这一统计**不应进入 R10B 的正式表述，现撤回**。
 
-因此本文把信息分成四类：
+原因有二：
+
+1. R10B 原执行报告中的 `material degree = 48` 是**统一的材料解析展开阶次**，不是“总系数个数”；
+2. 已恢复的原 `00_R10B_report.md` 明确对 `U、C、T、T^7` 四个 scalar objects 给出 N=48 表示误差，因此把原执行存储结构擅自简化成 `U/C/T 三组 × 49` 没有证据基础。
+
+正式论文/报告统一只写：
 
 ```text
-A. EXACT_CURRENT_GITHUB
-   当前仓库直接冻结的材料公式、R10 平滑、谱域、Cayley-Hamilton 代数、精确矩、求导原则。
-
-B. EXACT_DERIVED_FROM_CURRENT_FORMULAS
-   由 A 中公式唯一代数推出、无需猜测的变量映射与递推。
-
-C. STRONGLY_RECOVERED_ARCHITECTURE
-   由 R10B 理论 + 既有 coefficient-algebra 前驱实现共同确认的 U/C/T 编译—矩阵函数重构链。
-
-D. ORIGINAL_EXECUTION_DETAIL_UNRESOLVED
-   原 R10B 一维 Chebyshev coefficient generator 的具体节点/投影 convention、当次 N48 数组、空间截断/dealiasing 的逐行实现和原 core 字节。
+material approximation order N_m = 48
 ```
 
-**不得把 D 类未恢复事项用新生成的相似代码冒充原 R10B。**
+若以后需要报告实际 coefficient-array 数量，必须以恢复的原 core / coefficient file 为准，不再从阶次自行推导“147”等总数。
 
 ---
 
-# 1. 第一层：材料原始参数 -> R10 一维物理公式
+# 1. 当前能够确定恢复的物理函数
 
-Case21 ordinary concrete 基准材料参数：
+Case21 普通混凝土参数：
 
 \[
-f_c=21.23\ \mathrm{MPa},\qquad
-E_0=20321\ \mathrm{MPa},\qquad
-\varepsilon_0=0.00209,\qquad
-\nu=0.18.
+f_c=21.23\,\mathrm{MPa},\qquad E_0=20321\,\mathrm{MPa},\qquad
+\varepsilon_0=0.00209,\qquad \nu=0.18,
 \]
-
-固定：
 
 \[
 \rho=0.1,
+\qquad
+\kappa=\frac{E_0\varepsilon_0}{f_c}=2.0005129533678754,
 \]
 
 \[
-\kappa=\frac{E_0\varepsilon_0}{f_c}
-=2.0005129533678754,
+x_{cr}=\frac{\rho}{\kappa}=0.04998717945397425,
+\qquad
+\eta=\frac{x_{cr}}{20}=0.0024993589726987125.
 \]
 
-\[
-x_{cr}=\frac{\rho}{\kappa}
-=0.04998717945397425,
-\]
-
-\[
-\eta=\frac{x_{cr}}{20}
-=0.0024993589726987125.
-\]
-
-正/负平滑坐标：
+定义
 
 \[
 \Pi_\eta(z)=
@@ -71,7 +55,7 @@ t(\lambda)=\Pi_\eta(\lambda),\qquad
 c(\lambda)=\Pi_\eta(-\lambda).
 \]
 
-压缩标量：
+压缩 scalar：
 
 \[
 \boxed{
@@ -81,1063 +65,465 @@ C(\lambda)=
 }.
 \]
 
-R10 仅修改 tensile scalar，不改二维 interaction。
-
-## 1.1 R10 rise branch
-
-定义
+R10 只平滑 tensile scalar。材料功条件给出
 
 \[
-0\le t\le x_{cr},\qquad \tau=\frac{t}{x_{cr}},
+W_{src}=0.031741235181249904,
+\qquad u_r=0.03,
 \]
-
-则
 
 \[
 \boxed{
-\begin{aligned}
-u_{rise}(t)={}&
-\rho\tau
-+(10h-6\rho)\tau^3
+h=\frac15\left[
+\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r
+\right]
+=0.09799750427197301.}
+\]
+
+当 \(0\le t\le x_{cr}\)，令 \(\tau=t/x_{cr}\)：
+
+\[
+\boxed{
+ u_{rise}(t)=
+\rho\tau+(10h-6\rho)\tau^3
 +(8\rho-15h)\tau^4
 +(6h-3\rho)\tau^5.
-\end{aligned}
 }
 \]
 
-这三个高次系数由端点 C2 条件唯一确定，不是自由材料回归参数。
-
-## 1.2 R10 fall branch
-
-令残余
+当 \(x_{cr}\le t\le10x_{cr}\)，令
 
 \[
-u_r=0.03,
-\]
-
-对
-
-\[
-x_{cr}\le t\le10x_{cr},\qquad
 \tau_f=\frac{t-x_{cr}}{9x_{cr}},
 \]
 
-有
-
-\[
-\boxed{
-u_{fall}(t)=
-h+(u_r-h)
-\left(10\tau_f^3-15\tau_f^4+6\tau_f^5\right).
-}
-\]
-
-## 1.3 h 由材料功唯一决定
-
-R10 冻结：
-
-\[
-W_{src}=0.031741235181249904.
-\]
-
-rise 段：
-
-\[
-\int_0^{x_{cr}}u_{rise}(t)\,dt
-=x_{cr}\left(\frac h2+\frac{\rho}{10}\right).
-\]
-
-fall 段：
-
-\[
-\int_{x_{cr}}^{10x_{cr}}u_{fall}(t)\,dt
-=9x_{cr}\frac{h+u_r}{2}.
-\]
-
-因此
-
-\[
-W_{sm}=x_{cr}
-\left[
-5h+\frac{\rho}{10}+\frac92u_r
-\right].
-\]
-
-由 \(W_{sm}=W_{src}\)：
-
-\[
-\boxed{
-h=\frac15
-\left[
-\frac{W_{src}}{x_{cr}}
--\frac{\rho}{10}
--\frac92u_r
-\right]
-=0.09799750427197301.
-}
-\]
-
-故 R10 理论层没有需要人工录入的自由五次系数。
-
-## 1.4 R10 主标量 U/C/T
-
-定义
-
-\[
-\boxed{T^{R10}(\lambda)=\frac{u_{sm}(t(\lambda))}{\rho}}
-\]
-
-以及
-
-\[
-\boxed{
-U^{R10}(\lambda)=
-\kappa\lambda
--C(\lambda)
-+\kappa c(\lambda)
-+u_{sm}(t(\lambda))
--\kappa t(\lambda).
-}
-\]
-
-于是 R10B 最小材料编译对象为同一 current-map 所需的三个一维 scalar functions：
-
-\[
-\boxed{U(\lambda),\qquad C(\lambda),\qquad T(\lambda).}
-\]
-
-`C^2`、`T^7`、`T^8`、CC/TC/TT 不需要作为自由材料拟合对象；它们可在 coefficient algebra 中由 C/T 乘法与幂递推产生。原 core 是否为了效率缓存额外 primitive 数组属于 ORIGINAL_EXECUTION_DETAIL_UNRESOLVED。
-
----
-
-# 2. 第二层：Case21 谱域 -> 唯一一维 Chebyshev 坐标
-
-R10B Case21 认证区间：
-
-\[
-\lambda_+\in[-0.0956591207,0.1029457518],
-\]
-
-\[
-\lambda_-\in[-1.0029457518,-0.6843408793].
-\]
-
-安全 compiler intervals：
-
-```text
-lambda+ : [-0.10,  0.105]
-lambda- : [-1.01, -0.68]
-```
-
-并置于一个统一 scalar hull：
-
-\[
-\boxed{\lambda\in[\lambda_a,\lambda_b]=[-1.01,0.105].}
-\]
-
-精确写成：
-
-\[
-\lambda_a=-\frac{101}{100},\qquad
-\lambda_b=\frac{21}{200}.
-\]
-
-中心与半宽：
-
-\[
-\lambda_c=\frac{\lambda_a+\lambda_b}{2}
-=-\frac{181}{400},
-\]
-
-\[
-\lambda_s=\frac{\lambda_b-\lambda_a}{2}
-=\frac{223}{400}.
-\]
-
-定义材料 Chebyshev 坐标：
-
-\[
-\boxed{
-\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_s}
-=\frac{400\lambda+181}{223}
-\in[-1,1].
-}
-\]
-
-这一步由 R10B 的统一 hull 唯一确定，不涉及拟合。
-
----
-
-# 3. 第三层：一维材料函数 -> N48 编译系数
-
-对任一 frozen scalar
-
-\[
-F\in\{U,C,T\},
-\]
-
-R10B 的有限表示写为
-
-\[
-\boxed{
-F_N(\lambda)=
-\sum_{n=0}^{N}\widehat F_n
-T_n\!\left(\frac{400\lambda+181}{223}\right).
-}
-\]
-
-在正式 N48 中：
-
-\[
-N=48.
-\]
-
-因此每一个 scalar function 有
-
-\[
-\boxed{49\text{ 个 }(n=0,\ldots,48)\text{ Chebyshev coefficients}.}
-\]
-
-不是“48 个系数”。若采用最小 \(U,C,T\) 集，则有 3×49=147 个**一级材料编译系数**；这些都是由 frozen material functions 派生的 compiler data，不是独立材料参数。
-
-## 3.1 已恢复到的确定程度
-
-当前仓库明确冻结：
-
-```text
-1D material-coordinate Chebyshev compiler
-material degree = 48
-material-coordinate samples may be used only to derive fixed compiler coefficients
-```
-
-但当前 GitHub 未保存原 `07_R10B_zero_spatial_compiler_core.py` 和 `03_material_compiler_N48_metrics.csv` 的内容，只保存 SHA-256。因此原 R10B 究竟使用：
-
-- Chebyshev-Gauss projection / DCT-II；
-- Chebyshev-Lobatto interpolation / DCT-I；
-- 或同族的等价高分辨率 projection convention；
-
-**不能仅凭当前文本唯一判定。**
-
-故把原 coefficient operator 记为：
-
-\[
-\boxed{
-\widehat F_n=\mathcal C^{R10B}_{n,48}
-\left[F(\lambda_c+\lambda_s\xi)\right].
-}
-\]
-
-这不是回避定义，而是对当前缺失原 core 的证据边界的精确记录。
-
-## 3.2 两个数学上标准、但不能冒充原 core 的 convention
-
-连续 Chebyshev projection：
-
-\[
-\widehat F_0=
-\frac1\pi\int_0^\pi
-F(\lambda_c+\lambda_s\cos\theta)\,d\theta,
-\]
-
-\[
-\widehat F_n=
-\frac2\pi\int_0^\pi
-F(\lambda_c+\lambda_s\cos\theta)
-\cos(n\theta)\,d\theta,\qquad n\ge1.
-\]
-
-Chebyshev-Lobatto/DCT-I interpolation则取
-
-\[
-\xi_j=\cos\frac{j\pi}{N},\qquad j=0,\ldots,N,
-\]
-
-并由离散余弦变换唯一恢复系数。
-
-历史相邻执行中两类 convention 都曾出现，因此在找回原 core 前，不选择其中之一作为“原 R10B 的逐字 convention”。
-
----
-
-# 4. 第四层：一维系数 -> 2×2 矩阵函数系数
-
-将归一化 equivalent-uniaxial tensor 记为 \(X\)，其主值即 \(\lambda_\pm\)。
-
-由同一 affine map：
-
-\[
-\boxed{
-Y=\frac{X-\lambda_cI}{\lambda_s}
-=\frac{400X+181I}{223}
-=aI+bX,
-}
-\]
-
-其中
-
-\[
-a=\frac{181}{223},\qquad b=\frac{400}{223}.
-\]
-
-Y 的两个不变量：
-
-\[
-K_1=\operatorname{tr}Y,
-\qquad
-K_2=\det Y.
-\]
-
-Cayley-Hamilton：
-
-\[
-Y^2-K_1Y+K_2I=0.
-\]
-
-故每一个矩阵 Chebyshev 多项式都可唯一写成：
-
-\[
-\boxed{
-T_n(Y)=A_n(K_1,K_2)I+B_n(K_1,K_2)Y.
-}
-\]
-
-初值：
-
-\[
-(A_0,B_0)=(1,0),
-\qquad
-(A_1,B_1)=(0,1).
-\]
-
-利用
-
-\[
-T_{n+1}(Y)=2YT_n(Y)-T_{n-1}(Y)
-\]
-
-以及
-
-\[
-Y(AI+BY)=(-BK_2)I+(A+BK_1)Y,
-\]
-
-得到显式递推：
-
-\[
-\boxed{
-A_{n+1}=-2K_2B_n-A_{n-1},
-}
-\]
-
-\[
-\boxed{
-B_{n+1}=2A_n+2K_1B_n-B_{n-1}.
-}
-\]
-
-因此任一材料函数的 N48 矩阵形式是：
-
-\[
-\boxed{
-F_{48}(Y)=
-\left(\sum_{n=0}^{48}\widehat F_nA_n\right)I
-+
-\left(\sum_{n=0}^{48}\widehat F_nB_n\right)Y.
-}
-\]
-
-定义：
-
-\[
-A_F=\sum_{n=0}^{48}\widehat F_nA_n,
-\qquad
-B_F=\sum_{n=0}^{48}\widehat F_nB_n,
-\]
-
-则
-
-\[
-F(Y)=A_FI+B_FY.
-\]
-
-此处开始，原来的 49 个一维 scalar coefficients 已经被自动提升为二维 objective matrix function；**没有二维材料面重新拟合。**
-
----
-
-# 5. Pair algebra：U/C/T -> CC/TC/TT -> 总应力
-
-用 pair
-
-\[
-F\equiv(A_F,B_F)
-\]
-
-代表
-
-\[
-F=A_FI+B_FY.
-\]
-
-若
-
-\[
-F=(A,B),\qquad G=(C,D),
-\]
-
 则
 
 \[
 \boxed{
-FG=
-(AC-BDK_2,\ AD+BC+BDK_1).
+ u_{fall}(t)=
+h+(u_r-h)(10\tau_f^3-15\tau_f^4+6\tau_f^5).
 }
 \]
 
-此外：
+定义 \(u_{sm}(t)\) 为上述两段函数，则
 
 \[
-\boxed{\operatorname{tr}F=2A+BK_1}
+\boxed{T(\lambda)=\frac{u_{sm}[t(\lambda)]}{\rho}},
 \]
 
 \[
 \boxed{
-\det F=A^2+ABK_1+B^2K_2.
+U(\lambda)=
+\kappa\lambda-C(\lambda)+\kappa c(\lambda)
++u_{sm}[t(\lambda)]-\kappa t(\lambda).
 }
 \]
 
-于是所有 interaction 可直接 coefficient-algebra 生成。
-
-## 5.1 CC
-
-对 \(C=(A_C,B_C)\)：
+R10B 原报告实际审计的四个一维对象是
 
 \[
-d_C=A_C^2+A_CB_CK_1+B_C^2K_2.
+\boxed{F(\lambda)\in\{U(\lambda),C(\lambda),T(\lambda),T(\lambda)^7\}.}
 \]
 
-R10B：
+这四个对象不是四组独立物理参数；它们都由同一个冻结 R10 材料关系派生。
+
+---
+
+# 2. Case21 的认证谱域与统一 Chebyshev 坐标
+
+R10B 解析认证：
 
 \[
-CC=\det(C)C,
+\lambda_+\in[-0.0956591,0.1029458],
+\qquad
+\lambda_-\in[-1.0029458,-0.6843409].
 \]
 
-故
+采用安全编译带：
 
 \[
-\boxed{
-CC=(d_CA_C,\ d_CB_C).
-}
+I_+=[-0.10,0.105],
+\qquad
+I_-=[-1.01,-0.68].
 \]
 
-## 5.2 TC
+两个实际需要逼近的区域是其并集
 
 \[
-\operatorname{tr}T=2A_T+B_TK_1.
+\boxed{\mathcal I=I_-\cup I_+.}
 \]
 
+为保持一个统一多项式坐标，使用外包 hull
+
 \[
-\operatorname{tr}(T)I-T
-=(A_T+B_TK_1,-B_T).
+[\lambda_a,\lambda_b]=[-1.01,0.105].
 \]
 
 于是
 
 \[
-\boxed{
-TC=C\,[\operatorname{tr}(T)I-T]
-}
+\lambda_c=\frac{\lambda_a+\lambda_b}{2}=-\frac{181}{400},
+\qquad
+\lambda_s=\frac{\lambda_b-\lambda_a}{2}=\frac{223}{400},
 \]
-
-用上面的 pair product 一次得到，不需要主值逐点计算。
-
-## 5.3 TT
-
-先用 pair product 的 binary powering 或逐次乘法得到：
-
-\[
-T^2,T^3,\ldots,T^7.
-\]
-
-每一级仍是一个 pair。
-
-设
-
-\[
-T^7=(A_7,B_7),
-\]
-
-则
-
-\[
-\operatorname{tr}(T^7)=2A_7+B_7K_1.
-\]
-
-\[
-\det T=A_T^2+A_TB_TK_1+B_T^2K_2.
-\]
-
-故
 
 \[
 \boxed{
-TT=\det(T)[\operatorname{tr}(T^7)I-T^7]
+\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_s}
+=\frac{400\lambda+181}{223}.
 }
 \]
 
-亦完全在有限 pair algebra 中生成。
-
-## 5.4 总归一化应力 pair
-
-R10B：
+正式 N48 形式写为
 
 \[
 \boxed{
-S=U-a_{cc}CC+TC-\rho a_tTT.
+F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}T_n[\xi(\lambda)].
 }
 \]
 
-若
-
-\[
-S=(A_S,B_S),
-\]
-
-则物理应力为：
-
-\[
-\boxed{\boldsymbol\sigma=f_c\,[A_SI+B_SY].}
-\]
-
-由于
-
-\[
-Y=aI+bX,
-\]
-
-还可回写为
-
-\[
-\boxed{
-\boldsymbol\sigma=f_c
-\left[(A_S+aB_S)I+bB_SX\right].
-}
-\]
-
-这就是一维 material coefficients 到二维 current stress tensor 的完整代数桥梁。
+这里 `48` 是最高 Chebyshev degree。论文正文不再把它改写成一个“总 coefficient count”。
 
 ---
 
-# 6. 第五层：Nguyen 场 -> 稀疏不变量系数
+# 3. 系数生成问题的完整数学形式
 
-Case21 定义：
+当前原执行报告明确说明：material-coordinate samples 只用于生成有限解析 coefficients，不是空间样点；但原 `07_R10B_zero_spatial_compiler_core.py` 与原 coefficient arrays 尚未恢复。因此原执行中**样点数、样点权重、线性求解/正则化细节**仍不能逐字确认。
 
-\[
-u=\sin X,\qquad v=\sin Y,\qquad z=\zeta,
-\]
+但是系数生成的数学问题可以完整写到下列层次。
 
-\[
-M=C_m(q),\qquad B=C_b(q).
-\]
-
-Nguyen 归一化物理应变：
+设编译材料坐标样本为
 
 \[
-e_x=\nu D+M(1-u^2)v^2+Buvz,
+\Lambda=\{\lambda_j\}_{j=1}^{M}\subset\mathcal I,
 \]
+
+权重为 \(w_j>0\)。定义
 
 \[
-e_y=-D+Mu^2(1-v^2)+Buvz,
+\xi_j=\frac{400\lambda_j+181}{223},
 \]
+
+以及 Chebyshev 设计矩阵
 
 \[
-g=2Muv\sqrt{1-u^2}\sqrt{1-v^2}
--2B\sqrt{1-u^2}\sqrt{1-v^2}z.
+\boxed{V_{jn}=T_n(\xi_j),\qquad n=0,\ldots,48.}
 \]
 
-先定义物理应变迹与行列式：
+对任一
 
 \[
-p=e_x+e_y,
-\qquad
-d=e_xe_y-\frac{g^2}{4}.
+F\in\{U,C,T,T^7\},
 \]
 
-Equivalent-uniaxial normalized tensor \(X\) 的不变量可直接化为：
+材料向量为
+
+\[
+f_j^{(F)}=F(\lambda_j).
+\]
+
+若采用与原执行数值指纹一致的离散加权最小二乘结构，则系数向量
+
+\[
+\mathbf a^{(F)}=
+[a_0^{(F)},a_1^{(F)},\ldots,a_{48}^{(F)}]^T
+\]
+
+由
 
 \[
 \boxed{
-J_1=\operatorname{tr}X=\frac{p}{1-\nu},
+\mathbf a^{(F)}
+=\arg\min_{\mathbf a}
+\sum_{j=1}^{M}w_j
+\left[
+F(\lambda_j)-\sum_{n=0}^{48}a_nT_n(\xi_j)
+\right]^2
 }
 \]
+
+确定。
+
+令
+
+\[
+W=\operatorname{diag}(w_1,\ldots,w_M),
+\]
+
+则正规方程为
+
+\[
+\boxed{(V^TWV)\mathbf a^{(F)}=V^TW\mathbf f^{(F)}.}
+\]
+
+逐项完全展开为
 
 \[
 \boxed{
-J_2=\det X=
-\frac{d+\nu J_1^2}{(1+\nu)^2}.
+\sum_{m=0}^{48}G_{nm}a_m^{(F)}=b_n^{(F)},
+\qquad n=0,1,\ldots,48,
 }
-\]
-
-这避免显式求 \(\lambda_\pm\) 和谱平方根。
-
-## 6.1 J1 的完整稀疏 Chebyshev 展开
-
-物理迹：
-
-\[
-p=(\nu-1)D+M(u^2+v^2-2u^2v^2)+2Buvz.
-\]
-
-记
-
-\[
-U_n=T_n(u),\quad V_n=T_n(v),\quad Z_n=T_n(z).
-\]
-
-利用
-
-\[
-u^2=\frac{U_2+1}{2},\qquad
-v^2=\frac{V_2+1}{2},
-\]
-
-有
-
-\[
-u^2+v^2-2u^2v^2
-=\frac12-\frac12U_2V_2.
-\]
-
-所以
-
-\[
-\boxed{
-J_1=
--D
-+\frac{M}{2(1-\nu)}
--\frac{M}{2(1-\nu)}U_2V_2
-+\frac{2B}{1-\nu}U_1V_1Z_1.
-}
-\]
-
-只有四个基础 coefficient blocks。
-
-## 6.2 d 的完整有限 Chebyshev 展开
-
-已有 exact invariant identity：
-
-\[
-\begin{aligned}
-d={}&-\nu D^2
-+DMK
-+BD(\nu-1)W\\
-&+BMW(2-u^2-v^2)
-+B^2z^2(u^2+v^2-1),
-\end{aligned}
 \]
 
 其中
 
 \[
-W=uvz,
-\]
-
-\[
-K=\nu u^2-v^2+(1-\nu)u^2v^2.
-\]
-
-K 展开为：
-
-\[
 \boxed{
-K=
-\frac{\nu-1}{4}
-+\frac{1+\nu}{4}U_2
--\frac{1+\nu}{4}V_2
-+\frac{1-\nu}{4}U_2V_2.
+G_{nm}=\sum_{j=1}^{M}w_jT_n(\xi_j)T_m(\xi_j),
 }
 \]
 
-并有：
-
 \[
 \boxed{
-W(2-u^2-v^2)=
-\frac12U_1V_1Z_1
--\frac14U_3V_1Z_1
--\frac14U_1V_3Z_1.
-}
+b_n^{(F)}=\sum_{j=1}^{M}w_jF(\lambda_j)T_n(\xi_j).}
 \]
 
-以及
+因此 49 条方程的首、次、末行分别是
 
 \[
-\boxed{
-z^2(u^2+v^2-1)=
-\frac14
-(U_2+V_2+U_2Z_2+V_2Z_2).
-}
-\]
-
-故
-
-\[
-\boxed{
-\begin{aligned}
-d={}&-\nu D^2\\
-&+DM\left[
-\frac{\nu-1}{4}
-+\frac{1+\nu}{4}U_2
--\frac{1+\nu}{4}V_2
-+\frac{1-\nu}{4}U_2V_2
-\right]\\
-&+BD(\nu-1)U_1V_1Z_1\\
-&+BM\left[
-\frac12U_1V_1Z_1
--\frac14U_3V_1Z_1
--\frac14U_1V_3Z_1
-\right]\\
-&+\frac{B^2}{4}
-(U_2+V_2+U_2Z_2+V_2Z_2).
-\end{aligned}
-}
-\]
-
-再由
-
-\[
-J_2=\frac{d+\nu J_1^2}{(1+\nu)^2}
-\]
-
-构造 J2。J1² 不需要手写长多项式，因 Chebyshev product identity 是精确有限卷积：
-
-\[
-\boxed{
-T_m(x)T_n(x)=\frac12
-\left[T_{m+n}(x)+T_{|m-n|}(x)\right].
-}
-\]
-
-## 6.3 K1/K2
-
-由
-
-\[
-Y=aI+bX,
-\quad a=181/223,\quad b=400/223,
-\]
-
-有
-
-\[
-\boxed{K_1=2a+bJ_1}
+G_{00}a_0+G_{01}a_1+\cdots+G_{0,48}a_{48}=b_0,
 \]
 
 \[
-\boxed{K_2=a^2+abJ_1+b^2J_2}.
+G_{10}a_0+G_{11}a_1+\cdots+G_{1,48}a_{48}=b_1,
 \]
 
-因此 \(K_1,K_2\) 本身都是 \((U_i,V_j,Z_k)\) 上的有限 coefficient arrays。
+\[
+\vdots
+\]
+
+\[
+G_{48,0}a_0+G_{48,1}a_1+\cdots+G_{48,48}a_{48}=b_{48}.
+\]
+
+这不是“黑箱拟合”：一旦 \(\lambda_j,w_j\) 被固定，每个 \(G_{nm}\)、每个 \(b_n^{(F)}\)、每个 \(a_n^{(F)}\) 都由材料参数唯一生成。
+
+数值实现应采用 QR/SVD 解最小二乘而不是显式求 \((V^TWV)^{-1}\)，但论文中的定义式仍是上面的正规方程。
 
 ---
 
-# 7. 第六层：空间 coefficient algebra
+# 4. 每个右端项如何由材料参数逐层生成
 
-所有场统一写成：
+对任意样本 \(\lambda_j\)，先计算
+
+\[
+A_j=\sqrt{\lambda_j^2+\eta^2},
+\]
 
 \[
 \boxed{
-F(X,Y,z)=
-\sum_{i,j,k}
-c_{ijk}
-T_i(\sin X)
-T_j(\sin Y)
-T_k(z).
+c_j=
+\frac{\lambda_j^2(A_j-\lambda_j)}{2(\lambda_j^2+\eta^2)},
+\qquad
+t_j=
+\frac{\lambda_j^2(A_j+\lambda_j)}{2(\lambda_j^2+\eta^2)}.}
+\]
+
+然后
+
+\[
+\boxed{
+C_j=\frac{\kappa c_j}
+{1+(\kappa-2)c_j+c_j^2}.}
+\]
+
+若 \(t_j\le x_{cr}\)，令
+
+\[
+\tau_j=\frac{t_j}{x_{cr}},
+\]
+
+则
+
+\[
+\boxed{
+u_j=
+\rho\tau_j+(10h-6\rho)\tau_j^3
++(8\rho-15h)\tau_j^4
++(6h-3\rho)\tau_j^5.}
+\]
+
+若 \(x_{cr}<t_j\le10x_{cr}\)，令
+
+\[
+\tau_{f,j}=\frac{t_j-x_{cr}}{9x_{cr}},
+\]
+
+则
+
+\[
+\boxed{
+u_j=
+h+(u_r-h)(10\tau_{f,j}^3-15\tau_{f,j}^4+6\tau_{f,j}^5).}
+\]
+
+随后
+
+\[
+\boxed{T_j=\frac{u_j}{\rho},}
+\]
+
+\[
+\boxed{
+U_j=\kappa\lambda_j-C_j+\kappa c_j+u_j-\kappa t_j,
 }
 \]
 
-系数乘法不需要空间节点。每一维使用：
-
 \[
-T_mT_n=\frac12(T_{m+n}+T_{|m-n|}).
+\boxed{T_j^{(7)}=T_j^7.}
 \]
 
-三维乘积就是三个一维有限卷积的张量积。
+于是四组右端项完全写为
 
-R10B 记录：FFT 只用于 coefficient-index convolution 加速；FFT 不在物理空间评价 integrand。
+\[
+\boxed{
+b_n^{(U)}=\sum_jw_jU_jT_n(\xi_j),}
+\]
 
-N48 formal root 对应：
+\[
+\boxed{
+b_n^{(C)}=\sum_jw_jC_jT_n(\xi_j),}
+\]
+
+\[
+\boxed{
+b_n^{(T)}=\sum_jw_jT_jT_n(\xi_j),}
+\]
+
+\[
+\boxed{
+b_n^{(T^7)}=\sum_jw_jT_j^7T_n(\xi_j).}
+\]
+
+这已经把“材料参数 -> N48 系数”的代数链完全展开到唯一尚缺的历史实现数据 \(\{\lambda_j,w_j\}\)。
+
+---
+
+# 5. 本次 forensic numerical fingerprint
+
+在不使用任何 Case21 试验荷载的前提下，本次独立重建做了以下检查：
+
+- 使用同一个 hull `[-1.01,0.105]` 定义 Chebyshev 坐标；
+- 只在两个认证谱带 `I_- ∪ I_+` 上给材料函数值；
+- 对 `U,C,T,T^7` 各做 degree-48 Chebyshev least-squares；
+- 在两个认证带上独立密集验证。
+
+得到的误差与原 R10B 报告非常接近：
+
+| scalar | 原 R10B max | forensic LS max | 原 R10B P95 | forensic LS P95 |
+|---|---:|---:|---:|---:|
+| U | 0.000200 | 0.000197 | 0.000138 | 0.000139 |
+| C | 0.002895 | 0.002823 | 0.000712 | 0.000686 |
+| T | 0.027887 | 0.027194 | 0.006928 | 0.006638 |
+| T^7 | 0.027497 | 0.026180 | 0.017399 | 0.016341 |
+
+这构成了一个很强的**数值指纹证据**：原 R10B 的 N48 material compiler 与“在两条认证谱带并集上建立一个统一 hull-coordinate 的 degree-48 Chebyshev least-squares representation”高度一致。
+
+但因为误差没有逐位重合，所以在找回原 core 前，仍不得把本次 forensic LS 的具体样点数/权重冒充原执行设置。
+
+正式证据身份：
 
 ```text
-material degree       = 48
-spatial Chebyshev deg = 28
+R10B_N48_LEAST_SQUARES_UNION_BAND_ARCHITECTURE = STRONGLY_SUPPORTED
+ORIGINAL_SAMPLE_COUNT_AND_WEIGHTING             = UNRESOLVED
+ORIGINAL_COEFFICIENT_ARRAYS                      = UNRECOVERED
+BYTE_IDENTICAL_R10B_COMPILER_CORE                = UNRECOVERED
 ```
-
-`28` 的身份是保留的空间 coefficient-basis degree，不是 28 个空间 collocation points。
-
-原 core 的逐级 truncation/dealiasing 次序当前未恢复，故不得声称 byte-identical reproduction；但最终数学对象确定是有限 \(c_{ijk}\) arrays。
 
 ---
 
-# 8. 第七层：系数 -> P 与 R 的精确完整半波矩
+# 6. N48 后如何进入二维 current map
 
-定义
+对任一 scalar polynomial
 
 \[
-M_n=\int_0^\pi T_n(\sin X)\,dX,
+F_{48}(Y)=\sum_{n=0}^{48}a_n^{(F)}T_n(Y),
 \]
 
-则
+令
 
 \[
-\boxed{
-M_n=
-\begin{cases}
-\pi,&n=0,\\
-2\sin(n\pi/2)/n,&n\ge1.
-\end{cases}
-}
+K_1=\operatorname{tr}Y,\qquad K_2=\det Y,
 \]
 
-厚度矩：
+二维 Cayley-Hamilton：
 
 \[
-Z_k=\int_{-1}^{1}T_k(z)\,dz,
+Y^2-K_1Y+K_2I=0.
+\]
+
+写
+
+\[
+T_n(Y)=A_nI+B_nY.
+\]
+
+初值
+
+\[
+(A_0,B_0)=(1,0),\qquad(A_1,B_1)=(0,1),
+\]
+
+递推
+
+\[
+\boxed{A_{n+1}=-2K_2B_n-A_{n-1},}
 \]
 
 \[
-\boxed{
-Z_k=
-\begin{cases}
-0,&k\text{ odd},\\
-2/(1-k^2),&k\text{ even}.
-\end{cases}
-}
-\]
-
-若轴力 integrand 的有限 coefficient array 为
-
-\[
-f_P=\sum c^P_{ijk}U_iV_jZ_k,
-\]
-
-则
-
-\[
-\boxed{
-\mathcal I_P=
-\sum_{ijk}c^P_{ijk}M_iM_jZ_k.
-}
+\boxed{B_{n+1}=2A_n+2K_1B_n-B_{n-1}.}
 \]
 
 因此
 
 \[
 \boxed{
-P_c(D,q)=
--\frac{bt}{2\pi^2}\mathcal I_P.
-}
+F_{48}(Y)=
+\left(\sum_{n=0}^{48}a_n^{(F)}A_n\right)I+
+\left(\sum_{n=0}^{48}a_n^{(F)}B_n\right)Y.}
 \]
 
-若幅值残量 integrand coefficient array 为
+后续采用原 R10B pair algebra：
 
 \[
-f_R=\sum c^R_{ijk}U_iV_jZ_k,
-\]
-
-则
-
-\[
-\boxed{
-\mathcal I_R=
-\sum_{ijk}c^R_{ijk}M_iM_jZ_k,
-}
+(A,B)(C,D)=
+(AC-BDK_2,\ AD+BC+BDK_1),
 \]
 
 \[
-\boxed{
-R_{q,c}(D,q)=
-\frac{\varepsilon_0b\ell t}{2\pi^2}\mathcal I_R.
-}
+CC=\det(C)C,
 \]
 
-正式结构积分至此仅是有限系数 contraction：
+\[
+TC=C[\operatorname{tr}(T)I-T],
+\]
 
-```text
-N_formal_spatial_sampling   = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-```
+\[
+TT=\det(T)[\operatorname{tr}(T^7)I-T^7],
+\]
+
+\[
+\boxed{S=U-a_{cc}CC+TC-\rho a_tTT.}
+\]
+
+该步骤不做二维材料面重新拟合。
 
 ---
 
-# 9. 第八层：same-expression derivative coefficients
+# 7. 正式论文/报告的最低可重复性要求
 
-R10B 不对最终 P/R 做有限差分。每个 coefficient object 同时携带对 D、q 的 forward jets。
+若 R10B 要作为正式论文计算方法，而不是仅作为历史成功计算记录，则材料 N48 部分至少必须公开：
 
-例如标量 coefficient objects \(F,G\) 的乘积 \(H=FG\)：
+1. \(I_-\)、\(I_+\) 与统一 hull；
+2. \(\xi(\lambda)\) 的坐标映射；
+3. `U,C,T,T^7` 的材料来源公式；
+4. 完整 coefficient equation，即本文件第 3–4 节；
+5. 原样点生成式 \(\lambda_j\)、样点数 \(M\)、权重 \(w_j\)；
+6. N48 numerical coefficient table（可放 Supplementary Material，不必塞进正文）；
+7. N48 material error table；
+8. coefficient -> Cayley-Hamilton -> D15 moment 的递推式。
 
-\[
-\boxed{H_D=F_DG+FG_D}
-\]
+因此，**当前还不能声称“R10B 系数生成已达到论文级完全可重复”**。现在已经恢复的是除第 5–6 项外的全部数学链，并通过数值指纹把原生成器强烈定位到 two-band unified-hull Chebyshev least-squares family。
 
-\[
-\boxed{H_q=F_qG+FG_q}
-\]
-
-\[
-\boxed{
-H_{Dq}=F_{Dq}G+F_DG_q+F_qG_D+FG_{Dq}
-}
-\]
-
-\[
-\boxed{
-H_{qq}=F_{qq}G+2F_qG_q+FG_{qq}.
-}
-\]
-
-同一规则逐层作用于：
-
-```text
-M(q), B(q)
--> J1,J2
--> K1,K2
--> matrix Chebyshev recurrence
--> U/C/T pairs
--> CC/TC/TT
--> S
--> sigma
--> fP,fR coefficient arrays
-```
-
-由于 exact moment contraction 是线性的：
-
-\[
-\boxed{
-P_D=
--\frac{bt}{2\pi^2}
-\sum_{ijk}(c^P_{ijk})_D M_iM_jZ_k
-}
-\]
-
-\[
-\boxed{
-P_q=
--\frac{bt}{2\pi^2}
-\sum_{ijk}(c^P_{ijk})_q M_iM_jZ_k
-}
-\]
-
-同理得到 \(R_D,R_q\)。
-
-然后：
-
-\[
-\boxed{L=P_DR_q-P_qR_D.}
-\]
-
-极限点求解：
-
-\[
-\boxed{R(D,q)=0,\qquad L(D,q)=0.}
-\]
-
-数值根算法只解已经显式形成的有限方程，不回到空间积分。
-
----
-
-# 10. R10B N48 已执行结果作为链路闭合证据
-
-当前 canonical result：
-
-```text
-material degree = 48
-spatial degree  = 28
-D_u  = 0.8449505
-q_u  = 0.001779254542005754
-A_u  = 2.1706905412470197 mm
-Pc   = 337.39660909142 kN
-Ps   = 30.922943404456966 kN
-Pu   = 368.31955249587696 kN
-R    = -2.2383016926141863e-05 kN mm
-P_D  = 106.58759351383472
-P_q  = -75105.39767023241
-R_D  = -1376.335532846137
-R_q  = 969815.5988960797
-L    = 83.31643116474152
-L_normalized = 4.029999719717427e-07
-```
-
-N96 fixed-D equilibrium audit：
-
-```text
-q_eq = 0.0017855282237914806
-P    = 368.50804285212683 kN
-Delta P from N48 = 0.18849035625 kN = 0.0511757671 %
-```
-
-这说明有限解析 compiler order 的工程敏感度，而不是空间 quadrature 误差。
-
----
-
-# 11. 目前到底缺什么
-
-已恢复：
-
-```text
-PASS: material parameters -> kappa/xcr/eta
-PASS: Wsrc -> h
-PASS: R10 rise/fall coefficients as parameter formulas
-PASS: U/C/T physical scalar definitions
-PASS: Case21 compiler hull
-PASS: exact lambda -> xi affine map
-PASS: exact X -> Y affine matrix map
-PASS: matrix-Chebyshev Cayley-Hamilton recurrence
-PASS: pair product / trace / determinant
-PASS: CC/TC/TT algebra
-PASS: sparse J1 and d coefficient expansions
-PASS: J2,K1,K2 construction
-PASS: tensor-Chebyshev finite coefficient algebra
-PASS: exact complete-halfwave moment contraction
-PASS: same-expression derivative genealogy
-PASS: N48/N96 canonical numerical results
-```
-
-未恢复：
-
-```text
-OPEN: exact original R10B 1D coefficient-node/projection convention
-OPEN: original N48 coefficient arrays
-OPEN: original 03_material_compiler_N48_metrics.csv bytes
-OPEN: original 07_R10B_zero_spatial_compiler_core.py bytes
-OPEN: exact internal spatial truncation/dealiasing scheduling
-```
-
-Artifact manifest 已冻结原文件哈希，因此以后若找回本地 ZIP/core，可逐文件 SHA-256 验证并把 OPEN 项升级为 EXACT_EXECUTION_RECOVERY。
-
----
-
-# 12. 论文表达建议
-
-正式论文不应把几十个 Chebyshev 小数当作材料参数。推荐层次：
-
-\[
-\boxed{
-\text{material parameters}
-\to
-\text{R10 physical scalar formula}
-\to
-\text{coefficient operator }\mathcal C_N
-\to
-\{\widehat U_n,\widehat C_n,\widehat T_n\}
-\to
-\text{Cayley-Hamilton coefficient algebra}
-\to
-\{c^P_{ijk},c^R_{ijk}\}
-\to
-\text{exact moments}
-\to
-P,R,L.
-}
-\]
-
-理论正文给参数公式和 coefficient-generation operator；附录/补充材料保存 machine coefficient tables。这样材料物理和解析编译层完全分离，也避免人工抄录十几位小数。
+下一步若找不到原 `07_R10B_zero_spatial_compiler_core.py`，则必须在不改变 R10 材料物理的前提下，重新冻结一个显式 \(\lambda_j,w_j\) contract，重编译 N48、重算 Case21，并要求其 P/R/root 与当前 R10B 工程基线一致后，才能把新的 fully reproducible coefficient table 作为正式论文版本。
