@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-11 20:30 +08:00  
+**Updated:** 2026-08-11 22:25 +08:00  
 **Purpose:** 唯一当前工作入口；保持主线简单。
 
 ## 0. Highest-priority contract
@@ -108,159 +108,25 @@ No long decimal coefficient table is part of the theory.
 
 ---
 
-## 3. Paper-style derivation
+## 3. Paper-style derivation and Case21 closure
 
 Canonical derivation:
 
 - `current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md`
 
-The term-by-term chain is
-
-\[
-\boxed{
-a_n^{(F)}
-\rightarrow
-(A_n,B_n)
-\rightarrow
-\mathbf F_{48}
-\rightarrow
-\mathbf S
-\rightarrow
-c_{ijk}
-\rightarrow
-c_{ijk}M_iM_jZ_k.}
-\]
-
-For any retained spatial coefficient field
-
-\[
-Q(X,Y,\zeta)
-=\sum_{i,j,k}c_{ijk}
-\mathcal C_i(\sin X)
-\mathcal C_j(\sin Y)
-\mathcal C_k(\zeta),
-\]
-
-D15 uses
-
-\[
-\boxed{\mathscr D[Q]=\sum_{i,j,k}c_{ijk}M_iM_jZ_k},
-\]
-
-with
-
-\[
-M_n=\begin{cases}
-\pi,&n=0,\\
-2\sin(n\pi/2)/n,&n\ge1,
-\end{cases}
-\qquad
-Z_k=\begin{cases}
-0,&k\text{ odd},\\
-2/(1-k^2),&k\text{ even}.
-\end{cases}
-\]
-
----
-
-## 4. Current fresh Case21 calculation closure — PASS
-
-Canonical files:
+Case21 fresh closure:
 
 - `current/theory/NZ_SCCM_CASE21_FRESH_R10_N48_D15_CLOSURE_20260811.md`
 - `current/theory/NZ_SCCM_CASE21_FRESH_R10_N48_D15_CLOSURE_results.json`
 - `governance/CASE21_FRESH_R10_N48_D15_CLOSURE_DECISION_20260811.md`
 
-The calculation was regenerated from the closed R10 formulas and the N48 coefficient rule. No historical Case21 computed load, historical root or historical load path was used as an input, target, guide or calibration quantity.
+Case21 is frozen as the process exemplar, not as a numerical target for other panels.
 
-Fresh limit state:
-
-\[
-\boxed{D_u\approx0.835918},
-\qquad
-\boxed{q_u\approx0.00178979},
-\]
-
-\[
-\boxed{A_u\approx2.18354\ \mathrm{mm}},
-\]
-
-\[
-\boxed{P_c\approx337.60174\ \mathrm{kN}},
-\qquad
-\boxed{P_s\approx30.58760\ \mathrm{kN}},
-\]
-
-\[
-\boxed{P_u\approx368.18934\ \mathrm{kN}}.
-\]
-
-Equilibrium closure:
-
-\[
-R_{q,c}\approx+311.30656\ \mathrm{kN\,mm},
-\]
-
-\[
-R_{q,s}\approx-311.30656\ \mathrm{kN\,mm},
-\]
-
-\[
-\boxed{R_q\approx2.3\times10^{-12}\ \mathrm{kN\,mm}}.
-\]
-
-Same-expression limit determinant normalized residual:
-
-\[
-\boxed{L_{norm}\approx4.4\times10^{-9}}.
-\]
-
-The only post-calculation numerical comparison is the Case21 experimental failure load:
-
-\[
-P_{f,exp}=368.31275\ \mathrm{kN},
-\]
-
-\[
-\boxed{\text{error}\approx-0.0335\%}.
-\]
-
-### 4.1 Governing dimensional/conjugacy clarification
-
-Direct concrete axial force is
-
-\[
-\boxed{
-P_c=-\frac{f_cb t_p}{2\pi^2}\mathscr D[S_{yy}]
-}
-\]
-
-rather than an un-divided complete-halfwave volume resultant.
-
-For amplitude generalized work, physical stress is conjugate to normalized physical strain
-
-\[
-\mathbf e=\frac{\mathbf E}{\varepsilon_0}
-=(1+\nu)\mathbf X-\nu\operatorname{tr}(\mathbf X)\mathbf I,
-\]
-
-so
-
-\[
-\boxed{Q_q=\mathbf S:\mathbf e_{,q}}.
-\]
-
-These are dimensional/conjugacy clarifications only; the R10 material target, N48 compiler, Nguyen second-order kinematics and D15 exact-moment architecture are unchanged.
-
----
-
-## 5. Canonical calculation process template — COMPLETE
-
-The fresh Case21 closure is now frozen as the calculation-process template for subsequent panels:
+Canonical workflow:
 
 - `current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md`
 
-The template fixes the execution order:
+Execution chain:
 
 ```text
 INPUT
@@ -277,25 +143,56 @@ INPUT
 -> experiment-only comparison
 ```
 
-Every future panel must deliver the same 11-part audit package:
+---
+
+## 4. Swartz 24-panel fresh blind calculation — COMPLETE
+
+Canonical files:
+
+- `current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv`
+- `current/results/NZ_SCCM_SWARTZ24_FRESH_THEORY_VS_EXPERIMENT_20260811.csv`
+- `current/results/NZ_SCCM_SWARTZ24_FRESH_R10_N48_D15_REPORT_20260811.md`
+
+The blind theory table was committed before the experiment-comparison table. The solve did not use historical Case roots, historical Case loads, historical load paths, historical FE results, or experiment loads.
 
 ```text
-INPUT
-R10
-SPECTRAL
-N48
-KINEMATICS
-D15
-STEEL
-EQUILIBRIUM
-LIMIT
-CHECKS
-EXPERIMENT
+SWARTZ24_FRESH_THEORY_PREDICTIONS = 24/24 PASS
+BLIND_THEORY_FREEZE_BEFORE_EXPERIMENT = PASS
+EXPERIMENTAL_COMPARISON = COMPLETE
+STRUCTURAL_CALIBRATION = NO
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+MATERIAL_COMPILER_ORDER = 48
+COMPILER_DOMAIN_CERTIFICATE = 24/24 PASS
+STEEL_BRANCH_CHECK = 24/24 ELASTIC
+SAME_EXPRESSION_LIMIT_CONDITION = 24/24 PASS
 ```
 
-Case21 is a process/output-format exemplar only. Its numerical root, load or error is prohibited as a target or guide for another panel.
+Full-sample statistics after blind prediction freeze:
 
-If a future panel has \(\ell/b\neq1\), use the same frozen Nguyen second-order kinematics in its general \(\ell/b\) form; do not mechanically copy the Case21-specific \(\ell=b\) simplification. This is geometry substitution, not theory reopening.
+- mean theory/experiment = 0.9638;
+- mean signed error = -3.62%;
+- MAPE = 12.06%;
+- RMSE = 79.26 kN.
+
+Group diagnostics:
+
+| Group | Approx. b/t identity from Nguyen | Mean error | MAPE | RMSE |
+|---|---:|---:|---:|---:|
+| Case 1–8 | ~48 | +4.43% | 12.66% | 73.60 kN |
+| Case 9–16 | ~38.3 | -13.23% | 15.45% | 108.29 kN |
+| Case 17–24 | ~63.1 | -2.07% | 8.06% | 41.25 kN |
+
+These group differences are diagnostic evidence only. They do not authorize retuning R10, N48, q0, reinforcement parameters, or any panel-specific material quantity.
+
+---
+
+## 5. Current source-based interpretation boundary
+
+Nguyen's review of Swartz's 24 walls reports three slenderness groups. For the approximate b/t = 48, 38.3 and 63.1 groups, the reported average critical stress ratios were about 0.795, 0.93 and 0.618 of the relevant concrete compressive strength, respectively. Panels 17–24 showed two sinusoidal half waves and behavior close to elastic/tangent-orthotropic plate buckling; the b/t ≈ 48 and 38 groups showed approximately one half wave and buckled at stresses much closer to the material peak. Nguyen also reports that reinforcement ratio/layer count had only a small effect on the buckling loads in the Swartz series.
+
+This source evidence may be used to diagnose why the current ultimate-capacity model has different error structures in the three groups, but not to calibrate the model against the experiments.
 
 ---
 
@@ -309,22 +206,12 @@ LONG_DECIMAL_COEFFICIENT_TABLE_IN_THEORY = PROHIBITED
 R10_N48_D15_PAPER_STYLE_DERIVATION = COMPLETE
 CASE21_FRESH_R10_N48_D15_CLOSURE = PASS
 CASE21_CALCULATION_PROCESS_TEMPLATE = COMPLETE
-HISTORICAL_CASE21_COMPUTED_RESULTS_USED_IN_FRESH_CLOSURE = NO
+SWARTZ24_FRESH_BLIND_THEORY = 24/24 PASS
+SWARTZ24_EXPERIMENT_COMPARISON = COMPLETE
+HISTORICAL_CASE_COMPUTED_RESULTS_USED_IN_SWARTZ24_SOLVE = NO
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
-SAME_EXPRESSION_LIMIT_CONDITION = PASS_ENGINEERING
 STRUCTURAL_Pu_CALIBRATION = NO
-FINAL_CASE21_COMPARISON = EXPERIMENT_ONLY
-SWARTZ24 = NOT_STARTED
-```
-
----
-
-## 7. Current execution boundary
-
-Case21 itself is no longer to be reopened. The next numerical panel, when selected, must be executed through the canonical calculation-process template above.
-
-```text
-CURRENT_NEXT_TASK = APPLY_TEMPLATE_TO_NEXT_USER_SELECTED_PANEL
+CURRENT_NEXT_TASK = INDEPENDENT_REPRODUCIBILITY_AUDIT_AND_ERROR_MECHANISM_DIAGNOSIS
 ```
