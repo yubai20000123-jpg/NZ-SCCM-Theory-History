@@ -1,6 +1,6 @@
 # NZ-SCCM R10B COEFFICIENT-GENERATION CONTRACT V1
 
-**Updated:** 2026-08-11 16:31 +08:00  
+**Updated:** 2026-08-11 16:38 +08:00  
 **Status:** CURRENT GOVERNING SIMPLE CONTRACT
 
 ## 1. Principle
@@ -99,8 +99,10 @@ F\in\{U,C,T,T^7\},
 write only
 
 \[
-\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}T_n(\xi)}.
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi)}.
 \]
+
+Here \(\mathcal C_n\) denotes the first-kind Chebyshev polynomial, so it is not confused with the tensile utilization symbol \(T\).
 
 The complete coefficient formula is
 
@@ -120,7 +122,7 @@ a_n^{(F)}=
 
 This one formula defines every one of the 49 coefficients. The theory does not need to print 49 decimal values.
 
-Equivalent continuous-projection notation may be used in derivations:
+Equivalent continuous-projection notation may be used only as a compact theoretical reference:
 
 \[
 a_0^{(F)}=\frac1\pi\int_0^\pi F[\lambda(\theta)]d\theta,
@@ -136,7 +138,7 @@ with
 \lambda(\theta)=\lambda_c+\lambda_h\cos\theta.
 \]
 
-The discrete N48 expression is the production compiler rule; the continuous expression is the compact theoretical definition.
+The discrete N48 root formula above is the governing production compiler rule.
 
 ## 4. Engineering acceptance
 
