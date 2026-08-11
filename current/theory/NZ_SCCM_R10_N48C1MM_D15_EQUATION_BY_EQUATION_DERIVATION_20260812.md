@@ -1,0 +1,1289 @@
+# NZ-SCCM 更新版理论逐式展开与参数释义
+## 材料参数 → 闭式 R10 → N48-C1/MM → Cayley–Hamilton → Nguyen 二阶半波 → D15 → \(P,R_q,L\) → 周思铭切线稳定门
+
+**日期：2026-08-12**  
+**身份：CURRENT EQUATION-BY-EQUATION PAPER-STYLE DERIVATION**  
+
+**固定边界**
+
+```text
+R10_MATERIAL_TARGET = FROZEN
+MATERIAL_COMPILER_ORDER = 48
+U_COMPILER  = N48-C1
+C_COMPILER  = N48-C1
+T7_COMPILER = N48-C1
+T_COMPILER  = N48-C1-CONSTRAINED-MINIMAX
+
+DOMAIN = ONE_CONTINUOUS COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+本文的“材料点”仅指生成一维材料解析系数时的材料坐标，不是结构空间积分点。正式结构积分始终由 D15 有限解析矩完成。
+
+---
+
+# 1 总体计算链
+
+\[
+\boxed{
+\text{材料基本参数}
+\rightarrow
+\text{闭式 R10}
+\rightarrow
+\{U,C,T,T^7\}
+\rightarrow
+\text{N48-C1/MM}
+\rightarrow
+\text{Cayley--Hamilton}
+\rightarrow
+\mathbf S
+\rightarrow
+\text{有限三角--厚度系数}
+\rightarrow
+\text{D15}
+\rightarrow
+P,\ R_q,\ L
+}
+\tag{1}
+\]
+
+式中，R10 为当前冻结的普通混凝土 current material operator；\(U,C,T,T^7\) 为构成二维 current-map 的四个一维材料 primitive；N48-C1/MM 为保持 48 阶并严格满足 R10 零点函数值与一阶切线锚点的有限解析编译层；\(\mathbf S\) 为无量纲二维应力张量；D15 为完整代表半波的精确解析矩引擎；\(P\) 为轴向承载力；\(R_q\) 为局部挠曲幅值 \(q\) 的广义平衡残量；\(L\) 为沿平衡支判定极限点的行列式型极限条件。
+
+---
+
+# 2 普通混凝土基本材料参数
+
+定义归一化初始斜率
+
+\[
+\boxed{\kappa=\frac{E_0\varepsilon_0}{f_c}}
+\tag{2}
+\]
+
+式中，\(E_0\) 为混凝土初始弹性模量；\(\varepsilon_0\) 为当前材料关系采用的参考压缩应变；\(f_c\) 为当前分析采用的混凝土单轴抗压强度；\(\kappa\) 为无量纲初始斜率。
+
+\[
+\boxed{\rho=0.1}
+\tag{3}
+\]
+
+式中，\(\rho\) 为 R10 中拉伸应力相对于 \(f_c\) 的归一化强度尺度。
+
+\[
+\boxed{x_{cr}=\frac{\rho}{\kappa}}
+\tag{4}
+\]
+
+式中，\(x_{cr}\) 为无量纲拉伸特征应变坐标；\(\rho\) 与 \(\kappa\) 分别由式（3）和式（2）确定。
+
+\[
+\boxed{\eta=\frac{x_{cr}}{20}}
+\tag{5}
+\]
+
+式中，\(\eta\) 为主等效应变在零点附近进行拉、压平滑分解的材料尺度；\(x_{cr}\) 为式（4）的拉伸特征坐标。
+
+---
+
+# 3 物理面内应变与等效单轴张量
+
+\[
+\boxed{\mathbf E=\begin{bmatrix}\varepsilon_x & \gamma_{xy}/2\\ \gamma_{xy}/2 & \varepsilon_y\end{bmatrix}}
+\tag{6}
+\]
+
+式中，\(\mathbf E\) 为板中一点的物理面内应变张量；\(\varepsilon_x\) 为 \(x\) 方向法向应变；\(\varepsilon_y\) 为轴压 \(y\) 方向法向应变；\(\gamma_{xy}\) 为工程剪应变，因此张量剪应变分量为 \(\gamma_{xy}/2\)。
+
+\[
+\boxed{\mathbf E_u=\frac{(1-\nu)\mathbf E+\nu\,\operatorname{tr}(\mathbf E)\mathbf I}{1-\nu^2}}
+\tag{7}
+\]
+
+式中，\(\mathbf E_u\) 为 current material operator 使用的等效单轴应变张量；\(\nu\) 为混凝土泊松比；\(\operatorname{tr}(\mathbf E)\) 为 \(\mathbf E\) 的迹；\(\mathbf I\) 为二维二阶单位张量。
+
+\[
+\boxed{\mathbf X=\frac{\mathbf E_u}{\varepsilon_0}}
+\tag{8}
+\]
+
+式中，\(\mathbf X\) 为无量纲等效应变张量；\(\mathbf E_u\) 由式（7）确定；\(\varepsilon_0\) 为式（2）中的参考压缩应变。
+
+\[
+\boxed{X_{11}=\frac{\varepsilon_x+\nu\varepsilon_y}{(1-\nu^2)\varepsilon_0}}
+\tag{9}
+\]
+
+\[
+\boxed{X_{22}=\frac{\nu\varepsilon_x+\varepsilon_y}{(1-\nu^2)\varepsilon_0}}
+\tag{10}
+\]
+
+\[
+\boxed{X_{12}=\frac{\gamma_{xy}}{2(1+\nu)\varepsilon_0}}
+\tag{11}
+\]
+
+式中，\(X_{11},X_{22},X_{12}\) 为 \(\mathbf X\) 的两个法向分量和一个对称剪切分量；\(\varepsilon_x,\varepsilon_y,\gamma_{xy}\) 为式（6）中的物理应变；\(\nu\) 为泊松比；\(\varepsilon_0\) 为参考压缩应变。
+
+\[
+\boxed{\mu=\frac{X_{11}+X_{22}}{2},\qquad \delta=\frac{X_{11}-X_{22}}{2}}
+\tag{12}
+\]
+
+式中，\(\mu\) 为两个法向等效应变分量的平均值；\(\delta\) 为两个法向分量之半差。
+
+\[
+\boxed{r_X=\sqrt{\delta^2+X_{12}^2}}
+\tag{13}
+\]
+
+式中，\(r_X\) 为二维对称张量 \(\mathbf X\) 的主值半径；\(\delta\) 由式（12）确定；\(X_{12}\) 由式（11）确定。
+
+\[
+\boxed{\lambda_\pm=\mu\pm r_X}
+\tag{14}
+\]
+
+式中，\(\lambda_+\) 与 \(\lambda_-\) 分别为 \(\mathbf X\) 的较大和较小主值；\(\mu\) 与 \(r_X\) 分别由式（12）和式（13）给出。
+
+---
+
+# 4 主值拉、压部分的平滑分解
+
+\[
+\boxed{\Pi_\eta(z)=\frac{z^2\left(\sqrt{z^2+\eta^2}+z\right)}{2(z^2+\eta^2)}}
+\tag{15}
+\]
+
+式中，\(z\) 为任意无量纲主应变坐标；\(\Pi_\eta(z)\) 为平滑正部算子；\(\eta\) 为式（5）的平滑尺度。
+
+\[
+\boxed{c_i=\Pi_\eta(-\lambda_i)}
+\tag{16}
+\]
+
+式中，\(i\in\{+,-\}\)；\(c_i\) 为第 \(i\) 个主方向对应的平滑压缩材料坐标；\(\lambda_i\) 为式（14）的主等效应变。
+
+\[
+\boxed{t_i=\Pi_\eta(\lambda_i)}
+\tag{17}
+\]
+
+式中，\(t_i\) 为第 \(i\) 个主方向对应的平滑拉伸材料坐标；其余符号含义同式（16）。
+
+---
+
+# 5 R10 压缩 primitive
+
+\[
+\boxed{C_i=\frac{\kappa c_i}{1+(\kappa-2)c_i+c_i^2}}
+\tag{18}
+\]
+
+式中，\(C_i\) 为第 \(i\) 个主方向的无量纲压缩材料 primitive；\(c_i\) 为式（16）的压缩材料坐标；\(\kappa\) 为式（2）的无量纲初始斜率。
+
+\[
+\boxed{C(\lambda)=\frac{\kappa\,\Pi_\eta(-\lambda)}{1+(\kappa-2)\Pi_\eta(-\lambda)+[\Pi_\eta(-\lambda)]^2}}
+\tag{19}
+\]
+
+式中，\(C(\lambda)\) 表示以任一主等效应变 \(\lambda\) 为自变量的一维压缩 primitive；\(\Pi_\eta\)、\(\kappa\) 与 \(\eta\) 分别由式（15）、式（2）和式（5）定义。
+
+---
+
+# 6 Foster 源拉伸函数
+
+\[
+\boxed{r=\frac{t}{x_{cr}}}
+\tag{20}
+\]
+
+式中，\(t\) 为一般拉伸材料坐标；\(r\) 为按 \(x_{cr}\) 归一化后的拉伸横坐标；\(x_{cr}\) 由式（4）给出。
+
+\[
+\boxed{m_t=-\frac{7}{90},\qquad \eta_r=0.05}
+\tag{21}
+\]
+
+式中，\(m_t\) 为 Foster 源拉伸下降段的斜率参数；\(\eta_r\) 为 Foster 源函数在转折位置附近的平滑尺度。
+
+\[
+\boxed{H(r,r_0)=\frac12\left[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}\right]-\frac12\left[-r_0+\sqrt{r_0^2+\eta_r^2}\right]}
+\tag{22}
+\]
+
+式中，\(H(r,r_0)\) 为平滑铰函数；\(r\) 为式（20）的拉伸横坐标；\(r_0\) 为铰激活中心；\(\eta_r\) 为式（21）的平滑尺度。当前源函数分别在 \(r_0=1\) 与 \(r_0=10\) 处使用该函数。
+
+\[
+\boxed{T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10)}
+\tag{23}
+\]
+
+式中，\(T_{src}\) 为用于保存原材料功的 Foster 源拉伸利用函数；\(m_t\) 为式（21）参数；\(H(r,1)\) 与 \(H(r,10)\) 分别为式（22）在两个转折位置的平滑铰函数。
+
+\[
+\boxed{u_{t,src}(t)=\rho\,T_{src}\!\left(\frac{t}{x_{cr}}\right)}
+\tag{24}
+\]
+
+式中，\(u_{t,src}\) 为源归一化拉应力；\(\rho\) 为式（3）的拉伸强度尺度；\(T_{src}\) 为式（23）的源函数；\(t/x_{cr}\) 为式（20）的无量纲拉伸横坐标。
+
+\[
+\boxed{W_{src}=\int_0^{10x_{cr}}u_{t,src}(t)\,dt=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr}
+\tag{25}
+\]
+
+式中，\(W_{src}\) 为仅由一维源材料关系确定的材料功；\(u_{t,src}\) 为式（24）的源归一化应力；\(x_{cr}\) 为式（4）的拉伸特征坐标；\(T_{src}\) 为式（23）的源函数。该式不包含结构试验荷载。
+
+---
+
+# 7 R10 拉伸上升支
+
+\[
+\boxed{\tau=\frac{t}{x_{cr}},\qquad 0\le\tau\le1}
+\tag{26}
+\]
+
+式中，\(\tau\) 为 R10 上升支的无量纲局部横坐标；\(t\) 为拉伸材料坐标；\(x_{cr}\) 为式（4）的拉伸特征坐标。
+
+\[
+\boxed{u_1(\tau)=b_0+b_1\tau+b_2\tau^2+b_3\tau^3+b_4\tau^4+b_5\tau^5}
+\tag{27}
+\]
+
+式中，\(u_1\) 为 R10 拉伸上升支的归一化应力；\(b_0,\ldots,b_5\) 为由端点条件唯一确定的系数；\(\tau\) 为式（26）的局部坐标。
+
+\[
+\boxed{u_1(0)=0,\qquad \frac{du_1}{dt}(0)=\kappa,\qquad \frac{d^2u_1}{dt^2}(0)=0}
+\tag{28}
+\]
+
+式中，第一式规定零拉应变对应零拉应力；第二式规定零点物理初始切线与 \(\kappa\) 一致；第三式规定零点二阶曲率为零；\(\kappa\) 为式（2）的无量纲初始斜率。
+
+\[
+\boxed{u_1(1)=h,\qquad u'_{1,\tau}(1)=0,\qquad u''_{1,\tau}(1)=0}
+\tag{29}
+\]
+
+式中，\(h\) 为 R10 拉伸峰值；\(u'_{1,\tau}\) 和 \(u''_{1,\tau}\) 分别表示 \(u_1\) 对 \(\tau\) 的一阶和二阶导数。
+
+\[
+\boxed{\kappa x_{cr}=\rho}
+\tag{30}
+\]
+
+式中，\(\kappa,x_{cr},\rho\) 分别由式（2）、式（4）和式（3）定义。
+
+\[
+\boxed{b_0=0,\qquad b_1=\rho,\qquad b_2=0}
+\tag{31}
+\]
+
+式中，\(b_0,b_1,b_2\) 为式（27）的前三个多项式系数；\(\rho\) 为式（3）的拉伸强度尺度。
+
+\[
+\boxed{b_3=10h-6\rho}
+\tag{32}
+\]
+
+\[
+\boxed{b_4=8\rho-15h}
+\tag{33}
+\]
+
+\[
+\boxed{b_5=6h-3\rho}
+\tag{34}
+\]
+
+式中，\(b_3,b_4,b_5\) 为式（27）的三至五次项系数；\(h\) 为拉伸峰值；\(\rho\) 为拉伸强度尺度。
+
+\[
+\boxed{u_1(\tau)=\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5}
+\tag{35}
+\]
+
+式中，\(u_1\) 为最终闭式 R10 上升支；\(\tau\) 为式（26）的局部坐标；\(h\) 与 \(\rho\) 分别为拉伸峰值和拉伸强度尺度。
+
+---
+
+# 8 R10 拉伸下降支
+
+\[
+\boxed{s=\frac{t-x_{cr}}{9x_{cr}},\qquad 0\le s\le1}
+\tag{36}
+\]
+
+式中，\(s\) 为 R10 下降支局部坐标；\(t\) 为拉伸材料坐标；下降支覆盖 \(x_{cr}\le t\le10x_{cr}\)。
+
+\[
+\boxed{u_r=0.03}
+\tag{37}
+\]
+
+式中，\(u_r\) 为下降支在 \(t=10x_{cr}\) 处的残余归一化拉应力。
+
+\[
+\boxed{u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)}
+\tag{38}
+\]
+
+式中，\(u_2\) 为 R10 拉伸下降支；\(h\) 为拉伸峰值；\(u_r\) 为式（37）的残余拉应力；\(s\) 为式（36）的下降支坐标；括号内为满足两端 \(C^2\) 平滑条件的五次 smoothstep。
+
+---
+
+# 9 R10 能量闭合与峰值 h
+
+\[
+\boxed{\int_0^{x_{cr}}u_1(t)\,dt=x_{cr}\left(\frac{h}{2}+\frac{\rho}{10}\right)}
+\tag{39}
+\]
+
+式中，\(u_1(t)\) 表示把式（35）的 \(\tau=t/x_{cr}\) 代回后的上升支；\(x_{cr}\) 为拉伸特征坐标；\(h\) 为拉伸峰值；\(\rho\) 为拉伸强度尺度。
+
+\[
+\boxed{\int_{x_{cr}}^{10x_{cr}}u_2(t)\,dt=\frac{9x_{cr}}{2}(h+u_r)}
+\tag{40}
+\]
+
+式中，\(u_2(t)\) 为式（38）的下降支；\(u_r\) 为残余拉应力；其余符号含义同式（39）。
+
+\[
+\boxed{\int_0^{x_{cr}}u_1(t)\,dt+\int_{x_{cr}}^{10x_{cr}}u_2(t)\,dt=W_{src}}
+\tag{41}
+\]
+
+式中，左端为 R10 上升支与下降支总材料功；\(W_{src}\) 为式（25）的 Foster 源材料功。
+
+\[
+\boxed{h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)}
+\tag{42}
+\]
+
+式中，\(h\) 为由材料功唯一闭合得到的 R10 拉伸峰值；\(W_{src}\) 为源材料功；\(x_{cr}\) 为拉伸特征坐标；\(\rho\) 为拉伸强度尺度；\(u_r\) 为残余拉应力。该式不含任何结构试验承载力。
+
+---
+
+# 10 完整拉伸 primitive T
+
+\[
+\boxed{u_{sm}(t)=\begin{cases}u_1(t/x_{cr}),&0\le t\le x_{cr},\\ u_2[(t-x_{cr})/(9x_{cr})],&x_{cr}<t\le10x_{cr}\end{cases}}
+\tag{43}
+\]
+
+式中，\(u_{sm}\) 为 R10 完整归一化拉应力；\(u_1\) 为式（35）的上升支；\(u_2\) 为式（38）的下降支；\(t\) 为拉伸材料坐标。
+
+\[
+\boxed{T_i=\frac{u_{sm}(t_i)}{\rho}}
+\tag{44}
+\]
+
+式中，\(T_i\) 为第 \(i\) 个主方向的无量纲拉伸利用函数；\(u_{sm}\) 为式（43）；\(t_i\) 为式（17）的拉伸材料坐标；\(\rho\) 为式（3）的拉伸强度尺度。
+
+\[
+\boxed{T(\lambda)=\frac{u_{sm}[\Pi_\eta(\lambda)]}{\rho}}
+\tag{45}
+\]
+
+式中，\(T(\lambda)\) 为以任一主等效应变 \(\lambda\) 为自变量的一维拉伸 primitive；\(\Pi_\eta\) 为式（15）的平滑正部算子。
+
+\[
+\boxed{T^{(7)}(\lambda)=[T(\lambda)]^7}
+\tag{46}
+\]
+
+式中，\(T^{(7)}\) 为后续双拉相互作用所需的独立一维编译 primitive；\(T(\lambda)\) 为式（45）的拉伸 primitive。正式编译时直接编译 \(T^7\) 的标量目标，不用“先截断 T 再数值七次幂”替代。
+
+---
+
+# 11 一维 current master U
+
+\[
+\boxed{U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i}
+\tag{47}
+\]
+
+式中，\(U_i\) 为第 \(i\) 个主方向的一维 current master；\(\lambda_i\) 为主等效应变；\(C_i\) 为压缩 primitive；\(c_i,t_i\) 为拉压平滑坐标；\(T_i\) 为拉伸 primitive；\(\kappa,\rho\) 分别为式（2）和式（3）的材料参数。
+
+\[
+\boxed{U(\lambda)=\kappa\lambda-C(\lambda)+\kappa\Pi_\eta(-\lambda)+\rho T(\lambda)-\kappa\Pi_\eta(\lambda)}
+\tag{48}
+\]
+
+式中，\(U(\lambda)\) 为 N48 编译目标之一；\(C(\lambda)\) 为式（19）；\(T(\lambda)\) 为式（45）；\(\Pi_\eta\) 为式（15）。
+
+---
+
+# 12 二维主应力相互作用
+
+\[
+\boxed{a_t=1-2^{-1/8}}
+\tag{49}
+\]
+
+式中，\(a_t\) 为 R10 双拉相互作用的冻结无量纲系数。
+
+\[
+\boxed{s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8}
+\tag{50}
+\]
+
+\[
+\boxed{s_-=U_- -a_{cc}C_-^2C_+ +C_-T_+ -\rho a_tT_-T_+^8}
+\tag{51}
+\]
+
+式中，\(s_+,s_-\) 为两个主方向的无量纲 current stress；\(U_\pm,C_\pm,T_\pm\) 分别为对应主值的三个 primitive；\(a_{cc}\) 为双压相互作用系数；\(a_t\) 为式（49）的双拉相互作用系数；\(\rho\) 为拉伸强度尺度。
+
+\[
+\boxed{\sigma_\pm=f_c\,s_\pm}
+\tag{52}
+\]
+
+式中，\(\sigma_\pm\) 为两个主方向的物理应力；\(f_c\) 为混凝土单轴抗压强度；\(s_\pm\) 为式（50）和式（51）的无量纲主应力。
+
+---
+
+# 13 N48 编译区间
+
+\[
+\boxed{\lambda\in[\lambda_a,\lambda_b]}
+\tag{53}
+\]
+
+式中，\(\lambda_a\) 与 \(\lambda_b\) 分别为当前板 N48 材料编译区间的下、上界；它们必须覆盖理论求解过程中实际出现的全部主等效应变。
+
+\[
+\boxed{\lambda_c=\frac{\lambda_a+\lambda_b}{2},\qquad \lambda_h=\frac{\lambda_b-\lambda_a}{2}}
+\tag{54}
+\]
+
+式中，\(\lambda_c\) 为编译区间中心；\(\lambda_h>0\) 为编译区间半宽。
+
+\[
+\boxed{\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_h}}
+\tag{55}
+\]
+
+式中，\(\xi\in[-1,1]\) 为 Chebyshev 标准坐标；\(\lambda\) 为主等效应变；\(\lambda_c,\lambda_h\) 由式（54）确定。
+
+\[
+\boxed{\mathcal C_n(\xi)=\cos[n\arccos(\xi)]}
+\tag{56}
+\]
+
+式中，\(\mathcal C_n\) 为第 \(n\) 阶第一类 Chebyshev 多项式；\(n=0,1,\ldots,48\)；\(\xi\) 为式（55）的标准坐标。
+
+---
+
+# 14 direct N48 的通用材料系数公式
+
+\[
+\boxed{\theta_j=\frac{(j+\tfrac12)\pi}{49},\qquad j=0,\ldots,48}
+\tag{57}
+\]
+
+式中，\(\theta_j\) 为第 \(j\) 个 Chebyshev 根点角度；\(j\) 为材料坐标索引，不是空间积分点。
+
+\[
+\boxed{\lambda_j=\lambda_c+\lambda_h\cos\theta_j}
+\tag{58}
+\]
+
+式中，\(\lambda_j\) 为第 \(j\) 个一维材料坐标；\(\lambda_c,\lambda_h\) 由式（54）定义；\(\theta_j\) 由式（57）定义。
+
+\[
+\boxed{a_n^{(F,0)}=\frac{2-\delta_{n0}}{49}\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),\qquad n=0,\ldots,48}
+\tag{59}
+\]
+
+式中，\(F\) 表示 \(U,C,T,T^7\) 中任意一个一维 primitive；\(a_n^{(F,0)}\) 为其 direct N48 第 \(n\) 阶系数；\(\delta_{n0}\) 为 Kronecker delta，当 \(n=0\) 时等于 1，否则为 0；\(\lambda_j\) 与 \(\theta_j\) 分别由式（58）和式（57）定义。
+
+\[
+\boxed{F_{48}^{(0)}(\lambda)=\sum_{n=0}^{48}a_n^{(F,0)}\mathcal C_n[\xi(\lambda)]}
+\tag{60}
+\]
+
+式中，\(F_{48}^{(0)}\) 为旧 direct N48 近似；\(a_n^{(F,0)}\) 为式（59）系数；\(\mathcal C_n\) 为式（56）的 Chebyshev 多项式。
+
+---
+
+# 15 R10 的严格 C1 零点锚点
+
+\[
+\boxed{U(0)=0,\qquad U'(0)=\kappa}
+\tag{61}
+\]
+
+式中，\(U(0)\) 与 \(U'(0)\) 分别为一维 current master 在零点的函数值和对 \(\lambda\) 的一阶导数；\(\kappa\) 为式（2）的初始斜率。
+
+\[
+\boxed{C(0)=T(0)=T^7(0)=0}
+\tag{62}
+\]
+
+式中，\(C,T,T^7\) 分别为式（19）、式（45）、式（46）的三个 primitive。
+
+\[
+\boxed{C'(0)=T'(0)=(T^7)'(0)=0}
+\tag{63}
+\]
+
+式中，撇号表示对主等效应变 \(\lambda\) 求导。式（61）—式（63）是 N48-C1/MM 必须严格保持的材料锚点。
+
+---
+
+# 16 N48-C1 通用约束修正式
+
+\[
+\boxed{V_{jn}=\mathcal C_n[\xi(\lambda_j)]=\cos(n\theta_j)}
+\tag{64}
+\]
+
+式中，\(\mathbf V\) 为材料节点到 Chebyshev 系数的线性映射矩阵；\(j,n=0,\ldots,48\)；\(\lambda_j,\theta_j\) 分别由式（58）、式（57）定义。
+
+\[
+\boxed{\mathbf H=\mathbf V^T\mathbf V=\operatorname{diag}\left(49,\frac{49}{2},\ldots,\frac{49}{2}\right)}
+\tag{65}
+\]
+
+式中，\(\mathbf H\) 为 Chebyshev 根点离散正交产生的正规矩阵；上标 \(T\) 表示矩阵转置。
+
+\[
+\boxed{\xi_0=-\frac{\lambda_c}{\lambda_h}}
+\tag{66}
+\]
+
+式中，\(\xi_0\) 为物理材料坐标 \(\lambda=0\) 映射到标准区间后的坐标；\(\lambda_c,\lambda_h\) 由式（54）确定。
+
+\[
+\boxed{\mathbf G=\begin{bmatrix}\mathcal C_0(\xi_0)&\cdots&\mathcal C_{48}(\xi_0)\\ \lambda_h^{-1}\mathcal C_0'(\xi_0)&\cdots&\lambda_h^{-1}\mathcal C_{48}'(\xi_0)\end{bmatrix}}
+\tag{67}
+\]
+
+式中，\(\mathbf G\) 为 \(2\times49\) 的严格 C1 锚点矩阵；第一行为 \(\lambda=0\) 的函数值约束；第二行为对真实材料坐标 \(\lambda\) 的一阶导数约束；\(\mathcal C_n'(\xi)\) 表示对标准坐标 \(\xi\) 的导数；\(\lambda_h^{-1}\) 来自链式法则 \(d/d\lambda=\lambda_h^{-1}d/d\xi\)。
+
+\[
+\boxed{\mathbf d_U=\begin{bmatrix}0\\ \kappa\end{bmatrix}}
+\tag{68}
+\]
+
+式中，\(\mathbf d_U\) 为 \(U\) 的零点函数值和一阶导数目标；0 对应 \(U(0)\)；\(\kappa\) 对应 \(U'(0)\)。
+
+\[
+\boxed{\mathbf d_C=\mathbf d_T=\mathbf d_{T^7}=\begin{bmatrix}0\\0\end{bmatrix}}
+\tag{69}
+\]
+
+式中，\(\mathbf d_C,\mathbf d_T,\mathbf d_{T^7}\) 分别为三个 primitive 的严格零值—零斜率目标。
+
+\[
+\boxed{\mathbf a^{(F,C1)}=\mathbf a^{(F,0)}+\mathbf H^{-1}\mathbf G^T(\mathbf G\mathbf H^{-1}\mathbf G^T)^{-1}[\mathbf d_F-\mathbf G\mathbf a^{(F,0)}]}
+\tag{70}
+\]
+
+式中，\(F\in\{U,C,T^7\}\)；\(\mathbf a^{(F,C1)}\) 为严格满足 R10 C1 锚点后的 49 维 N48 系数向量；\(\mathbf a^{(F,0)}\) 为式（59）的 direct N48 系数向量；\(\mathbf H\) 为式（65）的正规矩阵；\(\mathbf G\) 为式（67）的约束矩阵；\(\mathbf d_F\) 为式（68）或式（69）的目标向量。括号内只涉及一个 \(2\times2\) 矩阵求逆。
+
+\[
+\boxed{\mathbf H^{-1}=\frac1{49}\operatorname{diag}(1,2,\ldots,2)}
+\tag{71}
+\]
+
+式中，\(\mathbf H^{-1}\) 为式（65）正规矩阵的显式逆矩阵，所以 N48-C1 不需要新增大规模求解器。
+
+---
+
+# 17 T 的严格 C1 constrained-minimax
+
+\[
+\boxed{T_{48}^{MM}(\lambda)=\sum_{n=0}^{48}a_n^{(T,MM)}\mathcal C_n[\xi(\lambda)]}
+\tag{72}
+\]
+
+式中，\(T_{48}^{MM}\) 为最终拉伸 primitive 编译式；\(a_n^{(T,MM)}\) 为最终 T-minimax 系数；\(\xi(\lambda)\) 与 \(\mathcal C_n\) 分别由式（55）和式（56）定义。
+
+\[
+\boxed{\mathbf a^{(T,MM)}=\underset{\mathbf a\in\mathbb R^{49}}{\operatorname{argmin}}\left\|\sum_{n=0}^{48}a_n\mathcal C_n[\xi(\lambda)]-T_{R10}(\lambda)\right\|_{L^\infty([\lambda_a,\lambda_b])}}
+\tag{73}
+\]
+
+并附加
+
+\[
+\boxed{\mathbf G\mathbf a=\mathbf d_T}
+\tag{74}
+\]
+
+式中，\(\mathbf a^{(T,MM)}\) 为在所有严格满足零值—零斜率约束的 48 阶 Chebyshev 多项式中，使完整编译区间最大绝对误差最小的系数向量；\(T_{R10}\) 为式（45）的闭式 R10 拉伸 primitive；\(L^\infty\) 范数表示区间内最大绝对误差；\(\mathbf G\) 与 \(\mathbf d_T\) 分别由式（67）和式（69）确定。Remez/exchange 或等价线性规划只负责求出材料系数，不改变最终理论形式。
+
+\[
+\boxed{\mathbf a^{(F,*)}=\begin{cases}\mathbf a^{(F,C1)},&F\in\{U,C,T^7\},\\ \mathbf a^{(T,MM)},&F=T\end{cases}}
+\tag{75}
+\]
+
+式中，上标 \((*)\) 表示当前更新后的 N48-C1/MM 系数身份。
+
+\[
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F,*)}\mathcal C_n[\xi(\lambda)]}
+\tag{76}
+\]
+
+式中，\(F_{48}\) 表示当前最终 N48 标量函数；\(F\in\{U,C,T,T^7\}\)；\(a_n^{(F,*)}\) 由式（75）确定。
+
+---
+
+# 18 R10 近零拉伸边界层
+
+\[
+\boxed{\mathcal B_\eta=\{\lambda\ge0:0\le\Pi_\eta(\lambda)\le\eta\}}
+\tag{77}
+\]
+
+式中，\(\mathcal B_\eta\) 为 R10 近零拉伸边界层；\(\Pi_\eta\) 为式（15）的平滑正部函数；\(\eta\) 为式（5）的 R10 固有平滑尺度。
+
+\[
+\boxed{\Pi_\eta(\lambda_\eta)=\eta,\qquad \lambda_\eta>0}
+\tag{78}
+\]
+
+式中，\(\lambda_\eta\) 为边界层的正端点；它完全由 R10 已有参数 \(\eta\) 决定，不是新增经验参数。
+
+---
+
+# 19 Cayley–Hamilton 二维提升
+
+\[
+\boxed{\mathbf Y=\frac{\mathbf X-\lambda_c\mathbf I}{\lambda_h}}
+\tag{79}
+\]
+
+式中，\(\mathbf Y\) 为把二维无量纲等效应变张量 \(\mathbf X\) 映射到 N48 标准区间后的张量；\(\lambda_c,\lambda_h\) 为式（54）的区间中心与半宽；\(\mathbf I\) 为二维单位张量。
+
+\[
+\boxed{K_1=\operatorname{tr}(\mathbf Y),\qquad K_2=\det(\mathbf Y)}
+\tag{80}
+\]
+
+式中，\(K_1\) 为 \(\mathbf Y\) 的迹；\(K_2\) 为 \(\mathbf Y\) 的行列式。
+
+\[
+\boxed{\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=\mathbf0}
+\tag{81}
+\]
+
+式中，\(\mathbf0\) 为二维零张量；其余符号由式（79）和式（80）定义。
+
+\[
+\boxed{\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y}
+\tag{82}
+\]
+
+式中，\(A_n\) 与 \(B_n\) 为只依赖 \(K_1,K_2\) 的标量多项式；\(\mathcal C_n(\mathbf Y)\) 为第 \(n\) 阶 Chebyshev 矩阵多项式。
+
+\[
+\boxed{A_0=1,\ B_0=0,\qquad A_1=0,\ B_1=1}
+\tag{83}
+\]
+
+式中，\(A_0,B_0,A_1,B_1\) 为式（82）的前两阶系数。
+
+\[
+\boxed{A_{n+1}=-2K_2B_n-A_{n-1}}
+\tag{84}
+\]
+
+\[
+\boxed{B_{n+1}=2A_n+2K_1B_n-B_{n-1}}
+\tag{85}
+\]
+
+式中，\(n\ge1\)；\(K_1,K_2\) 由式（80）给出；\(A_n,B_n\) 为式（82）的标量系数。
+
+---
+
+# 20 每一个 N48 系数如何进入二维材料张量
+
+\[
+\boxed{\mathbf F_{48}^{(n)}=a_n^{(F,*)}\mathcal C_n(\mathbf Y)=a_n^{(F,*)}(A_n\mathbf I+B_n\mathbf Y)}
+\tag{86}
+\]
+
+式中，\(\mathbf F_{48}^{(n)}\) 为 primitive \(F\) 的第 \(n\) 阶二维张量贡献；\(a_n^{(F,*)}\) 为式（75）的材料系数；\(A_n,B_n\) 为式（84）—式（85）的 Cayley–Hamilton 系数；\(\mathbf Y\) 为式（79）的标准化张量。
+
+\[
+\boxed{\mathbf F_{48}=\sum_{n=0}^{48}\mathbf F_{48}^{(n)}}
+\tag{87}
+\]
+
+式中，\(\mathbf F_{48}\) 分别代表 \(\mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\) 中任意一个二维材料张量。
+
+\[
+\boxed{A_F=\sum_{n=0}^{48}a_n^{(F,*)}A_n,\qquad B_F=\sum_{n=0}^{48}a_n^{(F,*)}B_n}
+\tag{88}
+\]
+
+式中，\(A_F,B_F\) 为 primitive \(F\) 汇总后的两个标量系数。
+
+\[
+\boxed{\mathbf F_{48}=A_F\mathbf I+B_F\mathbf Y}
+\tag{89}
+\]
+
+式中，\(\mathbf F_{48}\) 为二维 current material primitive；\(\mathbf I,\mathbf Y,A_F,B_F\) 分别由式（79）和式（88）定义。
+
+---
+
+# 21 二维 CC、TC、TT 相互作用张量
+
+\[
+\boxed{\mathbf{CC}=\det(\mathbf C)\,\mathbf C}
+\tag{90}
+\]
+
+式中，\(\mathbf{CC}\) 为二维双压相互作用张量；\(\mathbf C\) 为式（87）得到的压缩 primitive 张量；\(\det(\mathbf C)\) 为其行列式。
+
+\[
+\boxed{\mathbf{TC}=\mathbf C[\operatorname{tr}(\mathbf T)\mathbf I-\mathbf T]}
+\tag{91}
+\]
+
+式中，\(\mathbf{TC}\) 为二维拉压相互作用张量；\(\mathbf C\) 与 \(\mathbf T\) 分别为压缩和拉伸 primitive 张量；\(\operatorname{tr}(\mathbf T)\) 为 \(\mathbf T\) 的迹。
+
+\[
+\boxed{\mathbf{TT}=\det(\mathbf T)[\operatorname{tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}]}
+\tag{92}
+\]
+
+式中，\(\mathbf{TT}\) 为双拉相互作用张量；\(\mathbf T\) 为拉伸 primitive；\(\mathbf T^{(7)}\) 为独立编译的 \(T^7\) 张量 primitive；\(\det(\mathbf T)\) 为 \(\mathbf T\) 的行列式。
+
+\[
+\boxed{\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}}
+\tag{93}
+\]
+
+式中，\(\mathbf S\) 为无量纲 current stress tensor；\(\mathbf U\) 为 current master 张量；\(\mathbf{CC},\mathbf{TC},\mathbf{TT}\) 分别由式（90）—式（92）定义；\(a_{cc}\) 为双压相互作用系数；\(\rho\) 为式（3）的拉伸尺度；\(a_t\) 为式（49）的双拉相互作用系数。
+
+\[
+\boxed{\boldsymbol\sigma=f_c\mathbf S}
+\tag{94}
+\]
+
+式中，\(\boldsymbol\sigma\) 为物理应力张量；\(f_c\) 为混凝土单轴抗压强度；\(\mathbf S\) 为式（93）的无量纲应力张量。
+
+---
+
+# 22 Nguyen 连续二阶代表半波
+
+\[
+\boxed{X=\frac{\pi x}{b},\qquad Y=\frac{\pi y}{\ell},\qquad \zeta=\frac{2z}{t_p}}
+\tag{95}
+\]
+
+式中，\(X,Y\in[0,\pi]\) 为完整代表半波的无量纲面内坐标；\(\zeta\in[-1,1]\) 为厚度坐标；\(b\) 为代表半波宽度；\(\ell\) 为代表半波轴向长度；\(t_p\) 为板厚；\(z\) 为距中面的物理厚度坐标。
+
+\[
+\boxed{w_0=A_0\sin X\sin Y,\qquad w_1=A\sin X\sin Y}
+\tag{96}
+\]
+
+式中，\(w_0\) 为初始几何缺陷；\(w_1\) 为加载后相对于初始形状的附加挠曲；\(A_0\) 为初始缺陷幅值；\(A\) 为附加挠曲幅值。
+
+\[
+\boxed{q_0=\frac{A_0}{b},\qquad q=\frac{A}{b}}
+\tag{97}
+\]
+
+式中，\(q_0\) 为无量纲初始缺陷幅值；\(q\) 为当前局部挠曲广义坐标；\(A_0,A,b\) 含义见式（96）。
+
+\[
+\boxed{\chi_q=q_0q+\frac12q^2}
+\tag{98}
+\]
+
+式中，\(\chi_q\) 为 von Kármán 二阶几何项中初始缺陷—附加挠曲耦合项与附加挠曲平方项的无量纲组合。
+
+\[
+\boxed{e_x^{(0)}=\nu D,\qquad e_y^{(0)}=-D}
+\tag{99}
+\]
+
+式中，\(D>0\) 表示轴压 \(y\) 方向的无量纲平均压缩应变幅值；\(e_x^{(0)},e_y^{(0)}\) 为除局部挠曲外的归一化基础膜应变；\(\nu D\) 为泊松效应对应的横向应变。
+
+\[
+\boxed{C_{mx}=\frac{\pi^2}{\varepsilon_0}\chi_q,\qquad C_{my}=\frac{\pi^2b^2}{\varepsilon_0\ell^2}\chi_q}
+\tag{100}
+\]
+
+式中，\(C_{mx}\) 与 \(C_{my}\) 分别为 \(x,y\) 方向二阶膜应变系数；\(b,\ell\) 为代表半波宽度和轴向长度；\(\chi_q\) 为式（98）；\(\varepsilon_0\) 为参考压缩应变。
+
+\[
+\boxed{C_{mxy}=\frac{2\pi^2b}{\varepsilon_0\ell}\chi_q}
+\tag{101}
+\]
+
+式中，\(C_{mxy}\) 为几何非线性引起的工程剪应变膜项系数。
+
+\[
+\boxed{C_{bx}=\frac{\pi^2t_p}{2\varepsilon_0b}q,\qquad C_{by}=\frac{\pi^2t_pb}{2\varepsilon_0\ell^2}q}
+\tag{102}
+\]
+
+式中，\(C_{bx},C_{by}\) 分别为 \(x,y\) 法向应变的线性弯曲系数；\(t_p\) 为板厚；\(q\) 为式（97）的附加挠曲幅值。
+
+\[
+\boxed{C_{bxy}=-\frac{\pi^2t_p}{\varepsilon_0\ell}q}
+\tag{103}
+\]
+
+式中，\(C_{bxy}\) 为扭曲曲率引起的工程剪应变弯曲系数；负号来自 Kirchhoff 弯曲剪应变 \(-2zw_{,xy}\)。
+
+\[
+\boxed{e_x=\nu D+C_{mx}\cos^2X\sin^2Y+C_{bx}\sin X\sin Y\,\zeta}
+\tag{104}
+\]
+
+式中，\(e_x=\varepsilon_x/\varepsilon_0\)；\(D,\nu,C_{mx},C_{bx},X,Y,\zeta\) 分别由式（95）、式（99）、式（100）、式（102）定义。
+
+\[
+\boxed{e_y=-D+C_{my}\sin^2X\cos^2Y+C_{by}\sin X\sin Y\,\zeta}
+\tag{105}
+\]
+
+式中，\(e_y=\varepsilon_y/\varepsilon_0\)；\(C_{my},C_{by}\) 分别由式（100）、式（102）定义，其余符号同式（104）。
+
+\[
+\boxed{g_{xy}=C_{mxy}\sin X\cos X\sin Y\cos Y+C_{bxy}\cos X\cos Y\,\zeta}
+\tag{106}
+\]
+
+式中，\(g_{xy}=\gamma_{xy}/\varepsilon_0\) 为归一化工程剪应变；\(C_{mxy}\) 与 \(C_{bxy}\) 分别由式（101）和式（103）定义。
+
+\[
+\boxed{\varepsilon_x=\varepsilon_0e_x,\qquad \varepsilon_y=\varepsilon_0e_y,\qquad \gamma_{xy}=\varepsilon_0g_{xy}}
+\tag{107}
+\]
+
+式中，\(\varepsilon_0\) 为参考压缩应变；\(e_x,e_y,g_{xy}\) 分别由式（104）—式（106）给出。
+
+---
+
+# 23 D15 完整半波解析矩
+
+\[
+\boxed{J_\Omega=\frac{b\ell t_p}{2\pi^2}}
+\tag{108}
+\]
+
+式中，\(J_\Omega\) 为从 \((x,y,z)\) 到 \((X,Y,\zeta)\) 的体积 Jacobian；\(b,\ell,t_p\) 分别为代表半波宽度、长度和板厚。
+
+\[
+\boxed{Q(X,Y,\zeta)=\sum_{i,j,k}c_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta)}
+\tag{109}
+\]
+
+式中，\(Q\) 为任一待积标量场；\(c_{ijk}\) 为有限解析系数；\(i,j,k\) 分别为 \(X,Y,\zeta\) 三个方向的解析基阶次；\(\mathcal C_n\) 为第一类 Chebyshev 多项式。
+
+\[
+\boxed{M_n=\int_0^\pi\mathcal C_n(\sin X)\,dX=\begin{cases}\pi,&n=0,\\ \dfrac{2\sin(n\pi/2)}{n},&n\ge1\end{cases}}
+\tag{110}
+\]
+
+式中，\(M_n\) 为第 \(n\) 阶完整半波面内精确矩；\(n\) 为解析基阶次。
+
+\[
+\boxed{Z_k=\int_{-1}^1\mathcal C_k(\zeta)\,d\zeta=\begin{cases}0,&k\text{为奇数},\\ \dfrac{2}{1-k^2},&k\text{为偶数}\end{cases}}
+\tag{111}
+\]
+
+式中，\(Z_k\) 为第 \(k\) 阶厚度精确矩；\(k\) 为厚度解析基阶次。
+
+\[
+\boxed{\mathscr D[Q]=\sum_{i,j,k}c_{ijk}M_iM_jZ_k}
+\tag{112}
+\]
+
+式中，\(\mathscr D[\cdot]\) 为完整代表半波的无量纲精确矩收缩算子；\(c_{ijk}\) 为式（109）的解析系数；\(M_i,M_j,Z_k\) 分别由式（110）和式（111）确定。
+
+---
+
+# 24 每一个 N48 项如何进入 D15
+
+\[
+\boxed{[A_n\delta_{ab}+B_nY_{ab}]=\sum_{i,j,k}\phi_{ijk,ab}^{(F,n)}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta)}
+\tag{113}
+\]
+
+式中，\(a,b\in\{x,y\}\) 为张量分量指标；\(\delta_{ab}\) 为 Kronecker delta；\(\phi_{ijk,ab}^{(F,n)}\) 为第 \(n\) 个材料项经 Cayley–Hamilton 提升后产生的有限空间解析系数；\(A_n,B_n,Y_{ab}\) 分别由式（79）—式（85）确定。
+
+\[
+\boxed{c_{ijk,ab}^{(F,n)}=a_n^{(F,*)}\phi_{ijk,ab}^{(F,n)}}
+\tag{114}
+\]
+
+式中，\(c_{ijk,ab}^{(F,n)}\) 为 primitive \(F\) 的第 \(n\) 个 N48 系数对空间解析项 \((i,j,k)\) 的实际贡献；\(a_n^{(F,*)}\) 为式（75）的材料系数；\(\phi_{ijk,ab}^{(F,n)}\) 为式（113）的结构—材料代数系数。
+
+\[
+\boxed{\mathscr D[F_{ab}^{(n)}]=a_n^{(F,*)}\sum_{i,j,k}\phi_{ijk,ab}^{(F,n)}M_iM_jZ_k}
+\tag{115}
+\]
+
+式中，\(\mathscr D[F_{ab}^{(n)}]\) 为第 \(n\) 个材料项对最终完整半波积分的贡献；其余符号分别由式（110）—式（114）定义。
+
+\[
+\boxed{\mathcal C_m(\chi)\mathcal C_n(\chi)=\frac12[\mathcal C_{m+n}(\chi)+\mathcal C_{|m-n|}(\chi)]}
+\tag{116}
+\]
+
+式中，\(\chi\) 表示任一标准 Chebyshev 自变量；\(m,n\) 为两个基函数阶次。该式使 \(\mathbf{CC},\mathbf{TC},\mathbf{TT}\) 中的乘积全部转化为有限系数卷积，而不需要空间乘点。
+
+\[
+\boxed{\mathfrak C[\mathbf S]=\mathfrak C[\mathbf U]-a_{cc}\mathfrak C[\mathbf{CC}]+\mathfrak C[\mathbf{TC}]-\rho a_t\mathfrak C[\mathbf{TT}]}
+\tag{117}
+\]
+
+式中，\(\mathfrak C[\cdot]\) 表示把连续解析张量场转换成有限 \((i,j,k)\) 系数集合的代数算子；所有乘积内部均由式（116）诱导的有限卷积精确完成；\(\mathbf S\) 由式（93）定义。
+
+---
+
+# 25 混凝土轴向承载力
+
+\[
+\boxed{P_c=-\frac1\ell\int_{\Omega_h}\sigma_{yy}\,dV}
+\tag{118}
+\]
+
+式中，\(P_c\) 为混凝土对轴向承载力的贡献；\(\Omega_h\) 为一个完整代表半波体积；\(\sigma_{yy}\) 为物理轴向应力；负号用于把压应力对应的承载力取正；\(\ell\) 为代表半波轴向长度。
+
+\[
+\boxed{S_{yy}=\sum_{i,j,k}p_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta)}
+\tag{119}
+\]
+
+式中，\(p_{ijk}\) 为最终无量纲轴向应力分量 \(S_{yy}\) 的有限解析系数。
+
+\[
+\boxed{P_c=-\frac{f_cb t_p}{2\pi^2}\sum_{i,j,k}p_{ijk}M_iM_jZ_k}
+\tag{120}
+\]
+
+式中，\(P_c\) 为混凝土轴向力；\(f_c\) 为混凝土抗压强度；\(b\) 为代表半波宽度；\(t_p\) 为板厚；\(p_{ijk}\) 为式（119）的轴向应力系数；\(M_i,M_j,Z_k\) 为 D15 精确矩。若 \(f_c\) 用 MPa、长度用 mm，则式（120）结果为 N，转为 kN 时除以 1000。
+
+---
+
+# 26 幅值 q 的混凝土广义残量
+
+\[
+\boxed{\mathbf e=\frac{\mathbf E}{\varepsilon_0}}
+\tag{121}
+\]
+
+式中，\(\mathbf e\) 为物理应变张量按参考压缩应变 \(\varepsilon_0\) 归一化后的张量；\(\mathbf E\) 为式（6）的物理应变。
+
+\[
+\boxed{\mathbf e=(1+\nu)\mathbf X-\nu\operatorname{tr}(\mathbf X)\mathbf I}
+\tag{122}
+\]
+
+式中，\(\mathbf X\) 为无量纲等效应变张量；\(\nu\) 为泊松比；\(\mathbf I\) 为单位张量。
+
+\[
+\boxed{Q_q=\mathbf S:\frac{\partial\mathbf e}{\partial q}}
+\tag{123}
+\]
+
+式中，\(Q_q\) 为无量纲应力对广义幅值 \(q\) 的功共轭被积量；冒号“:”表示二阶张量双点积；\(\mathbf S\) 为式（93）的无量纲应力张量；\(\partial\mathbf e/\partial q\) 为由 Nguyen 二阶应变场对 \(q\) 的解析导数。
+
+\[
+\boxed{Q_q=\sum_{i,j,k}r_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta)}
+\tag{124}
+\]
+
+式中，\(r_{ijk}\) 为广义功被积量 \(Q_q\) 的有限解析系数。
+
+\[
+\boxed{R_{q,c}=f_c\varepsilon_0J_\Omega\sum_{i,j,k}r_{ijk}M_iM_jZ_k}
+\tag{125}
+\]
+
+式中，\(R_{q,c}\) 为混凝土对无量纲幅值 \(q\) 的广义残量；\(f_c\) 为抗压强度；\(\varepsilon_0\) 为参考压缩应变；\(J_\Omega\) 为式（108）的体积 Jacobian；\(r_{ijk}\) 为式（124）的系数；\(M_i,M_j,Z_k\) 为 D15 精确矩。因为 \(q\) 无量纲，\(R_{q,c}\) 的物理量纲为功或 N·mm。
+
+---
+
+# 27 钢筋贡献
+
+\[
+\boxed{\varepsilon_{s,\alpha}^{(\ell_s)}=\varepsilon_0e_\alpha(X,Y,\zeta_{\ell_s})}
+\tag{126}
+\]
+
+式中，\(\varepsilon_{s,\alpha}^{(\ell_s)}\) 为第 \(\ell_s\) 层、\(\alpha\in\{x,y\}\) 方向钢筋应变；\(\zeta_{\ell_s}=2z_{\ell_s}/t_p\) 为该钢筋层的无量纲厚度坐标；\(e_\alpha\) 为式（104）或式（105）的归一化法向应变。
+
+\[
+\boxed{\sigma_{s,\alpha}^{(\ell_s)}=E_s\varepsilon_{s,\alpha}^{(\ell_s)}}
+\tag{127}
+\]
+
+式中，\(\sigma_{s,\alpha}^{(\ell_s)}\) 为钢筋应力；\(E_s\) 为钢筋弹性模量；\(\varepsilon_{s,\alpha}^{(\ell_s)}\) 为式（126）的钢筋应变。若达到屈服条件，则必须切换到冻结的钢筋材料支，而不能继续使用式（127）。
+
+\[
+\boxed{P_s=-\frac{t_p}{\ell}\sum_{\ell_s}\rho_{s,y}^{(\ell_s)}\int_0^b\int_0^\ell\sigma_{s,y}^{(\ell_s)}(x,y)\,dx\,dy}
+\tag{128}
+\]
+
+式中，\(P_s\) 为轴压 y 方向钢筋承载力；\(\rho_{s,y}^{(\ell_s)}\) 为第 \(\ell_s\) 层 y 向钢筋相对于混凝土板体积的等效配筋率；\(t_p\) 为板厚；\(\sigma_{s,y}^{(\ell_s)}\) 为式（127）的钢筋应力；\(b,\ell\) 为代表半波宽度和长度。
+
+\[
+\boxed{R_{q,s}=t_p\sum_{\alpha\in\{x,y\}}\sum_{\ell_s}\rho_{s,\alpha}^{(\ell_s)}\int_0^b\int_0^\ell\sigma_{s,\alpha}^{(\ell_s)}\frac{\partial\varepsilon_{s,\alpha}^{(\ell_s)}}{\partial q}\,dx\,dy}
+\tag{129}
+\]
+
+式中，\(R_{q,s}\) 为全部钢筋对广义幅值 q 的功共轭残量；\(\rho_{s,\alpha}^{(\ell_s)}\) 为对应钢筋层和方向的配筋率；其余符号见式（126）—式（128）。该面积积分同样由完整半波解析矩闭合，不使用空间 Gauss 点。
+
+---
+
+# 28 总平衡方程
+
+\[
+\boxed{P(D,q)=P_c(D,q)+P_s(D,q)}
+\tag{130}
+\]
+
+式中，\(P\) 为结构总轴向承载力；\(P_c\) 为式（120）的混凝土贡献；\(P_s\) 为式（128）的钢筋贡献；\(D,q\) 为两个当前广义变量。
+
+\[
+\boxed{R_q(D,q)=R_{q,c}(D,q)+R_{q,s}(D,q)}
+\tag{131}
+\]
+
+式中，\(R_q\) 为总幅值平衡残量；\(R_{q,c}\) 和 \(R_{q,s}\) 分别由式（125）和式（129）给出。
+
+\[
+\boxed{R_q(D,q)=0}
+\tag{132}
+\]
+
+式中，满足式（132）的 \((D,q)\) 组合构成当前单调轴压下的非线性平衡支。
+
+---
+
+# 29 同源解析导数与极限条件
+
+\[
+\boxed{P_{,D}=\frac{\partial P}{\partial D},\qquad P_{,q}=\frac{\partial P}{\partial q}}
+\tag{133}
+\]
+
+式中，\(P_{,D}\) 与 \(P_{,q}\) 分别为总轴向承载力对广义压缩变量 \(D\) 和局部幅值 \(q\) 的偏导数。
+
+\[
+\boxed{R_{q,D}=\frac{\partial R_q}{\partial D},\qquad R_{q,q}=\frac{\partial R_q}{\partial q}}
+\tag{134}
+\]
+
+式中，\(R_{q,D}\) 与 \(R_{q,q}\) 为总幅值残量对 \(D\) 与 \(q\) 的同源偏导数。
+
+\[
+\boxed{\frac{dq}{dD}=-\frac{R_{q,D}}{R_{q,q}}}
+\tag{135}
+\]
+
+式中，\(dq/dD\) 为沿 \(R_q=0\) 平衡支局部幅值随轴向压缩变量的变化率；式（135）由对式（132）全微分得到。
+
+\[
+\boxed{\frac{dP}{dD}=P_{,D}-P_{,q}\frac{R_{q,D}}{R_{q,q}}}
+\tag{136}
+\]
+
+式中，\(dP/dD\) 为实际平衡路径上的总轴力切线；其余四个偏导数分别由式（133）和式（134）定义。
+
+\[
+\boxed{L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0}
+\tag{137}
+\]
+
+式中，\(L\) 为极限点判别函数；当同时满足 \(R_q=0\) 与 \(L=0\) 时，平衡支轴力对 \(D\) 的切线为零，即得到当前理论极限承载状态。
+
+\[
+\boxed{\begin{cases}R_q(D,q)=0,\\ L(D,q)=0\end{cases}}
+\tag{138}
+\]
+
+式中，未知量仅为 \(D\) 与 \(q\)；所有结构积分已经在进入该两变量方程前由 D15 精确收缩完成。
+
+---
+
+# 30 current tangent 与周思铭 Dx-Dy-H 稳定门
+
+\[
+\boxed{\mathbb C_t=\frac{\partial\boldsymbol\sigma}{\partial\mathbf E}}
+\tag{139}
+\]
+
+式中，\(\mathbb C_t\) 为当前二维材料一致切线四阶张量；\(\boldsymbol\sigma\) 为式（94）的物理应力张量；\(\mathbf E\) 为式（6）的物理应变张量。该切线由同一个 R10→N48-C1/MM current-map 直接解析求导，不另建独立材料切线模型。
+
+\[
+\boxed{C_{xx,t},\ C_{yy,t},\ C_{xy,t},\ C_{yx,t},\ G_t}
+\tag{140}
+\]
+
+式中，\(C_{xx,t}\) 为 x 向法向应力对 x 向法向应变的当前切线；\(C_{yy,t}\) 为 y 向法向应力对 y 向法向应变的当前切线；\(C_{xy,t},C_{yx,t}\) 为两个交叉法向切线；\(G_t\) 为当前工程剪切切线。
+
+\[
+\boxed{D_x=\frac{t_p^3}{12}C_{xx,t}}
+\tag{141}
+\]
+
+式中，\(D_x\) 为抵抗 x 方向曲率的当前等效弯曲刚度；\(t_p\) 为板厚；\(C_{xx,t}\) 为式（140）的 x 向 current tangent。
+
+\[
+\boxed{D_y=\frac{t_p^3}{12}C_{yy,t}}
+\tag{142}
+\]
+
+式中，\(D_y\) 为抵抗轴压 y 方向曲率的当前等效弯曲刚度；\(C_{yy,t}\) 为轴向 current tangent。
+
+\[
+\boxed{D_{\mu,\mathrm{eff}}=\frac{t_p^3}{24}(C_{xy,t}+C_{yx,t})}
+\tag{143}
+\]
+
+式中，\(D_{\mu,\mathrm{eff}}\) 为泊松/交叉法向耦合对应的等效刚度；下标 eff 表示对两个交叉切线进行对称化后的稳定等效值。
+
+\[
+\boxed{D_{66}=\frac{t_p^3}{12}G_t}
+\tag{144}
+\]
+
+式中，\(D_{66}\) 为 current shear tangent 对扭转稳定刚度的贡献；\(G_t\) 为式（140）的当前工程剪切切线。
+
+\[
+\boxed{H_{\mathrm{eff}}=D_{\mu,\mathrm{eff}}+2D_{66}}
+\tag{145}
+\]
+
+式中，\(H_{\mathrm{eff}}\) 为进入正交各向异性 Navier 稳定方程的组合耦合刚度；\(D_{\mu,\mathrm{eff}}\) 与 \(D_{66}\) 分别由式（143）、式（144）确定。
+
+\[
+\boxed{\alpha=\frac{\pi}{b},\qquad \beta=\frac{\pi}{\ell}}
+\tag{146}
+\]
+
+式中，\(\alpha,\beta\) 分别为 x,y 两方向的基本 Navier 波数；\(b,\ell\) 为代表半波宽度和长度。
+
+\[
+\boxed{N_{y,cr}^{Z}=\frac{D_x\alpha^4+2H_{\mathrm{eff}}\alpha^2\beta^2+D_y\beta^4}{\beta^2}}
+\tag{147}
+\]
+
+式中，\(N_{y,cr}^{Z}\) 为以周思铭 \(D_x-D_y-H\) 分解解释的轴压方向切线临界膜力；\(D_x,D_y,H_{\mathrm{eff}}\) 分别由式（141）、式（142）、式（145）定义；\(\alpha,\beta\) 为式（146）的 Navier 波数。该式在本理论中作为 current tangent 的稳定性验收门，不取代式（138）的完整 nonlinear 极限承载力联立方程。
+
+---
+
+# 31 从一个 N48 系数到最终极限承载力的完整路径
+
+\[
+\boxed{a_n^{(F,*)}\rightarrow a_n^{(F,*)}(A_n\mathbf I+B_n\mathbf Y)\rightarrow \mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\rightarrow \mathbf S\rightarrow\{p_{ijk},r_{ijk}\}\rightarrow\{M_iM_jZ_k\}\rightarrow\{P_c,R_{q,c}\}\rightarrow\{P,R_q,L\}}
+\tag{148}
+\]
+
+式中，\(a_n^{(F,*)}\) 为更新后的第 \(n\) 个 N48 材料系数；\(A_n,B_n,\mathbf Y\) 为 Cayley–Hamilton 提升量；\(\mathbf S\) 为无量纲应力张量；\(p_{ijk}\) 为轴向应力系数；\(r_{ijk}\) 为幅值功共轭系数；\(M_i,M_j,Z_k\) 为 D15 精确矩；\(P_c,R_{q,c}\) 为混凝土轴力和幅值残量；\(P,R_q,L\) 为最终结构求解量。
+
+---
+
+# 32 最终参数释义总表
+
+| 符号 | 含义 |
+|---|---|
+| \(f_c\) | 混凝土单轴抗压强度 |
+| \(E_0\) | 混凝土初始弹性模量 |
+| \(\varepsilon_0\) | 参考压缩应变 |
+| \(\nu\) | 混凝土泊松比 |
+| \(\kappa\) | 归一化初始斜率 \(E_0\varepsilon_0/f_c\) |
+| \(\rho\) | 冻结归一化拉伸强度尺度，当前为 0.1 |
+| \(x_{cr}\) | R10 拉伸特征坐标 |
+| \(\eta\) | R10 拉压平滑分离尺度 |
+| \(m_t\) | Foster 源拉伸下降段斜率参数 |
+| \(\eta_r\) | Foster 源转折平滑尺度 |
+| \(W_{src}\) | Foster 源材料功 |
+| \(h\) | 由材料功闭合得到的 R10 拉伸峰值 |
+| \(u_r\) | R10 拉伸下降支残余应力 |
+| \(\mathbf E\) | 物理面内应变张量 |
+| \(\mathbf E_u\) | 等效单轴应变张量 |
+| \(\mathbf X\) | 无量纲等效单轴应变张量 |
+| \(\lambda_\pm\) | \(\mathbf X\) 的两个主等效应变 |
+| \(\Pi_\eta\) | 平滑正部函数 |
+| \(c_i,t_i\) | 第 i 主方向的压缩、拉伸材料坐标 |
+| \(C\) | 一维压缩 primitive |
+| \(T\) | 一维拉伸 primitive |
+| \(T^7\) | 双拉相互作用使用的独立 primitive |
+| \(U\) | 一维 current master |
+| \(a_{cc}\) | 双压相互作用系数 |
+| \(a_t\) | 双拉相互作用系数 \(1-2^{-1/8}\) |
+| \(s_\pm\) | 两个主方向无量纲应力 |
+| \(\lambda_a,\lambda_b\) | N48 编译区间下、上界 |
+| \(\lambda_c,\lambda_h\) | N48 编译区间中心、半宽 |
+| \(\xi\) | N48 标准 Chebyshev 坐标 |
+| \(\mathcal C_n\) | 第 n 阶第一类 Chebyshev 多项式 |
+| \(\theta_j,\lambda_j\) | 第 j 个一维材料 Chebyshev 根点角度和材料坐标 |
+| \(a_n^{(F,0)}\) | primitive F 的 direct N48 系数 |
+| \(\mathbf V\) | 49×49 材料根点矩阵 |
+| \(\mathbf H=\mathbf V^T\mathbf V\) | N48-C1 正规矩阵 |
+| \(\mathbf G\) | 零点函数值/一阶导数约束矩阵 |
+| \(\mathbf d_F\) | R10 的严格 C1 锚点目标 |
+| \(a_n^{(F,C1)}\) | N48-C1 系数 |
+| \(a_n^{(T,MM)}\) | T 的严格 C1 constrained-minimax 系数 |
+| \(a_n^{(F,*)}\) | 更新后的最终 N48-C1/MM 系数 |
+| \(\mathcal B_\eta\) | R10 近零拉伸边界层 |
+| \(\lambda_\eta\) | 边界层正端点 |
+| \(\mathbf Y\) | 标准化二维等效应变张量 |
+| \(K_1,K_2\) | \(\mathbf Y\) 的迹与行列式 |
+| \(A_n,B_n\) | Cayley–Hamilton 二维递推系数 |
+| \(\mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\) | 四个二维 current material primitive |
+| \(\mathbf{CC},\mathbf{TC},\mathbf{TT}\) | 双压、拉压、双拉相互作用张量 |
+| \(\mathbf S\) | 无量纲二维 current stress tensor |
+| \(\boldsymbol\sigma\) | 物理应力张量 \(f_c\mathbf S\) |
+| \(b\) | 完整代表半波宽度 |
+| \(\ell\) | 完整代表半波轴向长度 |
+| \(t_p\) | 板厚 |
+| \(x,y,z\) | 物理空间坐标 |
+| \(X,Y,\zeta\) | 无量纲完整半波坐标 |
+| \(A_0,A\) | 初始缺陷幅值与加载后附加挠曲幅值 |
+| \(q_0,q\) | 归一化初始缺陷与附加挠曲幅值 |
+| \(D\) | 无量纲平均轴向压缩广义变量 |
+| \(\chi_q\) | \(q_0q+q^2/2\)，二阶几何组合量 |
+| \(C_{mx},C_{my},C_{mxy}\) | 二阶膜应变系数 |
+| \(C_{bx},C_{by},C_{bxy}\) | 弯曲应变系数 |
+| \(J_\Omega\) | 完整代表半波坐标变换 Jacobian |
+| \(c_{ijk}\) | D15 待积场有限解析系数 |
+| \(M_i,M_j\) | 两个面内完整半波精确矩 |
+| \(Z_k\) | 厚度精确矩 |
+| \(\mathscr D\) | D15 精确矩收缩算子 |
+| \(p_{ijk}\) | \(S_{yy}\) 的有限解析系数 |
+| \(r_{ijk}\) | \(Q_q\) 的有限解析系数 |
+| \(P_c,P_s,P\) | 混凝土、钢筋、总轴向承载力 |
+| \(R_{q,c},R_{q,s},R_q\) | 混凝土、钢筋、总幅值广义残量 |
+| \(P_{,D},P_{,q}\) | 总轴力对 D,q 的偏导数 |
+| \(R_{q,D},R_{q,q}\) | 总幅值残量对 D,q 的偏导数 |
+| \(L\) | 极限点判别函数 |
+| \(\mathbb C_t\) | 物理 current tangent 四阶张量 |
+| \(C_{xx,t},C_{yy,t},C_{xy,t},C_{yx,t},G_t\) | current tangent 的板面分量 |
+| \(D_x,D_y\) | 周思铭式两个方向当前弯曲刚度 |
+| \(D_{\mu,\mathrm{eff}}\) | 交叉法向切线的对称化耦合刚度 |
+| \(D_{66}\) | 剪切切线对应的扭转刚度 |
+| \(H_{\mathrm{eff}}\) | \(D_{\mu,\mathrm{eff}}+2D_{66}\) |
+| \(\alpha,\beta\) | 两方向基本 Navier 波数 |
+| \(N_{y,cr}^{Z}\) | 周思铭/Navier current-tangent 稳定验收膜力 |
+
+---
+
+# 33 理论身份总结
+
+\[
+\boxed{\text{R10 原始材料参数}\rightarrow\text{闭式 }U,C,T,T^7\rightarrow\text{N48-C1/MM 系数}\rightarrow\text{Cayley--Hamilton}\rightarrow\text{Nguyen 连续二阶半波}\rightarrow\text{有限解析系数代数}\rightarrow\text{D15}\rightarrow R_q=0,\ L=0}
+\tag{149}
+\]
+
+式中，整个结构空间从始至终没有 Gauss、Simpson、adaptive quadrature、空间 Chebyshev collocation、材料点网格或空间 cells；N48 的一维材料坐标只负责产生最终有限解析材料系数。
