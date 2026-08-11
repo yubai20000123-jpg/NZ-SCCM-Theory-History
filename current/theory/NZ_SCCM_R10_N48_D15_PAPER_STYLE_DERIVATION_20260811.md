@@ -222,8 +222,7 @@ r+(m_t-1)H(r,1)-m_tH(r,10).
 对应的归一化拉伸应力为
 
 \[
-\boxed{
-u_{t,src}(t)=\rho T_{src}(t/x_{cr}).}
+\boxed{u_{t,src}(t)=\rho T_{src}(t/x_{cr}).}
 \tag{15}
 \]
 
@@ -313,8 +312,7 @@ b_5=6h-3\rho.}
 因此
 
 \[
-\boxed{
-u_1(\tau)=
+\boxed{u_1(\tau)=
 \rho\tau
 +(10h-6\rho)\tau^3
 +(8\rho-15h)\tau^4
@@ -338,8 +336,7 @@ s=\frac{t-x_{cr}}{9x_{cr}},
 令残余拉伸水平为 \(u_r\)，并要求在 \(s=0\) 和 \(s=1\) 两端的一阶、二阶导数均为零。唯一五次平滑连接式为
 
 \[
-\boxed{
-u_2(s)=
+\boxed{u_2(s)=
 h+(u_r-h)(10s^3-15s^4+6s^5).}
 \tag{25}
 \]
