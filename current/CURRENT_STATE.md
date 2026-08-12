@@ -1,7 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-12 14:20 +08:00  
-**Purpose:** 唯一当前工作入口；反映独立理论审计后的正式闭合状态。
+**Updated:** 2026-08-12 14:51 +08:00  
+**Purpose:** 唯一当前工作入口；反映独立理论审计后的正式闭合状态，以及 Case21 在该闭合理论下的全新计算闭合。
 
 ## 0. Highest-priority invariants
 
@@ -11,6 +11,11 @@ ACTIVE_MODE = m=1
 KINEMATICS = NGUYEN_SECOND_ORDER
 R10_MATERIAL_TARGET = FROZEN
 N48_ORDER = 48
+U_COMPILER  = N48-C1
+C_COMPILER  = N48-C1
+T7_COMPILER = N48-C1
+T_COMPILER  = N48-C1-CONSTRAINED-MINIMAX
+CAYLEY_HAMILTON = GOVERNING
 EXACT_MOMENT_ENGINE = D15_GENERAL_TRIG_MOMENTS
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
@@ -22,77 +27,52 @@ Production prohibits spatial Gauss/Simpson/adaptive quadrature, spatial Chebyshe
 
 ---
 
-## 1. Independent theory audit — purpose achieved
+## 1. Formal theory audit and closure
 
-The independent audit did **not** overturn the central theory architecture. It confirmed that large parts of R10 internal algebra, Cayley–Hamilton, Nguyen second-order kinematics and NC-R1 level-set geometry are internally sound, while identifying local formal gaps in the written derivation.
+The independent theory audit did not overturn the central architecture:
 
-Audit outcome is preserved as a challenge record, but its global `BLOCKED` label is not interpreted as failure of the central zero-spatial analytic idea.
+\[
+\boxed{
+\text{continuous complete halfwave}
+\to R10
+\to N48\text{-}C1/MM
+\to \text{CH}
+\to \text{Nguyen}
+\to \text{D15 exact moments}
+\to P(D,q),R_q(D,q),L(D,q)
+\to \text{low-dimensional limit root}.}
+\]
 
-Closure matrix:
+The effective audit criticisms were closed without reopening R10, increasing N48 order, introducing spatial quadrature or creating a second Pu solver.
 
-- `current/audits/NZ_SCCM_NC_R1_INDEPENDENT_AUDIT_CLOSURE_MATRIX_20260812.md`
-
-Current architecture verdict:
-
-```text
-CORE_ZERO_SPATIAL_ANALYTIC_IDEA = RETAINED / PASS AT FORMAL-ARCHITECTURE LEVEL
-LOAD_STEP_MATERIAL_HISTORY_REQUIRED = NO
-SPATIAL_GAUSS_REQUIRED = NO
-MATERIAL_POINT_GRID_REQUIRED = NO
-LOW_DIMENSIONAL_LIMIT_ROOT_SYSTEM = YES
-```
-
-Precise meaning of “non-iterative ultimate-load theory”:
-
-- no structural load-step/material-history iteration is required by the theory;
-- no spatial numerical quadrature is required;
-- after material coefficients are frozen, the structural problem reduces to finite low-dimensional `P(D,q)`, `Rq(D,q)`, `L(D,q)`;
-- joint roots may be obtained by algebraic elimination/all-real-root isolation or any equivalent low-dimensional backend;
-- a chosen math backend may internally iterate without changing the formal theory identity.
-
----
-
-## 2. Current governing formal theory-writing baseline
-
-Canonical formal closure:
+Current canonical formal theory:
 
 - `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md` **← CURRENT GOVERNING FORMAL THEORY-WRITING BASELINE**
-- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_CANONICAL_ERRATA_20260812.md` **← EDITORIAL SYMBOL ERRATA ONLY**
-
-Pre-closure writing files are retained only for history/comparison:
-
-- `current/theory/NZ_SCCM_NC_R1_ZHOU_STYLE_FORMAL_EQUATION_DERIVATION_20260812.md`
-- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md`
-- `current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md`
-- `current/theory/NZ_SCCM_R10_N48C1MM_D15_EQUATION_BY_EQUATION_DERIVATION_20260812.md`
+- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_CANONICAL_ERRATA_20260812.md`
 
 Governance:
 
 - `current/governance/NZ_SCCM_NC_R1_FORMAL_CLOSURE_DECISION_20260812.md`
 - `current/governance/NZ_SCCM_NC_R1_LIMIT_ROOT_PRODUCTION_CONTRACT_V1_20260812.md`
 
-No new theory number such as `NC-R1.1` or `NC-R2` is created. This is a formal closure of the existing NC-R1 theory chain.
+No new theory number such as NC-R1.1 or NC-R2 is created.
 
 ---
 
-## 3. Governing NC material and compiler
+## 2. Governing material/compiler identity
 
 ```text
 R10 = FROZEN
-U_COMPILER  = N48-C1
-C_COMPILER  = N48-C1
-T7_COMPILER = N48-C1
-T_COMPILER  = N48-C1-CONSTRAINED-MINIMAX
+N48_ORDER = 48
+U = N48-C1
+C = N48-C1
+T7 = N48-C1
+T = N48-C1-CONSTRAINED-MINIMAX
 ```
 
-The formal closure adds a deterministic identity for T if the primary constrained-minimax optimum is non-unique:
+The formal closure defines a unique T production coefficient even if the primary minimax optimum is non-unique: preserve the same minimax optimum and select the unique minimum-H-distance solution relative to the T-C1 reference.
 
-1. keep the same primary minimax error;
-2. among all primary minimizers choose the unique minimum H-distance solution relative to the T-C1 reference.
-
-This adds no material mechanism and does not change N48 order.
-
-Existing engineering compiler evidence remains:
+Current compiler evidence remains:
 
 ```text
 R10_VALUE_ANCHOR_GATE = PASS
@@ -103,47 +83,27 @@ CAYLEY_HAMILTON_COMPATIBILITY = PASS
 D15_COMPATIBILITY = PASS
 ```
 
-Full-hull value and scaled first-derivative errors must be reported for each new compiler interval; no new theorem-level remainder threshold is imposed.
+No theorem-level 1e-10 global remainder certificate is required as an engineering production gate.
 
 ---
 
-## 4. a_cc source identity
+## 3. D15 formal identity
 
-```text
-a_cc = 0.1072329249362415
-```
-
-Current identity:
-
-```text
-PROJECT-FROZEN LOW-PARAMETER BIAXIAL-COMPRESSION PHYSICAL TARGET
-```
-
-It is selected so the equal-biaxial target meets the current conservative CC envelope while the uniaxial axes remain unchanged. It is **not** claimed as a verbatim Nguyen/Foster constant and is **not** a panel-Pu calibration parameter.
-
----
-
-## 5. D15 formal closure
-
-The pre-closure restricted statement that every intermediate tensor component can be represented only as a function of `sin X`, `sin Y`, `zeta` is superseded.
-
-Governing exact-moment basis:
+The governing exact-moment basis is the general finite trigonometric-thickness basis
 
 \[
-Q=\sum c_{prush}\sin^pX\cos^rX\sin^uY\cos^sY\zeta^h.
+Q=\sum c_{prush}\sin^pX\cos^rX\sin^uY\cos^sY\zeta^h,
 \]
 
-Exact moments:
+with exact moments
 
 \[
 J_{pr}=\int_0^\pi\sin^pX\cos^rX\,dX,
-\]
-
-\[
+\qquad
 Z_h=\int_{-1}^{1}\zeta^h\,d\zeta.
 \]
 
-Thus naked cosine factors in intermediate off-diagonal fields do not invalidate D15. Final scalar integrands are finite trigonometric polynomials and are contracted by exact moments.
+Thus naked cosine factors in intermediate fields do not invalidate D15. Final scalar integrands are finite analytic fields contracted by exact moments.
 
 ```text
 D15_GENERAL_EXACT_TRIG_MOMENTS = GOVERNING
@@ -152,111 +112,70 @@ FORMAL_SPATIAL_QUADRATURE = 0
 
 ---
 
-## 6. Rebar formal closure
+## 4. Rebar and axial-load identity
 
-The governing formal derivation now explicitly defines:
+The governing formal theory explicitly defines the source steel stress law, direction strain \(\mathbf n^T\mathbf E\mathbf n\), smeared-layer thickness, \(P_s(D,q)\) and \(R_{q,s}(D,q)\).
 
-```text
-source steel stress law
-rebar-direction strain n^T E n
-smeared layer thickness t_s = rho_s t_p
-Ps(D,q)
-Rq,s(D,q)
-```
-
-The formulas are continuous-area/line-family equivalents and use the same Nguyen kinematics.
-
-Production condition:
-
-```text
-SUPPORTED_SINGLE_REBAR_BRANCH_OVER_COMPLETE_HALFWAVE = REQUIRED
-```
-
-If one reinforcement family spatially crosses unsupported material branches and no single-domain analytic contract is frozen:
+If a reinforcement family crosses an unsupported material branch and no single-domain analytic contract is frozen:
 
 ```text
 BLOCKED_AT_STEEL_BRANCH
 ```
 
-No spatial rebar Gauss points/cells are introduced.
+No spatial rebar Gauss points/cells may be introduced.
 
----
-
-## 7. Axial load identity
+The concrete load
 
 \[
-P_c=-\frac1\ell\int_{\Omega_h}\sigma_{yy}\,dV
+P_c=-\ell^{-1}\int_{\Omega_h}\sigma_{yy}\,dV
 \]
 
-is formally classified as the **representative-halfwave average axial load observable**, not as an unconditional local end-section reaction identity.
-
-This load observable is used to form the load path `P(D,q)` whose first primary-branch maximum defines current ultimate capacity.
+is classified as the representative-halfwave **average axial load observable**, not an unconditional local-end-reaction identity.
 
 ---
 
-## 8. NC-R1 root topology — governing
+## 5. NC-R1 root topology — governing
 
 \[
-\mathcal A=\{D\ge0,q\ge0,\text{ all compiler/material/rebar/source gates pass}\}.
+\mathcal A=\{D\ge0,q\ge0,\text{ all compiler/material/rebar/source gates pass}\},
 \]
 
 \[
 \Gamma_0=\operatorname{Conn}_{(0,0)}(\{R_q=0\}\cap\mathcal A).
 \]
 
-At regular points:
+At regular points,
 
 \[
 \mathbf t_0=(R_{q,q},-R_{q,D}),
-\]
-
-\[
+\qquad
 L=P_DR_{q,q}-P_qR_{q,D}=\nabla P\cdot\mathbf t_0.
 \]
 
 Unique production ultimate:
 
 \[
-P_u=\text{first }+\to-\text{ local maximum encountered from }(0,0)\text{ along }\Gamma_0.
+\boxed{P_u=\text{first }+\to-\text{ local maximum encountered from }(0,0)\text{ along }\Gamma_0.}
 \]
 
-The prior coordinate-rescaling ambiguity is closed by distinguishing scalar level-set residual re-expression from redefinition of a new energy-conjugate residual. Used consistently, both preserve `L_norm`.
-
-Root-repeatability metric explicitly assumes current production `q0 > 0`.
+Maximum-among-all-roots, experiment-nearest-root and historical-root targeting remain prohibited.
 
 ---
 
-## 9. Zhou current-tangent role — corrected and closed
-
-The original Zhou thesis has been read at the required target sections. It defines directional orthotropic bending/torsion stiffness language including `Dx` and `H=Dxy+Dmu`, and uses these quantities in stability equations.
-
-Current project does **not** transplant Zhou composite-wall section constants.
-
-For the nonlinear nonuniform current tangent field, the governing project identity is now:
+## 6. Zhou current-tangent role
 
 ```text
 ZHOU = FULL-FIELD CURRENT-TANGENT MODAL AUDIT / INTERPRETATION
 NOT = SECOND Pu SOLVER
 ```
 
-The canonical formal theory defines:
-
-- exact current material tangent field `Ct(X,Y,zeta;D,q)`;
-- basic Navier perturbation `phi=sinX sinY`;
-- full-field material and geometric modal tangent terms;
-- reinforcement tangent/geometric terms;
-- total modal audit quantity `K_Z`;
-- exact mode-projected `Dx*`, `Dy*`, `Dmu*`, `D66*`, `H*`.
-
-The old local formulas such as `t_p^3 Cxx,t / 12` remain only as the spatially uniform-tangent degeneration of the generalized projection.
-
-For uniform pure-y compression the modal audit reduces to the familiar Zhou/Navier critical-membrane-force form. For general nonlinear states the full-field `K_Z` is the audit quantity.
+For nonuniform current tangent fields, the canonical theory uses full-field exact modal second variation and D15-evaluable projected \(D_x^*,D_y^*,D_\mu^*,D_{66}^*,H^*\). Local \(t_p^3C_t/12\) formulas are only the uniform-tangent degeneration.
 
 ---
 
-## 10. Current structural identity
+## 7. Precise non-iterative structural identity
 
-Within frozen material coefficients and a globally supported rebar branch:
+After material coefficients are frozen and within a supported rebar branch,
 
 \[
 P(D,q)=\sum p_{ij}D^iq^j,
@@ -264,13 +183,11 @@ P(D,q)=\sum p_{ij}D^iq^j,
 R_q(D,q)=\sum r_{ij}D^iq^j,
 \]
 
-and
-
 \[
 L(D,q)=P_DR_{q,q}-P_qR_{q,D}.
 \]
 
-Thus the formal ultimate problem is the low-dimensional joint system
+Thus the formal ultimate problem is the finite low-dimensional joint system
 
 \[
 R_q(D,q)=0,
@@ -280,20 +197,141 @@ L(D,q)=0,
 
 followed by NC-R1 branch/root classification.
 
-This is the current precise sense in which the ultimate load is **not dependent on structural load-step/material-point iteration**.
+This means the theory does not depend on structural load-step/material-point iteration or spatial quadrature. A chosen low-dimensional mathematical backend may internally iterate without changing this formal identity.
 
 ---
 
-## 11. Execution boundary
+## 8. Case21 fresh formal-closure calculation — COMPLETE
+
+Fresh calculation report:
+
+- `current/results/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_FRESH_CALCULATION_20260812.md`
+
+Fresh material coefficient table:
+
+- `current/case21/NZ_SCCM_CASE21_NC_R1_FRESH_N48_COEFFICIENTS_20260812.csv`
+
+Experiment-only source, opened only after the theoretical result was frozen:
+
+- `current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812.md`
+
+Isolation status:
 
 ```text
-CASE21_NEW_CALCULATION = NOT PERFORMED
-CASE21_UNIQUE_PRODUCTION_Pu = NOT YET REPRODUCED UNDER FORMAL-CLOSURE BASELINE
+HISTORICAL_CASE21_D_Q_P_ROOT_PATH_USED = NO
+HISTORICAL_CASE21_THEORY_RESULT_USED = NO
+HISTORICAL_FE_GAUSS_SIMPSON_RESULT_USED = NO
+EXPERIMENT_USED_DURING_SOLVE = NO
+EXPERIMENT_USED_FOR_ROOT_SELECTION = NO
+EXPERIMENT_USED_FOR_PARAMETER_TUNING = NO
+FORMAL_SPATIAL_SAMPLING = 0
+FORMAL_SPATIAL_QUADRATURE = 0
+FORMAL_SPATIAL_SUBDOMAINS = 1
+```
+
+Fresh material/compiler quantities include
+
+\[
+\kappa=2.0005129533678754,
+\quad
+x_{cr}=0.04998717945397425,
+\quad
+\eta=0.0024993589726987125,
+\]
+
+\[
+W_{src}=0.03174123518124918,
+\qquad
+h=0.09799750427197022.
+\]
+
+Fresh T-minimax material representation:
+
+\[
+E_T^*=0.08957188456536706,
+\]
+
+with zero-anchor residuals at machine scale.
+
+Fresh NC-R1 production root:
+
+\[
+\boxed{D_u=0.8903314709224796},
+\]
+
+\[
+\boxed{q_u=0.0018331919936158214},
+\]
+
+\[
+\boxed{A_u=2.236494232211302\ \mathrm{mm}},
+\]
+
+\[
+\boxed{P_u^{theory}=372.7757254085579\ \mathrm{kN}}.
+\]
+
+Production residuals:
+
+\[
+\boxed{R_{norm}=2.1729946248051996\times10^{-9}<10^{-5}},
+\]
+
+\[
+\boxed{|L_{norm}|=8.347329895379345\times10^{-6}<10^{-5}}.
+\]
+
+Continuous compiler-domain certificate over the entire complete halfwave: PASS.
+
+Rebar branch certificate:
+
+\[
+\max|\varepsilon_s|=0.001860792774228<\varepsilon_y=0.00265,
+\]
+
+so the complete reinforcement field remains on the supported elastic branch.
+
+First-maximum classification is confirmed by a fresh +→− sign change of the equilibrium-branch load tangent around the production root.
+
+```text
+CASE21_CURRENT_THEORY_CALCULATION = COMPLETE
+CASE21_UNIQUE_PRODUCTION_Pu = REPRODUCED UNDER FORMAL-CLOSURE BASELINE
+CASE21_CALCULATION_CLOSURE = PASS
+```
+
+---
+
+## 9. Case21 experiment-only comparison
+
+Only after the theoretical result was frozen, Nguyen Chapter 5 Section 5.2 experimental table was opened. Case21 experimental load:
+
+\[
+P_u^{exp}=336\ \mathrm{kN}.
+\]
+
+Final blind comparison:
+
+\[
+\Delta P=+36.7757254085579\ \mathrm{kN},
+\]
+
+\[
+\boxed{\frac{P_u^{theory}-P_u^{exp}}{P_u^{exp}}\times100\%=+10.9451563716\%}.
+\]
+
+The experimental value did not participate in coefficient generation, root finding, branch selection or parameter adjustment.
+
+---
+
+## 10. Current execution boundary
+
+```text
+CASE21_FRESH_CALCULATION = COMPLETE
+CASE21_CALCULATION_CLOSURE = PASS
 SWARTZ24_RECALCULATION = NOT AUTHORIZED / NOT PERFORMED
 R10_REOPEN = NO
 N48_ORDER_CHANGE = NO
 NEW_MATERIAL_MODEL = NO
 NEW Pu SOLVER = NO
+CURRENT_NEXT_TASK = USER_DIRECTED
 ```
-
-Current next task remains user-directed.
