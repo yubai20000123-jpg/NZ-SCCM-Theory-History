@@ -1,51 +1,21 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-12 17:34 +08:00  
-**Purpose:** 唯一当前工作入口；采用“内容描述 + YYYYMMDD_HHMM”时间戳命名，不再用 V1/V2/R1/R2 作为当前正式主线标识。
+**Updated:** 2026-08-12 18:02 +08:00  
+**Purpose:** 唯一当前工作入口；正式文件采用“内容描述 + YYYYMMDD_HHMM”时间戳命名。
 
-## 0. Current naming governance
+## 0. Current governing baseline
 
-Current naming decision:
-
-- `current/governance/NZ_SCCM_TIMESTAMP_NAMING_AND_BASELINE_DECISION_20260812_1734.md`
-
-Rule:
-
-```text
-<clear-content-description>_YYYYMMDD_HHMM.<ext>
-```
-
-Old V/R/NC-R numbered files remain history only unless explicitly requested for historical audit.
-
----
-
-## 1. Current governing theory baseline
-
-Formal name:
-
-**NZ-SCCM 普通混凝土钢筋板零空间解析极限承载力—切线稳定统一理论**
-
-Current governing file:
+Theory:
 
 - `current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md`
 
-Core chain:
+Case21 contract:
 
-\[
-\boxed{
-\text{raw input}
-\to R10
-\to N48\text{-}C1/MM
-\to \text{Cayley--Hamilton}
-\to \text{Nguyen complete halfwave}
-\to \text{general D15 exact moments}
-\to P,R_q,L
-\to \Gamma_0
-\to \{\text{limit point},K_Z\text{ tangent loss}\}
-}
-\]
+- `current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md`
 
-Highest-priority invariants:
+Naming governance:
+
+- `current/governance/NZ_SCCM_TIMESTAMP_NAMING_AND_BASELINE_DECISION_20260812_1734.md`
 
 ```text
 DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
@@ -62,33 +32,42 @@ STRUCTURAL_CALIBRATION = NO
 PANEL_LEVEL_SURROGATE = NO
 ```
 
-Production prohibits spatial Gauss/Simpson/adaptive quadrature, spatial Chebyshev collocation, material-point grids/cells, experiment-driven parameter tuning and experiment-driven root selection.
+---
+
+## 1. Current fresh Case21 evidence package
+
+Raw input freeze:
+
+- `current/case21/NZ_SCCM_CASE21_RAW_INPUT_FREEZE_20260812_1734.md`
+
+Fresh material coefficients:
+
+- `current/case21/NZ_SCCM_CASE21_FRESH_MATERIAL_COEFFICIENTS_20260812_1802.csv`
+
+Theory result frozen before experiment:
+
+- `current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md`
+
+Experiment-only source opened after theory freeze:
+
+- `current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md`
+
+Final closure:
+
+- `current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md`
 
 ---
 
-## 2. General D15 identity
-
-Governing structural scalar basis:
-
-\[
-Q(X,Y,\zeta)=\sum c_{prush}\sin^pX\cos^rX\sin^uY\cos^sY\zeta^h.
-\]
-
-Exact moments:
-
-\[
-J_{pr}=\int_0^\pi\sin^pX\cos^rX\,dX,
-\qquad
-Z_h=\int_{-1}^{1}\zeta^h\,d\zeta,
-\]
-
-\[
-\mathscr D[Q]=\sum c_{prush}J_{pr}J_{us}Z_h.
-\]
-
-This governs `Syy`, `Qq`, all same-expression derivatives used in `L`, and all Zhou/Navier current-tangent modal integrands.
+## 2. Isolation status
 
 ```text
+HISTORICAL_CASE21_D_Q_P_Pu_ROOT_PATH_USED = NO
+HISTORICAL_CASE21_ANALYTIC_RESULT_USED = NO
+HISTORICAL_FE_GAUSS_SIMPSON_RESULT_USED = NO
+HISTORICAL_MATERIAL_POINT_HISTORY_USED = NO
+EXPERIMENT_USED_DURING_SOLVE = NO
+EXPERIMENT_USED_FOR_ROOT_SELECTION = NO
+EXPERIMENT_USED_FOR_PARAMETER_TUNING = NO
 FORMAL_SPATIAL_SAMPLING = 0
 FORMAL_SPATIAL_QUADRATURE = 0
 FORMAL_SPATIAL_SUBDOMAINS = 1
@@ -96,140 +75,168 @@ FORMAL_SPATIAL_SUBDOMAINS = 1
 
 ---
 
-## 3. Primary equilibrium branch and limit candidate
+## 3. Fresh Case21 current result
+
+Corrected general-D15 primary branch first `+ -> -` load maximum:
 
 \[
-P=P_c+P_s,
+\boxed{D_u=0.7822850963110681},
+\]
+
+\[
+\boxed{q_u=0.0017707520964949533},
+\]
+
+\[
+\boxed{A_u=2.160317557723843\ \mathrm{mm}},
+\]
+
+\[
+\boxed{P_u^{theory}=365.580427565\ \mathrm{kN}}.
+\]
+
+Load components:
+
+\[
+P_c=336.968777333\ \mathrm{kN},
 \qquad
-R_q=R_{q,c}+R_{q,s}.
+P_s=28.611650232\ \mathrm{kN}.
+\]
+
+Residual gates:
+
+\[
+R_{norm}=1.5607568553\times10^{-6}<10^{-5},
 \]
 
 \[
-\Gamma_0=\operatorname{Conn}_{(0,0)}(\{R_q=0\}\cap\mathcal A).
+|L_{norm}|=4.0119433896\times10^{-6}<10^{-5}.
 \]
 
-At regular points,
+Continuous compiler-domain certificate: PASS.
 
-\[
-L=P_DR_{q,q}-P_qR_{q,D}=\nabla P\cdot(R_{q,q},-R_{q,D}).
-\]
-
-The first `+ -> -` local maximum along the correct `Gamma0` is only a **limit-point candidate** until the tangent gate has been completed.
-
-Maximum-among-all-roots, experiment-nearest-root and historical-root targeting remain prohibited.
+Reinforcement whole-field elastic-branch certificate: PASS.
 
 ---
 
-## 4. Zhou/Navier current-tangent gate
+## 4. Current tangent control
 
-The same current material operator must generate
-
-\[
-\mathbb C_t=\frac{\partial\boldsymbol\sigma}{\partial\mathbf E}.
-\]
-
-Total modal current tangent:
+Zero-state regression:
 
 \[
-K_Z=K_{Z,c}^{mat}+K_{Z,c}^{geo}+K_{Z,s}^{mat}+K_{Z,s}^{geo}.
-\]
-
-Because
-
-\[
-\mathbf X=\mathbf E_u/\varepsilon_0,
-\]
-
-the tangent directional derivative must obey
-
-\[
-\delta\mathbf X=\delta\mathbf E_u/\varepsilon_0.
-\]
-
-For Case21 the unloaded square-halfwave regression is
-
-\[
-\boxed{K_Z(0,0)=\frac{E_0t_p^3\pi^4}{12(1-\nu^2)b^2}=823.416805665\ \mathrm{N/mm}.}
+\boxed{K_Z(0,0)=823.416805664979\ \mathrm{N/mm}}
 \]
 
 ```text
 ZERO_STATE_TANGENT_REGRESSION = PASS
 ```
 
-Local `t_p^3 Ct/12` formulas are not the governing definition for a nonuniform current tangent field; they remain only the uniform-tangent degeneration.
-
----
-
-## 5. Current Case21 execution contract
-
-Formal name:
-
-**NZ-SCCM Case21 零空间解析极限—切线稳定统一计算合同**
-
-Current governing file:
-
-- `current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md`
-
-Mandatory order:
-
-```text
-raw Case21 inputs
--> fresh R10 material functions
--> fresh N48-C1/MM coefficients
--> Cayley-Hamilton
--> Nguyen complete continuous halfwave
--> general-D15 Syy
--> general-D15 Qq
--> fresh Rq(D,q)
--> corrected Gamma0 from (0,0)
--> first +->- limit candidate
--> zero-state tangent regression
--> KZ,c^mat + KZ,c^geo + KZ,s^mat + KZ,s^geo
--> K_Z along the same corrected Gamma0
--> determine whether tangent loss occurs before limit point
--> theory-result freeze
--> experiment-only comparison
-```
-
-A calculation cannot receive `CALCULATION_CLOSURE = PASS` before every mandatory gate is reported.
-
----
-
-## 6. Current Case21 blocker
-
-Current audit record:
-
-- `current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md`
-
-The previous Case21 fresh result remains historical/audit evidence only. Under the governing general-D15 recheck:
-
-```text
-GENERAL_D15_Syy_RECHECK = PASS
-GENERAL_D15_Qq_RECHECK = FAIL AGAINST PREVIOUS EXECUTION
-PREVIOUS_CASE21_GAMMA0 = NOT CURRENTLY ACCEPTED
-PREVIOUS_CASE21_LIMIT_LOAD = AUDIT RECORD ONLY / NOT CURRENT PRODUCTION RESULT
-ZERO_STATE_TANGENT_REGRESSION = PASS
-PRODUCTION_TANGENT_GATE = NOT YET REACHED ON A CORRECTED BRANCH
-CASE21_COMPLETE_CLOSURE = BLOCKED
-```
-
-The blocker is execution consistency, not reopening of the material/current-tangent theory.
-
----
-
-## 7. Current next task
-
-Only authorized next execution:
+At the first load maximum:
 
 \[
-\boxed{
-\text{fresh general-D15 }Q_q
-\to R_q(D,q)
-\to \Gamma_0
-\to \text{first }+\to-\text{ limit candidate}
-\to K_Z\text{ on same }\Gamma_0
-\to \text{final control classification}
-}
+K_{Z,c}^{mat}=765.4620815266977,
 \]
 
-No historical Case21 roots/loads/paths, no historical FE/Gauss/Simpson/material-point results, and no experimental load may participate in that calculation. Experimental data may be opened only after the new theory result is frozen.
+\[
+K_{Z,c}^{geo}=-719.5765678312335,
+\]
+
+\[
+K_{Z,s}^{mat}=0,
+\]
+
+\[
+K_{Z,s}^{geo}=-45.50598684467001\ \mathrm{N/mm},
+\]
+
+hence
+
+\[
+\boxed{K_Z=+0.37952685079415716\ \mathrm{N/mm}>0}.
+\]
+
+First tangent-zero on the same corrected primary branch:
+
+\[
+D_T=0.7824254327857517,
+\qquad
+q_T=0.0017710077550576295,
+\]
+
+with
+
+\[
+K_Z\approx0.
+\]
+
+Since
+
+\[
+D_T-D_u=0.0001403364746835889>10^{-4},
+\]
+
+current classification:
+
+```text
+PRELIMIT_TANGENT_STABILITY = PASS
+LIMIT_POINT_CONTROL = YES
+COUPLED_LIMIT_TANGENT_CONTROL = NO
+```
+
+---
+
+## 5. Material compiler fidelity record
+
+Current timestamped Case21 contract requires reporting but does not freeze a new numerical cutoff for global E1. Fresh records:
+
+| primitive | E0 value metric | E1 tangent metric |
+|---|---:|---:|
+| U | 0.00245360402031 | 0.906633445993 |
+| C | 0.0140129840394 | 1.21310364652 |
+| T | 0.0895720993894 | 199.312325124 |
+| T7 | 0.112736914660 | 64.1319479976 |
+
+No new threshold, N48-order change or R10 modification was introduced in this calculation.
+
+---
+
+## 6. Experiment-only comparison
+
+Only after theory-result freeze, Nguyen Chapter 5 experimental table was opened. Case21 experiment column:
+
+\[
+P_{exp}=336\ \mathrm{kN}.
+\]
+
+The thesis table labels this experimental quantity `Exp. Pcr`.
+
+Comparison:
+
+\[
+\Delta P=+29.580427565\ \mathrm{kN},
+\]
+
+\[
+\boxed{\delta_P=+8.803698680\%},
+\]
+
+\[
+P_u^{theory}/P_{exp}=1.0880369868.
+\]
+
+---
+
+## 7. Current status
+
+```text
+CASE21_ZERO_SPATIAL_ANALYTIC_CALCULATION = COMPLETE
+CASE21_19_ITEM_CONTRACT = COMPLETE
+CALCULATION_CLOSURE = PASS
+CONTROL = FIRST +->- LIMIT POINT
+PRELIMIT_TANGENT_STABILITY = PASS
+THEORY_RESULT = 365.580427565 kN
+EXPERIMENT = 336 kN
+ERROR = +8.803698680 %
+SWARTZ24_RECALCULATION = NOT AUTHORIZED / NOT PERFORMED
+CURRENT_NEXT_TASK = USER_DIRECTED
+```
