@@ -23,9 +23,10 @@ P(D,q),R_q(D,q),L(D,q)
 }
 \]
 
-The audit did identify formal gaps in the written derivation. These are repaired in:
+The audit did identify formal gaps in the written derivation. The governing corrected derivation is now:
 
-- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md`
+- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md`
+- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_CANONICAL_ERRATA_20260812.md` — editorial-symbol correction only
 
 No Case21 or Swartz24 result is used to define the repairs.
 
@@ -55,7 +56,7 @@ The previous restricted statement that every intermediate tensor component belon
 The governing exact-moment basis is restored to the historical general trigonometric form
 
 \[
-Q=\sum c_{prqsh}\sin^pX\cos^rX\sin^qY\cos^sY\zeta^h,
+Q=\sum c_{prush}\sin^pX\cos^rX\sin^uY\cos^sY\zeta^h,
 \]
 
 with exact moments
