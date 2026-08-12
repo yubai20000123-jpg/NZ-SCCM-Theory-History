@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-12 18:02 +08:00  
+**Updated:** 2026-08-13 00:47 +08:00  
 **Purpose:** 唯一当前工作入口；正式文件采用“内容描述 + YYYYMMDD_HHMM”时间戳命名。
 
 ## 0. Current governing baseline
@@ -55,6 +55,11 @@ Experiment-only source opened after theory freeze:
 Final closure:
 
 - `current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md`
+
+Swartz24 current fresh completion / failure comparison:
+
+- `current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md`
+- `current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv`
 
 ---
 
@@ -183,6 +188,8 @@ LIMIT_POINT_CONTROL = YES
 COUPLED_LIMIT_TANGENT_CONTROL = NO
 ```
 
+The coefficient-space tangent implementation was independently rechecked at unloaded and loaded Case21 during the 2026-08-13 Swartz24 continuation and reproduces the governing tangent to numerical roundoff / coefficient-set micro-difference.
+
 ---
 
 ## 5. Material compiler fidelity record
@@ -200,43 +207,114 @@ No new threshold, N48-order change or R10 modification was introduced in this ca
 
 ---
 
-## 6. Experiment-only comparison
+## 6. Case21 experimental quantities: distinguish Pcr from Pf
 
-Only after theory-result freeze, Nguyen Chapter 5 experimental table was opened. Case21 experiment column:
-
-\[
-P_{exp}=336\ \mathrm{kN}.
-\]
-
-The thesis table labels this experimental quantity `Exp. Pcr`.
-
-Comparison:
+Nguyen Chapter 5 table labels Case21 experimental buckling/critical load as:
 
 \[
-\Delta P=+29.580427565\ \mathrm{kN},
+P_{cr,exp}=336\ \mathrm{kN}.
+\]
+
+This is a **buckling/critical** quantity and must not be used as the ultimate/failure-load accuracy metric.
+
+The Swartz experimental **failure/ultimate** load used for current Pu validation is:
+
+\[
+\boxed{P_{f,exp}=368.3127497435694\ \mathrm{kN}}.
+\]
+
+With
+
+\[
+P_u^{theory}=365.580427565\ \mathrm{kN},
+\]
+
+the ultimate-load comparison is:
+
+\[
+\Delta P=-2.7323221785694\ \mathrm{kN},
 \]
 
 \[
-\boxed{\delta_P=+8.803698680\%},
+\boxed{\delta_{Pu/Pf}=-0.741848\%}.
 \]
 
-\[
-P_u^{theory}/P_{exp}=1.0880369868.
-\]
+The older `+8.8037%` value is specifically `Pu_theory` versus experimental `Pcr=336 kN`; it remains a buckling-vs-limit diagnostic only, not a failure-load error.
 
 ---
 
-## 7. Current status
+## 7. Swartz24 current fresh completion
+
+User authorization supersedes the earlier `SWARTZ24_RECALCULATION = NOT AUTHORIZED` state.
+
+```text
+SWARTZ24_RECALCULATION_AUTHORIZED = YES
+SWARTZ24_FRESH_PU_VALUES = 24/24 AVAILABLE
+SWARTZ24_FAILURE_LOAD_COMPARISON = COMPLETE
+SWARTZ24_FULL_L_KZ_PRODUCTION_GATE = PENDING_24_PANEL_BULK_COMPLETION
+CASE21_FULL_L_KZ_GATE = PASS
+```
+
+Current 24-panel failure-load comparison statistics:
+
+```text
+mean signed error = -2.8105 %
+MAE               = 12.0600 %
+RMSE(error %)      = 13.5244 %
+median |error|     = 11.7819 %
+mean Pu/Pf         = 0.97190
+|error| <= 5%      = 4/24
+|error| <= 10%     = 8/24
+|error| <= 15%     = 17/24
+```
+
+Thickness/slenderness group diagnostics:
+
+|Group|Cases|mean signed error|MAE|
+|---|---|---:|---:|
+|b/t ~ 48|1–8|+6.313%|13.135%|
+|b/t ~ 38.3|9–16|-11.849%|14.662%|
+|b/t ~ 63.1|17–24|-2.896%|8.383%|
+
+The strongest systematic bias is the Case9–16 thick-panel group. This is treated as a model-form/current-tangent/post-buckling redistribution diagnostic; no R10/N48/group-factor calibration is authorized or performed.
+
+---
+
+## 8. Additional uploaded physical-panel screen
+
+```text
+ADDITIONAL_UPLOADED_PHYSICAL_RC_PANEL_DATASETS
+BOTH_STRUCTURE_COMPATIBLE_AND_INPUT_COMPLETE = 0
+```
+
+Current classifications:
+
+- Ernst (1952): `INPUT_INCOMPLETE`.
+- Saheb & Desayi (1990): `OUT_OF_CURRENT_SCOPE + INPUT_INCOMPLETE` because the tests use constant eccentricity `e=t/6` and the uploaded material lacks a complete specimen-by-specimen current-contract input table.
+- Attard (1994): `REFERENCE_ANALYTICAL_ONLY`.
+- Sanjayan/Maheswaran-related tests referenced by Nguyen: `INPUT_INCOMPLETE / POSSIBLE_BOUNDARY_MISMATCH`.
+- Nguyen high-strength/parametric cases: `NUMERICAL_REFERENCE_ONLY`.
+- Uploaded steel-wall/CFT/UHPC material/interface tests: `OUT_OF_CURRENT_SCOPE` for the present ordinary-RC-panel production contract.
+
+No missing parameter is inferred from experimental Pu/Pf.
+
+---
+
+## 9. Current status
 
 ```text
 CASE21_ZERO_SPATIAL_ANALYTIC_CALCULATION = COMPLETE
 CASE21_19_ITEM_CONTRACT = COMPLETE
-CALCULATION_CLOSURE = PASS
-CONTROL = FIRST +->- LIMIT POINT
-PRELIMIT_TANGENT_STABILITY = PASS
-THEORY_RESULT = 365.580427565 kN
-EXPERIMENT = 336 kN
-ERROR = +8.803698680 %
-SWARTZ24_RECALCULATION = NOT AUTHORIZED / NOT PERFORMED
-CURRENT_NEXT_TASK = USER_DIRECTED
+CASE21_CALCULATION_CLOSURE = PASS
+CASE21_CONTROL = FIRST +->- LIMIT POINT
+CASE21_PRELIMIT_TANGENT_STABILITY = PASS
+CASE21_THEORY_Pu = 365.580427565 kN
+CASE21_FAILURE_LOAD_Pf = 368.3127497435694 kN
+CASE21_Pu_VS_Pf_ERROR = -0.741848 %
+NGUYEN_CASE21_336_kN = EXPERIMENTAL_Pcr / NOT Pf
+SWARTZ24_FRESH_Pu = 24/24 AVAILABLE
+SWARTZ24_Pu_VS_FAILURE_COMPARISON = COMPLETE
+SWARTZ24_FULL_L_KZ_GATE = PENDING_BULK_COMPLETION
+ADDITIONAL_COMPATIBLE_INPUT_COMPLETE_PHYSICAL_RC_PANEL_DATASETS = 0
+CURRENT_NEXT_TASK = BULK_24_PANEL_L_KZ_GATE_OR_USER_DIRECTED
 ```
