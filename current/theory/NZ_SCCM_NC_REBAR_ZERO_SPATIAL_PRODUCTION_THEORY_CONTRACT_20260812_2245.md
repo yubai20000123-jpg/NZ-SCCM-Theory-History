@@ -108,10 +108,10 @@ PANEL_LEVEL_SURROGATE = NO
 ## 3.3 钢筋
 
 \[
-\boxed{E_s,\ f_y,\ \varepsilon_y,\ \rho_{s,\alpha}^{(r)},\ z_s^{(r)},\ \theta_\alpha}.
+\boxed{E_s,\ f_y,\ \varepsilon_y,\ \rho_{s,\alpha}^{(r)},\ z_s^{(r)}}.
 \]
 
-式中 \(r\) 为层号，\(\alpha\) 为方向；\(z_s^{(r)}\) 为钢筋层相对中面位置。
+当前正式钢筋映射对应 Swartz/Nguyen 同类的正交双向钢筋（x/y 方向）及其单层或多层布置；\(r\) 为层号，\(\alpha\in\{x,y\}\) 为钢筋方向；\(z_s^{(r)}\) 为钢筋层相对中面位置。若未来出现斜向钢筋，应先从同一连续方向应变公式明确扩展轴向投影，不在本合同中擅自新增。
 
 ## 3.4 compiler interval
 
@@ -612,14 +612,14 @@ f_y\operatorname{sgn}(\varepsilon_s),&\varepsilon_y<|\varepsilon_s|\le\varepsilo
 \end{cases}
 \]
 
+对当前正交 x/y 钢筋，\(n_x=(1,0)^T\)，\(n_y=(0,1)^T\)，且
+
 \[
-n_\alpha=(\cos\theta_\alpha,\sin\theta_\alpha)^T,
-\qquad
 \zeta_r=\frac{2z_s^{(r)}}{t_p},
 \]
 
 \[
-\boxed{\varepsilon_{s,\alpha}^{(r)}=n_\alpha^TE(X,Y,\zeta_r)n_\alpha}.
+\boxed{\varepsilon_{s,\alpha}^{(r)}=n_\alpha^TE(X,Y,\zeta_r)n_\alpha},\qquad \alpha\in\{x,y\}.
 \]
 
 \[
@@ -627,11 +627,11 @@ t_{s,\alpha}^{(r)}=\rho_{s,\alpha}^{(r)}t_p.
 \]
 
 \[
-\boxed{P_s=-\sum_{r\parallel y}\frac{t_{s,y}^{(r)}}{\ell}\int_A\sigma_{s,y}^{(r)}\,dA},
+\boxed{P_s=-\sum_{r}\frac{t_{s,y}^{(r)}}{\ell}\int_A\sigma_{s,y}^{(r)}\,dA},
 \]
 
 \[
-\boxed{R_{q,s}=\sum_{r,\alpha}t_{s,\alpha}^{(r)}\int_A\sigma_{s,\alpha}^{(r)}\frac{\partial\varepsilon_{s,\alpha}^{(r)}}{\partial q}\,dA}.
+\boxed{R_{q,s}=\sum_{r,\alpha\in\{x,y\}}t_{s,\alpha}^{(r)}\int_A\sigma_{s,\alpha}^{(r)}\frac{\partial\varepsilon_{s,\alpha}^{(r)}}{\partial q}\,dA}.
 \]
 
 在一个新板件上，钢筋只需按 frozen source law 与实际层位/方向代入；不引入板级经验参数。
@@ -867,8 +867,9 @@ Zhou/Navier tangent 是同一 equilibrium branch 上的 current-tangent stabilit
 对一个未参与任何现有 Swartz24 历史计算的新试件，只要：
 
 1. 它属于当前 one-complete-halfwave / Nguyen second-order / m=1 的结构类；
-2. §3 的材料、几何、缺陷与钢筋原始输入齐全；
-3. 在求解前按现有 production policy 声明 compiler interval；
+2. 它采用当前已闭合的正交 x/y 钢筋布置形式，或无钢筋；
+3. §3 的材料、几何、缺陷与钢筋原始输入齐全；
+4. 在求解前按现有 production policy 声明 compiler interval；
 
 则从公式层面可直接执行：
 
