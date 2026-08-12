@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-12 02:18 +08:00  
+**Updated:** 2026-08-12 10:35 +08:00  
 **Purpose:** 唯一当前工作入口；只保留当前有效状态、canonical evidence 和下一门禁。
 
 ## 0. Highest-priority contract
@@ -140,111 +140,73 @@ SYMBOL_DEFINITIONS = COMPLETE
 
 ---
 
-## 4. Updated Case21 fresh N48-C1/MM + D15 closure — COMPLETE
+## 4. Updated Case21 fresh numerical record — PRESERVED, but independent reproduction BLOCKED
 
-This calculation was executed fresh under the updated compiler. It did not load or use historical Case21 calculated loads, historical Case21 roots, historical load paths, historical FE/Gauss results, or the experimental failure load during the solve.
+A fresh N48-C1/MM + D15 Case21 numerical record was produced without historical Case21 calculated values or experimental load entering the solve. That record is preserved as an execution artifact, but it has **not** passed the later blank-chat self-contained reproduction gate.
 
-Canonical evidence:
-
-- `current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_BLIND_RESULT_20260812.md`
-- `current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_COEFFICIENTS_20260812.csv`
-- `current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md`
-- `current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_THEORY_VS_EXPERIMENT_20260812.md`
-- `current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_INPUT_20260812.md`
-- `current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_PROMPT_20260812.txt`
-- `governance/CASE21_N48C1MM_D15_FRESH_CLOSURE_DECISION_20260812.md`
-
-Repository ordering freezes the blind theory result before the experiment-comparison file.
-
-Fresh source inputs:
-
-\[
-b=\ell=1220\ {\rm mm},\quad t_p=19.30\ {\rm mm},
-\]
-
-\[
-f_c=21.23\ {\rm MPa},\quad E_0=20321\ {\rm MPa},\quad
-\varepsilon_0=0.00209,\quad \nu=0.18,
-\]
-
-\[
-q_0=1/400.
-\]
-
-The fresh compiler interval was fixed before solving as
-
-\[
-\boxed{\lambda\in[-1.15,0.12]}.
-\]
-
-The final continuous spectral certificate is
-
-\[
--0.874981134\le\lambda\le0.092641134,
-\]
-
-and the final steel certificate is
-
-\[
-\max|\varepsilon_s|=0.001635091<0.00265.
-\]
-
-Fresh blind theoretical state:
-
-\[
-D_u\approx0.78234,\qquad q_u\approx0.00177047,
-\]
-
-\[
-\boxed{P_{u,th}\approx365.61\ {\rm kN}}.
-\]
-
-Engineering residuals:
-
-\[
-\frac{|R_q|}{|R_{q,c}|+|R_{q,s}|}
-\approx2.27\times10^{-5},
-\]
-
-\[
-L_{norm}\approx-2.35\times10^{-4},
-\]
-
-\[
-(dP/dD)_{R_q=0}\approx-0.06805\ {\rm kN}.
-\]
-
-Only after the blind result was frozen was the experimental failure load attached:
-
-\[
-P_{f,exp}=82.8\ {\rm kip}=368.312750\ {\rm kN}.
-\]
-
-Thus
-
-\[
-\boxed{\text{signed error}\approx-0.734\%}.
-\]
+The independent blank-chat audit used the fresh full-calculation document as its only allowed input and found the first blocking omission at R10:
 
 ```text
-CASE21_N48C1MM_D15_FRESH_BLIND = PASS_ENGINEERING
-HISTORICAL_CASE21_COMPUTED_VALUES_USED = NO
-HISTORICAL_CASE21_ROOTS_OR_PATHS_USED = NO
-HISTORICAL_GAUSS_HISTORY_USED = NO
-EXPERIMENT_USED_DURING_SOLVE = NO
-FORMAL_SPATIAL_QUADRATURE = 0
-CONTINUOUS_SPECTRAL_CERTIFICATE = PASS
-STEEL_BRANCH = ELASTIC
-Rq_EQUILIBRIUM = PASS_ENGINEERING
-LIMIT_L = PASS_ENGINEERING
-EXPERIMENT_COMPARISON_AFTER_BLIND_FREEZE = COMPLETE
+OVERALL = BLOCKED
+FIRST_SUBSTANTIVE_DIVERGENCE = R10
+FIRST_BLOCK = R10 / FOSTER_SOURCE_H_NOT_DEFINED
 ```
 
-The backend may use FFT only to accelerate finite analytic coefficient convolution; no physical-space FFT/collocation points are used. D15 exact moments remain the formal spatial integration identity.
+The same audit also found that the fresh full-calculation document was not self-contained for:
+
+- \(\Pi_\eta(z)\);
+- the complete \(u_{sm}(t)\) branch definition and \(\tau(t),s(t)\);
+- N48-C1 \(\mathbf H,\mathbf G,\mathbf d_F\);
+- a unique reproducible numerical production contract for the T constrained-minimax coefficients.
+
+Therefore the previously reported fresh values, including the numerical \(D,q,P_u\), remain **reported execution results only** until a second independent reproduction passes. They must not be labeled an independently verified closure.
+
+Canonical audit evidence:
+
+- `current/audits/NZ_SCCM_CASE21_N48C1MM_INDEPENDENT_REPRO_BLOCKED_R10_20260812.md`
+
+Governance status:
+
+```text
+CASE21_N48C1MM_D15_FRESH_NUMERICAL_RECORD = PRESERVED
+CASE21_N48C1MM_D15_INDEPENDENT_REPRO = BLOCKED_AT_R10
+CASE21_N48C1MM_D15_FRESH_CLOSURE_ACCEPTED = NO
+HISTORICAL_CASE21_COMPUTED_VALUES_USED_IN_FRESH_RECORD = NO
+EXPERIMENT_USED_DURING_FRESH_SOLVE = NO
+```
+
+No inference about agreement with experiment can override this reproducibility block.
 
 ---
 
-## 5. Earlier completed structural records remain preserved
+## 5. Self-contained Case21 blind contract V2 — READY FOR SECOND AUDIT
+
+A new blind contract has been prepared specifically to remove the omissions identified by the independent audit. It includes explicit definitions for:
+
+- \(H(r,r_0)\);
+- \(\Pi_\eta(z)\);
+- complete \(u_{sm}(t)\), \(\tau(t)\), \(s(t)\) and branch intervals;
+- \(\mathbf H,\mathbf G,\mathbf d_F\) for N48-C1;
+- a deterministic material-coordinate exchange/LP contract for T strict-C1 constrained-minimax;
+- Cayley-Hamilton, Nguyen kinematics, D15, Case21 steel, same-expression derivatives and the continuous compiler-domain gate.
+
+Files:
+
+- `current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md`
+- `current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_PROMPT_V2_20260812.txt`
+
+The V2 contract contains **no Case21 theoretical answer and no experimental failure load**.
+
+```text
+SELF_CONTAINED_BLIND_CONTRACT_V2 = READY
+SECOND_BLANK_CHAT_REPRODUCTION = NOT_YET_EXECUTED
+```
+
+V2 itself is not declared validated until the new blank-chat audit reaches PASS. If the second audit finds another first missing closure, that new first block controls the next revision.
+
+---
+
+## 6. Earlier structural records remain preserved
 
 ```text
 EARLIER_CASE21_DIRECT_N48_VALUE_CLOSURE = PRESERVED_HISTORICAL_RECORD
@@ -252,25 +214,25 @@ SWARTZ24_FRESH_BLIND_VALUE_CLOSURE = 24/24 PRESERVED_RECORD
 SWARTZ24_PRIMARY_MECHANISM_AUDIT = COMPLETE
 ```
 
-They are not inputs to the fresh updated Case21 closure and are not silently overwritten.
+They are not inputs to the new Case21 V2 blind reproduction.
 
 ---
 
-## 6. Current execution boundary
+## 7. Current execution boundary
 
 Do not automatically:
 
 - reopen R10;
 - add a new material mechanism;
 - raise to N96/N112;
-- overwrite earlier Case21/Swartz24 records;
-- use experiments to tune compiler coefficients;
-- automatically recalculate the full Swartz24 series without user instruction.
+- use old Case21 values as targets for the V2 audit;
+- use experiment during the V2 solve;
+- recalculate Swartz24 before Case21 V2 reproducibility passes.
 
 ```text
 R10 = FROZEN
 N48_ORDER = 48
 UPDATED_N48_C1_MM_D15_DERIVATION = CANONICAL
-CASE21_N48C1MM_D15_FRESH_CLOSURE = COMPLETE
-CURRENT_NEXT_TASK = USER_DIRECTED
+CASE21_N48C1MM_D15_FRESH_CLOSURE_ACCEPTED = NO
+CURRENT_NEXT_TASK = SECOND_BLANK_CHAT_CASE21_V2_REPRODUCTION
 ```
