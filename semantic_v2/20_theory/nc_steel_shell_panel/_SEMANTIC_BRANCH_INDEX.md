@@ -21,7 +21,7 @@ direct Rq=0,L=0 first +->- limit solve
 same-branch Zhou/Navier stability check
 ```
 
-## Active extension
+## Active structural extension
 
 - `20260813_1834__NZSCCM__NC_STEEL_SHELL_PANEL__REBAR_REPLACEMENT_GENERAL_D15__THEORY_EXTENSION_CONTRACT.md`
 
@@ -38,10 +38,24 @@ KZ = KZ,c + KZ,sh
 
 Each steel-shell layer is integrated exactly through its own thickness coordinate; no shell Gauss points or material-point grid are introduced.
 
-## Only new open item before production Pu
+## Active steel-material derivation
+
+- `20260813_1834__NZSCCM__STEEL_SHELL__J2_DEFORMATION_THEORY_SOURCE_CURVE_PLANE_STRESS__MATERIAL_OPERATOR_DERIVATION.md`
+
+This derives a path-independent full 2D plane-stress current operator by lifting an approved uniaxial steel source curve through J2 deformation theory. The map reduces the multiaxial update to one scalar equivalent-stress constitutive equation, exactly recovers the uniaxial source curve, exactly degenerates to standard elastic plane stress, and provides an analytic consistent tangent by implicit differentiation.
+
+The structural test set is not used in this derivation.
+
+## Remaining gate before production Pu
+
+The steel operator is **not yet production-frozen**. Required source-only gates include:
 
 ```text
-STEEL_SHELL_2D_CURRENT_OPERATOR = SOURCE-CONSISTENT FREEZE PENDING
+freeze steel-grade uniaxial source curve
+verify full material-only tangent
+freeze invariant material compiler/domain
+verify general-D15 coefficient closure
+check monotonic/proportional suitability
 ```
 
-The steel operator must be plane-stress, full 2D, provide a consistent directional tangent, remain compatible with finite analytic compilation/general-D15, and must not be selected using structural test Pu.
+After these pass, the operator can be inserted directly into `Psh,Rq,sh,L,KZ,sh` without reopening the locked concrete theory.
