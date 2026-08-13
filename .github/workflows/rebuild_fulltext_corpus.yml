@@ -1,0 +1,93 @@
+name: Rebuild full-text corpus
+
+on:
+  push:
+    branches: [canonical-rebuild-20260813]
+    paths-ignore:
+      - 'REBUILD_AUDIT/**'
+
+permissions:
+  contents: write
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build complete repository text corpus and manifest
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, csv, os
+
+          root = Path('.')
+          outdir = root / 'REBUILD_AUDIT'
+          outdir.mkdir(exist_ok=True)
+          corpus = outdir / 'FULL_TEXT_CORPUS.txt'
+          manifest = outdir / 'FILE_MANIFEST.csv'
+          treefile = outdir / 'ALL_FILES_TREE.txt'
+
+          exclude_roots = {'.git', 'REBUILD_AUDIT'}
+          files = []
+          for p in root.rglob('*'):
+              if not p.is_file():
+                  continue
+              parts = p.parts
+              if any(x in exclude_roots for x in parts):
+                  continue
+              files.append(p)
+          files.sort(key=lambda p: p.as_posix())
+
+          rows=[]
+          with corpus.open('w', encoding='utf-8', newline='\n') as cf:
+              for p in files:
+                  b=p.read_bytes()
+                  sha=hashlib.sha256(b).hexdigest()
+                  rel=p.as_posix()
+                  try:
+                      text=b.decode('utf-8')
+                      enc='utf-8'
+                      is_text=True
+                  except UnicodeDecodeError:
+                      try:
+                          text=b.decode('utf-8-sig')
+                          enc='utf-8-sig'
+                          is_text=True
+                      except UnicodeDecodeError:
+                          text=''
+                          enc='binary-or-non-utf8'
+                          is_text=False
+                  lines=text.count('\n') + (1 if text and not text.endswith('\n') else 0) if is_text else 0
+                  rows.append([rel,len(b),sha,enc,lines,'TEXT' if is_text else 'BINARY'])
+                  cf.write('\n' + '='*100 + '\n')
+                  cf.write(f'FILE: {rel}\nSIZE: {len(b)}\nSHA256: {sha}\nENCODING: {enc}\nLINES: {lines}\n')
+                  cf.write('='*100 + '\n')
+                  if is_text:
+                      cf.write(text)
+                      if text and not text.endswith('\n'):
+                          cf.write('\n')
+                  else:
+                      cf.write('[BINARY CONTENT NOT INLINED]\n')
+
+          with manifest.open('w',encoding='utf-8',newline='') as f:
+              w=csv.writer(f)
+              w.writerow(['path','size_bytes','sha256','encoding','line_count','kind'])
+              w.writerows(rows)
+          treefile.write_text('\n'.join(p.as_posix() for p in files)+'\n',encoding='utf-8')
+          print(f'files={len(files)} corpus_bytes={corpus.stat().st_size}')
+          PY
+      - name: Commit audit corpus
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add REBUILD_AUDIT
+          if git diff --cached --quiet; then
+            echo 'No corpus changes'
+          else
+            git commit -m 'Build complete repository full-text audit corpus'
+            git push
+          fi
