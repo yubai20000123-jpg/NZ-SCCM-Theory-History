@@ -14,80 +14,41 @@ first KZ=0 vs first L=0, g:+->- maximum
 
 Case21 has the formal zero-spatial ordering completed. The other 23 formal KZ orderings remain pending.
 
-## 2026-08-13 kinematics / halfwave provenance correction
+## 2026-08-13 18:34 governing correction — LOCKED
 
-Highest-priority kinematics audit:
+Highest-priority governance is now:
 
-- `20260813_1756__NZSCCM__SWARTZ24__SECOND_ORDER_KINEMATICS_AND_HALFWAVE_PROVENANCE__AUDIT.md`
+- `semantic_v2/10_governance/20260813_1834__NZSCCM__NC_PANEL__ENERGY_MINIMUM_HALFWAVE_R10_N48C1MM_D15_DIRECT_LIMIT__LOCKED_BASELINE.md`
 
-Source-backed mode geometry is:
-
-```text
-Cases 1-16  : approximately one longitudinal halfwave -> ell=2440 mm
-Cases 17-24 : two longitudinal halfwaves              -> ell=1220 mm
-```
-
-A later three-representative-panel blind input incorrectly stated `b=ell=1220 mm` for Case1, Case14 and Case21. The recent Case1 reconstruction also used `ell=1220 mm`. Therefore that reconstruction is now **partially superseded on structural-kinematics provenance**, even though it reproduces the stored 608.925 kN value closely.
-
-The stored 608.925 kN result itself is not silently deleted or replaced; its exact execution provenance must be recovered before deciding whether it inherited the same halfwave error.
-
-An audit-only source-correct Case1 rerun with `ell=2440 mm`, with R10/current C1-MM otherwise unchanged, gives a first-load-maximum around 647.5 kN. Thus correcting the halfwave length does not cure the Case1 overprediction; it increases it in the audit. This number has no production identity because the rerun used high-order spatial Gauss only as an independent diagnostic.
-
-The same kinematics audit also finds that omitted third/higher geometric terms are too small by order-of-magnitude to plausibly explain a 10-25% capacity error at the current displacement amplitudes. The more serious open kinematic issue is the reduced `(D,q)` / fixed-mode subspace compared with Nguyen's general `u(x,y),v(x,y),w(x,y)` fields.
-
-## 2026-08-13 ideal-mode / imperfection / reserve mechanism audit
-
-New source-grounded mechanism audit:
-
-- `20260813_1816__NZSCCM__SWARTZ24__IDEAL_MODE_IMPERFECTION_AND_POSTBUCKLING_RESERVE__MECHANISM_AUDIT.md`
-
-Current synthesis:
+The following interpretation is now locked:
 
 ```text
-CLASSICAL a/b=2 ISOTROPIC BASELINE:
-    two square halfwaves are the lowest mode;
-    one full-length halfwave has classical k=6.25 vs k=4.00, i.e. 1.5625 times the critical level.
-
-NGUYEN PERFECT NONLINEAR BASELINE:
-    Cases1-16 -> approximately one full-length halfwave;
-    Cases17-24 -> two halfwaves.
-
-THEREFORE:
-    one-wave existence in Cases1-16 does not uniquely prove initial imperfection;
-    off-center / unequal / localized bulges are stronger nonideality signatures.
+FORMAL_DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+FORMAL_HALFWAVE = THEORETICAL ENERGY/MINIMUM ADMISSIBLE HALFWAVE FROM DESIGN DATA
+OBSERVED EXPERIMENTAL BULGE LENGTH/LOCATION = VALIDATION / INTERFERENCE EVIDENCE ONLY
+NGUYEN SECOND-ORDER MEMBRANE STRAIN = ALREADY INCLUDED
+ADD u,v RITZ TO REPAIR A GENERIC MISSING MEMBRANE EFFECT = REJECTED
+R10 = FROZEN
+COMPILER = CURRENT N48-C1/MM
+GENERAL-D15 = FROZEN
+DIRECT LIMIT = Rq=0 + L=0, FIRST +->- MAXIMUM
 ```
 
-The 24-panel source table gives experimental bulge locations and postbuckling reserve. Across the current signed failure-load errors, the experimental reserve has an audit correlation of approximately `r=-0.626`: specimens with larger measured postbuckling reserve tend to be underpredicted by the present model.
+Accordingly, the earlier 17:56 diagnostic that redefined Cases1-16 production halfwave length from the observed/FE long-wave pattern is **SUPERSEDED AS A PRODUCTION INPUT RULE**. Its numerical direction checks remain historical diagnostic evidence only.
 
-Case21 is the strongest modal-consistency benchmark: source location is approximately top-half + bottom-half (two-wave family), matching Nguyen's perfect slender-panel mode, and current error is about -0.74%. Cases19 and21 are the two clearest two-halfwave source patterns and are comparatively well predicted. Cases22-24 depart toward a single/localized dominant zone and show positive current errors, which is qualitatively consistent with imperfection/eccentricity/support-selected weaker modes.
+The 18:16 ideal-mode/imperfection/postbuckling narrative is also **PARTIALLY SUPERSEDED** wherever it asserted a missing generic membrane-redistribution mechanism. Nguyen second-order kinematics already contains the nonlinear membrane strain terms through `chi_q=q0*q+q^2/2` and the corresponding `Cmx,Cmy,Cmxy` field.
 
-Conversely, Cases9-16 mostly show the centered full-length one-wave that Nguyen predicts even for a perfect nonlinear wall, while they have large experimental postbuckling reserves and mostly negative current errors. This strongly rejects `initial imperfection alone` as a global explanation.
+The valid retained lesson is narrower: noncanonical experimental bulges, eccentricity, thickness variation, support imperfections and other specimen nonidealities can explain departures of an experiment from the theoretical minimum halfwave; they do not redefine the formal halfwave or the locked theory.
 
-The current best non-calibrating mechanism hypothesis is a competition:
+## Current interpretation of Swartz accuracy
 
-```text
-P_exp_failure
-~ P_ideal_source_faithful
-  - downward imperfection/eccentricity/support/localization effect
-  + upward postbuckling redistribution/reserve
-  + specimen/material scatter
-```
+The current successful Swartz results are treated as evidence that the locked theory has predictive capability. Experimental departures from the formal minimum-halfwave response are external validation effects to be discussed after the blind theoretical solution, not terms to be inserted into the governing equations.
 
-No term may be inferred from `Pf` for parameter generation.
+No specimen-specific imperfection, halfwave length, material coefficient or root may be inferred from `Pf`.
 
-## Case1 reconstruction history
+## Case1 reconstruction evidence retained with qualification
 
-Priority files retained for evidence:
-
-- `20260813_TUNK__NZSCCM__CASE1__COMPILER_VALUE_SHIFT_AND_FULL_FIELD_KZ_RECONSTRUCTION__AUDIT.md` — **PARTIALLY_SUPERSEDED ON HALFWAVE PROVENANCE**; retains value/tangent decomposition evidence for the square-halfwave execution identity.
-- `20260813_TUNK__NZSCCM__CASE1__CURRENT_BRANCH_KZ__AUDIT_TRACE.csv` — same square-halfwave audit identity.
-- `20260813_TUNK__NZSCCM__SWARTZ24__CONTROL_ORDERING_REFINEMENT_AFTER_CASE1_RECONSTRUCTION__AUDIT.md` — same qualification.
-- `20260813_1719__NZSCCM__CASE1_TO_CASE8__SOURCE_SPECIMEN_VARIABILITY_AND_TEST_NONIDEALITY__AUDIT.md`
-- `20260813_1647__NZSCCM__SWARTZ24__LIMIT_POINT_VS_TANGENT_LOSS_CONTROL_ORDERING__AUDIT.md`
-- `20260813_1035__NZSCCM__SWARTZ24__FULL_SAME_EXPRESSION_L_KZ_BULK_GATE__EXECUTION_AUDIT.md`
-- `20260811_TUNK__NZSCCM__SWARTZ24__C1_TANGENT_REPAIR_AT_DIRECT_N48_STATES__AUDIT_TABLE.csv`
-
-The square-halfwave Case1 audit had reconstructed
+The square-halfwave Case1 audit reconstructed
 
 ```text
 D ~ 0.98833818
@@ -96,20 +57,21 @@ P ~ 608.92642 kN
 KZ_audit at maximum ~ +3066.68 N/mm
 ```
 
-and isolated a compiler value/tangent effect. Those calculations remain useful for diagnosing that specific execution identity, but they are no longer accepted as a source-faithful Case1 structural reconstruction until the halfwave provenance is reconciled.
+and isolated a compiler value/tangent effect. Its high-order Gauss evaluator is audit-only; formal zero-spatial Case1 KZ remains pending.
 
-## Source-level experimental audit
+The later long-halfwave `~647.5 kN` result is also audit-only and is **not** promoted as the formal Case1 production geometry merely because Nguyen/experiment showed a long-wave pattern.
 
-The original Swartz papers and Nguyen's later review establish several real test/specimen nonidealities absent from an average-property ideal plate:
+## Source-level specimen nonidealities retained as validation evidence
+
+The original Swartz papers and Nguyen's review support real specimen/test nonidealities such as:
 
 ```text
-CASE1_Pf_110p2_KIP = SOURCE_CONFIRMED
-CASE1_Pcr_125p1_KIP = SOUTHWELL_DERIVED / HIGH_BIAS_RISK
-WITHIN_PANEL_THICKNESS_VARIATION = ABOUT +/-3% / SOURCE_EXPLICIT
-UNAVOIDABLE_LOAD_ECCENTRICITY = SOURCE_EXPLICIT
-DISCRETE_SUPPORT_AND_LOAD_BEDDING = SOURCE_EXPLICIT
-CURRENT_b_OVER_400 = PROJECT_INPUT / NOT_MEASURED_CASE1_IMPERFECTION
-LOCAL_MATERIAL_FIELD = NOT_MEASURED; TWO CYLINDER AVERAGE ONLY
+within-panel thickness variation ~ +/-3%
+unavoidable load eccentricity
+discrete support/load bedding
+noncanonical/localized bulging
+project q0=b/400 not being a measured Case1 imperfection
+only limited cylinder-based material sampling
 ```
 
-These are credible sources of individual-specimen capacity scatter, but no Case1-specific correction magnitude is currently source-closed. They may not be inferred from `Pf` or used to calibrate material/structure parameters.
+These remain legitimate post-solution physical discussion only. They may not be used to calibrate the locked theory.
