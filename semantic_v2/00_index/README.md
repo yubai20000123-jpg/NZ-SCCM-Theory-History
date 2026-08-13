@@ -1,7 +1,35 @@
 # NZ-SCCM semantic tree v2
 
-This namespace is a non-destructive semantic reconstruction of the repository.
+This namespace is the **content-first, non-destructive semantic reconstruction** of the repository.
 
-It does **not** make a file current merely by copying its old filename or directory. Canonical identity is determined from file contents and supersession evidence first.
+A legacy path or filename is a locator only. It does not confer current/superseded/rejected identity.
 
-Canonical naming rule and semantic manifest live beside this file. Existing legacy paths are preserved until migration mappings are content-audited.
+## Read order
+
+1. `20260813_1328__NZSCCM__REPOSITORY__CONTENT_FIRST_NAMING_AND_TREE_POLICY__GOVERNANCE.md`
+2. `20260813_1328__NZSCCM__REPOSITORY__CONTENT_SEMANTIC_TREE__SEMANTIC_MANIFEST.md`
+3. `20260813_1328__NZSCCM__REPOSITORY__AUDITED_ARTIFACTS__SEMANTIC_MANIFEST.csv`
+4. `20260813_1328__NZSCCM__REPOSITORY__ARTIFACT_SUPERSESSION__SUPERSESSION_MAP.csv`
+5. `20260813_1328__NZSCCM__REPOSITORY__LEGACY_TO_CANONICAL__RENAME_MAP.csv`
+
+## Audit levels
+
+- `A_DIRECT_CONTENT_AUDIT`: file body opened/read; identity derived from content + chronology.
+- `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER`: stable source/history role derived from a content-read registry/ledger; open the leaf before using it for a technical claim.
+- `C_NOT_YET_DIRECT_CONTENT_AUDITED`: locator known, semantic identity not yet asserted beyond family/locator role.
+
+## Canonical naming
+
+```text
+YYYYMMDD_HHMM__NZSCCM__<SCOPE>__<SPECIFIC_CONTENT>__<ARTIFACT_KIND>.<ext>
+```
+
+If date is known but clock time is not defensible, use `YYYYMMDD_TUNK`; do not invent `00:00`.
+
+Mutable status is stored in the semantic manifest rather than treated as filename truth.
+
+## Migration rule
+
+Existing legacy paths remain preserved until their contents/supersession relations are sufficiently audited. Canonical `.LOCATOR.md` files under `semantic_v2/` provide the clean semantic entry points without duplicating or silently rewriting theory/result bodies.
+
+No legacy file is to be deleted, moved, or renamed solely from its filename.
