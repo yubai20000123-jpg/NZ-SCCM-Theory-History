@@ -16,7 +16,7 @@ Case21 has the formal zero-spatial ordering completed. The other 23 formal KZ or
 
 ## 2026-08-13 kinematics / halfwave provenance correction
 
-Highest-priority new audit:
+Highest-priority kinematics audit:
 
 - `20260813_1756__NZSCCM__SWARTZ24__SECOND_ORDER_KINEMATICS_AND_HALFWAVE_PROVENANCE__AUDIT.md`
 
@@ -34,6 +34,46 @@ The stored 608.925 kN result itself is not silently deleted or replaced; its exa
 An audit-only source-correct Case1 rerun with `ell=2440 mm`, with R10/current C1-MM otherwise unchanged, gives a first-load-maximum around 647.5 kN. Thus correcting the halfwave length does not cure the Case1 overprediction; it increases it in the audit. This number has no production identity because the rerun used high-order spatial Gauss only as an independent diagnostic.
 
 The same kinematics audit also finds that omitted third/higher geometric terms are too small by order-of-magnitude to plausibly explain a 10-25% capacity error at the current displacement amplitudes. The more serious open kinematic issue is the reduced `(D,q)` / fixed-mode subspace compared with Nguyen's general `u(x,y),v(x,y),w(x,y)` fields.
+
+## 2026-08-13 ideal-mode / imperfection / reserve mechanism audit
+
+New source-grounded mechanism audit:
+
+- `20260813_1816__NZSCCM__SWARTZ24__IDEAL_MODE_IMPERFECTION_AND_POSTBUCKLING_RESERVE__MECHANISM_AUDIT.md`
+
+Current synthesis:
+
+```text
+CLASSICAL a/b=2 ISOTROPIC BASELINE:
+    two square halfwaves are the lowest mode;
+    one full-length halfwave has classical k=6.25 vs k=4.00, i.e. 1.5625 times the critical level.
+
+NGUYEN PERFECT NONLINEAR BASELINE:
+    Cases1-16 -> approximately one full-length halfwave;
+    Cases17-24 -> two halfwaves.
+
+THEREFORE:
+    one-wave existence in Cases1-16 does not uniquely prove initial imperfection;
+    off-center / unequal / localized bulges are stronger nonideality signatures.
+```
+
+The 24-panel source table gives experimental bulge locations and postbuckling reserve. Across the current signed failure-load errors, the experimental reserve has an audit correlation of approximately `r=-0.626`: specimens with larger measured postbuckling reserve tend to be underpredicted by the present model.
+
+Case21 is the strongest modal-consistency benchmark: source location is approximately top-half + bottom-half (two-wave family), matching Nguyen's perfect slender-panel mode, and current error is about -0.74%. Cases19 and21 are the two clearest two-halfwave source patterns and are comparatively well predicted. Cases22-24 depart toward a single/localized dominant zone and show positive current errors, which is qualitatively consistent with imperfection/eccentricity/support-selected weaker modes.
+
+Conversely, Cases9-16 mostly show the centered full-length one-wave that Nguyen predicts even for a perfect nonlinear wall, while they have large experimental postbuckling reserves and mostly negative current errors. This strongly rejects `initial imperfection alone` as a global explanation.
+
+The current best non-calibrating mechanism hypothesis is a competition:
+
+```text
+P_exp_failure
+~ P_ideal_source_faithful
+  - downward imperfection/eccentricity/support/localization effect
+  + upward postbuckling redistribution/reserve
+  + specimen/material scatter
+```
+
+No term may be inferred from `Pf` for parameter generation.
 
 ## Case1 reconstruction history
 
