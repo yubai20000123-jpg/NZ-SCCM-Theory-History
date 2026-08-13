@@ -14,35 +14,53 @@ first KZ=0 vs first L=0, g:+->- maximum
 
 Case21 has the formal zero-spatial ordering completed. The other 23 formal KZ orderings remain pending.
 
-## Case1 reconstruction refinement
+## 2026-08-13 kinematics / halfwave provenance correction
 
-Current priority files:
+Highest-priority new audit:
 
-- `20260813_TUNK__NZSCCM__CASE1__COMPILER_VALUE_SHIFT_AND_FULL_FIELD_KZ_RECONSTRUCTION__AUDIT.md`
-- `20260813_TUNK__NZSCCM__CASE1__CURRENT_BRANCH_KZ__AUDIT_TRACE.csv`
-- `20260813_TUNK__NZSCCM__SWARTZ24__CONTROL_ORDERING_REFINEMENT_AFTER_CASE1_RECONSTRUCTION__AUDIT.md`
+- `20260813_1756__NZSCCM__SWARTZ24__SECOND_ORDER_KINEMATICS_AND_HALFWAVE_PROVENANCE__AUDIT.md`
+
+Source-backed mode geometry is:
+
+```text
+Cases 1-16  : approximately one longitudinal halfwave -> ell=2440 mm
+Cases 17-24 : two longitudinal halfwaves              -> ell=1220 mm
+```
+
+A later three-representative-panel blind input incorrectly stated `b=ell=1220 mm` for Case1, Case14 and Case21. The recent Case1 reconstruction also used `ell=1220 mm`. Therefore that reconstruction is now **partially superseded on structural-kinematics provenance**, even though it reproduces the stored 608.925 kN value closely.
+
+The stored 608.925 kN result itself is not silently deleted or replaced; its exact execution provenance must be recovered before deciding whether it inherited the same halfwave error.
+
+An audit-only source-correct Case1 rerun with `ell=2440 mm`, with R10/current C1-MM otherwise unchanged, gives a first-load-maximum around 647.5 kN. Thus correcting the halfwave length does not cure the Case1 overprediction; it increases it in the audit. This number has no production identity because the rerun used high-order spatial Gauss only as an independent diagnostic.
+
+The same kinematics audit also finds that omitted third/higher geometric terms are too small by order-of-magnitude to plausibly explain a 10-25% capacity error at the current displacement amplitudes. The more serious open kinematic issue is the reduced `(D,q)` / fixed-mode subspace compared with Nguyen's general `u(x,y),v(x,y),w(x,y)` fields.
+
+## Case1 reconstruction history
+
+Priority files retained for evidence:
+
+- `20260813_TUNK__NZSCCM__CASE1__COMPILER_VALUE_SHIFT_AND_FULL_FIELD_KZ_RECONSTRUCTION__AUDIT.md` — **PARTIALLY_SUPERSEDED ON HALFWAVE PROVENANCE**; retains value/tangent decomposition evidence for the square-halfwave execution identity.
+- `20260813_TUNK__NZSCCM__CASE1__CURRENT_BRANCH_KZ__AUDIT_TRACE.csv` — same square-halfwave audit identity.
+- `20260813_TUNK__NZSCCM__SWARTZ24__CONTROL_ORDERING_REFINEMENT_AFTER_CASE1_RECONSTRUCTION__AUDIT.md` — same qualification.
 - `20260813_1719__NZSCCM__CASE1_TO_CASE8__SOURCE_SPECIMEN_VARIABILITY_AND_TEST_NONIDEALITY__AUDIT.md`
 - `20260813_1647__NZSCCM__SWARTZ24__LIMIT_POINT_VS_TANGENT_LOSS_CONTROL_ORDERING__AUDIT.md`
 - `20260813_1035__NZSCCM__SWARTZ24__FULL_SAME_EXPRESSION_L_KZ_BULK_GATE__EXECUTION_AUDIT.md`
 - `20260811_TUNK__NZSCCM__SWARTZ24__C1_TANGENT_REPAIR_AT_DIRECT_N48_STATES__AUDIT_TABLE.csv`
 
-The Case1 independent audit reconstructs the current first load maximum at approximately
+The square-halfwave Case1 audit had reconstructed
 
 ```text
-D = 0.98833818
-q = 0.00083313173
-P = 608.92642 kN
+D ~ 0.98833818
+q ~ 0.00083313173
+P ~ 608.92642 kN
+KZ_audit at maximum ~ +3066.68 N/mm
 ```
 
-versus the stored 608.925 kN. It also finds the audit-only complete-halfwave KZ remains strongly positive at the maximum, approximately +3066.68 N/mm, with all 15 checked pre-limit branch states positive.
+and isolated a compiler value/tangent effect. Those calculations remain useful for diagnosing that specific execution identity, but they are no longer accepted as a source-faithful Case1 structural reconstruction until the halfwave provenance is reconciled.
 
-Therefore present evidence does **not** support an early full-field KZ zero as the cause of the Case1 +22.30% -> +24.22% worsening. The reconstructed dominant numerical mechanism is the finite compiler value/tangent trade-off: at the same old direct-N48 state the current C1/MM value field raises P by about +19.16 kN, while re-equilibration lowers it by about -9.75 kN, leaving the observed net +9.41 kN increase.
+## Source-level experimental audit
 
-The full-field audit uses high-order physical-space Gauss only as an independent diagnostic. It is not promoted to the formal zero-spatial D15 result. Formal Case1 KZ remains pending until the coefficient-space engine is regenerated.
-
-## 2026-08-13 source-level experimental audit
-
-The original Swartz papers and Nguyen's later review establish several real test/specimen nonidealities that are absent from an average-property ideal plate:
+The original Swartz papers and Nguyen's later review establish several real test/specimen nonidealities absent from an average-property ideal plate:
 
 ```text
 CASE1_Pf_110p2_KIP = SOURCE_CONFIRMED
@@ -54,6 +72,4 @@ CURRENT_b_OVER_400 = PROJECT_INPUT / NOT_MEASURED_CASE1_IMPERFECTION
 LOCAL_MATERIAL_FIELD = NOT_MEASURED; TWO CYLINDER AVERAGE ONLY
 ```
 
-These are credible sources of individual-specimen capacity scatter and can favor a weaker local halfwave, but no Case1-specific correction magnitude is currently source-closed. They may not be inferred from `Pf` or used to calibrate material/structure parameters.
-
-Historical mechanism/source audits from 2026-08-11 are partially superseded where their Pu/error columns use old direct-N48 predictions. Their source-observation columns remain usable within provenance limits.
+These are credible sources of individual-specimen capacity scatter, but no Case1-specific correction magnitude is currently source-closed. They may not be inferred from `Pf` or used to calibrate material/structure parameters.
