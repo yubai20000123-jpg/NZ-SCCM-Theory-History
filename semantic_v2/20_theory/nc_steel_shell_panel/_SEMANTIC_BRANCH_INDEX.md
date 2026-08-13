@@ -1,212 +1,203 @@
 # Concrete + steel-shell semantic branch
 
-## Parent theory
+## Parent theory — LOCKED
 
-Locked parent governance:
+Parent governance:
 
 - `semantic_v2/10_governance/20260813_1834__NZSCCM__NC_PANEL__ENERGY_MINIMUM_HALFWAVE_R10_N48C1MM_D15_DIRECT_LIMIT__LOCKED_BASELINE.md`
 
-The parent locks:
+Locked identities:
 
 ```text
-one theoretical energy-minimum complete halfwave
-D,q Nguyen second-order kinematics with membrane terms included
-energy-fitted R10 concrete target
-current N48-C1/MM compiler with specimen/design-dependent material interval
+ONE theoretical energy-minimum complete halfwave
+GLOBAL coordinates = D,q
+NGUYEN second-order kinematics; membrane terms included
+R10 ordinary-concrete current target frozen
+N48-C1/MM compiler
 Cayley-Hamilton 2D lift
 full directional current tangent
-general-D15 exact multiple integrals
-zero formal spatial quadrature
-direct Rq=0,L=0 first +->- limit solve
-same-branch Zhou/Navier stability check
+general-D15 exact multiple moments
+formal spatial quadrature = 0
+direct primary-branch limit: Rq=0 + L=0, first +->- maximum
+same-branch Zhou/Navier current-tangent control check
 ```
 
-## Active structural extension
+## Continuous steel-shell replacement
+
+Structural extension:
 
 - `20260813_1834__NZSCCM__NC_STEEL_SHELL_PANEL__REBAR_REPLACEMENT_GENERAL_D15__THEORY_EXTENSION_CONTRACT.md`
 
-The extension removes the reinforcement contribution and replaces it by continuous steel-shell contributions. The parent concrete theory is unchanged.
+The rebar module is replaced by continuous finite-thickness shell contributions; the concrete parent is unchanged.
 
-## Preliminary zero-quadrature structural validation — PASS
+## Zero-quadrature shell gate — PASS
 
-Validation report:
+Validation:
 
 - `semantic_v2/60_validation/steel_shell/20260813_1854__NZSCCM__STEEL_SHELL__ZERO_QUADRATURE_SSSS_NAVIER_ZHOU_ABAQUS__VALIDATION.md`
 
-Execution test:
+Execution:
 
 - `semantic_v2/40_execution/steel_shell/20260813_1854__NZSCCM__STEEL_SHELL__ZERO_QUADRATURE_SSSS_EXACT_MOMENT_TEST.py`
 
-Result table:
-
-- `semantic_v2/50_results/steel_shell/20260813_1854__NZSCCM__STEEL_SHELL__SSSS_EXACT_VS_ABAQUS__RESULT_TABLE.csv`
-
-The finite-thickness shell exact-moment operator reduces to the classical four-edge simply-supported elastic Navier plate and reproduces the official Abaqus benchmark analytical value at machine roundoff:
-
 ```text
-Ncr exact-moment = 90.38099268396850
-Ncr classical     = 90.38099268396849
-
 FINITE_THICKNESS_SHELL_EXACT_MOMENTS = PASS
 ZERO_SPATIAL_QUADRATURE = PASS
 ZERO_THICKNESS_QUADRATURE = PASS
 SSSS_NAVIER_ELASTIC_DEGENERATION = PASS
+Ncr exact-moment = 90.38099268396850
+Ncr classical    = 90.38099268396849
 ```
 
-Zhou's four-edge simply-supported Navier/orthotropic architecture is compatible with this degeneration. Literal reproduction of Zhou's own numerical FE table remains pending recovery of the primary numerical table; no value is invented.
+## Yun Lu Chapter 2 -> general-D15 — EXACT PASS
 
-## Yun Lu Chapter 2 exact general-D15 compilation — PASS
-
-Current primary local-shell audit:
+Primary audit:
 
 - `20260813_1919__NZSCCM__YUN_LU__CH2_GENERAL_D15_EXACT_COMPILATION_AND_DQ_COUPLING__THEORY_AUDIT.md`
 
-Reproducible exact-symbolic audit:
+Reproducible symbolic audit:
 
 - `semantic_v2/40_execution/steel_shell/20260813_1919__NZSCCM__YUN_LU__CH2_D15_EXACT_SYMBOLIC_AUDIT.py`
-
-The Yun Lu Chapter 2 source chain has now been compiled directly:
-
-```text
-Eq.2-19 / 2-20 deflection + imperfection
--> Eq.2-23 Karman compatibility
--> Table 2-1 Airy coefficients
--> Eq.2-28~2-31 Galerkin
--> Eq.2-32 closed postbuckling path
--> Eq.2-35~2-37 axial stress field / first-yield event
-```
 
 Exact gates:
 
 ```text
-YUN_LU_CH2_GENERAL_D15_EXACT = PASS
-ONE_COMPLETE_HALFWAVE_REDUCTION = EXACT PASS
-TABLE_2_1_FROM_D15 = EXACT PASS
-KCRX_FROM_D15 = EXACT PASS
-KP_FROM_D15 = EXACT PASS
-EQ_2_32_FROM_D15 = EXACT PASS
-EQ_2_37_FROM_TABLE_2_1 = EXACT PASS
-MINIMUM_LOCAL_HALFWAVE_r=1 = EXACT PASS
+ONE_COMPLETE_HALFWAVE_REDUCTION = PASS
+TABLE_2_1_FROM_D15 = PASS
+KCRX_FROM_D15 = PASS
+KP_FROM_D15 = PASS
+EQ_2_32_FROM_D15 = PASS
+EQ_2_37_FROM_TABLE_2_1 = PASS
+MINIMUM_LOCAL_HALFWAVE_r=1 = PASS
 FORMAL_SPATIAL_QUADRATURE = 0
 ```
 
-With `r=ell/b=(a/b)/m`, the exact D15 reduction gives
+With `r=ell/b`:
 
 \[
 k_{crx}(r)=\frac{4(3r^4+2r^2+3)}{3r^2},
 \]
 
-and
-
 \[
 k_p(r)=\frac{272r^{16}+2856r^{14}+11273r^{12}+23146r^{10}+31506r^8+23146r^6+11273r^4+2856r^2+272}{r^2(r^2+1)^2(r^2+4)^2(4r^2+1)^2}.
 \]
 
-At `r=1`:
+At `r=1`, `k_crx=32/3` and `k_p=1066/25=42.64`.
+
+Yun Lu Eq.2-36 contains a source-internal inconsistency in its final printed cross harmonic; production regeneration follows Table 2-1 + Eq.2-27 and is cross-checked by Eq.2-37.
+
+## Steel rule for the Yun branch
+
+Current user-approved closure:
 
 ```text
-k_crx = 32/3 = 10.666666...
-k_p   = 1066/25 = 42.64
-k_crx'(1)=0, k_crx''(1)=32>0
-k_p'(1)=0,   k_p''(1)=75064/625>0
+STEEL = ideal elastic-perfectly-plastic
+Yun-Lu elastic large-deflection path = valid before first local yield
+strain hardening = 0
 ```
 
-This independently recovers Yun Lu's minimum-wave statement and is fully consistent with the parent energy-minimum-halfwave governance.
+Yun Lu Chapter 2 is explicitly a postbuckling theory. A local buckling event does not terminate the global solution.
 
-### Source-internal Eq.2-36 qualification
-
-The printed last cross-harmonic term of Yun Lu Eq.2-36 is not algebraically consistent with Table 2-1 + Eq.2-27. The unique field generated from Table 2-1 contains a `cos(2m*pi*x/a) cos(4*pi*y/b)` cross harmonic with denominator `(4a^2+b^2m^2)^2`. Yun Lu Eq.2-37 at the maximum-compression point agrees with this Table-2-1-derived form.
-
-Therefore:
+Clean elastic-buckling-first ordering:
 
 ```text
-TABLE_2_1 + EQ_2_27 + EQ_2_37 = internally consistent
-EQ_2_36_LAST_CROSS_TERM_AS_PRINTED = SOURCE INTERNAL TYPO / INCONSISTENCY
-PRODUCTION_COMPILATION = generated from Table 2-1 and cross-checked by Eq.2-37
+S0 pre-buckling
+-> B_s local buckling
+-> S1 Yun-Lu elastic large-deflection postbuckling
+-> Y_s first local yield
+-> global path may continue with ideal-EP strength cap
 ```
 
-The source discrepancy is documented rather than silently overwritten.
+Detailed expanding plastic-zone/local-shape evolution after first yield is not supplied by Yun Lu Chapter 2 and is not invented.
 
-## Steel material rule for the Yun-Lu branch
+## Correct local-amplitude coupling — INTERNAL COORDINATE + EXACT CONDENSATION
 
-Per current user instruction and Yun Lu's own Chapter 2 ultimate definition:
+**Correction to the earlier index wording:** production does **not** prescribe an empirical/design-side `A=A(q)` map.
+
+Each active local Yun-Lu amplitude is a finite internal coordinate with exact local residual
+
+\[
+R_A(D,q,A)=0.
+\]
+
+When `R_A,A != 0`, implicit differentiation gives
+
+\[
+A_D=-R_{A,D}/R_{A,A},\qquad A_q=-R_{A,q}/R_{A,A}.
+\]
+
+The local variable is then exactly condensed from the global derivatives:
+
+\[
+\widetilde P_D=P_D+P_AA_D,\qquad
+\widetilde P_q=P_q+P_AA_q,
+\]
+
+\[
+\widetilde R_{q,D}=R_{q,D}+R_{q,A}A_D,\qquad
+\widetilde R_{q,q}=R_{q,q}+R_{q,A}A_q.
+\]
+
+The parent global limit identity is retained:
+
+\[
+\widetilde L=\widetilde P_D\widetilde R_{q,q}-\widetilde P_q\widetilde R_{q,D}.
+\]
+
+For multiple local amplitudes, use the finite local Jacobian block inverse. This is exact algebraic condensation, not a spatial discretization or modal deletion.
+
+## Postbuckling current tangent
+
+After local-mode activation, same-branch stability uses the current condensed tangent:
+
+\[
+\boxed{K_{gg}^{cond}=K_{gg}-K_{gA}K_{AA}^{-1}K_{Ag}},\qquad g=(D,q).
+\]
+
+Thus `KZ` after local buckling includes local-mode relaxation; the pre-buckling shell tangent may not be frozen and reused.
+
+## First real-source NC+PBL preflight — Sun A5
+
+Execution checkpoint:
+
+- `semantic_v2/40_execution/steel_shell/20260813_2005__NZSCCM__SUN_A5__YUN_LOCAL_INSTANTIATION_AND_GLOBAL_PU_PREFLIGHT__EXECUTION_CHECKPOINT.md`
+
+Mechanism audit:
+
+- `semantic_v2/60_validation/steel_shell/20260813_2005__NZSCCM__SUN_A5__LOCAL_BUCKLING_YIELD_POSTBUCKLING_ORDERING__AUDIT.md`
+
+A5 local source geometry:
 
 ```text
-STEEL = IDEAL ELASTIC-PERFECTLY-PLASTIC
-YUN_LU_ELASTIC_LARGE_DEFLECTION_PATH = retained to first local yield
-ULTIMATE/YIELD EVENT = first maximum axial compressive stress reaches fy
-STRAIN_HARDENING = 0
+b=256 mm; t_s=6 mm; s_h=520 mm; m=2
+ell=260 mm; r=1.015625
+E_s=208000 MPa; fy=423 MPa; nu_s=0.30
 ```
 
-The earlier J2 deformation-theory current-map remains a retained candidate/history item, but it is not required for the first Yun-Lu production branch.
-
-No post-first-yield expanding plastic-zone theory is silently invented. If such continuation is opened later, it will require a separate analytic yield-boundary derivation.
-
-## Global D-q analytic interface — CLOSED
-
-A displacement-control compatibility relation has been derived from Yun Lu's same Karman field and Airy stress field, using exact D15 averaging:
-
-\[
-\varepsilon_{c,s}=\frac{p_x}{E_st_s}+\frac{3\pi^2}{\ell^2}\left(A_0A+\frac12A^2\right).
-\]
-
-For a shell longitudinal direction sharing the global axial shortening `eps0*D`:
-
-\[
-p_x^{comp}(D,A)=E_st_s\left[\varepsilon_0D-\frac{3\pi^2}{\ell^2}\left(A_0A+\frac12A^2\right)\right].
-\]
-
-The Yun-Lu Galerkin residual can be written exactly as
-
-\[
-\mathcal G_Y=\frac{3\pi^2b}{t_s\ell}(A+A_0)[p_x^Y(A)-p_x].
-\]
-
-For an analytically prescribed design-side amplitude map `A=A(q)`, the physical shell contribution becomes
-
-\[
-R_{q,sh}=\frac{3\pi^2b}{\ell}A_{,q}(A+A_0)[p_x^Y(A)-p_x^{comp}(D,A)].
-\]
-
-For multiple local shell subpanels, sum this finite analytic contribution over the subpanels. The shell axial load is
-
-\[
-P_{sh}(D,q)=\sum_i b_i p_{x,i}^{comp}(D,A_i(q)).
-\]
-
-Hence the locked two-variable global structure is preserved:
-
-\[
-P=P_c+P_{sh},\qquad R_q=R_{q,c}+R_{q,sh},
-\]
-
-\[
-L=P_DR_{q,q}-P_qR_{q,D}.
-\]
-
-All derivatives are analytic; no new spatial quadrature, material-point grid, or load-history stepping is introduced.
-
-Current status:
+Exact Yun coefficients:
 
 ```text
-YUN_LU_LOCAL_AMPLITUDE_COUPLING = ANALYTIC INTERFACE CLOSED
-GLOBAL_GENERALIZED_COORDINATES = D,q RETAINED
-IDEAL_EP_FIRST_YIELD_CAP = ACCEPTED
-FORMAL_SPATIAL_QUADRATURE = 0
-FORMAL_SPATIAL_SUBDOMAINS = one representative complete halfwave per analytic local panel contribution
+k_crx = 10.670513051651874
+k_p   = 42.654436695417374
+sigma_cr_el = 1101.9155543017378 MPa
+sigma_cr_el/fy = 2.6050013104059992
 ```
 
-## Next execution gate
-
-The next task is no longer a theoretical feasibility question. It is the first blind nonlinear `concrete + Yun-Lu steel-shell` benchmark:
+Therefore A5 is `YIELD-FIRST` under the adopted ideal-EP model. Its elastic Yun-Lu S1 branch must not be forced before yield.
 
 ```text
-1. freeze the benchmark's design geometry / local PBL-bounded shell widths and initial local imperfections;
-2. generate each local r, k_crx, k_p and A_i(q) mapping from design-side data only;
-3. assemble Psh and Rq,sh analytically with the frozen concrete Pc and Rq,c;
-4. solve Rq=0 and L=0 directly on the primary branch;
-5. on that same branch compare first L=0, first KZ=0 and first local Yun-Lu yield Y_s,i=0;
-6. only after theory freeze compare with an experimental or FE benchmark.
+SUN_A5_LOCAL_D15 = PASS
+SUN_A5_YIELD_FIRST_CLASSIFICATION = PASS
+SUN_A5_FULL_Du_qu_Pu = NOT RELEASED
 ```
 
-No reopening of the locked concrete theory is authorized by this benchmark.
+The full root is withheld because A5 still lacks a source-frozen R10 `eps0` input and a source-consistent yield-first local-buckling closure under ideal EP; no experimental load is used to fill either gap.
+
+## Current next gate
+
+Two distinct next calculations are now separated:
+
+1. **Clean Yun postbuckling benchmark:** choose a source/design panel with `sigma_cr_el < fy`, then execute `B_s -> S1 -> Y_s -> global L/KZ` and solve the full concrete+shell branch.
+2. **Sun A5 production benchmark:** close the yield-first local branch plus the missing A5 R10 material input, then solve A5 without forcing an elastic Yun branch.
+
+No reopening of the locked ordinary-concrete mother theory is authorized.
