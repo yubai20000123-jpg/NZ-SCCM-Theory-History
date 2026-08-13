@@ -1,9 +1,22 @@
 # CURRENT WORKSPACE
 
-这个目录只放**下一步工作会直接用到**的文件。
+## Important: directory name is not semantic status
 
-- `CURRENT_STATE.md`：唯一当前状态入口。
-- `theory/`：当前 benchmark/operator 与可执行 helper。
-- `case21/`：当前 Case21 handoff、next-step report 与结果记录。
+This directory is **not presently semantically pure**. It contains a mixture of current production artifacts, retained predecessors, historical result tables, correction audits and old exploratory branches. Therefore a file must not be treated as current-valid merely because it is under `current/`.
 
-旧 Case21 路线、旧材料 compiler、nested-D15、piecewise analytic、CAS 尝试等全部归入 `history/`，不要从这里恢复旧路线。
+Mandatory entry points:
+
+1. `CONTENT_INDEX.md`
+2. `CONTENT_SEMANTIC_MANIFEST_20260813.csv`
+3. `CURRENT_STATE.md`
+4. `../governance/CONTENT_SEMANTIC_IDENTITY_RULE_20260813.md`
+
+```text
+PATH_NAME_IS_LOCATOR_ONLY = YES
+PATH_NAME_CONFERS_CURRENT_STATUS = NO
+CONTENT_AUDIT_REQUIRED_BEFORE_USE = YES
+```
+
+The previous statement that this directory contains only files directly used for the next step is no longer relied upon as a factual description of the actual tree. The actual recursive tree shows old PF1/M1R/R09-era artifacts and superseded Swartz24 result tables still under `current/`.
+
+Do not perform destructive cleanup by filename. First classify content in the semantic manifest; only then may a later controlled migration move/rename artifacts while preserving provenance and supersession.
