@@ -1,10 +1,10 @@
 
 ====================================================================================================
 FILE: .github/workflows/rebuild_fulltext_corpus.yml
-SIZE: 3376
-SHA256: 7cf74fa0b3203375a978277aa845a4b55847cc638649ec6447a1b78462a03af7
+SIZE: 4048
+SHA256: 2904019accc877fc5ba6439cf6a2c2fb1f43915ee957cb98eba0b87cc15372fa
 ENCODING: utf-8
-LINES: 93
+LINES: 98
 ====================================================================================================
 name: Rebuild full-text corpus
 
@@ -24,16 +24,20 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Build complete repository text corpus and manifest
+      - name: Build complete repository text corpus, manifest, and chunks
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-          import hashlib, csv, os
+          import hashlib, csv, shutil
 
           root = Path('.')
           outdir = root / 'REBUILD_AUDIT'
           outdir.mkdir(exist_ok=True)
+          chunkdir = outdir / 'CORPUS_CHUNKS'
+          if chunkdir.exists():
+              shutil.rmtree(chunkdir)
+          chunkdir.mkdir()
           corpus = outdir / 'FULL_TEXT_CORPUS.txt'
           manifest = outdir / 'FILE_MANIFEST.csv'
           treefile = outdir / 'ALL_FILES_TREE.txt'
@@ -43,8 +47,7 @@ jobs:
           for p in root.rglob('*'):
               if not p.is_file():
                   continue
-              parts = p.parts
-              if any(x in exclude_roots for x in parts):
+              if any(x in exclude_roots for x in p.parts):
                   continue
               files.append(p)
           files.sort(key=lambda p: p.as_posix())
@@ -56,18 +59,12 @@ jobs:
                   sha=hashlib.sha256(b).hexdigest()
                   rel=p.as_posix()
                   try:
-                      text=b.decode('utf-8')
-                      enc='utf-8'
-                      is_text=True
+                      text=b.decode('utf-8'); enc='utf-8'; is_text=True
                   except UnicodeDecodeError:
                       try:
-                          text=b.decode('utf-8-sig')
-                          enc='utf-8-sig'
-                          is_text=True
+                          text=b.decode('utf-8-sig'); enc='utf-8-sig'; is_text=True
                       except UnicodeDecodeError:
-                          text=''
-                          enc='binary-or-non-utf8'
-                          is_text=False
+                          text=''; enc='binary-or-non-utf8'; is_text=False
                   lines=text.count('\n') + (1 if text and not text.endswith('\n') else 0) if is_text else 0
                   rows.append([rel,len(b),sha,enc,lines,'TEXT' if is_text else 'BINARY'])
                   cf.write('\n' + '='*100 + '\n')
@@ -75,17 +72,25 @@ jobs:
                   cf.write('='*100 + '\n')
                   if is_text:
                       cf.write(text)
-                      if text and not text.endswith('\n'):
-                          cf.write('\n')
+                      if text and not text.endswith('\n'): cf.write('\n')
                   else:
                       cf.write('[BINARY CONTENT NOT INLINED]\n')
 
           with manifest.open('w',encoding='utf-8',newline='') as f:
-              w=csv.writer(f)
-              w.writerow(['path','size_bytes','sha256','encoding','line_count','kind'])
-              w.writerows(rows)
+              w=csv.writer(f); w.writerow(['path','size_bytes','sha256','encoding','line_count','kind']); w.writerows(rows)
           treefile.write_text('\n'.join(p.as_posix() for p in files)+'\n',encoding='utf-8')
-          print(f'files={len(files)} corpus_bytes={corpus.stat().st_size}')
+
+          all_lines=corpus.read_text(encoding='utf-8').splitlines(True)
+          chunk_size=1800
+          chunk_rows=[]
+          for i in range(0,len(all_lines),chunk_size):
+              n=i//chunk_size+1
+              cp=chunkdir / f'chunk_{n:03d}.txt'
+              cp.write_text(''.join(all_lines[i:i+chunk_size]),encoding='utf-8')
+              chunk_rows.append([n,i+1,min(i+chunk_size,len(all_lines)),cp.stat().st_size,cp.as_posix()])
+          with (outdir/'CORPUS_CHUNK_INDEX.csv').open('w',encoding='utf-8',newline='') as f:
+              w=csv.writer(f); w.writerow(['chunk','global_start_line','global_end_line','size_bytes','path']); w.writerows(chunk_rows)
+          print(f'files={len(files)} corpus_lines={len(all_lines)} corpus_bytes={corpus.stat().st_size} chunks={len(chunk_rows)}')
           PY
       - name: Commit audit corpus
         shell: bash
@@ -96,7 +101,7 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No corpus changes'
           else
-            git commit -m 'Build complete repository full-text audit corpus'
+            git commit -m 'Build complete repository chunked full-text audit corpus'
             git push
           fi
 

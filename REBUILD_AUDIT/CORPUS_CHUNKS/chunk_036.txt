@@ -1,0 +1,1800 @@
+- 理论依据：Terms and coefficients must follow theory/source equations, not selected fit points or panel loads
+- 继承内容：Explicit derivation/provenance for every active coefficient
+- 排除边界：Special-value fitting, panel calibration, hidden regression
+- 证据：user lock 2026-08-06
+- 手算：required for every formal calculation
+- 测试：provenance gate
+
+### H28 · Current · NSC/UHPC information-level symmetry
+- 当前身份：`HARD_LOCK`
+- 作用层：`contract`
+- 理论依据：No temporary NSC-only mechanisms unsupported for UHPC common framework
+- 继承内容：Separate source-specific references may exist but not silently enter common formal model
+- 排除边界：Asymmetric unannounced additions
+- 证据：user lock 2026-08-05
+- 手算：source registry
+- 测试：component ledger
+
+### H29 · Current · Hand-calculation audit protocol
+- 当前身份：`HARD_LOCK`
+- 作用层：`contract`
+- 理论依据：Inputs, formulas, substitutions, intermediates, result, units, independent check
+- 继承内容：Mandatory for all formal computations
+- 排除边界：Code-only numerical result
+- 证据：HAND_CALC_OUTPUT_PROTOCOL_LOCKED.md
+- 手算：self
+- 测试：deliverable checklist
+
+### H30 · Current · Swartz 24-panel production
+- 当前身份：`PAUSED`
+- 作用层：`production`
+- 理论依据：One frozen material/matrix version, m=1, no per-panel tuning
+- 继承内容：Population computation only after material closure and exact-matrix gate
+- 排除边界：Premature representative-panel calibration or partial publication
+- 证据：project locks
+- 手算：required when resumed
+- 测试：not authorized
+
+### H31 · Future · Yunlu steel-shell module
+- 当前身份：`NOT_STARTED`
+- 作用层：`future`
+- 理论依据：Must provide finite exact blocks compatible with zero-integration architecture
+- 继承内容：Interface requirement only
+- 排除边界：Starting coupling before material baseline closure
+- 证据：user requirement
+- 手算：required later
+- 测试：none
+
+====================================================================================================
+FILE: history/materials/UHPC/old_operator_baselines/10_UHPC_C0_material_contract.json
+SIZE: 1973
+SHA256: 8e48ad967082561787f39a986c9be145268c886ace8bcf040cd43bb662da6b41
+ENCODING: utf-8
+LINES: 44
+====================================================================================================
+{
+  "identity": "UHPC-C0-DIRECT-SERIES-CALCULABLE-BASELINE",
+  "common_structural_kernel": "continuous Nguyen half-wave -> continuous strain -> M(epsilon) -> analytic series -> D15 -> P,RA,L",
+  "parameters": {
+    "fc_MPa": 141.1,
+    "Ec_MPa": 43400.0,
+    "eps_c0": 0.0035,
+    "nu": 0.2,
+    "Vsf": 0.02,
+    "ft_cr_MPa": 9.7677,
+    "ft_peak_MPa": 10.7348,
+    "ft_loc_MPa": 10.348,
+    "eps_t_cr": 0.00042,
+    "eps_t_peak": 0.0038,
+    "eps_t_loc": 0.0069,
+    "eps_t_lim": 0.00759
+  },
+  "compression": {
+    "source": "Zhang-2023 equations in project D16 register",
+    "prepeak": "sigma/fc = r*x/(r-1+x^r)",
+    "r": 14.064814814814795,
+    "postpeak": "sigma/fc = 0.18 + 0.82/[1+n(x-1)^2]",
+    "n": 0.6666666666666666
+  },
+  "tension": {
+    "source": "Hiew et al. 2024; project 2%-fibre anchor set",
+    "shape": "elastic -> strain-hardening -> peak -> localization -> exponential softening",
+    "postlocalization": "Hiew Eq.(17): cubic factor multiplied by exponential decay; C1,C2 taken from matching 2% fibre family, never from structural load fitting"
+  },
+  "multiaxial": {
+    "current_stress_baseline": "spectral scalar UHPC-C0, immediately calculable",
+    "strength_audit": "Wang Willam-Warnke and Zhou DP retained as separate material-level utilization/failure boundaries",
+    "note": "No ordinary-concrete Saenz compression law is copied into UHPC."
+  },
+  "analytic_series": {
+    "prepeak_compression": "binomial/Taylor/Chebyshev expansion of noninteger-power rational law",
+    "postpeak_compression": "rational geometric/Chebyshev expansion",
+    "tension_to_localization": "finite linear/polynomial pieces",
+    "postlocalization": "Taylor expansion of polynomial*exp",
+    "formal_spatial_points": 0,
+    "formal_gauss_points": 0
+  },
+  "historical_status_note_20260810": "EXECUTED_CALCULABLE_BASELINE_ONLY; not a final production multiaxial/path-dependent UHPC operator. Current-state authority is CURRENT_STATE.md and later governance."
+}
+
+====================================================================================================
+FILE: history/raw/CHAT_TURN_0001_0148_LOCATOR.md
+SIZE: 2299
+SHA256: a4127ca1ab2494cb0aac1ab0cd427d727337b69c61f78fd6d71a6a55459b52ad
+ENCODING: utf-8
+LINES: 66
+====================================================================================================
+# 原始共享对话 TURN 0001—0148：恢复定位器
+
+## 1. 原件身份
+
+```text
+filename = chat_export_2026-08-05T20-29-31-447Z_part_01_turn_1-148.txt
+ChatGPT File Library ID = file_00000000b7788209a161cd5ec2db852a
+kind = original user-visible dialogue export
+project-history authority = LEVEL 1
+GitHub text copy = PENDING
+```
+
+配套 manifest：
+
+```text
+filename = chat_export_2026-08-05T20-29-31-447Z_manifest.txt
+ChatGPT File Library ID = file_00000000d7b08209a6a93987565bd8c2
+```
+
+## 2. 为什么这个文件必须单独保留
+
+它是 NZ-SCCM-U v0.2 一段关键历史中，用户可见共享页面 TURN 0001—0148 的连续正文基线。后期 R04/R05、D19R/D20 工件和 Conversation JSON 都不能代替它来证明“共享页面上到底交付了什么”。
+
+## 3. 历史真值锁
+
+已锁定：
+
+```text
+TURN 0001—0148 = 连续共享正文基线
+TURN 0147 = 用户：“那就执行吧”
+TURN 0148 = 任务启动/思考 + 连接中断
+D20 formal assistant final = NOT DELIVERED ON SHARED PAGE
+G31 final visible delivery = historically unresolved/absent in the recovered branch at its interruption point
+```
+
+因此，后续发现的：
+
+```text
+D20
+D19R
+D19C
+v0.6.1
+v0.6.3
+G-series execution artifacts
+```
+
+只能证明相应后台/分支工件存在；在不能与原始消息树对应时，不得据此补写一个从未出现在共享页面的 assistant turn，也不得推定用户已经验收。
+
+## 4. 恢复方式
+
+新对话若需要恢复该阶段，应按以下顺序：
+
+1. 在 ChatGPT File Library 搜精确文件名；
+2. 打开 TURN 0001—0148 原始导出；
+3. 再读取 `00_完整性复核与末24小时裁决_R04.md`；
+4. 再读取 `NZ_SCCM_148回合思想演化与当前正式主线恢复_R05.md`；
+5. 若需调查后台/分支，再读取 Conversation JSON active-main-branch audit；
+6. 最后才使用 handoff/decision ledger 做索引。
+
+## 5. GitHub 二进制/文本迁移说明
+
+当前 GitHub connector 的文本写接口没有把 ChatGPT File Library 文件直接作为 file parameter 上传到仓库的动作。因此先保存精确 File Library locator 和证据身份。获得原始文本二进制/挂载副本后，应原样放入：
+
+`history/raw/chat_export_2026-08-05T20-29-31-447Z_part_01_turn_1-148.txt`
+
+不得用摘要重建该文件。
+
+====================================================================================================
+FILE: history/raw/UCFT_V3工程进展.txt
+SIZE: 1454
+SHA256: 66ce4bca70fdb3b3335adf6cede7196486e28d2146f10f2dfa98c2e4fa6f7fc3
+ENCODING: utf-8
+LINES: 43
+====================================================================================================
+已按你的限制执行：**只使用上传压缩包中的源码、配置和命令行入口**，没有调用历史结果、其他求解器、外部理论文件或替代计算方法。
+
+结果是：**现有代码无法完成Case-1计算，因此我已停止，未继续Case-2。**
+
+执行情况：
+
+- 压缩包解压成功；
+- 自带测试：`8/8 PASS`；
+- 使用原始入口：
+  ```text
+  python -m ucft_l0_mechanism.cli
+  ```
+- Case-1使用原始配置 `case1_Q9V3L8.json`；
+- 首次执行120秒，随后从干净目录重新执行600秒；
+- 两次都未完成第一个非零载荷步。
+
+停止时状态：
+
+| 项目 | 状态 |
+|---|---:|
+| 已接受路径点 | 1，仅零载点 |
+| 当前路径步 | 第1步 |
+| 目标载荷参数 | \(5.0\times10^{-5}\) |
+| Newton记录 | 0 |
+| 线搜索记录 | 0 |
+| 结果摘要 | 未生成 |
+| 极限承载力 | 未获得 |
+
+代码停留在首个非零载荷步、第一次Newton记录写出之前。它没有抛出明确的理论或输入错误，但在当前执行环境中，**仅凭该包内现有代码无法完成Case-1正式计算**。
+
+按照你的要求，我没有：
+
+- 修改代码以提速；
+- 修改积分阶次；
+- 修改矩阵规模；
+- 关闭矩阵记录；
+- 更改路径参数；
+- 使用历史Case结果代替；
+- 继续运行Case-2。
+
+因此本次没有Case-1或Case-2的计算值。
+
+原始历史文件 SHA-256：`b72083561889782ceacf0b2b415f61799516c61e10e9161280c7588a91186bd9`
+
+====================================================================================================
+FILE: history/recovery/06_HISTORICAL_DECISION_LEDGER_LOCATOR.md
+SIZE: 1945
+SHA256: cebf6160abbaf1bab0b5c25980b8c1815b99e8ff61a561472e65970f6ac4959e
+ENCODING: utf-8
+LINES: 44
+====================================================================================================
+# 06_HISTORICAL_DECISION_LEDGER.csv — 原始定位器
+
+```text
+filename = 06_HISTORICAL_DECISION_LEDGER.csv
+ChatGPT File Library ID = file_0000000067c48211882209ee351303e1
+SHA-256 = 2949b6968537dccb2e60c20f75fda6640bf6ef281c11ddd6ce8e182074851d18
+role = structured historical decision ledger
+GitHub byte-exact original = PENDING
+```
+
+该 ledger 记录的不是普通版本列表，而是逐阶段：
+
+```text
+stage
+user_request
+user_objection
+assistant_action
+retained_result
+rejected_result
+open_issue
+gate_result
+next_stage_trigger
+later_overturned_by
+current_status
+```
+
+它对恢复“用户为何否决某条路线”尤其重要。
+
+已重新确认的典型记录包括：
+
+- DRS / direct-integration 转折：连续 strain→stress→integral 保留；event-network 生产主线被否决；
+- stateless 2D current map：保留二维 current coupling，但不是两个独立单轴模型；
+- zero-spatial-quadrature tightening：正式生产排除大量空间 samples；
+- cubic/quartic 生产材料候选：因物理/conditioning/source gate 失败而淘汰；
+- D15-R special-function：仅诊断；
+- finite-trig composite field：保留“有限三角运动学 + material-function composition”思想；
+- G06 correction：明确 pointwise material map 本身并不难，难点是 whole-domain zero-quadrature integration；
+- G07R/G08：统一二维材料函数 grammar 与 algebraic/physical identifiability 区分；
+- G09R：胡文旭单轴式不再作为必须永久复制的 production oracle；
+- G11/G12：补强二维 UHPC 证据并修正早期“Liu坐标不可得”等错误；
+- G14：moment table 是 scalar moment cache，不是新隐藏矩阵；
+- G15：用户明确授权执行，但 conversation 在 tool execution 后中断，没有 final artifact/assistant final。
+
+恢复时必须将该 ledger 与原始对话正文交叉使用。Ledger 是结构化二级证据，不得高于原始 user-assistant dialogue。
+
+====================================================================================================
+FILE: history/recovery/G15_FORENSIC_PACKAGE_LOCATOR.md
+SIZE: 2511
+SHA256: e8d066e9aabb25e0fd53d5d399045fcc71ad62aee529473fa36b782c81ff51da
+ENCODING: utf-8
+LINES: 74
+====================================================================================================
+# G15 / active-main-branch Conversation JSON 法证包定位器
+
+## 原始审计文件
+
+`01_RAW_ACTIVE_BRANCH_MACHINE_AUDIT.json`
+
+ChatGPT File Library ID:
+`file_00000000df348211abafbcd65759a6c3`
+
+该审计的 authoritative conversation source 在工件中登记为：
+
+`{title任务执行与核验,create_time1785996157(1).txt`
+
+conversation id:
+`6a742376-07f4-83e8-a85b-4b6a3b1cb0b7`
+
+机器审计记录：
+
+```text
+TOTAL_MAPPING_NODES = 1033
+TOTAL_MESSAGE_NODES = 1032
+ROOT_NODES = 1
+LEAF_NODES = 1
+BRANCHING_NODES = 0
+SIDE_BRANCH_COUNT = 0
+ACTIVE_MAIN_BRANCH_RESOLVED = YES
+ACTIVE_MAIN_BRANCH_NODE_COUNT = 1033
+```
+
+## 配套文件及 SHA-256
+
+来自 `MANIFEST_SHA256.json`：
+
+```text
+01_RAW_ACTIVE_BRANCH_MACHINE_AUDIT.json
+2536baa3a38b517d64046439680a10e8716b97caae1e0ce3f005d51596bdc3c1
+
+02_USER_VISIBLE_MAIN_DIALOGUE.md
+5a7071abe2a65e0077ca37cc45f0fc8a2931ffa83ca94175d3719a07c5881955
+
+03_DIALOGUE_GROUP_INDEX.csv
+70849ffc9ae6b3c093ba5fca21b5aa7dfb5fd8eabe1109cdced26b77dc0b2140
+
+04_D4_TO_G15_STAGE_INDEX.csv
+42ef9fc2c13c5be4fb13b139963c6b35e4faf89838d8bacf00715f7e4b426b33
+
+05_D20_TO_G15_FULL_EVOLUTION.md
+207b1ba6162fc8c20eac68ebc8aecfe691f98a8df61a74cf2dadcada7eea3936
+
+06_HISTORICAL_DECISION_LEDGER.csv
+2949b6968537dccb2e60c20f75fda6640bf6ef281c11ddd6ce8e182074851d18
+
+07_BRANCH_AUDIT.csv
+c55296d3a8a234d77cdc69698fe8c93552c32ca87452a1ccaeee815aefe8690c
+
+08_G14_FORENSIC_REPORT.md
+ffe3ebaafa0216e690cf156e41d37d6f9b0dff701057bf502f7f26ee22ab06cf
+
+09_G15_INTERRUPTION_FORENSIC_REPORT.md
+6e427833a2854c5b5f603617c6474033ca3524a5bc6465eb8ddc58a73639df1d
+
+10_RECOVERY_COMPLETENESS_REPORT.md
+e042a39b7a7b9ebb77a3ec17c423dac31a1e21b6fac072c927b82ba582ed32cf
+```
+
+## 历史边界
+
+该 Conversation JSON 法证包的真实 active-main-branch 终点被审计为 G15 interruption：最后一个 assistant code/tool-call 节点仍为 `in_progress`，随后 tool execution output 已成功返回并成为唯一 leaf，但其后没有 assistant final、没有新 user、没有 G16。
+
+因此这个 JSON 法证包本身不能证明更晚阶段存在于该 conversation 的真实主分支。更晚 G16/G31 等内容应按它们各自的来源/对话/工件身份记录，不能倒填进入这份 JSON 的主分支。
+
+## GitHub 迁移状态
+
+当前保存 locator + hashes；完整 JSON 体量较大，原始 File Library 对象仍是 authoritative source。取得可直接上传的本地文件通道后，应将法证包各原件原样复制到 `history/recovery/G15_forensic_package/`，不得从摘要重建。
+
+====================================================================================================
+FILE: history/recovery/NZ_SCCM_R10B_COEFFICIENT_GENERATION_RECOVERY_20260811.md
+SIZE: 4593
+SHA256: 62a6fff4acfd25110ccb49255ab53f141b0a5860f84bd13bbe6a3d1834a61af3
+ENCODING: utf-8
+LINES: 153
+====================================================================================================
+# NZ-SCCM R10B 系数生成恢复记录 — 非治理性历史说明
+
+**日期：2026-08-11**  
+**当前身份：SUPERSEDED_RECOVERY_NOTE / NON-GOVERNING**
+
+> 本文件记录 2026-08-11 对 R10B coefficient-generation 的一次恢复尝试。该尝试中出现了超出原始证据的推断。当前治理解释已转移到：
+>
+> `governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md`
+>
+> 任何与该治理文件、`current/CURRENT_STATE.md`、R10/R10B canonical theory/governance 不一致的内容，均以治理文件和 current 为准。
+
+---
+
+## 1. 本恢复尝试中明确撤回的说法
+
+以下内容不得再作为 R10B 正式理论事实：
+
+1. `N=48` 可以被重新解释成某个总 coefficient count；
+2. 由假定的 `U/C/T` 三组数组推导出 `147` 个“一级材料系数”；
+3. 在没有原 `07_R10B_zero_spatial_compiler_core.py` 的情况下，把 DCT-I、DCT-II、continuous projection、least-squares 或某一种权重方案认定为历史 R10B 唯一 coefficient generator；
+4. 用 forensic least-squares 数值接近性反向定义历史 R10B 的正式 compiler convention；
+5. 把 R10 描述为只在一个极窄 `lambda` 小窗上的局部 patch；
+6. 把 R10B 的有限阶表示误差与 R10 的材料目标改变混为一类。
+
+---
+
+## 2. 当前仍可保留的恢复事实
+
+### 2.1 R10 与 R10B 是两次不同性质的变换
+
+```text
+SOURCE FOSTER -> R10
+= material-target modification
+
+R10 -> R10B
+= finite analytic compilation / reintegration
+```
+
+R10 是唯一允许改变材料目标的一步；R10B 不允许重新调整材料参数或多轴 interaction。
+
+### 2.2 R10 的实际执行范围
+
+R10 使用内部 scalar coordinate
+
+\[
+t=\Pi_\eta(\lambda)
+\]
+
+并对 retained tensile interval
+
+\[
+0\le t\le10x_{cr}
+\]
+
+采用两段 C2 quintic reconstruction。它保留 source work、origin tangent、rounded peak、residual level 和 endpoint regularity，但不是仅对一个无穷小尖点做局部修补。
+
+### 2.3 R10B 的阶次身份
+
+```text
+material degree = 48
+spatial Chebyshev degree = 28
+```
+
+当前只允许解释为：
+
+\[
+N_M=48=\text{material-coordinate finite analytic representation order},
+\]
+
+\[
+N_S=28=\text{structural spatial coefficient-representation order}.
+\]
+
+不得由这两个阶次自行推导物理参数数量、材料点数量、空间积分点数量或内部 coefficient-array 总数。
+
+### 2.4 R10B 历史 coefficient generator 仍未恢复
+
+当前仓库没有保存 byte-exact 原：
+
+- `07_R10B_zero_spatial_compiler_core.py`；
+- N48 actual coefficient arrays；
+- coefficient-generation nodes/weights/projection convention 的完整原始执行内容。
+
+因此历史 coefficient generator 的精确 convention 仍是：
+
+```text
+UNRESOLVED_FROM_CURRENT_ORIGINAL_EVIDENCE
+```
+
+---
+
+## 3. 后续恢复必须采用的顺序
+
+若继续 R10/R10B 可重复性恢复，必须按以下顺序：
+
+```text
+STEP 1  审计 frozen R10 material target
+        - Foster source scalar vs R10 scalar
+        - 0..10*xcr 材料功重新分布
+        - stress/tangent differences
+        - multidimensional surface differences
+        - 禁止用 Case21/Swartz Pu 反调
+
+STEP 2  审计 R10B 对 frozen R10 的 representation fidelity
+        - material-coordinate approximation error
+        - spatial coefficient truncation
+        - exact moment contraction identity
+
+STEP 3  恢复原 coefficient generator
+        - 只有原 core / 原 coefficient artifacts 可以定义历史 convention
+        - 若原件无法恢复，则另行冻结一个 NEW reproducibility contract
+
+STEP 4  生成正式 coefficient table / supplementary package
+        - 必须明确是 historical recovery 还是 newly frozen convention
+```
+
+---
+
+## 4. 当前状态不受本恢复纠错影响
+
+以下已执行结果不因本恢复 note 的降级而改变：
+
+```text
+R10_1D_ENERGY_SMOOTHING      = PASS
+R10B_1D_MATERIAL_RECOMPILE   = PASS
+R10B_ZERO_SPATIAL_CASE21     = PASS_ENGINEERING
+CASE21_N48_LIMIT_ROOT        = PASS
+SWARTZ24                     = NOT_STARTED
+```
+
+Case21 当前正式 R10B 工程结果仍为：
+
+```text
+D_u  = 0.8449505
+q_u  = 0.001779254542005754
+Pc   = 337.39660909142 kN
+Ps   = 30.922943404456966 kN
+Pu   = 368.31955249587696 kN
+```
+
+---
+
+## 5. 阅读规则
+
+恢复顺序必须是：
+
+1. `current/CURRENT_STATE.md`
+2. `governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md`
+3. R10 / R10B canonical governance + theory
+4. original execution artifacts / original conversation
+5. 本文件
+
+本文件不得再被用于反向覆盖 current 或 canonical R10/R10B 数学身份。
+
+====================================================================================================
+FILE: history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md
+SIZE: 902
+SHA256: 52ef4fe1bc2fb8fdbc6c15fff6a90bb0621481c34ab3e77b669ed20348654ca9
+ENCODING: utf-8
+LINES: 18
+====================================================================================================
+# Pre-clean repository pointer
+
+Repository cleanup intentionally removed migration-era full-text mirrors, migration checkpoints, R2 snapshot copies and migration metadata from the active `main` branch so they cannot pollute normal GitHub search/recovery.
+
+They remain recoverable from Git history.
+
+## Recovery commits
+
+- `5c83f82da95d42efa33cbf2192c95545ab009017`
+  - last useful migration-era working tree before temporary reorganization markers;
+  - contains the old `sources_text/`, `checkpoints/`, `snapshots/`, migration metadata and pre-clean directory layout.
+
+- `41fc94aea846f05ed98d7099703ec49c9356cf9e`
+  - staging tree immediately before the atomic repository reorganization.
+
+## Rule
+
+If an old migration/full-text asset is ever required, read it directly from one of these commits or restore only the needed excerpt. Do **not** merge the old repository layout wholesale back into `main`.
+
+====================================================================================================
+FILE: history/recovery/R04_R05_CHARTER_LOCATOR.md
+SIZE: 2446
+SHA256: a5d1db051eee4cb7822abb171351176db99879f4f47acf151a11091590f82207
+ENCODING: utf-8
+LINES: 62
+====================================================================================================
+# R04 / R05 / D4–D20 执行宪章：原始文件定位器
+
+这些文件是恢复 NZ-SCCM-U v0.2 / TURN 0001—0148 思想演化时的高优先级证据。当前 File Library 长文件检索会截断，因此 GitHub 先保存原始定位器，不以截断文本冒充原件。
+
+## 1. R04
+
+```text
+filename = 00_完整性复核与末24小时裁决_R04.md
+ChatGPT File Library ID = file_000000000f58820983c8062ab883d90d
+role = conversation-completeness / final-24h adjudication
+GitHub full original copy = PENDING
+```
+
+## 2. R05
+
+```text
+filename = NZ_SCCM_148回合思想演化与当前正式主线恢复_R05.md
+ChatGPT File Library ID = file_000000005fc08209bef6426deeb216bb
+created = 2026-08-05T20:46:49Z
+role = 148-turn thought-evolution recovery + then-current mainline adjudication
+GitHub full original copy = PENDING
+```
+
+R05 明确区分：
+- TURN 0001—0148 对话证据层；
+- 对话结束后形成的后续锁定层。
+
+并明确：TURN 0148 连接中断，PRAM/D20 正式回复、计算结果和用户验收均没有在共享页面形成。R05 还保留了重要历史裁决：D15 的精确几何/厚度矩引擎保留，而 D15 UHPC Layer-0 材料身份被废止。
+
+## 3. D4–D20 执行宪章
+
+从原始 Conversation recovery 工件重新确认：
+
+```text
+filename = 00_NZ_SCCM_D4_D20执行宪章_v1.0_LOCKED.md
+ChatGPT File Library ID = file_000000001ab0820685d2fe13b92ae182
+DOCUMENT_ID = NZ-SCCM-D4-D20-CHARTER-v1.0
+STATUS = LOCKED (historical governance status)
+EFFECTIVE_DATE = 2026-08-06T13:57:13.919987+08:00
+AUTHORITATIVE_CHAT = TURN 0001—0148
+CHAT_SHA256 = f3f3662bb98a7abab7d826f9238c32d1ab83468ba8d65213d1b15f950ee0f14a
+RECOVERY_REPORT = NZ_SCCM_148回合思想演化与当前正式主线恢复_R05.md
+GitHub full original copy = PENDING
+```
+
+该宪章是特定历史阶段的正式治理文件，但 2026-08-10 已发生明确项目 priority reset。以后讨论“当时允许什么”时必须读宪章；讨论“现在执行什么”时以 `CURRENT_STATE.md` 和后续用户修正为准，不能让历史宪章覆盖后来的显式修正。
+
+## 4. 恢复顺序
+
+历史争议时：
+
+```text
+TURN 0001—0148 original export
+→ R04 completeness audit
+→ R05 thought-evolution recovery
+→ D4–D20 charter (historical governance)
+→ active-main-branch JSON forensic package
+→ later stage artifacts
+→ CURRENT_STATE for present execution
+```
+
+不得颠倒成“最新文件名 → 推定旧对话内容”。
+
+====================================================================================================
+FILE: semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__ARTIFACT_SUPERSESSION__SUPERSESSION_MAP.csv
+SIZE: 9118
+SHA256: 70072cfd96295fbea11575923121f3e5b171a92ca30c6935008920d1c788d1fb
+ENCODING: utf-8
+LINES: 31
+====================================================================================================
+predecessor,relation,successor,retained_valid_scope,superseded_scope,audit_level
+current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md,SUPERSEDED_BY,govenance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md,"historical direct-N48 generation formula and engineering record","direct-N48 as tangent-faithful current compiler",A_DIRECT_CONTENT_AUDIT
+governance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md,REFINED_BY,governance/N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_DECISION_20260812.md,"C1 hard value/derivative anchor identity for U/C/T/T7","T plain C1 as final compiler representation",A_DIRECT_CONTENT_AUDIT
+governance/N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_DECISION_20260812.md,INCORPORATED_BY,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,"compiler identity U/C/T7=C1 and T=C1-MM","none; later contract is governing integrated production entry",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md,SUPERSEDED_BY,current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md,"R10/D15 explanatory lineage","direct-N48 compiler identity in formal current derivation",A_DIRECT_CONTENT_AUDIT
+current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md,SUPERSEDED_BY,current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md,"historical workflow order and provenance discipline","direct-N48 production workflow",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_CASE1_CASE14_CASE21_BLIND_INPUT_20260811.md,SUPERSEDED_BY,current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md,"historical three-panel audit context","direct-N48 blind input as current reproduction contract",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_CASE21_N48C1MM_INDEPENDENT_REPRO_BLOCKED_R10_20260812.md,SUPERSEDED_BY,current/audits/NZ_SCCM_CASE21_V2_SECOND_BLANK_REPRO_STATUS_20260812.md,"evidence that first full-calculation package was not self-contained","BLOCKED_AT_R10 as latest reproduction status",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_CASE21_V2_SECOND_BLANK_REPRO_STATUS_20260812.md,RESOLVED_BY,current/governance/NZ_SCCM_NC_R1_LIMIT_ROOT_PRODUCTION_CONTRACT_V1_20260812.md,"upstream reproduction PASS evidence and unresolved candidate as historical record","absence of unique root-production identity",A_DIRECT_CONTENT_AUDIT
+current/governance/NZ_SCCM_NC_R1_LIMIT_ROOT_PRODUCTION_CONTRACT_V1_20260812.md,INCORPORATED_BY,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,"Gamma0/first +->- limit root identity","separate use as sole production entry",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md,CANONICALIZED_BY,current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md,"formal-closure history","pre-canonical wording/errors",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md,INCORPORATED_BY,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md,"canonical formal derivation as writing reference","separate role as latest whole-system theory entry",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md,INCORPORATED_BY,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,"mechanics baseline","status as latest integrated production execution contract",A_DIRECT_CONTENT_AUDIT
+current/workflows/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_PRODUCTION_CONTRACT_WITH_TANGENT_GATE_20260812.md,SUPERSEDED_BY,current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md,"formal closure/KZ lineage","primary Case21 execution-entry status",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_BLIND_RESULT_20260812.md,SUPERSEDED_BY,current/results/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_FRESH_CALCULATION_20260812.md,"first C1/MM candidate record","candidate root as current final Case21 result",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_FRESH_CALCULATION_20260812.md,INVALIDATED_BY,current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md,"formal-closure implementation chronology","root produced with pre-correction Qq/general-D15 realization",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md,RESOLVED_BY,current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md,"correction evidence","open current Case21 root after Qq correction",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md,EXTENDED_BY,current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md,"current root/load/residual","none; full closure adds KZ and comparison",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md,PARTIAL_VALIDATION_SUPERSESSION,current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md,"root/load/residual/KZ/control classification","336 kN treated as ultimate comparison; later Pf≈368.313 kN is failure/ultimate comparison",A_DIRECT_CONTENT_AUDIT
+current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812.md,CORRECTED_BY,current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md,"historical evidence of source-identity correction","336 kN labelled ultimate rather than buckling/critical",A_DIRECT_CONTENT_AUDIT
+current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md,SCOPE_COMPLEMENTED_BY,current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,"336 kN buckling/critical-load and raw input provenance","not superseded as buckling source; it simply does not supply failure Pf",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv,SUPERSEDED_BY,current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,"old direct-N48 roots/derivatives as historical execution evidence","use as current C1/MM+general-D15 roots/results",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_FRESH_THEORY_VS_EXPERIMENT_20260811.csv,SUPERSEDED_BY,current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,"old direct-N48 validation record","current Pu-vs-failure comparison",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_FRESH_R10_N48_D15_REPORT_20260811.md,SUPERSEDED_BY,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,"operational direct-N48 history","direct-N48 production identity",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_20260811.md,TRIGGERS_REPAIR,governance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md,"diagnostic evidence for derivative/tangent failure","none; audit itself remains historical evidence",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_20260811.md,PARTIAL_NUMERICAL_SUPERSESSION,current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,"source variables/Pcr method flags/mechanism questions","old direct-N48 Pu/error statistics",A_DIRECT_CONTENT_AUDIT
+current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_OBSERVATIONS_AND_GROUP_ERROR_MECHANISM_20260811.md,PARTIAL_NUMERICAL_SUPERSESSION,current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,"Nguyen/Swartz source observations on modes/buckling groups","old direct-N48 group Pu/error numerical summaries",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md,REVOKED_BY_CURRENT_BOUNDARY,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,"historical diagnostic/counterexample","panel-level D-q surrogate as formal production",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md,REVOKED_AS_MATERIAL_OBJECT,governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md,"D15 feasibility lessons","global energy-potential replacement as governing material route",A_DIRECT_CONTENT_AUDIT
+current/governance/NZ_SCCM_TIMESTAMP_NAMING_AND_BASELINE_DECISION_20260812_1734.md,NAMING_SUPERSEDED_BY,semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__CONTENT_FIRST_NAMING_AND_TREE_POLICY__GOVERNANCE.md,"timestamp/descriptive naming principle and provenance preservation","filename/path treated as semantic status; lack of partial-supersession metadata",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_SWARTZ24_CHECKPOINT_RECOVERY_FAIL_AT_CASE21_REGRESSION_20260813_1221.md,INTERPRETATION_CORRECTED_BY,current/audits/NZ_SCCM_AUG11_13_EXECUTION_HISTORY_RECOVERY_AUDIT_20260813_1249.md,"fact that a newly rebuilt dense backend failed Case21 regression","inference that historical production implementation/process was absent",A_DIRECT_CONTENT_AUDIT
+
+====================================================================================================
+FILE: semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__AUDITED_ARTIFACTS__SEMANTIC_MANIFEST.csv
+SIZE: 12938
+SHA256: 83d337943fd34a48bb5a437fde13587d678673b0b921999f824c140e4029495f
+ENCODING: utf-8
+LINES: 37
+====================================================================================================
+legacy_path,canonical_id,semantic_section,status,valid_scope,superseded_scope,superseded_by,contains_theory,contains_code,contains_inputs,contains_roots,contains_derivatives,contains_KZ,case_coverage,compiler_or_execution_identity,audit_level
+current/CURRENT_STATE.md,20260813_TUNK__PROJECT__CURRENT_STATE_AND_OPEN_GAPS,00_index,CURRENT_PRIMARY,"current Case21/Swartz24 state and open gaps","primary theory pointer not synchronized to later 22:45 contract","current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md",yes,no,yes,yes,yes,yes,"Case21+Swartz24","R10;N48-C1/MM;general-D15 stated",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,20260812_2245__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15__THEORY_EXECUTION_CONTRACT,20_theory/nc_rebar_panel,CURRENT_PRIMARY,"integrated production theory and execution contract","",,yes,no,yes,no,yes,yes,"Swartz24+compatible RC panels","R10;N48-C1/MM;CH;Nguyen;general-D15;P/Rq/L;KZ",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md,20260812_1734__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15_LIMIT_KZ__THEORY,20_theory/nc_rebar_panel,CURRENT_SUPPORT,"mechanics baseline","latest integrated production-entry role","22:45 production contract",yes,no,no,no,yes,yes,general,"R10;N48-C1/MM;general-D15",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md,20260812_TUNK__NC_REBAR_PANEL__FORMAL_CLOSURE__THEORY_DERIVATION,20_theory/nc_rebar_panel,CURRENT_SUPPORT,"canonical formal derivation","latest whole-system production-entry role","17:34 unified theory / 22:45 production contract",yes,no,no,no,yes,yes,general,"R10;N48-C1/MM;general-D15;rebar;KZ",A_DIRECT_CONTENT_AUDIT
+current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md,20260812_1734__CASE21__R10_N48C1MM_GENERAL_D15_LIMIT_KZ__EXECUTION_CONTRACT,30_workflows/case21,CURRENT_PRIMARY,"Case21 execution contract","",,yes,no,yes,no,yes,yes,Case21,"current Case21 production",A_DIRECT_CONTENT_AUDIT
+current/case21/NZ_SCCM_CASE21_RAW_INPUT_FREEZE_20260812_1734.md,20260812_1734__CASE21__GEOMETRY_MATERIAL_REBAR_COMPILER_INTERVAL__INPUT_FREEZE,40_execution/case21,CURRENT_EXECUTION_INPUT,"Case21 raw inputs/provenance","",,no,no,yes,no,no,no,Case21,"compiler interval [-1.15,0.12]",A_DIRECT_CONTENT_AUDIT
+current/case21/NZ_SCCM_CASE21_FRESH_MATERIAL_COEFFICIENTS_20260812_1802.csv,20260812_1802__CASE21__R10_N48C1MM_U_C_T_T7__COEFFICIENT_TABLE,40_execution/case21,CURRENT_EXECUTION_INPUT,"final current Case21 49x4 coefficients","",,no,no,yes,no,no,no,Case21,"U/C/T7 C1; T MM",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md,20260812_1802__CASE21__LIMIT_ROOT_THEORY_OUTPUT__RESULT_FREEZE,50_results/case21,CURRENT_RESULT,"final current root/load/residual freeze","",,yes,no,yes,yes,yes,no,Case21,"current C1/MM+general-D15",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md,20260812_1802__CASE21__LIMIT_ROOT_KZ_AND_EXPERIMENT_COMPARISON__RESULT_FREEZE,50_results/case21,PARTIALLY_SUPERSEDED,"root/load/residual/KZ/control classification","336 kN treated as ultimate/failure comparison","00:47 Swartz24 failure-load comparison",yes,no,yes,yes,yes,yes,Case21,"current C1/MM+general-D15+KZ",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,20260813_0047__SWARTZ24__C1MM_GENERAL_D15_PU_VS_FAILURE_LOAD__RESULT_TABLE,50_results/swartz24,CURRENT_RESULT,"24/24 current Pu vs experimental failure Pf","does not contain Cases1-18 current roots",,no,no,yes,no,no,no,Cases1-24,"current Pu values",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md,20260813_0047__SWARTZ24__PU_COMPLETION_ROOTS19_24_FAILURE_AND_EXTERNAL_SCREEN__EXECUTION_REPORT,50_results/swartz24,CURRENT_RESULT,"24/24 current Pu; current roots Cases19-24; external screen","no 24/24 KZ table",,yes,no,yes,yes,no,"partial",Cases1-24,"current C1/MM+general-D15",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv,20260811_TUNK__SWARTZ24__DIRECT_N48_LIMIT_ROOTS_DERIVATIVES_AND_CERTIFICATES__RESULT_TABLE,80_history/d_g_r_routes,SUPERSEDED,"historical direct-N48 roots/derivatives/certificates","use as current C1/MM+general-D15 roots/results","current production results",no,no,yes,yes,yes,no,Cases1-24,"direct-N48 predecessor",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_FRESH_THEORY_VS_EXPERIMENT_20260811.csv,20260811_TUNK__SWARTZ24__DIRECT_N48_PU_VS_FAILURE_LOAD__RESULT_TABLE,80_history/d_g_r_routes,SUPERSEDED,"historical direct-N48 validation record","current Pu-vs-Pf role","00:47 current result table",no,no,yes,no,no,no,Cases1-24,"direct-N48 predecessor",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_20260811.md,20260811_TUNK__SWARTZ24__DIRECT_N48_TANGENT_FIDELITY__DIAGNOSTIC,80_history/d_g_r_routes,RETAINED_LINEAGE,"evidence of direct-N48 first-derivative/tangent failure","not a current tangent-result table",,yes,no,yes,yes,yes,no,Cases1-24,"R10 target vs direct N48",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_COMPACT_20260811.csv,20260811_TUNK__SWARTZ24__DIRECT_N48_TANGENT_FIDELITY__RESULT_TABLE,80_history/d_g_r_routes,RETAINED_LINEAGE,"old roots + R10/N48 tangent diagnostics","not current roots",,no,no,yes,yes,yes,no,Cases1-24,"direct-N48 diagnostic",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_20260811.md,20260811_TUNK__SWARTZ24__SOURCE_VARIABLES_AND_DIRECT_N48_ERROR_MECHANISMS__DIAGNOSTIC,60_validation/swartz24,PARTIALLY_SUPERSEDED,"source variables/Pcr method flags/mechanism questions","Pu/error statistics from direct-N48 table","00:47 current Pu/Pf table for updated error statistics",yes,no,yes,no,no,no,Cases1-24,"direct-N48 validation era",A_DIRECT_CONTENT_AUDIT
+current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_OBSERVATIONS_AND_GROUP_ERROR_MECHANISM_20260811.md,20260811_TUNK__SWARTZ24__SOURCE_BUCKLING_OBSERVATIONS_AND_GROUP_ERROR__DIAGNOSTIC,60_validation/swartz24,PARTIALLY_SUPERSEDED,"Nguyen/Swartz source observations","group Pu/error numbers from old direct-N48","00:47 current Pu/Pf table for updated error numbers",yes,no,yes,no,no,no,Cases1-24,"source-grounded diagnostic + old Pu",A_DIRECT_CONTENT_AUDIT
+governance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md,20260811_TUNK__NC_MATERIAL__N48C1_VALUE_AND_TANGENT_REPAIR__GOVERNANCE,80_history/d_g_r_routes,RETAINED_LINEAGE,"C1 hard-anchor formula and repair reasoning","N48-C1 alone as final T production compiler","T constrained-minimax decision",yes,no,no,no,no,no,Cases1-24,"N48-C1",A_DIRECT_CONTENT_AUDIT
+governance/N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_DECISION_20260812.md,20260812_TUNK__NC_MATERIAL__N48C1_T_CONSTRAINED_MINIMAX__GOVERNANCE,20_theory/nc_material,CURRENT_SUPPORT,"current compiler identity","",,yes,no,no,no,no,no,Cases1-24,"U/C/T7 C1; T C1-MM",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md,20260810_2352__NC_MATERIAL__R10_TENSILE_C2_ENERGY_RECONSTRUCTION__THEORY,20_theory/nc_material,CURRENT_SUPPORT,"R10 material-target lineage","structural Gauss portion is audit-only, not production",,yes,no,yes,no,no,no,Case21,"R10 material target",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md,20260811_1530__NC_MATERIAL__R10_SOURCE_VS_EXECUTED_TARGET__AUDIT,20_theory/nc_material,CURRENT_SUPPORT,"R10 target identity/provenance clarification","",,yes,no,yes,no,no,no,Case21,"R10 audit",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md,20260811_TUNK__CASE21__DIRECT_N48_ZERO_SPATIAL_D15_LIMIT__RESULT_FREEZE,80_history/case21,SUPERSEDED,"historical direct-N48 Case21 result/derivatives","current production role","C1/MM + general-D15 final Case21",yes,no,yes,yes,yes,no,Case21,"direct N48",A_DIRECT_CONTENT_AUDIT
+current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md,20260812_TUNK__CASE21__N48C1MM_FFT_COEFFICIENT_D15_DIRECTIONAL_AD__EXECUTION_REPORT,80_history/case21,RETAINED_LINEAGE,"backend process lineage","candidate root/result as final current result","later general-D15/final Case21 closure",yes,yes,yes,yes,yes,no,Case21,"FFT coefficient convolution; D15; directional AD",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md,20260812_TUNK__CASE21__GENERAL_D15_QQ_AND_TANGENT_RECHECK__AUDIT,80_history/case21,RETAINED_LINEAGE,"general-D15/Qq correction evidence","",,yes,no,yes,yes,yes,yes,Case21,"correction audit",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_FULL_THEORY_AND_EXECUTION_CONTRACT_RECOVERY_20260812_2145.md,20260812_2145__PROJECT__FULL_THEORY_AND_EXECUTION_RECOVERY__AUDIT,80_history/recovery,AUDIT_ONLY,"full startup recovery snapshot","later 22:45 production contract and subsequent current state take precedence",,yes,no,yes,no,no,no,repository,"recovery audit",A_DIRECT_CONTENT_AUDIT
+current/governance/NZ_SCCM_EXECUTION_CHECKPOINT_BACKUP_AUDIT_AND_RULE_20260813_1207.md,20260813_1207__PROJECT__RESUMABLE_EXECUTION_CHECKPOINT_REQUIREMENTS__GOVERNANCE,10_governance,CURRENT_PRIMARY,"current checkpoint/resume requirements","",,yes,no,yes,yes,yes,yes,Cases1-24,"checkpoint governance",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_AUG11_13_EXECUTION_HISTORY_RECOVERY_AUDIT_20260813_1249.md,20260813_1249__HISTORY_RECOVERY__AUG11_13_EXECUTION_ARTIFACTS__AUDIT,80_history/recovery,AUDIT_ONLY,"historical process/backend strategy recovery status","",,yes,no,no,yes,no,no,repository,"recovery audit",A_DIRECT_CONTENT_AUDIT
+current/audits/NZ_SCCM_SWARTZ24_CHECKPOINT_RECOVERY_FAIL_AT_CASE21_REGRESSION_20260813_1221.md,20260813_1221__HISTORY_RECOVERY__NEW_DENSE_BACKEND_CASE21_REGRESSION_FAILURE__AUDIT,80_history/recovery,AUDIT_ONLY,"failure of newly rebuilt dense backend","must not imply historical backend/process absent","Aug11-13 recovery audit corrected interpretation",yes,yes,yes,no,no,no,Case21,"failed rebuild only",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md,20260810_TUNK__CASE21__GLOBAL_DQ_CHEBYSHEV_SURFACE_CAPACITY__THEORY,80_history/rejected_routes,REJECTED,"historical surrogate diagnostic","formal/current production use","current no-panel-surrogate contract",yes,no,yes,yes,no,no,Case21,"panel-level D-q surrogate",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md,20260810_TUNK__NC_MATERIAL__GLOBAL_ENERGY_POTENTIAL_D15_FEASIBILITY__AUDIT,80_history/rejected_routes,REJECTED,"D15 feasibility lessons","global energy potential as governing material object","revocation/current R10 route",yes,no,yes,no,no,no,NC,"rejected material route",A_DIRECT_CONTENT_AUDIT
+current/theory/NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md,20260810_TUNK__NC_REBAR_PANEL__FINITE_MATERIAL_MOMENT_INTERFACE__THEORY,80_history/d_g_r_routes,RETAINED_LINEAGE,"analytic architecture design bridge","current execution-contract status",,yes,no,no,no,yes,no,general,"finite material moments",A_DIRECT_CONTENT_AUDIT
+current/theory/nz_sccm_case21_invariant_exact_moments_v1.py,20260810_TUNK__CASE21__I1_I2_EXACT_MONOMIAL_MOMENTS__CODE,20_theory/nc_rebar_panel,CURRENT_SUPPORT,"symbolic exact-moment helper/checksums","complete general-D15 production backend role",,no,yes,yes,no,no,no,Case21,"exact monomial audit helper",A_DIRECT_CONTENT_AUDIT
+current/theory/nz_sccm_current_operator_explicit_v1.py,20260809_TUNK__NC_MATERIAL__ALGEBRAIC_FOSTER_CURRENT_OPERATOR_AND_REBAR__CODE,80_history/d_g_r_routes,RETAINED_LINEAGE,"source-operator/code lineage","final R10/C1MM production executable role",,yes,yes,yes,no,no,no,NC+rebar,"algebraic Foster predecessor",A_DIRECT_CONTENT_AUDIT
+evidence/catalog/SOURCE_REGISTRY.md,DATEUNK_TUNK__PROJECT__ORIGINAL_SOURCE_LOCATIONS_AND_ROLES__SOURCE_REGISTRY,70_evidence,SOURCE_ONLY,"source locations/roles","",,no,no,yes,no,no,no,repository,"source registry",A_DIRECT_CONTENT_AUDIT
+history/ledgers/HISTORICAL_COMPONENT_LEDGER.md,DATEUNK_TUNK__PROJECT__D_G_R_COMPONENT_STATUS__SEMANTIC_MANIFEST,80_history,RETAINED_LINEAGE,"historical component status ledger","cannot replace original artifact when a technical claim depends on it",,yes,no,yes,no,no,no,repository,"history ledger",A_DIRECT_CONTENT_AUDIT
+history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md,DATEUNK_TUNK__HISTORY_RECOVERY__PRECLEAN_COMMITS__LOCATOR,90_raw/preclean_locators,LOCATOR_ONLY,"pre-clean commit locators","does not promote pre-clean assets to current",,no,no,yes,no,no,no,repository,"Git-history locator",A_DIRECT_CONTENT_AUDIT
+
+====================================================================================================
+FILE: semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__CONTENT_AUDIT_COVERAGE_AND_FRONTIER__AUDIT.md
+SIZE: 7302
+SHA256: 54049762396a6c4e8baed7e2d40471c26da406a0d8d9517ef971650e1eae608a
+ENCODING: utf-8
+LINES: 147
+====================================================================================================
+# NZ-SCCM repository content-audit coverage and frontier
+
+**Timestamp:** 2026-08-13 13:28 +08:00  
+**Purpose:** make the semantic reconstruction auditable; distinguish direct body-reading from registry/ledger classification and unresolved leaf content.
+
+## 1. High-risk branches already direct-audited
+
+The highest-risk ambiguity was not the literature/source archive; it was the legacy active workspace, because files under `current/` and files whose names contain `FRESH`, `CURRENT`, `PASS`, `PRODUCTION`, `CLOSURE`, `Rxx`, or `Vxx` could be mistaken for current production.
+
+The following high-risk families have been body-read at file level for their governing/ambiguous artifacts:
+
+```text
+current/CURRENT_STATE.md
+current/results/              primary/current vs old direct-N48 tables and candidate Case21 results
+current/case21/               current inputs/coefficients vs old Aug-09 handoff/tail files
+current/workflows/            current Case21 execution contract vs direct-N48/reproduction contracts
+current/diagnostics/          Swartz24 source/mechanism diagnostic
+current/audits/               compiler repair, general-D15 correction, reproduction, recovery, checkpoint/KZ audits
+current/governance/           timestamp naming, root/closure/checkpoint governance
+current/theory/               current production/theory chain plus principal obsolete analytical routes
+root governance/              source/recovery/sync + major material/compiler/route decisions and revocations
+```
+
+Directly audited root-governance chronology includes at least:
+
+- source-of-truth, recovery and sync protocols;
+- effective source excerpt policy;
+- explicit execution evidence rule;
+- full-startup recovery/architecture checkpoint;
+- material-native domain rules;
+- energy-potential proposal and its later revocation/stop evidence;
+- R07R explicit-surface route;
+- root-cause pause;
+- PF1 invariant/relevance/complexity controls;
+- R09A/R09C;
+- R10 material smoothing and intent audit;
+- R10B representation/refreeze/direct-N48 decisions;
+- N48 tangent failure -> C1 -> T constrained-minimax chronology;
+- direct-N48 Case21 closure -> C1/MM candidate -> general-D15 correction -> final Case21 closure.
+
+These are `A_DIRECT_CONTENT_AUDIT` and may be assigned semantic identities based on their bodies + later supersession.
+
+## 2. Important content corrections found by direct reading
+
+### 2.1 `current/` is not semantically current
+
+Examples:
+
+- `current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv` = old direct-N48 24-panel roots/results, not current C1/MM + general-D15 roots.
+- `current/case21/NEXTSTEP_EXECUTION_REPORT.md` = old Aug-09 tail/Chebyshev route.
+- `current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md` = panel/global D-q surrogate route now prohibited for production.
+
+### 2.2 whole-file CURRENT/HISTORICAL labels are insufficient
+
+`current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md` contains current root/KZ data **and** an obsolete experiment-identity comparison to 336 kN. It therefore requires section-level partial supersession.
+
+### 2.3 older `CURRENT GOVERNANCE` can become historical
+
+Examples:
+
+- PF1 route locks self-declared CURRENT while PF1 was active, but current R10/N48-C1/MM production no longer uses PF1 as the production route.
+- the energy-potential-first rule was later explicitly revoked as the wrong governing blocker/route test.
+- the material-native Lambda_M/Lambda_R concept remains useful governance metadata but a later 22:31 correction explicitly revokes promoting it into an extra current runtime/root blocker.
+
+Thus self-declared identity at creation time must be followed by later chronology.
+
+## 3. B-level source/evidence coverage
+
+The following content-derived indices were directly read:
+
+- `evidence/catalog/SOURCE_REGISTRY.md`
+- `evidence/catalog/MASTER_SOURCE_INVENTORY.csv`
+- `history/ledgers/HISTORICAL_COMPONENT_LEDGER.md`
+- `history/README.md`
+- `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md`
+
+Therefore source/history leaf files can be placed in the semantic tree at `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER` when the only claim is their stable repository role (source excerpt, source map, raw archive, historical artifact, recovery locator).
+
+This **does not** authorize extracting a technical formula/number from a B-level leaf without opening the leaf/original source.
+
+## 4. C-level direct-audit frontier
+
+The remaining `C_NOT_YET_DIRECT_CONTENT_AUDITED` population is mainly low-risk companion material rather than ambiguous production identity:
+
+### 4.1 companion result JSONs / coefficient JSONs
+
+Examples:
+
+```text
+current/theory/*_results.json
+current/theory/NZ_SCCM_R07R_EXPLICIT_GLOBAL_P_RQ_COEFFICIENTS.json
+```
+
+Their parent route/report has been body-read, so the route status is known. The companion numerical payload itself should still be opened before citing a number from it.
+
+### 4.2 historical helper scripts whose parent route is already direct-audited
+
+Examples include remaining `nz_sccm_m1*`, `nz_sccm_m1r*`, `nz_sccm_pf1*`, `nz_sccm_tensile*` helper scripts. Several representative helpers were directly opened; the rest remain C-level until code contents are individually inspected.
+
+### 4.3 prompt-only workflow companions
+
+Prompt files for old blind/recovery audits may remain C-level if their paired input/contract/audit body is already direct-read. They cannot acquire production status from their filenames.
+
+### 4.4 source/history leaves
+
+Most are B rather than C because their source/archive roles are established by registries/ledgers. They become A when a technical claim requires leaf-level inspection.
+
+## 5. Physical migration frontier
+
+A canonical semantic tree, naming policy, rename map, supersession map and primary locators now exist under `semantic_v2/`.
+
+Physical moving/renaming of legacy source files is intentionally not yet performed because:
+
+1. old internal links would break;
+2. raw/historical provenance could be damaged;
+3. a file may contain both retained and superseded sections;
+4. Git history already provides chronology, so a clean canonical locator can be introduced first without destructive rewrite.
+
+The next migration stage, if desired, is:
+
+```text
+A/B semantic classification sufficiently complete
+-> create canonical locator for every important artifact
+-> patch internal links to canonical IDs/locators
+-> move stable legacy files in controlled batches
+-> leave old-path locator stubs or preserve an unambiguous rename map
+-> verify START_HERE + semantic manifests + source locators after every batch
+```
+
+No file should be moved merely because its old name contains `current`, `fresh`, `pass`, `production`, `Rxx`, or a date.
+
+## 6. Current semantic-reconstruction status
+
+```text
+SEMANTIC_V2_TREE = ESTABLISHED
+CANONICAL_NAMING_SYSTEM = ESTABLISHED
+LEGACY_TO_CANONICAL_RENAME_MAP = ESTABLISHED
+SUPERSESSION_MAP = ESTABLISHED
+PRIMARY_CURRENT_LOCATORS = ESTABLISHED
+HIGH_RISK_CURRENT_WORKSPACE_CONTENT_AUDIT = SUBSTANTIAL / ACTIVE
+SOURCE_HISTORY_ROLE_COVERAGE = B_LEVEL_REGISTRY_LEDGER
+DESTRUCTIVE_PHYSICAL_RENAME = NOT_STARTED
+THEORY_CHANGED = NO
+RESULT_CHANGED = NO
+```
+
+The remaining work is content completion and controlled migration, not another filename-based reorganization.
+
+====================================================================================================
+FILE: semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__CONTENT_FIRST_NAMING_AND_TREE_POLICY__GOVERNANCE.md
+SIZE: 6289
+SHA256: a3aa3450d9c4b25f2b7a8748de50f1d76cf5ab264796f834e091f872de6c6806
+ENCODING: utf-8
+LINES: 232
+====================================================================================================
+# NZ-SCCM content-first naming and semantic-tree policy
+
+**Timestamp:** 2026-08-13 13:28 +08:00  
+**Role:** repository information architecture / naming governance only  
+**Theory/result change:** NONE
+
+## 1. Root defect being corrected
+
+The legacy repository mixes current, retained, superseded, rejected, diagnostic and source artifacts under paths such as `current/`, and many filenames contain mutable status words such as `CURRENT`, `FRESH`, `PASS`, `PRODUCTION`, `CLOSURE`, `R01`, `V1`.
+
+Those tokens are locators, not semantic identity. Content and supersession chronology are authoritative.
+
+## 2. Mandatory identity order
+
+For any artifact used in recovery or continuation:
+
+1. read file content;
+2. identify what equations/data/code/results it actually contains;
+3. identify its self-declared role at creation time;
+4. check later supersession/correction/revocation/incorporation;
+5. record valid scope and superseded scope separately when only part of a file is outdated;
+6. use path/name/timestamp only as locator metadata.
+
+## 3. Canonical filename grammar
+
+New canonical names use:
+
+```text
+YYYYMMDD_HHMM__NZSCCM__<SCOPE>__<SPECIFIC_CONTENT>__<ARTIFACT_KIND>.<ext>
+```
+
+If a legacy artifact has a known date but no defensible clock time, use:
+
+```text
+YYYYMMDD_TUNK__NZSCCM__... 
+```
+
+Do not invent `00:00` as an exact time. If even the date is genuinely unknown, use `DATEUNK_TUNK` and preserve commit/source metadata in the manifest.
+
+### 3.1 SCOPE
+
+Use the physical/theoretical object, not its mutable status. Examples:
+
+```text
+PROJECT
+NC_MATERIAL
+NC_REBAR_PANEL
+CASE21
+SWARTZ24
+UHPC_MATERIAL
+STEEL_SHELL
+PBL
+HISTORY_RECOVERY
+```
+
+### 3.2 SPECIFIC_CONTENT
+
+Describe what the artifact actually contains. Examples:
+
+```text
+R10_N48C1MM_CH_NGUYEN_GENERAL_D15
+LIMIT_ROOT_KZ
+PU_VS_FAILURE_LOAD
+DIRECT_N48_LIMIT_ROOTS_AND_DERIVATIVES
+TANGENT_FIDELITY
+CASE21_RAW_INPUTS
+R10_MATERIAL_COEFFICIENTS_N48C1MM
+```
+
+Avoid generic names such as `report`, `new`, `fresh`, `final2`, `updated`, `current` as the content description.
+
+### 3.3 ARTIFACT_KIND
+
+Use a small controlled vocabulary:
+
+```text
+GOVERNANCE
+THEORY
+THEORY_DERIVATION
+THEORY_CONTRACT
+EXECUTION_CONTRACT
+WORKFLOW
+INPUT_FREEZE
+COEFFICIENT_TABLE
+CODE
+RESULT_FREEZE
+RESULT_TABLE
+EXECUTION_REPORT
+AUDIT
+DIAGNOSTIC
+SOURCE_EXCERPT
+SOURCE_MAP
+SOURCE_REGISTRY
+RAW_EXPORT
+LOCATOR
+RENAME_MAP
+SUPERSESSION_MAP
+SEMANTIC_MANIFEST
+```
+
+## 4. Status is metadata, never filename authority
+
+Canonical filenames must not rely on mutable status words. Current validity is stored in the semantic manifest as one of:
+
+```text
+CURRENT_PRIMARY
+CURRENT_SUPPORT
+CURRENT_RESULT
+CURRENT_EXECUTION_INPUT
+RETAINED_LINEAGE
+PARTIALLY_SUPERSEDED
+SUPERSEDED
+REJECTED
+DIAGNOSTIC_ONLY
+AUDIT_ONLY
+SOURCE_ONLY
+RAW_ARCHIVE
+LOCATOR_ONLY
+UNKNOWN_NOT_CONTENT_AUDITED
+```
+
+A status can change without renaming the artifact, which is precisely why status is not embedded as the decisive part of the filename.
+
+## 5. Partial supersession
+
+Whole-file status is insufficient when only one section became obsolete. The manifest therefore has both:
+
+```text
+valid_scope
+superseded_scope
+superseded_by
+```
+
+Example: the 2026-08-12 18:02 Case21 full-closure report retains the current theory root and KZ audit, but its comparison of ultimate load with `336 kN` is superseded by the later failure-load comparison (`Pf≈368.313 kN`). It is therefore `PARTIALLY_SUPERSEDED`, not simply CURRENT or HISTORICAL.
+
+## 6. Semantic directory tree
+
+The canonical role tree is:
+
+```text
+semantic_v2/
+  00_index/
+  10_governance/
+  20_theory/
+    nc_material/
+    nc_rebar_panel/
+    uhpc_material/
+    steel_shell_pbl/
+  30_workflows/
+    case21/
+    swartz24/
+  40_execution/
+    case21/
+    swartz24/
+  50_results/
+    case21/
+    swartz24/
+  60_validation/
+    swartz24/
+    external_rc_panels/
+  70_evidence/
+    nc/
+    uhpc/
+    stability/
+    steel_shell_pbl/
+    mathematics/
+    literature/
+  80_history/
+    case21/
+    d_g_r_routes/
+    ucft/
+    rejected_routes/
+    recovery/
+  90_raw/
+    conversation_exports/
+    original_source_locators/
+    preclean_locators/
+```
+
+The semantic tree is role-based. `current` versus `history` is no longer the primary information architecture.
+
+## 7. Migration discipline
+
+This reconstruction is non-destructive until content classification is complete enough to preserve provenance.
+
+```text
+DELETE_LEGACY_FILE_BEFORE_AUDIT = PROHIBITED
+MOVE_BY_FILENAME_GUESS = PROHIBITED
+BREAK_EXISTING_PROVENANCE_LINK = PROHIBITED
+```
+
+The first pass establishes canonical IDs, a rename map and a supersession map. Physical moves/renames may then be performed with old-path locator stubs or Git-history preservation.
+
+## 8. Source/evidence naming
+
+Primary literature and user-uploaded originals are not renamed to imply project conclusions. Their canonical locator names should preserve author/year/source identity, e.g.:
+
+```text
+20260807_TUNK__NZSCCM__UHPC_MATERIAL__HIEW2024_DIRECT_TENSION__SOURCE_LOCATOR.md
+20260712_TUNK__NZSCCM__NC_MATERIAL__NGUYEN_THESIS__SOURCE_LOCATOR.md
+```
+
+Publication year belongs in `SPECIFIC_CONTENT`; project ingestion/audit time remains the leading timestamp.
+
+## 9. Execution artifacts
+
+Any future successful production run must persist at least:
+
+- exact input snapshot;
+- theory/contract identity and commit;
+- compiler interval/order/coefficient checksum;
+- executable code/hash or exact tool execution record;
+- roots and residuals;
+- derivatives and limit function;
+- material-domain/rebar certificates;
+- KZ quantities when requested;
+- experiment-isolation flags.
+
+A final Pu table without the run checkpoint is a result artifact, not a resumable execution artifact.
+
+## 10. Immediate naming examples
+
+```text
+20260812_2245__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15__THEORY_EXECUTION_CONTRACT.md
+20260812_1734__NZSCCM__CASE21__ZERO_SPATIAL_LIMIT_ROOT_KZ__EXECUTION_CONTRACT.md
+20260812_1802__NZSCCM__CASE21__LIMIT_ROOT_AND_KZ__RESULT_FREEZE.md
+20260813_0047__NZSCCM__SWARTZ24__PU_VS_FAILURE_LOAD__RESULT_TABLE.csv
+20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_LIMIT_ROOTS_AND_DERIVATIVES__RESULT_TABLE.csv
+20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_TANGENT_FIDELITY__DIAGNOSTIC.md
+```
+
+These canonical names describe immutable content; current/superseded status remains in the manifest.
+
+====================================================================================================
+FILE: semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__CONTENT_SEMANTIC_TREE__SEMANTIC_MANIFEST.md
+SIZE: 24799
+SHA256: 5ae475cc409ebf091fb401abba8f395ee3901ca3001fb340fe8f8bc7fc972876
+ENCODING: utf-8
+LINES: 617
+====================================================================================================
+# NZ-SCCM repository content semantic tree
+
+**Timestamp:** 2026-08-13 13:28 +08:00  
+**Mode:** non-destructive content audit / semantic reconstruction  
+**Theory/result change:** NONE
+
+## 0. Audit levels
+
+This tree distinguishes three evidence levels rather than pretending every leaf was inferred from its name.
+
+```text
+A_DIRECT_CONTENT_AUDIT
+  The file body was opened/read in the current repository audit and its role was derived from content + supersession.
+
+B_CONTENT_DERIVED_REGISTRY_OR_LEDGER
+  The leaf is classified through a content-derived source registry, inventory, or historical component ledger whose own body was read. This is acceptable for stable source/archive role, but is not a substitute for direct leaf reading when a future technical claim depends on that leaf.
+
+C_NOT_YET_DIRECT_CONTENT_AUDITED
+  Path is known from the real repository tree, but no semantic claim beyond locator/family role should be made until its body is read.
+```
+
+The objective is to drive `C` toward zero for ambiguous current/governance artifacts. Primary literature/source leaves may remain `B` until a concrete claim requires direct source inspection.
+
+---
+
+# 1. Canonical semantic tree
+
+```text
+semantic_v2/
+├── 00_index/                       [CURRENT repository navigation/governance]
+├── 10_governance/                  [project rules, source-of-truth, recovery, checkpoints]
+├── 20_theory/
+│   ├── nc_material/                [R10 material target and compiler representation]
+│   ├── nc_rebar_panel/             [CH + Nguyen + D15 + P/Rq/L + KZ theory]
+│   ├── uhpc_material/              [source-ledger/closure work, not current NC production]
+│   └── steel_shell_pbl/            [Yun/Sun/Zhang-derived theory/evidence]
+├── 30_workflows/
+│   ├── case21/                     [execution contracts, blind-reproduction inputs]
+│   └── swartz24/                   [batch-production/recovery workflow]
+├── 40_execution/
+│   ├── case21/                     [raw input, coefficients, code/checkpoints]
+│   └── swartz24/                   [batch checkpoints; current gap for Cases1–18 roots]
+├── 50_results/
+│   ├── case21/                     [current root/KZ freeze and historical candidates]
+│   └── swartz24/                   [current Pu/Pf table and historical direct-N48 tables]
+├── 60_validation/
+│   ├── swartz24/                   [failure-load comparison and mechanism diagnostics]
+│   └── external_rc_panels/         [candidate external validation literature]
+├── 70_evidence/
+│   ├── nc/
+│   ├── uhpc/
+│   ├── stability/
+│   ├── steel_shell_pbl/
+│   ├── mathematics/
+│   └── literature/
+├── 80_history/
+│   ├── case21/
+│   ├── d_g_r_routes/
+│   ├── ucft/
+│   ├── rejected_routes/
+│   └── recovery/
+└── 90_raw/
+    ├── conversation_exports/
+    ├── original_source_locators/
+    └── preclean_locators/
+```
+
+This semantic tree supersedes the assumption that `current/` itself is semantically pure.
+
+---
+
+# 2. Current primary chain — A_DIRECT_CONTENT_AUDIT
+
+## 2.1 Project/current state
+
+Legacy:
+`current/CURRENT_STATE.md`
+
+Semantic role:
+`PROJECT / CURRENT_STATE_POINTER`
+
+Status:
+`CURRENT_PRIMARY`
+
+Important content:
+- current Case21 final root/load/residual/KZ state;
+- current Swartz24 status;
+- still points to the 17:34 theory as primary theory entry, while a later 22:45 production theory/execution contract exists.
+
+Therefore the pointer layer is usable but not fully synchronized with the latest production-contract layer.
+
+## 2.2 Primary NC+rebar production theory/execution contract
+
+Legacy:
+`current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md`
+
+Canonical content ID:
+`20260812_2245__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15__THEORY_EXECUTION_CONTRACT`
+
+Status:
+`CURRENT_PRIMARY`
+
+Content identity:
+- explicitly declares `CURRENT PRODUCTION THEORY + EXECUTION CONTRACT`;
+- R10 frozen;
+- U/C/T7 = N48-C1;
+- T = N48-C1 constrained minimax;
+- Cayley–Hamilton;
+- Nguyen second-order complete halfwave;
+- general-D15;
+- P/Rq/L and KZ language;
+- no structural calibration or formal spatial quadrature.
+
+This is later than the 17:34 baseline and incorporates the successful Swartz24 operational chain plus accepted formal repairs.
+
+## 2.3 Mechanics baseline
+
+Legacy:
+`current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md`
+
+Canonical content ID:
+`20260812_1734__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15_LIMIT_KZ__THEORY`
+
+Status:
+`CURRENT_SUPPORT`
+
+Content identity:
+current governing mechanics baseline; incorporated into the later 22:45 production contract.
+
+## 2.4 Formal theory-writing chain
+
+A_DIRECT files:
+
+- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md`
+  - earlier formal-closure writing baseline;
+  - status `RETAINED_LINEAGE` after canonical formal closure.
+
+- `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md`
+  - canonical formal closure;
+  - status `CURRENT_SUPPORT`, incorporated by later timestamped unified/production theory.
+
+- `current/theory/NZ_SCCM_NC_R1_ZHOU_STYLE_FORMAL_EQUATION_DERIVATION_20260812.md`
+  - formal equation-by-equation derivation;
+  - status `CURRENT_SUPPORT` as writing/derivation, not independent production contract.
+
+- `current/theory/NZ_SCCM_R10_N48C1MM_D15_EQUATION_BY_EQUATION_DERIVATION_20260812.md`
+  - current equation-by-equation derivation;
+  - status `CURRENT_SUPPORT`.
+
+- `current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md`
+  - current paper-style derivation;
+  - status `CURRENT_SUPPORT`.
+
+## 2.5 Current compiler decisions
+
+A_DIRECT:
+
+- `governance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md`
+  - N48-C1 candidate and tangent repair;
+  - production was HOLD at that stage;
+  - status `RETAINED_LINEAGE`.
+
+- `governance/N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_DECISION_20260812.md`
+  - freezes U/C/T7=N48-C1 and T=N48-C1 constrained minimax;
+  - status `CURRENT_SUPPORT`, incorporated into 22:45 production contract.
+
+- `current/audits/NZ_SCCM_N48_C1_VALUE_TANGENT_REPAIR_AUDIT_20260811.md`
+  - diagnostic basis of C1 repair;
+  - status `RETAINED_LINEAGE/AUDIT_ONLY`.
+
+- `current/audits/NZ_SCCM_N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_AUDIT_20260812.md`
+  - companion minimax audit;
+  - status `CURRENT_SUPPORT/AUDIT`.
+
+---
+
+# 3. Case21 semantic branch — A_DIRECT_CONTENT_AUDIT
+
+## 3.1 Current execution inputs
+
+`current/case21/NZ_SCCM_CASE21_RAW_INPUT_FREEZE_20260812_1734.md`
+
+Status: `CURRENT_EXECUTION_INPUT`
+
+Contains geometry/material/rebar/q0/compiler interval and source identities.
+
+`current/case21/NZ_SCCM_CASE21_FRESH_MATERIAL_COEFFICIENTS_20260812_1802.csv`
+
+Status: `CURRENT_EXECUTION_INPUT`
+
+Contains 49×4 current material compiler coefficients: U_C1/C_C1/T_MM/T7_C1.
+
+`current/case21/NZ_SCCM_CASE21_NC_R1_FRESH_N48_COEFFICIENTS_20260812.csv`
+
+Status: `SUPERSEDED`
+
+Earlier coefficient set/candidate; not the final 18:02 coefficient freeze.
+
+## 3.2 Current Case21 execution contract
+
+`current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md`
+
+Canonical content ID:
+`20260812_1734__NZSCCM__CASE21__R10_N48C1MM_GENERAL_D15_LIMIT_KZ__EXECUTION_CONTRACT`
+
+Status: `CURRENT_PRIMARY`
+
+Defines the current Case21 chain including primary branch, first limit candidate and same-branch KZ audit.
+
+Earlier:
+`current/workflows/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_PRODUCTION_CONTRACT_WITH_TANGENT_GATE_20260812.md`
+
+Status: `RETAINED_LINEAGE`; later 17:34 timestamped Case21 contract is primary.
+
+## 3.3 Current Case21 results
+
+`current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md`
+
+Status: `CURRENT_RESULT`
+
+Contains final current theory root/load/residual freeze.
+
+`current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md`
+
+Status: `PARTIALLY_SUPERSEDED`
+
+Valid scope:
+- final current root/load/residual;
+- KZ decomposition;
+- first same-branch KZ zero;
+- limit-point vs tangent-control classification.
+
+Superseded scope:
+- its final `ultimate` experiment comparison to 336 kN. Later source review establishes that 336 kN is the Swartz/Nguyen buckling/critical load, whereas current ultimate/failure comparison uses Pf≈368.313 kN.
+
+## 3.4 Earlier Case21 candidate lineage
+
+`current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_BLIND_RESULT_20260812.md`
+- earlier candidate root/result;
+- status `SUPERSEDED`.
+
+`current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md`
+- status `RETAINED_LINEAGE`;
+- root/result in the report was later superseded, but the file preserves important backend process: finite coefficient algebra, FFT coefficient convolution, power-to-Chebyshev conversion, D15 exact contraction and directional AD.
+
+`current/results/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_FRESH_CALCULATION_20260812.md`
+- earlier root candidate;
+- status `SUPERSEDED` by the general-D15 Qq correction/final branch.
+
+`current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md`
+- status `RETAINED_LINEAGE/AUDIT`;
+- documents the general-D15/Qq correction that invalidated the earlier branch.
+
+`current/audits/NZ_SCCM_CASE21_N48C1MM_INDEPENDENT_REPRO_BLOCKED_R10_20260812.md`
+- first independent reproduction blocked because the earlier full calculation report was not self-contained at R10;
+- status `SUPERSEDED_AUDIT` by the second blank reproduction.
+
+`current/audits/NZ_SCCM_CASE21_V2_SECOND_BLANK_REPRO_STATUS_20260812.md`
+- second blank reproduction passed R10/C1/MM/CH/kinematics/D15/steel/Rq/spectral but remained blocked at L/root-definition;
+- status `RETAINED_LINEAGE/AUDIT` because later root contract/final closure resolves the production identity.
+
+`current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md`
+- reproduction contract, not current production contract;
+- status `RETAINED_LINEAGE`.
+
+`current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_INPUT_20260812.md`
+- blind audit input; status `RETAINED_LINEAGE`.
+
+## 3.5 Misleading Case21 legacy files still under current/case21
+
+`current/case21/NEXTSTEP_EXECUTION_REPORT.md`
+- Aug-09 tail/Chebyshev route report;
+- status `SUPERSEDED`.
+
+`current/case21/results_nextstep.json`
+- companion old-route result JSON;
+- status `SUPERSEDED`.
+
+`current/case21/NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md`
+- historical handoff for an older direct-analytic/tail route;
+- status `RETAINED_LINEAGE/HISTORICAL`.
+
+## 3.6 Experiment-source identity
+
+`current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812.md`
+- labels Nguyen/Swartz 336 kN buckling quantity as an ultimate quantity;
+- status `SUPERSEDED/MISLABELLED`.
+
+`current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md`
+- corrects 336 kN to experimental buckling/critical-load identity and retains raw input provenance;
+- status `SOURCE_ONLY` for buckling/critical information, not the final failure-load Pf source.
+
+---
+
+# 4. Swartz24 semantic branch — A_DIRECT_CONTENT_AUDIT
+
+## 4.1 Current final result
+
+`current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv`
+
+Canonical content ID:
+`20260813_0047__NZSCCM__SWARTZ24__C1MM_GENERAL_D15_PU_VS_FAILURE_LOAD__RESULT_TABLE`
+
+Status: `CURRENT_RESULT`
+
+Contains current 24/24 Pu and experimental failure Pf comparison. It does not contain Cases1–18 current Du/qu.
+
+`current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md`
+
+Status: `CURRENT_RESULT/EXECUTION_REPORT`
+
+Contains 24/24 current Pu and current roots for Cases19–24. Does not establish a 24/24 KZ bulk audit.
+
+## 4.2 Superseded direct-N48 table hidden in current/results
+
+`current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv`
+
+Canonical content ID:
+`20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_LIMIT_ROOTS_DERIVATIVES_AND_CERTIFICATES__RESULT_TABLE`
+
+Status: `SUPERSEDED`
+
+Despite `current/results` and `FRESH` in its legacy name, its body contains the old direct-N48 roots/results, including Case1 Pu=599.515895 kN. It is not the current C1/MM + general-D15 root table.
+
+`current/results/NZ_SCCM_SWARTZ24_FRESH_THEORY_VS_EXPERIMENT_20260811.csv`
+- companion direct-N48 Pu-vs-failure comparison;
+- status `SUPERSEDED`.
+
+`current/results/NZ_SCCM_SWARTZ24_FRESH_R10_N48_D15_REPORT_20260811.md`
+- direct-N48 production-at-the-time report;
+- status `SUPERSEDED`.
+
+## 4.3 Tangent-fidelity correction lineage
+
+`current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_20260811.md`
+
+`current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_COMPACT_20260811.csv`
+
+Status: `RETAINED_LINEAGE/DIAGNOSTIC_ONLY`
+
+The table explicitly contains the old direct-N48 Du/Pu and compares R10-target vs N48 tangent quantities. It is diagnostic evidence for why direct N48 cannot be treated as current tangent-faithful production.
+
+`governance/P1_N48_TANGENT_FIDELITY_DECISION_20260811.md`
+
+Status: `RETAINED_LINEAGE/GOVERNANCE`.
+
+## 4.4 Mechanism diagnostics
+
+`current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_20260811.md`
+
+`current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_TABLE_20260811.csv`
+
+Status: `PARTIALLY_SUPERSEDED`.
+
+Valid scope:
+- digitized source variables / buckling-method flags / historical mechanism exploration.
+
+Superseded scope:
+- Pu/error statistics based on old direct-N48 results.
+
+`current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_OBSERVATIONS_AND_GROUP_ERROR_MECHANISM_20260811.md`
+
+Status: `PARTIALLY_SUPERSEDED`.
+
+Valid scope:
+- Nguyen/Swartz source observations on b/t groups, buckling mode and buckling-load interpretation.
+
+Superseded scope:
+- numerical group Pu/error statistics built from the old direct-N48 table.
+
+---
+
+# 5. R10 / compiler material lineage — A_DIRECT_CONTENT_AUDIT
+
+`current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md`
+- origin of the currently frozen R10 material-target modification;
+- status `CURRENT_SUPPORT` for material lineage;
+- its structural Gauss calculation is explicitly audit-only and not production.
+
+`current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md`
+- clarifies that executed R10 reconstructs the whole retained tensile interval, not merely an infinitesimal local peak patch;
+- status `CURRENT_SUPPORT/AUDIT`.
+
+`governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md`
+- separates R10 material-target change from R10B finite analytic representation;
+- status `CURRENT_SUPPORT/RETAINED_LINEAGE`.
+
+`current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md`
+- old direct-N48 compiler contract;
+- status `SUPERSEDED` by C1/MM compiler decisions.
+
+`current/theory/NZ_SCCM_R10B_REPRESENTATION_FIDELITY_AUDIT_20260811.md`
+- historical R10B engineering-fidelity/reproducibility audit;
+- status `RETAINED_LINEAGE`.
+
+`current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
+- direct-N48 Case21 zero-spatial result/derivatives;
+- status `SUPERSEDED` as production.
+
+`current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md`
+- old direct-N48 derivation;
+- status `SUPERSEDED` by 2026-08-12 N48-C1/MM derivations.
+
+---
+
+# 6. Exploratory routes still physically stored under current/theory
+
+These files prove why physical location under `current/` cannot confer current status.
+
+## 6.1 Rejected / superseded production routes — A_DIRECT
+
+- `NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md`
+  - panel-level/global D-q Chebyshev surface route;
+  - `REJECTED` under current `PANEL_LEVEL_SURROGATE=NO`.
+
+- `NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md`
+  - D15 finite polynomial closure passes but proposed global energy material potential fails;
+  - `REJECTED` material route.
+
+- `NZ_SCCM_M1_STRUCTURED_MATRIX_POLYNOMIAL_SCREEN_R01_20260810.md`
+  - low-order structured polynomial material screen fails TC interaction;
+  - `REJECTED`.
+
+- `NZ_SCCM_M1R_OUTER_RESOLVENT_HYPERELLIPTIC_CLASSIFICATION_R02_20260810.md`
+  - hyperelliptic/outer-resolvent classification, no current Pu production closure;
+  - `REJECTED` production route.
+
+- `NZ_SCCM_M1R_P2A_INTEGRABILITY_FIRST_PRIMITIVE_SCREEN_20260810.md`
+  - integrability screen/HOLD path; later abandoned;
+  - `REJECTED` production route.
+
+- `NZ_SCCM_PF1_GENUS2_GAUSS_MANIN_ABSOLUTE_X_CLOSURE_R03_20260810.md`
+- `NZ_SCCM_PF1_RELATIVE_X_ENDPOINT_COMPATIBLE_REDUCTION_R04_20260810.md`
+- `NZ_SCCM_PF1_RELATIVE_ENDPOINT_HYPERGEOMETRIC_CLOSURE_R04_20260810.md`
+- `NZ_SCCM_PF1_HYPERGEOMETRIC_DRIVER_REDUCTION_R05_20260810.md`
+- `NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_20260810.md`
+
+All are analytically interesting PF1 lineage but not current production. Semantic status: `REJECTED/RETAINED_LINEAGE` depending on whether the artifact is used as mathematical history; none is current execution theory.
+
+## 6.2 Retained diagnostic/design lineage — A_DIRECT
+
+- `NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md`
+  - important finite material-moment / analytic material-structure interface design bridge;
+  - `RETAINED_LINEAGE`.
+
+- `NZ_SCCM_INVARIANT_COORDINATE_LIFT_EXACT_REDUCTION_R01_20260810.md`
+  - invariant-coordinate exact reduction exploration;
+  - `RETAINED_LINEAGE`.
+
+- `NZ_SCCM_SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03_20260810.md`
+  - analytical spectral separation/rank diagnostics;
+  - `RETAINED_LINEAGE`, not current production-domain contract.
+
+- `NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_20260810.md`
+  - tension-width and reachable-domain diagnostic;
+  - `RETAINED_LINEAGE/DIAGNOSTIC_ONLY`.
+
+- `NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.md`
+  - material-coordinate geometric regularization diagnostic;
+  - `RETAINED_LINEAGE/DIAGNOSTIC_ONLY`.
+
+- `NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_20260810.md`
+  - exact-kernel classification diagnostic;
+  - `RETAINED_LINEAGE/DIAGNOSTIC_ONLY`.
+
+- `NZ_SCCM_MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05_20260810.md`
+- `NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_20260810.md`
+- `NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_20260810.md`
+- `NZ_SCCM_R09B_ENERGY_EQUIVALENT_TENSION_CAPACITY_RULE_20260810.md`
+
+These are retained material-route diagnostics/proposals, not current production contracts.
+
+- `NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md`
+  - historical user-sketch smoothing plus local D-q surrogate;
+  - `REJECTED` as current production.
+
+## 6.3 Code identity examples — A_DIRECT
+
+`current/theory/nz_sccm_case21_invariant_exact_moments_v1.py`
+- symbolic I1/I2 and exact monomial-moment audit helper;
+- self-declares not production material model or spatial quadrature;
+- `CURRENT_SUPPORT/CODE_AUDIT_HELPER`, not the entire general-D15 production backend.
+
+`current/theory/nz_sccm_current_operator_explicit_v1.py`
+- explicit algebraic-Foster/current material operator and rebar source helper;
+- predates final R10/C1MM production identity;
+- `RETAINED_LINEAGE/CODE`.
+
+`current/theory/nz_sccm_current_target_geometric_regularization_r01.py`
+- numerical material-coordinate diagnostic code generating geometric-regularization evidence;
+- `RETAINED_LINEAGE/DIAGNOSTIC_CODE`.
+
+`current/theory/nz_sccm_frozen_nc_invariant_surface_screen_r01.py`
+- explicitly diagnostic-only invariant A/B architecture screen;
+- `RETAINED_LINEAGE/DIAGNOSTIC_CODE`.
+
+`current/theory/nz_sccm_invariant_coordinate_lift_r01.py`
+- exact symbolic check helper for invariant-coordinate lift;
+- `RETAINED_LINEAGE/CODE_AUDIT_HELPER`.
+
+Other companion Python/result JSON files in this family are indexed by their parent route. They must not be promoted merely because they reside in `current/theory`.
+
+---
+
+# 7. Governance semantic branch
+
+## 7.1 Current repository governance — A_DIRECT
+
+- `governance/SOURCE_OF_TRUTH_POLICY.md`
+  - `CURRENT_PRIMARY/GOVERNANCE`.
+
+- `governance/RECOVERY_PROTOCOL.md`
+  - `CURRENT_PRIMARY/GOVERNANCE`; explicitly requires dynamic repository-tree scan and identity classification.
+
+- `governance/CONTENT_SEMANTIC_IDENTITY_RULE_20260813.md`
+  - `CURRENT_PRIMARY/GOVERNANCE`.
+
+- `current/governance/NZ_SCCM_EXECUTION_CHECKPOINT_BACKUP_AUDIT_AND_RULE_20260813_1207.md`
+  - `CURRENT_PRIMARY/GOVERNANCE` for resumable checkpoint requirements.
+
+## 7.2 Earlier naming rule
+
+`current/governance/NZ_SCCM_TIMESTAMP_NAMING_AND_BASELINE_DECISION_20260812_1734.md`
+- useful earlier decision to prefer descriptive content + timestamp over R/V numbering;
+- naming portion is `SUPERSEDED_BY semantic_v2 content-first naming policy` because it does not solve path/name semantic contamination or partial supersession;
+- provenance-preservation principle remains valid.
+
+## 7.3 Formal-closure decision
+
+`current/governance/NZ_SCCM_NC_R1_FORMAL_CLOSURE_DECISION_20260812.md`
+- status `CURRENT_SUPPORT/GOVERNANCE`, incorporated into later current production contract.
+
+## 7.4 Priority reset
+
+`governance/PRIORITY_RESET_20260810.md`
+- status `PARTIALLY_SUPERSEDED/HISTORICAL_GOVERNANCE`;
+- retains important history of dropping theorem-level strict remainder as engineering hard gate and material-vs-solution-operator separation;
+- its broader long-term material/operator proposals are not the narrow current NC production contract.
+
+---
+
+# 8. Evidence semantic branch
+
+`evidence/catalog/SOURCE_REGISTRY.md` — A_DIRECT registry read.
+
+`evidence/catalog/MASTER_SOURCE_INVENTORY.csv` — A_DIRECT inventory read at registry level.
+
+These establish stable source identities for Nguyen, Attard, Yun, Zhang, Sun, UHPC theses/papers, raw conversation exports and historical machine artifacts.
+
+Source leaves under `evidence/materials`, `evidence/stability`, `evidence/steel_shell`, `evidence/mathematics`, and `evidence/literature` are therefore classified as `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER` unless separately opened. Their role is stable `SOURCE_ONLY`/`SOURCE_EXCERPT`/`SOURCE_MAP`; no current-theory status is inferred from their filenames.
+
+Important rule: when a technical claim depends on a source leaf, that leaf/PDF must still be opened directly.
+
+---
+
+# 9. History semantic branch
+
+`history/README.md` — A_DIRECT.
+
+`history/ledgers/HISTORICAL_COMPONENT_LEDGER.md` — A_DIRECT.
+
+The ledger already classifies D/G/R components by inherited/rejected role, e.g. active D15 mathematical core versus rejected panel-level Chebyshev condensation and historical state-front routes.
+
+Therefore stable history leaves may be indexed at `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER` until a specific recovery question requires direct leaf inspection.
+
+`history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md`
+- `LOCATOR_ONLY/RAW_ARCHIVE_RECOVERY`;
+- points to pre-clean Git commits where migration-era full-text mirrors/checkpoints/snapshots remain recoverable.
+
+Pre-clean historical assets are not automatically merged back into the active semantic tree; they are restored by content only when a specific missing artifact is being recovered.
+
+---
+
+# 10. Execution-recovery status
+
+The body-level audit supports the following precise statement:
+
+```text
+HISTORICAL_CALCULATION_PROCESS = PRESENT
+HISTORICAL_BACKEND_STRATEGY = PRESENT
+CASE21_CURRENT_RESUMABLE_CHECKPOINT = COMPLETE
+SWARTZ24_CURRENT_PU_TABLE = 24/24 PRESENT
+SWARTZ24_CURRENT_ROOTS_RETAINED = 6/24 (Cases19–24)
+CASES1_18_CURRENT_CORRECTED_Du_qu = NOT_YET_LOCATED
+FINAL_AUG12_13_TRANSIENT_BATCH_TOOL_SOURCE = NOT_YET_LOCATED
+FULL_24_PANEL_CURRENT_KZ_TABLE = NOT_PRESENT/NOT_COMPLETED
+```
+
+`NOT_YET_LOCATED` must not be rewritten as `did not exist`.
+
+---
+
+# 11. Repository cleanliness verdict
+
+```text
+LEGACY_CURRENT_DIRECTORY_SEMANTIC_PURITY = FALSE
+LEGACY_FILENAME_STATUS_RELIABILITY = FALSE
+CONTENT_FIRST_SEMANTIC_INDEX = ACTIVE
+CANONICAL_NAMING_POLICY = ACTIVE
+DESTRUCTIVE_MIGRATION = NOT_YET_AUTHORIZED
+```
+
+The new tree is intentionally non-destructive. A rename map and supersession map accompany this manifest. Physical moves/renames should occur only after the map is content-audited enough to avoid breaking provenance and recovery links.
+
+---
+
+# 12. Remaining audit frontier
+
+The highest-risk ambiguous branches (`current/results`, `current/case21`, current production theory/workflows, compiler chronology, key current diagnostics/governance) have direct-content classifications above.
+
+Remaining direct-leaf work is lower risk and is tracked as either:
+
+- companion JSON/Python of an already content-audited historical route;
+- source/evidence leaves whose stable role is supplied by a content-read registry/ledger;
+- older history leaves available through the historical component ledger or pre-clean locator.
+
+No unresolved leaf may be used as current production merely because of its path or filename.
+
+====================================================================================================
+FILE: semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__LEGACY_TO_CANONICAL__RENAME_MAP.csv
+SIZE: 25705
+SHA256: 4e292f21cf8ef5c0ebef9c075262efda0d6aec705d4336e5e67a61a310b50baf
+ENCODING: utf-8
+LINES: 95
+====================================================================================================
+legacy_path,canonical_semantic_path,canonical_name,status,audit_level,notes
+current/CURRENT_STATE.md,semantic_v2/00_index/,20260813_TUNK__NZSCCM__PROJECT__CURRENT_STATE_AND_OPEN_GAPS__SEMANTIC_INDEX.md,CURRENT_PRIMARY,A_DIRECT_CONTENT_AUDIT,"State pointer; theory pointer layer lags later 22:45 production contract"
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_2245__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15__THEORY_EXECUTION_CONTRACT.md,CURRENT_PRIMARY,A_DIRECT_CONTENT_AUDIT,"Primary production theory/execution contract"
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_1734__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15_LIMIT_KZ__THEORY.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Mechanics baseline incorporated by 22:45 production contract"
+current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_TUNK__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_GENERAL_D15_FORMAL_CLOSURE__THEORY_DERIVATION.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Canonical formal closure; incorporated by later timestamped theory"
+current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md,semantic_v2/80_history/d_g_r_routes/,20260812_TUNK__NZSCCM__NC_REBAR_PANEL__PRECANONICAL_FORMAL_CLOSURE__THEORY_DERIVATION.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Pre-canonical formal closure writing baseline"
+current/theory/NZ_SCCM_NC_R1_ZHOU_STYLE_FORMAL_EQUATION_DERIVATION_20260812.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_TUNK__NZSCCM__NC_REBAR_PANEL__FORMAL_EQUATION_BY_EQUATION__THEORY_DERIVATION.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Formal writing companion"
+current/theory/NZ_SCCM_R10_N48C1MM_D15_EQUATION_BY_EQUATION_DERIVATION_20260812.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_TUNK__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_D15_EQUATION_BY_EQUATION__THEORY_DERIVATION.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Current explanatory derivation"
+current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_TUNK__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_D15_PAPER_STYLE__THEORY_DERIVATION.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Current paper-style derivation"
+current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md,semantic_v2/30_workflows/case21/,20260812_1734__NZSCCM__CASE21__R10_N48C1MM_GENERAL_D15_LIMIT_KZ__EXECUTION_CONTRACT.md,CURRENT_PRIMARY,A_DIRECT_CONTENT_AUDIT,"Current Case21 execution contract"
+current/workflows/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_PRODUCTION_CONTRACT_WITH_TANGENT_GATE_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__FORMAL_CLOSURE_LIMIT_AND_KZ__EXECUTION_CONTRACT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Superseded as primary by 17:34 timestamped contract"
+current/case21/NZ_SCCM_CASE21_RAW_INPUT_FREEZE_20260812_1734.md,semantic_v2/40_execution/case21/,20260812_1734__NZSCCM__CASE21__GEOMETRY_MATERIAL_REBAR_COMPILER_INTERVAL__INPUT_FREEZE.md,CURRENT_EXECUTION_INPUT,A_DIRECT_CONTENT_AUDIT,"Current raw input freeze"
+current/case21/NZ_SCCM_CASE21_FRESH_MATERIAL_COEFFICIENTS_20260812_1802.csv,semantic_v2/40_execution/case21/,20260812_1802__NZSCCM__CASE21__R10_N48C1MM_U_C_T_T7__COEFFICIENT_TABLE.csv,CURRENT_EXECUTION_INPUT,A_DIRECT_CONTENT_AUDIT,"Final current Case21 49x4 coefficient table"
+current/case21/NZ_SCCM_CASE21_NC_R1_FRESH_N48_COEFFICIENTS_20260812.csv,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__PRE1802_N48C1MM_COEFFICIENTS__COEFFICIENT_TABLE.csv,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Earlier coefficient candidate"
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md,semantic_v2/50_results/case21/,20260812_1802__NZSCCM__CASE21__LIMIT_ROOT_THEORY_OUTPUT__RESULT_FREEZE.md,CURRENT_RESULT,A_DIRECT_CONTENT_AUDIT,"Final current theory root/load/residual freeze"
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md,semantic_v2/50_results/case21/,20260812_1802__NZSCCM__CASE21__LIMIT_ROOT_KZ_AND_EXPERIMENT_COMPARISON__RESULT_FREEZE.md,PARTIALLY_SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Root/KZ valid; 336-kN ultimate comparison superseded"
+current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_BLIND_RESULT_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__EARLY_N48C1MM_D15_LIMIT_CANDIDATE__RESULT_FREEZE.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Earlier candidate root"
+current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__N48C1MM_FFT_COEFFICIENT_D15_DIRECTIONAL_AD__EXECUTION_REPORT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Candidate root superseded; backend process lineage retained"
+current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_THEORY_VS_EXPERIMENT_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__EARLY_C1MM_PU_VS_FAILURE_LOAD__DIAGNOSTIC.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Uses earlier candidate Pu"
+current/results/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_FRESH_CALCULATION_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__PRE_GENERAL_D15_QQ_FORMAL_CLOSURE_ROOT__RESULT_FREEZE.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Earlier branch invalidated by general-D15 Qq correction"
+current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__GENERAL_D15_QQ_AND_TANGENT_RECHECK__AUDIT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Correction chronology"
+current/audits/NZ_SCCM_CASE21_N48C1MM_INDEPENDENT_REPRO_BLOCKED_R10_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__FIRST_BLANK_REPRO_BLOCKED_AT_R10__AUDIT.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Superseded by second blank reproduction"
+current/audits/NZ_SCCM_CASE21_V2_SECOND_BLANK_REPRO_STATUS_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__SECOND_BLANK_REPRO_BLOCKED_AT_LIMIT_ROOT_IDENTITY__AUDIT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Passed upstream chain; root identity unresolved at that stage"
+current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__SELF_CONTAINED_BLIND_REPRODUCTION__EXECUTION_CONTRACT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Independent reproduction contract; not primary production contract"
+current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_INPUT_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__N48C1MM_D15_BLIND_AUDIT__INPUT_FREEZE.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Blind audit input"
+current/case21/NEXTSTEP_EXECUTION_REPORT.md,semantic_v2/80_history/case21/,20260809_TUNK__NZSCCM__CASE21__TAIL_CHEBYSHEV_NEXTSTEP__EXECUTION_REPORT.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Old tail/Chebyshev route despite current/case21 location"
+current/case21/results_nextstep.json,semantic_v2/80_history/case21/,20260809_TUNK__NZSCCM__CASE21__TAIL_CHEBYSHEV_NEXTSTEP__RESULT_TABLE.json,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Old route companion JSON"
+current/case21/NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md,semantic_v2/80_history/case21/,20260809_TUNK__NZSCCM__CASE21__GLOBAL_AUDIT__LOCATOR.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Historical handoff"
+current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812.md,semantic_v2/80_history/case21/,20260812_TUNK__NZSCCM__CASE21__336KN_MISLABELLED_AS_ULTIMATE__SOURCE_EXCERPT.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"336 kN is buckling/critical quantity, not final failure Pu source"
+current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md,semantic_v2/70_evidence/stability/,20260812_1802__NZSCCM__CASE21__336KN_BUCKLING_AND_RAW_INPUTS__SOURCE_EXCERPT.md,SOURCE_ONLY,A_DIRECT_CONTENT_AUDIT,"Correct buckling/critical-load identity; not failure Pf source"
+current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,semantic_v2/50_results/swartz24/,20260813_0047__NZSCCM__SWARTZ24__C1MM_GENERAL_D15_PU_VS_FAILURE_LOAD__RESULT_TABLE.csv,CURRENT_RESULT,A_DIRECT_CONTENT_AUDIT,"24/24 current Pu vs experimental Pf"
+current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md,semantic_v2/50_results/swartz24/,20260813_0047__NZSCCM__SWARTZ24__PU_COMPLETION_ROOTS19_24_FAILURE_AND_EXTERNAL_SCREEN__EXECUTION_REPORT.md,CURRENT_RESULT,A_DIRECT_CONTENT_AUDIT,"Roots printed for 19-24; no full 24 KZ table"
+current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_LIMIT_ROOTS_DERIVATIVES_AND_CERTIFICATES__RESULT_TABLE.csv,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Misleading legacy path/name; old direct-N48 full table"
+current/results/NZ_SCCM_SWARTZ24_FRESH_THEORY_VS_EXPERIMENT_20260811.csv,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_PU_VS_FAILURE_LOAD__RESULT_TABLE.csv,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Companion direct-N48 validation table"
+current/results/NZ_SCCM_SWARTZ24_FRESH_R10_N48_D15_REPORT_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_R10_D15__EXECUTION_REPORT.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Production-at-the-time direct-N48 report"
+current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_TANGENT_FIDELITY__DIAGNOSTIC.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Tangent failure diagnostic"
+current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_COMPACT_20260811.csv,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ24__DIRECT_N48_TANGENT_FIDELITY__RESULT_TABLE.csv,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Contains old roots and R10-vs-N48 tangent metrics"
+current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_20260811.md,semantic_v2/60_validation/swartz24/,20260811_TUNK__NZSCCM__SWARTZ24__SOURCE_VARIABLES_AND_DIRECT_N48_ERROR_MECHANISMS__DIAGNOSTIC.md,PARTIALLY_SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Source variables retained; old Pu/error statistics superseded"
+current/results/NZ_SCCM_SWARTZ24_PRIMARY_MECHANISM_AUDIT_TABLE_20260811.csv,semantic_v2/60_validation/swartz24/,20260811_TUNK__NZSCCM__SWARTZ24__SOURCE_VARIABLES_AND_DIRECT_N48_ERROR_MECHANISMS__RESULT_TABLE.csv,PARTIALLY_SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Source columns retained; theory-error columns old direct-N48"
+current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_OBSERVATIONS_AND_GROUP_ERROR_MECHANISM_20260811.md,semantic_v2/60_validation/swartz24/,20260811_TUNK__NZSCCM__SWARTZ24__SOURCE_BUCKLING_OBSERVATIONS_AND_GROUP_ERROR__DIAGNOSTIC.md,PARTIALLY_SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Source observations valid; old group Pu/error numbers superseded"
+governance/P1_N48_TANGENT_FIDELITY_DECISION_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__NC_MATERIAL__DIRECT_N48_TANGENT_FAILURE__GOVERNANCE.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Documents first-derivative/tangent failure"
+governance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__NC_MATERIAL__N48C1_VALUE_AND_TANGENT_REPAIR__GOVERNANCE.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"C1 candidate held at that stage"
+governance/N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_DECISION_20260812.md,semantic_v2/20_theory/nc_material/,20260812_TUNK__NZSCCM__NC_MATERIAL__N48C1_T_CONSTRAINED_MINIMAX__GOVERNANCE.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Current compiler identity"
+current/audits/NZ_SCCM_N48_C1_VALUE_TANGENT_REPAIR_AUDIT_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__NC_MATERIAL__N48C1_VALUE_TANGENT_REPAIR__AUDIT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"C1 repair diagnostics"
+current/audits/NZ_SCCM_N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_AUDIT_20260812.md,semantic_v2/20_theory/nc_material/,20260812_TUNK__NZSCCM__NC_MATERIAL__T_CONSTRAINED_MINIMAX_BOUNDARY_LAYER__AUDIT.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Companion current compiler audit"
+current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md,semantic_v2/20_theory/nc_material/,20260810_2352__NZSCCM__NC_MATERIAL__R10_TENSILE_C2_ENERGY_RECONSTRUCTION__THEORY.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"R10 material-target origin; structural Gauss in file is audit-only"
+current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md,semantic_v2/20_theory/nc_material/,20260811_1530__NZSCCM__NC_MATERIAL__R10_SOURCE_VS_EXECUTED_TARGET__AUDIT.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Clarifies whole retained tensile interval was reconstructed"
+governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md,semantic_v2/20_theory/nc_material/,20260811_1428__NZSCCM__NC_MATERIAL__R10_MATERIAL_TARGET_VS_R10B_COMPILER__GOVERNANCE.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Material-target vs representation distinction"
+current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_1638__NZSCCM__NC_MATERIAL__DIRECT_N48_COEFFICIENT_GENERATION__THEORY_CONTRACT.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Direct-N48 compiler contract superseded by C1/MM"
+current/theory/NZ_SCCM_R10B_REPRESENTATION_FIDELITY_AUDIT_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_1605__NZSCCM__NC_MATERIAL__DIRECT_N48_REPRESENTATION_FIDELITY_AND_REPRO_GAP__AUDIT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Historical fidelity/reproducibility evidence"
+current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md,semantic_v2/80_history/case21/,20260811_TUNK__NZSCCM__CASE21__DIRECT_N48_ZERO_SPATIAL_D15_LIMIT__RESULT_FREEZE.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Direct-N48 Case21 result"
+current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__NC_REBAR_PANEL__DIRECT_N48_D15_PAPER_STYLE__THEORY_DERIVATION.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Replaced by C1/MM derivations"
+current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md,semantic_v2/80_history/case21/,20260811_TUNK__NZSCCM__CASE21__DIRECT_N48_CALCULATION_TEMPLATE__WORKFLOW.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Stale workflow uses direct N48"
+current/audits/NZ_SCCM_CASE1_CASE14_CASE21_BLIND_INPUT_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ_CASE1_14_21__DIRECT_N48_BLIND_REPRO__INPUT_FREEZE.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Historical direct-N48 audit input"
+current/audits/NZ_SCCM_CASE1_CASE14_CASE21_FULL_REPRODUCTION_AUDIT_PACKAGE_20260811.md,semantic_v2/80_history/d_g_r_routes/,20260811_TUNK__NZSCCM__SWARTZ_CASE1_14_21__DIRECT_N48_FULL_REPRODUCTION__AUDIT.md,SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Historical direct-N48 reproduction package"
+current/governance/NZ_SCCM_EXECUTION_CHECKPOINT_BACKUP_AUDIT_AND_RULE_20260813_1207.md,semantic_v2/10_governance/,20260813_1207__NZSCCM__PROJECT__RESUMABLE_EXECUTION_CHECKPOINT_REQUIREMENTS__GOVERNANCE.md,CURRENT_PRIMARY,A_DIRECT_CONTENT_AUDIT,"Current backup/checkpoint rule"
+current/governance/NZ_SCCM_TIMESTAMP_NAMING_AND_BASELINE_DECISION_20260812_1734.md,semantic_v2/80_history/recovery/,20260812_1734__NZSCCM__REPOSITORY__DESCRIPTIVE_TIMESTAMP_NAMING_V1__GOVERNANCE.md,PARTIALLY_SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Naming rule superseded by content-first semantic naming; provenance principle retained"
+governance/SOURCE_OF_TRUTH_POLICY.md,semantic_v2/10_governance/,DATEUNK_TUNK__NZSCCM__PROJECT__SOURCE_OF_TRUTH_AND_EVIDENCE_HIERARCHY__GOVERNANCE.md,CURRENT_PRIMARY,A_DIRECT_CONTENT_AUDIT,"Current source hierarchy"
+governance/RECOVERY_PROTOCOL.md,semantic_v2/10_governance/,DATEUNK_TUNK__NZSCCM__PROJECT__FULL_AND_TASK_SCOPED_RECOVERY__GOVERNANCE.md,CURRENT_PRIMARY,A_DIRECT_CONTENT_AUDIT,"Requires dynamic tree scan/content identity"
+current/governance/NZ_SCCM_NC_R1_FORMAL_CLOSURE_DECISION_20260812.md,semantic_v2/20_theory/nc_rebar_panel/,20260812_TUNK__NZSCCM__NC_REBAR_PANEL__GENERAL_D15_REBAR_ROOT_KZ_FORMAL_REPAIRS__GOVERNANCE.md,CURRENT_SUPPORT,A_DIRECT_CONTENT_AUDIT,"Incorporated into later production theory"
+governance/PRIORITY_RESET_20260810.md,semantic_v2/80_history/recovery/,20260810_TUNK__NZSCCM__PROJECT__ENGINEERING_ANALYTIC_PRIORITY_AND_OPERATOR_ARCHITECTURE__GOVERNANCE.md,PARTIALLY_SUPERSEDED,A_DIRECT_CONTENT_AUDIT,"Historical priority reset; some long-term proposals not current production"
+current/theory/NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md,semantic_v2/80_history/d_g_r_routes/,20260810_TUNK__NZSCCM__NC_REBAR_PANEL__FINITE_MATERIAL_MOMENT_INTERFACE__THEORY.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Architecture bridge, not current production contract"
+current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__CASE21__GLOBAL_DQ_CHEBYSHEV_SURFACE_CAPACITY__THEORY.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Panel-level surrogate conflicts with current prohibition"
+current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__GLOBAL_ENERGY_POTENTIAL_D15_FEASIBILITY__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Global material energy potential route failed"
+current/theory/NZ_SCCM_M1_STRUCTURED_MATRIX_POLYNOMIAL_SCREEN_R01_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__LOW_ORDER_STRUCTURED_MATRIX_POLYNOMIAL__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"TC interaction failure"
+current/theory/NZ_SCCM_M1R_SOURCE_SHAPED_RATIONAL_PRIMITIVE_SCREEN_R01_20260810.md,semantic_v2/80_history/d_g_r_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__SOURCE_SHAPED_RATIONAL_PRIMITIVES__AUDIT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Inner reduction lineage; not current production"
+current/theory/NZ_SCCM_M1R_OUTER_RESOLVENT_HYPERELLIPTIC_CLASSIFICATION_R02_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__OUTER_RESOLVENT_HYPERELLIPTIC_CLASSIFICATION__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"No production closure"
+current/theory/NZ_SCCM_M1R_P2A_INTEGRABILITY_FIRST_PRIMITIVE_SCREEN_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__P2A_INTEGRABILITY_PRIMITIVE_SCREEN__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"HOLD/abandoned route"
+current/theory/NZ_SCCM_PF1_GENUS2_GAUSS_MANIN_ABSOLUTE_X_CLOSURE_R03_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__PF1_GENUS2_GAUSS_MANIN__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Mathematical lineage only"
+current/theory/NZ_SCCM_PF1_RELATIVE_X_ENDPOINT_COMPATIBLE_REDUCTION_R04_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__PF1_RELATIVE_X_ENDPOINT_REDUCTION__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Mathematical lineage only"
+current/theory/NZ_SCCM_PF1_RELATIVE_ENDPOINT_HYPERGEOMETRIC_CLOSURE_R04_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__PF1_RELATIVE_ENDPOINT_HYPERGEOMETRIC__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Whole gate hold"
+current/theory/NZ_SCCM_PF1_HYPERGEOMETRIC_DRIVER_REDUCTION_R05_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__PF1_HYPERGEOMETRIC_RATIONAL_DRIVER__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Whole connection hold"
+current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_20260810.md,semantic_v2/80_history/rejected_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__PF1_ENDPOINT_IBP_MASTER_CONNECTION__AUDIT.md,REJECTED,A_DIRECT_CONTENT_AUDIT,"Not current production"
+current/theory/NZ_SCCM_INVARIANT_COORDINATE_LIFT_EXACT_REDUCTION_R01_20260810.md,semantic_v2/80_history/d_g_r_routes/,20260810_TUNK__NZSCCM__NC_MATERIAL__INVARIANT_COORDINATE_LIFT__AUDIT.md,RETAINED_LINEAGE,A_DIRECT_CONTENT_AUDIT,"Exact reduction exploration"

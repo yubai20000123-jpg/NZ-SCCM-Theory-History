@@ -1,0 +1,1800 @@
+
+```text
+OPEN
+```
+
+The exact linearly constrained audit was explicitly not sufficient to promote to production.
+
+## R20
+
+R20 finally demonstrated the unconstrained multi-DOF historical Branch-C audit:
+
+```text
+24 global DOFs
+16 free DOFs
+5 layers
+45 material points
+15 accepted points
+U -> TC event
+one discrete peak
+two accepted postpeak points
+PASS_AUDIT_ONLY
+```
+
+The unified R16–R20 regression contract then reported:
+
+```text
+75/75 tests
+compileall PASS
+PASS_READY_FOR_UNIFIED_24_PANEL_BATCH
+```
+
+Critically, the same registry also says:
+
+```text
+Swartz calculations have not started
+```
+
+and identifies the 15-point path as an **audit fixture, not a Swartz specimen**.
+
+## Why R20 is retained but not current production theory
+
+R20 is highly valuable as a **Nguyen-source numerical oracle / historical verification route** because it preserved:
+
+- Ch.3 source-state relations and source tangents;
+- Ch.4 Q4/Hermite16 discretization;
+- Ch.6 full residual/path structure;
+- material-state transaction and rollback;
+- natural state transitions;
+- peak/postpeak path behavior.
+
+But R20's actual implementation also uses:
+
+```text
+5 layers
+45 material points
+```
+
+and the broader R16–R20 route is a finite-element/material-point/history path. It therefore cannot be silently described as the later formal NZ-SCCM operator satisfying:
+
+```text
+N_formal_spatial_sampling   = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+Historical identity:
+
+```text
+R16_R20_NGUYEN_BRANCH_C = RETAINED_AS_SOURCE_ORACLE_AND_NUMERICAL_AUDIT
+R16_R20_NGUYEN_BRANCH_C = NOT_CURRENT_FORMAL_ZERO_SPATIAL_OPERATOR
+```
+
+## Non-revival rule
+
+A future conversation may use R16–R20 to answer questions such as:
+
+- What did Nguyen-source TC/TT/CC/TCX transitions do?
+- Were source jumps artificially smoothed? (No.)
+- Did the historical full residual reach peak and postpeak? (Yes, in R20 audit.)
+- How did rollback and source-active arc handling work?
+- What source equations were mapped to which code objects?
+
+But it may **not** infer from the R20 `PASS_READY_FOR_UNIFIED_24_PANEL_BATCH` label that:
+
+1. Swartz24 had already been calculated at R20;
+2. R20 is the current NZ-SCCM production path;
+3. 45 material points satisfy the zero-spatial formal theory;
+4. the later current-state operator / moment-first D15 / single-domain governance is obsolete.
+
+Any such promotion requires an explicit later user decision and provenance review.
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R17/equation_to_code_registry_R17.csv
+SIZE: 6318
+SHA256: 450602024bfae11fb45a331db3cc9f9b136adc29d6cf82d79e04ef52a13eb357
+ENCODING: utf-8
+LINES: 20
+====================================================================================================
+index,source,source_object,program_variables,code_object,verification,status,notes
+0,Nguyen Eq.3.21-3.23; Appendix-B stmoduc route 3,TT uncracked explicit response,"e1,e2,E0,nu",n_branch_c.materials._tt_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,0 independent local unknowns; no nonlinear root
+1,Nguyen Eq.3.18-3.19; 3.21-3.23; 3.39-3.42; Appendix-B e3itstteu call,TC uncracked equivalent-uniaxial solution,"E2_secant; sigma1,sigma2; eps2u; sig1p,sig2p",n_branch_c.materials._tc_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,1 independent local unknown; source stress residual <=1e-10
+2,Nguyen Eq.3.17; 3.21-3.23; 3.39-3.42; Appendix-B e3itstress call,CC uncracked equivalent-uniaxial solution,"E1_secant,E2_secant; sigma1,sigma2; eps1u,eps2u",n_branch_c.materials._cc_uncracked_source,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain; audit/r17_material_2d_scan.csv,PASS,2 independent secant unknowns; Saenz/stsecmod retained even if the major ratio exceeds one; source residual <=1e-10
+3,Appendix-B stmoduc irout dispatch,CC/TC/TT source-quadrant selection,"source_stress1,source_stress2; preferred route; route-consistency inequalities",n_branch_c.materials._uncracked_response_with_diagnostics,tests/test_r16_source_local_solver.py::test_old_tc_failure_band_is_solved_without_generic_four_variable_root,PASS,routes solved separately; no generic four-variable production root
+4,Appendix-B estore continuation,previous accepted source secants and stresses,"source_secant1,source_secant2,source_stress1,source_stress2",n_branch_c.materials.NguyenConcreteState,tests/test_source_boundary_continuation.py::test_undamaged_trial_state_retains_appendix_b_estore_secants,PASS,numerical continuation only; no added constitutive state
+5,Nguyen source state changes U/TC/TT/CC/TCX,deterministic strain substep and event localization,"source_strain; strain_start; strain_target; event bracket",n_branch_c.materials.NguyenConcreteMonotonic._localized_path_update,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,same source equations at every substep; no smoothing or fallback law
+6,Nguyen biaxial failure envelope; Ch.3 statement that cracking occurs when envelope is breached,U-to-cracked event criterion,"base.stress[0],sig1p",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,removed non-source total-strain OR trigger
+7,Nguyen Eq.3.43-3.80,cracked and crushed source branches,"TC,TT,CC,TCX histories and source tangents",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_nguyen_material.py,PASS,original five source states retained
+8,Nguyen Eq.3.81-3.83; Appendix-B stab_bar2,reinforcement first yield,"max_strain,stress_at_max",n_branch_c.materials.BilinearSteel.update,audit/run_r16_material_audit.py,PASS,fine and coarse monotonic paths identical
+9,R16 mandatory material-domain audit,24 Swartz material parameter sets with temporary ft=0.10fc_analysis,"1056 principal-strain points; U/TC/TT/CC/TCX",audit/run_r16_material_audit.py,audit/r16_material_2d_scan.csv,PASS,zero failures; exact repeat determinism
+10,R16 natural source-path audit,"U->TC; U->TT; U->CC; TC->TCX",96 paths across all 24 parameter sets,audit/run_r16_material_audit.py,audit/r16_natural_path_audit.csv,PASS,max fine/coarse stress difference 5.240386842854213e-7
+11,R16 transition-surface audit,source-model switch stress and tangent behavior,"representative source-parameter envelope cases 11,12,23,24",audit/run_r16_material_audit.py,audit/run_r17_transition_handoff_audit.py; audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT,finite full-vector jumps at U->TC/TT/CC are generated by the explicit source operator changes; TC->TCX is continuous; no smoothing added
+12,Nguyen Ch.4 and Ch.6 retained kernel,Kirchhoff/Q4/Hermite16/layers/residual/Newton/arc-length,existing retained code,"n_branch_c.kinematics; q4; hermite16; residual; solver; arc_length",67-test suite,PASS_REGRESSION,no Y-module or Branch-A/P production substitution
+13,Branch P/A degeneration audit,verification-only degenerations,"P eigenpair; A small-imperfection asymptotic",n_branch_c.degenerations,tests/test_r12_degenerations_final_gate.py,PASS_REGRESSION,verification only
+14,Current full production gate,real-material layer->element->global Newton/arc-length path through source events,"global residual/Jacobian/rollback/peak",NOT_EXECUTED_R16,audit/pytest_R17_full.txt,OPEN_ONE_CC_GLOBALIZATION_FAILURE,"68 passed, 1 failed: pre-seeded CC fixed-load Newton line search; real natural-path global nesting not yet executed"
+15,"Nguyen Appendix-B stmoduc, printed pp.321-322",CC pre-crushing/event rule,"eps1u,eps2u,eps1p,eps2p; source secant E1,E2",n_branch_c.materials._cc_uncracked_source; NguyenConcreteMonotonic._update_direct,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain,PASS,pre-crushing stsecmod/sttanmod continues until eps2u/eps2p>=1; major ratio may exceed one without switching
+16,"Nguyen Eqs.3.69-3.76; Appendix-B stmodcc, printed pp.316-317",CC post-crushing peak-secant remap,"sig1p,sig2p,eps1p,eps2p; ebar1,ebar2; eps1u,eps2u; E1,E2",n_branch_c.materials._cc_crushed_source,tests/test_r17_source_handoff.py::test_cc_handoff_matches_independent_appendix_b_stmodcc_transcription,PASS,independent source reference error <=1.17e-16; no total-strain substitution
+17,Nguyen Eqs.3.48-3.68; Appendix-B stmodtc/stmodtt,U-to-cracked state handoff,"eps_cr1,f_cr1,g_precrack; coupled U operator; diagonal cracked operator",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT_WITH_FINITE_SOURCE_JUMP,source removes dilation without an interpolation law; full stress vector is not mathematically continuous and must not be artificially smoothed
+18,Nguyen Eqs.3.77-3.80,TC-to-TCX crushing handoff,"eps2,eps2p,sig2p,gamma2",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_CONTINUOUS,max normalized stress jump 3.68e-16
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R18/N模块分支C_来源Newton全局化与首个自然路径审计_R18.md
+SIZE: 7135
+SHA256: a7e787706df78477c66eab27602d4290f30e8c533fc9d93b13127baddf5dca4a
+ENCODING: utf-8
+LINES: 264
+====================================================================================================
+# N模块分支C：来源Newton全局化与首个自然路径审计 R18
+
+> Archive identity: complete text recovered from File Library `file_000000009a508207acadd05eca0beffa`. Historical N-module Branch-C audit; not a current zero-spatial production theory.
+
+## 1. 本阶段边界
+
+本阶段仅处理 **N–Y系统中N模块Nguyen完整分支C** 的数值求解组织：
+
+- N模块：启用；
+- Y模块：关闭；
+- 分支P、分支A：仅保留既有退化回归测试；
+- Nguyen第3章材料关系：未修改；
+- Nguyen第4章Q4面内离散、四节点16自由度Kirchhoff板单元及离散钢筋梁：未修改；
+- Nguyen第6章完整分层耦合残量：未修改；
+- Swartz结构试件计算：未启动；
+- 试验结果反标定：未进行。
+
+R18只解决R17暴露的全局数值问题：Nguyen来源切线Newton在CC状态下可能出现“所有回溯步均不能降低残量”的情况。允许的处理范围仅为对原来源Newton迭代进行数值全局化，不改变任何物理方程。
+
+## 2. 原方程与程序变量
+
+完整分支C仍求解Nguyen式（6.36）对应的全局平衡方程：
+
+\[
+\mathbf R(\mathbf q,\lambda)=\mathbf 0,
+\]
+
+来源切线Newton修正保持为：
+
+\[
+\Delta\mathbf q_N=-\mathbf K_s^{-1}\mathbf R,
+\]
+
+其中：
+
+- \(\mathbf R\)：第6章完整分层耦合残量；
+- \(\mathbf K_s\)：由Nguyen第3章来源材料切线，经分层、单元和全局装配形成的来源结构切线；
+- \(\mathbf q\)：Q4面内自由度与Nguyen 16自由度面外板自由度形成的全局向量；
+- \(\lambda\)：荷载因子。
+
+R18没有以中心差分、其他本构切线或试验拟合切线替换 \(\mathbf K_s\)。
+
+## 3. R18数值全局化
+
+### 3.1 问题定位
+
+R17的CC固定荷载审计在第2次Newton校正后达到：
+
+\[
+\|\mathbf R_f\|=1.0225095075,
+\]
+
+但沿来源Newton方向从 \(\alpha=1\) 缩小到既定最小步长，残量均不能继续降低，因此原程序返回线搜索失败。
+
+该失败不是材料点不收敛，也不是第3章公式缺失；材料状态始终为CC，失败位置是全局来源Newton方向的数值全局化。
+
+### 3.2 允许范围内的处理
+
+R18保留每一步来源Newton修正：
+
+\[
+\mathbf f_k=\Delta\mathbf q_{N,k}=-\mathbf K_{s,k}^{-1}\mathbf R_k.
+\]
+
+在已有来源Newton历史上构造有限深度多割线组合：
+
+\[
+\mathbf q_{A,k+1}
+=
+\mathbf q_k+\mathbf f_k
+-
+\left(\Delta\mathbf Q+\Delta\mathbf F\right)\boldsymbol\gamma,
+\]
+
+其中 \(\boldsymbol\gamma\) 仅由历次 \(\mathbf q_k\) 和来源Newton修正 \(\mathbf f_k\) 求得。该候选点仍以原始完整残量重新评价；只有残量降低时才接受。
+
+因此该算法的身份是：
+
+> **Nguyen来源Newton映射的数值全局化**，不是新Jacobian、不是新材料模型，也不是新理论分支。
+
+程序实现：
+
+- `n_branch_c.solver._source_newton_anderson_candidate`
+- `n_branch_c.solver.solve_fixed_load`
+
+所有候选点仍从同一个已提交材料状态计算；拒绝候选不会提交材料历史。
+
+## 4. 材料来源未变证明
+
+R17与R18的 `n_branch_c/materials.py` SHA-256完全一致：
+
+```text
+3a8dffd6eeff11f25945af7674fe36fc1432a43cc491d4c6a5ff6fe6f713f97f
+```
+
+R18唯一核心代码变化位于全局求解器 `solver.py`，详见：
+
+- `audit/solver_R17_to_R18.diff`
+- `audit/materials_hash_comparison_R18.txt`
+
+## 5. CC来源Newton全局化审计
+
+使用R17同一CC平衡问题、同一材料状态、同一来源切线和同一起点：
+
+| 项目 | 关闭R18全局化 | 启用R18全局化 |
+|---|---:|---:|
+| 是否收敛 | 否 | 是 |
+| 结束原因 | 线搜索与全局化均关闭/失败 | CONVERGED |
+| 迭代记录数 | 3 | 7 |
+| 最终自由残量 | 1.0225095075 | \(2.40615\times10^{-7}\) |
+| 相对已知平衡解误差 | \(4.30473\times10^{-4}\) | \(3.70102\times10^{-11}\) |
+| 材料状态 | CC | CC |
+
+启用后的残量序列为：
+
+\[
+1800.0709
+\rightarrow3.76921
+\rightarrow1.02251
+\rightarrow0.183141
+\rightarrow0.00363392
+\rightarrow2.94615\times10^{-5}
+\rightarrow2.40615\times10^{-7}.
+\]
+
+结论：
+
+\[
+\boxed{\text{CC来源Newton全局化：PASS}}
+\]
+
+## 6. 首个自然全局状态路径审计
+
+为避免再次用“预置状态附近Newton”冒充自然路径能力，R18另外建立了一个非Swartz、无试验标定的2×2混凝土板网格：
+
+- 材料从零状态开始；
+- Q4面内离散、ConcreteLayer、单元积分和全局装配均实际调用；
+- 面外自由度仅在本膜状态审计中约束为零；
+- 边界位移按比例加载；
+- 材料状态由程序自然从U进入TT；
+- 未直接预置TT状态。
+
+名义八等分路径在 \(t=0.75\rightarrow0.875\) 之间需要一次确定性缩步，因此加入：
+
+\[
+t=0.8125.
+\]
+
+最终接受序列：
+
+```text
+0.125, 0.25, 0.375, 0.5,
+0.625, 0.75, 0.8125, 0.875, 0.9375, 1.0
+```
+
+状态演化：
+
+- \(t\le0.5\)：U；
+- \(t\ge0.625\)：TT；
+- 全部10个全局平衡点收敛；
+- 最终自由残量：\(2.93880\times10^{-9}\)。
+
+这证明了：
+
+\[
+\text{材料点}
+\rightarrow\text{厚度层}
+\rightarrow\text{单元}
+\rightarrow\text{全局残量/来源切线}
+\rightarrow\text{来源Newton全局化}
+\]
+
+能够在至少一条从零状态自然发生的 \(U\rightarrow TT\) 路径上闭合。
+
+结论：
+
+\[
+\boxed{\text{自然全局 }U\rightarrow TT\text{ 路径：PASS}}
+\]
+
+该结果不能外推为其余状态路径或完整Swartz计算能力。
+
+## 7. 自动测试与回归
+
+```text
+71 tests collected
+71 passed
+compileall PASS
+```
+
+完整回归继续覆盖：
+
+- Nguyen分象限局部材料；
+- 来源状态交接；
+- Q4与Hermite16；
+- 分层积分；
+- 完整残量及结构切线；
+- 离散钢筋；
+- 全局装配；
+- Newton事务；
+- 恒弧长基础算法；
+- 分支P/A退化；
+- Swartz输入门禁。
+
+R18新增测试：
+
+- `test_source_newton_anderson_globalizes_cc_without_material_change`
+- `test_natural_u_to_tt_global_path_converges_with_source_step_cutback`
+
+## 8. 当前门禁
+
+通过：
+
+\[
+\boxed{\text{Nguyen局部材料门禁：PASS}}
+\]
+
+\[
+\boxed{\text{来源状态交接门禁：PASS\_SOURCE\_EXACT}}
+\]
+
+\[
+\boxed{\text{CC来源Newton全局化：PASS}}
+\]
+
+\[
+\boxed{\text{自然全局 }U\rightarrow TT\text{：PASS}}
+\]
+
+仍未完成：
+
+- 自然全局 \(U\rightarrow TC\)；
+- 自然全局 \(U\rightarrow CC\)；
+- 自然全局 \(TC\rightarrow TCX\)；
+- 真实Nguyen材料跨来源状态的恒弧长路径；
+- 上述全部完成后的完整全局门禁复核。
+
+因此当前只能判定：
+
+\[
+\boxed{\text{GLOBAL NESTED GATE：PARTIAL PASS}}
+\]
+
+\[
+\boxed{\text{READY FOR SWARTZ 24-PANEL CALCULATION：NO}}
+\]
+
+本轮没有计算任何Swartz试件，也没有生成任何单板、部分板或承载力结果。
+
+## 9. 下一唯一任务
+
+保持R18材料文件、单元、残量和临时Swartz输入全部冻结，只继续完成：
+
+\[
+U\rightarrow TC
+\rightarrow
+U\rightarrow CC
+\rightarrow
+TC\rightarrow TCX
+\rightarrow
+\text{真实材料恒弧长嵌套审计}.
+\]
+
+只有这些自然全局路径、事务回滚、路径步接受/拒绝、极限点和峰后平衡点全部通过后，才允许重新判定完整求解器门禁。不得在此之前计算任何Swartz板。
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R18/equation_to_code_registry_R18.csv
+SIZE: 7827
+SHA256: 0961c1416f873ef747200c80e0c93f9dc7178029d6565402df27e2e9b5653626
+ENCODING: utf-8
+LINES: 23
+====================================================================================================
+index,source,source_object,program_variables,code_object,verification,status,notes
+0,Nguyen Eq.3.21-3.23; Appendix-B stmoduc route 3,TT uncracked explicit response,"e1,e2,E0,nu",n_branch_c.materials._tt_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,0 independent local unknowns; no nonlinear root
+1,Nguyen Eq.3.18-3.19; 3.21-3.23; 3.39-3.42; Appendix-B e3itstteu call,TC uncracked equivalent-uniaxial solution,"E2_secant; sigma1,sigma2; eps2u; sig1p,sig2p",n_branch_c.materials._tc_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,1 independent local unknown; source stress residual <=1e-10
+2,Nguyen Eq.3.17; 3.21-3.23; 3.39-3.42; Appendix-B e3itstress call,CC uncracked equivalent-uniaxial solution,"E1_secant,E2_secant; sigma1,sigma2; eps1u,eps2u",n_branch_c.materials._cc_uncracked_source,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain; audit/r17_material_2d_scan.csv,PASS,2 independent secant unknowns; Saenz/stsecmod retained even if the major ratio exceeds one; source residual <=1e-10
+3,Appendix-B stmoduc irout dispatch,CC/TC/TT source-quadrant selection,"source_stress1,source_stress2; preferred route; route-consistency inequalities",n_branch_c.materials._uncracked_response_with_diagnostics,tests/test_r16_source_local_solver.py::test_old_tc_failure_band_is_solved_without_generic_four_variable_root,PASS,routes solved separately; no generic four-variable production root
+4,Appendix-B estore continuation,previous accepted source secants and stresses,"source_secant1,source_secant2,source_stress1,source_stress2",n_branch_c.materials.NguyenConcreteState,tests/test_source_boundary_continuation.py::test_undamaged_trial_state_retains_appendix_b_estore_secants,PASS,numerical continuation only; no added constitutive state
+5,Nguyen source state changes U/TC/TT/CC/TCX,deterministic strain substep and event localization,"source_strain; strain_start; strain_target; event bracket",n_branch_c.materials.NguyenConcreteMonotonic._localized_path_update,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,same source equations at every substep; no smoothing or fallback law
+6,Nguyen biaxial failure envelope; Ch.3 statement that cracking occurs when envelope is breached,U-to-cracked event criterion,"base.stress[0],sig1p",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,removed non-source total-strain OR trigger
+7,Nguyen Eq.3.43-3.80,cracked and crushed source branches,"TC,TT,CC,TCX histories and source tangents",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_nguyen_material.py,PASS,original five source states retained
+8,Nguyen Eq.3.81-3.83; Appendix-B stab_bar2,reinforcement first yield,"max_strain,stress_at_max",n_branch_c.materials.BilinearSteel.update,audit/run_r16_material_audit.py,PASS,fine and coarse monotonic paths identical
+9,R16 mandatory material-domain audit,24 Swartz material parameter sets with temporary ft=0.10fc_analysis,"1056 principal-strain points; U/TC/TT/CC/TCX",audit/run_r16_material_audit.py,audit/r16_material_2d_scan.csv,PASS,zero failures; exact repeat determinism
+10,R16 natural source-path audit,"U->TC; U->TT; U->CC; TC->TCX",96 paths across all 24 parameter sets,audit/run_r16_material_audit.py,audit/r16_natural_path_audit.csv,PASS,max fine/coarse stress difference 5.240386842854213e-7
+11,R16 transition-surface audit,source-model switch stress and tangent behavior,"representative source-parameter envelope cases 11,12,23,24",audit/run_r16_material_audit.py,audit/run_r17_transition_handoff_audit.py; audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT,finite full-vector jumps at U->TC/TT/CC are generated by the explicit source operator changes; TC->TCX is continuous; no smoothing added
+12,Nguyen Ch.4 and Ch.6 retained kernel,Kirchhoff/Q4/Hermite16/layers/residual/Newton/arc-length,existing retained code,"n_branch_c.kinematics; q4; hermite16; residual; solver; arc_length",67-test suite,PASS_REGRESSION,no Y-module or Branch-A/P production substitution
+13,Branch P/A degeneration audit,verification-only degenerations,"P eigenpair; A small-imperfection asymptotic",n_branch_c.degenerations,tests/test_r12_degenerations_final_gate.py,PASS_REGRESSION,verification only
+14,Current full production gate,real-material layer->element->global Newton/arc-length path through source events,"global q; committed/trial material states; source residual and tangent",n_branch_c.solver.solve_fixed_load; n_branch_c.arc_length,audit/r18_globalization_audit.json; tests/test_r18_source_newton_globalization.py,PARTIAL_PASS,"CC source-Newton globalization and natural global U->TT pass; U->TC, U->CC, TC->TCX and nonlinear real-material arc-length remain open; Swartz not authorized"
+15,"Nguyen Appendix-B stmoduc, printed pp.321-322",CC pre-crushing/event rule,"eps1u,eps2u,eps1p,eps2p; source secant E1,E2",n_branch_c.materials._cc_uncracked_source; NguyenConcreteMonotonic._update_direct,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain,PASS,pre-crushing stsecmod/sttanmod continues until eps2u/eps2p>=1; major ratio may exceed one without switching
+16,"Nguyen Eqs.3.69-3.76; Appendix-B stmodcc, printed pp.316-317",CC post-crushing peak-secant remap,"sig1p,sig2p,eps1p,eps2p; ebar1,ebar2; eps1u,eps2u; E1,E2",n_branch_c.materials._cc_crushed_source,tests/test_r17_source_handoff.py::test_cc_handoff_matches_independent_appendix_b_stmodcc_transcription,PASS,independent source reference error <=1.17e-16; no total-strain substitution
+17,Nguyen Eqs.3.48-3.68; Appendix-B stmodtc/stmodtt,U-to-cracked state handoff,"eps_cr1,f_cr1,g_precrack; coupled U operator; diagonal cracked operator",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT_WITH_FINITE_SOURCE_JUMP,source removes dilation without an interpolation law; full stress vector is not mathematically continuous and must not be artificially smoothed
+18,Nguyen Eqs.3.77-3.80,TC-to-TCX crushing handoff,"eps2,eps2p,sig2p,gamma2",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_CONTINUOUS,max normalized stress jump 3.68e-16
+19,Nguyen Eq.6.36 source residual and source tangent Newton,source-Newton globalization without Jacobian replacement,"q_k; R_k; K_source,k; delta_q_N,k; limited q/delta history",n_branch_c.solver._source_newton_anderson_candidate; solve_fixed_load,tests/test_r18_source_newton_globalization.py::test_source_newton_anderson_globalizes_cc_without_material_change; audit/r18_globalization_audit.json,PASS,multisecant combination uses only source-Newton corrections; every candidate is re-evaluated by the unchanged full residual; no finite-difference or replacement tangent
+20,R18 natural global transition audit,zero-state U->TT through material/layer/element/global Newton,"prescribed proportional boundary path t; q; committed state; source states",n_branch_c.solver.solve_fixed_load,tests/test_r18_source_newton_globalization.py::test_natural_u_to_tt_global_path_converges_with_source_step_cutback; audit/r18_globalization_audit.json,PASS_ONE_PATH,2x2 mesh; state emerges naturally; deterministic cutback at t=0.8125; not a Swartz panel and not evidence for the remaining source paths
+21,R18 constitutive source freeze,Nguyen Chapter-3 material implementation unchanged from R17,materials.py SHA-256,n_branch_c.materials,audit/materials_hash_comparison_R18.txt,PASS_IDENTICAL,R17 and R18 hash 3a8dffd6eeff11f25945af7674fe36fc1432a43cc491d4c6a5ff6fe6f713f97f
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R18/status_R18.json
+SIZE: 1081
+SHA256: fda5ce655d917190c61c34b1bfa15594478472aed219aca9cc74f2c71ff5e9a6
+ENCODING: utf-8
+LINES: 29
+====================================================================================================
+{
+  "version": "R18",
+  "scope": "Nguyen N-module Branch-C source-Newton globalization and first natural global transition audit",
+  "boundary_expansion": false,
+  "y_module": "OFF",
+  "branch_p_a": "DEGENERATION_ONLY",
+  "swartz_panel_calculations_started": false,
+  "material_source_unchanged": true,
+  "material_sha256": "3a8dffd6eeff11f25945af7674fe36fc1432a43cc491d4c6a5ff6fe6f713f97f",
+  "tests": {
+    "collected": 71,
+    "passed": 71,
+    "failed": 0,
+    "compileall": "PASS"
+  },
+  "gates": {
+    "local_material": "PASS",
+    "source_handoff": "PASS_SOURCE_EXACT",
+    "cc_source_newton_globalization": "PASS",
+    "natural_global_U_to_TT": "PASS",
+    "natural_global_U_to_TC": "OPEN",
+    "natural_global_U_to_CC": "OPEN",
+    "natural_global_TC_to_TCX": "OPEN",
+    "real_material_nonlinear_arc_length": "OPEN",
+    "global_nested_gate": "PARTIAL_PASS",
+    "ready_for_swartz_24_panel": false
+  },
+  "next_unique_task": "Complete natural global U->TC, U->CC, TC->TCX and real-material nonlinear arc-length nesting audit with R18 material/source equations frozen."
+}
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R19/equation_to_code_registry_R19.csv
+SIZE: 10952
+SHA256: c2f5292b79a7ba2ec9422ad3388dc8442c3adeade1c81dd1692f7390b4df6017
+ENCODING: utf-8
+LINES: 29
+====================================================================================================
+index,source,source_object,program_variables,code_object,verification,status,notes
+0,Nguyen Eq.3.21-3.23; Appendix-B stmoduc route 3,TT uncracked explicit response,"e1,e2,E0,nu",n_branch_c.materials._tt_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,0 independent local unknowns; no nonlinear root
+1,Nguyen Eq.3.18-3.19; 3.21-3.23; 3.39-3.42; Appendix-B e3itstteu call,TC uncracked equivalent-uniaxial solution,"E2_secant; sigma1,sigma2; eps2u; sig1p,sig2p",n_branch_c.materials._tc_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,1 independent local unknown; source stress residual <=1e-10
+2,Nguyen Eq.3.17; 3.21-3.23; 3.39-3.42; Appendix-B e3itstress call,CC uncracked equivalent-uniaxial solution,"E1_secant,E2_secant; sigma1,sigma2; eps1u,eps2u",n_branch_c.materials._cc_uncracked_source,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain; audit/r17_material_2d_scan.csv,PASS,2 independent secant unknowns; Saenz/stsecmod retained even if the major ratio exceeds one; source residual <=1e-10
+3,Appendix-B stmoduc irout dispatch,CC/TC/TT source-quadrant selection,"source_stress1,source_stress2; preferred route; route-consistency inequalities",n_branch_c.materials._uncracked_response_with_diagnostics,tests/test_r16_source_local_solver.py::test_old_tc_failure_band_is_solved_without_generic_four_variable_root,PASS,routes solved separately; no generic four-variable production root
+4,Appendix-B estore continuation,previous accepted source secants and stresses,"source_secant1,source_secant2,source_stress1,source_stress2",n_branch_c.materials.NguyenConcreteState,tests/test_source_boundary_continuation.py::test_undamaged_trial_state_retains_appendix_b_estore_secants,PASS,numerical continuation only; no added constitutive state
+5,Nguyen source state changes U/TC/TT/CC/TCX,deterministic strain substep and event localization,source_strain; strain_start; strain_target; event bracket,n_branch_c.materials.NguyenConcreteMonotonic._localized_path_update,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,same source equations at every substep; no smoothing or fallback law
+6,Nguyen biaxial failure envelope; Ch.3 statement that cracking occurs when envelope is breached,U-to-cracked event criterion,"base.stress[0],sig1p",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,removed non-source total-strain OR trigger
+7,Nguyen Eq.3.43-3.80,cracked and crushed source branches,"TC,TT,CC,TCX histories and source tangents",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_nguyen_material.py,PASS,original five source states retained
+8,Nguyen Eq.3.81-3.83; Appendix-B stab_bar2,reinforcement first yield,"max_strain,stress_at_max",n_branch_c.materials.BilinearSteel.update,audit/run_r16_material_audit.py,PASS,fine and coarse monotonic paths identical
+9,R16 mandatory material-domain audit,24 Swartz material parameter sets with temporary ft=0.10fc_analysis,1056 principal-strain points; U/TC/TT/CC/TCX,audit/run_r16_material_audit.py,audit/r16_material_2d_scan.csv,PASS,zero failures; exact repeat determinism
+10,R16 natural source-path audit,U->TC; U->TT; U->CC; TC->TCX,96 paths across all 24 parameter sets,audit/run_r16_material_audit.py,audit/r16_natural_path_audit.csv,PASS,max fine/coarse stress difference 5.240386842854213e-7
+11,R16 transition-surface audit,source-model switch stress and tangent behavior,"representative source-parameter envelope cases 11,12,23,24",audit/run_r16_material_audit.py,audit/r17_transition_handoff_audit.py; audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT,finite full-vector jumps at U->TC/TT/CC are generated by the explicit source operator changes; TC->TCX is continuous; no smoothing added
+12,Nguyen Ch.4 and Ch.6 retained kernel,Kirchhoff/Q4/Hermite16/layers/residual/Newton/arc-length,existing retained code,n_branch_c.kinematics; q4; hermite16; residual; solver; arc_length,67-test suite,PASS_REGRESSION,no Y-module or Branch-A/P production substitution
+13,Branch P/A degeneration audit,verification-only degenerations,P eigenpair; A small-imperfection asymptotic,n_branch_c.degenerations,tests/test_r12_degenerations_final_gate.py,PASS_REGRESSION,verification only
+14,Current full production gate,real-material layer->element->global Newton/arc-length path through source events,global q; committed/trial material states; source residual and tangent,n_branch_c.solver.solve_fixed_load; n_branch_c.arc_length,audit/r18_globalization_audit.json; tests/test_r18_source_newton_globalization.py,PARTIAL_PASS,"CC source-Newton globalization and natural global U->TT pass; U->TC, U->CC, TC->TCX and nonlinear real-material arc-length remain open; Swartz not authorized"
+15,"Nguyen Appendix-B stmoduc, printed pp.321-322",CC pre-crushing/event rule,"eps1u,eps2u,eps1p,eps2p; source secant E1,E2",n_branch_c.materials._cc_uncracked_source; NguyenConcreteMonotonic._update_direct,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain,PASS,pre-crushing stsecmod/sttanmod continues until eps2u/eps2p>=1; major ratio may exceed one without switching
+16,"Nguyen Eqs.3.69-3.76; Appendix-B stmodcc, printed pp.316-317",CC post-crushing peak-secant remap,"sig1p,sig2p,eps1p,eps2p; ebar1,ebar2; eps1u,eps2u; E1,E2",n_branch_c.materials._cc_crushed_source,tests/test_r17_source_handoff.py::test_cc_handoff_matches_independent_appendix_b_stmodcc_transcription,PASS,independent source reference error <=1.17e-16; no total-strain substitution
+17,Nguyen Eqs.3.48-3.68; Appendix-B stmodtc/stmodtt,U-to-cracked state handoff,"eps_cr1,f_cr1,g_precrack; coupled U operator; diagonal cracked operator",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT_WITH_FINITE_SOURCE_JUMP,source removes dilation without an interpolation law; full stress vector is not mathematically continuous and must not be artificially smoothed
+18,Nguyen Eqs.3.77-3.80,TC-to-TCX crushing handoff,"eps2,eps2p,sig2p,gamma2",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_CONTINUOUS,max normalized stress jump 3.68e-16
+19,Nguyen Eq.6.36 source residual and source tangent Newton,source-Newton globalization without Jacobian replacement,"q_k; R_k; K_source,k; delta_q_N,k; limited q/delta history",n_branch_c.solver._source_newton_anderson_candidate; solve_fixed_load,tests/test_r18_source_newton_globalization.py::test_source_newton_anderson_globalizes_cc_without_material_change; audit/r18_globalization_audit.json,PASS,multisecant combination uses only source-Newton corrections; every candidate is re-evaluated by the unchanged full residual; no finite-difference or replacement tangent
+20,R18 natural global transition audit,zero-state U->TT through material/layer/element/global Newton,prescribed proportional boundary path t; q; committed state; source states,n_branch_c.solver.solve_fixed_load,tests/test_r18_source_newton_globalization.py::test_natural_u_to_tt_global_path_converges_with_source_step_cutback; audit/r18_globalization_audit.json,PASS_ONE_PATH,2x2 mesh; state emerges naturally; deterministic cutback at t=0.8125; not a Swartz panel and not evidence for the remaining source paths
+21,R18 constitutive source freeze,Nguyen Chapter-3 material implementation unchanged from R17,materials.py SHA-256,n_branch_c.materials,audit/materials_hash_comparison_R18.txt,PASS_IDENTICAL,R17 and R18 hash 3a8dffd6eeff11f25945af7674fe36fc1432a43cc491d4c6a5ff6fe6f713f97f
+22,Nguyen Ch.3 source-state evolution embedded in Ch.6 global residual,natural full-global U->TC transition from zero state,global q; committed/trial concrete states; Q4/Hermite16 DOFs,n_branch_c.global_model.BranchCGlobalModel.evaluate; n_branch_c.solver.solve_fixed_load,tests/test_r19_remaining_global_paths_and_arc.py::test_remaining_natural_global_source_paths_from_zero_state; audit/r19_natural_global_paths.csv,PASS,2x2 full Branch-C mesh; homogeneous affine boundary audit; no pre-set TC state
+23,Nguyen Ch.3 stmoduc to stmodcc handoff embedded in Ch.6 global residual,natural full-global U->CC transition from zero state,global q; source secants; CC committed state,n_branch_c.materials.NguyenConcreteMonotonic.update; n_branch_c.global_model.BranchCGlobalModel.evaluate,tests/test_r19_remaining_global_paths_and_arc.py::test_remaining_natural_global_source_paths_from_zero_state; audit/r19_natural_global_paths.csv,PASS,2x2 full Branch-C mesh; state changes naturally at accepted global path step
+24,Nguyen Eqs.3.77-3.80 embedded in Ch.6 global residual,natural full-global U->TC->TCX path from zero state,global q; TC and TCX history variables; source tangent,n_branch_c.materials.NguyenConcreteMonotonic.update; n_branch_c.solver.solve_fixed_load,tests/test_r19_remaining_global_paths_and_arc.py::test_remaining_natural_global_source_paths_from_zero_state; audit/r19_natural_global_paths.csv,PASS,2x2 full Branch-C mesh; no pre-set cracked or crushed state
+25,Nguyen Eq.6.36 plus source-compatible constant arc-length augmented equation,"real-material source events, limit point and two accepted postpeak points under exact linear MPC audit",q=aT; r_a=T^T R_full; k_a=T^T K_source T; lambda; committed source states,tests.test_r19_remaining_global_paths_and_arc._LinearlyConstrainedBranchCModel; n_branch_c.source_path.solve_source_active_arc_step,tests/test_r19_remaining_global_paths_and_arc.py::test_real_material_full_stack_source_arc_crosses_events_and_peak; audit/r19_real_material_arc_path.csv,PASS_AUDIT_ONLY,exact linear constraint/Galerkin transformation of one full Branch-C element with 5 layers and 45 material points; not a production substitute and not sufficient to close unconstrained multi-DOF gate
+26,Nguyen source-state transaction requirement within arc-length trial steps,rejected source-active arc step rollback,q_start; lambda_start; committed_state; trial source events,n_branch_c.source_path.solve_source_active_arc_step,tests/test_r19_remaining_global_paths_and_arc.py::test_rejected_real_material_arc_step_rolls_back_all_state; audit/r19_remaining_paths_and_arc_audit.json,PASS,"deliberate MAX_ITERATIONS rejection returns original q, lambda and committed state object"
+27,R19 mandatory full nested pre-Swartz gate,unconstrained multi-DOF real-material source-active arc path through state events and peak/postpeak,full global free-DOF vector q_f; lambda; full source tangent; active source states,n_branch_c.source_path.solve_source_active_arc_step,not yet completed in R19,OPEN,exact linear-MPC audit cannot be promoted to the unconstrained full multi-DOF production gate; Swartz remains unauthorized
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R20/equation_to_code_registry_R20.csv
+SIZE: 13836
+SHA256: 21e9d7c27c8ae38fd1307b6cf6bc8628a8de5a015205d51b9a25c3e780445533
+ENCODING: utf-8
+LINES: 33
+====================================================================================================
+index,source,source_object,program_variables,code_object,verification,status,notes
+0,Nguyen Eq.3.21-3.23; Appendix-B stmoduc route 3,TT uncracked explicit response,"e1,e2,E0,nu",n_branch_c.materials._tt_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,0 independent local unknowns; no nonlinear root
+1,Nguyen Eq.3.18-3.19; 3.21-3.23; 3.39-3.42; Appendix-B e3itstteu call,TC uncracked equivalent-uniaxial solution,"E2_secant; sigma1,sigma2; eps2u; sig1p,sig2p",n_branch_c.materials._tc_uncracked_source,tests/test_r16_source_local_solver.py::test_appendix_b_routes_have_only_source_independent_unknowns,PASS,1 independent local unknown; source stress residual <=1e-10
+2,Nguyen Eq.3.17; 3.21-3.23; 3.39-3.42; Appendix-B e3itstress call,CC uncracked equivalent-uniaxial solution,"E1_secant,E2_secant; sigma1,sigma2; eps1u,eps2u",n_branch_c.materials._cc_uncracked_source,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain; audit/r17_material_2d_scan.csv,PASS,2 independent secant unknowns; Saenz/stsecmod retained even if the major ratio exceeds one; source residual <=1e-10
+3,Appendix-B stmoduc irout dispatch,CC/TC/TT source-quadrant selection,"source_stress1,source_stress2; preferred route; route-consistency inequalities",n_branch_c.materials._uncracked_response_with_diagnostics,tests/test_r16_source_local_solver.py::test_old_tc_failure_band_is_solved_without_generic_four_variable_root,PASS,routes solved separately; no generic four-variable production root
+4,Appendix-B estore continuation,previous accepted source secants and stresses,"source_secant1,source_secant2,source_stress1,source_stress2",n_branch_c.materials.NguyenConcreteState,tests/test_source_boundary_continuation.py::test_undamaged_trial_state_retains_appendix_b_estore_secants,PASS,numerical continuation only; no added constitutive state
+5,Nguyen source state changes U/TC/TT/CC/TCX,deterministic strain substep and event localization,"source_strain; strain_start; strain_target; event bracket",n_branch_c.materials.NguyenConcreteMonotonic._localized_path_update,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,same source equations at every substep; no smoothing or fallback law
+6,Nguyen biaxial failure envelope; Ch.3 statement that cracking occurs when envelope is breached,U-to-cracked event criterion,"base.stress[0],sig1p",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_r16_source_local_solver.py::test_natural_source_paths_coarse_substep_match_fine_path,PASS,removed non-source total-strain OR trigger
+7,Nguyen Eq.3.43-3.80,cracked and crushed source branches,"TC,TT,CC,TCX histories and source tangents",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,tests/test_nguyen_material.py,PASS,original five source states retained
+8,Nguyen Eq.3.81-3.83; Appendix-B stab_bar2,reinforcement first yield,"max_strain,stress_at_max",n_branch_c.materials.BilinearSteel.update,audit/run_r16_material_audit.py,PASS,fine and coarse monotonic paths identical
+9,R16 mandatory material-domain audit,24 Swartz material parameter sets with temporary ft=0.10fc_analysis,"1056 principal-strain points; U/TC/TT/CC/TCX",audit/run_r16_material_audit.py,audit/r16_material_2d_scan.csv,PASS,zero failures; exact repeat determinism
+10,R16 natural source-path audit,"U->TC; U->TT; U->CC; TC->TCX",96 paths across all 24 parameter sets,audit/run_r16_material_audit.py,audit/r16_natural_path_audit.csv,PASS,max fine/coarse stress difference 5.240386842854213e-7
+11,R16 transition-surface audit,source-model switch stress and tangent behavior,"representative source-parameter envelope cases 11,12,23,24",audit/run_r16_material_audit.py,audit/run_r17_transition_handoff_audit.py; audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT,finite full-vector jumps at U->TC/TT/CC are generated by the explicit source operator changes; TC->TCX is continuous; no smoothing added
+12,Nguyen Ch.4 and Ch.6 retained kernel,Kirchhoff/Q4/Hermite16/layers/residual/Newton/arc-length,existing retained code,"n_branch_c.kinematics; q4; hermite16; residual; solver; arc_length",67-test suite,PASS_REGRESSION,no Y-module or Branch-A/P production substitution
+13,Branch P/A degeneration audit,verification-only degenerations,"P eigenpair; A small-imperfection asymptotic",n_branch_c.degenerations,tests/test_r12_degenerations_final_gate.py,PASS_REGRESSION,verification only
+14,Current full production gate,real-material layer->element->global Newton/arc-length path through source events,"global q; committed/trial material states; source residual and tangent",n_branch_c.solver.solve_fixed_load; n_branch_c.arc_length,audit/r18_globalization_audit.json; tests/test_r18_source_newton_globalization.py,PARTIAL_PASS,"CC source-Newton globalization and natural global U->TT pass; U->TC, U->CC, TC->TCX and nonlinear real-material arc-length remain open; Swartz not authorized"
+15,"Nguyen Appendix-B stmoduc, printed pp.321-322",CC pre-crushing/event rule,"eps1u,eps2u,eps1p,eps2p; source secant E1,E2",n_branch_c.materials._cc_uncracked_source; NguyenConcreteMonotonic._update_direct,tests/test_r17_source_handoff.py::test_appendix_b_cc_event_is_controlled_by_minor_equivalent_strain,PASS,pre-crushing stsecmod/sttanmod continues until eps2u/eps2p>=1; major ratio may exceed one without switching
+16,"Nguyen Eqs.3.69-3.76; Appendix-B stmodcc, printed pp.316-317",CC post-crushing peak-secant remap,"sig1p,sig2p,eps1p,eps2p; ebar1,ebar2; eps1u,eps2u; E1,E2",n_branch_c.materials._cc_crushed_source,tests/test_r17_source_handoff.py::test_cc_handoff_matches_independent_appendix_b_stmodcc_transcription,PASS,independent source reference error <=1.17e-16; no total-strain substitution
+17,Nguyen Eqs.3.48-3.68; Appendix-B stmodtc/stmodtt,U-to-cracked state handoff,"eps_cr1,f_cr1,g_precrack; coupled U operator; diagonal cracked operator",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_SOURCE_EXACT_WITH_FINITE_SOURCE_JUMP,source removes dilation without an interpolation law; full stress vector is not mathematically continuous and must not be artificially smoothed
+18,Nguyen Eqs.3.77-3.80,TC-to-TCX crushing handoff,"eps2,eps2p,sig2p,gamma2",n_branch_c.materials.NguyenConcreteMonotonic._update_direct,audit/r17_transition_handoff.csv,PASS_CONTINUOUS,max normalized stress jump 3.68e-16
+19,Nguyen Eq.6.36 source residual and source tangent Newton,source-Newton globalization without Jacobian replacement,"q_k; R_k; K_source,k; delta_q_N,k; limited q/delta history",n_branch_c.solver._source_newton_anderson_candidate; solve_fixed_load,tests/test_r18_source_newton_globalization.py::test_source_newton_anderson_globalizes_cc_without_material_change; audit/r18_globalization_audit.json,PASS,multisecant combination uses only source-Newton corrections; every candidate is re-evaluated by the unchanged full residual; no finite-difference or replacement tangent
+20,R18 natural global transition audit,zero-state U->TT through material/layer/element/global Newton,"prescribed proportional boundary path t; q; committed state; source states",n_branch_c.solver.solve_fixed_load,tests/test_r18_source_newton_globalization.py::test_natural_u_to_tt_global_path_converges_with_source_step_cutback; audit/r18_globalization_audit.json,PASS_ONE_PATH,2x2 mesh; state emerges naturally; deterministic cutback at t=0.8125; not a Swartz panel and not evidence for the remaining source paths
+21,R18 constitutive source freeze,Nguyen Chapter-3 material implementation unchanged from R17,materials.py SHA-256,n_branch_c.materials,audit/materials_hash_comparison_R18.txt,PASS_IDENTICAL,R17 and R18 hash 3a8dffd6eeff11f25945af7674fe36fc1432a43cc491d4c6a5ff6fe6f713f97f
+22,Nguyen Ch.3 source-state evolution embedded in Ch.6 global residual,natural full-global U->TC transition from zero state,"global q; committed/trial concrete states; Q4/Hermite16 DOFs",n_branch_c.global_model.BranchCGlobalModel.evaluate; n_branch_c.solver.solve_fixed_load,tests/test_r19_remaining_global_paths_and_arc.py::test_remaining_natural_global_source_paths_from_zero_state; audit/r19_natural_global_paths.csv,PASS,2x2 full Branch-C mesh; homogeneous affine boundary audit; no pre-set TC state
+23,Nguyen Ch.3 stmoduc to stmodcc handoff embedded in Ch.6 global residual,natural full-global U->CC transition from zero state,"global q; source secants; CC committed state",n_branch_c.materials.NguyenConcreteMonotonic.update; n_branch_c.global_model.BranchCGlobalModel.evaluate,tests/test_r19_remaining_global_paths_and_arc.py::test_remaining_natural_global_source_paths_from_zero_state; audit/r19_natural_global_paths.csv,PASS,2x2 full Branch-C mesh; state changes naturally at accepted global path step
+24,Nguyen Eqs.3.77-3.80 embedded in Ch.6 global residual,natural full-global U->TC->TCX path from zero state,"global q; TC and TCX history variables; source tangent",n_branch_c.materials.NguyenConcreteMonotonic.update; n_branch_c.solver.solve_fixed_load,tests/test_r19_remaining_global_paths_and_arc.py::test_remaining_natural_global_source_paths_from_zero_state; audit/r19_natural_global_paths.csv,PASS,2x2 full Branch-C mesh; no pre-set cracked or crushed state
+25,Nguyen Eq.6.36 plus source-compatible constant arc-length augmented equation,"real-material source events, limit point and two accepted postpeak points under exact linear MPC audit","q=aT; r_a=T^T R_full; k_a=T^T K_source T; lambda; committed source states",tests.test_r19_remaining_global_paths_and_arc._LinearlyConstrainedBranchCModel; n_branch_c.source_path.solve_source_active_arc_step,tests/test_r19_remaining_global_paths_and_arc.py::test_real_material_full_stack_source_arc_crosses_events_and_peak; audit/r19_real_material_arc_path.csv,PASS_AUDIT_ONLY,exact linear constraint/Galerkin transformation of one full Branch-C element with 5 layers and 45 material points; not a production substitute and not sufficient to close unconstrained multi-DOF gate
+26,Nguyen source-state transaction requirement within arc-length trial steps,rejected source-active arc step rollback,"q_start; lambda_start; committed_state; trial source events",n_branch_c.source_path.solve_source_active_arc_step,tests/test_r19_remaining_global_paths_and_arc.py::test_rejected_real_material_arc_step_rolls_back_all_state; audit/r19_remaining_paths_and_arc_audit.json,PASS,"deliberate MAX_ITERATIONS rejection returns original q, lambda and committed state object"
+27,R19 mandatory full nested pre-Swartz gate,unconstrained multi-DOF real-material source-active arc path through state events and peak/postpeak,"full global free-DOF vector q_f; lambda; full source tangent; active source states",n_branch_c.source_path.solve_source_active_arc_step,not yet completed in R19,OPEN,exact linear-MPC audit cannot be promoted to the unconstrained full multi-DOF production gate; Swartz remains unauthorized
+28,Nguyen Eq.6.36 with the unchanged source-compatible constant arc-length augmented equations,dimensionless/equilibrated solution of predictor and augmented Newton linear systems,"q_f; lambda; ArcLengthMetric.q_scales; ArcLengthMetric.lambda_scale; original augmented matrix and right-hand side",n_branch_c.source_path._equilibrated_scaled_solve; n_branch_c.source_path.solve_source_active_arc_step,tests/test_r20_unconstrained_multidof_arc.py; audit/r20_unconstrained_multidof_arc_path.csv; audit/r20_unconstrained_multidof_arc_audit.json,PASS,"only the linear algebra coordinates and row equilibration are changed; the returned correction satisfies the original unscaled equations; residual, Nguyen source tangent, material equations and arc constraint are unchanged"
+29,Nguyen Eq.6.36 source-tangent Newton iteration under the same augmented residual,limited multisecant globalization using histories of accepted source-Newton iterates and corrections,"augmented iterate x=[q_f,lambda]; source-Newton correction history; unchanged full residual merit",n_branch_c.source_path._anderson_candidate; n_branch_c.source_path.solve_source_active_arc_step,tests/test_r20_unconstrained_multidof_arc.py; audit/source_path_R19_to_R20.diff,PASS,does not form a numerical Jacobian and does not replace the Nguyen source tangent; every candidate is accepted or rejected by the original full residual and arc constraint
+30,Nguyen Ch.3 material + Ch.4 Q4/Hermite16 discretization + Ch.6 Eq.6.36 full global path,unconstrained multi-DOF real-material source-active arc audit with no Galerkin projection and no linear MPC,"direct BranchCGlobalModel; 24 global DOFs; 16 free DOFs; 5 layers; 45 material points; q_f; lambda; source states",n_branch_c.global_model.BranchCGlobalModel; n_branch_c.source_path.solve_source_active_arc_step,tests/test_r20_unconstrained_multidof_arc.py::test_unconstrained_multidof_real_material_arc_crosses_event_peak_and_postpeak; audit/r20_unconstrained_multidof_arc_path.csv,PASS_AUDIT_ONLY,"15 accepted points, U to TC source event, one discrete peak and two accepted postpeak points; audit fixture only and not a Swartz specimen"
+31,Unified pre-Swartz audit contract R16-R20,"local source equations, source handoffs, natural transitions, nested Newton/arc, rollback, P/A regression, and unconstrained full multi-DOF peak/postpeak gate",all frozen N-module Branch-C production objects and audit gates,"n_branch_c.materials; n_branch_c.layers; n_branch_c.residual; n_branch_c.global_model; n_branch_c.solver; n_branch_c.source_path; n_branch_c.degenerations","75/75 tests in four deterministic partitions; compileall PASS",PASS_READY_FOR_UNIFIED_24_PANEL_BATCH,"Swartz calculations have not started; next and only permitted action is a single frozen-code batch attempt for all 24 panels, with no single-panel preview or per-panel tuning"
+
+====================================================================================================
+FILE: history/NZ_SCCM/R_series/R20/pytest_R20_summary.txt
+SIZE: 468
+SHA256: a29dd84caf389f71cd1ab91940d6c1d98e5abfc2447d4c18a2763704cf9044d3
+ENCODING: utf-8
+LINES: 17
+====================================================================================================
+R20 regression execution summary
+
+The monolithic pytest command exceeded the execution wall-time, so the complete collected suite was run in four deterministic, non-overlapping partitions.
+
+Partition 1: 58 passed
+Partition 2 (R19): 3 passed
+Partition 3 (R20): 1 passed
+Partition 4: 13 passed
+Total: 75/75 passed
+compileall: PASS
+
+Source logs:
+- pytest_R20_group1.txt
+- pytest_R20_group2_r19.txt
+- pytest_R20_group3_r20.txt
+- pytest_R20_group4.txt
+- compileall_R20.txt
+
+====================================================================================================
+FILE: history/NZ_SCCM/direct_analytic/NZ_SCCM_直接解析积分主线_20260809_LOCATOR.md
+SIZE: 1509
+SHA256: 56a33e9e5cbadf73d32bf4fb07761b1ff6c10444bbb7f44a30cfb03fa0877565
+ENCODING: utf-8
+LINES: 39
+====================================================================================================
+# 2026-08-09 直接解析积分主线：原始文件定位与身份边界
+
+## 原件
+
+```text
+filename = NZ_SCCM_直接解析积分主线_Case21到Swartz24_阶段锁定稿_20260809.md
+ChatGPT File Library ID = file_00000000e0688230b6dcf613472b6798
+local R2 copy SHA-256 = 439a278738e953a2933f35cfc917e8427b89341b76d7d9c6b24c2524998ebba1
+GitHub byte-exact original = PENDING
+```
+
+## 历史角色
+
+该文件冻结过“原始目标函数显式化 + 面向实际 integrand 临时选择数学工具”的直接解析思想，并明确：
+
+```text
+N_formal_spatial_quadrature = 0
+```
+
+以及不能只写 `M(epsilon)` / `Q_nm` 后停止，正式推导应把应力内部材料关系继续展开到实际函数。
+
+## 必须保留的 supersession 边界
+
+该历史文件中的 tension law 使用过 `tanh` / sigmoid transition 形式。这不是 2026-08-09 后续恢复出来的当前 NC benchmark tension identity。
+
+当前 NC/rebar benchmark 以：
+
+`theory/current/NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`
+
+为准，其中 tension law 是 **algebraic Foster H(r,r0;0.05)**，不是 tanh variant。
+
+因此：
+
+```text
+DIRECT_ANALYTIC_EXPLICIT_INTEGRAND_PHILOSOPHY = RETAINED
+TANH_TENSION_VARIANT_AS_CURRENT_NC_BENCHMARK = SUPERSEDED / EXCLUDED
+```
+
+该文件仍是重要历史证据，因为它记录了从“material compiler 中心”转向“直接面对真实连续目标积分”的思想转折，但不得因文件名含“阶段锁定稿”就覆盖后续 material identity correction。
+
+====================================================================================================
+FILE: history/NZ_SCCM/material_recovery/MATERIAL_COMPONENT_RECOVERY_LEDGER.csv
+SIZE: 2822
+SHA256: 7bc9f7c35a7b491ce7b7ef25f6e3027115506e81d78bff17d141f7f3bb9639d0
+ENCODING: utf-8
+LINES: 16
+====================================================================================================
+index,id,origin,component,current_status,can_enter_formal_zero_quadrature_core,retained_use,excluded_boundary,evidence
+0,MR01,D15,Exact trigonometric-thickness moment compiler,PASS_RETAIN,YES,Formal matrix engine,No material identity implied,D15 original report and D15R independent rebuild
+1,MR02,D15,UHPC a3..a6 numeric coefficients,NOT_FOUND_ORIGINAL_PENDING,NO,,Do not recreate from panel loads,D15 original gate
+2,MR03,D15,UHPC source constraint registry,RECOVERED_SOURCE_LOCKED,NO,Source/constraint registry only,Not a coefficient table,D15_UHPC_SOURCE_CONSTRAINT_REGISTRY.csv
+3,MR04,Post-D15 lock,UHPC-L0 single-axis material identity,REJECTED,NO,Historical regression only,No permanent beta=0 or loss of full states,Later full-state lock
+4,MR05,R16-R20 Nguyen N-module,Uncracked TT route,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle,Not direct production under zero-integration lock,Nguyen Eq.3.21-3.23 and Appendix-B route 3
+5,MR06,R16-R20 Nguyen N-module,Uncracked TC equivalent-uniaxial route,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle with 1 local secant unknown,No generic fitted replacement,Nguyen Eq.3.18-3.19; 3.21-3.23; 3.39-3.42
+6,MR07,R16-R20 Nguyen N-module,Uncracked CC equivalent-uniaxial route,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle with 2 local secant unknowns,No total-strain substitution,Nguyen Eq.3.17; 3.21-3.23; 3.39-3.42
+7,MR08,R16-R20 Nguyen N-module,Cracked/crushed TC TT CC TCX branches,HISTORICAL_PASS_EVIDENCE,CONDITIONAL,NSC source oracle and state equations,Not a finite zero-quadrature operator yet,Nguyen Eq.3.43-3.80
+8,MR09,R16-R20 Nguyen N-module,U-to-cracked source handoff,HISTORICAL_PASS_SOURCE_JUMP,CONDITIONAL,Exact event/source-jump reference,No artificial smoothing,Nguyen Eq.3.48-3.68; Appendix-B stmodtc/stmodtt
+9,MR10,R16-R20 Nguyen N-module,TC-to-TCX handoff,HISTORICAL_PASS_CONTINUOUS,CONDITIONAL,Exact transition reference,,Nguyen Eq.3.77-3.80
+10,MR11,R16-R20 Nguyen N-module,Material-domain and natural-path audits,HISTORICAL_PASS_EVIDENCE,NO,Verification evidence,Not rerun in this stage; not a zero-integration proof,1056 points; 96 paths; R20 registry
+11,MR12,D19,Liu 2023 UHPC TC compression scalar branch,RECOVERED_PARTIAL_PASS,CONDITIONAL,UHPC TC compression reference,Not full 2D TC/TCX,Liu Eqs.10-13
+12,MR13,D19,Exact state-front topology and derivative,RECOVERED_PASS,YES,State-boundary audit core,Outer 1D quadrature excluded,D19 event system
+13,MR14,UHPC source registry,Hu uniaxial compression/tension,RECOVERED_SOURCE_LOCKED,CONDITIONAL,Uniaxial source reference,Not a full-state material operator,Hu Wenxu locked UCFT module
+14,MR15,UHPC source registry,Zhou DP and Wang WW constraints,RECOVERED_REFERENCE,CONDITIONAL,CC/C3 envelope constraints,Not complete stress-strain/tangent operators,Zhou Jun and Wang Shunan
+
+====================================================================================================
+FILE: history/NZ_SCCM/material_recovery/MATERIAL_RECOVERY_EXECUTION_REPORT.md
+SIZE: 7225
+SHA256: d181fcc65bf2eda7190d522d3e119285a117c44a5d476b22233eb1aa92f5e342
+ENCODING: utf-8
+LINES: 175
+====================================================================================================
+# NZ-SCCM 历史材料组件恢复执行报告（组合基线 v1.1）
+
+## 1. 本轮任务
+
+本轮不建立新材料函数、不计算板承载力，只执行：
+
+1. 在账户文件库、当前会话文件和本地历史交付物中检索 D15 之后是否曾冻结普通混凝土或 UHPC 的正式有限解析材料系数；
+2. 将已经真正实现并通过审计的材料组件从原求解框架中拆出，登记为可继承的“材料来源组件”；
+3. 修正 v1.0 组合基线中“正式普通混凝土材料仍完全 OPEN”的过度概括。
+
+硬边界保持不变：`m=1`、完全零空间数值积分、禁止板荷载反标定、禁止离散特值拟合、正式计算必须给出手算过程。
+
+## 2. 检索范围与方法
+
+执行了三类检索：
+
+- File Library 与当前会话文件的近期导航和精确语义检索；
+- 针对 `D15_UHPC_NUMERIC_A3_TO_A6`、`a3..a6`、`FROZEN/PASS/PRODUCTION`、`equation_to_code_registry_R20`、`n_branch_c.materials` 等对象的交叉检索；
+- `/mnt/data` 已有交付物、报告、源码展开目录和清单的递归文本扫描。
+
+未使用网页资料，也未根据记忆补写缺失文件。
+
+## 3. 关键恢复结论
+
+### 3.1 D15 精确矩引擎成功，但 UHPC 数值材料系数未冻结
+
+原 D15 已完成：连续半波运动学、`I1/I2`、Newton 幂和、精确三角矩、精确厚度矩、有限材料基到全局多项式的零求积映射，以及 D11 机器精度回归。
+
+原 D15 门禁同时明确：
+
+```text
+D15_UHPC_NUMERIC_A3_TO_A6 = PENDING
+D15_UHPC_PANEL_CALCULATION = NOT STARTED
+D15_PRODUCTION_USE = NOT AUTHORIZED
+```
+
+本轮没有检索到任何将 `a3...a6` 改为 `PASS/FROZEN/PRODUCTION` 的后继文件。因此不得继续假设历史上曾存在一套已经成功冻结但暂时遗失的 D15 UHPC 数值系数。
+
+### 3.2 D15 来源注册表不是最终系数表
+
+恢复的 `D15_UHPC_SOURCE_CONSTRAINT_REGISTRY.csv` 只锁定：
+
+- 胡文旭型 UHPC 峰前/峰后受压关系；
+- 纤维参数控制的受拉指数关系；
+- 系数只能由材料曲线确定，禁止板荷载反算；
+- 当时 L0 边界下多轴 beta 项取零；
+- 周俊 DP 与王淑楠 W-W 作为可选多轴约束。
+
+它提供的是来源和约束，不包含最终 `a3...a6` 数值。
+
+### 3.3 后继理论已经废止 UHPC-L0 的正式材料身份
+
+同日后继记录明确：D15 精确矩生成器可以保留，但“UHPC 仅调用两个主方向单轴曲线、永久关闭多轴项”的 L0 材料身份应废止；正式 UHPC 应恢复 U、TC、TT、CC、TCX、C3 等完整状态族。
+
+所以即使以后找到一组旧 L0 系数，也只能作为历史回归对象，不能直接成为当前正式 UHPC 材料。
+
+### 3.4 普通混凝土完整来源实现的历史审计证据已经恢复
+
+R20 方程—代码注册表证明，Nguyen 普通混凝土来源实现已经完成并通过历史审计：
+
+- U 状态内 TT、TC、CC 三条 Appendix-B 来源子路线；
+- TC 含 1 个独立割线未知量、CC 含 2 个独立割线未知量；
+- U/TC/TT/CC/TCX 五状态原始分支；
+- U→TC、U→TT、U→CC、TC→TCX 的事件定位和历史变量传递；
+- U→开裂状态的有限来源跳变保持，不做人为平滑；
+- TC→TCX 连续连接；
+- 24 组 Swartz 材料参数下 1056 个二维主应变点零失败；
+- 96 条自然材料路径，粗细子步最大应力差约 `5.24e-7`；
+- R16–R20 统一门禁记载 75/75 测试和 `compileall PASS`。
+
+本轮恢复的是**来源实现及测试的注册证据**。对应 R20 源代码发布包的本地字节没有在当前容器中恢复，因此本轮没有重新执行那 75 项测试，也不声称完成了源码级复跑。
+
+当前身份应写为：
+
+```text
+NSC_SOURCE_IMPLEMENTATION_EVIDENCE = RECOVERED_HISTORICAL_PASS
+NSC_SOURCE_ORACLE = ACTIVE_REFERENCE_CORE
+NSC_SOURCE_PACKAGE_LOCAL_BYTES = NOT_RECOVERED
+NSC_ZERO_QUADRATURE_FINITE_OPERATOR = OPEN
+```
+
+这一区分修正了 v1.0 的过度概括：普通混凝土不是“来源材料理论尚未建立”，而是“来源模型已建立且有历史测试证据，但尚未转换成满足完全零空间积分的有限解析算子”。
+
+### 3.5 UHPC 历史中仅恢复到部分来源组件
+
+已恢复：
+
+- Hu 型单轴受压和受拉来源关系；
+- Liu 2023 TC 压缩标量子支路：压缩峰值软化、峰值应变、上升/下降段及相应导数；
+- 周俊 DP、王淑楠 W-W 多轴破坏面约束；
+- D19 精确状态前沿和事件系统，作为状态边界审计核心。
+
+仍未闭合：
+
+- 完整二维 TC 的拉向应力和裂缝剪切；
+- TT 完整多轴拉伸算子；
+- CC/C3 全过程应力—应变与一致切线；
+- TCX 完整历史和残余关系；
+- 满足完全零空间数值积分的正式有限材料算子。
+
+因此：
+
+```text
+UHPC_SOURCE_FRAGMENTS = RECOVERED
+UHPC_FULL_STATE_ZERO_QUADRATURE_OPERATOR = OPEN
+```
+
+## 4. 对 v1.0 组合基线的修正
+
+旧表述：
+
+```text
+FORMAL_NSC_MATERIAL = OPEN
+```
+
+修正为：
+
+```text
+NSC_SOURCE_MATERIAL_IMPLEMENTATION = HISTORICAL_PASS_EVIDENCE_RECOVERED
+NSC_ZERO_QUADRATURE_FINITE_REPRESENTATION = OPEN
+```
+
+UHPC 修正为：
+
+```text
+UHPC_SOURCE_COMPONENTS = PARTIAL_RECOVERED
+UHPC_ZERO_QUADRATURE_FINITE_REPRESENTATION = OPEN
+```
+
+## 5. 本轮没有执行的内容
+
+- 没有新造 P6、十项式或高阶正交材料函数；
+- 没有从板荷载反算任何材料参数；
+- 没有把 R20 材料点离散实现接入当前生产矩阵；
+- 没有恢复 UHPC-L0 为正式材料；
+- 没有计算 Swartz 24 板；
+- 没有加入云露模块；
+- 没有宣称重新运行 R20 历史测试。
+
+## 6. 下一步唯一允许的工作
+
+以 R20 Nguyen 来源实现的审计注册表和 Nguyen 原文为普通混凝土真值依据，按 U、TC、TT、CC、TCX 逐状态提取：
+
+1. 来源方程与 Appendix-B 子程序；
+2. 独立局部未知量；
+3. 状态进入、保持、退出条件；
+4. 应力和一致切线；
+5. 能否由 D15 有限不变量基严格表示；
+6. 阻止完全有限闭式的具体项。
+
+UHPC 建立同格式表，但只登记已恢复来源；缺失项保持 OPEN。整个过程不得生成新的拟合系数。
+
+## 7. 当前裁决
+
+```text
+D15_EXACT_MOMENT_ENGINE                    = PASS_RETAIN
+D15_UHPC_A3_TO_A6_FROZEN_HISTORY           = NOT_FOUND_AND_ORIGINAL_STATUS_PENDING
+D15_UHPC_L0_FORMAL_IDENTITY                = REJECTED_BY_LATER_LOCK
+
+NGUYEN_R20_NSC_SOURCE_EVIDENCE              = RECOVERED_HISTORICAL_PASS
+NGUYEN_R20_NSC_SOURCE_PACKAGE_LOCAL_BYTES   = NOT_RECOVERED
+NGUYEN_R20_NSC_STATE_SET                    = U_TC_TT_CC_TCX_PASS_BY_REGISTRY
+NGUYEN_R20_MATERIAL_DOMAIN_AUDIT            = PASS_1056_POINTS_BY_REGISTRY
+NGUYEN_R20_NATURAL_PATH_AUDIT               = PASS_96_PATHS_BY_REGISTRY
+NGUYEN_R20_COMPLETE_TEST_GATE               = PASS_75_OF_75_BY_REGISTRY
+NSC_ZERO_QUADRATURE_FINITE_OPERATOR         = OPEN
+
+UHPC_HU_UNIAXIAL_SOURCES                    = RECOVERED_SOURCE_LOCKED
+UHPC_LIU_TC_COMPRESSION_SCALAR              = RECOVERED_PARTIAL_PASS
+UHPC_DP_WW_MULTIAXIAL_CONSTRAINTS            = RECOVERED_REFERENCE
+UHPC_FULL_STATE_ZERO_QUADRATURE_OPERATOR     = OPEN
+
+SWARTZ24                                    = PAUSED
+YUNLU_MODULE                                = NOT_STARTED
+```
+
+====================================================================================================
+FILE: history/NZ_SCCM/moment_first/NZ_SCCM_moment_first_D15_Pu_锁定流程与发展路线_20260809.md
+SIZE: 7871
+SHA256: 52bdab488bf6305a02d6e3aa0d75152b6058ef45e468b2c47e241e317587d7fe
+ENCODING: utf-8
+LINES: 225
+====================================================================================================
+# NZ-SCCM：moment-first D15 极限承载力流程锁定稿  
+## ——普通混凝土 / UHPC current material operator、Case21 concrete-only \(P_u\)、解析积分核与后续钢筋/钢壳扩展
+
+**版本日期：2026-08-09**  
+**状态：历史阶段锁定稿；后续身份以 CURRENT_STATE / 2026-08-10 priority reset 为准。**
+
+## 0. 本文件的用途
+
+本文件用于保存 2026-08-09 时点 NZ-SCCM 极限承载力理论的计算主线、材料接口、数学实现方式、Case21 验收结果和当时未来扩展方向。它是历史证据，不应覆盖后来的 priority reset。
+
+# 1. 研究目标与用户约束
+
+本项目真正关心的是有限幅值平衡路径上的极限承载力：
+
+\[
+P_u=\max_{\text{可达平衡路径}} P .
+\]
+
+在光滑极限点处，当时采用：
+
+\[
+R_A(D,A)=0
+\]
+
+与
+
+\[
+L(D,A)=P_{,D}R_{A,A}-P_{,A}R_{A,D}=0
+\]
+
+共同确定极限状态。材料非光滑事件控制时比较事件两侧 one-sided states。
+
+当时锁定要求包括：正式空间积分零数值积分；不允许连续板切成材料点云再用 Gauss/Simpson/adaptive quadrature；不采用板级 Chebyshev surrogate；材料 current operator 写为 \(\sigma=M(\varepsilon)\)；不使用运行时 TT/TC/CC 分类作为生产主线；不以材料点 Newton/history array/load-step history 为正式主线；切线由同一 current map 求导；材料拟合优先面向文献公式而非结构 Pu；结构试验不得反标材料；理论必须人工可审计。
+
+# 2. 为什么采用 current material operator
+
+在单调轴压、固定边界、一个连续完整代表半波、不研究循环卸载、结构未知量有限的限定下，给定 \(D,A\) 后连续应变场已知，因此直接使用：
+
+\[
+(D,A)\rightarrow\varepsilon(X,Y,\zeta)\rightarrow M(\varepsilon)\rightarrow\sigma(X,Y,\zeta)\rightarrow P,R_A,L.
+\]
+
+其目的在当时是切断传统 FE 式“空间点→状态分类→历史变量→材料点迭代→应力”链条。
+
+# 3. 当前结构运动学（该历史阶段）
+
+固定一个连续完整代表半波、active mode \(m=1\)、Nguyen 二阶运动学、初始缺陷与加载后幅值分开。
+
+\[
+X=\pi x/b,\qquad Y=\pi y/\ell,\qquad\zeta=2z/t,
+\]
+
+\[
+\phi=\sin X\sin Y,\qquad w=(A_0+A)\phi,
+\]
+
+\[
+q=A/b,\qquad q_0=A_0/b,
+\]
+
+\[
+S=q_0q+\frac12q^2.
+\]
+
+Case21 \(b=\ell\) 时：
+
+\[
+e_x=\nu D+C_m\cos^2X\sin^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+
+\[
+e_y=-D+C_m\sin^2X\cos^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+
+\[
+g_{xy}=\cos X\cos Y[2C_m\sin X\sin Y-2C_b\zeta],
+\]
+
+\[
+C_m=\frac{\pi^2}{\varepsilon_0}(q_0q+\tfrac12q^2),
+\qquad
+C_b=\frac{\pi^2}{2\varepsilon_0}\frac tbq.
+\]
+
+物理应变为 \(\varepsilon_0(e_x,e_y,g_{xy})\)。
+
+# 4. 普通混凝土 NC 来源背景
+
+Nguyen Chapter 3 / Appendix B 提供 biaxial peak envelope、equivalent-uniaxial secant/tangent、Saenz compression、tension stiffening、shear retention、TC、TT、CC、TCX、bilinear reinforcement。项目 equation-to-code registry 曾逐项登记这些来源。
+
+当时 current 约化保留 Saenz 型压缩骨架、Nguyen/Foster 拉伸结构及低参数 CC/TC/TT interaction。参数必须是材料级来源，不用 Case21/Swartz Pu 反标。
+
+# 5. UHPC 来源背景（历史阶段身份）
+
+该阶段曾组织：Zhang 2023 compression、Hiew 2024 tension、Liu 2023 TC、Liu 2024 biaxial strength、Wang/周俊三轴资格审计。后续已经明确：这套 UHPC 组织属于历史可计算/候选链，不等于最终冻结的完整 UHPC 多轴/history operator。
+
+# 6. 统一 current tensor 接口
+
+\[
+\mathbf E=\begin{bmatrix}\varepsilon_x&\gamma_{xy}/2\\\gamma_{xy}/2&\varepsilon_y\end{bmatrix},
+\]
+
+\[
+\mathbf E_u=\frac{(1-\nu)\mathbf E+\nu\operatorname{tr}(\mathbf E)\mathbf I}{1-\nu^2},
+\qquad
+\mathbf X_M=\mathbf E_u/\varepsilon_{0,M}.
+\]
+
+随后 \(\sigma_M=M_M(\mathbf X_M)\)，切线由同一 operator 求导。
+
+# 7. 为什么不再生成自由二维大系数表
+
+几十乃至更多二维 Chebyshev 自由系数会造成物理意义不清、stress/tangent 同时约束困难、高阶内部振荡、来源关系难保持以及空间展开项数爆炸。因此当时转向“少数一维来源函数 + 少数低参数 tensor interaction”。
+
+# 8. D15 精确矩
+
+基本空间矩：
+
+\[
+\mathcal I_{abh}=\int_0^\pi\sin^aX\,dX\int_0^\pi\sin^bY\,dY\int_{-1}^{1}\zeta^h\,d\zeta.
+\]
+
+\[
+\int_0^\pi\sin^nX\,dX=\sqrt\pi\frac{\Gamma((n+1)/2)}{\Gamma((n+2)/2)},
+\]
+
+\[
+\int_{-1}^1\zeta^h\,d\zeta=0\;(h\text{ odd}),\qquad=2/(h+1)\;(h\text{ even}).
+\]
+
+只要 integrand 写成有限三角—厚度代数组合，空间积分可由解析矩完成。
+
+# 9. expand-all then D15 的淘汰
+
+错误组织是完整展开巨大 \(\sigma(X,Y,\zeta)\) 后再 D15，导致表达爆炸、内存急剧增长和人工不可审计。由此转为 moment-first contraction：每生成一个结构真正需要的解析材料矩对象，立即施加目标积分泛函，不保留不必要的巨大空间展开。
+
+# 10. Q_nm 与 moment-first 的严格意义
+
+对解析基函数 \(T_n,T_m\)，定义连续场：
+
+\[
+Q_{nm}(X,Y,\zeta;D,q)=\mathcal C[T_n,T_m].
+\]
+
+它不是空间点。通过二维 Cayley-Hamilton 可写成：
+
+\[
+Q_{nm}=\frac12(S_{nm}-K_1A_{nm})\mathbf I+A_{nm}\mathbf Z.
+\]
+
+对轴力和幅值平衡分别施加解析线性泛函：
+
+\[
+M_{nm}^{P}=\mathscr L_P[Q_{nm}],
+\qquad
+M_{nm}^{R}=\mathscr L_R[Q_{nm}].
+\]
+
+所谓“立即积分并删除空间变量”是完成解析积分后的代数收缩，不是离散化。与 Gauss 求和的区别是正式成本依赖解析项数而不是空间点数。
+
+# 11. Case21 concrete-only 历史验收
+
+输入：
+
+\[
+a=2440\text{ mm},\;b=\ell=1220\text{ mm},\;t=19.30\text{ mm},
+\]
+
+\[
+f_c=21.23\text{ MPa},\;E_0=20321\text{ MPa},\;\varepsilon_0=0.00209,\;\nu=0.18,
+\]
+
+\[
+A_0=b/400=3.05\text{ mm}.
+\]
+
+试验失效荷载：
+
+\[
+P_{f,\exp}=368.312750\text{ kN}.
+\]
+
+该历史阶段 concrete-only moment-first D15 得到约：
+
+\[
+P_{u,c}^{D15}\approx339.1\text{ kN},\quad D_u\approx0.7955,\quad q_u\approx1.974\times10^{-3},\quad A_u\approx2.41\text{ mm}.
+\]
+
+独立高阶空间数值积分 audit 对同一 current operator/运动学约得 \(339.6\) kN，差约 0.15%。数值积分仅是 audit，不是正式生产积分。
+
+后续更高精度 current-operator 实现产生约 338.318 kN concrete / 342.334 kN RC 的 verification references；因此 339.1 kN 应保留为这一 moment-first 历史阶段结果，不要误写成当前唯一数值真值。
+
+# 12. 钢筋扩展的长期有效原则
+
+钢筋连续应变：
+
+\[
+\varepsilon_s^{(r)}=\mathbf n_r^T\mathbf E\mathbf n_r,
+\]
+
+钢筋贡献必须进入 \(P_s\) 和 \(R_{A,s}\)：
+
+\[
+P=P_c+P_s,\qquad R_A=R_{A,c}+R_{A,s}.
+\]
+
+然后重新联立极限条件。禁止先求 concrete-only Pu 再事后加 \(A_sf_y\)。这一原则在后续当前理论中仍有效。
+
+# 13. 钢壳 / UCFT 扩展思想
+
+历史上提出钢壳区域也进入同一结构残量/荷载积分，并由来源明确的 steel law 提供应力。后续当前严格 benchmark 尚未最终冻结 \(M_{shell}\)，因此本节只保留为历史扩展思想；云露/张宁/孙立鹏等来源需在新 shell operator 冻结前重新恢复。
+
+# 14. 当时的后续顺序与后来修正
+
+当时建议顺序为：Case21 钢筋 → Swartz24 → UHPC → shell/UCFT。2026-08-10 priority reset 后，strict theorem certificate 已降级，当前 Nguyen/Foster 仅作为 benchmark，并允许 final-attempt 失败后重新建立 material/target/solution operator。因此本文件不得独立覆盖当前治理。
+
+# 15. 长期仍有效的核心
+
+即使后续材料 operator 重新设计，以下思路仍是重要历史遗产：
+
+\[
+\boxed{\text{连续运动学}\rightarrow\text{材料 operator}\rightarrow\text{解析矩/全局收缩}\rightarrow P,R,L\rightarrow P_u}
+\]
+
+并且正式理论不得把空间材料点、Gauss/Simpson、自适应空间积分或板级 Pu 拟合偷偷恢复为核心理论单位。
+
+====================================================================================================
+FILE: history/NZ_SCCM/nested_D15/NZ_SCCM_NESTED_D15_CASE21_REGRESSION_审计_LOCATOR.md
+SIZE: 1962
+SHA256: f7f537f97a5b3b568c474bd718eef9ef9eb4ee8c8cbbd5559467ad2c5faa446e
+ENCODING: utf-8
+LINES: 47
+====================================================================================================
+# Nested-D15 Case21 regression：原始审计报告定位器
+
+## 原件
+
+```text
+filename = NZ_SCCM_NESTED_D15_CASE21_REGRESSION_完整审计报告_20260809.md
+ChatGPT File Library ID = file_00000000a2dc8211b82832afebbed753
+local R2 copy SHA-256 = 26ca53df30fd882eb0954cc298c1487917c7e78578d3d6e1195556cd9cf6cd24
+GitHub byte-exact original = PENDING
+```
+
+## 报告的主要历史裁决
+
+该审计报告并没有否定 nested moment-first D15 的理论方向；它把当时 ZIP 登记为局部 Case21 validation，并指出：
+
+```text
+THEORY_ROUTE = RETAINED
+FORMAL_SPATIAL_QUADRATURE = ZERO_CONFIRMED
+CASE21_REPORTED_PU_KN ≈ 342.10774
+CASE21_NUMERICAL_PLAUSIBILITY = PASS
+CASE21_BITWISE/PROVENANCE_REPRODUCIBILITY = FAIL
+FULL_CASE21_END_TO_END_REPRODUCIBILITY = FAIL
+COMMON_SWARTZ24_COMPILER_DOMAIN = OPEN
+PRODUCTION_ADOPTION = NOT_AUTHORIZED
+```
+
+关键软件/证据问题包括：
+- fixed mask 与 N/TOL/coefficients/compiler hash 未形成强绑定 metadata；
+- N<60 可静默误用固定 mask；
+- 默认入口不是 README 所定义的 N=60/fixed 正式模式；
+- hard-coded temporary path / mask filename mismatch；
+- `final_case21_out.txt` 的 exact generating state/version 未完全闭合；
+- package 缺完整 concrete+rebar total residual/root/limit driver；
+- independent high-order quadrature audit 未随包完整交付；
+- N=60 primitive stress values 尚可，但 total consistent tangent / Rq / L convergence 没有完成 production certificate。
+
+## 后续身份
+
+2026-08-10 priority reset 以后，不再把 theorem-level tight remainder/certificate 当工程生产硬门槛；但 **provenance closure、正式 evaluator identity、不得用 audit 选阶、不得恢复空间离散** 等问题仍然有效。
+
+因此该审计的长期价值是：
+
+```text
+RETAIN nested/moment-first insight
+RETAIN reproducibility/provenance warnings
+DO NOT automatically reactivate fixed-mask/compiler implementation as current production route
+```
+
+====================================================================================================
+FILE: history/RAW_HISTORY_REGISTRY.md
+SIZE: 3610
+SHA256: b691a72507896c732df02d048b26d0dca69f94bad01d0b8f1627aff4b02733b8
+ENCODING: utf-8
+LINES: 58
+====================================================================================================
+# RAW HISTORY REGISTRY — 原始对话/TXT/响应工件登记
+
+本文件防止后续只剩阶段总结，而丢失用户原始指示、助手原始响应与历史执行输出。
+
+## 1. 已重新确认的原始共享对话/恢复文件
+
+| history_id | 文件名 | File Library / 本地身份 | 证据角色 |
+|---|---|---|---|
+| CHAT_TURN_1_148 | `chat_export_2026-08-05T20-29-31-447Z_part_01_turn_1-148.txt` | File Library ID `file_00000000b7788209a161cd5ec2db852a` | NZ-SCCM-U v0.2 共享页面 TURN 0001—0148 原始正文基线；TURN 0148 连接中断，不得用后期工件补写 D20 final |
+| RAW_EVOLUTION | `{titleNZ-SCCM思想演化恢复,create_time1786(1).txt` | 当前本地 `/mnt/data`；4,609,510 bytes；SHA-256 `43a032115c4010a2f590aeeec4f6fa8335b95a4b229ee0bc0bd57daac62394b6` | 大体量 Conversation JSON/思想恢复证据；含历史 web 搜索、工件、分支线索；不等于共享正文 |
+| RAW_EVOLUTION_FL | `{titleNZ-SCCM思想演化恢复,create_time1786.txt` | File Library ID `file_000000001c58820b8d0057693a2cb762`（另有重复/后续副本） | 用于恢复 D/G 系列、材料检索与分支历史 |
+| TASK_EXECUTION_RAW | `{title任务执行与核验,create_time1785996157.txt` | File Library 至少存在 `file_00000000db8c81f780f4a4ea9a48b2fa`、`file_00000000566c820690274d576ccbd77c` | 包含材料文献文本镜像、执行/响应上下文；必须保留原始身份，不只抽取结论 |
+| PASTED_RAW_20260809 | `粘贴的文本 (1).txt` | File Library ID `file_00000000fbe081faabfe9ca371a41a86` | 包含 2026-08-09 材料/网络检索及对话机器记录片段 |
+
+## 2. 当前本地可直接校验的历史 TXT
+
+| 文件名 | bytes | SHA-256 | 当前身份 |
+|---|---:|---|---|
+| `路径A与极限承载力.txt` | 22210 | `c1862e55076732361094c4ea99bae1a341b0ddd8580882a2a1b7a58093ef5edb` | 历史路线与 UHPC Layer-0 等内容的原始阶段文件；只作历史追溯，不恢复为当前正式主线 |
+| `UCFT V3工程进展.txt` | 1761 | `b72083561889782ceacf0b2b415f61799516c61e10e9161280c7588a91186bd9` | UCFT V3 历史进展原始 TXT |
+| `UCFT V3工程进展分析.txt` | 23424 | `931bb423875e84c8b573e74dce0ae89c804f49f04528b02e8592d3c156a51b38` | UCFT V3 历史分析原始 TXT |
+
+## 3. “响应文件”也必须保存
+
+以下类型不应只在阶段总结中出现：
+
+- gate report / execution report；
+- CSV state ledger；
+- equation-to-code registry；
+- exact input hashes；
+- source registry；
+- prompt / instruction file；
+- solver response / calculation transcript；
+- one-shot closure / rollback report；
+- active branch machine audit JSON。
+
+后续恢复时优先按文件名关键词搜索：
+
+`D6`, `D8`, `D9`, `D10`, `D11`, `D12`, `D13`, `D14`, `D15`, `D18`, `D19`, `D19R`, `D19C`, `D20`, `G15`, `G16R`, `G30`, `G31`, `ONE_SHOT_CLOSURE`, `ACTIVE_BRANCH`, `equation_to_code_registry`, `STATE_EQUATION_LEDGER`。
+
+## 4. 不允许的历史压缩
+
+不得把：
+
+`原始对话 → 若干 gate 报告 → 一个最新 handoff`
+
+当作完整历史。
+
+正确恢复顺序应为：
+
+`原始 user/assistant 文本 + 原始附件/响应工件 → 可复现实验 → decision ledger → handoff`。
+
+## 5. GitHub 迁移状态
+
+- 当前先登记所有已发现原件和 File Library ID。
+- 文本原件将分批直接复制到 `history/raw/`。
+- 大 PDF 二进制若当前 connector 不便直接复制，则至少保留 File Library locator、SHA（若本地可得）和机械提取文本镜像。
+- File Library pointer 不是公开 URL；若原始资料有 DOI/公开来源，后续应在独立 evidence note 中补正式链接。
+
+====================================================================================================
+FILE: history/README.md
+SIZE: 864
+SHA256: 9244d563e2d7b785a11dfcb7b21388403ce8563507c064a1050adfdcb70d1895
+ENCODING: utf-8
+LINES: 19
+====================================================================================================
+# HISTORY
+
+这里保存已经发生过、但**不能自动视为当前有效理论**的路线、工件、回滚和来源重构。
+
+## 目录
+
+- `NZ_SCCM/`：D/G/R 系列、moment-first、direct-analytic、nested-D15、material-recovery 等历史路线。
+- `Case21/`：Case21 旧 route/history。
+- `UCFT/`：Layer-0、Path-A、v5 等前期路线。
+- `materials/`：历史材料 baseline/operator（例如 UHPC-C0）。
+- `raw/`：原始历史文本/工程原件镜像。
+- `recovery/`：TURN 0001–0148、G15、R04/R05 等恢复 locator。
+- `ledgers/`：历史组件/决策台账。
+
+## 规则
+
+看到 PASS/HOLD/READY 等历史标签时，先检查它所属阶段和 supersession 边界。旧 PASS 不覆盖 `current/CURRENT_STATE.md`。
+
+历史追溯优先：原始 user-assistant dialogue / 原始执行工件 > machine audit / ledger > handoff / summary。
+
+====================================================================================================
+FILE: history/UCFT/Layer0/UCFT_V3工程进展分析.txt
+SIZE: 17656
+SHA256: 9cf47c222fc4c0ca58f2c6a35531eebef8172b9021c3414b53fb9691deea951e
+ENCODING: utf-8
+LINES: 965
+====================================================================================================
+## 1. 永久排除已锁定
+
+已按你的要求永久锁定：
+
+\[
+\boxed{
+\text{后续理论推导、计算、对比、求解器设计和结果解释中，永久排除该历史支线。}
+}
+\]
+
+除非你以后明确要求做“历史错误追溯”，否则不再调用、不再提及，也不再把它作为阻断理由或候选模型。
+
+下面只比较：
+
+\[
+\boxed{\text{历史 L0-B1-TC-EP 路径模型}}
+\]
+
+与
+
+\[
+\boxed{\text{完整不降阶 L0 矩阵理论}}
+\]
+
+---
+
+# 2. 先纠正一个关键判断：完整不降阶L0不是“更高层理论”
+
+我此前称完整不降阶L0为“后续升级理论”，这个表述不准确。
+
+正确关系是：
+
+\[
+\boxed{
+\text{二者属于相同的物理层级——层0。}
+}
+\]
+
+完整不降阶L0没有增加下列层1机制：
+
+- UHPC双轴或三轴强度增强；
+- 围压增强；
+- 钢—UHPC界面滑移；
+- 黏结退化或脱空接触；
+- PBL显式弹簧；
+- PBL钢材独立承载；
+- 钢材二维J2塑性；
+- 残余应力；
+- 加载端和接触柔度。
+
+两者均采用：
+
+\[
+\boxed{N=N_c+N_s^++N_s^-}
+\]
+
+PBL只作为局部钢壳子板的强固支边界，不计独立轴力，也不设置显式弹簧能量。
+
+真正的关系是：
+
+\[
+\boxed{
+\text{L0-B1-TC-EP}
+=
+\text{层0物理假定下的低阶、约束型路径模型}
+}
+\]
+
+\[
+\boxed{
+\text{完整不降阶L0}
+=
+\text{同一层0物理假定下解除自由度、模态、子板和耦合降阶后的正式母体系}
+}
+\]
+
+因此不应称为“层级升级”，而应称为：
+
+\[
+\boxed{
+\text{由低阶B1约束子空间恢复到完整层0近似空间。}
+}
+\]
+
+完整矩阵锁定稿明确规定：它保留一般面内Ritz自由度、多个整体面外模态、每块局部子板独立幅值、全部区域积分和全部一致耦合项；旧B1只能作为退化校核模型，不能反向定义完整理论。
+
+---
+
+# 3. 本次比较采用的L0-B1-TC-EP身份
+
+本次所说的 `L0-B1-TC-EP`，严格指历史Case-1、Case-2计算链所使用的低阶层0路径逻辑：
+
+\[
+\boxed{
+\mathbf q_{g}^{B1}
+=
+[q_{u1},q_{u2},q_{v1},q_{v2},\eta_t]^{\mathsf T}
+}
+\]
+
+整体平衡保留两个轴向面内Ritz自由度、两个横向面内Ritz自由度和一个整体面外幅值。
+
+Case-2再通过B1局部模块计算各360 mm子板的局部幅值、平均应力、有效切线和状态，并将其回代到整体平衡和整板切线矩阵中。历史峰值表确实保存了上述五个整体变量以及局部S1p状态、轴力分项和切线特征值。
+
+这里**不采用**此前错误建立的：
+
+\[
+[\varepsilon_Y^0,\eta,A^+,A^-]^{\mathsf T}
+\]
+
+四变量重闭合。那套模型已经撤销，不能代表历史L0-B1-TC-EP。
+
+---
+
+# 4. 两套理论共同的层0物理基础
+
+以下部分两者相同，不构成差异。
+
+## 4.1 力学对象
+
+结构隔离体为：
+
+\[
+\text{上钢壳}
++
+\text{连续UHPC核心板}
++
+\text{下钢壳}
++
+\text{PBL形成的局部边界约束}.
+\]
+
+PBL：
+
+\[
+N_{\mathrm{PBL}}=0,
+\qquad
+U_{\mathrm{PBL}}^{\mathrm{spring}}=0.
+\]
+
+总轴力：
+
+\[
+N=N_c+N_s^++N_s^-.
+\]
+
+## 4.2 初始构形几何非线性
+
+两者均区分：
+
+- 初始整体缺陷 \(W_{g0}\)；
+- 加载新增整体挠曲 \(\widehat W_g\)；
+- 局部初始缺陷 \(w_{\ell0,i}^{\pm}\)；
+- 加载新增局部鼓曲 \(\widehat w_{\ell i}^{\pm}\)。
+
+整体总挠度为：
+
+\[
+W_{gt}=W_{g0}+\widehat W_g.
+\]
+
+钢壳局部子板总挠度由整体和局部两部分叠加，并保留von Kármán型平方项和局部—整体交叉项。
+
+## 4.3 材料层级
+
+UHPC采用层0单轴受压主曲线和一致切线：
+
+\[
+\sigma_c=\sigma_c(\varepsilon_c),
+\qquad
+E_{c,t}=\frac{d\sigma_c}{d\varepsilon_c}.
+\]
+
+钢材采用纵向标量弹塑性模型；局部钢壳可进入弹性后屈曲和纤维弹塑性后屈曲。
+
+## 4.4 路径型承载力定义
+
+两者均应以有效平衡路径上的总轴力峰值定义承载力：
+
+\[
+\boxed{
+N_u=\max_{\lambda\in\mathcal P_{\mathrm{valid}}}N(\lambda)
+}
+\]
+
+钢壳首次屈服、局部屈曲、整体切线失稳、UHPC达峰、局部状态转换均只是路径事件，不必然单独等于 \(N_u\)。
+
+---
+
+# 5. L0-B1-TC-EP的完整计算过程
+
+下面按照历史B1路径逻辑逐步列出。
+
+## 5.1 输入与分区
+
+输入：
+
+\[
+a_c,\ B_c,\ t_c,\ t_s^\pm,\ z_s^\pm
+\]
+
+以及：
+
+\[
+f_c,\ E_c,\ \varepsilon_{c0},\ E_s,\ f_y,\ \nu_s.
+\]
+
+钢壳按PBL边界划分为局部子板：
+
+\[
+\Omega_{\ell i}^{+},
+\qquad
+\Omega_{\ell i}^{-}.
+\]
+
+Case-1和Case-2的区别只来自实际分区及其局部事件：
+
+- Case-1：120 mm子板，局部屈曲峰前不激活；
+- Case-2：360 mm子板，局部屈曲和局部纤维弹塑性后屈曲激活。
+
+## 5.2 采用单一整体面外模态
+
+B1使用一个预选整体模态：
+
+\[
+\psi_g(X,Y).
+\]
+
+整体初始缺陷：
+
+\[
+W_{g0}=\eta_0\psi_g.
+\]
+
+当前整体挠曲：
+
+\[
+W_{gt}=\eta_t\psi_g
+\]
+
+或者以新增幅值表示为：
+
+\[
+W_{gt}=(\eta_0+\eta)\psi_g.
+\]
+
+因此所有整体挠曲形状均被限制在同一个函数方向内，只有幅值变化。
+
+这是B1的第一个主要约束：
+
+\[
+\boxed{
+\text{整体面外位移空间只有一个预选模态方向。}
+}
+\]
+
+## 5.3 最小整体面内Ritz变量
+
+历史计算保留：
+
+\[
+\mathbf q_g^{B1}
+=
+[q_{u1},q_{u2},q_{v1},q_{v2},\eta_t]^{\mathsf T}.
+\]
+
+因此面内位移不是完全均匀应变，但只保留预先选定的低阶Ritz项：
+
+\[
+u(X,Y)
+=
+-\lambda X
++
+q_{u1}U_1(X,Y)
++
+q_{u2}U_2(X,Y),
+\]
+
+\[
+v(X,Y)
+=
+q_{v1}V_1(X,Y)
++
+q_{v2}V_2(X,Y).
+\]
+
+整体未知量维数固定为五。
+
+## 5.4 局部子板形函数
+
+每个PBL间钢壳子板使用四边固支局部形函数：
+
+\[
+\psi_{\ell i}
+=
+\left[
+1-\cos\left(
+\frac{2m_i\pi X}{a_{\ell i}}
+\right)
+\right]
+\left[
+1-\cos\left(
+\frac{2\pi\bar Y_i}{B_{s,i}}
+\right)
+\right].
+\]
+
+满足：
+
+\[
+w_\ell=0,
+\qquad
+\frac{\partial w_\ell}{\partial n}=0
+\]
+
+于局部子板边界。
+
+## 5.5 B1同侧统一幅值约束
+
+B1不让每个局部子板自由发展独立幅值，而采用：
+
+\[
+A_i^\pm=\omega_i^\pm A^\pm.
+\]
+
+其中：
+
+\[
+\omega_i^\pm
+=
+\frac{
+\max_X|\psi_g(X,Y_i^\pm)|
+}{
+\max_{X,Y}|\psi_g(X,Y)|
+}.
+\]
+
+对于一阶正弦整体模态：
+
+\[
+\omega_i^\pm
+=
+\left|
+\sin\frac{\pi Y_i^\pm}{B_c}
+\right|.
+\]
+
+但局部初始缺陷不按整体模态加权：
+
+\[
+A_{0i}^\pm\neq\omega_i^\pm A_0^\pm,
+\]
+
+而取统一制造缺陷值或各子板实测值。
+
+因此B1的核心局部约束是：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{同一侧所有局部子板只有一个母幅值 }A^\pm;\\
+&\text{不同子板仅通过预设 }\omega_i^\pm\text{产生比例差异。}
+\end{aligned}
+}
+\]
+
+## 5.6 钢壳总挠度
+
+上、下钢壳第 \(i\) 块子板的当前挠度为：
+
+\[
+W_{s,i}^{\pm}
+=
+W_{gt}
++
+s_\pm
+\left(
+A_{0i}^\pm+A_i^\pm
+\right)\psi_{\ell i}^{\pm},
+\]
+
+其中：
+
+\[
+s_+=+1,\qquad s_-=-1.
+\]
+
+钢壳纵向应变保留：
+
+\[
+\frac12
+\left(
+W_{g,X}+w_{\ell,X}^{\pm}
+\right)^2.
+\]
+
+展开即：
+
+\[
+\frac12W_{g,X}^2
++
+W_{g,X}w_{\ell,X}^{\pm}
++
+\frac12(w_{\ell,X}^{\pm})^2.
+\]
+
+因此历史B1并不是完全忽略局部—整体耦合；它保留了耦合，但耦合发生在被约束后的低阶幅值空间中。
+
+## 5.7 UHPC材料更新
+
+在每个积分点计算：
+
+\[
+\varepsilon_c
+=
+\varepsilon_m
+-
+z\kappa.
+\]
+
+然后更新：
+
+\[
+\sigma_c(\varepsilon_c),
+\qquad
+E_{c,t}(\varepsilon_c).
+\]
+
+恢复：
+
+\[
+N_c
+=
+\int_{\Omega_c}\int_{-t_c/2}^{t_c/2}
+\sigma_{c,x}\,dz\,d\Omega.
+\]
+
+当：
+
+\[
+\varepsilon_{c,\max}
+=
+\varepsilon_{c0}
+\]
+
+时，历史L0-B1路径按UHPC峰值边界终止。
+
+## 5.8 局部钢壳状态判断
+
+历史TC-EP逻辑采用分段状态链：
+
+\[
+S0\rightarrow S1e\rightarrow S1p\rightarrow S2.
+\]
+
+### S0：局部屈曲前
+
+局部子板仍沿基本材料压缩路径承载。
+
+### S1e：弹性局部后屈曲
+
+局部子板达到弹性屈曲条件后，局部幅值发展，平均应力按大挠度后屈曲关系更新。
+
+### S1p：局部纤维弹塑性后屈曲
+
+局部最大纤维进入钢材非线性区后，局部平均应力和局部有效切线由弹塑性纤维状态计算：
+
+\[
+\sigma_{s,i}^{avg},
+\qquad
+E_{s,i}^{tan}.
+\]
+
+Case-2峰值时360 mm子板主要处于S1p，而不是平均全宽达到 \(f_y\) 的平台。
+
+### S2：强度封顶
+
+早期低阶B1理论允许在达到局部强度上限时进行幅值或平均应力封顶。该状态属于历史B1计算闭合的一部分。
+
+## 5.9 TC切线更新
+
+每个局部子板根据当前状态输出：
+
+\[
+\sigma_{s,i}^{avg},
+\qquad
+E_{s,i}^{tan}.
+\]
+
+这些量进入：
+
+- 上、下钢壳轴力积分；
+- 整体切线矩阵；
+- 面外稳定项；
+- 局部—整体耦合项。
+
+因此TC的核心作用不是简单修改最终轴力，而是：
+
+\[
+\boxed{
+\text{使当前钢壳局部弹塑性状态进入整板切线刚度。}
+}
+\]
+
+Case-2中局部有效切线降低到约50～90 GPa，引起整体面外刚度提前软化，并加速UHPC压区应变集中。
+
+## 5.10 整体残量和切线矩阵
+
+给定路径参数：
+
+\[
+\lambda=\varepsilon_X^0,
+\]
+
+求解整体五变量平衡：
+
+\[
+\mathbf R_g^{B1}
+\left(
+q_{u1},q_{u2},q_{v1},q_{v2},\eta_t;
+\lambda
+\right)
+=
+\mathbf0.
+\]
+
+组装低阶切线矩阵：
+
+\[
+\mathbf K_T^{B1}
+=
+\frac{\partial\mathbf R_g^{B1}}
+{\partial\mathbf q_g^{B1}}.
+\]
+
+局部子板状态通过当前平均应力和有效切线进入该矩阵，但局部子板并没有全部作为独立Newton未知量进入一个完整矩阵。
+
+## 5.11 有缺陷路径
+
+当：
+
+\[
+\eta_0>0
+\]
+
+时，从第一个载荷步起便存在二阶效应。路径过程为：
+
+\[
+\text{初始缺陷响应}
+\rightarrow
+\text{钢壳屈服或局部屈曲}
+\rightarrow
+\text{切线刚度退化}
+\rightarrow
+\eta_t\text{增长}
+\rightarrow
+\text{应力重分布}
+\rightarrow
+\text{UHPC达峰或总轴力峰值}.
+\]
+
+这对应历史B1、B2路径。
+
+## 5.12 无缺陷路径
+
+当：
+
+\[
+\eta_0=0
+\]
+
+时，首先沿平直完美轴压分支：
+
+\[
+\eta_t=0.
+\]
+
+对于Case-1，正确事件逻辑为：完美轴向压缩 → 钢壳屈服 → 按当前材料切线计算整板临界荷载 → 平直分支失稳 → 进入二阶效应并搜索新的非零平衡点 → 新稳定支路或被UHPC峰值截断。
+
+对于Case-2，无缺陷路径还必须先处理局部平凡分支以及360 mm子板的完美局部分岔。
+
+## 5.13 路径终止和承载力
+
+每个路径点恢复：
+
+\[
+N_c,\quad N_s^+,\quad N_s^-,
+\]
+
+\[
+N=N_c+N_s^++N_s^-.
+\]
+
+监测：
+
+\[

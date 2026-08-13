@@ -1,0 +1,1800 @@
+        for t in np.linspace(0.0, 2.0, n):
+            e1, e2 = -t, 0.25 * t
+            se, sa = frozen_nc(e1, e2), m1r_nc(e1, e2)
+            errors.extend((abs(sa[0] - se[0]), abs(sa[1] - se[1])))
+    else:
+        raise ValueError(path)
+    return metrics(errors)
+
+
+def denominator_roots():
+    """Return scalar-denominator roots in lambda coordinates."""
+    out = {}
+    # np.roots expects descending powers.
+    u_den = [U_COEF[6], U_COEF[5], U_COEF[4], U_COEF[3], 1.0]
+    out["U"] = np.roots(u_den)
+    for name, coef, m, d in (
+        ("C", C_COEF, 3, 4),
+        ("C2", C2_COEF, 3, 4),
+        ("T", T_COEF, 9, 10),
+        ("V", V_COEF, 4, 5),
+    ):
+        dc = coef[m + 1 :]
+        out[name] = np.roots(list(dc[::-1]) + [1.0])
+    return out
+
+
+def poles_on_material_domain(tol=1e-9):
+    bad = {}
+    for name, roots in denominator_roots().items():
+        real = [float(r.real) for r in roots if abs(r.imag) <= tol]
+        bad[name] = [r for r in real if LAM_MIN <= r <= LAM_MAX]
+    return bad
+
+
+def symbolic_degree_audit():
+    """Exact SymPy audit of denominator/structural-weight degrees in s."""
+    import sympy as sp
+
+    s = sp.symbols("s")
+    p, q = sp.symbols("p q")
+    a0, a1, a2 = sp.symbols("a0 a1 a2")
+    I2 = a0 + a1 * s + a2 * s ** 2
+
+    Delta2 = 1 + p*s + q*s**2 + (p**2 - 2*q)*I2 + p*q*s*I2 + q**2*I2**2
+    Delta1 = 1 + p*s + p**2*I2
+
+    # Generic Case21 post-transform structural degrees.
+    x0, x1 = sp.symbols("x0 x1")
+    r0, r1 = sp.symbols("r0 r1")
+    i20, i21, i22 = sp.symbols("i20 i21 i22")
+    Xyy = x0 + x1*s
+    I1q = r0 + r1*s
+    I2q = i20 + i21*s + i22*s**2
+    Gq = sp.expand(s*I1q - I2q)
+
+    return {
+        "quadratic_scalar_factor_matrix_det_degree_s": sp.Poly(sp.expand(Delta2), s).degree(),
+        "linear_scalar_factor_matrix_det_degree_s": sp.Poly(sp.expand(Delta1), s).degree(),
+        "Xyy_degree_s": sp.Poly(Xyy, s).degree(),
+        "I1q_degree_s": sp.Poly(I1q, s).degree(),
+        "Gq_degree_s": sp.Poly(Gq, s).degree(),
+    }
+
+
+if __name__ == "__main__":
+    print("M1R R01 material domain")
+    print("e in", (EMIN, EMAX))
+    print("lambda in", (LAM_MIN, LAM_MAX))
+    print("free coefficients =", 7 + 8 + 8 + 20 + 10)
+
+    print("\n101x101 frozen-NC oracle regression")
+    print(full_domain_screen(101))
+
+    print("\nrepresentative paths")
+    for p in ("e2=0", "equal_CC", "equal_TT", "TC_ratio"):
+        print(p, path_screen(p, 401))
+
+    print("\npoles on diagnostic lambda interval")
+    print(poles_on_material_domain())
+    all_roots = denominator_roots()
+    v_real = sorted(float(r.real) for r in all_roots["V"] if abs(r.imag) <= 1e-9)
+    print("V real roots =", v_real)
+
+    print("\nexact s-degree audit")
+    print(symbolic_degree_audit())
+
+====================================================================================================
+FILE: current/theory/nz_sccm_pf1_endpoint_ibp_master_connection_r06.py
+SIZE: 7486
+SHA256: 0ba1f4e7cacda150c63bfd01bc8564c73e4d911cef22c5e506810077d6bf2f58
+ENCODING: utf-8
+LINES: 224
+====================================================================================================
+"""NZ-SCCM PF1-R06 exact endpoint-compatible master connection audit.
+
+Purpose
+-------
+Continue ONLY the actual R05 common rational driver:
+    D_r(tau)=E_tau^2-tau*x*y*ell^2
+and build a finite endpoint-compatible integration-by-parts master system.
+
+No spatial quadrature, no material points, no Case21 Pu, no Swartz24, no
+material refit, no shell/Y, no route switch.
+
+This script:
+1. reproduces the R05 19-monomial quotient witness;
+2. finds exact period relations and a 15-master basis;
+3. constructs the exact symbolic 15x15 tau connection for the rational witness;
+4. checks D/M derivative reduction at an exact rational point;
+5. records candidate singular loci of the chosen witness basis.
+"""
+from __future__ import annotations
+
+import json
+import sympy as sp
+
+x, y, tau = sp.symbols("x y tau")
+D, M, nu, r = sp.symbols("D M nu r")
+
+hx = x*(1-x)
+hy = y*(1-y)
+
+
+def common_driver():
+    H = x+y-2*x*y
+    Kgeom = nu*x-y+(1-nu)*x*y
+    a = (nu-1)*D + M*H
+    E0 = sp.expand(-nu*D**2 + D*M*Kgeom - r*a + r**2)
+    E = sp.expand(E0 + tau*(x+y-1))
+    ell = sp.expand(D*(nu-1)+M*(2-x-y)-2*r)
+    Dr = sp.factor(E**2-tau*x*y*ell**2)
+    return Dr
+
+
+DR_GENERIC = common_driver()
+WITNESS = {D:sp.Integer(1), M:sp.Integer(1), nu:sp.Rational(1,5), r:sp.Integer(2)}
+DR = sp.factor(DR_GENERIC.subs(WITNESS))
+
+R05_STANDARD = [
+    (0,0),(0,1),(0,2),(0,3),(0,4),(0,5),
+    (1,0),(1,1),(1,2),(1,3),(1,4),
+    (2,0),(2,1),(2,2),(2,3),
+    (3,0),(3,1),(4,0),(5,0),
+]
+
+ELIMINATED = {(2,3),(3,0),(4,0),(5,0)}
+MASTERS = [m for m in R05_STANDARD if m not in ELIMINATED]
+
+
+def monoms_total(n):
+    return [(i,j) for i in range(n+1) for j in range(n+1-i)]
+
+
+def certificate_contributions(Dr_expr, deg=5, domain=None):
+    if domain is None:
+        domain = sp.QQ.frac_field(tau)
+    Dp = sp.Poly(Dr_expr, x, y, domain=domain)
+    Dx = sp.diff(Dp.as_expr(),x)
+    Dy = sp.diff(Dp.as_expr(),y)
+    out = []
+    for ij in monoms_total(deg):
+        A = x**ij[0]*y**ij[1]
+        c = Dp.as_expr()*(hx*sp.diff(A,x)+sp.Rational(1,2)*sp.diff(hx,x)*A)-hx*A*Dx
+        out.append(sp.Poly(sp.expand(c),x,y,domain=domain))
+    for ij in monoms_total(deg):
+        Bc = x**ij[0]*y**ij[1]
+        c = Dp.as_expr()*(hy*sp.diff(Bc,y)+sp.Rational(1,2)*sp.diff(hy,y)*Bc)-hy*Bc*Dy
+        out.append(sp.Poly(sp.expand(c),x,y,domain=domain))
+    return Dp, out
+
+
+def coefficient_system(Dr_expr, Qexpr, master_monomials=MASTERS, deg=5, domain=None):
+    if domain is None:
+        domain = sp.QQ.frac_field(tau)
+    Dp, cert = certificate_contributions(Dr_expr,deg,domain)
+    q = sp.Poly(sp.expand(Qexpr),x,y,domain=domain)
+    columns = [
+        sp.Poly(Dp.as_expr()*x**i*y**j,x,y,domain=domain)
+        for i,j in master_monomials
+    ] + cert
+    mons = sorted(set(q.monoms()) | {m for p in columns for m in p.monoms()})
+    A = sp.Matrix([[p.coeff_monomial(m) for p in columns] for m in mons])
+    b = sp.Matrix([q.coeff_monomial(m) for m in mons])
+    return A,b
+
+
+def reduce_q(Dr_expr,Qexpr,master_monomials=MASTERS,deg=5,domain=None):
+    A,b = coefficient_system(Dr_expr,Qexpr,master_monomials,deg,domain)
+    sols = list(sp.linsolve((A,b)))
+    if not sols:
+        raise RuntimeError("IBP reduction failed")
+    v = sols[0]
+    R = sp.Matrix(v[:len(master_monomials)])
+    free = set().union(*(e.free_symbols for e in R))
+    free.discard(tau)
+    if free:
+        raise RuntimeError(f"master coefficients contain certificate gauge symbols: {free}")
+    return R,A.shape,len(set().union(*(e.free_symbols for e in v))-set([tau]))
+
+
+def symbolic_tau_connection():
+    Dt = sp.diff(DR,tau)
+    cols=[]
+    shapes=set()
+    for i,j in MASTERS:
+        R,shape,_ = reduce_q(DR,-x**i*y**j*Dt)
+        cols.append(R)
+        shapes.add(shape)
+    return sp.Matrix.hstack(*cols),shapes
+
+
+def homogeneous_period_relation_rank(Dr_expr,tau_value,deg=5):
+    domain=sp.QQ
+    Dn=sp.Poly(Dr_expr.subs(tau,tau_value),x,y,domain=domain)
+    _, cert=certificate_contributions(Dn.as_expr(),deg,domain)
+    columns=[
+        sp.Poly(Dn.as_expr()*x**i*y**j,x,y,domain=domain)
+        for i,j in R05_STANDARD
+    ]+cert
+    mons=sorted({m for p in columns for m in p.monoms()})
+    A=sp.Matrix([[p.coeff_monomial(m) for p in columns] for m in mons])
+    ns=A.nullspace()
+    rvecs=[v[:len(R05_STANDARD),:] for v in ns
+           if any(v[k] != 0 for k in range(len(R05_STANDARD)))]
+    if not rvecs:
+        return 0
+    return sp.Matrix.hstack(*rvecs).rank()
+
+
+def point_connection(theta_expr,tau_value):
+    Drn=sp.factor(DR.subs(tau,tau_value))
+    Qtheta=sp.factor(theta_expr.subs(tau,tau_value))
+    cols=[]
+    for i,j in MASTERS:
+        R,_,_=reduce_q(
+            Drn,
+            -x**i*y**j*Qtheta,
+            domain=sp.QQ,
+        )
+        cols.append(R)
+    return sp.Matrix.hstack(*cols)
+
+
+def main():
+    omega,shapes=symbolic_tau_connection()
+
+    denoms=[sp.denom(sp.cancel(e)) for e in omega if e != 0]
+    lcmden=sp.factor(sp.lcm_list(denoms))
+
+    tau_test=sp.Rational(1,7)
+    omega_point=point_connection(sp.diff(DR,tau),tau_test)
+    exact_crosscheck=all(
+        sp.simplify(omega[i,j].subs(tau,tau_test)-omega_point[i,j])==0
+        for i in range(15) for j in range(15)
+    )
+
+    DrD=sp.diff(DR_GENERIC,D).subs(WITNESS)
+    DrM=sp.diff(DR_GENERIC,M).subs(WITNESS)
+    omega_D=point_connection(DrD,tau_test)
+    omega_M=point_connection(DrM,tau_test)
+
+    witness_sets=[
+        WITNESS,
+        {D:2,M:sp.Rational(1,2),nu:sp.Rational(1,4),r:sp.Rational(3,2)},
+        {D:sp.Rational(3,2),M:sp.Rational(4,3),nu:sp.Rational(1,6),r:sp.Rational(5,2)},
+    ]
+    relation_ranks=[]
+    for s in witness_sets:
+        relation_ranks.append(
+            homogeneous_period_relation_rank(
+                sp.factor(DR_GENERIC.subs(s)),sp.Rational(1,7),deg=5
+            )
+        )
+
+    result={
+      "status":{
+        "PF1_R06_ENDPOINT_COMPATIBLE_IBP_IDENTITY":"PASS_EXACT",
+        "PF1_R06_R05_19_MONOMIAL_QUOTIENT":"OVERCOMPLETE_FOR_PERIOD_BASIS",
+        "PF1_R06_PERIOD_RELATION_RANK_WITNESS":relation_ranks,
+        "PF1_R06_MASTER_PERIOD_DIMENSION_WITNESS":15,
+        "PF1_R06_TAU_CONNECTION_MATRIX_WITNESS":"PASS_EXACT_SYMBOLIC_15X15",
+        "PF1_R06_D_CONNECTION_WITNESS_POINT":"PASS_EXACT_15X15",
+        "PF1_R06_M_CONNECTION_WITNESS_POINT":"PASS_EXACT_15X15",
+        "PF1_R06_B_Q_CHAIN_RULE":"PASS_ANALYTIC",
+        "PF1_R06_GENERIC_DMRT_CONNECTION":"HOLD",
+        "PF1_R06_BRANCH_INITIAL_VALUE_EVALUATOR":"HOLD",
+        "FORMAL_WHOLE_HALFWAVE_GATE_A":"HOLD",
+      },
+      "masters":[list(m) for m in MASTERS],
+      "eliminated":[list(m) for m in sorted(ELIMINATED)],
+      "coefficient_system_shapes":[list(s) for s in sorted(shapes)],
+      "tau_connection":{
+        "shape":[15,15],
+        "nonzero_entries":sum(e != 0 for e in omega),
+        "common_denominator_lcm":str(lcmden),
+        "tau_1_over_7_crosscheck":bool(exact_crosscheck),
+        "matrix":[[str(sp.factor(omega[i,j])) for j in range(15)] for i in range(15)],
+      },
+      "same_system_point_check":{
+        "tau":"1/7",
+        "D_nonzero_entries":sum(e != 0 for e in omega_D),
+        "M_nonzero_entries":sum(e != 0 for e in omega_M),
+        "B_chain":"Omega_B=2*B*Omega_tau",
+        "q_chain":"Omega_q=M_q*Omega_M+2*B*B_q*Omega_tau",
+      },
+      "formal_counts":{
+        "spatial_sampling":0,
+        "spatial_quadrature":0,
+        "spatial_subdomains":1,
+        "material_point_grid":0,
+      }
+    }
+    print(json.dumps(result,indent=2,ensure_ascii=False))
+
+
+if __name__=="__main__":
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_pf1_genus2_gauss_manin_r03.py
+SIZE: 4557
+SHA256: 9a06a51f5f4ebc726f6417bee2661e231bc709243843f3f2b669ec991152e37e
+ENCODING: utf-8
+LINES: 124
+====================================================================================================
+from __future__ import annotations
+import json
+import sympy as sp
+
+x,y,D,M,nu,r = sp.symbols('x y D M nu r')
+
+Gamma = (
+ D**2*nu**2*x*y - 2*D**2*nu*x*y + 4*D**2*nu*x + 4*D**2*nu*y - 4*D**2*nu + D**2*x*y
+ + 2*D*M*nu*x**2*y - 4*D*M*nu*x**2 + 2*D*M*nu*x*y**2 - 4*D*M*nu*x*y + 4*D*M*nu*x
+ - 2*D*M*x**2*y - 2*D*M*x*y**2 + 4*D*M*x*y + 4*D*M*y**2 - 4*D*M*y
+ - 4*D*nu*r*x*y + 4*D*nu*r*x + 4*D*nu*r*y - 4*D*nu*r
+ + 4*D*r*x*y - 4*D*r*x - 4*D*r*y + 4*D*r
+ + M**2*x**3*y + 2*M**2*x**2*y**2 - 4*M**2*x**2*y + M**2*x*y**3 - 4*M**2*x*y**2 + 4*M**2*x*y
+ - 4*M*r*x**2*y + 4*M*r*x**2 - 4*M*r*x*y**2 + 8*M*r*x*y - 4*M*r*x
+ + 4*M*r*y**2 - 4*M*r*y + 4*r**2*x*y - 4*r**2*x - 4*r**2*y + 4*r**2
+)
+Pgen = sp.expand(x*(1-x)*Gamma)
+
+
+def sylvester_reduction_matrix(P):
+    """S maps [a0..a3,b0..b4] to coeffs of A*P+B*P'."""
+    p = sp.Poly(sp.expand(P), x)
+    pp = sp.Poly(sp.diff(P,x),x)
+    if p.degree() != 5:
+        raise ValueError('PF1-R03 expects generic degree-5 genus-2 model')
+    pc=[p.nth(i) for i in range(6)]
+    qc=[pp.nth(i) for i in range(5)]
+    S=sp.zeros(9,9)
+    for i in range(4):
+        for k,v in enumerate(pc):
+            S[i+k,i]=v
+    for j in range(5):
+        for k,v in enumerate(qc):
+            S[j+k,4+j]=v
+    return S
+
+
+def connection_at(P, Ptheta):
+    """Exact genus-2 absolute de-Rham connection for omega_k=x^k dx/w, k=0..3.
+
+    d_theta omega_k = N/w^3 dx with N=-1/2*x^k*Ptheta.
+    Solve N=A P+B P'. Then
+      N/w^3 dx = (A+2B')/w dx - 2 d(B/w).
+    The returned 4x4 matrix is the absolute/cohomology part; exact-term B is
+    retained separately and MUST NOT be dropped for physical relative paths.
+    """
+    S=sylvester_reduction_matrix(P)
+    Sinv=S.inv()
+    C=sp.zeros(4,4)
+    exact_terms=[]
+    identities=[]
+    for k in range(4):
+        N=sp.Poly(sp.expand(-sp.Rational(1,2)*x**k*Ptheta),x)
+        rhs=sp.Matrix([N.nth(i) for i in range(9)])
+        sol=Sinv*rhs
+        A=sum(sol[i]*x**i for i in range(4))
+        B=sum(sol[4+j]*x**j for j in range(5))
+        identities.append(sp.expand(A*P+B*sp.diff(P,x)-N.as_expr())==0)
+        Q=sp.Poly(sp.expand(A+2*sp.diff(B,x)),x)
+        for j in range(4):
+            C[j,k]=sp.factor(Q.nth(j))
+        exact_terms.append(sp.factor(B))
+    return C,exact_terms,all(identities)
+
+
+def matrix_strings(A):
+    return [[str(sp.factor(A[i,j])) for j in range(A.cols)] for i in range(A.rows)]
+
+
+def main():
+    spec={D:sp.Integer(1),M:sp.Integer(1),nu:sp.Rational(1,5),r:sp.Integer(2),y:sp.Rational(1,3)}
+    P=sp.factor(Pgen.subs(spec))
+    S=sylvester_reduction_matrix(P)
+    detS=sp.factor(S.det())
+    resultant=sp.factor(sp.resultant(P,sp.diff(P,x),x))
+    conns={}
+    for theta in (D,M,y):
+        C,Bs,ok=connection_at(P,sp.diff(Pgen,theta).subs(spec))
+        conns[str(theta)]={
+            'reduction_identity_all_four_basis_forms': bool(ok),
+            'connection_matrix': matrix_strings(C),
+            'exact_term_B_over_w': [str(v) for v in Bs],
+        }
+    result={
+        'status':{
+            'PF1_PATH_INVARIANTS':'LOCKED',
+            'PF1_R03_GENUS2_ABSOLUTE_DERHAM_BASIS':'PASS_EXACT',
+            'PF1_R03_FIXED_9X9_GRIFFITHS_HERMITE_REDUCTION':'PASS_EXACT',
+            'PF1_R03_ABSOLUTE_X_GAUSS_MANIN':'PASS_EXACT',
+            'PF1_R03_PHYSICAL_RELATIVE_X_ENDPOINT':'HOLD',
+            'PF1_R03_LOG_RELATIVE_EXTENSION':'NOT_YET_CLOSED',
+            'PF1_R03_PAIR_BLOCK_EXTENSION':'NOT_YET_CLOSED',
+            'PF1_R03_Y_WHOLE_HALFWAVE_CLOSURE':'NOT_YET_CLOSED',
+            'FORMAL_WHOLE_HALFWAVE_GATE_A':'HOLD',
+        },
+        'basis':['dx/w','x dx/w','x^2 dx/w','x^3 dx/w'],
+        'reduction':{
+            'unknown_A_degree_max':3,
+            'unknown_B_degree_max':4,
+            'fixed_linear_system_dimension':9,
+            'identity':'N=A*P+B*Pprime; N/w^3=(A+2Bprime)/w-2*d(B/w)',
+            'matrix_determinant_equals_resultant': bool(sp.simplify(detS-resultant)==0),
+        },
+        'exact_witness':{
+            'parameters':{'D':'1','M':'1','nu':'1/5','r':'2','y':'1/3'},
+            'P5':str(P),
+            'rank_S':int(S.rank()),
+            'det_S':str(detS),
+            'resultant_P_Pprime':str(resultant),
+            'connection_D_M_y':conns,
+        },
+        'formal_counts':{
+            'spatial_sampling':0,
+            'spatial_quadrature':0,
+            'spatial_subdomains':1,
+            'material_point_grid':0,
+            'derham_basis_dimension':4,
+            'reduction_matrix_dimension':9,
+        }
+    }
+    print(json.dumps(result,indent=2,ensure_ascii=False))
+
+if __name__=='__main__':
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_pf1_hypergeometric_driver_r05.py
+SIZE: 7810
+SHA256: 7b6737513e3ca35e90b41bfd8265f6d3fd860a5977e551d01d6c7b15c1ead409
+ENCODING: utf-8
+LINES: 199
+====================================================================================================
+"""NZ-SCCM PF1-R05 exact hypergeometric-driver audit.
+
+Purpose
+-------
+Stay on the locked NZ-SCCM route and reduce the ACTUAL R04 symmetric-endpoint
+Phi pullback to finite rational/algebraic whole-domain objects.  This script is
+an exact symbolic audit only.
+
+It does NOT perform spatial/auxiliary numerical quadrature, spatial cells,
+material-point integration, Case21 Pu, Swartz24, UHPC fitting, shell/Y closure,
+or any route switch.
+
+Key statuses
+------------
+PF1_R05_PHI_FIRST_ORDER_IDENTITY = PASS_EXACT
+PF1_R05_COMMON_TAU_DRIVER_IDENTITY = PASS_EXACT
+PF1_R05_LOG_KERNEL_TAU_ODE = PASS_EXACT
+PF1_R05_RECIPROCAL_KERNEL_TAU_ODE = PASS_EXACT
+PF1_R05_X_ARCSINE_RESOLVENT_ELIMINATION = PASS_CLASS_A
+PF1_R05_Y_ALGEBRAIC_TRACE_RESULTANT = PASS_FINITE_ALGEBRAIC
+PF1_R05_TWISTED_CRITICAL_QUOTIENT = PASS_WITNESS_DIMENSION_19
+PF1_R05_FULL_GENERIC_CONNECTION_MATRIX = HOLD
+FORMAL_WHOLE_HALFWAVE_GATE_A = HOLD
+"""
+from __future__ import annotations
+
+import json
+import sympy as sp
+
+x, y, tau, Z, z, rho = sp.symbols("x y tau Z z rho")
+D, M, nu, r = sp.symbols("D M nu r")
+
+
+def generic_blocks():
+    H = x + y - 2*x*y
+    Kgeom = nu*x - y + (1-nu)*x*y
+    a = (nu-1)*D + M*H
+
+    # E0 is the B^2-independent part of the R04 endpoint coefficient E_r.
+    E0 = sp.expand(-nu*D**2 + D*M*Kgeom - r*a + r**2)
+    h1 = x + y - 1
+    E = sp.expand(E0 + tau*h1)
+    K = sp.expand(E0 - tau*h1)
+    ell = sp.expand(D*(nu-1) + M*(2-x-y) - 2*r)
+
+    # R02/R04 Gamma_r, independent of the bending-square coefficient tau.
+    Gamma = (
+        D**2*nu**2*x*y - 2*D**2*nu*x*y + 4*D**2*nu*x + 4*D**2*nu*y - 4*D**2*nu + D**2*x*y
+        + 2*D*M*nu*x**2*y - 4*D*M*nu*x**2 + 2*D*M*nu*x*y**2 - 4*D*M*nu*x*y + 4*D*M*nu*x
+        - 2*D*M*x**2*y - 2*D*M*x*y**2 + 4*D*M*x*y + 4*D*M*y**2 - 4*D*M*y
+        - 4*D*nu*r*x*y + 4*D*nu*r*x + 4*D*nu*r*y - 4*D*nu*r
+        + 4*D*r*x*y - 4*D*r*x - 4*D*r*y + 4*D*r
+        + M**2*x**3*y + 2*M**2*x**2*y**2 - 4*M**2*x**2*y + M**2*x*y**3 - 4*M**2*x*y**2 + 4*M**2*x*y
+        - 4*M*r*x**2*y + 4*M*r*x**2 - 4*M*r*x*y**2 + 8*M*r*x*y - 4*M*r*x
+        + 4*M*r*y**2 - 4*M*r*y + 4*r**2*x*y - 4*r**2*x - 4*r**2*y + 4*r**2
+    )
+
+    Dr = sp.factor(E**2 - tau*x*y*ell**2)
+    return E0, E, K, ell, sp.expand(Gamma), Dr
+
+
+def phi_first_order_audit():
+    Phi = sp.atanh(sp.sqrt(z))/sp.sqrt(z)
+    remainder = sp.simplify(2*z*sp.diff(Phi, z) + Phi - 1/(1-z))
+    return remainder
+
+
+def kernel_tau_ode_audit():
+    E0, E, K, ell, Gamma, Dr = generic_blocks()
+
+    common_remainder = sp.factor(Dr - (K**2 - tau*Gamma))
+
+    zL = sp.cancel(tau*x*y*ell**2/E**2)
+    RL = sp.cancel(ell/(2*E))
+    coeffL = sp.factor(sp.diff(RL, tau)/RL - sp.diff(zL, tau)/(2*zL))
+    driverL = sp.factor(RL*sp.diff(zL, tau)/(2*zL*(1-zL)))
+    driverL_remainder = sp.factor(driverL - ell*K/(4*tau*Dr))
+
+    zJ = sp.cancel(tau*Gamma/K**2)
+    RJ = sp.cancel(1/K)
+    coeffJ = sp.factor(sp.diff(RJ, tau)/RJ - sp.diff(zJ, tau)/(2*zJ))
+    driverJ = sp.factor(RJ*sp.diff(zJ, tau)/(2*zJ*(1-zJ)))
+    driverJ_remainder = sp.factor(driverJ - E/(2*tau*Dr))
+
+    return {
+        "common_remainder": common_remainder,
+        "coeffL": coeffL,
+        "driverL_remainder": driverL_remainder,
+        "coeffJ": coeffJ,
+        "driverJ_remainder": driverJ_remainder,
+        "Dr": Dr,
+    }
+
+
+def exact_witness_audit():
+    E0, E, K, ell, Gamma, Dr = generic_blocks()
+    subs = {D: sp.Integer(1), M: sp.Integer(1), nu: sp.Rational(1,5), r: sp.Integer(2)}
+    Drw = sp.factor(Dr.subs(subs))
+
+    # Exact x-root trace algebraic cover: Z = rho(rho-1), D(rho,y;tau)=0.
+    resultant = sp.factor(sp.resultant(Drw, Z - x*(x-1), x))
+    Pres = sp.Poly(resultant, Z, y)
+    discZ = sp.factor(sp.discriminant(Pres, Z))
+
+    # Endpoint-compatible twisted critical ideal for the actual rational driver.
+    hx = x*(1-x)
+    hy = y*(1-y)
+    Gx = sp.expand(2*hx*sp.diff(Drw, x) + sp.diff(hx, x)*Drw)
+    Gy = sp.expand(2*hy*sp.diff(Drw, y) + sp.diff(hy, y)*Drw)
+    Gb = sp.groebner([Gx, Gy], x, y, order="grevlex", domain=sp.QQ.frac_field(tau))
+    leading = [list(p.LM(order=Gb.order).exponents) for p in Gb.polys]
+
+    standard = []
+    for i in range(12):
+        for j in range(12):
+            if not any(i >= a and j >= b for a, b in leading):
+                standard.append([i, j])
+
+    return {
+        "parameters": {"D": "1", "M": "1", "nu": "1/5", "r": "2", "tau": "symbolic"},
+        "driver": str(Drw),
+        "x_root_trace_resultant": {
+            "degree_Z": int(sp.degree(resultant, Z)),
+            "degree_y": int(sp.degree(resultant, y)),
+            "total_degree_Z_y": int(Pres.total_degree()),
+            "term_count": len(Pres.terms()),
+            "discriminant_degree_y": int(sp.degree(discZ, y)),
+            "discriminant_degree_tau": int(sp.degree(discZ, tau)),
+            "discriminant_factor_degrees": [
+                [int(sp.degree(f, y)), int(sp.degree(f, tau)), int(e)]
+                for f, e in sp.factor_list(discZ)[1]
+            ],
+        },
+        "twisted_critical_ideal": {
+            "groebner_leading_monomials": leading,
+            "standard_monomial_count": len(standard),
+            "standard_monomials": standard,
+        },
+    }
+
+
+def main():
+    ode = kernel_tau_ode_audit()
+    _, _, _, _, _, Dr = generic_blocks()
+    P = sp.Poly(sp.expand(Dr), x, y)
+
+    # Exact Euler-beta resolvent identity used for the x elimination.
+    hgred = sp.hyperexpand(sp.hyper([sp.Rational(1,2), 1], [1], 1/rho))
+
+    result = {
+        "status": {
+            "PF1_PATH_INVARIANTS": "LOCKED",
+            "PF1_R05_PHI_FIRST_ORDER_IDENTITY": "PASS_EXACT",
+            "PF1_R05_COMMON_TAU_DRIVER_IDENTITY": "PASS_EXACT",
+            "PF1_R05_LOG_KERNEL_TAU_ODE": "PASS_EXACT",
+            "PF1_R05_RECIPROCAL_KERNEL_TAU_ODE": "PASS_EXACT",
+            "PF1_R05_X_ARCSINE_RESOLVENT_ELIMINATION": "PASS_CLASS_A",
+            "PF1_R05_Y_ALGEBRAIC_TRACE_RESULTANT": "PASS_FINITE_ALGEBRAIC",
+            "PF1_R05_TWISTED_CRITICAL_QUOTIENT": "PASS_WITNESS_DIMENSION_19",
+            "PF1_R05_FULL_GENERIC_CONNECTION_MATRIX": "HOLD",
+            "FORMAL_WHOLE_HALFWAVE_GATE_A": "HOLD",
+        },
+        "exact_identities": {
+            "phi_first_order": "2*z*Phi'(z)+Phi(z)=1/(1-z)",
+            "phi_identity_remainder": str(phi_first_order_audit()),
+            "common_driver": "D_r(tau)=E_tau^2-tau*x*y*ell^2=K_tau^2-tau*Gamma",
+            "common_driver_remainder": str(ode["common_remainder"]),
+            "log_kernel_ode": "(2*tau*d/dtau+1) F_L = ell*K_tau/(2*D_r)",
+            "log_chain_coeff": str(ode["coeffL"]),
+            "log_driver_remainder": str(ode["driverL_remainder"]),
+            "reciprocal_kernel_ode": "(2*tau*d/dtau+1) F_J = E_tau/D_r",
+            "reciprocal_chain_coeff": str(ode["coeffJ"]),
+            "reciprocal_driver_remainder": str(ode["driverJ_remainder"]),
+        },
+        "driver_geometry": {
+            "degree_x": int(sp.degree(Dr, x)),
+            "degree_y": int(sp.degree(Dr, y)),
+            "total_degree": int(P.total_degree()),
+            "term_count": len(P.terms()),
+            "support": [list(m) for m, _ in P.terms()],
+        },
+        "x_resolvent": {
+            "basic_identity": "integral_0^1 dx/[sqrt(x(1-x))*(x-rho)] = -pi/sqrt(rho*(rho-1)) on the analytically continued branch",
+            "hypergeometric_reduction": "2F1(1/2,1;1;1/rho)=" + str(hgred),
+            "cubic_trace": "for simple roots rho_j of D(x,y;tau), integral N/D = -pi*sum_j N(rho_j)/(D_x(rho_j)*sqrt(rho_j(rho_j-1)))",
+        },
+        "exact_witness": exact_witness_audit(),
+        "formal_counts": {
+            "spatial_sampling": 0,
+            "spatial_quadrature": 0,
+            "spatial_subdomains": 1,
+            "material_point_grid": 0,
+        },
+    }
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_pf1_relative_endpoint_hypergeometric_r04.py
+SIZE: 5208
+SHA256: 5de4b7b9c995947999a04d1f7bf7f90d993a544ac95055913ab5022db0509d7d
+ENCODING: utf-8
+LINES: 128
+====================================================================================================
+from __future__ import annotations
+import json
+import sympy as sp
+
+x,y,s,D,M,B,nu,r = sp.symbols('x y s D M B nu r')
+
+Gamma = (
+ D**2*nu**2*x*y - 2*D**2*nu*x*y + 4*D**2*nu*x + 4*D**2*nu*y - 4*D**2*nu + D**2*x*y
+ + 2*D*M*nu*x**2*y - 4*D*M*nu*x**2 + 2*D*M*nu*x*y**2 - 4*D*M*nu*x*y + 4*D*M*nu*x
+ - 2*D*M*x**2*y - 2*D*M*x*y**2 + 4*D*M*x*y + 4*D*M*y**2 - 4*D*M*y
+ - 4*D*nu*r*x*y + 4*D*nu*r*x + 4*D*nu*r*y - 4*D*nu*r
+ + 4*D*r*x*y - 4*D*r*x - 4*D*r*y + 4*D*r
+ + M**2*x**3*y + 2*M**2*x**2*y**2 - 4*M**2*x**2*y + M**2*x*y**3 - 4*M**2*x*y**2 + 4*M**2*x*y
+ - 4*M*r*x**2*y + 4*M*r*x**2 - 4*M*r*x*y**2 + 8*M*r*x*y - 4*M*r*x
+ + 4*M*r*y**2 - 4*M*r*y + 4*r**2*x*y - 4*r**2*x - 4*r**2*y + 4*r**2
+)
+Pgen = sp.expand(x*(1-x)*Gamma)
+
+def sylvester_matrix(P):
+    ac=sp.symbols('a0:4'); bc=sp.symbols('b0:5')
+    A=sum(ac[i]*x**i for i in range(4))
+    Bp=sum(bc[i]*x**i for i in range(5))
+    expr=sp.Poly(sp.expand(A*P+Bp*sp.diff(P,x)),x)
+    vars=list(ac)+list(bc)
+    S=sp.Matrix([[expr.coeff_monomial(x**k).coeff(v) for v in vars] for k in range(9)])
+    return S,A,Bp,vars
+
+def endpoint_factor_audit():
+    spec={D:sp.Integer(1),M:sp.Integer(1),nu:sp.Rational(1,5),r:sp.Integer(2),y:sp.Rational(1,3)}
+    P=sp.factor(Pgen.subs(spec))
+    S,A,Bp,vars=sylvester_matrix(P)
+    out={}
+    for theta in (D,M,y):
+        rows=[]
+        for k in range(4):
+            N=sp.Poly(sp.expand(-sp.Rational(1,2)*x**k*sp.diff(Pgen,theta).subs(spec)),x)
+            rhs=sp.Matrix([N.coeff_monomial(x**j) for j in range(9)])
+            sol=S.LUsolve(rhs)
+            Bsol=sp.factor(Bp.subs(dict(zip(vars,sol))))
+            q,rem=sp.div(Bsol,x*(1-x),domain='QQ')
+            rows.append({
+                'k':k,
+                'B_at_0':str(sp.factor(Bsol.subs(x,0))),
+                'B_at_1':str(sp.factor(Bsol.subs(x,1))),
+                'divisible_by_x1mx':bool(sp.expand(rem)==0),
+                'quotient_degree':int(sp.Poly(q,x).degree()),
+            })
+        out[str(theta)]=rows
+    return out
+
+def quadratic_kernel_audit():
+    alpha,beta,gamma,a,c = sp.symbols('alpha beta gamma a c', nonzero=True)
+    z=sp.symbols('z')
+    Delta=lambda q: alpha*q**2+beta*q+gamma
+    A0=sp.expand(Delta(a))
+    L=sp.expand(2*alpha*a+beta)
+    E=sp.expand(A0+alpha*c**2)
+    K=sp.expand(A0-alpha*c**2)
+    disc=sp.expand(beta**2-4*alpha*gamma)
+    sd=sp.sqrt(disc)
+    J0=sp.atanh(c*sd/K)/(c*sd)
+    Dlog=sp.atanh(c*L/E)/c
+    check_J0=sp.simplify(sp.diff(2*c*J0,c)-(1/Delta(a+c)+1/Delta(a-c)))
+    logratio=sp.log(Delta(a+c)/Delta(a-c))
+    check_log=sp.simplify(sp.diff(2*c*Dlog,c)-sp.diff(logratio,c))
+    Phi=sp.atanh(sp.sqrt(z))/sp.sqrt(z)
+    ode=sp.simplify(z*(1-z)*sp.diff(Phi,z,2)+(sp.Rational(3,2)-sp.Rational(5,2)*z)*sp.diff(Phi,z)-sp.Rational(1,2)*Phi)
+    return {
+        'reciprocal_endpoint_derivative_identity':bool(check_J0==0),
+        'log_endpoint_derivative_identity':bool(check_log==0),
+        'Phi_hypergeometric_ode_identity':bool(ode==0),
+        'Phi_ode':'z(1-z)Phi_dd+(3/2-5z/2)Phi_d-Phi/2=0',
+    }
+
+def actual_delta_audit():
+    H=x+y-2*x*y
+    Kkin=nu*x-y+(1-nu)*x*y
+    a=(nu-1)*D+M*H
+    I2=(-nu*D**2+D*M*Kkin+D*(nu-1)*(s-a)/2+M*(2-x-y)*(s-a)/2+(x+y-1)*(s-a)**2/(4*x*y))
+    Delta=sp.Poly(sp.expand(I2-r*s+r**2),s)
+    alpha=sp.factor(Delta.coeff_monomial(s**2))
+    beta=sp.factor(Delta.coeff_monomial(s))
+    gamma=sp.factor(Delta.coeff_monomial(1))
+    disc=sp.factor(beta**2-4*alpha*gamma)
+    ell=sp.factor(D*(nu-1)+M*(2-x-y)-2*r)
+    L=sp.factor(2*alpha*a+beta)
+    E=sp.factor((alpha*a**2+beta*a+gamma)+alpha*(4*B**2*x*y))
+    E_target=sp.factor(-nu*D**2+D*M*Kkin+B**2*(x+y-1)-r*a+r**2)
+    Kbar=sp.factor((alpha*a**2+beta*a+gamma)-alpha*(4*B**2*x*y))
+    return {
+        'alpha':str(alpha),
+        'L_equals_ell_over_2':bool(sp.simplify(L-ell/2)==0),
+        'E_identity':bool(sp.simplify(E-E_target)==0),
+        'Kbar_identity':bool(sp.simplify(Kbar-(E_target-2*B**2*(x+y-1)))==0),
+        'c2_disc_equals_B2_Gamma':bool(sp.simplify(4*B**2*x*y*disc-B**2*Gamma)==0),
+        'chi_log':'B^2*x*y*ell_r^2/E_r^2',
+        'chi_reciprocal':'B^2*Gamma_r/Kbar_r^2',
+    }
+
+def main():
+    result={
+      'status':{
+        'PF1_PATH_INVARIANTS':'LOCKED',
+        'PF1_R04_PHYSICAL_RELATIVE_X_EXACT_TERM':'PASS_EXACT',
+        'PF1_R04_ENDPOINT_B_OVER_W':'VANISHES_EXACTLY',
+        'PF1_R04_LOG_ATANH_SYMMETRIC_KERNEL':'PASS_EXACT',
+        'PF1_R04_CANONICAL_SPECIAL_FUNCTION':'2F1(1/2,1;3/2;z)',
+        'PF1_R04_ALPHA_ZERO':'REMOVABLE_ANALYTIC_LIMIT',
+        'PF1_R04_PAIR_S_ENDPOINT_KERNEL_FAMILY':'FINITE_PHI_FAMILY',
+        'PF1_R04_SPATIAL_SUBDOMAINS_ADDED':0,
+        'PF1_R04_SPATIAL_QUADRATURE':0,
+        'FORMAL_WHOLE_HALFWAVE_GATE_A':'HOLD',
+      },
+      'endpoint_factor_witness':endpoint_factor_audit(),
+      'quadratic_kernel':quadratic_kernel_audit(),
+      'actual_M1R_delta':actual_delta_audit(),
+      'formal_counts':{
+        'spatial_sampling':0,
+        'spatial_quadrature':0,
+        'spatial_subdomains':1,
+        'material_point_grid':0,
+      },
+      'next_task':'PF1-R05 finite creative telescoping for Beta-weighted rational x Phi(rational pullback) blocks',
+    }
+    print(json.dumps(result,indent=2,ensure_ascii=False))
+
+if __name__=='__main__':
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_pf1_relative_x_endpoint_r04.py
+SIZE: 7166
+SHA256: 99944a8f6b806f490354d14cfa06345ef8c43dea9d98f7c5fa08208b571271b4
+ENCODING: utf-8
+LINES: 177
+====================================================================================================
+"""NZ-SCCM PF1-R04 physical relative-x endpoint audit.
+
+This is an exact symbolic audit only. No spatial/auxiliary numerical quadrature,
+no cells, no material points, no Case21 Pu, no Swartz24, and no route switch.
+
+Main result
+-----------
+For P=x(1-x) Gamma and parameter derivatives that do not move x=0,1,
+P_theta=x(1-x) Gamma_theta.  The R03 Griffiths/Hermite exact term can be
+chosen with B_rel=x(1-x) C, so B_rel/w -> 0 at both physical branch endpoints.
+Thus the algebraic compact subsystem uses the same finite Gauss-Manin matrix on
+the physical [0,1] relative chain; the exact-differential endpoint functional
+vanishes identically.  Log/atanh endpoint terms remain a separate relative
+extension and are NOT declared closed here.
+"""
+from __future__ import annotations
+
+import json
+import sympy as sp
+
+x,y,D,M,nu,r,Bb,t,eta = sp.symbols('x y D M nu r Bb t eta')
+h = x*(1-x)
+
+Gamma = (
+ D**2*nu**2*x*y - 2*D**2*nu*x*y + 4*D**2*nu*x + 4*D**2*nu*y - 4*D**2*nu + D**2*x*y
+ + 2*D*M*nu*x**2*y - 4*D*M*nu*x**2 + 2*D*M*nu*x*y**2 - 4*D*M*nu*x*y + 4*D*M*nu*x
+ - 2*D*M*x**2*y - 2*D*M*x*y**2 + 4*D*M*x*y + 4*D*M*y**2 - 4*D*M*y
+ - 4*D*nu*r*x*y + 4*D*nu*r*x + 4*D*nu*r*y - 4*D*nu*r
+ + 4*D*r*x*y - 4*D*r*x - 4*D*r*y + 4*D*r
+ + M**2*x**3*y + 2*M**2*x**2*y**2 - 4*M**2*x**2*y + M**2*x*y**3 - 4*M**2*x*y**2 + 4*M**2*x*y
+ - 4*M*r*x**2*y + 4*M*r*x**2 - 4*M*r*x*y**2 + 8*M*r*x*y - 4*M*r*x
+ + 4*M*r*y**2 - 4*M*r*y + 4*r**2*x*y - 4*r**2*x - 4*r**2*y + 4*r**2
+)
+Pgen = sp.expand(h*Gamma)
+
+
+def endpoint_reduction_matrix(G):
+    """7x7 map [Atilde_0..3,C_0..2] -> coeffs of Atilde*G+C*h*G'."""
+    Gp=sp.Poly(sp.expand(G),x)
+    HGp=sp.Poly(sp.expand(h*sp.diff(G,x)),x)
+    if Gp.degree()!=3:
+        raise ValueError('R04 generic single-resolvent Gamma must be cubic in x')
+    S=sp.zeros(7,7)
+    gc=[Gp.nth(i) for i in range(4)]
+    hc=[HGp.nth(i) for i in range(5)]
+    for i in range(4):
+        for k,v in enumerate(gc): S[i+k,i]=v
+    for j in range(3):
+        for k,v in enumerate(hc): S[j+k,4+j]=v
+    return S
+
+
+def endpoint_compatible_reduction(G,Gtheta,k):
+    """Return A,Brel,C and exact identity for N=-1/2*x^k*h*Gtheta."""
+    S=endpoint_reduction_matrix(G)
+    Nt=sp.Poly(sp.expand(-sp.Rational(1,2)*x**k*Gtheta),x)
+    rhs=sp.Matrix([Nt.nth(i) for i in range(7)])
+    sol=S.LUsolve(rhs)
+    Atilde=sum(sol[i]*x**i for i in range(4))
+    C=sum(sol[4+j]*x**j for j in range(3))
+    Brel=sp.factor(h*C)
+    A=sp.factor(Atilde-C*sp.diff(h,x))
+    P=sp.factor(h*G)
+    N=sp.factor(h*Nt.as_expr())
+    identity=sp.expand(A*P+Brel*sp.diff(P,x)-N)==0
+    Q=sp.factor(A+2*sp.diff(Brel,x))
+    return A,Brel,C,Q,identity
+
+
+def exact_state_audit(name,subs):
+    G=sp.factor(Gamma.subs(subs))
+    S=endpoint_reduction_matrix(G)
+    detS=sp.factor(S.det())
+    resultant=sp.factor(sp.resultant(G,h*sp.diff(G,x),x))
+    per_theta={}
+    for theta in (D,M,y):
+        Gtheta=sp.diff(Gamma,theta).subs(subs)
+        rows=[]
+        for k in range(4):
+            A,Brel,C,Q,ok=endpoint_compatible_reduction(G,Gtheta,k)
+            rows.append({
+                'k':k,
+                'identity':bool(ok),
+                'Brel_has_x_factor':bool(sp.rem(sp.Poly(Brel,x),sp.Poly(x,x)).as_expr()==0),
+                'Brel_has_1_minus_x_factor':bool(sp.simplify(Brel.subs(x,1))==0),
+                'Brel_at_0':str(sp.factor(Brel.subs(x,0))),
+                'Brel_at_1':str(sp.factor(Brel.subs(x,1))),
+                'Q_degree':int(sp.Poly(Q,x).degree()),
+            })
+        per_theta[str(theta)]=rows
+    return {
+        'name':name,
+        'state':{str(k):str(v) for k,v in subs.items()},
+        'Gamma':str(G),
+        'P':str(sp.factor(h*G)),
+        'det_7x7':str(detS),
+        'resultant_G_hGprime':str(resultant),
+        'det_equals_resultant':bool(sp.simplify(detS-resultant)==0),
+        'theta_audit':per_theta,
+    }
+
+
+def log_divisor_audit():
+    H=x+y-2*x*y
+    K=nu*x-y+(1-nu)*x*y
+    a=(nu-1)*D+M*H
+    E=sp.factor(-nu*D**2+D*M*K+Bb**2*(x+y-1)-r*a+r**2)
+    O=sp.factor(Bb*(D*(nu-1)+M*(2-x-y)-2*r))
+    # t^2=x, eta^2=y. Direct log[Delta(s+)/Delta(s-)] factors.
+    E_t=sp.expand(E.subs(x,t**2))
+    O_t=sp.expand(O.subs(x,t**2))
+    phi_plus=sp.expand(E_t+eta*t*O_t)
+    phi_minus=sp.expand(E_t-eta*t*O_t)
+    product_identity=sp.expand((phi_plus*phi_minus).subs(eta**2,y) - (E_t**2-y*t**2*O_t**2))==0
+
+    # Exact rational witness with eta^2=y=1/4.
+    wsub={D:sp.Integer(1),M:sp.Integer(1),nu:sp.Rational(1,5),r:sp.Integer(2),y:sp.Rational(1,4),eta:sp.Rational(1,2),Bb:sp.Rational(1,3)}
+    pp=sp.factor(phi_plus.subs(wsub)); pm=sp.factor(phi_minus.subs(wsub))
+    return {
+        'E_degree_x':int(sp.Poly(E,x).degree()),
+        'O_degree_x':int(sp.Poly(O,x).degree()),
+        'phi_plus_degree_t':int(sp.Poly(phi_plus,t).degree()),
+        'phi_minus_degree_t':int(sp.Poly(phi_minus,t).degree()),
+        'product_identity':bool(product_identity),
+        'witness':{
+            'parameters':{'D':'1','M':'1','nu':'1/5','r':'2','y':'1/4','sqrt_y':'1/2','Bb':'1/3'},
+            'phi_plus':str(pp),
+            'phi_minus':str(pm),
+            'gcd_degree':int(sp.gcd(sp.Poly(pp,t),sp.Poly(pm,t)).degree()),
+            'disc_phi_plus':str(sp.factor(sp.discriminant(sp.Poly(pp,t),t))),
+            'disc_phi_minus':str(sp.factor(sp.discriminant(sp.Poly(pm,t),t))),
+        }
+    }
+
+
+def main():
+    states=[
+        ('A',{D:sp.Integer(1),M:sp.Integer(1),nu:sp.Rational(1,5),r:sp.Integer(2),y:sp.Rational(1,3)}),
+        ('B',{D:sp.Rational(4,5),M:sp.Rational(3,2),nu:sp.Rational(1,4),r:sp.Rational(-1,2),y:sp.Rational(2,5)}),
+        ('C',{D:sp.Rational(6,5),M:sp.Rational(2,3),nu:sp.Rational(1,6),r:sp.Rational(3,2),y:sp.Rational(3,5)}),
+    ]
+    result={
+        'status':{
+            'PF1_PATH_INVARIANTS':'LOCKED',
+            'PF1_R04_ENDPOINT_COMPATIBLE_7X7_REDUCTION':'PASS_EXACT',
+            'PF1_R04_PHYSICAL_ALGEBRAIC_X_ENDPOINT':'PASS_EXACT',
+            'PF1_R04_DIRECT_LOG_DIVISOR_IDENTIFICATION':'PASS_EXACT',
+            'PF1_R04_LOG_RELATIVE_EXTENDED_CONNECTION':'HOLD',
+            'PF1_R04_PAIR_BLOCK_EXTENSION':'NOT_YET_CLOSED',
+            'PF1_R04_Y_WHOLE_HALFWAVE_CLOSURE':'NOT_YET_CLOSED',
+            'FORMAL_WHOLE_HALFWAVE_GATE_A':'HOLD',
+        },
+        'identity':{
+            'P':'h*Gamma, h=x(1-x)',
+            'Ptheta':'h*Gamma_theta',
+            'N':'h*Ntilde, Ntilde=-1/2*x^k*Gamma_theta',
+            'reduced_equation':'Ntilde=Atilde*Gamma+C*h*Gamma_prime',
+            'Brel':'h*C',
+            'A':'Atilde-C*h_prime',
+            'boundary':'Brel/w=C*sqrt(h/Gamma) -> 0 at x=0,1 when P is square-free',
+            'matrix_dimension':7,
+            'matrix_determinant':'Res(Gamma,h*Gamma_prime)=Res(Gamma,h)*Res(Gamma,Gamma_prime)'
+        },
+        'exact_states':[exact_state_audit(name,subs) for name,subs in states],
+        'direct_log_divisor':log_divisor_audit(),
+        'formal_counts':{
+            'spatial_sampling':0,
+            'spatial_quadrature':0,
+            'spatial_subdomains':1,
+            'material_point_grid':0,
+            'endpoint_reduction_matrix_dimension':7,
+        }
+    }
+    print(json.dumps(result,indent=2,ensure_ascii=False))
+
+if __name__=='__main__':
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_tensile_current_map_transition_corridor_r02.py
+SIZE: 3189
+SHA256: 8899f1cb973271c8d38ca926651cd24a10b1473a84f391b3f05ded3bdaf4ea9e
+ENCODING: utf-8
+LINES: 107
+====================================================================================================
+import numpy as np
+from numpy.polynomial.chebyshev import chebfit, chebval
+
+# Frozen material-only reference constants
+kappa=2.0005129533678754
+rho=0.1
+xcr=rho/kappa
+eta_pi0=xcr/20.0
+eta_r0=0.05
+m_t=-7.0/90.0
+a_cc=0.1072329249362415
+a_t=1.0-2.0**(-1.0/8.0)
+LAM_MIN=-2.4390243902439024
+LAM_MAX=0.7317073170731706
+
+
+def Pi_eta(z,eta):
+    z=np.asarray(z)
+    return z*z*(np.sqrt(z*z+eta*eta)+z)/(2.0*(z*z+eta*eta))
+
+
+def H(r,r0,eta):
+    r=np.asarray(r)
+    return 0.5*((r-r0)+np.sqrt((r-r0)**2+eta**2))-0.5*((-r0)+np.sqrt(r0**2+eta**2))
+
+
+def primitives(lam,k_pi=1.0,k_H=1.0,alpha_T=1.0):
+    c=Pi_eta(-lam,eta_pi0*k_pi)
+    t=Pi_eta(lam,eta_pi0*k_pi)
+    C=kappa*c/(1.0+(kappa-2.0)*c+c*c)
+    r=t/xcr
+    T=(r+(m_t-1.0)*H(r,1.0,eta_r0*k_H)-m_t*H(r,10.0,eta_r0*k_H))*alpha_T
+    U=kappa*lam-C+kappa*c+rho*T-kappa*t
+    return U,C,T
+
+
+def current_map(l1,l2,k_pi=1.0,k_H=1.0,alpha_T=1.0):
+    U1,C1,T1=primitives(l1,k_pi,k_H,alpha_T)
+    U2,C2,T2=primitives(l2,k_pi,k_H,alpha_T)
+    s1=U1-a_cc*C1*C1*C2+C1*T2-rho*a_t*T1*T2**8
+    s2=U2-a_cc*C2*C2*C1+C2*T1-rho*a_t*T2*T1**8
+    return s1,s2
+
+
+_lam_t=np.linspace(0.0,0.8,200001)
+_ft_ref=float(current_map(_lam_t,0.0)[0].max())
+
+
+def anchor_alpha(k_pi,k_H):
+    lo,hi=0.5,1.5
+    for _ in range(60):
+        mid=0.5*(lo+hi)
+        p=float(current_map(_lam_t,0.0,k_pi,k_H,mid)[0].max())
+        if p<_ft_ref: lo=mid
+        else: hi=mid
+    return 0.5*(lo+hi)
+
+
+def curvature_peaks(k_pi,k_H,alpha_T):
+    x=np.linspace(-0.02,0.62,320001)
+    T=primitives(x,k_pi,k_H,alpha_T)[2]
+    h=x[1]-x[0]
+    d2=np.gradient(np.gradient(T,h),h)
+    out=[]
+    for lo,hi in [(0.0,0.01),(0.03,0.08),(0.45,0.56)]:
+        m=(x>=lo)&(x<=hi)
+        out.append(float(np.max(np.abs(d2[m]))))
+    return out
+
+
+def jacobian(l1,l2,k_pi,k_H,alpha_T):
+    h=1e-30
+    s1,s2=current_map(l1+1j*h,l2,k_pi,k_H,alpha_T)
+    d11,d21=np.imag(s1)/h,np.imag(s2)/h
+    s1,s2=current_map(l1,l2+1j*h,k_pi,k_H,alpha_T)
+    d12,d22=np.imag(s1)/h,np.imag(s2)/h
+    return np.array([[d11,d12],[d21,d22]],float)
+
+
+def cheb_screen(k,alpha,deg,lo,hi,nfit=12001,nval=200001):
+    lf=np.linspace(lo,hi,nfit)
+    xf=(2.0*lf-(hi+lo))/(hi-lo)
+    Tf=primitives(lf,k,k,alpha)[2]
+    co=chebfit(xf,Tf,deg)
+    lv=np.linspace(lo,hi,nval)
+    xv=(2.0*lv-(hi+lo))/(hi-lo)
+    Tv=primitives(lv,k,k,alpha)[2]
+    P=chebval(xv,co)
+    scale=max(float(np.max(np.abs(Tv))),1e-15)
+    e=np.abs(P-Tv)/scale
+    return float(e.max()),float(np.percentile(e,95)),float(np.max(np.abs(P-Tv)))
+
+
+if __name__=='__main__':
+    base_curv=np.array(curvature_peaks(1.0,1.0,1.0))
+    print('ft_ref=',_ft_ref)
+    print('base_curvature=',base_curv)
+    for k in [1.0,1.25,1.5,1.75,2.0,4.0,8.0]:
+        a=1.0 if k==1.0 else anchor_alpha(k,k)
+        curv=np.array(curvature_peaks(k,k,a))
+        print('k=',k,'alpha=',a,'curvature_ratio=',curv/base_curv)
+    for k in [1.0,1.25,1.5,2.0]:
+        a=1.0 if k==1.0 else anchor_alpha(k,k)
+        print('full n32',k,cheb_screen(k,a,32,LAM_MIN,LAM_MAX))
+        print('full n64',k,cheb_screen(k,a,64,LAM_MIN,LAM_MAX))
+    print('lambda+ n32',cheb_screen(1.0,1.0,32,-0.1051,0.13584,4001,100001))
+    print('lambda- n6',cheb_screen(1.0,1.0,6,-0.86569,-0.62473,4001,100001))
+
+====================================================================================================
+FILE: current/theory/r10b_coefficient_generator_v1.py
+SIZE: 1989
+SHA256: 71b0cce119c573e197d7d73c72fa8a12a69faded91e80be113b7ae8e28257308
+ENCODING: utf-8
+LINES: 81
+====================================================================================================
+# NZ-SCCM R10B transparent material-coordinate coefficient generator
+# Current governing default: N=48. No spatial sampling/quadrature is used here.
+import numpy as np
+
+FC = 21.23
+E0 = 20321.0
+EPS0 = 0.00209
+NU = 0.18
+RHO = 0.1
+KAPPA = E0 * EPS0 / FC
+XCR = RHO / KAPPA
+ETA = XCR / 20.0
+H = 0.09799750427197301
+UR = 0.03
+
+LAM_A = -1.01
+LAM_B = 0.105
+LAM_C = 0.5 * (LAM_A + LAM_B)
+LAM_H = 0.5 * (LAM_B - LAM_A)
+
+def pi_eta(z):
+    z = np.asarray(z, dtype=float)
+    return z*z * (np.sqrt(z*z + ETA*ETA) + z) / (2.0 * (z*z + ETA*ETA))
+
+def u_sm(t):
+    t = np.asarray(t, dtype=float)
+    out = np.empty_like(t)
+    rise = t <= XCR
+    tau = t[rise] / XCR
+    out[rise] = (
+        RHO*tau
+        + (10*H - 6*RHO)*tau**3
+        + (8*RHO - 15*H)*tau**4
+        + (6*H - 3*RHO)*tau**5
+    )
+    fall = ~rise
+    s = (t[fall] - XCR) / (9*XCR)
+    out[fall] = H + (UR-H) * (10*s**3 - 15*s**4 + 6*s**5)
+    return out
+
+def C(lam):
+    c = pi_eta(-np.asarray(lam, dtype=float))
+    return KAPPA*c / (1.0 + (KAPPA-2.0)*c + c*c)
+
+def T(lam):
+    return u_sm(pi_eta(np.asarray(lam, dtype=float))) / RHO
+
+def U(lam):
+    lam = np.asarray(lam, dtype=float)
+    c = pi_eta(-lam)
+    t = pi_eta(lam)
+    cc = KAPPA*c / (1.0 + (KAPPA-2.0)*c + c*c)
+    return KAPPA*lam - cc + KAPPA*c + u_sm(t) - KAPPA*t
+
+FUNCTIONS = {
+    "U": U,
+    "C": C,
+    "T": T,
+    "T7": lambda lam: T(lam)**7,
+}
+
+def coefficients(N, f):
+    j = np.arange(N + 1)
+    theta = (j + 0.5) * np.pi / (N + 1)
+    lam = LAM_C + LAM_H * np.cos(theta)
+    values = f(lam)
+    a = np.empty(N + 1)
+    for n in range(N + 1):
+        prefactor = (1.0 if n == 0 else 2.0) / (N + 1)
+        a[n] = prefactor * np.sum(values * np.cos(n * theta))
+    return a
+
+def evaluate(a, lam):
+    xi = (np.asarray(lam, dtype=float) - LAM_C) / LAM_H
+    return np.polynomial.chebyshev.chebval(xi, a)
+
+if __name__ == "__main__":
+    N = 48
+    for name, f in FUNCTIONS.items():
+        a = coefficients(N, f)
+        print(name, len(a), np.max(np.abs(a)))
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md
+SIZE: 12089
+SHA256: 6eee3bcbdd7a264cfb353eb0abb332732923829977a84bbcc8bc416d79b0ffbc
+ENCODING: utf-8
+LINES: 603
+====================================================================================================
+# NZ-SCCM 计算过程模板 V1 —— 以 Case21 全新闭合作为唯一格式范例
+
+**日期：2026-08-11**  
+**身份：CURRENT CALCULATION PROCESS TEMPLATE**  
+**用途：把已经闭合的 Case21 计算过程固化为后续板件计算的统一执行模板。它不是新材料阶段，不修改 R10，不修改 N48，不修改 D15。**
+
+---
+
+# 0. 不可变执行纪律
+
+后续任一板件必须按下列顺序执行：
+
+```text
+原始板件输入
+-> 闭式 R10 材料参数代入
+-> 连续主等效应变范围解析证书
+-> N48 系数由统一公式重新生成
+-> Nguyen 连续二阶运动学
+-> Cayley-Hamilton 二维 current-map
+-> D15 完整半波精确矩
+-> 钢筋闭式贡献与材料支检查
+-> 解 Rq(D,q)=0 平衡支
+-> 解 L(D,q)=0 极限点
+-> 残量与材料支自洽检查
+-> 最后才引入试验值比较
+```
+
+禁止：
+
+```text
+历史 CaseXX 计算荷载作为输入 = NO
+历史 CaseXX 根作为初值目标 = NO
+历史 CaseXX 荷载路径作为选根依据 = NO
+试验荷载参与求解/调参 = NO
+空间 Gauss = NO
+空间 Simpson = NO
+空间 collocation = NO
+材料点网格 = NO
+自动提高 N48 阶次 = NO
+重新打开 R10 材料路线 = NO
+```
+
+正式空间身份始终为
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+---
+
+# 1. STEP-1：建立板件原始输入表
+
+每块板首先只登记来源输入，不做理论调整。
+
+必须登记：
+
+\[
+a,\quad b,\quad \ell,\quad t_p,
+\]
+
+\[
+f_c,\quad E_0,\quad \varepsilon_0,\quad \nu,
+\]
+
+\[
+\rho_{s,x},\quad \rho_{s,y},\quad z_s,
+\]
+
+\[
+E_s,\quad \varepsilon_y,\quad f_y,
+\]
+
+\[
+q_0=\frac{A_0}{b}.
+\]
+
+式中：
+
+- \(a\) —— 整板轴向长度；
+- \(b\) —— 板宽；
+- \(\ell\) —— 当前已批准的一个连续完整代表半波长度；
+- \(t_p\) —— 混凝土板厚；
+- \(f_c\) —— 混凝土单轴抗压强度；
+- \(E_0\) —— 混凝土初始弹性模量；
+- \(\varepsilon_0\) —— 混凝土参考压缩应变；
+- \(\nu\) —— 泊松比；
+- \(\rho_{s,x},\rho_{s,y}\) —— 两个正交方向配筋率；
+- \(z_s\) —— 钢筋层相对中面的厚度坐标；
+- \(E_s\) —— 钢筋弹性模量；
+- \(\varepsilon_y\) —— 钢筋屈服应变；
+- \(f_y\) —— 钢筋屈服强度；
+- \(A_0\) —— 初始缺陷幅值；
+- \(q_0\) —— 初始缺陷无量纲幅值。
+
+**输出：** 一张输入表，并给出每个输入的来源。  
+**PASS：** 所有输入均来自试件/材料来源或已冻结项目合同。  
+**FAIL：** 缺少关键输入时停止，不用试验承载力反推。
+
+---
+
+# 2. STEP-2：直接代入闭式 R10 材料公式
+
+计算
+
+\[
+\boxed{\kappa=\frac{E_0\varepsilon_0}{f_c}},
+\]
+
+\[
+\boxed{x_{cr}=\frac{\rho}{\kappa}},
+\qquad
+\boxed{\eta=\frac{x_{cr}}{20}},
+\]
+
+其中 \(\rho=0.1\)。
+
+源 Foster 标量：
+
+\[
+r=\frac{t}{x_{cr}},
+\qquad
+m_t=-\frac7{90},
+\qquad
+\eta_r=0.05,
+\]
+
+\[
+H(r,r_0)=
+\frac12\left[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}\right]
+-
+\frac12\left[-r_0+\sqrt{r_0^2+\eta_r^2}\right],
+\]
+
+\[
+\boxed{T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10)}.
+\]
+
+材料功：
+
+\[
+\boxed{W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr}.
+\]
+
+R10 峰值：
+
+\[
+\boxed{
+h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)},
+\qquad u_r=0.03.
+\]
+
+上升支：
+
+\[
+\boxed{
+u_1(\tau)=
+\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5},
+\]
+
+\[
+\tau=\frac{t}{x_{cr}}.
+\]
+
+下降支：
+
+\[
+\boxed{
+u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)},
+\]
+
+\[
+s=\frac{t-x_{cr}}{9x_{cr}}.
+\]
+
+**输出：** \(\kappa,x_{cr},\eta,W_{src},h\) 和上、下降支的参数组合。  
+**PASS：** 只由材料输入得到。  
+**FAIL：** 不允许通过结构试验值调整 \(h\)、\(u_r\) 或其他参数。
+
+---
+
+# 3. STEP-3：连续主等效应变范围解析证书
+
+先写当前板件的 Nguyen 连续二阶应变场，再由整个连续半波上的解析上下界得到
+
+\[
+\lambda_-\ge\lambda_a,
+\qquad
+\lambda_+\le\lambda_b.
+\]
+
+这里 \([\lambda_a,\lambda_b]\) 是本板件 N48 编译所需的一维主等效应变包络。
+
+**重要：** 这个包络必须来自连续场解析界或已批准的解析搜索域，不能通过空间采样点扫描获得。
+
+定义
+
+\[
+\lambda_c=\frac{\lambda_a+\lambda_b}{2},
+\qquad
+\lambda_h=\frac{\lambda_b-\lambda_a}{2},
+\qquad
+\xi=\frac{\lambda-\lambda_c}{\lambda_h}.
+\]
+
+**输出：** \(\lambda_a,\lambda_b,\lambda_c,\lambda_h\)。  
+**PASS：** 连续场解析证书覆盖求解域。  
+**FAIL：** 若不能覆盖，只修正解析包络，不改变 R10 或 N48 阶次。
+
+---
+
+# 4. STEP-4：用一个公式重新生成 N48
+
+对
+
+\[
+F\in\{U,C,T,T^7\}
+\]
+
+写
+
+\[
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi)}.
+\]
+
+根点：
+
+\[
+\theta_j=\frac{(j+\tfrac12)\pi}{49},
+\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
+\qquad j=0,\ldots,48.
+\]
+
+所有系数统一由
+
+\[
+\boxed{
+a_n^{(F)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),
+\quad n=0,\ldots,48}
+\]
+
+生成。
+
+**输出：** 理论正文只给通式；计算审计可给 \(a_0,a_1,a_2\) 等少量代表系数。  
+**PASS：** 系数从本板件闭式材料重新生成。  
+**FAIL：** 不允许用旧板件 coefficient array 代替。
+
+---
+
+# 5. STEP-5：代入 Nguyen 连续二阶运动学
+
+统一坐标：
+
+\[
+X=\frac{\pi x}{b},
+\qquad
+Y=\frac{\pi y}{\ell},
+\qquad
+\zeta=\frac{2z}{t_p},
+\qquad
+q=\frac{A}{b}.
+\]
+
+然后使用当前已冻结的 Nguyen 二阶运动学建立
+
+\[
+\boxed{\mathbf E=\mathbf E(X,Y,\zeta;D,q)}.
+\]
+
+**Case21 特例说明：** Case21 中 \(\ell=b\)，因此其已展示的 \(C_m,C_b,e_x,e_y,g_{xy}\) 形式含有 \(\ell/b=1\) 的特化。后续若 \(\ell/b\neq1\)，不得机械复制 Case21 的 \(\ell=b\) 简化式；必须使用同一冻结 Nguyen 运动学的一般 \(\ell/b\) 形式，然后继续执行完全相同的后续步骤。这个区别是几何代入，不是重新打开理论。
+
+**输出：** 显式 \(e_x,e_y,g_{xy}\) 或等价 \(\mathbf E\) 公式，并列出该板件的所有数值系数组合。  
+**PASS：** 整个半波仍是一个连续解析场。
+
+---
+
+# 6. STEP-6：二维等效应变与 current-map
+
+由
+
+\[
+\mathbf E_u=
+\frac{(1-\nu)\mathbf E+\nu\operatorname{tr}(\mathbf E)\mathbf I}{1-\nu^2},
+\qquad
+\mathbf X=\frac{\mathbf E_u}{\varepsilon_0},
+\]
+
+建立
+
+\[
+\mathbf Y=\frac{\mathbf X-\lambda_c\mathbf I}{\lambda_h}.
+\]
+
+定义
+
+\[
+K_1=\operatorname{tr}\mathbf Y,
+\qquad
+K_2=\det\mathbf Y.
+\]
+
+二维 Cayley-Hamilton：
+
+\[
+\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=0.
+\]
+
+矩阵 Chebyshev 递推：
+
+\[
+\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y,
+\]
+
+\[
+A_{n+1}=-2K_2B_n-A_{n-1},
+\]
+
+\[
+B_{n+1}=2A_n+2K_1B_n-B_{n-1}.
+\]
+
+得到
+
+\[
+\mathbf U,\quad\mathbf C,\quad\mathbf T,\quad\mathbf T^{(7)},
+\]
+
+再计算
+
+\[
+\mathbf{CC}=\det(\mathbf C)\mathbf C,
+\]
+
+\[
+\mathbf{TC}=\mathbf C[\operatorname{tr}(\mathbf T)\mathbf I-\mathbf T],
+\]
+
+\[
+\mathbf{TT}=\det(\mathbf T)[\operatorname{tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}],
+\]
+
+\[
+\boxed{\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}}.
+\]
+
+**输出：** 不需要打印大数组，只需记录系数代数已闭合及必要人工校核项。  
+**PASS：** 无二维材料面重新拟合。
+
+---
+
+# 7. STEP-7：D15 完整半波精确矩
+
+任一待积分量写成
+
+\[
+Q(X,Y,\zeta)=\sum_{i,j,k}c_{ijk}
+\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta).
+\]
+
+基础矩：
+
+\[
+M_n=\begin{cases}
+\pi,&n=0,\\
+2\sin(n\pi/2)/n,&n\ge1,
+\end{cases}
+\]
+
+\[
+Z_k=\begin{cases}
+0,&k\text{ odd},\\
+2/(1-k^2),&k\text{ even}.
+\end{cases}
+\]
+
+因此
+
+\[
+\boxed{\mathscr D[Q]=\sum c_{ijk}M_iM_jZ_k}.
+\]
+
+直接混凝土轴力：
+
+\[
+\boxed{
+P_c=-\frac{f_cb t_p}{2\pi^2}\mathscr D[S_{yy}]}
+\]
+
+（若单位为 N、mm，则最终除以 1000 得 kN）。
+
+幅值广义功采用物理归一化应变
+
+\[
+\mathbf e=\frac{\mathbf E}{\varepsilon_0}
+=(1+\nu)\mathbf X-\nu\operatorname{tr}(\mathbf X)\mathbf I,
+\]
+
+\[
+\boxed{Q_q=\mathbf S:\mathbf e_{,q}},
+\]
+
+\[
+\boxed{
+R_{q,c}=f_c\varepsilon_0J_\Omega\mathscr D[Q_q]},
+\qquad
+J_\Omega=\frac{b\ell t_p}{2\pi^2}.
+\]
+
+**输出：** 至少给出 \(\mathscr D[S_{yy}]\)、轴力前因子、\(P_c\)、\(\mathscr D[Q_q]\)、广义功前因子和 \(R_{q,c}\)。  
+**PASS：** 结果由解析系数乘精确矩得到，而非空间点求和。
+
+---
+
+# 8. STEP-8：钢筋先检查材料支，再计算贡献
+
+必须先从连续钢筋应变场得到
+
+\[
+\varepsilon_{s,\min},\qquad\varepsilon_{s,\max}.
+\]
+
+若
+
+\[
+|\varepsilon_s|<\varepsilon_y,
+\]
+
+则使用
+
+\[
+\sigma_s=E_s\varepsilon_s.
+\]
+
+若达到屈服，则按冻结钢筋本构切换对应解析支；不得事后直接加 \(A_sf_y\)。
+
+计算
+
+\[
+P_s(D,q),\qquad R_{q,s}(D,q),
+\]
+
+并在求根前组成
+
+\[
+\boxed{P=P_c+P_s},
+\qquad
+\boxed{R_q=R_{q,c}+R_{q,s}}.
+\]
+
+**输出：** 钢筋应变范围、材料支判定、\(P_s,R_{q,s}\)。  
+**PASS：** 钢筋从求解开始就在总方程中，不事后追加。
+
+---
+
+# 9. STEP-9：求平衡支 Rq=0
+
+对若干广义压缩变量 \(D\)，只在低维未知量 \(q\) 上解
+
+\[
+\boxed{R_q(D,q)=0}.
+\]
+
+生成表格：
+
+| \(D\) | 平衡根 \(q\) | \(A=bq\) | \(P_c\) | \(P_s\) | \(P\) |
+|---:|---:|---:|---:|---:|---:|
+| ... | ... | ... | ... | ... | ... |
+
+这里允许对低维广义变量做少量插值、二分或 Newton；这不是空间离散。
+
+**PASS：** 平衡支连续、根可追踪。  
+**FAIL：** 若不存在合法根，报告该板件失败，不通过历史结果选一个根。
+
+---
+
+# 10. STEP-10：求极限状态
+
+在平衡支极值附近，用同一解析表达求
+
+\[
+P_{,D},\quad P_{,q},\quad R_{q,D},\quad R_{q,q}.
+\]
+
+极限条件
+
+\[
+\boxed{L=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0}.
+\]
+
+最终同时闭合
+
+\[
+\boxed{R_q(D_u,q_u)=0},
+\]
+
+\[
+\boxed{L(D_u,q_u)=0}.
+\]
+
+并给出
+
+\[
+A_u=bq_u,
+\qquad
+P_u=P(D_u,q_u).
+\]
+
+**输出：** \(D_u,q_u,A_u,P_c,P_s,P_u,R_q,L\) 及归一化残量。  
+**PASS：** 平衡条件和极限条件同时满足。
+
+---
+
+# 11. STEP-11：计算后自洽检查
+
+在最终 \((D_u,q_u)\) 重新检查：
+
+1. 主等效应变是否仍位于 N48 编译包络；
+2. 钢筋材料支是否仍正确；
+3. \(R_q\) 是否闭合；
+4. \(L\) 是否达到工程容差；
+5. 所有空间积分是否仍只使用 D15 精确矩；
+6. 是否存在任何试验荷载参与求解。
+
+只有全部通过，才进入最终比较。
+
+---
+
+# 12. STEP-12：最后才与试验值比较
+
+求解全部结束后，才读取试验失效荷载
+
+\[
+P_{f,exp}.
+\]
+
+仅计算
+
+\[
+\boxed{\Delta P=P_u-P_{f,exp}},
+\]
+
+\[
+\boxed{
+\varepsilon_P=
+\frac{P_u-P_{f,exp}}{P_{f,exp}}\times100\%}.
+\]
+
+不得把误差反向用于修改任何材料参数、N48 系数或根。
+
+标准输出表：
+
+| 板件 | \(P_u\) 理论值 / kN | \(P_{f,exp}\) / kN | 差值 / kN | 相对误差 / % |
+|---|---:|---:|---:|---:|
+| CaseXX | ... | ... | ... | ... |
+
+---
+
+# 13. Case21 在本模板中的身份
+
+Case21 仅承担两个作用：
+
+1. **已闭合的计算过程范例**：证明上述 12 步可以从输入一路闭合到 \(P_u\)；
+2. **输出格式范例**：后续每块板都应按同样层级记录中间量、残量和最终比较。
+
+Case21 不再承担：
+
+- 材料参数校准目标；
+- 后续板件根的初值目标；
+- 后续板件荷载预测目标；
+- 误差修正基准。
+
+因此后续板件的计算是
+
+\[
+\boxed{
+\text{same process}\neq\text{reuse Case21 numerical result}.
+}
+\]
+
+---
+
+# 14. 最小正式交付包
+
+以后每计算一块板，至少输出：
+
+1. `INPUT`：原始输入与来源；
+2. `R10`：\(\kappa,x_{cr},\eta,W_{src},h\)；
+3. `SPECTRAL`：\([\lambda_a,\lambda_b]\) 连续解析证书；
+4. `N48`：统一系数公式与少量代表系数审计；
+5. `KINEMATICS`：该板的连续 Nguyen 应变场；
+6. `D15`：关键精确矩收缩值；
+7. `STEEL`：钢筋支判定和闭式贡献；
+8. `EQUILIBRIUM`：\(R_q=0\) 平衡支；
+9. `LIMIT`：\(R_q=0,L=0\) 最终状态；
+10. `CHECKS`：材料域、钢筋支、残量、零空间积分检查；
+11. `EXPERIMENT`：最后单独与试验失效荷载比较。
+
+这个 11 项交付包就是后续统一的“计算闭合”判据。
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_INPUT_20260812.md
+SIZE: 2040
+SHA256: ee659111ced2c344522b81507d3cc4e23fcffa499cd57494d1ea7ba9d2a2d549
+ENCODING: utf-8
+LINES: 61
+====================================================================================================

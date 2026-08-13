@@ -1,0 +1,1800 @@
+
+施加六个条件
+
+\[
+u_1(0)=0,
+\qquad
+\frac{du_1}{dt}(0)=\kappa,
+\qquad
+\frac{d^2u_1}{dt^2}(0)=0,
+\tag{19}
+\]
+
+\[
+u_1(1)=h,
+\qquad
+\frac{du_1}{d\tau}(1)=0,
+\qquad
+\frac{d^2u_1}{d\tau^2}(1)=0.
+\tag{20}
+\]
+
+由于 \(\kappa x_{cr}=\rho\)，由式（19）有
+
+\[
+b_0=0,
+\qquad
+b_1=\rho,
+\qquad
+b_2=0.
+\tag{21}
+\]
+
+再由式（20）解得
+
+\[
+\boxed{
+b_3=10h-6\rho,\qquad
+b_4=8\rho-15h,\qquad
+b_5=6h-3\rho.}
+\tag{22}
+\]
+
+因此
+
+\[
+\boxed{u_1(\tau)=
+\rho\tau
++(10h-6\rho)\tau^3
++(8\rho-15h)\tau^4
++(6h-3\rho)\tau^5.}
+\tag{23}
+\]
+
+式中，\(h\) 为 R10 拉伸支在 \(t=x_{cr}\) 处的峰值；\(b_0\sim b_5\) 不是独立拟合参数，而是由端点值、端点切线和端点曲率条件唯一确定。
+
+## 3.4 R10 下降支
+
+在
+
+\[
+x_{cr}\le t\le10x_{cr},
+\qquad
+s=\frac{t-x_{cr}}{9x_{cr}},
+\tag{24}
+\]
+
+令残余拉伸水平为 \(u_r\)，并要求在 \(s=0\) 和 \(s=1\) 两端的一阶、二阶导数均为零。唯一五次平滑连接式为
+
+\[
+\boxed{u_2(s)=
+h+(u_r-h)(10s^3-15s^4+6s^5).}
+\tag{25}
+\]
+
+式中：
+
+- \(s\) —— 下降支的局部无量纲坐标；
+- \(u_r\) —— 在 \(t=10x_{cr}\) 处保留的归一化残余拉伸水平；
+- \(10s^3-15s^4+6s^5\) —— 满足两端一阶、二阶导数均为零的五次平滑连接函数。
+
+## 3.5 由材料功直接求峰值 h
+
+由式（23），上升支材料功为
+
+\[
+\int_0^{x_{cr}}u_1(t)\,dt
+=x_{cr}\left(\frac h2+\frac{\rho}{10}\right).
+\tag{26}
+\]
+
+由式（25），下降支材料功为
+
+\[
+\int_{x_{cr}}^{10x_{cr}}u_2(t)\,dt
+=\frac{9x_{cr}}2(h+u_r).
+\tag{27}
+\]
+
+R10 要求总材料功等于 Foster 源材料功：
+
+\[
+\int_0^{x_{cr}}u_1(t)\,dt
++
+\int_{x_{cr}}^{10x_{cr}}u_2(t)\,dt
+=W_{src}.
+\tag{28}
+\]
+
+将式（26）、式（27）代入式（28），得到
+
+\[
+W_{src}
+=x_{cr}\left(5h+\frac{\rho}{10}+\frac92u_r\right).
+\tag{29}
+\]
+
+故峰值 \(h\) 直接写成
+
+\[
+\boxed{
+h=
+\frac15\left(
+\frac{W_{src}}{x_{cr}}
+-\frac{\rho}{10}
+-\frac92u_r
+\right).
+}
+\tag{30}
+\]
+
+式中，\(h\) 完全由源材料功 \(W_{src}\)、特征坐标 \(x_{cr}\)、拉伸尺度 \(\rho\) 和残余水平 \(u_r\) 决定，不需要结构试验承载力参与。
+
+## 3.6 R10 拉伸函数
+
+定义
+
+\[
+u_{sm}(t)=
+\begin{cases}
+u_1(t/x_{cr}),&0\le t\le x_{cr},\\
+u_2[(t-x_{cr})/(9x_{cr})],&x_{cr}<t\le10x_{cr}.
+\end{cases}
+\tag{31}
+\]
+
+则第 \(i\) 个主方向上的拉伸利用系数为
+
+\[
+\boxed{
+T_i=\frac{u_{sm}(t_i)}{\rho}.
+}
+\tag{32}
+\]
+
+---
+
+# 4 重新嵌入原二维 current material operator
+
+## 4.1 一维 current master
+
+每个主方向定义
+
+\[
+\boxed{
+U_i=
+\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i.
+}
+\tag{33}
+\]
+
+式中，\(U_i\) 为第 \(i\) 个主方向的归一化 current master；\(C_i\) 为压缩标量；\(T_i\) 为 R10 拉伸利用系数。
+
+## 4.2 双轴相互作用
+
+保持源 current operator 的相互作用形式
+
+\[
+\boxed{
+s_+=U_+
+-a_{cc}C_+^2C_-
++C_+T_-
+-\rho a_tT_+T_-^8,}
+\tag{34}
+\]
+
+\[
+\boxed{
+s_-=U_-
+-a_{cc}C_-^2C_+
++C_-T_+
+-\rho a_tT_-T_+^8.}
+\tag{35}
+\]
+
+式中：
+
+- \(s_+,s_-\) —— 两个主方向的归一化主应力；
+- \(a_{cc}\) —— 源 current operator 中冻结的双压相互作用参数；
+- \(a_t=1-2^{-1/8}\) —— 双拉相互作用参数；
+- \(C_+^2C_-\)、\(C_-^2C_+\) —— 双压耦合项；
+- \(C_+T_-\)、\(C_-T_+\) —— 拉压耦合项；
+- \(T_+T_-^8\)、\(T_-T_+^8\) —— 双拉耦合项。
+
+物理应力最终为
+
+\[
+\boldsymbol\sigma=f_c\mathbf S,
+\tag{36}
+\]
+
+其中 \(\mathbf S\) 为由 \(s_+,s_-\) 谱返回得到的归一化应力张量。
+
+---
+
+# 5 N48：只把闭合材料写成一个有限解析公式
+
+## 5.1 编译坐标
+
+在所需主等效应变包络 \([\lambda_a,\lambda_b]\) 上定义
+
+\[
+\lambda_c=\frac{\lambda_a+\lambda_b}{2},
+\qquad
+\lambda_h=\frac{\lambda_b-\lambda_a}{2},
+\tag{37}
+\]
+
+\[
+\boxed{
+\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_h}\in[-1,1].
+}
+\tag{38}
+\]
+
+式中：
+
+- \(\lambda_a,\lambda_b\) —— 当前结构问题所需的一维主等效应变编译区间下、上界；
+- \(\lambda_c\) —— 编译区间中心；
+- \(\lambda_h\) —— 编译区间半宽；
+- \(\xi\) —— 映射到 \([-1,1]\) 的 Chebyshev 材料坐标。
+
+为避免与拉伸利用系数 \(T\) 混淆，以下把第一类 Chebyshev 多项式记为 \(\mathcal C_n\)：
+
+\[
+\mathcal C_n(\xi)=\cos[n\arccos(\xi)],
+\tag{39}
+\]
+
+\[
+\mathcal C_0=1,
+\qquad
+\mathcal C_1=\xi,
+\qquad
+\mathcal C_{n+1}=2\xi\mathcal C_n-\mathcal C_{n-1}.
+\tag{40}
+\]
+
+## 5.2 四个一维标量对象
+
+N48 只编译
+
+\[
+\boxed{F\in\{U,C,T,T^7\}.}
+\tag{41}
+\]
+
+对任一 \(F\)，写成
+
+\[
+\boxed{
+F_{48}(\lambda)
+=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n[\xi(\lambda)].
+}
+\tag{42}
+\]
+
+式中：
+
+- \(F\) —— 待编译的一维闭式材料函数；
+- \(F_{48}\) —— N48 有限解析表示；
+- \(a_n^{(F)}\) —— 第 \(n\) 个 Chebyshev 编译系数；
+- \(n\) —— 材料解析项编号，\(n=0,1,\ldots,48\)；
+- \(N_M=48\) —— 当前冻结的材料编译阶次。
+
+## 5.3 每一个系数的统一计算式
+
+取 \(\mathcal C_{49}\) 的 49 个根点
+
+\[
+\theta_j=\frac{(j+\tfrac12)\pi}{49},
+\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
+\qquad
+j=0,1,\ldots,48.
+\tag{43}
+\]
+
+则所有系数统一由
+
+\[
+\boxed{
+a_n^{(F)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}
+F(\lambda_j)\cos(n\theta_j),
+\qquad
+n=0,1,\ldots,48.
+}
+\tag{44}
+\]
+
+给出。
+
+式中：
+
+- \(j\) —— Chebyshev 根点编号；
+- \(\theta_j\) —— 第 \(j\) 个角坐标；
+- \(\lambda_j\) —— 第 \(j\) 个材料坐标；
+- \(\delta_{n0}\) —— Kronecker 符号，\(n=0\) 时为 1，否则为 0；
+- \(F(\lambda_j)\) —— 直接由式（11）、式（31）—式（33）等闭式材料公式算出的函数值。
+
+特别地，
+
+\[
+a_0^{(F)}=\frac1{49}\sum_{j=0}^{48}F(\lambda_j),
+\tag{45}
+\]
+
+\[
+a_1^{(F)}=\frac2{49}\sum_{j=0}^{48}F(\lambda_j)\cos\theta_j,
+\tag{46}
+\]
+
+\[
+a_2^{(F)}=\frac2{49}\sum_{j=0}^{48}F(\lambda_j)\cos2\theta_j,
+\tag{47}
+\]
+
+直至
+
+\[
+a_{48}^{(F)}=\frac2{49}\sum_{j=0}^{48}F(\lambda_j)\cos48\theta_j.
+\tag{48}
+\]
+
+因此，“49 个系数”不是 49 个需要人工拟合的材料参数，而是同一个公式（44）在 \(n=0\sim48\) 上的 49 次直接计算结果。
+
+---
+
+# 6 每一个 N48 项如何进入二维 current-map
+
+## 6.1 从标量坐标提升到二维矩阵坐标
+
+定义
+
+\[
+\boxed{
+\mathbf Y=\frac{\mathbf X-\lambda_c\mathbf I}{\lambda_h}.
+}
+\tag{49}
+\]
+
+则 \(\mathbf Y\) 的两个特征值就是 \(\xi_+,\xi_-\)。定义
+
+\[
+K_1=\operatorname{tr}\mathbf Y,
+\qquad
+K_2=\det\mathbf Y.
+\tag{50}
+\]
+
+根据二维 Cayley–Hamilton 定理，
+
+\[
+\boxed{
+\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=\mathbf0.
+}
+\tag{51}
+\]
+
+因此任意 \(\mathcal C_n(\mathbf Y)\) 都只需要写成
+
+\[
+\boxed{
+\mathcal C_n(\mathbf Y)
+=A_n(K_1,K_2)\mathbf I+B_n(K_1,K_2)\mathbf Y.
+}
+\tag{52}
+\]
+
+式中，\(A_n,B_n\) 为第 \(n\) 个矩阵 Chebyshev 项的两个标量系数函数。
+
+## 6.2 A_n、B_n 的递推式
+
+初值为
+
+\[
+A_0=1,\quad B_0=0,
+\qquad
+A_1=0,\quad B_1=1.
+\tag{53}
+\]
+
+由
+
+\[
+\mathcal C_{n+1}(\mathbf Y)
+=2\mathbf Y\mathcal C_n(\mathbf Y)-\mathcal C_{n-1}(\mathbf Y)
+\tag{54}
+\]
+
+以及式（51）可得
+
+\[
+\boxed{
+A_{n+1}=-2K_2B_n-A_{n-1},
+}
+\tag{55}
+\]
+
+\[
+\boxed{
+B_{n+1}=2A_n+2K_1B_n-B_{n-1}.
+}
+\tag{56}
+\]
+
+这两条递推式就是从第 0 项一直生成到第 48 项的完整矩阵代数。
+
+## 6.3 单个材料系数项的进入方式
+
+式（42）中的第 \(n\) 项为
+
+\[
+F_{48}^{(n)}
+=a_n^{(F)}\mathcal C_n(\mathbf Y).
+\tag{57}
+\]
+
+代入式（52）：
+
+\[
+\boxed{
+F_{48}^{(n)}
+=a_n^{(F)}A_n\mathbf I
++a_n^{(F)}B_n\mathbf Y.
+}
+\tag{58}
+\]
+
+因此每一个 \(a_n^{(F)}\) 的作用完全透明：它只分别乘到该阶的 \(A_n\) 和 \(B_n\) 上。求和后
+
+\[
+\boxed{
+\mathbf F_{48}=A_F\mathbf I+B_F\mathbf Y,
+}
+\tag{59}
+\]
+
+其中
+
+\[
+\boxed{
+A_F=\sum_{n=0}^{48}a_n^{(F)}A_n,
+\qquad
+B_F=\sum_{n=0}^{48}a_n^{(F)}B_n.
+}
+\tag{60}
+\]
+
+式中，\(A_F,B_F\) 分别为材料函数 \(F\) 在二维矩阵空间中的单位张量系数和 \(\mathbf Y\) 系数。
+
+---
+
+# 7 双轴相互作用也只做有限代数，不再重新拟合
+
+由式（59）分别得到矩阵函数
+
+\[
+\mathbf U,\qquad \mathbf C,\qquad \mathbf T,\qquad \mathbf T^{(7)}.
+\tag{61}
+\]
+
+在主方向对角基下，有恒等式
+
+\[
+\boxed{
+\mathbf{CC}=\det(\mathbf C)\,\mathbf C,
+}
+\tag{62}
+\]
+
+\[
+\boxed{
+\mathbf{TC}=\mathbf C
+\left[\operatorname{tr}(\mathbf T)\mathbf I-\mathbf T\right],
+}
+\tag{63}
+\]
+
+\[
+\boxed{
+\mathbf{TT}=\det(\mathbf T)
+\left[\operatorname{tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}\right].
+}
+\tag{64}
+\]
+
+式中：
+
+- \(\mathbf{CC}\) —— 对应主方向项 \((C_+^2C_-,\,C_-^2C_+)\)；
+- \(\mathbf{TC}\) —— 对应主方向项 \((C_+T_-,\,C_-T_+)\)；
+- \(\mathbf{TT}\) —— 对应主方向项 \((T_+T_-^8,\,T_-T_+^8)\)；
+- \(\mathbf T^{(7)}\) —— 对一维函数 \(T^7\) 进行同一 N48 编译后得到的矩阵函数。
+
+于是归一化 current 应力张量直接写成
+
+\[
+\boxed{
+\mathbf S
+=\mathbf U
+-a_{cc}\mathbf{CC}
++\mathbf{TC}
+-\rho a_t\mathbf{TT}.
+}
+\tag{65}
+\]
+
+式（65）与式（34）、式（35）完全对应，只是把两个主方向公式改写为不需要显式逐点求特征向量的二维矩阵代数。
+
+---
+
+# 8 从连续半波运动学进入 D15
+
+## 8.1 完整半波坐标
+
+采用一个连续完整半波，定义
+
+\[
+X=\frac{\pi x}{b},
+\qquad
+Y=\frac{\pi y}{\ell},
+\qquad
+\zeta=\frac{2z}{t_p},
+\tag{66}
+\]
+
+则
+
+\[
+0\le X\le\pi,
+\qquad
+0\le Y\le\pi,
+\qquad
+-1\le\zeta\le1.
+\tag{67}
+\]
+
+物理体积元为
+
+\[
+\boxed{
+d\Omega
+=J_\Omega\,dX\,dY\,d\zeta,
+\qquad
+J_\Omega=\frac{b\ell t_p}{2\pi^2}.
+}
+\tag{68}
+\]
+
+式中：
+
+- \(x,y,z\) —— 板的物理空间坐标；
+- \(b\) —— 半波横向宽度；
+- \(\ell\) —— 半波轴向长度；
+- \(t_p\) —— 混凝土板厚度；
+- \(X,Y\) —— 完整半波无量纲平面坐标；
+- \(\zeta\) —— 厚度无量纲坐标；
+- \(J_\Omega\) —— 从 \((x,y,z)\) 到 \((X,Y,\zeta)\) 的体积 Jacobian。
+
+Nguyen 二阶运动学给出连续应变场
+
+\[
+\mathbf E=\mathbf E(X,Y,\zeta;D,q),
+\tag{69}
+\]
+
+进而通过式（4）得到
+
+\[
+\mathbf X=\mathbf X(X,Y,\zeta;D,q).
+\tag{70}
+\]
+
+式中，\(D\) 为轴向广义压缩变量；\(q=A/b\) 为局部挠曲无量纲幅值；\(A\) 为当前局部挠曲幅值。
+
+## 8.2 有限空间解析表达
+
+将式（70）代入式（49）—式（65），所有保留项最终写成有限空间系数形式。对任一待积分量 \(Q\)，记
+
+\[
+\boxed{
+Q(X,Y,\zeta)
+=\sum_{i,j,k}c_{ijk}
+\mathcal C_i(\sin X)
+\mathcal C_j(\sin Y)
+\mathcal C_k(\zeta).
+}
+\tag{71}
+\]
+
+式中：
+
+- \(Q\) —— 任一需要进入结构积分的有限解析量，例如 \(S_{yy}\) 或 \(\mathbf S:\mathbf X_{,q}\)；
+- \(c_{ijk}\) —— 由 Nguyen 运动学、N48 材料系数及 current-map 有限代数共同生成的空间解析系数；
+- \(i,j,k\) —— 三个解析基方向上的项编号；
+- \(\mathcal C_i(\sin X)\)、\(\mathcal C_j(\sin Y)\) —— 两个完整半波方向的有限解析基；
+- \(\mathcal C_k(\zeta)\) —— 厚度方向有限解析基。
+
+这里的 \(c_{ijk}\) 是解析系数，不是空间积分点值。
+
+---
+
+# 9 D15：每一个空间项如何被精确积分
+
+## 9.1 完整半波基础矩
+
+定义
+
+\[
+M_n=\int_0^\pi\mathcal C_n(\sin X)\,dX.
+\tag{72}
+\]
+
+则
+
+\[
+\boxed{
+M_n=
+\begin{cases}
+\pi,&n=0,\\
+\dfrac{2\sin(n\pi/2)}{n},&n\ge1.
+\end{cases}}
+\tag{73}
+\]
+
+厚度方向定义
+
+\[
+Z_k=\int_{-1}^{1}\mathcal C_k(\zeta)\,d\zeta,
+\tag{74}
+\]
+
+则
+
+\[
+\boxed{
+Z_k=
+\begin{cases}
+0,&k\text{ 为奇数},\\
+\dfrac{2}{1-k^2},&k\text{ 为偶数}.
+\end{cases}}
+\tag{75}
+\]
+
+式中，\(M_n\) 为完整半波方向的第 \(n\) 阶精确矩；\(Z_k\) 为厚度方向的第 \(k\) 阶精确矩。
+
+## 9.2 单项进入 D15 的规则
+
+对式（71）中的单独一项
+
+\[
+Q_{ijk}
+=c_{ijk}\mathcal C_i(\sin X)
+\mathcal C_j(\sin Y)
+\mathcal C_k(\zeta),
+\tag{76}
+\]
+
+其完整连续域积分严格等于
+
+\[
+\boxed{
+\mathscr D[Q_{ijk}]
+=c_{ijk}M_iM_jZ_k.
+}
+\tag{77}
+\]
+
+式中，\(\mathscr D[\cdot]\) 表示 D15 完整半波精确矩算子。
+
+因此总量只需逐项相加：
+
+\[
+\boxed{
+\mathscr D[Q]
+=\sum_{i,j,k}c_{ijk}M_iM_jZ_k.
+}
+\tag{78}
+\]
+
+这就是“每一个 N48 材料项最终如何进入 D15”的核心：
+
+\[
+\boxed{
+a_n^{(F)}
+\rightarrow
+(A_n,B_n)
+\rightarrow
+\mathbf F_{48}
+\rightarrow
+\mathbf S
+\rightarrow
+c_{ijk}
+\rightarrow
+c_{ijk}M_iM_jZ_k.}
+\tag{79}
+\]
+
+全过程只是有限代数与精确矩收缩，不出现空间 Gauss 点、Simpson 点、材料点网格或空间子域切分。
+
+---
+
+# 10 轴力与幅值平衡量的 D15 表达
+
+## 10.1 混凝土轴力
+
+将归一化轴向应力场记为
+
+\[
+S_{yy}(X,Y,\zeta)
+=\sum_{i,j,k}p_{ijk}
+\mathcal C_i(\sin X)
+\mathcal C_j(\sin Y)
+\mathcal C_k(\zeta).
+\tag{80}
+\]
+
+则按压缩为正的符号约定，混凝土轴力为
+
+\[
+\boxed{
+P_c
+=-f_cJ_\Omega
+\sum_{i,j,k}p_{ijk}M_iM_jZ_k.
+}
+\tag{81}
+\]
+
+式中：
+
+- \(P_c\) —— 混凝土承担的轴向力；
+- \(p_{ijk}\) —— \(S_{yy}\) 的空间解析系数；
+- \(f_c\) —— 将归一化应力恢复为物理应力的强度尺度；
+- 负号 —— 与当前“压缩荷载取正”的轴力符号约定对应。
+
+## 10.2 幅值平衡量
+
+定义
+
+\[
+Q_q=\mathbf S:\mathbf X_{,q},
+\tag{82}
+\]
+
+并写成
+
+\[
+Q_q
+=\sum_{i,j,k}r_{ijk}
+\mathcal C_i(\sin X)
+\mathcal C_j(\sin Y)
+\mathcal C_k(\zeta).
+\tag{83}
+\]
+
+则混凝土对广义幅值 \(q\) 的平衡量为
+
+\[
+\boxed{
+R_{q,c}
+=f_c\varepsilon_0J_\Omega
+\sum_{i,j,k}r_{ijk}M_iM_jZ_k.
+}
+\tag{84}
+\]
+
+式中：
+
+- \(R_{q,c}\) —— 混凝土部分对局部幅值 \(q\) 的广义平衡量；
+- \(\mathbf X_{,q}=\partial\mathbf X/\partial q\) —— 归一化等效应变张量对幅值变量的解析导数；
+- \(r_{ijk}\) —— \(\mathbf S:\mathbf X_{,q}\) 的空间解析系数；
+- 冒号“:” —— 二阶张量双重内积。
+
+## 10.3 同源导数
+
+由于 \(p_{ijk}\) 和 \(r_{ijk}\) 都由同一有限解析表达生成，故
+
+\[
+P_{c,D},\quad P_{c,q},\quad R_{q,c,D},\quad R_{q,c,q}
+\tag{85}
+\]
+
+均可对系数表达直接求导，再使用完全相同的 \(M_iM_jZ_k\) 收缩。正式理论不需要有限差分导数。
+
+---
+
+# 11 与周思铭式理论表达的对应关系
+
+经典板理论常把挠度写成模态级数
+
+\[
+w=\sum A_{mn}\phi_{mn}(x,y),
+\tag{86}
+\]
+
+再将每一项的导数代入总势能，利用正交积分得到有限或无限代数式。当前 NZ-SCCM 的写法完全对应这一思想，但级数对象发生了变化：
+
+\[
+\boxed{
+\underbrace{a_n^{(F)}}_{\text{材料解析系数}}
+\times
+\underbrace{\mathcal C_n}_{\text{材料解析基}}
+\rightarrow
+\underbrace{c_{ijk}}_{\text{结构空间解析系数}}
+\times
+\underbrace{\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta)}_{\text{完整半波解析基}}
+\rightarrow
+\underbrace{M_iM_jZ_k}_{\text{精确积分矩}}.
+}
+\tag{87}
+\]
+
+因此理论正文真正需要展示的是：
+
+1. 材料闭式参数关系；
+2. 一个统一的 N48 系数计算式；
+3. 一个统一的 Cayley–Hamilton 递推式；
+4. 一个统一的 D15 精确矩公式。
+
+不需要展示几十个或几百个长小数系数。
+
+---
+
+# 12 参数与符号总表
+
+| 符号 | 含义 |
+|---|---|
+| \(f_c\) | 混凝土单轴抗压强度 |
+| \(E_0\) | 混凝土初始弹性模量 |
+| \(\varepsilon_0\) | 混凝土参考压缩应变 |
+| \(\nu\) | 混凝土泊松比 |
+| \(\kappa\) | 归一化初始切线斜率 \(E_0\varepsilon_0/f_c\) |
+| \(\rho\) | 拉伸归一化强度尺度 |
+| \(x_{cr}\) | 拉伸特征坐标 \(\rho/\kappa\) |
+| \(\eta\) | 正负标量坐标平滑尺度 |
+| \(\eta_r\) | Foster 转折平滑尺度 |
+| \(m_t\) | Foster 软化段斜率参数 |
+| \(W_{src}\) | Foster 拉伸标量保留区间的材料功 |
+| \(h\) | R10 拉伸峰值，由材料功能量等价式唯一确定 |
+| \(u_r\) | R10 保留的残余拉伸水平 |
+| \(t_i,c_i\) | 第 \(i\) 主方向上的拉、压标量坐标 |
+| \(T_i\) | R10 拉伸利用系数 |
+| \(C_i\) | 归一化压缩应力幅值 |
+| \(U_i\) | 一维 current master |
+| \(a_{cc}\) | 双压相互作用参数 |
+| \(a_t\) | 双拉相互作用参数 |
+| \(\lambda_\pm\) | 两个主等效应变 |
+| \(\lambda_a,\lambda_b\) | 一维材料编译区间下、上界 |
+| \(\lambda_c,\lambda_h\) | 编译区间中心和半宽 |
+| \(\xi\) | Chebyshev 材料坐标 |
+| \(\mathcal C_n\) | 第 \(n\) 阶第一类 Chebyshev 多项式 |
+| \(a_n^{(F)}\) | 函数 \(F\) 的第 \(n\) 个 N48 编译系数 |
+| \(N_M\) | 材料解析编译阶次，当前固定 48 |
+| \(\mathbf Y\) | 归一化到 Chebyshev 区间的二维等效应变矩阵 |
+| \(K_1,K_2\) | \(\mathbf Y\) 的迹与行列式 |
+| \(A_n,B_n\) | 第 \(n\) 阶矩阵 Chebyshev 项的 Cayley–Hamilton 两系数 |
+| \(\mathbf S\) | 归一化二维 current 应力张量 |
+| \(b\) | 完整半波横向宽度 |
+| \(\ell\) | 完整半波轴向长度 |
+| \(t_p\) | 混凝土板厚度 |
+| \(X,Y,\zeta\) | 完整半波无量纲坐标 |
+| \(D\) | 轴向广义压缩变量 |
+| \(q\) | 局部挠曲无量纲幅值 \(A/b\) |
+| \(c_{ijk}\) | 任一结构量的有限空间解析系数 |
+| \(M_i,M_j\) | 两个完整半波方向的 D15 精确矩 |
+| \(Z_k\) | 厚度方向 D15 精确矩 |
+| \(J_\Omega\) | 无量纲坐标到物理体积的 Jacobian |
+| \(P_c\) | 混凝土轴向力 |
+| \(R_{q,c}\) | 混凝土局部幅值广义平衡量 |
+
+---
+
+# 13 最终紧凑公式链
+
+整套理论可以压缩为四组公式。
+
+**第一组：材料闭合**
+
+\[
+W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)dr,
+\qquad
+h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right),
+\tag{88}
+\]
+
+\[
+u_1=\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5,
+\tag{89}
+\]
+
+\[
+u_2=h+(u_r-h)(10s^3-15s^4+6s^5).
+\tag{90}
+\]
+
+**第二组：N48 编译**
+
+\[
+F_{48}=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi),
+\tag{91}
+\]
+
+\[
+a_n^{(F)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j).
+\tag{92}
+\]
+
+**第三组：二维 current-map**
+
+\[
+\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y,
+\tag{93}
+\]
+
+\[
+A_{n+1}=-2K_2B_n-A_{n-1},
+\qquad
+B_{n+1}=2A_n+2K_1B_n-B_{n-1},
+\tag{94}
+\]
+
+\[
+\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}.
+\tag{95}
+\]
+
+**第四组：D15 精确矩**
+
+\[
+Q=\sum c_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta),
+\tag{96}
+\]
+
+\[
+\boxed{
+\mathscr D[Q]=\sum c_{ijk}M_iM_jZ_k.
+}
+\tag{97}
+\]
+
+因此正式理论的核心不是一张长系数表，而是
+
+\[
+\boxed{
+\text{闭式材料公式}
++\text{一个 N48 系数通式}
++\text{一个二维矩阵递推式}
++\text{一个 D15 精确矩通式}.
+}
+\tag{98}
+\]
+
+---
+
+## 14 当前边界
+
+本文只完成理论表达，不执行任何 Case21 数值闭合。当前不允许因为追求更小编译误差而自动提高 N48，也不允许把长小数 coefficient table 当作材料理论。后续若需要计算，必须直接使用本文公式链，不重新打开材料路线。
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03_20260810.md
+SIZE: 7643
+SHA256: 5079b7995906c2831a53f64facb8058c2fc89887c273db08cdc9121b7a8acb41
+ENCODING: utf-8
+LINES: 273
+====================================================================================================
+# NZ-SCCM SPECTRAL REACHABLE DOMAIN REDUCTION R03
+
+Date: 2026-08-10
+
+## 1. Identity
+Same-route G18/G20/G27 dimensional/reachable-domain reduction.
+No route switch. No Case21/Swartz Pu calibration. No formal spatial quadrature.
+
+## 2. Convention and exact sufficient separation inequality
+This R03 fixes:
+
+```text
+r = ell/b
+```
+
+Thus cases 1-16 use `r=2` and cases 17-24 use `r=1`.
+
+For the generalized halfwave kinematics,
+
+\[
+X_{11}-X_{22}=D+\frac{C_m}{1+\nu}\left[(1-\sin^2X)\sin^2Y-r^{-2}\sin^2X(1-\sin^2Y)\right]
++\frac{C_b(1-r^{-2})}{1+\nu}\sin X\sin Y\,\zeta.
+\]
+
+Therefore, for `q>=0` and `r>=1`,
+
+\[
+X_{11}-X_{22}\ge
+D-\frac{C_m}{r^2(1+\nu)}
+-\frac{|C_b|(1-r^{-2})}{1+\nu}.
+\]
+
+Since
+
+\[
+\lambda_+-\lambda_-=\sqrt{(X_{11}-X_{22})^2+4X_{12}^2},
+\]
+
+the sufficient all-space spectral-order condition is
+
+\[
+\boxed{
+D>D_{\rm sep}(q)
+=\frac{C_m}{r^2(1+\nu)}
++\frac{|C_b|(1-r^{-2})}{1+\nu}.
+}
+\]
+
+## 3. Executed common diagnostic contract
+
+```text
+D in [0.60,0.78]
+q in [0.0001,0.006]
+```
+
+This contains the historical Case21 regression box but is **not frozen as the final Swartz24 production reachability box**.
+
+Across all 24 source panels the above inequality certifies positive spectral separation.
+
+Worst panel: Case 11.
+
+```text
+D_sep(q=0.006) = 0.3214976720
+certified gap lower at D=0.60 = 0.2785023280
+```
+
+Audit-only dense material-coordinate sampling found:
+
+```text
+minimum observed gap = 0.3179329509
+case                  = 11
+```
+
+Audit union over the executed diagnostic contract:
+
+\[
+\lambda_+\in[-0.479285,0.479285],
+\]
+
+\[
+\lambda_-\in[-1.123467,-0.252159].
+\]
+
+The audit cloud is diagnostic only and is not part of the formal structural operator.
+
+## 4. Interpretation
+The earlier Case21 two-interval observation was not accidental. Under this explicit diagnostic D-q contract, ordered principal spectra remain globally separated for all 24 Swartz geometries.
+
+This is not yet a final Swartz24 production theorem because the final admissible D-q box remains open. The reusable result is the analytic inequality `D>D_sep(q)`: any future structural search box must pass it before a separated two-interval scalar compiler is accepted.
+
+## 5. Saddle-surface diagnostic
+For the current reference principal surface `s1(lambda1,lambda2)`, a Hessian-sign diagnostic over `[-1.1,0.18]^2` gives approximately:
+
+```text
+det(H)<0 / saddle-like = 30.62%
+convex-like            = 68.54%
+concave-like           = 0.84%
+```
+
+Therefore the plotted current surface contains substantial local saddle-like patches, but it is **not** one global hyperbolic paraboloid. Visual saddle resemblance does not by itself identify an integration family.
+
+## 6. Exact dimensional reduction: source-shaped principal surface has separated rank <= 4
+This is stronger than the numerical SVD observation. The source-shaped reference map is algebraically separable:
+
+\[
+s_+(\lambda_+,\lambda_-)
+=U(\lambda_+)
+-a_{cc}C(\lambda_+)^2C(\lambda_-)
++C(\lambda_+)T(\lambda_-)
+-\rho a_tT(\lambda_+)T(\lambda_-)^8,
+\]
+
+\[
+s_-(\lambda_+,\lambda_-)
+=U(\lambda_-)
+-a_{cc}C(\lambda_-)^2C(\lambda_+)
++C(\lambda_-)T(\lambda_+)
+-\rho a_tT(\lambda_-)T(\lambda_+)^8.
+\]
+
+Hence each principal stress surface is a sum of at most **four products of one-variable functions**. A generic two-dimensional surface fit is not mathematically necessary for this reference architecture.
+
+On the R03 audit reachable cloud:
+
+| term | max abs normalized stress | P95 abs | mean abs |
+|---|---:|---:|---:|
+| `splus_U` | 7.79560e-1 | 4.27339e-1 | 9.95678e-2 |
+| `splus_CC` | 6.51463e-2 | 1.90762e-2 | 2.84402e-3 |
+| `splus_C*Tminus` | 3.05283e-5 | 1.62591e-5 | 3.48135e-6 |
+| `splus_Tplus*Tminus^8` | 6.45159e-36 | 1.65283e-37 | 3.30782e-38 |
+| `sminus_U` | 1.00001 | 9.87652e-1 | 9.41105e-1 |
+| `sminus_CC` | 8.35480e-2 | 4.33017e-2 | 8.61624e-3 |
+| `sminus_Cminus*Tplus` | 9.73450e-1 | 8.08333e-1 | 1.18088e-1 |
+| `sminus_Tminus*Tplus^8` | 3.91963e-7 | 1.34062e-7 | 1.56897e-8 |
+
+On the executed audit interval
+
+\[
+\lambda_-\in[-1.123467,-0.252159],
+\]
+
+we obtained
+
+\[
+\max |T(\lambda_-)|=1.23799\times10^{-4}.
+\]
+
+Corresponding interval bounds include
+
+```text
+|C(lambda+) T(lambda-)| <= 9.65e-5
+rho*a_t |T(lambda+) T(lambda-)^8| <= 4.52e-34
+rho*a_t |T(lambda-) T(lambda+)^8| <= 9.23e-7
+```
+
+These are diagnostic material-coordinate bounds, not a production deletion rule. They show why the negative ordered branch is overwhelmingly compression-dominated in the executed contract.
+
+## 7. Numerical low-rank confirmation
+SVD of `s1` gives:
+
+```text
+full square [-1.25,0.15]^2:
+  rank 3 -> relative Frobenius residual < 1e-4
+  rank 4 -> machine-level residual
+
+R03 ordered reachable rectangle:
+  rank 2 -> relative Frobenius residual < 1e-4
+  rank 3 -> machine-level residual
+```
+
+The machine-level rank-4 result follows from the exact algebra above; the lower numerical rank on the reachable rectangle occurs because several separated interaction terms are extremely small there.
+
+## 8. Univariate branch-compiler implication
+Once the map is kept in exact rank-4 form, the remaining scalar approximation problem is one-dimensional on `lambda+` and `lambda-` separately.
+
+Diagnostic compiler results on the R03 audit intervals:
+
+```text
+lambda- branch:
+  U,C,T,T8 all reach <=0.1% normalized max error by degree 8
+
+lambda+ branch:
+  U reaches <=1% by degree 32
+  C reaches <=1% by degree 48
+  T and T8 still do not reach <=1% by degree 96 on the broad diagnostic union
+```
+
+Thus the hard part has been localized again: it is almost entirely the positive ordered branch crossing the narrow tensile transitions. The negative compression branch is analytically cheap.
+
+## 9. Exact Appell-F1 master kernel demonstrated
+For
+
+\[
+D(X,Y)=a+b\sin^2X+c\sin^2Y+d\sin^2X\sin^2Y,
+\]
+
+the whole-domain master is
+
+\[
+\boxed{
+\mathcal M=
+\frac{\pi^2}{\sqrt{a(a+b)}}
+F_1\!\left(
+\frac12;\frac12,\frac12;1;
+-\frac ca,-\frac{c+d}{a+b}
+\right).
+}
+\]
+
+R03 representative execution:
+
+```text
+formal Appell-F1 value = 6.611588675823622
+audit-only Gauss value = 6.611588675823635
+relative difference     = 1.881e-15
+formal spatial quadrature count = 0
+```
+
+Parameter derivatives of this master generate squared-denominator/numerator moments. Appell/Carlson are therefore genuine candidate **named exact kernels** when the reduced NZ-SCCM algebra matches their denominator class.
+
+## 10. Coalescence-safe 2x2 matrix-function form
+A future broader D-q box may reduce the principal gap. This still does not require a TT/TC/CC material state switch.
+
+For
+
+\[
+\mathbf X=\mu\mathbf I+\mathbf Y,
+\qquad
+\mathbf Y^2=r_s^2\mathbf I,
+\]
+
+any scalar matrix function has the exact form
+
+\[
+f(\mathbf X)=f_e(\mu,r_s)\mathbf I+f_o(\mu,r_s)\mathbf Y,
+\]
+
+\[
+f_e=\frac{f(\mu+r_s)+f(\mu-r_s)}2,
+\]
+
+\[
+f_o=\frac{f(\mu+r_s)-f(\mu-r_s)}{2r_s},
+\qquad
+f_o\to f'(\mu)\quad(r_s\to0).
+\]
+
+This Cayley-Hamilton/divided-difference representation is continuous through repeated eigenvalues and is preferable to fragile eigenvector branch logic.
+
+## 11. R03 decision
+
+```text
+SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03 = PASS_DIAGNOSTIC
+ROUTE_SWITCH = NO
+GLOBAL_TWO_BRANCH_SEPARATION_IN_R03_CONTRACT = CERTIFIED
+FINAL_SWARTZ24_PRODUCTION_DQ_BOX = OPEN
+EXACT_RANK4_PRINCIPAL_FACTORISATION = PROMOTED
+GENERIC_2D_SURFACE_FIT = NOT_NEEDED_FOR_SOURCE_SHAPED_REFERENCE
+K_1P25_PHYSICAL_WIDENING = OPTIONAL_NOT_FROZEN
+APPELL_F1_CARLSON = PROMOTED_WHEN_KERNEL_CLASS_MATCHES
+LARGE_PICARD_FUCHS_RETURN = NOT_AUTHORIZED
+```
+
+Preferred next representation task:
+
+```text
+1D_BRANCH_PRIMITIVES
+-> EXACT_RANK4_CONTRACTION
+-> COALESCENCE_SAFE_2x2_MATRIX_FUNCTION
+-> DIRECT_BETA/APPELL/CARLSON_KERNEL_CLASSIFICATION
+```
+
+No Case21 or Swartz Pu was solved in R03.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03_results.json
+SIZE: 2623
+SHA256: 9f8370f8e663c29d6cc7b869435ac0d9f1b110df5e95adc8e1ca1467e9712c5c
+ENCODING: utf-8
+LINES: 67
+====================================================================================================
+{
+  "identity": "SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03",
+  "r_convention": "r=ell/b",
+  "diagnostic_contract": {
+    "D": [0.6, 0.78],
+    "q": [0.0001, 0.006],
+    "status": "DIAGNOSTIC_NOT_FINAL_SWARTZ_PRODUCTION_BOX"
+  },
+  "analytic_spectral_separation": {
+    "all_24_certified_in_diagnostic_contract": true,
+    "worst_case": 11,
+    "worst_certified_gap_lower": 0.2785023279580049,
+    "worst_D_sep_threshold_at_qmax": 0.3214976720419951
+  },
+  "audit": {
+    "minimum_observed_gap": 0.31793295086792606,
+    "case_at_minimum": 11,
+    "lambda_plus_union": [-0.47928466072035325, 0.47928466072035325],
+    "lambda_minus_union": [-1.1234666851099888, -0.2521594728711599]
+  },
+  "saddle_diagnostic": {
+    "s1_hessian_negative_fraction": 0.3062030738221214,
+    "s1_convex_like_fraction": 0.6854421768707483,
+    "s1_concave_like_fraction": 0.00835474930713026,
+    "conclusion": "LOCAL_SADDLE_PATCHES_EXIST_BUT_SURFACE_IS_NOT_A_SINGLE_GLOBAL_HYPERBOLIC_PARABOLOID"
+  },
+  "low_rank": {
+    "exact_rank_upper_bound": 4,
+    "full_square_rank_for_1e-3_frobenius": 3,
+    "reachable_rectangle_rank_for_1e-3_frobenius": 2,
+    "full_square_rank_for_1e-4_frobenius": 3,
+    "reachable_rectangle_rank_for_1e-4_frobenius": 2
+  },
+  "negative_branch": {
+    "max_abs_T_minus": 0.00012379927723702558,
+    "bound_splus_C_times_Tminus": 0.00009650650771533321,
+    "bound_splus_Tplus_Tminus8": 4.51855838699712e-34,
+    "bound_sminus_Tminus_Tplus8": 9.233359737095038e-07,
+    "all_U_C_T_T8_degree_for_0p1pct_max_error": 8
+  },
+  "positive_branch": {
+    "U_first_degree_for_1pct_max_error": 32,
+    "C_first_degree_for_1pct_max_error": 48,
+    "T_first_degree_for_1pct_max_error_up_to_96": null,
+    "T8_first_degree_for_1pct_max_error_up_to_96": null
+  },
+  "appell_demo": {
+    "formal_Appell_F1_value": 6.611588675823622,
+    "audit_Gauss_value": 6.611588675823635,
+    "relative_difference": 1.880712561758503e-15,
+    "formal_spatial_quadrature_count": 0,
+    "audit_only_quadrature_order": 120
+  },
+  "decision": {
+    "R03": "PASS_DIAGNOSTIC",
+    "global_two_branch_separation_in_this_contract": "CERTIFIED",
+    "final_Swartz24_production_Dq_box": "OPEN",
+    "exact_rank4_principal_coordinate_factorization": "PROMOTED",
+    "two_dimensional_surface_fit_needed": "NO_FOR_SOURCE_SHAPED_REFERENCE",
+    "next_representation_focus": "1D_BRANCH_PRIMITIVES_PLUS_EXACT_RANK4_CONTRACTION",
+    "coalescence_safe_2x2_matrix_function": "PROMOTED",
+    "special_function_kernel": "APPELL_F1_CARLSON_WHEN_REDUCED_DENOMINATOR_MATCHES",
+    "route_switch": false,
+    "case21_Pu_run": false,
+    "swartz24_Pu_run": false
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_TARGET_FUNCTION_REBUILD_ANALYTIC_MOMENT_V1_20260810.md
+SIZE: 8593
+SHA256: b008ac8755d5530906595ab136198149f1b5b06a14dca15fd9a00ce832fcab32
+ENCODING: utf-8
+LINES: 253
+====================================================================================================
+# NZ-SCCM 目标函数体系重建：解析矩驱动材料—结构接口 V1
+
+**日期：2026-08-10**  
+**身份：CURRENT DESIGN DECISION / USER-ACCEPTED DIRECTION**
+
+## 0. 本文件锁定的新方向
+
+用户已明确接受：下一阶段不再把主要研究资源用于“如何把当前复杂 integrand 用更强数学工具积分掉”，而是保留结构力学目标，重建中间的材料—结构目标函数体系。
+
+同时新增不可退让边界：
+
+```text
+FORMAL_INTEGRATION = ANALYTIC_EXACT_MOMENTS
+ELEMENT_INTEGRATION = PROHIBITED
+SPATIAL_CELLS = PROHIBITED
+GAUSS_SIMPSON_ADAPTIVE = PROHIBITED_IN_FORMAL_OPERATOR
+MATERIAL_POINT_GRID = PROHIBITED_IN_FORMAL_OPERATOR
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+所谓“重建目标函数”绝不意味着把数值积分或单元积分换一个名字重新引入。正式结果必须由一个连续完整代表半波上的有限解析积分 / 精确矩得到。
+
+## 1. 什么保留，什么重建
+
+### 保留的结构力学目标
+
+当前 Case21 结构层继续保留：
+
+- 轴向承载力 `P(D,q)`；
+- 幅值方向平衡残量 `Rq(D,q)=0`；
+- 极限点/稳定条件
+
+`L(D,q)=P_,D Rq_,q - P_,q Rq_,D = 0`。
+
+钢筋仍必须在求根前进入 `P` 和 `Rq`，不得使用 `Pu=Pu,concrete+As fy` 的事后附加法。
+
+### 重建的中间层
+
+旧问题链：
+
+```text
+finite kinematics
+-> complicated full stress field sigma(x,y,z)
+-> difficult nonlinear composition
+-> try to integrate/certify the resulting integrand
+```
+
+新链：
+
+```text
+finite analytic kinematics
+-> finite strain invariants
+-> compact invariant/tensor-basis material law
+-> finite analytic material moments
+-> P, Rq, derivatives/tangent, L
+```
+
+核心原则：零数值积分应从材料表示、有限运动学和结构所需功能量共同设计之初实现，而不是事后用越来越复杂的积分算法战胜任意 integrand。
+
+## 2. 运动学层
+
+对 Case21 保持 Nguyen 二阶单完整半波运动学。令广义坐标
+
+`a=(D,q)`，其中 `q=A/b`。
+
+物理应变张量写成有限解析场：
+
+`E(X,Y,zeta;a)=sum_r e_r(a) Phi_r(X,Y,zeta)`，
+
+其中 `Phi_r` 只由有限个 sin/cos 与厚度多项式组成。
+
+这意味着任意有限次应变多项式仍属于有限三角—厚度多项式代数，可在整个半波域上解析积分。
+
+## 3. 材料表示层：二维各向同性 invariant/tensor basis
+
+对二维对称应变张量定义归一化张量
+
+`X=E/eps_ref`。
+
+采用两个基本不变量，例如
+
+`I1=tr(X)`，
+`I2=det(X)`
+
+或等价的 `I1` 与 `J2=dev(X):dev(X)`。正式实现应选择最利于材料识别与解析矩闭合的一组。
+
+二维 Cayley-Hamilton 关系使各向同性同轴应力映射可压缩为
+
+`sigma_hat = A(I1,I2,z) I + B(I1,I2,z) X`
+
+其中 `sigma_hat=sigma/f_ref`；`z` 为未来路径依赖扩展所需内部变量。对当前单调 current-state V1，可先令 `z` 为空。
+
+这一表示避免必须显式求 principal eigenvalues、sqrt(delta^2+shear^2) 与 spectral return 才能构造应力。
+
+## 4. 解析友好的 scalar material functions
+
+V1 正式候选要求 `A`、`B` 属于有限解析基，优先采用有限 polynomial / orthogonal-polynomial expansion：
+
+`A(I1,I2)=sum_(m,n in S_A) a_mn Phi_mn(I1,I2)`
+
+`B(I1,I2)=sum_(m,n in S_B) b_mn Phi_mn(I1,I2)`。
+
+最透明形式为 monomial basis `I1^m I2^n`；若为数值条件采用 Chebyshev/Jacobi material basis，则必须能有限代数展开并最终落到同一精确矩族。
+
+系数只能由材料级单轴/双轴/三轴/拉伸数据与物理约束确定，禁止用 Case21、Swartz24、UCFT 结构 Pu 反标。
+
+NC 与 UHPC 共享表示骨架，但 `A/B` 的形式、阶次与参数不要求相同。
+
+## 5. 新的核心对象不是完整应力场，而是有限材料矩
+
+若
+
+`sigma_hat = A I + B X`
+
+且 `A,B` 为有限 invariant polynomial，则结构只需要以下有限矩族。
+
+对每个 material basis index `(m,n)` 定义：
+
+### 5.1 轴力矩
+
+`J^A_P(m,n)=int_Omega Phi_mn(I1,I2) dV`
+
+`J^B_P(m,n)=int_Omega Phi_mn(I1,I2) X_yy dV`
+
+于是
+
+`P_c = -f_ref * sum_mn [ a_mn J^A_P(m,n) + b_mn J^B_P(m,n) ]`
+
+乘上具体坐标归一化 Jacobian 后得到最终物理单位。
+
+### 5.2 幅值平衡矩
+
+定义 `X_q=partial X/partial q`：
+
+`J^A_q(m,n)=int_Omega Phi_mn(I1,I2) tr(X_q) dV`
+
+`J^B_q(m,n)=int_Omega Phi_mn(I1,I2) X:X_q dV`
+
+于是
+
+`Rq,c = f_ref*eps_ref * sum_mn [ a_mn J^A_q(m,n) + b_mn J^B_q(m,n) ]`
+
+同样保留真实几何 Jacobian。
+
+这四族矩是 V1 最基本材料—结构接口：材料只提供 `a_mn,b_mn`；结构运动学只提供精确矩 `J`；两者通过有限线性 contraction 得到 P 和 Rq。
+
+## 6. 为什么这些矩可以解析精确积分
+
+由于 Case21 应变分量是有限 sin/cos × zeta-polynomial，`I1`、`I2` 仍为有限三角—厚度多项式。有限次 `I1^m I2^n`、再乘 `X_yy`、`tr(X_q)` 或 `X:X_q` 后仍为有限和：
+
+`sin^p(X) cos^r(X) sin^s(Y) cos^t(Y) zeta^k`。
+
+因此整个连续半波积分可归结为有限个基础解析矩：
+
+`M_X(p,r)=int_0^pi sin^p X cos^r X dX`
+
+`M_Y(s,t)=int_0^pi sin^s Y cos^t Y dY`
+
+`M_z(k)=int_-1^1 zeta^k dzeta`。
+
+其中整数指数时：
+
+- `M_X(p,r)=0` 若 `r` 为奇数；其余可用 Beta/Gamma 函数或双阶乘闭式；
+- Y 同理；
+- `M_z(k)=0` 若 k 为奇数，若 k 为偶数则 `2/(k+1)`。
+
+因此最终 P、Rq 及其导数是有限解析和，不存在空间 quadrature、element integration 或 material-point sampling。
+
+## 7. 导数、切线与极限条件
+
+因为每个 `J(D,q)` 已是 D、q 的有限显式解析函数，可直接解析求导：
+
+`P_,D`、`P_,q`、`Rq_,D`、`Rq_,q`。
+
+不采用 finite difference，也不需要对空间点逐点形成 tangent 后再积分。
+
+最终：
+
+`Rq(D,q)=0`
+
+`L(D,q)=P_,D Rq_,q - P_,q Rq_,D=0`
+
+保持现有极限点身份。
+
+如后续扩展多个广义坐标 `a_alpha`，则统一形成
+
+`R_alpha=int_Omega sigma:E_,alpha dV - Q_alpha`
+
+和解析 Jacobian `K_alpha_beta=partial R_alpha/partial a_beta`，仍由同一有限矩族组装。
+
+## 8. 钢筋接口
+
+钢筋保持现有解析封闭式 `Ps(D,q)` 与 `Rq,s(D,q)`；总量：
+
+`P=P_c+P_s`
+
+`Rq=Rq,c+Rq,s`。
+
+如未来钢筋发生屈服，仍应采用解析分支/状态表达；不得为了钢筋单独引入空间积分点。
+
+## 9. NC 与 UHPC 的关系
+
+共享：
+
+- finite kinematics；
+- invariant coordinates；
+- tensor basis；
+- exact analytic moment engine；
+- P/R/Jacobian/L contraction architecture。
+
+不共享：
+
+- `A_NC,B_NC` 与 `A_UHPC,B_UHPC` 的具体 scalar law；
+- 材料参数；
+- 必要内部变量；
+- tension/compression/confinement/path-dependence 的材料级证据。
+
+UHPC 不能通过把 NC 的 fc 换成 141.1 MPa 得到。
+
+## 10. 路径依赖的后续扩展
+
+V1 先服务当前单调轴压 current-state benchmark。若后续材料证据要求 history/internal variables，则扩展为
+
+`sigma_hat=A(I,z)I+B(I,z)X+...`
+
+但 `z(X,Y,zeta)` 不允许采用材料点网格。应使用有限全局解析 basis 表示其场，并使状态更新或增量势仍能投影到有限解析矩；若某一候选内部变量模型无法做到这一点，它可以作为高保真材料 benchmark，但不能直接成为本项目 formal zero-spatial analytic operator。
+
+## 11. V1 第一阶段必须完成的数学任务
+
+1. 从现有 Nguyen 二阶 Case21 应变严格展开 `I1(D,q)` 与 `I2(D,q)`；
+2. 建立基础三角—厚度精确矩表；
+3. 推导四族 target moments `J^A_P,J^B_P,J^A_q,J^B_q` 的通项；
+4. 推导 P、Rq 与 D/q 导数；
+5. 先用低阶 generic coefficients 做手算/程序逐项一致性验证；
+6. 然后才进入 NC 材料级 `A/B` 识别；
+7. NC 通过材料级门禁后再接 Case21；
+8. UHPC 使用同一结构/积分骨架，但独立建立其材料 scalar law。
+
+## 12. 禁止事项
+
+- 不允许 element / Gauss / Simpson / adaptive integration 进入正式结果；
+- 不允许 spatial cells / collocation / material-point grid 伪装成“解析”；
+- 不允许为了积分方便修改 P、Rq、L 的力学定义；
+- 不允许用结构 Pu 反标材料 coefficient；
+- 不允许先生成巨大的完整 stress polynomial 再暴力 expand-and-integrate；正式实现应 moment-first contraction；
+- 不允许把 current benchmark Nguyen/Foster 自动当成新 `A/B` 的最终材料真值。
+
+## 13. 当前决策一句话
+
+`KEEP structural targets P,Rq,L; REBUILD material-to-target interface as finite invariant/tensor-basis material moments; REQUIRE exact analytic integration over one continuous complete halfwave.`
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_20260810.md
+SIZE: 6510
+SHA256: 41a58d87429a02f20199c5b6b2e5ec5884ead9967b8d2604e07dddc25b1c0457
+ENCODING: utf-8
+LINES: 138
+====================================================================================================
+# NZ-SCCM TENSILE CURRENT MAP TRANSITION CORRIDOR R02
+
+**Date:** 2026-08-10
+
+## 0. Identity
+Same-route G18/G20/G27 current-map reformulation. No route switch, no structural Pu calibration, no formal spatial quadrature, no runtime TT/TC/CC partition.
+
+## 1. Candidate definition actually executed
+Baseline reference uses the frozen material-coordinate smoothings
+
+\[
+\eta_{\Pi,0}=x_{cr}/20,
+\qquad
+\eta_{H,0}=0.05.
+\]
+
+For a common widening factor k:
+
+\[
+\eta_\Pi(k)=k\eta_{\Pi,0},
+\qquad
+\eta_H(k)=k\eta_{H,0}.
+\]
+
+The tensile utilization is
+
+\[
+T_k(\lambda)=\alpha_T(k)\left[r+(m_t-1)H_k(r;1)-m_tH_k(r;10)\right],
+\]
+
+where `alpha_T(k)` is determined only from the material operator so that the uniaxial tensile peak remains equal to the baseline reference peak. Case21/Swartz Pu is not used.
+
+## 2. Stage A — originally planned k=1,2,4,8 screen
+The originally planned common-width family was actually executed first. Results:
+
+| k | alpha_T | curvature ratio near lambda=0 | r=1 | r=10 | CC P95 stress change / fc | TC P95 | TT P95 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+|1|1.000000|1.0000|1.0000|1.0000|0|0|0|
+|2|1.007465|0.5027|0.5096|0.5038|0.002112|0.007913|0.001030|
+|4|1.012051|0.2504|0.2671|0.2531|0.009385|0.035605|0.002970|
+|8|0.988484|0.1184|0.1446|0.1237|0.025275|0.121299|0.008094|
+
+Thus k=4 and 8 reduce curvature strongly but create excessive TC/CC drift. The screen was therefore fail-fast refined to 1<k<=2 rather than continuing to larger widths.
+
+## 3. Stage B — refined material-only width screen
+
+| k | alpha_T | mean peak-curvature ratio | CC stress P95/fc | TC stress P95/fc | TT stress P95/fc | CC tangent P95/kappa | TC tangent P95/kappa | TT tangent P95/kappa |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|1.00|1.000000|1.000000|0|0|0|0|0|0|
+|1.25|1.002227|0.802271|0.000401|0.002103|0.000270|0.002555|0.043840|0.019649|
+|1.50|1.004208|0.670381|0.000888|0.004029|0.000530|0.005657|0.097338|0.035763|
+|1.75|1.005952|0.576116|0.001457|0.005792|0.000783|0.009291|0.160056|0.047437|
+|2.00|1.007465|0.505370|0.002112|0.007913|0.001030|0.013436|0.231306|0.055203|
+
+Interpretation:
+
+- `k=1.25`: about 19.8% mean reduction of the three curvature peaks; TC stress P95 change only about 0.210% fc; TC tangent P95 change about 4.38% of the initial normalized tangent.
+- `k=1.5`: about 33.0% curvature reduction, but TC tangent P95 change rises to about 9.73%.
+- `k>=1.75`: tangent disturbance grows too rapidly for this to remain a low-risk material regularization.
+
+Therefore `k=1.25` is retained as the moderate physical regularization candidate, `k=1.5` as a stronger diagnostic candidate, and `k>=1.75` is HOLD.
+
+## 4. Crucial negative result — reasonable widening alone does not solve the compiler problem
+Using the same full qualification interval
+
+\[
+\lambda\in[-2.4390243902,\,0.7317073171],
+\]
+
+we repeated the same global Chebyshev least-squares material-coordinate approximation screen for `T(lambda)`.
+
+At degree 32:
+
+- baseline k=1 max normalized error = 31.806%;
+- k=2 max normalized error = 31.324%.
+
+At degree 64 the baseline remains about 17.59%, and k=2 remains about 17.62%.
+
+Thus halving the local curvature peaks does **not** materially repair the single-global-polynomial representation over the full historical qualification interval. This is the key R02 conclusion: pure physical widening is insufficient as the sole solution.
+
+## 5. Dimensional/spectral-domain reduction diagnostic
+An existing Case21 zero-spatial audit already identified separated principal spectra at the diagnostic state `D=0.75, q=0.002`:
+
+\[
+\lambda_+\in[-0.1051,\,0.13584],
+\]
+
+\[
+\lambda_-\in[-0.86569,\,-0.62473].
+\]
+
+These intervals are used here only as a diagnostic demonstration; they are not frozen as the production Swartz-family domain.
+
+For the **same baseline material function** and the **same degree-32 polynomial screen**:
+
+- full historical interval: max normalized T error = 31.806%;
+- separated `lambda+` interval: max normalized T error = 2.283%.
+
+For the compression-only `lambda-` interval, degree 6 already gives max absolute T error about `5.19e-12`.
+
+This is a much larger complexity reduction than reasonable physical smoothing.
+
+## 6. Meaning of “dimensional reduction” in the current theory
+The 4D graph `(epsilon1,epsilon2,sigma1,sigma2)` is not a 4D input problem. The current map is still a 2->2 map. Safe reductions are representation/domain reductions, not deletion of physics:
+
+1. **Invariant reduction already active:** `(epsilon1,epsilon2)` -> `(J1,J2)` with the G18/G27 coaxial tensor basis.
+2. **Spectral-branch reduction:** if a positive global spectral gap is proven over the relevant structural parameter box, `lambda+` and `lambda-` are globally continuous branches and may use separate scalar analytic approximants of the same material function on disjoint spectral intervals. This is not a spatial/material-state partition.
+3. **Reachable-domain reduction:** qualify the current map on the analytically reachable union of material states for the target plate family rather than on an unnecessarily large oracle square. This domain must be derived from kinematics/parameter bounds, never from test Pu calibration.
+4. **Low-rank invariant representation:** after the reachable `(J1,J2)` domain is established, test whether `A(J1,J2),B(J1,J2)` admit a small separated polynomial rank. This preserves the same current-map architecture and remains D15-compatible.
+
+## 7. R02 decision
+
+```text
+TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02 = PASS_DIAGNOSTIC_WITH_REFRAME
+ROUTE_SWITCH = NO
+PURE_WIDTH_WIDENING = INSUFFICIENT_AS_SOLE_SOLUTION
+K_1P25 = RETAIN_MODERATE_MATERIAL_CANDIDATE_NOT_FROZEN
+K_1P5 = RETAIN_STRONGER_DIAGNOSTIC
+K_GE_1P75 = HOLD_DUE_TANGENT_DISTURBANCE
+SPECTRAL_REACHABLE_DOMAIN_REDUCTION = PROMOTE_TO_NEXT_MAIN_ACTION
+CASE21_PU = NOT_RUN
+SWARTZ24 = NOT_RUN
+```
+
+## 8. Next main action
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK = SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03
+```
+
+R03 must stay on the same G18/G20/G27/G26/G28/G30 route. It must:
+
+1. derive analytic/worst-case bounds for `lambda+` and `lambda-` over the actual Case21/Swartz production parameter box;
+2. prove whether a nonzero branch gap holds over that box;
+3. map the resulting reachable region into `(J1,J2)`;
+4. quantify polynomial/order reduction on separated branches and reachable invariant domain;
+5. only then decide whether the mild `k=1.25` physical regularization is still needed;
+6. keep zero formal spatial quadrature and no runtime state partition.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02_results.json
+SIZE: 3275
+SHA256: 93bb7ff918797e0c0319ac8987521b95b2c3cca6728fe7ce9af85a03e20548fa
+ENCODING: utf-8
+LINES: 42
+====================================================================================================
+{
+  "R02_status": "PASS_DIAGNOSTIC_WITH_REFRAME",
+  "route_switch": false,
+  "case21_Pu_run": false,
+  "swartz24_run": false,
+  "baseline": {
+    "xcr": 0.04998717945397425,
+    "eta_pi0": 0.0024993589726987125,
+    "eta_r0": 0.05,
+    "uniaxial_tensile_peak_over_fc": 0.09884559885573499,
+    "uniaxial_tensile_peak_lambda": 0.054152,
+    "curvature_peaks": [11582.934730380706, 4330.018635319083, 311.2814103705186]
+  },
+  "refined_common_width_screen": [
+    {"k":1.0,"alpha_T":1.0,"mean_curvature_ratio":1.0,"CC_stress_p95_over_fc":0.0,"TC_stress_p95_over_fc":0.0,"TT_stress_p95_over_fc":0.0,"CC_tangent_p95_over_kappa":0.0,"TC_tangent_p95_over_kappa":0.0,"TT_tangent_p95_over_kappa":0.0},
+    {"k":1.25,"alpha_T":1.0022269048905703,"mean_curvature_ratio":0.8022711878319787,"CC_stress_p95_over_fc":0.0004010463145254217,"TC_stress_p95_over_fc":0.002103136367394648,"TT_stress_p95_over_fc":0.00026979206144787937,"CC_tangent_p95_over_kappa":0.0025552475648080207,"TC_tangent_p95_over_kappa":0.0438401079288932,"TT_tangent_p95_over_kappa":0.019648657550216},
+    {"k":1.5,"alpha_T":1.0042081757089387,"mean_curvature_ratio":0.6703811253414097,"CC_stress_p95_over_fc":0.0008880271684222896,"TC_stress_p95_over_fc":0.0040292073660084665,"TT_stress_p95_over_fc":0.0005303798118835718,"CC_tangent_p95_over_kappa":0.005657460372221595,"TC_tangent_p95_over_kappa":0.09733843992521453,"TT_tangent_p95_over_kappa":0.03576330152530866},
+    {"k":1.75,"alpha_T":1.0059518587983143,"mean_curvature_ratio":0.5761163884145959,"CC_stress_p95_over_fc":0.001456949569632271,"TC_stress_p95_over_fc":0.005792147753080817,"TT_stress_p95_over_fc":0.0007827702432824379,"CC_tangent_p95_over_kappa":0.009290856563856954,"TC_tangent_p95_over_kappa":0.16005641951431657,"TT_tangent_p95_over_kappa":0.04743683001015882},
+    {"k":2.0,"alpha_T":1.007465477354272,"mean_curvature_ratio":0.505370311830435,"CC_stress_p95_over_fc":0.00211214995609621,"TC_stress_p95_over_fc":0.007912719810413305,"TT_stress_p95_over_fc":0.0010299070110363906,"CC_tangent_p95_over_kappa":0.01343612688445121,"TC_tangent_p95_over_kappa":0.23130590628182404,"TT_tangent_p95_over_kappa":0.05520259949225382}
+  ],
+  "global_polynomial_screen": {
+    "full_domain_degree32_baseline_T_max_normalized_error": 0.31806370052085836,
+    "full_domain_degree32_k2_T_max_normalized_error": 0.31324460208795,
+    "full_domain_degree64_baseline_T_max_normalized_error": 0.1758679492030242,
+    "full_domain_degree64_k2_T_max_normalized_error": 0.17620570825373766
+  },
+  "spectral_domain_diagnostic": {
+    "lambda_plus_interval": [-0.1051, 0.13584],
+    "lambda_minus_interval": [-0.86569, -0.62473],
+    "lambda_plus_degree32_T_max_normalized_error": 0.022834069879683703,
+    "lambda_minus_degree6_T_max_absolute_error": 5.192383171646539e-12,
+    "interval_identity": "existing Case21 diagnostic state D=0.75,q=0.002; not production Swartz-family bounds"
+  },
+  "decision": {
+    "pure_width_widening": "INSUFFICIENT_AS_SOLE_SOLUTION",
+    "k_1p25": "RETAIN_MODERATE_MATERIAL_CANDIDATE_NOT_FROZEN",
+    "k_1p5": "RETAIN_STRONGER_DIAGNOSTIC",
+    "k_ge_1p75": "HOLD_DUE_TANGENT_DISTURBANCE",
+    "spectral_reachable_domain_reduction": "PROMOTE_TO_NEXT_MAIN_ACTION",
+    "next_task": "SPECTRAL_REACHABLE_DOMAIN_REDUCTION_R03"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_20260810.md
+SIZE: 5899
+SHA256: 07b101c53f5beac1005a2169d6c36cb9ad07477594e75e19af5a7e2781924d7e
+ENCODING: utf-8
+LINES: 254

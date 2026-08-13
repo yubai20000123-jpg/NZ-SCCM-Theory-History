@@ -1,0 +1,1800 @@
+> original execution artifacts / source code / original conversation
+> audit / recovery note
+> handoff / summary / model memory
+```
+
+The current governing files remain:
+
+- `current/CURRENT_STATE.md`
+- `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md`
+- `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md`
+- `governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md`
+- `current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md`
+
+Any recovery note that conflicts with those files is non-governing.
+
+---
+
+## 3. First transformation: Foster source -> R10 material target
+
+This is a **material-target change**.
+
+The source ordinary-concrete current operator remains a multidimensional spectral current map:
+
+```text
+strain tensor
+-> equivalent-uniaxial tensor
+-> lambda+, lambda-
+-> same 1D primitives C(lambda), T_Foster(lambda), U(lambda)
+-> SAME CC/TC/TT interaction
+-> spectral return
+```
+
+R10 does not replace the multidimensional interaction architecture. It modifies only the tensile scalar used inside that architecture.
+
+The source tensile scalar is
+
+\[
+u_{t,src}(t)=\rho T_{Foster}(t),
+\qquad
+ t=\Pi_\eta(\lambda),
+\]
+
+with retained tensile interval
+
+\[
+0\le t\le 10x_{cr}.
+\]
+
+The source work is
+
+\[
+\boxed{W_{src}=0.031741235181249904.}
+\]
+
+R10 replaces the source tensile scalar over this retained interval by two C2 quintic branches.
+
+For
+
+\[
+0\le t\le x_{cr},\qquad \tau=t/x_{cr},
+\]
+
+\[
+\boxed{
+ u_{rise}=\rho\tau+(10h-6\rho)\tau^3
+ +(8\rho-15h)\tau^4+(6h-3\rho)\tau^5.
+}
+\]
+
+For
+
+\[
+x_{cr}\le t\le 10x_{cr},\qquad
+\tau_f=(t-x_{cr})/(9x_{cr}),
+\]
+
+\[
+\boxed{
+ u_{fall}=h+(u_r-h)(10\tau_f^3-15\tau_f^4+6\tau_f^5),
+\qquad u_r=0.03.
+}
+\]
+
+The energy condition
+
+\[
+\int_0^{10x_{cr}}u_{sm}(t)\,dt=W_{src}
+\]
+
+fixes
+
+\[
+\boxed{h=0.09799750427197301.}
+\]
+
+Thus the executed R10 should be described as:
+
+```text
+source Foster tensile scalar
+-> broad two-piece C2 reconstruction over the retained 0..10*xcr tensile interval
+-> same multidimensional U/C/T + CC/TC/TT + spectral architecture
+```
+
+The motivation is removal of the sharp Foster transition, but the executed formula is not merely an infinitesimal local patch around one `lambda` point.
+
+This distinction matters because R10 changes the distribution of tensile material work even while retaining the total work, origin tangent, rounded peak location, residual level and endpoint regularity.
+
+R10 is therefore the only step in the R10/R10B chain that changes the material target.
+
+---
+
+## 4. R10 reinsertion identity
+
+After R10 smoothing,
+
+\[
+\boxed{T_i^{new}=u_{sm}(t_i)/\rho.}
+\]
+
+The same current master remains
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i,
+\]
+
+and the same interactions remain
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_--\rho a_tT_+T_-^8,
+\]
+
+\[
+s_-=U_--a_{cc}C_-^2C_++C_-T_+-\rho a_tT_-T_+^8.
+\]
+
+There is no 2D/4D material refit in R10.
+
+The global-energy-potential replacement route remains revoked as the wrong mathematical object.
+
+---
+
+## 5. Second transformation: R10 material target -> R10B finite analytic representation
+
+This is **not a second material-model modification**.
+
+R10B starts from the frozen R10 scalar and performs only analytic compilation/reintegration:
+
+```text
+frozen R10 u_sm(t)
+-> 1D material-coordinate finite Chebyshev representation
+-> SAME U/C/T + CC/TC/TT current map
+-> Cayley-Hamilton coefficient algebra
+-> finite spatial coefficient representation
+-> exact complete-halfwave moments
+-> P(D,q), R(D,q)
+-> same-expression derivatives
+-> limit root
+```
+
+R10B changes no R10 material parameter and may not be interpreted as a second material calibration.
+
+However, finite-order analytic compilation is still an approximation to the frozen R10 material function. Therefore distinguish:
+
+```text
+material-physics change          : R10 only
+material representation error    : R10B finite compiler order
+spatial numerical quadrature     : zero in the formal R10B operator
+finite-representation integration: exact moment contraction
+```
+
+The statement that the R10 interaction is retained "exactly at the finite compiler level" means:
+
+> once the finite 1D compiler functions are fixed, CC/TC/TT and spectral reconstruction are generated algebraically without an additional multidimensional fit.
+
+It does **not** mean that a finite-order compiler is pointwise identical to the untruncated R10 scalar.
+
+---
+
+## 6. Meaning of the two R10B orders
+
+The current formal result records:
+
+```text
+material degree = 48
+spatial Chebyshev degree = 28
+```
+
+Governing interpretation:
+
+\[
+\boxed{N_M=48=\text{1D material-coordinate analytic representation order}}
+\]
+
+\[
+\boxed{N_S=28=\text{structural spatial coefficient-representation order}}
+\]
+
+They are not:
+
+- numbers of material parameters;
+- numbers of material points;
+- numbers of spatial integration points;
+- counts such as `147` inferred from an assumed internal array layout.
+
+Actual coefficient-array counts and storage layout are implementation facts and must be recovered from the original R10B core/coefficient artifacts before being asserted.
+
+---
+
+## 7. R10B coefficient-generator evidence boundary
+
+The canonical R10B theory establishes only that material-coordinate samples are used to derive finite 1D analytic compiler coefficients and that those samples are not spatial samples or free material parameters.
+
+The current repository does **not** contain the byte-exact original contents of:
+
+- `07_R10B_zero_spatial_compiler_core.py`;
+- the executed N48 coefficient arrays;
+- the complete original coefficient-generation convention.
+
+Therefore none of the following may currently be asserted as historical R10B fact without new original evidence:
+
+- DCT-I as the unique executed generator;
+- DCT-II as the unique executed generator;
+- a particular continuous Chebyshev projection;
+- a particular least-squares sampling/weighting rule;
+- a particular total coefficient count.
+
+Such constructions may be used later as transparent reproducible replacement conventions, but only after being explicitly frozen as a new reproducibility contract and revalidated against the current Case21 baseline. They must not be back-labelled as the historical R10B implementation.
+
+---
+
+## 8. R09A -> R10 -> R10B lineage
+
+The correct lineage is:
+
+```text
+R09A diagnostic
+  -> showed that tensile-shape complexity can be reduced
+  -> showed that retained tensile-capacity level is not negligible
+  -> SAT03/SAT05/SAT07 remain sensitivity brackets only
+
+R10 material target
+  -> uses source material work and physical/C2 anchors
+  -> replaces the source Foster tensile scalar by a broad two-piece C2 retained-interval reconstruction
+  -> retains the same multidimensional interaction
+
+R10B analytic compilation
+  -> makes no further material change
+  -> represents frozen R10 in finite analytic form
+  -> reconstructs the same interaction algebraically
+  -> performs zero-spatial exact moment contraction
+```
+
+---
+
+## 9. Interpretation of the large R10 structural shift
+
+The same-equation R10 audit gives approximately
+
+```text
+SOURCE_FOSTER Pu      = 342.334029 kN
+R10_ENERGY_SMOOTH Pu  = 368.723464 kN
+Delta                 = +26.389435 kN
+```
+
+while the tensile peak itself changes only modestly.
+
+This is not, by itself, evidence of calibration or error. R09A already showed that the tensile branch can shift the coupled stationary coordinates and therefore indirectly alter the compression-side contribution.
+
+Nevertheless, because the executed R10 reconstructs the entire retained tensile scalar interval rather than only an infinitesimal local peak neighborhood, the R10 material target deserves a dedicated material-level interpretation/audit before any attempt to reconstruct historical N48 coefficient-generation details.
+
+This audit must not retune `h` using Case21 or Swartz structural capacities.
+
+---
+
+## 10. Required order for further recovery work
+
+Until the R10/R10B recovery is complete, use the following order:
+
+```text
+STEP 1  Audit the frozen R10 material target itself
+        - source Foster scalar vs R10 scalar
+        - work redistribution over 0..10*xcr
+        - scalar stress/tangent differences
+        - reconstructed multidimensional material-surface differences
+        - no structural recalibration
+
+STEP 2  Audit R10B representation fidelity
+        - frozen R10 exact target vs finite N_M representation
+        - separate material-coordinate representation error from spatial coefficient truncation
+        - no change to R10 physics
+
+STEP 3  Recover or explicitly re-freeze the coefficient-generation convention
+        - only original core/artifacts may define the historical convention
+        - otherwise create a new transparent reproducibility contract and label it as new
+
+STEP 4  Generate coefficient tables / supplementary reproducibility material
+        - only after STEP 1-3 are resolved
+```
+
+Do not reverse this order.
+
+---
+
+## 11. Current project-state effect
+
+This clarification does not revoke the executed engineering result:
+
+```text
+R10_1D_ENERGY_SMOOTHING                    = PASS
+R10B_1D_MATERIAL_RECOMPILE                 = PASS
+R10B_ZERO_SPATIAL_CASE21                   = PASS_ENGINEERING
+CASE21_N48_LIMIT_ROOT                       = PASS
+SWARTZ24                                   = NOT_STARTED
+```
+
+No value of `h`, `D_u`, `q_u`, `Pc`, `Ps` or `Pu` is changed by this clarification.
+
+What changes is the recovery/interpretation discipline:
+
+```text
+R10  = material-target modification
+R10B = finite analytic compilation of frozen R10
+N_M  = material representation order, not parameter count
+N_S  = spatial coefficient order, not quadrature count
+historical R10B coefficient generator = unresolved until original evidence is recovered
+```
+
+====================================================================================================
+FILE: governance/README.md
+SIZE: 669
+SHA256: dee89ebdbfffd44c910d04239838d31f12b25af8860dabb1967240138b6caa30
+ENCODING: utf-8
+LINES: 11
+====================================================================================================
+# GOVERNANCE
+
+本目录只保存项目的长期规则，不保存阶段计算结果。
+
+- `SOURCE_OF_TRUTH_POLICY.md`：证据等级与原件优先规则。
+- `RECOVERY_PROTOCOL.md`：新对话如何按任务最小恢复。
+- `SYNC_PROTOCOL.md`：什么时候应同步 GitHub。
+- `EFFECTIVE_SOURCE_EXCERPT_POLICY.md`：只保留有效原文摘录，不再追求全文镜像。
+- `PRIORITY_RESET_20260810.md`：2026-08-10 后的工程优先级与 final-attempt / new-operator 边界。
+
+若历史文件与这里的治理规则冲突，先按证据优先级核查原始用户指示与时间顺序，再判断 supersession；不要仅按文件名中的版本号裁决。
+
+====================================================================================================
+FILE: governance/RECOVERY_PROTOCOL.md
+SIZE: 9701
+SHA256: 0fb459155d76acd84ece9c7450a5fad98d539586f2f7454ea2295949ad0a1a7a
+ENCODING: utf-8
+LINES: 267
+====================================================================================================
+# RECOVERY PROTOCOL — 跨对话恢复
+
+本文件规定新 ChatGPT / Work / Codex 对话如何从重构后的仓库恢复 NZ-SCCM。
+
+仓库支持两种恢复模式：
+
+1. `FULL_STARTUP_RECOVERY`：用于新的长期项目对话接管、长对话中断后的正式恢复，或用户明确要求“完整恢复项目”时。此模式优先于最小按需读取。
+2. `TASK_SCOPED_RECOVERY`：用于已经建立完整上下文后的普通窄任务，只恢复与当前问题直接相关的最小证据集。
+
+不得把 `TASK_SCOPED_RECOVERY` 的最小读取原则用于削弱用户明确要求的 `FULL_STARTUP_RECOVERY`。
+
+## 0. FULL_STARTUP_RECOVERY
+
+当进入完整启动恢复模式时，必须先确认实际 GitHub 状态，而不是根据旧聊天记忆、旧文件名单或历史 handoff 猜测当前结构。
+
+### 0.1 仓库身份与动态扫描
+
+依次完成：
+
+1. 实际连接仓库；
+2. 确认默认分支；
+3. 记录恢复开始时的 HEAD commit；
+4. 递归扫描当前默认分支目录树；
+5. 以实际 tree 决定读取对象，不使用僵硬固定文件名单；
+6. 若恢复过程中对 governance 形成稳定修订并提交，区分“恢复基线 HEAD”和“同步后新 HEAD”。
+
+### 0.2 固定前置读取
+
+无论仓库结构如何演化，优先寻找并读取当前承担以下角色的文件：
+
+1. 项目入口 / `START_HERE`；
+2. 当前状态 / `CURRENT_STATE`；
+3. source-of-truth / evidence hierarchy；
+4. recovery / sync governance。
+
+当前仓库对应入口为：
+
+- `START_HERE.md`
+- `current/CURRENT_STATE.md`
+- `governance/SOURCE_OF_TRUTH_POLICY.md`
+- 本文件
+- `governance/SYNC_PROTOCOL.md`
+
+这些路径以后若调整，以最新实际 tree 与 repository role 为准。
+
+### 0.3 分层完整恢复顺序
+
+在工具和上下文容量允许的前提下，按以下层级分批继续读取；“顺序靠后”不等于“可以忽略”。
+
+**第一层：当前状态 / 当前正式理论 / 当前执行入口**
+
+- `current/` 中 current-state、theory、case、result、code 和当前执行报告；
+- 当前正式主线、benchmark、未闭合问题与下一任务。
+
+**第二层：governance / source-of-truth / recovery / sync / project rules**
+
+- source hierarchy；
+- supersession / revocation / rollback；
+- recovery 与 checkpoint 规则；
+- 当前优先级重置。
+
+**第三层：evidence / source maps / registries / inventories / audits**
+
+- material evidence；
+- formula evidence；
+- source registry；
+- source locator；
+- equation-to-code mapping；
+- audit/report/JSON/CSV/TXT/code；
+- 原始 PDF 或正式来源的有效摘录与身份信息。
+
+**第四层：history / rejected routes / rollback / old operators / raw history / forensic records**
+
+- D/G/R 历史；
+- old Case21 routes；
+- UCFT historical routes；
+- raw conversation / original user instruction locators；
+- decision/component ledgers；
+- forensic recovery artifacts。
+
+**第五层：大型全文镜像、旧迁移资产或只存在于历史 commit 的资料**
+
+只有当前四层仍无法解决证据问题时，再读取：
+
+- pre-clean repository tree；
+- 迁移期全文镜像；
+- 旧 snapshots / checkpoints；
+- 其他已从当前 `main` 清出的超大迁移资产。
+
+第五层不得整体重新合并回当前 `main`；只定点恢复当前证据问题需要的内容。
+
+### 0.4 大型文件与二进制来源
+
+- 大型文本文件允许分段读取，但不能因为首段已有 summary 就宣布完整恢复；
+- PDF/DOCX/ZIP 等二进制若正文不在 Git 中，至少恢复 repository metadata、locator、SHA、file identity、source role 和已有 provenance 摘录；
+- 当前理论/证据判断确实需要正文时，再回原 PDF / File Library /正式出版来源；
+- `SOURCE_BYTES_NOT_RECOVERED` 必须显式标记，不能从 summary 补写原文。
+
+### 0.5 重要对象必须判定身份
+
+文件“存在”不等于“当前有效”。对重要理论、公式、材料模型、计算路线和数值结果，必须依据最新 current/governance 判断其身份，例如：
+
+- `CURRENT`
+- `CURRENT_BENCHMARK`
+- `SOURCE_ONLY`
+- `RETAINED`
+- `HISTORICAL`
+- `SUPERSEDED`
+- `REJECTED`
+- `DIAGNOSTIC_ONLY`
+- `AUDIT_ONLY`
+- `EXECUTED_BUT_UNACCEPTED`
+- `UNRESOLVED`
+
+历史文件中的 `PASS`、`READY`、`LOCKED`、`PRODUCTION` 不得自动覆盖后续 current/governance。
+
+### 0.6 冲突裁决
+
+涉及文献事实：
+
+```text
+原始 PDF / 正式出版来源
+> 有 provenance 的原文有效摘录
+> 机械文本镜像
+> evidence note / formula extraction
+> 项目解释
+> summary / handoff / model memory
+```
+
+涉及项目历史：
+
+```text
+原始 user-assistant conversation / 原始用户指示 / 原始 Conversation JSON
+> 原始执行工件、源码、CSV、报告、可复现实验
+> audit / decision ledger / recovery report
+> handoff / summary
+> 模型记忆或推断
+```
+
+冲突时必须记录证据等级、时间顺序和 current/history 身份，不得自行合成一个“看起来合理”的版本。
+
+### 0.7 FULL_STARTUP_RECOVERY 完成门禁
+
+至少能够从仓库证据回答下列问题后，才可宣布恢复完成：
+
+1. 当前项目最终目标；
+2. 当前正式主线；
+3. 当前推进阶段；
+4. ordinary concrete operator 当前身份；
+5. reinforcement 如何进入结构方程；
+6. UHPC 当前闭合程度；
+7. steel-shell / Y / PBL 当前闭合程度；
+8. Case21 当前正式计算身份；
+9. Swartz24 当前状态；
+10. 当前锁定理论边界；
+11. 已淘汰路线；
+12. 只能作 audit/reference 的历史结果；
+13. 当前关键 unresolved blocker；
+14. 下一步最合理工作；
+15. 上述每一点对应的 GitHub 核查路径。
+
+若仓库过大，应分批继续读取，而不是自行认定剩余内容不重要。若发现访问失败、损坏、current 冲突、registry 冲突、关键原件缺失或历史身份无法判断，必须在宣布恢复完成前显式报告。
+
+## 1. TASK_SCOPED_RECOVERY 固定前置
+
+当完整上下文已经建立、当前只是普通窄任务时，先读：
+
+1. `START_HERE.md`
+2. `current/CURRENT_STATE.md`
+3. `governance/SOURCE_OF_TRUTH_POLICY.md`
+
+然后按任务进入对应证据或历史目录。
+
+## 2. Case21 / Pu / current operator
+
+读取：
+
+- `current/CURRENT_STATE.md`
+- `current/theory/`
+- `current/case21/`
+- 必要时 `governance/PRIORITY_RESET_20260810.md`
+
+只有当问题涉及“为什么旧路线被否决”时，才进入 `history/Case21/` 或 `history/NZ_SCCM/`。
+
+338/342 kN 等历史高精度数值只能作 audit/reference，不得用于材料拟合、选阶、选根或结构校准。
+
+## 3. 普通混凝土 / Nguyen / reinforcement
+
+优先读取：
+
+- `evidence/materials/NC/Nguyen_source_map.md`
+- `evidence/materials/NC/Nguyen_AppendixB/`
+- `current/theory/` 中当前 NC+rebar benchmark
+
+需要历史 Branch-C 数值来源时，再读：
+
+- `history/NZ_SCCM/R_series/`
+- `history/NZ_SCCM/material_recovery/`
+
+不要把 Nguyen 的 FE/Gauss/material-point 路线恢复成当前正式零空间积分 operator。
+
+## 4. UHPC
+
+优先读取：
+
+- `evidence/materials/UHPC/core_sources/`
+- `evidence/materials/UHPC/audits/`
+- `evidence/materials/UHPC/source_data/`
+- `evidence/materials/UHPC/LOCAL_THESES_SOURCE_MAP.md`
+
+历史 UHPC-C0 在 `history/materials/UHPC/old_operator_baselines/`，只用于历史追溯，不是 production operator。
+
+若证据包不够，再通过 `evidence/catalog/SOURCE_REGISTRY.md` / `MASTER_SOURCE_INVENTORY.csv` 找到原 PDF/File Library/DOI，按需回原文。
+
+## 5. steel shell / Y / PBL
+
+优先读取：
+
+- `evidence/steel_shell/Yun_Lu_source_map.md`
+- `evidence/steel_shell/Zhang_Ning_source_map.md`
+- `evidence/steel_shell/Sun_Lipeng/`
+
+必要时再查 `history/UCFT/v5/`。
+
+云露经验有效宽度修正、张宁历史弹性支撑表示、孙立鹏历史有效面积/弹塑性闭合均不能因“来源存在”自动升格为当前 production shell operator。
+
+## 6. 历史路线裁决
+
+先读 `history/README.md`，再进入：
+
+- `history/NZ_SCCM/` — D/G/R、moment-first、direct-analytic、nested-D15 等；
+- `history/Case21/` — Case21 旧路线；
+- `history/UCFT/` — Layer0 / PathA / v5；
+- `history/raw/` 与 `history/recovery/` — 原始历史/法证 locator；
+- `history/ledgers/` — 历史组件/决策台账。
+
+不得只从最新 handoff 反推历史。
+
+## 7. 查上传文件/原始来源
+
+读取：
+
+- `evidence/catalog/SOURCE_REGISTRY.md`
+- `evidence/catalog/MASTER_SOURCE_INVENTORY.csv`
+- `evidence/catalog/INVENTORY_CHAIN.md`
+
+这些目录保存 File Library ID、SHA、URL、历史身份。若其中旧的 migration path/status 与当前树不同，以 `START_HERE.md`、`current/CURRENT_STATE.md` 和当前 Git tree 为准；catalog 的主要职责是“原件是否存在/如何找回”。
+
+## 8. 已移出的迁移期大文件
+
+此前的全文 TXT 镜像、R2 恢复快照、GitHub 迁移 checkpoint 和 migration metadata **不再存在于当前 `main`**，以避免搜索污染。
+
+若极少数情况下确需这些资料：
+
+1. 读 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md`；
+2. 从其中记录的 pre-clean Git commit 定点读取所需文件；
+3. 只恢复当前问题需要的片段，不要把整套旧目录重新合并到 `main`。
+
+优先仍应回原 PDF / File Library，而不是依赖旧全文镜像。
+
+## 9. 证据冲突
+
+文献事实：原始 PDF/正式来源 > 有 provenance 的有效摘录 > Git 历史中的机械全文镜像 > evidence note > summary。
+
+项目历史：原始 user-assistant dialogue / 原始用户指示 > 原始执行工件 > audit/ledger > handoff/summary > memory。
+
+找不到原件时必须明确标记 `SOURCE_BYTES_NOT_RECOVERED`，不能从摘要补写原文。
+
+====================================================================================================
+FILE: governance/REVOCATION_WRONG_GLOBAL_ENERGY_POTENTIAL_GATE_20260810.md
+SIZE: 4076
+SHA256: d4c5a567aa116f7584c0eb13d6110c4391eef1400d07402b5dd7808419962c5e
+ENCODING: utf-8
+LINES: 88
+====================================================================================================
+# REVOCATION — WRONG GLOBAL ENERGY-POTENTIAL GATE INTERPRETATION
+
+Date: 2026-08-10
+
+## Decision
+
+The execution recorded as `NC_ENERGY_POTENTIAL_AND_D15_FEASIBILITY_GATE = FAIL__STOP_AT_GATE` tested the wrong mathematical object for the user's intended route and is therefore **revoked as a governing blocker**.
+
+The numerical calculations in that gate remain historical evidence only: they show that a single low-order global energy polynomial over the entire scalar strain domain is a poor representation. They do **not** show that the intended NZ-SCCM scalar-smoothing route fails.
+
+```text
+NC_GLOBAL_ENERGY_POTENTIAL_GATE = REVOKED_AS_WRONG_ROUTE_TEST
+D15_EXACT_MOMENT_ENGINE = RETAINED
+CASE21_ZERO_SPATIAL_ANALYTIC_ROUTE = RETAINED
+```
+
+## Correct route restored
+
+The intended architecture is not
+
+```text
+full multidimensional constitutive law
+ -> replace everything by one global energy potential
+ -> differentiate potential
+ -> structural integration
+```
+
+It is
+
+```text
+multidimensional/current constitutive relation
+ -> principal/equivalent scalar coordinates lambda_+, lambda_-
+ -> one-dimensional scalar master material functions
+ -> smooth only the narrow scalar peak/kink/boundary-layer using a material-energy rule
+ -> reinsert the smoothed scalar function into the existing low-parameter multidimensional interaction/spectral reconstruction
+ -> Nguyen continuous second-order strain field
+ -> zero-spatial analytic/D15 target contraction
+ -> P(D,q), Rq(D,q) and same-expression derivatives
+ -> solve Rq=0 and L=0
+ -> Pu
+```
+
+## Why this correction is required
+
+Historical G19 had already localized the unresolved NC problem to the **one-dimensional cracking/peak boundary layer**, not to the two-dimensional interaction surface. Its governing conclusion was that the next work should regularize the one-dimensional scalar function rather than increase 2D interaction degree.
+
+The explicit Case21 zero-spatial analytic-series execution later demonstrated that the scalar-material/current-map -> continuous kinematics -> analytic moment contraction -> equilibrium/limit-root chain is calculable with formal spatial sampling and quadrature equal to zero. The remaining strict-certificate issue did not invalidate the central analytic solution.
+
+## Energy rule location
+
+Energy is used only to select/regularize the one-dimensional scalar patch. A generic admissible condition is
+
+\[
+\int_{\lambda_a}^{\lambda_b} u_{smooth}(\lambda)\,d\lambda
+=\eta_E\int_{\lambda_a}^{\lambda_b}u_{source}(\lambda)\,d\lambda,
+\]
+
+combined with the required physical anchors, monotonicity and derivative continuity. The rest of the multidimensional current-map architecture is not replaced by a global material potential.
+
+## Prohibitions retained
+
+- no spatial Gauss/Simpson/adaptive quadrature in the formal operator;
+- no material-point grid;
+- no moving spatial TT/TC/CC cells;
+- no whole-structure P/R/U surface fitted from spatial numerical integration;
+- no large bank of free material coefficients;
+- no Case21/Swartz Pu calibration of the scalar smoothing;
+- no 2D interaction-degree escalation to repair a 1D scalar kink;
+- no finite-difference production derivatives.
+
+## Correct next gate
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK
+= R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21
+```
+
+Before any Swartz24 batch, R10 must:
+
+1. recover the one-dimensional scalar master branch used by the accepted/current NC operator;
+2. identify the narrow peak/kink interval to be regularized;
+3. construct a low-parameter analytic smoothing using material energy and physical anchors only;
+4. verify scalar stress and derivative behavior;
+5. reinsert that scalar function into the existing multidimensional interaction/spectral current map without changing the interaction architecture;
+6. pass a material-surface audit;
+7. reuse the proven zero-spatial analytic/D15 Case21 chain;
+8. solve the reinforced Case21 equilibrium/limit equations with steel embedded before root solving;
+9. compare against prior Case21 analytic results and experiment only after the new material target is frozen.
+
+====================================================================================================
+FILE: governance/SOURCE_OF_TRUTH_POLICY.md
+SIZE: 2966
+SHA256: 6292c37698f0d651013028c2e2a4d3d51d1125ad3ae3bd6617f85fd8a6664df7
+ENCODING: utf-8
+LINES: 67
+====================================================================================================
+# SOURCE OF TRUTH POLICY
+
+## 1. 文献事实
+
+证据优先级：
+
+1. 原始 PDF / 正式出版物 / 规范原文；
+2. 带明确 provenance 的有效原文摘录（来源文件、SHA、File ID/URL，尽量带页码/行号）；
+3. 必要时从 Git 历史定点恢复的机械全文镜像；
+4. evidence note / 公式整理；
+5. 项目理论解释；
+6. stage summary / handoff / model memory。
+
+若摘录/历史 TXT 与 PDF 的符号、图表、版式或上下文冲突，以 PDF 为准。
+
+## 2. 项目历史
+
+证据优先级：
+
+1. 原始 user-assistant conversation / 原始用户上传指示词 / 原始 Conversation JSON；
+2. 原始执行输出、源码、CSV、报告和可复现实验；
+3. decision ledger / audit / recovery report；
+4. stage summary / handoff；
+5. model memory / inference。
+
+不得用后期工件虚构共享对话中没有发生的正式回复或用户验收。
+
+## 3. 当前身份与历史身份分离
+
+- `current/` 决定“现在下一步该用什么”。
+- `evidence/` 决定“这个事实/公式/来源由什么支持”。
+- `history/` 说明“以前做过什么、为什么被保留/替代/否决”，并保存 pre-clean repository recovery pointer。
+
+历史文件中的 `PASS/HOLD/READY` 不自动覆盖 `current/CURRENT_STATE.md`。
+
+## 4. 原件保全
+
+- 原始 PDF/TXT/JSON 一经登记，不静默覆盖；
+- 可取得的本地原件记录 SHA-256、字节数和来源身份；
+- GitHub 暂无二进制原件时，至少保留 File Library ID / 文件名 / SHA（若可得）/ DOI或URL；
+- 新扫描版/新版本另存，不覆盖旧 SHA。
+
+## 5. GitHub 文本身份
+
+### BYTE_EXACT_ORIGINAL
+
+只有按字节校验与登记 SHA 一致，才能这样标记。
+
+### EFFECTIVE_SOURCE_EXCERPT
+
+用于当前或历史理论的原始公式、参数、表格、试验路径、程序片段或关键论述。应记录来源及使用边界。
+
+### FULL_TEXT_MIRROR / NORMALIZED_TEXT_COPY
+
+聊天/connector UTF-8 复制可能改变 CRLF、Unicode、末尾换行或转义，因此只能作为检索镜像。迁移期建立的全文镜像已从当前 `main` 删除；若确需恢复，从 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 指向的 pre-clean commit 定点读取。
+
+正常工作不应优先依赖这些旧镜像。
+
+## 6. 原始信息优先
+
+此前上传过的 PDF、TXT/prompt/instruction、JSON、CSV ledger、execution/gate/rollback/response、source registry、equation-to-code registry、raw conversation export，应优先保存原件或至少保存可靠 locator。
+
+文献 PDF 不要求整篇文本继续复制进 GitHub；只要原件 locator 完整，且项目实际使用的有效部分有可审计证据，即满足恢复要求。
+
+## 7. 结构试验不得反标材料
+
+Case21、Swartz24、UCFT 构件承载力不得用于反标普通混凝土、UHPC、钢筋或钢壳材料参数。材料 operator 的参数与形式只能由材料级来源确定/验证；结构试验只用于结构层验证。
+
+====================================================================================================
+FILE: governance/SYNC_PROTOCOL.md
+SIZE: 4586
+SHA256: 56a732dee4f8c28c8efb6994e92bd266c7843e8c0ca29902a1e100ecc49ebf99
+ENCODING: utf-8
+LINES: 124
+====================================================================================================
+# SYNC PROTOCOL — GitHub 持续检查点同步规则
+
+## 1. 基本原则
+
+NZ-SCCM 的长期研究记录采用：
+
+```text
+CONTINUOUS_CHECKPOINT_SYNC
+```
+
+稳定研究事件形成后，应尽快写回 GitHub；不得默认等待用户再次说“同步 GitHub”，也不得把全部同步拖到对话结束或临时 handoff。
+
+原因：长对话可能随时中断。GitHub 必须能够在没有上一段长聊天上下文的情况下恢复到最近稳定研究状态。
+
+## 2. 何时必须同步
+
+出现下列任一稳定事件时，应优先形成 Git commit：
+
+- 用户明确接受/否决一条理论路线；
+- 一个重要理论判断刚刚确定；
+- 理论边界被冻结、解除或被新 governance supersede；
+- 材料公式、参数来源或 operator 身份被冻结/解冻；
+- Case21 / Swartz24 等 benchmark 的正式结果或身份发生变化；
+- 新的原始 PDF/TXT/JSON/CSV/代码进入项目；
+- 新 gate / rollback / audit / reproducibility artifact 形成；
+- 新 source evidence / source locator / equation-to-code mapping 形成；
+- 新失败路线及失败原因形成；
+- 新可复现实验形成；
+- 新 unresolved blocker 形成；
+- 对旧结论形成足以影响未来对话的重要修正；
+- 用户明确修改项目优先级；
+- 一个长计算完成；
+- 准备开始一个可能耗时很长的计算之前；
+- 一个较长工作阶段完成、下一阶段尚未开始；
+- 对话准备迁移或用户明确说“同步 GitHub”。
+
+原则表达为：
+
+```text
+稳定研究事件 -> GitHub checkpoint
+```
+
+而不是：
+
+```text
+对话结束 -> 才统一总结
+```
+
+## 3. 什么不需要逐条提交
+
+持续同步不等于每句话一个 commit。以下对象原则上不需要立即进入正式项目目录：
+
+- 普通讨论；
+- 临时猜想；
+- 尚未完成的试算；
+- 思考草稿；
+- 明显中间垃圾；
+- 尚未形成稳定身份的候选。
+
+但一旦它们形成稳定研究结论、正式否决、可复现实验或 unresolved blocker，就应形成 checkpoint。
+
+## 4. Repository role 与聊天身份必须一致
+
+后续对话产生的成果，不再建立一套只存在于聊天里的平行分类体系。
+
+- 属于 `current` 的结论，聊天中明确标为 current；
+- 属于 `evidence` 的来源，不写成正式理论；
+- 属于 `history` 的路线，不写成当前主线；
+- 属于 `audit_only` 的数值，不升级成 production；
+- 属于 `unresolved` 的缺口，不用推断补齐。
+
+文件路径以同步时最新实际 Git tree 为准，不预先假定目录永远固定。
+
+## 5. Canonical path 与历史真实性
+
+同步时：
+
+1. 优先更新已有 canonical 文件，不制造多份无法管理的“最新版”；
+2. `CURRENT` 文件可随正式理论更新；
+3. `HISTORY` 文件原则上保持历史真实性；
+4. 原始 source / raw conversation / original artifact 不静默改写；
+5. 旧文件具有历史证据价值时，不用新的 current 内容覆盖它；
+6. 被淘汰路线保留其身份、淘汰原因和证据定位；
+7. 不为了“仓库干净”删除唯一历史证据；
+8. 避免 `FINAL_v2` / `FINAL_v3` / `NEW_FINAL` / `FINAL_REVISED` 一类无法治理的命名链；
+9. 优先依赖 canonical path + Git commit history 表达演化。
+
+## 6. 原始文件策略
+
+- 原始 PDF/TXT/用户指示原则上 immutable；
+- 不静默覆盖；新版本另存并登记 SHA-256；
+- 二进制暂时不能迁移时，必须登记精确文件名、File Library ID、SHA（若可得）、公开 DOI/URL（若有）与恢复状态；
+- 压缩包只保存关键 frozen snapshot，避免 R1/R2/R3 大量重复二进制。
+
+## 7. Commit message 建议
+
+采用：`[stage/module] action: short decision`
+
+例如：
+- `[UHPC/G16R] freeze: fc=141.1 only`
+- `[Case21] audit: single-domain engineering convergence`
+- `[history] import: raw turns 0001-0148`
+- `[sources] add: Hiew 2024 original PDF`
+- `[governance] update: continuous checkpoint sync`
+
+## 8. 重要同步后的聊天反馈
+
+完成一次重要 GitHub 同步后，聊天中只需简短说明：
+
+- 更新了什么；
+- 写入/修改了哪些逻辑目录；
+- commit SHA；
+- 当前项目状态是否因此改变。
+
+不需要把完整 Git diff 贴回聊天。
+
+## 9. 不允许
+
+- 用最新 summary 覆盖早期原始文件；
+- 删除 rejected route 以“保持仓库干净”；
+- 因新结论出现而改写旧 commit 中的历史事实；
+- 把 audit-only 数值结果重新标成 production；
+- 延迟已经稳定的重要结论数十轮之后才同步；
+- 把聊天记忆当作 GitHub current-state 的替代物。
+
+====================================================================================================
+FILE: governance/USER_SKETCH_SHAPE_PRESERVING_SMOOTHING_RULE_20260810.md
+SIZE: 2805
+SHA256: d214cceb14c17b87e3f01c2986b42d36d209d5f9b2e602005f8246c7a2f259cb
+ENCODING: utf-8
+LINES: 84
+====================================================================================================
+# USER-SKETCH SHAPE-PRESERVING SMOOTHING RULE
+
+**Date:** 2026-08-10
+
+## 1. User correction
+
+The R07R rational scalar candidates are not the preferred interpretation of deliberate material under-use because their tensile side may still show an artificial overshoot / dip / rebound sequence.
+
+The accepted interpretation is a **shape-preserving data-processing operation**:
+
+```text
+source / measured sharp feature
+-> deliberately do not use the full sharp local capacity
+-> replace the local cut / spike by a low-parameter smooth monotone cap
+-> keep the main mechanical landmarks explicit
+-> evaluate the structural consequence afterwards
+```
+
+The objective is NOT minimum pointwise material regression error.
+
+## 2. Admissible representation
+
+Any mathematical representation is admissible, including:
+
+- explicit piecewise analytic scalar functions;
+- smooth 2D/4D current surfaces;
+- local Hermite / Bezier / polynomial patches;
+- invariant or spectral matrix functions;
+- whole-structure explicit target functions;
+- low-rank / special-function constructions.
+
+The mandatory end condition is:
+
+\[
+P(D,q),\qquad R_q(D,q),
+\]
+
+with explicit derivatives from the same formulas,
+
+\[
+P_{,D},P_{,q},R_{q,D},R_{q,q},
+\]
+
+and
+
+\[
+L=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0,
+\]
+
+so that
+
+\[
+P_u=P(D^*,q^*)
+\]
+
+is obtained from explicit formulas.
+
+## 3. Shape-preserving requirement
+
+For a deliberately simplified tensile branch, the preferred prototype is:
+
+- monotone increase from the origin to one rounded tensile peak;
+- zero tangent at the retained peak;
+- monotone decrease to the retained residual level;
+- zero tangent at the residual onset;
+- no artificial secondary undershoot;
+- no rebound after the local minimum;
+- no local oscillation introduced only by the regression family.
+
+The same principle applies to compression or mixed-state patches: remove a local cut/spike only when its mechanical consequence is explicitly reported.
+
+## 4. Structural validation order
+
+1. Freeze the material simplification before viewing the structural experimental target used for validation.
+2. Insert reinforcement into the SAME `P,Rq` equations before solving the RC limit state.
+3. Compare the resulting RC prediction with experiment.
+4. Only if a systematic deficiency remains may a minimal source-grounded multiaxial correction be introduced.
+5. Do not restore the full historical CC/TC/TT complexity merely to reduce local material regression error.
+
+## 5. Formal-status distinction
+
+An explicit whole-structure target identified offline from numerical data may be retained as a proof-of-concept under the current user priority, provided the offline identification is disclosed.
+
+It is NOT automatically identical to the older pure-D15 zero-spatial-quadrature production identity. That distinction must remain visible.
+
+====================================================================================================
+FILE: history/Case21/G31_ARTIFACT_LOCATOR.md
+SIZE: 1782
+SHA256: b5774d6e74bb6272272921e194e676c90f43f4605d3deef66087cce02e3fc256
+ENCODING: utf-8
+LINES: 49
+====================================================================================================
+# G31 原始工件定位器
+
+## 原始工件
+
+```text
+filename = 00_G31_Case21_Pu全过程与UHPC_C0同步模型.md
+ChatGPT File Library ID = file_0000000095688206bc564face5eb85fc
+created = 2026-08-08T08:36:18Z
+GitHub original-text copy = PENDING (File Library original is longer than current retrieval payload)
+```
+
+配套材料合同已直接复制到：
+
+`materials/UHPC/history/10_UHPC_C0_material_contract.json`
+
+原始 File Library ID：
+
+`file_00000000363c82308a0144275d632d61`
+
+## G31 工件的历史身份
+
+G31 证明当时一条“连续应变 → 材料函数 → 解析级数 → D15 → P, RA → 平衡峰值”的计算链已经实际执行。该工件中的无裂化 Case21 基线为：
+
+```text
+D ≈ 1.22
+q = 0.013820091996
+A = 16.860512 mm
+Pu = 476.935634 kN
+Pf_exp = 368.312750 kN
+error ≈ +29.492%
+```
+
+该数值的正确历史解释是：**数学求解链跑通，但故意忽略裂化/退化时材料模型显著高估试验。** 它不是当前 NC benchmark 的最终 Pu，也不是材料已经正确的证明。
+
+工件同时明确说明：Case21 钢筋不能在 concrete-only 峰值后简单加 `As fy`，因为钢筋也改变 `RA`，因此正式 RC Pu 必须把钢筋加入同一残量后重新求根。
+
+## 当前身份覆盖关系
+
+```text
+G31 UHPC-C0 = EXECUTED_CALCULABLE_BASELINE
+G31 final visible delivery/user acceptance = historical evidence must be checked against original conversation tree
+UHPC-C0 = NOT final production UHPC operator
+```
+
+当前治理以根目录 `CURRENT_STATE.md`、G16R/UHPC state ledgers 和 2026-08-10 priority reset 为准。
+
+## 恢复规则
+
+需要 G31 逐项公式/中间积分/完整 UHPC-C0 说明时，必须从 File Library 打开精确原件；本 locator 只保证原件不会因后续摘要而失去定位。
+
+====================================================================================================
+FILE: history/Case21/common_policy/REPORT_R2.md
+SIZE: 4554
+SHA256: f3ec1ae624478d7a95aeed6b3509604852b8c3f61af41512c6695aa41e339671
+ENCODING: utf-8
+LINES: 82
+====================================================================================================
+# NZ-SCCM Swartz24 common state-independent nested support policy + Case21 gate R2
+
+**Date:** 2026-08-09  
+**Scope:** support/compiler-policy closure and Case21 regression only. No NC physics change, no reinforcement physics change, no spatial numerical integration in the formal operator.
+
+## 1. Result
+
+The Case21-only magnitude mask has been replaced by one fixed **parity-total-degree closure (PTDC)** support policy. The policy has 2021 operation masks and 1,962,295 retained keys, versus 1,342,030 keys in the Case21-local seed (+46.2%). It is identical for all panels/states.
+
+The generalized halfwave generator now supports both Swartz source groups:
+
+- cases 1–16: `ell=2440 mm`, `r=b/ell=0.5`;
+- cases 17–24: `ell=1220 mm`, `r=1`;
+- one complete representative halfwave, active `m=1` within that halfwave.
+
+The r=1 reduction reproduces the R1 Case21 generator exactly.
+
+## 2. Common-policy numerical qualification
+
+Against independent high-order quadrature of the **same finite N60 material series** (audit only), 13 completed qualification states spanning both halfwave groups and the Swartz material-kappa extrema give:
+
+- max relative axial integral error: `0.0053431 %`;
+- max absolute amplitude-residual integral error: `0.01975435`;
+- principal normalized strain actually covered by the completed qualification set: approximately `[-1.24929, +0.13636]`;
+- `kappa` extrema tested: `1.9993148515` to `2.0008935611`.
+
+The raw state-by-state values are frozen in `audit_only/common_policy_qualification.csv`; no experimental load was used to construct or tune the mask.
+
+## 3. Case21 common-policy regression
+
+Three reclosed equilibrium roots around the peak are:
+
+| D | q | P/kN | total R |
+|---:|---:|---:|---:|
+|0.704000000|0.002189971407|342.100678762|-1.26e-7|
+|0.705400327|0.002194466440|342.102040052|-1.04e-7|
+|0.706000000|0.002196398532|342.101790217|-9.51e-8|
+
+Local quadratic peak location: `D=0.705400166`; the explicitly reclosed center point differs negligibly and is adopted.
+
+Final common-policy Case21 result:
+
+- `D_u = 0.7054003270`;
+- `q_u = 0.002194466440`;
+- `A_u = 2.677249 mm`;
+- `A0+A_u = 5.727249 mm`;
+- `Pc = 316.410841 kN`;
+- `Ps = 25.691200 kN`;
+- `Pu = 342.102040 kN`;
+- `R_total = -1.04e-7`;
+- versus `Pf_exp=368.312750 kN`: `-7.11643 %`.
+
+Comparison:
+
+- legacy old ZIP: `342.10774 kN`; common-policy difference `-0.00570 kN` (`-0.0017%`);
+- R1 Case21-local mask: `342.33835352 kN`; common-policy difference `-0.23631 kN`;
+- old direct physical-operator quadrature audit: `342.32988 kN`; common-policy difference `-0.22784 kN` (`~ -0.067%`).
+
+This resolves the previous ambiguity: the R1 local-mask value is **not** the stable target after removing state-specific support holes. The common policy returns essentially to the legacy 342.108 kN level. The remaining ~0.067% gap to the direct physical target belongs to the **N60 material-series representation/convergence layer**, not the support topology.
+
+## 4. TT pre-bound
+
+The exact frozen TT interaction was recovered as `tau_i*=tau_i[1-a_tt*tau_j^8]`, `a_tt=1-2^(-1/8)`. A common-domain analytic trace bound gives at least one principal normalized strain `<= -0.197745` everywhere in the qualified Swartz windows. The resulting common certificate is `|Delta s_TT|<1.18e-6`, `|Delta P_TT|<8.35e-4 kN`, and conservative `|Delta Rq_TT|<6.95e-3`. TT is therefore closed by an analytic common-domain error certificate rather than by deleting the term.
+
+## 5. Gate decision
+
+```text
+GENERALIZED_2_GROUP_KINEMATICS              = PASS
+R1_R_EQUALS_1_GENERATOR_EQUIVALENCE         = PASS
+FIXED_MASK_FAST_EVALUATOR_EQUIVALENCE       = PASS
+SWARTZ24_COMMON_STATE_INDEPENDENT_PTDC_MASK = PASS_R2
+CASE21_COMMON_POLICY_RQ_ROOT                 = PASS
+CASE21_COMMON_POLICY_PEAK_BRACKET            = PASS
+CASE21_COMMON_POLICY_Pu_kN                   = 342.102040052
+FORMAL_SPATIAL_QUADRATURE                    = 0
+
+TT_COMMON_DOMAIN_ANALYTIC_CERTIFICATE        = CLOSED_R2
+N_ORDER_STRESS_TANGENT_RQ_L_CONVERGENCE      = OPEN
+SWARTZ24_FORMAL_PRODUCTION_BATCH             = NOT_YET_AUTHORIZED
+```
+
+The support-policy gate and the TT common-domain certificate are now closed. The **only remaining mandatory pre-production gate** is N-order convergence for total stress + consistent tangent + `Rq/L`. The scalar audit already shows why this cannot be waived: N60 stress values are accurate, but the material derivative/tangent series is not yet demonstrably converged. The 24-panel formal batch must remain unreleased until that derivative-level gate is repaired and passed.
+
+====================================================================================================
+FILE: history/Case21/direct_analytic/NZ_SCCM_CASE21_DIRECT_ANALYTIC_ONE_SHOT_TEST_R01_20260809.md
+SIZE: 5536
+SHA256: d8fcc89a7e1fbf0766dc7ba2b7804778588af2665b8dd016b3b6ed04197ff225
+ENCODING: utf-8
+LINES: 173
+====================================================================================================
+# NZ-SCCM Case21 原始目标函数“一次性整体解析求值”测试 R01
+
+**日期：2026-08-09**  
+**身份：执行报告；不是新的材料模型，不是 compiler，不改变结构理论。**
+
+## 1. 本轮只测试一个问题
+
+对已经显式展开的 Case21 原始连续目标函数，直接交给现成 CAS 做整体解析积分，检查能否不再人工拆 Lauricella、也不建立材料 compiler，而直接得到可计算的 \(P_c(D,q)\)、\(R_{q,c}(D,q)\)。
+
+正式空间数值积分仍为 0。Gauss/Simpson/adaptive quadrature 未参与本轮正式测试。
+
+## 2. Case21 原始连续函数
+
+采用
+
+\[
+C_m=\frac{\pi^2}{\varepsilon_0}\left(q_0q+\frac12q^2\right),\qquad
+C_b=\frac{\pi^2}{2\varepsilon_0}\frac tb q,
+\]
+
+\[
+e_x=\nu D+C_m\cos^2X\sin^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+\[
+e_y=-D+C_m\sin^2X\cos^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+\[
+g_{xy}=2C_m\sin X\cos X\sin Y\cos Y-2C_b\cos X\cos Y\,\zeta.
+\]
+
+\[
+X_{11}=\frac{e_x+\nu e_y}{1-\nu^2},\quad
+X_{22}=\frac{\nu e_x+e_y}{1-\nu^2},\quad
+X_{12}=\frac{g_{xy}}{2(1+\nu)}.
+\]
+
+\[
+\mu=\frac{X_{11}+X_{22}}2,\quad
+\delta=\frac{X_{11}-X_{22}}2,\quad
+r=\sqrt{\delta^2+X_{12}^2},\quad
+\lambda_\pm=\mu\pm r.
+\]
+
+平滑正负坐标
+
+\[
+\Pi_\eta(z)=\frac{z^2\bigl(\sqrt{z^2+\eta^2}+z\bigr)}{2(z^2+\eta^2)},
+\]
+
+\[
+c_i=\Pi_\eta(-\lambda_i),\qquad t_i=\Pi_\eta(\lambda_i),
+\]
+
+Saenz 压缩
+
+\[
+C_i=\frac{\kappa c_i}{1+(\kappa-2)c_i+c_i^2}.
+\]
+
+本轮按较早 Case21 regression package 中 `build_material_coeffs.py` 的来源，采用 Foster 的代数平滑：
+
+\[
+H(r,r_0)=\frac12\left[(r-r_0)+\sqrt{(r-r_0)^2+0.05^2}\right]
+-\frac12\left[-r_0+\sqrt{r_0^2+0.05^2}\right],
+\]
+
+\[
+T_i=r_i+(m-1)H(r_i,1)-mH(r_i,10),\qquad r_i=t_i/x_{cr},\qquad m=-7/90.
+\]
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i.
+\]
+
+二维 interaction：
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
+\]
+\[
+s_-=U_--a_{cc}C_-^2C_++C_-T_+ -\rho a_tT_-T_+^8.
+\]
+
+因此实际轴向被积函数不是符号占位，而是
+
+\[
+\boxed{
+\sigma_y=f_c\left[
+\frac{s_++s_-}{2}
+-\frac{s_+-s_-}{2}
+\frac{\delta}{\sqrt{\delta^2+X_{12}^2}}
+\right].
+}
+\]
+
+正式目标
+
+\[
+P_c(D,q)=-\frac{bt}{2\pi^2}\iiint\sigma_y\,d\zeta\,dY\,dX,
+\]
+
+\[
+R_{q,c}(D,q)=\frac{f_c\varepsilon_0b\ell t}{2\pi^2}
+\iiint(S_xe_{x,q}+S_ye_{y,q}+T_{xy}g_{xy,q})\,d\zeta\,dY\,dX.
+\]
+
+## 3. 一次性 CAS 测试
+
+测试状态取历史 Case21 concrete-only 峰值附近：
+
+\[
+D=0.7955,\qquad q=0.001974.
+\]
+
+把上述关系逐层真正代入后，`SymPy` 构造出的完整无量纲 \(S_y\) 表达式约含 **29,088 个 symbolic operations**。
+
+第一轮直接执行
+
+```python
+sympy.integrate(Syy, (zeta, -1, 1))
+```
+
+并保留 \(X,Y\) 为符号变量。此前长测试在约 **120 s** 内没有返回解析结果。
+
+为排除“只是因为 \(X,Y\) 仍为符号”的影响，又把
+
+\[
+X=Y=\pi/4
+\]
+
+直接代入。此时 \(S_y(\zeta)\) 仍约含 **8,984 个 symbolic operations**；直接厚度积分此前约 **60 s** 仍未返回。2026-08-09 的短重复测试在 15 s 限时内同样未返回，两者均先成功完成表达式构造。
+
+因此，本轮结论不是“积分不存在”，而是：
+
+\[
+\boxed{
+\text{把完整原函数一次性交给当前 SymPy `integrate`，不能形成可用的实时解析求值器。}
+}
+\]
+
+而且这已经在比完整 \(P_c,R_{q,c}\) 更简单的子问题——单个 \(\sigma_y\) 的 \(\zeta\) 定积分——上失败，所以没有必要继续让完整三重积分空转。
+
+## 4. 本轮同时发现的来源漂移
+
+当前项目文件中存在两种 tension smoothing 实现：
+
+1. 较早 Case21 regression package：上面的 **代数 Foster 平滑** \(H(r,r_0;0.05)\)；
+2. 后来的 direct-quadrature / Swartz24 exploration：用 \(\tfrac12[1+\tanh((t-t_0)/\eta)]\) 做两个 sigmoid blend。
+
+两者不是同一个函数。最近的“直接解析积分阶段稿”把后者写成了当前 NC 原函数，这一步不能继续静默继承。就现有 provenance 而言，较早 regression package 与此前 MSAC 重建所针对的是代数 Foster 平滑；tanh 版本应暂时只登记为后来 exploratory variant，不能混进新的 direct-analytic \(P_u\)。
+
+## 5. 对 \(P_u\) 的处理
+
+用户给出的执行条件是：“如果一次性整体解析求值跑通，就立即求新的 direct-analytic Case21 \(P_u\)。”
+
+本轮 one-shot CAS 没有跑通，因此 **没有生成或宣称新的 formal direct-analytic \(P_u\)**。历史 concrete-only D15 数值 \(P_u\approx339.099\,\mathrm{kN}\) 只保留为历史基线，不冒充本轮结果。
+
+下一次执行不应再人工把每个项一路拆成 Lauricella，也不应重建材料 compiler。正确的最小动作是：仍以这份完整原函数为唯一输入，换用“现成 CAS 能直接接受的局部解析处理”作为求值后端；只在某个具体积分无法闭式返回时对**该实际被积函数**临时做带严格余项的解析展开。该展开无材料身份、无公共材料域、无永久系数表、无 support mask。
+
+## 6. 当前状态
+
+```text
+RAW_CASE21_PC_INTEGRAND_EXPLICIT       = YES
+RAW_CASE21_RQ_FORMULA_EXPLICIT         = YES
+MATERIAL_COMPILER                      = NONE
+COMMON_MATERIAL_DOMAIN                 = NONE
+SUPPORT_MASK                           = NONE
+FORMAL_SPATIAL_QUADRATURE              = 0
+ONE_SHOT_SYMPY_FULL_XY_ZETA            = NOT PRACTICALLY EVALUATED
+ONE_SHOT_SYMPY_CENTERLINE_ZETA         = NOT PRACTICALLY EVALUATED
+NEW_DIRECT_ANALYTIC_CASE21_PU          = NOT GENERATED
+HISTORICAL_339.099_KN                  = RETAINED AS BASELINE ONLY
+```
+
+====================================================================================================
+FILE: history/Case21/direct_analytic/NZ_SCCM_CASE21_MULTI_BACKEND_DIRECT_ANALYTIC_RESULT.md
+SIZE: 18618
+SHA256: 9aa7b670959fa69e0631015ab494e25a7223ff9aa3d082a790ef3fc9a45320f9
+ENCODING: utf-8
+LINES: 807
+====================================================================================================
+# NZ-SCCM Case21 多数学后端 direct-analytic 执行结果
+
+**日期：2026-08-09**  
+**执行对象：Case21 concrete-only → RC Case21**  
+**理论合同：`NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`**  
+**机器辅助参考：`nz_sccm_current_operator_explicit_v1.py`**
+
+> 最终状态先行说明：本轮已经把冻结的显式 NC current operator、Case21 连续运动学、`Pc/Rq,c` 和钢筋耦合真正跑到了 concrete-only 与 RC 的极限方程解；正式空间 Gauss/Simpson/adaptive quadrature 数为 **0**。但是，当前运行环境未能关闭“临时实际 integrand Chebyshev 表达的有用严格截断余项证书”。因此数值解已经得到，且与独立高阶数值 audit 高度闭合，但按本轮用户定义的最高成功标准，整体状态记为：
+>
+> `FORMAL_ANALYTIC_CANDIDATE_CERTIFICATE_UNRESOLVED`。
+>
+> 不能把它伪报为“完全 certified production SUCCESS”。
+
+---
+
+## A. Theory contract check
+
+### A.1 冻结文件身份
+
+上传文件 SHA-256：
+
+- MD：`98483fa75e828f57916b06fc708fc35fc7960fabbdebf4edb3e04aba10061bc6`
+- Python：`740e8862b1f428e66c779ea17c2ffefdec1f53ae7da5b98f9d85669ea24811c2`
+
+### A.2 MD > Python 检查
+
+逐项核查结论：
+
+1. Python 中 `nc_parameters`、`Pi_eta`、`foster_H`、`nc_principal_response`、`M_NC` 与 MD 第1节 ordinary-concrete current operator 一致；
+2. Python 中正式 tension smoothing 明确是代数 Foster：
+
+\[
+H(r,r_0)=\frac12[(r-r_0)+\sqrt{(r-r_0)^2+0.05^2}]
+-\frac12[-r_0+\sqrt{r_0^2+0.05^2}],
+\]
+
+没有 `tanh` 双 sigmoid；
+3. Python 中钢筋 `Es=200000 MPa`、`eps_y=0.00265`、`fy=530 MPa`、`Ew=0`、`eps_f=0.04` 与 MD 一致；
+4. Python 文件只提供材料函数和 Case21 材料参数，不含 MD 第2--6节的 Case21 结构运动学、`Pc`、`Rq,c` 与钢筋结构积分。这属于**机器文件范围更窄**，不是理论冲突；本轮结构部分严格取 MD。
+
+**CONTRACT_CHECK = PASS。**
+
+---
+
+# B. Exact \(M_{NC}\) expression identity
+
+本轮没有把 ordinary concrete 再缩写为隐藏的 `M(eps)`。计算链实际使用：
+
+\[
+(\varepsilon_x,\varepsilon_y,\gamma_{xy})
+\rightarrow
+(X_{11},X_{22},X_{12})
+\rightarrow
+(\lambda_+,\lambda_-)
+\rightarrow
+(c_\pm,t_\pm)
+\rightarrow
+(C_\pm,T_\pm,U_\pm)
+\rightarrow
+(s_+,s_-)
+\rightarrow
+(\sigma_x,\sigma_y,\tau_{xy}).
+\]
+
+## B.1 Equivalent-uniaxial tensor
+
+\[
+X_{11}=\frac{\varepsilon_x+\nu\varepsilon_y}{(1-\nu^2)\varepsilon_0},
+\qquad
+X_{22}=\frac{\nu\varepsilon_x+\varepsilon_y}{(1-\nu^2)\varepsilon_0},
+\]
+
+\[
+X_{12}=\frac{\gamma_{xy}}{2(1+\nu)\varepsilon_0}.
+\]
+
+\[
+\mu=\frac{X_{11}+X_{22}}2,
+\quad
+\delta=\frac{X_{11}-X_{22}}2,
+\quad
+r_X=\sqrt{\delta^2+X_{12}^2},
+\]
+
+\[
+\lambda_\pm=\mu\pm r_X.
+\]
+
+## B.2 Smooth positive/negative coordinates
+
+\[
+\Pi_\eta(z)=
+\frac{z^2(\sqrt{z^2+\eta^2}+z)}{2(z^2+\eta^2)},
+\]
+
+\[
+c_i=\Pi_\eta(-\lambda_i),\qquad t_i=\Pi_\eta(\lambda_i).
+\]
+
+## B.3 Saenz compression
+
+\[
+C_i=\frac{\kappa c_i}{1+(\kappa-2)c_i+c_i^2}.
+\]
+
+## B.4 Algebraic Foster tension
+
+\[
+\eta_r=0.05,\qquad m_t=-\frac7{90},
+\]
+
+\[
+H(r,r_0)=
+\frac12[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}]
+-\frac12[-r_0+\sqrt{r_0^2+\eta_r^2}],
+\]
+
+\[
+r_i=\frac{t_i}{x_{cr}},
+\]
+
+\[
+T_i=r_i+(m_t-1)H(r_i,1)-m_tH(r_i,10).
+\]
+
+## B.5 Uniaxial current master
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i.
+\]
+
+## B.6 CC/TC/TT interaction encoded in the frozen algebraic interaction
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_--\rho a_tT_+T_-^8,
+\]
+
+\[
+s_-=U_--a_{cc}C_-^2C_++C_-T_+-\rho a_tT_-T_+^8.
+\]
+
+## B.7 Spectral return
+
+\[
+S_{xx}=\frac{s_++s_-}{2}+\frac{s_+-s_-}{2}\frac{\delta}{r_X},
+\]
+
+\[
+S_{yy}=\frac{s_++s_-}{2}-\frac{s_+-s_-}{2}\frac{\delta}{r_X},
+\]
+
+\[
+S_{xy}=\frac{s_+-s_-}{2}\frac{X_{12}}{r_X},
+\]
+
+\[
+\sigma_x=f_cS_{xx},\quad
+\sigma_y=f_cS_{yy},\quad
+\tau_{xy}=f_cS_{xy}.
+\]
+
+在本轮两个极限状态邻域，直接计算得到的最小谱半径约为 0.3 量级，因此没有触发 `r_X=0` 的连续延拓分支。
+
+机器实现与上传 SymPy `M_NC` 在三组随机连续应变状态逐点对照，最大绝对应力差为约 `2.2e-14 MPa`，说明本轮 NumPy 直接表达没有改写材料物理。
+
+---
+
+# C. Exact reinforcement law
+
+\[
+E_s=200000\ \mathrm{MPa},\quad
+\varepsilon_y=0.00265,
+\quad f_y=530\ \mathrm{MPa},
+\]
+
+\[
+E_w=0,\qquad \varepsilon_f=0.04.
+\]
+
+在来源定义区间：
+
+\[
+\sigma_s(\varepsilon_s)=
+\begin{cases}
+E_s\varepsilon_s,& |\varepsilon_s|\le\varepsilon_y,\\
+f_y\operatorname{sgn}(\varepsilon_s),&
+\varepsilon_y<|\varepsilon_s|\le\varepsilon_f.
+\end{cases}
+\]
+
+不添加 \(|\varepsilon_s|>0.04\) 的 post-failure branch。
+
+Case21：
+
+\[
+\rho_{s,x}=\rho_{s,y}=0.00375,
+\qquad z_s=0.
+\]
+
+---
+
+# D. Case21 \(P_c/R_{q,c}\)
+
+## D.1 specimen data
+
+本轮结构输入：
+
+\[
+b=\ell=1220\ \mathrm{mm},
+\qquad t=19.30\ \mathrm{mm},
+\]
+
+\[
+A_0=b/400=3.05\ \mathrm{mm},
+\qquad q_0=1/400.
+\]
+
+材料：
+
+\[
+f_c=21.23\ \mathrm{MPa},
+\quad E_0=20321\ \mathrm{MPa},
+\quad \varepsilon_0=0.00209,
+\quad \nu=0.18.
+\]
+
+## D.2 continuous Nguyen strain field
+
+\[
+C_m=\frac{\pi^2}{\varepsilon_0}\left(q_0q+\frac12q^2\right),
+\]
+
+\[
+C_b=\frac{\pi^2}{2\varepsilon_0}\frac tbq.
+\]
+
+\[
+e_x=\nu D+C_m\cos^2X\sin^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+
+\[
+e_y=-D+C_m\sin^2X\cos^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+
+\[
+g_{xy}=2C_m\sin X\cos X\sin Y\cos Y-2C_b\cos X\cos Y\,\zeta.
+\]
+
+\[
+\varepsilon_x=\varepsilon_0e_x,
+\quad
+\varepsilon_y=\varepsilon_0e_y,
+\quad
+\gamma_{xy}=\varepsilon_0g_{xy}.
+\]
+
+## D.3 formal targets
+
+\[
+P_c(D,q)=
+-\frac{bt}{2\pi^2}
+\int_0^\pi\int_0^\pi\int_{-1}^{1}\sigma_y\,d\zeta\,dY\,dX,
+\]
+
+\[
+R_{q,c}(D,q)=
+\frac{\varepsilon_0b\ell t}{2\pi^2}
+\int_0^\pi\int_0^\pi\int_{-1}^{1}
+[\sigma_xe_{x,q}+\sigma_ye_{y,q}+\tau_{xy}g_{xy,q}]
+\,d\zeta\,dY\,dX.
+\]
+
+`N_formal_spatial_quadrature = 0`。
+
+---
+
+# E. Actual tools / repositories used or checked
+
+| backend | local status | actual action | outcome |
+|---|---|---|---|
+| SymPy 1.14.0 | installed | built full frozen near-peak `sigma_y` and called direct definite `zeta` integration | expression had 43,641 operations; no return within 25 s |
+| SciPy 1.17.0 + NumPy 2.3.5 | installed | DCT-I construction of a transient Chebyshev expression for the **actual structural integrands**, exact Chebyshev moments, complex-step scalar derivatives, nonlinear root solve | returned stable concrete and RC candidates |
+| mpmath 1.3.0 | installed | 80-digit direct current-operator evaluation | returned and agreed with double implementation |
+| mpmath.iv | installed | attempted rigorous interval derivative/range certificate | natural interval dependency became too wide; rejected as useful certificate |
+| Symbolica-integrate / Rubi | repository/API checked | install/run attempted conceptually; local Rust/cargo absent and no package in local Python mirror | not executable here |
+| SageMath | docs checked | executable discovery | not installed |
+| GIAC/Xcas | repository checked | executable discovery | not installed |
+| Maxima | docs checked | executable discovery | not installed |
+| python-flint / Arb | upstream package checked | pip installation attempted from local mirror and public PyPI | local mirror absent; public DNS/network blocked; not executable |
+
+因此本轮没有把“SymPy 卡住”误判为解析路线失败；实际继续使用了独立的 SciPy/NumPy polynomial mathematics 和 mpmath 高精度/interval 后端。
+
+---
+
+# F. Integration transformation trace
+
+## F.1 Direct CAS attempt
+
+原始目标先直接送入 SymPy。完整 `sigma_y` 在固定 near-peak 状态构造后约 43,641 个 SymPy operations。直接：
+
+\[
+\int_{-1}^{1}\sigma_y\,d\zeta
+\]
+
+在 25 s 限时内没有返回，因此该后端被记录为 `EXECUTED_TIMEOUT`，而不是理论失败。
+
+## F.2 Rejected global \(q=0\) Taylor route
+
+曾对实际 integrand 尝试从 \(q=0\) 展开。由于 frozen smooth coordinate 中存在
+
+\[
+\sqrt{\lambda^2+\eta^2},
+\]
+
+其复平面邻近奇点尺度由很小的 \(\eta\) 控制，实际 \(q\approx2\times10^{-3}\) 已超出该简单中心展开的有效实用范围；有限阶系数迅速放大。该路线被废弃，不进入正式结果。
+
+## F.3 Temporary actual-integrand Chebyshev expression
+
+只对当前两个**结构 integrand**：
+
+\[
+f_P=\sigma_y,
+\]
+
+\[
+f_R=\sigma_xe_{x,q}+\sigma_ye_{y,q}+\tau_{xy}g_{xy,q}
+\]
+
+作一次性有限解析表示。
+
+线性映射：
+
+\[
+u=\frac{2X}{\pi}-1,
+\qquad
+v=\frac{2Y}{\pi}-1,
+\qquad
+w=\zeta,
+\]
+
+令：
+
+\[
+f_N(u,v,w)
+=
+\sum_{i=0}^{N_x}\sum_{j=0}^{N_y}\sum_{k=0}^{N_z}
+ c_{ijk}T_i(u)T_j(v)T_k(w).
+\]
+
+本轮最终采用：
+
+\[
+N_x=N_y=112,\qquad N_z=56.
+\]
+
+这些系数只属于“当前 `(D,q)` 下当前实际结构 integrand 的瞬时多项式表达”；每次函数评价后即可丢弃：
+
+- 不是 material coefficient；
+- 不是 material common domain；
+- 不是 support mask；
+- 不是 PTDC；
+- 不持久化；
+- 不用于其他板或其他材料身份。
+
+Chebyshev 基的精确矩：
+
+\[
+I_n=\int_{-1}^{1}T_n(s)\,ds
+=
+\begin{cases}
+2,&n=0,\\
+0,&n\ \text{odd},\\
+\dfrac{2}{1-n^2},&n\ge2\ \text{even}.
+\end{cases}
+\]
+
+因此：
+
+\[
+\int_0^\pi\int_0^\pi\int_{-1}^{1}f_N\,d\zeta dYdX
+=
+\frac{\pi^2}{4}
+\sum_{ijk}c_{ijk}I_iI_jI_k.
+\]
+
+**正式积分阶段只有有限项闭式矩求和；没有任何 Gauss/Simpson/adaptive 权重。**
+
+---
+
+# G. Formal analytic evaluator
+
+本轮得到两个可直接、快速评价的有限表达 evaluator：
+
+\[
+P_{c,N}(D,q),\qquad R_{q,c,N}(D,q).
+\]
+
+参数偏导不是通过空间差分得到；对已经完成空间解析收缩的 evaluator 使用 complex-step：
+
+\[
+P_{,D},\ P_{,q},\ R_{q,D},\ R_{q,q}.
+\]
+
+极限函数：
+
+\[
+L=P_{,D}R_{q,q}-P_{,q}R_{q,D}.
+\]
+
+正式求解器只调用上述 Chebyshev-moment evaluator，不调用下面的 numerical audit。
+
+---
+
+# H. Error / remainder certificate
+
+## H.1 Independent numerical audit: PASS as audit only
+
+采用原始显式 current operator 直接高阶 3D Gauss-Legendre，**仅在 formal root 已经得到后**独立核对。
+
+Concrete-only 最终点：
+
+- formal candidate: `338.318378991 kN`
+- Gauss-96 audit: `338.317391831 kN`
+- formal − audit: `+0.0002918%`
+
+RC 最终点：
+
+- formal candidate: `342.333946949 kN`
+- Gauss-96 audit: `342.332787283 kN`
+- formal − audit: `+0.0003388%`
+
+这说明瞬时 finite Chebyshev expression 与冻结原函数的直接空间评价数值上已经闭合到约 \(3\times10^{-4}\%\)。
+
+## H.2 Strict truncation certificate: NOT CLOSED
+
+这里必须严格区分“数值高度一致”和“严格余项证书”。
+
+已实际尝试：
+
+1. `mpmath.iv` natural interval extension；
+2. 为 Chebyshev 误差构造 interval derivative/range 上界；
+3. 尝试安装 `python-flint/Arb` 作为 ball-arithmetic certificate backend。
+
+结果：
+
+- `mpmath.iv` 对嵌套谱分解、Foster 平滑和重复变量的 natural interval dependency 产生了过宽包络，无法给出有用的高阶导数/余项上界；
+- `python-flint/Arb` 在本运行环境无法安装；
+- 可以写出一个非常松的全局绝对包络，但其上界达到远大于结构荷载的量级，不能作为有效验收证书，因此本报告拒绝把它包装成“PASS”。
+

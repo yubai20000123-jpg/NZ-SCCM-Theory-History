@@ -1,0 +1,1800 @@
+SAT05: u_inf=0.05
+SAT07: u_inf=0.07
+
+## 3. Explicit RC chain
+
+For each candidate, the same R08 architecture is used:
+
+P = Pc + Ps,
+R = Rc + Rs,
+
+L = P_D R_q - P_q R_D.
+
+Reinforcement is analytic and inserted before solving the limit state.
+
+Concrete Pc(D,q), Rc(D,q) are represented locally by explicit degree-(16,16) Chebyshev surfaces around the mechanically located main branch. Their coefficients and analytic derivatives are part of the saved artifact.
+
+The offline full-halfwave evaluation used for coefficient identification remains an audit/identification step; runtime limit-state evaluation is explicit.
+
+## 4. Results
+
+| candidate | u_inf/fc | D_u | q_u | A_u (mm) | Pc (kN) | Ps (kN) | Pu (kN) | error vs Case21 experiment |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| R08 | — | 0.706185 | 0.0165438 | 20.1834 | 317.3033 | 18.2991 | 335.6024 | -8.8811% |
+| SAT03 | 0.03 | 0.674303 | 0.0166825 | 20.3526 | 305.3951 | 17.0068 | 322.4019 | -12.4652% |
+| SAT05 | 0.05 | 0.732368 | 0.0175027 | 21.3533 | 316.3733 | 18.4497 | 334.8230 | -9.0928% |
+| SAT07 | 0.07 | 0.789742 | 0.0182769 | 22.2978 | 325.9317 | 19.8795 | 345.8111 | -6.1094% |
+
+Independent same-root audit residuals are all small:
+
+- R08: R_audit = -0.024836 kN mm
+- SAT03: R_audit = +0.020661 kN mm
+- SAT05: R_audit = +0.003797 kN mm
+- SAT07: R_audit = +0.004502 kN mm
+
+All reinforcement remains elastic for all four candidates.
+
+Sensitivity across SAT03, SAT05, SAT07:
+
+Pu span = 23.409173 kN
+Pu span / mean Pu = 7.001495 %
+D span = 0.11543949
+q span = 0.00159440
+
+## 5. Interpretation
+
+The user's compression-dominance intuition is partly correct but must be stated carefully.
+
+At every stationary root, direct load decomposition is compression dominated:
+
+- concrete contributes about 305–326 kN;
+- reinforcement contributes about 17–20 kN.
+
+However, the tensile branch is NOT negligible in the coupled stability problem. Changing only the monotone tensile saturation level from 0.03 fc to 0.07 fc changes the stationary Pu by about 23.41 kN, or 7.00% of the mean SAT-series capacity.
+
+The mechanism is indirect as well as direct: changing the tensile branch shifts the equilibrium/stationary coordinates D_u and q_u, which in turn changes the compression-side concrete contribution Pc. Therefore a statement such as “tension carries little direct axial load” does not imply “the tensile constitutive branch has little effect on Pu”.
+
+This result still supports aggressive simplification of the tensile law SHAPE. The high-complexity source peak/softening details are not needed. But the retained tensile capacity level cannot be chosen arbitrarily; it needs a material/source-based rule or an explicit conservative design convention.
+
+## 6. Decision
+
+R09A_TENSION_SATURATION_SENSITIVITY = PASS_DIAGNOSTIC
+
+COMPRESSION_DOMINATES_DIRECT_LOAD = PASS
+
+TENSILE_SHAPE_CAN_BE_STRONGLY_SIMPLIFIED = PASS
+
+TENSILE_CAPACITY_LEVEL_IS_NEGLIGIBLE = FAIL
+
+MONOTONE_SATURATION_FAMILY = RETAINED AS SIMPLE EXPLICIT CANDIDATE
+
+SAT03/SAT05/SAT07 = SENSITIVITY BRACKETS ONLY; NONE IS FROZEN FROM CASE21 EXPERIMENT
+
+FORMAL_ZERO_QUADRATURE_PRODUCTION = HOLD (same offline-identification caveat as R08)
+
+## 7. Next task
+
+The next task is not to restore the old sharp tensile peak and not yet to add a multiaxial correction.
+
+First define a source-grounded or explicitly conservative rule for the one retained tensile-capacity parameter of the simple monotone law, and test that rule on the NC material domain rather than fitting it to Case21 Pu.
+
+Recommended next task:
+
+R09B_SOURCE_GROUNDED_TENSION_CAPACITY_LEVEL
+
+After that scalar tension level is frozen independently of structural experiments, return to the minimum source-grounded multiaxial correction question.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_results.json
+SIZE: 4898
+SHA256: bd7126e19ded5d0213b2fd5fb8ac076059ae3b8d960fbbbec266fd38ac4ef654
+ENCODING: utf-8
+LINES: 120
+====================================================================================================
+{
+  "identity": "R09A_TENSION_SATURATION_SENSITIVITY",
+  "tension_formula": "u_inf*(kappa*lambda/u_inf)/(1+kappa*lambda/u_inf)",
+  "tension_derivative": "kappa/(1+kappa*lambda/u_inf)^2",
+  "candidates": ["SAT03", "SAT05", "SAT07"],
+  "results": [
+    {
+      "candidate": "R08",
+      "u_inf_over_fc": null,
+      "D_u": 0.7061851649737501,
+      "q_u": 0.016543756150023726,
+      "A_u_mm": 20.183382503028945,
+      "Pc_kN": 317.30328671091553,
+      "Ps_kN": 18.299092602919714,
+      "Pu_kN": 335.60237931383523,
+      "error_vs_experiment_percent": -8.881139924198866,
+      "audit_P_kN_same_root": 335.6018751104713,
+      "audit_R_kNmm_same_root": -0.02483615036919673,
+      "explicit_minus_audit_P_kN": 0.0005042033639028887,
+      "lambda_plus_min": -0.7082439149423398,
+      "lambda_plus_max": 1.0115103302179103,
+      "lambda_minus_min": -1.4157263163656666,
+      "lambda_minus_max": 0.3020527584160796,
+      "steel_all_elastic": true,
+      "Pc_max_abs_kN": 0.08004228490688092,
+      "Pc_p95_abs_kN": 0.04878884286799801,
+      "Rc_max_abs_kNmm": 15.204135508739455,
+      "Rc_p95_abs_kNmm": 8.47024542220227
+    },
+    {
+      "candidate": "SAT03",
+      "u_inf_over_fc": 0.03,
+      "D_u": 0.6743027471622975,
+      "q_u": 0.016682496367124617,
+      "A_u_mm": 20.352645567892033,
+      "Pc_kN": 305.39512234190454,
+      "Ps_kN": 17.006819715773798,
+      "Pu_kN": 322.40194205767835,
+      "error_vs_experiment_percent": -12.465169327513548,
+      "audit_P_kN_same_root": 322.40198045827805,
+      "audit_R_kNmm_same_root": 0.02066142914043212,
+      "explicit_minus_audit_P_kN": -0.00003840059969206777,
+      "lambda_plus_min": -0.7140262864236372,
+      "lambda_plus_max": 1.024344356799579,
+      "lambda_minus_min": -1.3897206126845583,
+      "lambda_minus_max": 0.3458747199779809,
+      "steel_all_elastic": true,
+      "Pc_max_abs_kN": 0.039743961823489826,
+      "Pc_p95_abs_kN": 0.023411865815236865,
+      "Rc_max_abs_kNmm": 6.094611163670606,
+      "Rc_p95_abs_kNmm": 3.2303622499348634
+    },
+    {
+      "candidate": "SAT05",
+      "u_inf_over_fc": 0.05,
+      "D_u": 0.732367764519489,
+      "q_u": 0.017502711673770054,
+      "A_u_mm": 21.353308241999468,
+      "Pc_kN": 316.37330137559314,
+      "Ps_kN": 18.449678061091326,
+      "Pu_kN": 334.8229794366845,
+      "error_vs_experiment_percent": -9.092753526266883,
+      "audit_P_kN_same_root": 334.82302309191357,
+      "audit_R_kNmm_same_root": 0.003797092065724428,
+      "explicit_minus_audit_P_kN": -0.00004365522909210995,
+      "lambda_plus_min": -0.7484100230340105,
+      "lambda_plus_max": 1.101620535749877,
+      "lambda_minus_min": -1.4822505489807725,
+      "lambda_minus_max": 0.3655326653539084,
+      "steel_all_elastic": true,
+      "Pc_max_abs_kN": 0.04542224008883977,
+      "Pc_p95_abs_kN": 0.02088199806781006,
+      "Rc_max_abs_kNmm": 8.291180292036643,
+      "Rc_p95_abs_kNmm": 3.090119091703035
+    },
+    {
+      "candidate": "SAT07",
+      "u_inf_over_fc": 0.07,
+      "D_u": 0.789742241531203,
+      "q_u": 0.018276892872504197,
+      "A_u_mm": 22.29780930445512,
+      "Pc_kN": 325.93165801125275,
+      "Ps_kN": 19.879457223433587,
+      "Pu_kN": 345.8111152346863,
+      "error_vs_experiment_percent": -6.1093825194250435,
+      "audit_P_kN_same_root": 345.8109914238504,
+      "audit_R_kNmm_same_root": 0.004502243177284981,
+      "explicit_minus_audit_P_kN": 0.00012381083593027142,
+      "lambda_plus_min": -0.780802087285055,
+      "lambda_plus_max": 1.1768811806720927,
+      "lambda_minus_min": -1.572094425531283,
+      "lambda_minus_max": 0.38384507729515166,
+      "steel_all_elastic": true,
+      "Pc_max_abs_kN": 0.04323018341307261,
+      "Pc_p95_abs_kN": 0.029272046194310508,
+      "Rc_max_abs_kNmm": 8.467817524685415,
+      "Rc_p95_abs_kNmm": 4.801750872010109
+    }
+  ],
+  "sensitivity": {
+    "Pu_span_kN_across_SAT03_05_07": 23.409173177007972,
+    "Pu_span_percent_of_mean": 7.001495156648545,
+    "D_span": 0.11543949436890544,
+    "q_span": 0.0015943965053795799
+  },
+  "audit_localization": {
+    "R08": {"D": 0.7065256719229792, "q": 0.01655352294707258, "P_kN": 335.60230720819146, "R_kNmm": 7.617018127348274e-12},
+    "SAT03": {"D": 0.6738008605850687, "q": 0.016666714527995098, "P_kN": 322.40178858884127, "R_kNmm": 8.495298970956355e-07},
+    "SAT05": {"D": 0.732226232727861, "q": 0.017498669482383215, "P_kN": 334.82297109593446, "R_kNmm": -2.6965165034198435e-07},
+    "SAT07": {"D": 0.7902664981494001, "q": 0.01829061458639627, "P_kN": 345.8110118247308, "R_kNmm": -4.0288318814418744e-07}
+  },
+  "decision": {
+    "R09A_TENSION_SATURATION_SENSITIVITY": "PASS_DIAGNOSTIC",
+    "COMPRESSION_DOMINATES_DIRECT_LOAD": true,
+    "TENSILE_SHAPE_CAN_BE_STRONGLY_SIMPLIFIED": true,
+    "TENSILE_CAPACITY_LEVEL_IS_NEGLIGIBLE": false,
+    "SAT03_SAT05_SAT07": "SENSITIVITY_BRACKETS_ONLY",
+    "NEXT": "R09B_SOURCE_GROUNDED_TENSION_CAPACITY_LEVEL"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R09B_ENERGY_EQUIVALENT_TENSION_CAPACITY_RULE_20260810.md
+SIZE: 4736
+SHA256: bd82ab31917f29e67d25ba101c76a4a4111a19514db710add0fa12c08867bc07
+ENCODING: utf-8
+LINES: 169
+====================================================================================================
+# NZ-SCCM R09B — ENERGY-EQUIVALENT TENSION CAPACITY RULE
+
+Date: 2026-08-10
+Status: PROPOSED / MATERIAL-LEVEL RULE TO EXECUTE NEXT
+
+## 1. Core idea
+
+Do not choose the retained tensile-capacity parameter `u_inf` from Case21/Swartz structural Pu.
+Instead reduce the full tensile constitutive branch to one simple monotone saturation law by matching a declared amount of material tensile strain energy on the material-native tensile interval.
+
+For the R09A saturation family
+
+\[
+u_t(\lambda)=u_\infty\frac{\kappa\lambda/u_\infty}{1+\kappa\lambda/u_\infty},\qquad \lambda\ge 0,
+\]
+
+its dimensionless tensile energy primitive is
+
+\[
+\widehat\Psi_t(\lambda;u_\infty)
+=\int_0^\lambda u_t(s)\,ds
+=u_\infty\lambda-\frac{u_\infty^2}{\kappa}
+\ln\left(1+\frac{\kappa\lambda}{u_\infty}\right).
+\]
+
+The physical energy density is `fc*eps0*widehatPsi_t`.
+
+## 2. Material-native energy matching
+
+Use the NC source-native tensile transition limit
+
+\[
+\lambda_T=10x_{cr}=10\rho/\kappa.
+\]
+
+Define a reference tensile energy
+
+\[
+E_{t,ref}=\int_0^{\lambda_T}u_{t,ref}(\lambda)\,d\lambda.
+\]
+
+Then choose `u_inf` from
+
+\[
+\widehat\Psi_t(\lambda_T;u_\infty)=\eta_E E_{t,ref},
+\]
+
+where
+
+- `eta_E=1`: energy-preserving smoothing;
+- `0<eta_E<1`: deliberate conservative under-use of tensile material energy.
+
+This is a material-level rule. `eta_E` must not be selected from Case21/Swartz Pu.
+
+## 3. Current NC numerical identities
+
+With the current Case21 NC material constants
+
+\[
+\kappa=2.0005129533678754,\qquad
+x_{cr}=0.04998717945397425,
+\]
+
+\[
+\lambda_T=0.4998717945397425.
+\]
+
+For the R08 adopted rounded-peak tensile baseline (0.09 peak -> 0.03 residual), the dimensionless tensile energy over `[0,lambda_T]` is
+
+\[
+E_{t,R08}=0.0297423717751147.
+\]
+
+Energy-preserving reduction to the R09A saturation law gives
+
+\[
+\boxed{u_\infty=0.0742211076392}.
+\]
+
+If instead the older frozen smooth source-shaped tensile reference is used directly,
+
+\[
+E_{t,source}=0.0317645237620717,
+\]
+
+which gives
+
+\[
+\boxed{u_\infty=0.0803081815656}.
+\]
+
+These two numbers are material-energy reductions, not structural back-calibration.
+
+For the R08 reference, deliberate energy-retention factors give:
+
+| eta_E | u_inf |
+|---:|---:|
+| 1.0 | 0.0742211 |
+| 0.9 | 0.0655232 |
+| 0.8 | 0.0571214 |
+| 0.7 | 0.0490082 |
+
+## 4. Relation to the structural limit equations
+
+If the unified current material law is generated from a scalar material potential, the halfwave internal potential can be written
+
+\[
+\mathcal U(D,q)=\mathcal U_c+\mathcal U_t+\mathcal U_s.
+\]
+
+Under displacement-type axial control,
+
+\[
+P=\mathcal U_{,D},\qquad R_q=\mathcal U_{,q}.
+\]
+
+Therefore the existing stationary-limit condition
+
+\[
+L=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0
+\]
+
+becomes the Hessian singularity
+
+\[
+\boxed{
+L=\mathcal U_{,DD}\mathcal U_{,qq}-\mathcal U_{,Dq}^2=0
+}
+\]
+
+provided the material tangent is potential-consistent (Maxwell symmetry / integrability).
+
+This shows that force equilibrium and tangent/stability equilibrium are two derivative levels of the same energy functional rather than unrelated conditions.
+
+## 5. Mandatory caveat
+
+Energy balance alone cannot identify `u_inf`: for every admissible tensile law, the structural variables `(D,q)` can move to a different equilibrium state.
+Therefore `u_inf` must be fixed by a MATERIAL energy convention first (energy-preserving or declared conservative energy-retention factor), and only then passed to the structural equilibrium/limit calculation.
+
+For a general 2D current map, a scalar material potential exists only if the tangent is integrable, e.g.
+
+\[
+\frac{\partial\sigma_1}{\partial\varepsilon_2}
+=
+\frac{\partial\sigma_2}{\partial\varepsilon_1}
+\]
+
+in the chosen coordinates. If this fails, the project must either construct the current map from a potential first or treat the energy interpretation as pseudo-energy only.
+
+## 6. UHPC portability
+
+The same rule is transferable to UHPC without copying NC numerical values:
+
+1. define the UHPC material-native tensile interval from the selected UHPC source;
+2. compute/define the UHPC reference tensile energy;
+3. choose an energy-retention factor independent of structural Pu;
+4. solve the same one-parameter energy equation for `u_inf,UHPC`;
+5. use the same explicit structural energy/P/R/L architecture.
+
+## 7. Recommended next execution
+
+`R09B_ENERGY_EQUIVALENT_TENSION_LEVEL_EXECUTION`
+
+Execute both:
+
+- `eta_E=1` relative to the currently adopted R08 baseline (`u_inf=0.0742211`);
+- one explicitly conservative material rule (suggested first diagnostic: `eta_E=0.9`, `u_inf=0.0655232`).
+
+Then rerun Case21 using the unchanged compression and reinforcement model. Do not choose between them from the Case21 experimental load; the structural results are validation only.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md
+SIZE: 3671
+SHA256: 0557362896250bf63a59906e5df8308b341995ad90a1032306690879010730cc
+ENCODING: utf-8
+LINES: 155
+====================================================================================================
+# NZ-SCCM R10B COEFFICIENT-GENERATION CONTRACT V1
+
+**Updated:** 2026-08-11 16:38 +08:00  
+**Status:** CURRENT GOVERNING SIMPLE CONTRACT
+
+## 1. Principle
+
+The material theory is the closed R10 scalar/current relation itself. Chebyshev coefficients are only a finite analytic compiler for D15; they are not material parameters and are not to be printed as long decimal coefficient lists in the theory.
+
+The project restores the already successful engineering order
+
+\[
+\boxed{N_M=48}.
+\]
+
+No N112 requirement is governing. The previous N112 re-freeze is superseded by this simplicity decision.
+
+## 2. Closed R10 material formula
+
+Define
+
+\[
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad x_{cr}=\frac{\rho}{\kappa}.
+\]
+
+For the source Foster tensile scalar
+
+\[
+T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10),\qquad r=t/x_{cr},
+\]
+
+let
+
+\[
+W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr.
+\]
+
+The R10 peak parameter is obtained directly from the work condition:
+
+\[
+\boxed{
+h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)
+}.
+\]
+
+Rise branch, with \(\tau=t/x_{cr}\):
+
+\[
+\boxed{u_1(\tau)=
+\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5
+}.
+\]
+
+Fall branch, with \(s=(t-x_{cr})/(9x_{cr})\):
+
+\[
+\boxed{u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)
+}.
+\]
+
+Thus the material law is already a compact parameter formula. In the theory, write \(10h-6\rho\), \(8\rho-15h\), \(6h-3\rho\), etc.; do not replace them by long decimal constants.
+
+The multidimensional current map remains exactly the same:
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i,
+\]
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
+\]
+
+\[
+s_-=U_- -a_{cc}C_-^2C_+ + C_-T_+ -\rho a_tT_-T_+^8.
+\]
+
+## 3. N48 compiler formula
+
+Use the same scalar hull
+
+\[
+\lambda\in[\lambda_a,\lambda_b]=[-1.01,0.105],
+\]
+
+\[
+\lambda_c=\frac{\lambda_a+\lambda_b}{2},\qquad
+\lambda_h=\frac{\lambda_b-\lambda_a}{2},\qquad
+\xi=\frac{\lambda-\lambda_c}{\lambda_h}.
+\]
+
+For each scalar object
+
+\[
+F\in\{U,C,T,T^7\},
+\]
+
+write only
+
+\[
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi)}.
+\]
+
+Here \(\mathcal C_n\) denotes the first-kind Chebyshev polynomial, so it is not confused with the tensile utilization symbol \(T\).
+
+The complete coefficient formula is
+
+\[
+\theta_j=\frac{(j+\tfrac12)\pi}{49},\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j,
+\]
+
+\[
+\boxed{
+a_n^{(F)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),
+\qquad n=0,\ldots,48.
+}
+\]
+
+This one formula defines every one of the 49 coefficients. The theory does not need to print 49 decimal values.
+
+Equivalent continuous-projection notation may be used only as a compact theoretical reference:
+
+\[
+a_0^{(F)}=\frac1\pi\int_0^\pi F[\lambda(\theta)]d\theta,
+\]
+
+\[
+a_n^{(F)}=\frac2\pi\int_0^\pi F[\lambda(\theta)]\cos(n\theta)d\theta,\qquad n\ge1,
+\]
+
+with
+
+\[
+\lambda(\theta)=\lambda_c+\lambda_h\cos\theta.
+\]
+
+The discrete N48 root formula above is the governing production compiler rule.
+
+## 4. Engineering acceptance
+
+Historical R10B already achieved a complete N48 zero-spatial Case21 stationary root. The archived N96 fixed-D audit differed by about 0.051%, which is accepted as an engineering truncation scale and is far below the material/model uncertainty relevant to the project.
+
+Therefore:
+
+```text
+MATERIAL_COMPILER_ORDER = 48
+N112_REQUIREMENT = SUPERSEDED
+LONG_DECIMAL_COEFFICIENT_TABLE_IN_THEORY = PROHIBITED
+MATERIAL_FORM = CLOSED_PARAMETER_FORMULA
+COEFFICIENTS = DERIVED_BY_ONE_GENERAL_FORMULA
+```
+
+If a future material law cannot be compiled adequately at N48, the first response is to recover/use a simpler already-closed material law, not to escalate the compiler order without user approval.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10B_REPRESENTATION_FIDELITY_AUDIT_20260811.md
+SIZE: 3763
+SHA256: 7d7313a51e7f23a94791eadca5cbc2cafd64144e0fbcdebf9424a3bbfbb8ca99
+ENCODING: utf-8
+LINES: 94
+====================================================================================================
+# NZ-SCCM R10B REPRESENTATION FIDELITY AUDIT
+
+**Date:** 2026-08-11 16:05 +08:00  
+**Identity:** CURRENT RECOVERY AUDIT. No material law is changed in this file.
+
+## 1. Object being audited
+
+The frozen executed material target is the existing R10 scalar/current map. The audited transformation is only
+
+```text
+frozen R10 material target
+-> finite 1D material-coordinate representation
+-> same U/C/T + CC/TC/TT algebra
+-> finite spatial coefficient representation
+-> exact complete-halfwave moment contraction
+```
+
+R10B is not allowed to alter R10 material physics.
+
+## 2. Direct historical evidence
+
+The retained original `00_R10B_report.md` records the N=48 material-coordinate errors on the certified safe spectral branches:
+
+| scalar | max abs error | p95 abs error | max error / function scale | p95 / scale |
+|---|---:|---:|---:|---:|
+| U | 0.000200 | 0.000138 | 0.018198 % | 0.012547 % |
+| C | 0.002895 | 0.000712 | 0.289479 % | 0.071158 % |
+| T | 0.027887 | 0.006928 | 2.845694 % | 0.706922 % |
+| T^7 | 0.027497 | 0.017399 | 3.167978 % | 2.004616 % |
+
+Therefore the historical N48 representation was already highly faithful for U and C, while the positive tensile scalar T and T^7 were the limiting material objects.
+
+## 3. What the historical order study proves
+
+At the same R10 structural audit state, the retained zero-spatial order study changes material and spatial orders together:
+
+| N_M | N_S | P (kN) | R (kN mm) |
+|---:|---:|---:|---:|
+| 32 | 20 | 366.9675246 | 18.8609835 |
+| 40 | 24 | 367.6357111 | 8.2488354 |
+| 48 | 28 | 367.8426262 | 6.1492893 |
+| 56 | 30 | 368.1017038 | 3.4003506 |
+| 64 | 32 | 368.2664235 | 1.8739463 |
+| 72 | 34 | 368.3534474 | 1.1915080 |
+| 80 | 36 | 368.3983685 | 0.8428271 |
+| 96 | 40 | 368.5026604 | 0.1030400 |
+
+A separate N96 equilibrium reclosure at the N48 stationary D gives
+
+```text
+P_N96,eq = 368.50804285212683 kN
+Delta from N48 stationary result = 0.18849035625 kN = 0.0511757671 %
+```
+
+This is strong engineering evidence that the retained finite representation is stable at the structural observable level.
+
+However it is **not** a decomposition of material truncation error versus spatial truncation error, because N_M and N_S were raised simultaneously. It is also not a full N96 stationary-root certificate because D was not reoptimized.
+
+## 4. Exactness boundary
+
+Once a finite material/spatial coefficient representation is fixed, the following operations are exact for that retained representation:
+
+- Cayley-Hamilton pair algebra;
+- reconstruction of the same CC/TC/TT interaction;
+- coefficient-index convolution;
+- complete-halfwave moment contraction;
+- same-expression chain-rule derivatives.
+
+Thus the remaining approximation is representation truncation, not spatial quadrature.
+
+## 5. Reproducibility gap
+
+The historical execution package does not retain the actual coefficient arrays or the complete coefficient generator. Original conversation evidence explicitly records that `07_R10B_zero_spatial_compiler_core.py` omitted material coefficient generation and FFT coefficient-convolution plumbing.
+
+Therefore:
+
+```text
+HISTORICAL_R10B_MATHEMATICAL_PATH       = PASS
+HISTORICAL_R10B_RESULT_RECORD            = PASS
+HISTORICAL_R10B_MATERIAL_FIDELITY        = PASS_ENGINEERING
+HISTORICAL_R10B_BYTE_REPRODUCIBILITY     = HOLD
+HISTORICAL_COEFFICIENT_GENERATOR         = UNRECOVERED
+```
+
+No DCT-I, DCT-II, least-squares weighting, or other convention may be retroactively asserted as the exact historical generator.
+
+## 6. Audit decision
+
+```text
+R10B_REPRESENTATION_FIDELITY_AUDIT
+= PASS_ENGINEERING_WITH_REPRODUCIBILITY_GAP
+```
+
+This closes recovery step 2. The next action is recovery step 3 only: freeze a transparent coefficient-generation convention without changing R10 material physics.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.md
+SIZE: 6672
+SHA256: f623af35991351ed22e87fc61283e36a6327dde2d132e3f78ed23f6ce6968d53
+ENCODING: utf-8
+LINES: 290
+====================================================================================================
+# NZ-SCCM R10B — FROZEN R10 1D ENERGY SMOOTHING -> ZERO-SPATIAL D15 CASE21
+
+Date: 2026-08-11
+
+## 1. Identity
+
+R10B changes no material parameter and does not retune the R10 scalar. It recompiles the frozen R10 one-dimensional energy-smoothed tensile scalar into a Case21-local zero-spatial analytic backend.
+
+```text
+N_formal_spatial_sampling   = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+STRUCTURAL_Pu_CALIBRATION   = NO
+```
+
+Formal chain:
+
+```text
+frozen R10 u_sm(t)
+-> 1D material-coordinate Chebyshev compiler
+-> SAME U/C/T + CC/TC/TT current map
+-> Nguyen continuous Case21 kinematics
+-> Cayley-Hamilton tensor-Chebyshev coefficient algebra
+-> exact complete-halfwave moments
+-> P(D,q), R(D,q)
+-> same-expression P_D,P_q,R_D,R_q
+-> limit state
+```
+
+Material-coordinate samples are used only to derive finite 1D analytic compiler coefficients. They are not spatial samples and are not free material parameters.
+
+## 2. Analytic Case21 spectral certificate
+
+Freeze the Case21 search box
+
+\[
+D\in[0.78,0.90],\qquad q\in[0.0015,0.0021].
+\]
+
+For Case21, `ell/b=1`. At `qmax=0.0021`:
+
+```text
+Mmax = 0.035204737229723046
+Bmax = 0.07844047893484817
+```
+
+The equivalent-uniaxial diagonal gap satisfies
+
+\[
+X_{11}-X_{22}\ge D-\frac{M}{1+\nu},
+\]
+
+hence
+
+\[
+\boxed{g_{min}=0.7501654769239635>0}.
+\]
+
+Also
+
+\[
+|X_{12}|\le\frac{M/4+B}{1+\nu}
+=0.07393361291718553,
+\]
+
+and the eigenvalue correction is bounded by
+
+\[
+\frac{|X_{12}|^2}{g_{min}}
+\le0.007286631132909724.
+\]
+
+Using the diagonal bounds gives
+
+\[
+\boxed{\lambda_+\in[-0.0956591207,0.1029457518]},
+\]
+
+\[
+\boxed{\lambda_-\in[-1.0029457518,-0.6843408793]}.
+\]
+
+The compiler therefore uses safe-margin intervals
+
+```text
+lambda+ : [-0.10,  0.105]
+lambda- : [-1.01, -0.68]
+```
+
+inside one single scalar polynomial hull `[-1.01,0.105]`. This is spectral-domain reduction, not a spatial material-state partition.
+
+## 3. Multiaxial reconstruction without a 2D refit
+
+Map the equivalent-uniaxial tensor to
+
+\[
+\mathbf Y=a\mathbf I+b\mathbf E_u
+\]
+
+so the compiler hull maps to `[-1,1]`. Let
+
+\[
+K_1=\operatorname{tr}\mathbf Y,\qquad K_2=\det\mathbf Y.
+\]
+
+For every retained matrix Chebyshev polynomial,
+
+\[
+\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=0.
+\]
+
+Represent a matrix function by the pair
+
+\[
+F(\mathbf Y)=A(K_1,K_2)\mathbf I+B(K_1,K_2)\mathbf Y.
+\]
+
+Pair multiplication is exactly
+
+\[
+(A,B)(C,D)
+=(AC-BDK_2,\ AD+BC+BDK_1).
+\]
+
+The frozen R10 interaction is reconstructed algebraically, not fitted:
+
+\[
+CC=\det(C)C,
+\]
+
+\[
+TC=C[\operatorname{tr}(T)I-T],
+\]
+
+\[
+TT=\det(T)[\operatorname{tr}(T^7)I-T^7],
+\]
+
+\[
+\boxed{\mathbf S=\mathbf U-a_{cc}CC+TC-\rho a_tTT}.
+\]
+
+Thus the principal R10 formulas are retained exactly at the finite compiler level.
+
+## 4. Zero-spatial exact moments
+
+Every retained scalar field is a finite tensor-Chebyshev series
+
+\[
+F=\sum_{ijk}c_{ijk}T_i(\sin X)T_j(\sin Y)T_k(\zeta).
+\]
+
+Coefficient multiplication is performed entirely in coefficient space. FFT is used only to accelerate coefficient-index convolution; it never evaluates the physical-space integrand.
+
+The complete-halfwave moments are closed form:
+
+\[
+\int_0^\pi T_n(\sin X)dX=
+\begin{cases}
+\pi,&n=0,\\
+2\sin(n\pi/2)/n,&n\ge1,
+\end{cases}
+\]
+
+\[
+\int_{-1}^1T_k(\zeta)d\zeta=
+\begin{cases}
+0,&k\text{ odd},\\
+2/(1-k^2),&k\text{ even}.
+\end{cases}
+\]
+
+Therefore every formal structural integral is the finite contraction
+
+\[
+\boxed{\sum_{ijk}c_{ijk}M_iM_jZ_k}.
+\]
+
+No spatial Gauss/Simpson/adaptive quadrature or spatial sampling is present in the formal operator.
+
+## 5. Same-expression derivatives and limit condition
+
+Forward chain-rule jets are propagated through the same coefficient algebra. There is no finite-difference production derivative.
+
+At the selected N48 state:
+
+```text
+P_D = 106.58759351383472
+P_q = -75105.39767023241
+R_D = -1376.335532846137
+R_q = 969815.5988960797
+```
+
+\[
+L=P_D R_q-P_qR_D=83.31643116474152.
+\]
+
+Normalized by the two determinant terms:
+
+\[
+\boxed{L_{norm}=4.0299997197\times10^{-7}}.
+\]
+
+Along the explicit equilibrium branch,
+
+\[
+\frac{dP}{dD}=\frac{L}{R_q}
+=8.59095598\times10^{-5}\ \mathrm{kN},
+\]
+
+so the selected branch maximum and the explicit `L=0` condition are numerically coincident at engineering precision.
+
+## 6. N48 formal Case21 result
+
+```text
+material degree = 48
+spatial Chebyshev degree = 28
+D_u  = 0.8449505
+q_u  = 0.001779254542005754
+A_u  = 2.1706905412470197 mm
+Pc   = 337.39660909142 kN
+Ps   = 30.922943404456966 kN
+Pu   = 368.31955249587696 kN
+R    = -2.2383016926141863e-05 kN mm
+```
+
+Experiment is introduced only after the material law is frozen:
+
+```text
+Pf = 368.312750 kN
+Pu-Pf = +0.006802495877 kN
+error = +0.001846934671 %
+```
+
+This agreement is not a calibration result.
+
+## 7. Order-convergence audit
+
+At the fixed R10 audit state, the zero-spatial coefficient algebra gives:
+
+| material degree | spatial degree | P (kN) | R (kN mm) |
+|---:|---:|---:|---:|
+|32|20|366.9675246|18.8609835|
+|40|24|367.6357111|8.2488354|
+|48|28|367.8426262|6.1492893|
+|56|30|368.1017038|3.4003506|
+|64|32|368.2664235|1.8739463|
+|72|34|368.3534474|1.1915080|
+|80|36|368.3983685|0.8428271|
+|96|40|368.5026604|0.1030400|
+
+A separate N96 high-order equilibrium check at the N48 stationary D, with q reclosed, gives
+
+```text
+D fixed = 0.8449505
+q_eq    = 0.0017855282237914806
+P       = 368.50804285212683 kN
+R       = 0.021212151265274315 kN mm
+```
+
+The N96 equilibrium check differs from the N48 formal stationary result by
+
+\[
+\boxed{0.1884903563\ \mathrm{kN}=0.0511757671\%}.
+\]
+
+N96 was not separately reoptimized in D and is therefore an order-sensitivity audit, not a second stationary root.
+
+Under the current project rule that theorem-level tight remainder certificates are no longer an engineering hard gate, this 0.051% order sensitivity is accepted for continued theory development.
+
+## 8. Decision
+
+```text
+R10B_1D_MATERIAL_RECOMPILE                 = PASS
+SAME_MULTIAXIAL_CURRENT_MAP                = PASS
+CASE21_SPECTRAL_DOMAIN_CERTIFICATE         = PASS
+N_formal_spatial_sampling                  = 0
+N_formal_spatial_quadrature                = 0
+N_formal_spatial_subdomains                = 1
+EXACT_COMPLETE_HALFWAVE_MOMENT_CONTRACTION = PASS
+SAME_EXPRESSION_DERIVATIVES                = PASS
+CASE21_N48_LIMIT_ROOT                       = PASS
+N96_ENGINEERING_ORDER_CHECK                = PASS
+STRUCTURAL_Pu_CALIBRATION                   = NO
+SWARTZ24                                   = NOT_STARTED
+
+R10B_ZERO_SPATIAL_CASE21 = PASS_ENGINEERING
+```
+
+Next work must not modify the R10 scalar merely because Case21 is close to experiment. Before Swartz24 calculation, a common all-24-panel spectral/search-domain contract must be established.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_results.json
+SIZE: 1797
+SHA256: f45b19a7d076658bb3e5aa8e4912f985a12534c737f974a576ae9988a4257296
+ENCODING: utf-8
+LINES: 53
+====================================================================================================
+{
+  "stage": "R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND",
+  "status": "PASS_ENGINEERING",
+  "formal_counts": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1
+  },
+  "search_box": {
+    "D": [0.78, 0.90],
+    "q": [0.0015, 0.0021]
+  },
+  "spectral_certificate": {
+    "gap_lower": 0.7501654769239635,
+    "lambda_plus": [-0.09565912065225385, 0.10294575178516358],
+    "lambda_minus": [-1.0029457517851634, -0.6843408793477461],
+    "compiler_lambda_plus": [-0.10, 0.105],
+    "compiler_lambda_minus": [-1.01, -0.68]
+  },
+  "N48_formal_root": {
+    "material_degree": 48,
+    "spatial_cheb_degree": 28,
+    "D_u": 0.8449505,
+    "q_u": 0.001779254542005754,
+    "A_u_mm": 2.1706905412470197,
+    "Pc_kN": 337.39660909142,
+    "Ps_kN": 30.922943404456966,
+    "Pu_kN": 368.31955249587696,
+    "R_kNmm": -2.2383016926141863e-05,
+    "P_D": 106.58759351383472,
+    "P_q": -75105.39767023241,
+    "R_D": -1376.335532846137,
+    "R_q": 969815.5988960797,
+    "L": 83.31643116474152,
+    "L_normalized": 4.029999719717427e-07,
+    "equilibrium_branch_dP_dD": 8.590955977567161e-05,
+    "Pf_exp_kN": 368.31275,
+    "error_kN": 0.006802495876968351,
+    "error_percent": 0.0018469346708655486
+  },
+  "N96_engineering_order_check": {
+    "D_fixed": 0.8449505,
+    "q_equilibrium": 0.0017855282237914806,
+    "P_kN": 368.50804285212683,
+    "R_kNmm": 0.021212151265274315,
+    "difference_from_N48_kN": 0.1884903562498721,
+    "difference_from_N48_percent": 0.05117576706764219,
+    "identity": "equilibrium/order audit only; D not reoptimized"
+  },
+  "structural_calibration_to_Pf": false,
+  "Swartz24_started": false,
+  "next_task": "R11_SWARTZ24_COMMON_SPECTRAL_DOMAIN_AND_ZERO_SPATIAL_BATCH_PRECHECK"
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md
+SIZE: 6830
+SHA256: ff626a4a5af823be26b62c9446eed40869d6de647f8e98e178c782b76dc55ef8
+ENCODING: utf-8
+LINES: 361
+====================================================================================================
+# NZ-SCCM R10 — 1D ENERGY SMOOTHING → SAME MULTIAXIAL REINSERTION → CASE21
+
+**Date:** 2026-08-10 23:52 +08:00  
+**Identity:** corrected current-mainline execution. This is not a global material-potential refit.
+
+## 1. Scope
+
+R10 executes exactly the corrected chain:
+
+```text
+existing multidimensional/current NC operator
+→ internal 1D Foster tensile scalar
+→ material-energy smoothing of that 1D scalar only
+→ reinsert into the SAME U/C/T + CC/TC/TT + spectral map
+→ Case21 continuous-halfwave same-equation audit
+```
+
+No multidimensional interaction coefficient is re-fitted. No Case21/Swartz experimental load is used to choose the smoothing.
+
+The formal zero-spatial D15 production recompile is intentionally deferred to R10B; the Case21 structural calculation in R10 uses high-order full-halfwave Gauss integration only as an audit/reinsertion check and is not relabelled as production.
+
+---
+
+## 2. Frozen NC scalar source
+
+Case21 NC material constants:
+
+\[
+f_c=21.23\ \mathrm{MPa},\quad
+E_0=20321\ \mathrm{MPa},\quad
+\varepsilon_0=0.00209,\quad
+\nu=0.18,
+\]
+
+\[
+\kappa=\frac{E_0\varepsilon_0}{f_c}=2.0005129533678754,
+\quad \rho=0.1,
+\]
+
+\[
+x_{cr}=\frac{\rho}{\kappa}=0.04998717945397425.
+\]
+
+The current operator's positive scalar coordinate is
+
+\[
+t=\Pi_\eta(\lambda),
+\]
+
+and its Foster tensile utilization is
+
+\[
+T_{src}(t)=r+(m_t-1)H(r,1)-m_tH(r,10),
+\qquad r=t/x_{cr},
+\]
+
+with
+
+\[
+m_t=-\frac7{90}.
+\]
+
+The tensile stress scalar entering the current operator is
+
+\[
+u_{t,src}(t)=\rho T_{src}(t).
+\]
+
+The source scalar work over the retained tensile interval is
+
+\[
+\boxed{
+W_{src}=\int_0^{10x_{cr}}u_{t,src}(t)\,dt
+=0.031741235181249904.
+}
+\]
+
+The source peak is
+
+\[
+\boxed{
+\max u_{t,src}=0.09867291206823792.
+}
+\]
+
+The retained residual level at \(10x_{cr}\) is \(0.03\).
+
+---
+
+## 3. Fixed C2 energy-smoothing template
+
+No arbitrary plateau value is selected. The smoothing has one retained scalar height \(h\), and \(h\) is fixed uniquely by material work.
+
+### 3.1 Rise branch
+
+For
+
+\[
+0\le t\le x_{cr},\qquad \tau=t/x_{cr},
+\]
+
+use a quintic satisfying
+
+\[
+u(0)=0,\qquad u'(0)=\kappa,\qquad u''(0)=0,
+\]
+
+\[
+u(x_{cr})=h,\qquad u'(x_{cr})=0,\qquad u''(x_{cr})=0.
+\]
+
+After applying these constraints:
+
+\[
+\boxed{
+u_{rise}(\tau)=
+0.1\tau
++0.3799750427197293\tau^3
+-0.6699625640795939\tau^4
++0.28798502563183753\tau^5.
+}
+\]
+
+### 3.2 Decay branch
+
+For
+
+\[
+x_{cr}\le t\le10x_{cr},\qquad
+\tau=\frac{t-x_{cr}}{9x_{cr}},
+\]
+
+use the unique quintic satisfying
+
+\[
+u(x_{cr})=h,\quad u'(x_{cr})=u''(x_{cr})=0,
+\]
+
+\[
+u(10x_{cr})=0.03,\quad u'(10x_{cr})=u''(10x_{cr})=0.
+\]
+
+The adopted branch is
+
+\[
+\boxed{
+u_{fall}(\tau)=
+0.09799750427197301
+-0.6799750427197289\tau^3
++1.0199625640795933\tau^4
+-0.40798502563183736\tau^5.
+}
+\]
+
+### 3.3 Energy condition
+
+The defining condition is
+
+\[
+\boxed{
+\int_0^{10x_{cr}}u_{sm}(t)\,dt
+=
+\int_0^{10x_{cr}}u_{t,src}(t)\,dt.
+}
+\]
+
+This gives
+
+\[
+\boxed{h=0.09799750427197301.}
+\]
+
+Therefore
+
+\[
+W_{sm}=W_{src}=0.031741235181249904
+\]
+
+exactly at the adopted numerical precision.
+
+The peak is reduced only by
+
+\[
+\boxed{0.6844916017\%},
+\]
+
+while the narrow Foster transition is replaced by a broad C2 rounded scalar branch. The residual, origin tangent, total retained scalar work, monotone rise/fall identity and endpoint derivative regularity are retained.
+
+All polynomial constants above are algebraically derived from physical/energy anchors; they are not free material regression coefficients.
+
+---
+
+## 4. Reinsertion into the SAME multidimensional current operator
+
+Only the tensile scalar is changed:
+
+\[
+T_i^{new}=u_{sm}(t_i)/\rho.
+\]
+
+The current master remains
+
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i.
+\]
+
+The same multiaxial interaction remains
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_--\rho a_tT_+T_-^8,
+\]
+
+\[
+s_-=U_--a_{cc}C_-^2C_++C_-T_+-\rho a_tT_-T_+^8.
+\]
+
+The same spectral return then generates \(\sigma_x,\sigma_y,\tau_{xy}\).
+
+Thus R10 is genuinely
+
+\[
+\boxed{
+\text{current multidimensional law}
+\to\text{1D scalar smoothing}
+\to\text{same multidimensional law}.
+}
+\]
+
+It does not introduce a replacement global material potential.
+
+---
+
+## 5. Case21 same-execution audit
+
+The source Foster operator and the energy-smoothed operator are recomputed in the **same execution**, using the same geometry, Nguyen kinematics, current-map code, reinforcement model and structural evaluator.
+
+Final audit values reclose both \(D\) and \(q\) with the same 48×48×28 full-halfwave Gauss evaluator.
+
+### 5.1 Same-execution source baseline
+
+\[
+D_u=0.705727\ \text{(approximately)},
+\qquad
+q_u=0.002194\ \text{(approximately)},
+\]
+
+\[
+A_u=2.676738\ \mathrm{mm},
+\]
+
+\[
+P_c=316.630682\ \mathrm{kN},
+\qquad
+P_s=25.703347\ \mathrm{kN},
+\]
+
+\[
+\boxed{P_u=342.334029\ \mathrm{kN}}.
+\]
+
+The reclosed equilibrium residual is approximately
+
+\[
+1.42\times10^{-12}\ \mathrm{kN\,mm}.
+\]
+
+### 5.2 Energy-smoothed 1D result
+
+\[
+\boxed{D_u=0.843270\ \text{(approximately)}},
+\]
+
+\[
+\boxed{q_u=0.001783\ \text{(approximately)}},
+\]
+
+\[
+\boxed{A_u=2.175523\ \mathrm{mm}},
+\]
+
+\[
+P_c=337.863269\ \mathrm{kN},
+\qquad
+P_s=30.860195\ \mathrm{kN},
+\]
+
+\[
+\boxed{P_u=368.723464\ \mathrm{kN}}.
+\]
+
+The reclosed equilibrium residual is approximately
+
+\[
+-1.92\times10^{-8}\ \mathrm{kN\,mm}.
+\]
+
+Compared with the Case21 experiment
+
+\[
+P_f=368.312750\ \mathrm{kN},
+\]
+
+the audit difference is
+
+\[
+\boxed{+0.111512\%}.
+\]
+
+The same-execution change caused solely by the frozen 1D material-energy smoothing is approximately
+
+\[
+\boxed{\Delta P_u=26.389435\ \mathrm{kN}}.
+\]
+
+This near agreement is explicitly classified as a **post-freeze consequence**, not a calibration target.
+
+At the energy-smoothed audit root the principal equivalent-strain ranges are approximately
+
+\[
+\lambda_+\in[-0.080641,\ 0.080821],
+\]
+
+\[
+\lambda_-\in[-0.923911,\ -0.762450].
+\]
+
+---
+
+## 6. Status boundary
+
+```text
+R10_1D_ENERGY_SMOOTHING          = PASS
+MULTIAXIAL_REINSERTION           = PASS
+CASE21_SAME_EXECUTION_AUDIT      = PASS
+STRUCTURAL_CALIBRATION_TO_Pf     = NO
+SWARTZ24                          = NOT_STARTED
+```
+
+However the R10 structural evaluator uses spatial Gauss integration **only as an audit**. Therefore:
+
+```text
+FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION
+= HOLD_UNTIL_EXISTING_D15_COMPILER_IS_REBUILT_WITH_FROZEN_SMOOTH_SCALAR
+```
+
+The next formal task must make **no further material change**. It must feed the frozen R10 scalar law into the already-existing zero-spatial nested-D15 compiler, recover explicit \(P(D,q),R_q(D,q)\) and same-expression derivatives, and solve
+
+\[
+R_q=0,
+\]
+
+\[
+L=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0.
+\]
+
+Only after that passes can the R10 capacity be promoted from audit consequence to formal zero-spatial production result.
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK
+= R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND
+```
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_results.json
+SIZE: 2771
+SHA256: 2ad84893c7befa36f414b6cbe770550b197e1718269409a40106d829d1ddcb2e
+ENCODING: utf-8
+LINES: 80
+====================================================================================================
+{
+  "stage": "R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21",
+  "material_energy_rule": {
+    "scalar_coordinate": "t = Pi_eta(lambda)",
+    "source_scalar": "u_t_source(t) = rho*T_Foster(t)",
+    "xcr": 0.04998717945397425,
+    "lambda_r": 0.49987179453974245,
+    "W_source_dimensionless": 0.031741235181249904,
+    "W_smooth_dimensionless": 0.031741235181249904,
+    "energy_selected_peak_h": 0.09799750427197301,
+    "source_peak_sigma_over_fc": 0.09867291206823792,
+    "smooth_peak_sigma_over_fc": 0.09799750427197301,
+    "peak_reduction_percent": 0.6844916017050569,
+    "residual_sigma_over_fc": 0.03,
+    "rise_coefficients_tau_power": [
+      0.0,
+      0.1,
+      0.0,
+      0.3799750427197293,
+      -0.6699625640795939,
+      0.28798502563183753
+    ],
+    "fall_coefficients_tau_power": [
+      0.09799750427197301,
+      0.0,
+      0.0,
+      -0.6799750427197289,
+      1.0199625640795933,
+      -0.40798502563183736
+    ],
+    "structural_capacity_used_for_material_selection": false
+  },
+  "same_execution_source_foster": {
+    "D_u": 0.7057271404732661,
+    "q_u": 0.0021940477872221006,
+    "A_u_mm": 2.6767383004109626,
+    "Pc_kN": 316.6306821397406,
+    "Ps_kN": 25.7033473236443,
+    "Pu_kN": 342.3340294633849,
+    "R_total_kNmm": 1.4210854715202004e-12,
+    "lambda_plus_min": -0.09921295245604361,
+    "lambda_plus_max": 0.09944740843473682,
+    "lambda_minus_min": -0.80494028495455,
+    "lambda_minus_max": -0.6062797589534628,
+    "error_vs_experiment_percent": -7.053440462382873
+  },
+  "energy_smoothed_1D": {
+    "D_u": 0.843270404668947,
+    "q_u": 0.0017832151821667267,
+    "A_u_mm": 2.1755225222434067,
+    "Pc_kN": 337.8632691214933,
+    "Ps_kN": 30.860195005805895,
+    "Pu_kN": 368.7234641272992,
+    "R_total_kNmm": -1.924968273669947e-08,
+    "lambda_plus_min": -0.08064092098980424,
+    "lambda_plus_max": 0.08082056881801974,
+    "lambda_minus_min": -0.9239114280557563,
+    "lambda_minus_max": -0.7624498521838783,
+    "error_vs_experiment_percent": 0.11151232948064638
+  },
+  "same_execution_difference": {
+    "delta_Pu_kN": 26.389434663914295,
+    "delta_Pc_kN": 21.23258698175268,
+    "delta_Ps_kN": 5.156847682161596
+  },
+  "experiment": {
+    "Pf_kN": 368.31275,
+    "role": "post-freeze validation only"
+  },
+  "audit": {
+    "final_evaluator": "48x48x28 full-halfwave Gauss",
+    "identity": "AUDIT_ONLY_NOT_FORMAL_PRODUCTION",
+    "one_dimensional_energy_smoothing": "PASS",
+    "multidimensional_reinsertion": "PASS",
+    "case21_same_execution_audit": "PASS",
+    "formal_zero_spatial_quadrature_production": "HOLD_UNTIL_EXISTING_D15_COMPILER_IS_REBUILT_WITH_FROZEN_SMOOTH_SCALAR",
+    "swartz24": "NOT_STARTED",
+    "next_task": "R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_R10_MATERIAL_TARGET_INTENT_AUDIT_20260811.md
+SIZE: 8917
+SHA256: ebb212f88d90d8a141447285c89c797a5a35f920214d39e6d317ef9cc1f95b9d
+ENCODING: utf-8
+LINES: 337
+====================================================================================================
+# NZ-SCCM R10 MATERIAL-TARGET INTENT AUDIT
+
+**Date:** 2026-08-11 15:30 +08:00  
+**Identity:** CURRENT MATERIAL-LEVEL AUDIT. This audit does not change the already executed R10/R10B numerical records by itself. It checks whether the frozen R10 scalar actually matches the previously stated material-modification intent.
+
+## 0. Evidence hierarchy used
+
+This audit uses, in order:
+
+1. `current/theory/NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md` for the source Foster current operator;
+2. `current/theory/NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.md` for the executed R10 formula;
+3. `governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md` for the frozen R10 decision;
+4. original-conversation excerpt supplied again on 2026-08-11 (`file_000000009470821198589fc2be909fa7`, filename `粘贴的 markdown (1)。md(7)`) for the stated intent that the source 1D law should be altered only where the sharp feature requires regularization, with the rest retained.
+
+No structural experiment is used to choose or modify any material quantity in this audit.
+
+---
+
+# 1. Source Foster tensile scalar
+
+The source ordinary-concrete current operator uses
+
+\[
+t=\Pi_\eta(\lambda),
+\qquad
+r=\frac{t}{x_{cr}},
+\]
+
+\[
+H(r,r_0)=
+\frac12\left[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}\right]
+-\frac12\left[-r_0+\sqrt{r_0^2+\eta_r^2}\right],
+\]
+
+with
+
+\[
+\eta_r=0.05,
+\qquad
+m_t=-\frac7{90}.
+\]
+
+The source tensile utilization is
+
+\[
+T_{src}(r)
+=r+(m_t-1)H(r,1)-m_tH(r,10),
+\]
+
+and the normalized tensile stress scalar entering the current map is
+
+\[
+\boxed{u_{src}(t)=\rho T_{src}(t/x_{cr})}.
+\]
+
+For Case21,
+
+\[
+\rho=0.1,
+\qquad
+\kappa=\frac{E_0\varepsilon_0}{f_c}=2.0005129533678754,
+\]
+
+\[
+\boxed{x_{cr}=\frac{\rho}{\kappa}=0.04998717945397425}.
+\]
+
+The R10 source-work record is
+
+\[
+\boxed{W_{src}=0.031741235181249904}.
+\]
+
+---
+
+# 2. Executed R10 target
+
+The executed R10 does not leave the source law untouched outside a tiny local window. It replaces the whole retained tensile interval
+
+\[
+\boxed{0\le t\le10x_{cr}}
+\]
+
+by two C2 quintic branches.
+
+For
+
+\[
+0\le t\le x_{cr},
+\qquad
+r=\frac{t}{x_{cr}},
+\]
+
+\[
+\boxed{
+ u_{rise}(r)=
+\rho r+(10h-6\rho)r^3+(8\rho-15h)r^4+(6h-3\rho)r^5.
+}
+\]
+
+For
+
+\[
+x_{cr}\le t\le10x_{cr},
+\qquad
+s=\frac{r-1}{9},
+\]
+
+\[
+\boxed{
+ u_{fall}(s)=
+h+(u_r-h)(10s^3-15s^4+6s^5),
+}
+\]
+
+with
+
+\[
+u_r=0.03,
+\qquad
+\boxed{h=0.09799750427197301}.
+\]
+
+The energy condition is
+
+\[
+\boxed{
+\int_0^{10x_{cr}}u_{R10}(t)\,dt
+=
+\int_0^{10x_{cr}}u_{src}(t)\,dt.
+}
+\]
+
+Thus R10 is a genuine material-target change, not an analytic-compiler approximation.
+
+---
+
+# 3. Intent-versus-execution finding
+
+The earlier stated intent was effectively
+
+```text
+source 1D scalar
+-> locate sharp peak/kink/boundary layer
+-> regularize only the necessary scalar feature
+-> keep the unaffected source scalar unchanged
+-> reinsert into the same multidimensional interaction
+```
+
+The actually executed R10 is
+
+```text
+source 1D scalar on 0 <= t <= 10 x_cr
+-> replace the entire retained tensile interval
+   by a two-piece C2 quintic target
+-> preserve selected physical anchors and total scalar work
+-> reinsert into the same multidimensional interaction
+```
+
+These are related, but they are not mathematically identical.
+
+Therefore the phrase `R10 energy smoothing only of the sharp 1D tensile feature` is acceptable as a statement of *motivation*, but is insufficient as an exact description of the executed target. The executed formula is a **whole-retained-branch C2 reconstruction motivated by the sharp Foster transition**.
+
+---
+
+# 4. Material-coordinate forensic audit
+
+The following audit evaluates only the 1D material coordinate `r=t/x_cr`. It is not spatial sampling, structural quadrature, or a production structural calculation.
+
+Using the frozen source Foster formula and the frozen R10 formula gives approximately:
+
+| quantity | source Foster | executed R10 | audit implication |
+|---|---:|---:|---|
+| normalized stress at `r=0` | 0 | 0 | same origin value |
+| `du/dr` at `r=0` | 0.0999328 | 0.1000000 | R10 enforces the idealized elastic anchor exactly; it is not byte-for-byte the source smoothed-Foster tangent |
+| source peak location | `r ≈ 1.083` | `r = 1` | peak location is shifted |
+| peak value | `≈0.098673` | `0.0979975` | peak reduction only about 0.685% |
+| value at `r=10` | `≈0.0302538` | `0.0300000` | R10 enforces the intended residual level exactly; the algebraically smoothed source does not hit 0.03 exactly at finite `r=10` |
+| total work over `0<=r<=10` | `≈0.63498752` | `≈0.63498752` | equal by construction after multiplication by `x_cr` |
+
+Pointwise differences are not confined to the immediate peak neighborhood. Representative values are:
+
+| `r=t/x_cr` | Foster `u_src` | R10 `u_R10` | `R10-source` |
+|---:|---:|---:|---:|
+| 0.25 | 0.02498 | 0.02860 | +0.00362 |
+| 0.50 | 0.04993 | 0.06462 | +0.01469 |
+| 0.66 | 0.06587 | 0.08418 | +0.01831 |
+| 1.00 | 0.09737 | 0.09800 | +0.00062 |
+| 2.00 | 0.09222 | 0.09721 | +0.00499 |
+| 3.00 | 0.08448 | 0.09280 | +0.00832 |
+| 5.00 | 0.06894 | 0.07102 | +0.00208 |
+| 7.50 | 0.04950 | 0.03918 | -0.01033 |
+| 10.00 | 0.03025 | 0.03000 | -0.00025 |
+
+The maximum absolute normalized-stress difference is approximately
+
+\[
+\boxed{
+\max_{0\le r\le10}|u_{R10}-u_{src}|
+\approx0.01831
+}
+\]
+
+and occurs near
+
+\[
+r\approx0.660.
+\]
+
+This is about `0.01831 f_c` in normalized stress, not a negligible numerical perturbation.
+
+The signed work difference is zero by construction, but the positive and negative redistributed work are each approximately
+
+\[
+0.03140
+\]
+
+in the `r` coordinate. The total absolute redistributed work is about
+
+\[
+\boxed{9.89\%}
+\]
+
+of the source tensile work, while the positive relocated portion is about
+
+\[
+\boxed{4.95\%}
+\]
+
+of the source work.
+
+The first moment of the normalized tensile work shifts from approximately
+
+\[
+\bar r_{src}=4.3791
+\]
+
+to
+
+\[
+\bar r_{R10}=4.1208,
+\]
+
+a shift of about
+
+\[
+\boxed{-5.90\%}.
+\]
+
+Thus equal total work does **not** mean that the material work distribution along the tensile scalar is unchanged.
+
+---
+
+# 5. Relation to the large Case21 change
+
+The same-execution R10 structural audit recorded
+
+\[
+P_u^{source}=342.334029463\ \mathrm{kN},
+\]
+
+\[
+P_u^{R10}=368.723464127\ \mathrm{kN},
+\]
+
+so
+
+\[
+\Delta P_u=+26.389434664\ \mathrm{kN}.
+\]
+
+This audit does **not** use that structural difference to reject, fit, or alter R10. However, the 1D material audit shows that the R10 target redistributes the tensile scalar over a broad part of the retained interval despite almost preserving the peak value. Therefore the large structural response change cannot be described as the consequence of only an infinitesimal smoothing of one mathematical cusp.
+
+The R09A sensitivity result already established that tensile-branch shape/capacity changes can move the coupled `(D,q)` equilibrium and thereby change the compression-dominated capacity indirectly.
+
+---
+
+# 6. Multiaxial architecture remains unchanged
+
+This audit does not challenge the R10 reinsertion architecture.
+
+R10 uses
+
+\[
+T_i^{R10}=\frac{u_{R10}(t_i)}{\rho},
+\]
+
+then keeps the same
+
+\[
+U_i,
+\quad
+CC,
+\quad
+TC,
+\quad
+TT,
+\]
+
+and the same spectral return. No multidimensional interaction coefficient is refitted.
+
+Therefore the issue identified here is specifically the **identity of the 1D R10 material target**, not the validity of the multidimensional reinsertion mechanism.
+
+---
+
+# 7. Audit decision
+
+```text
+R10_EXECUTED_FORMULA_RECOVERY                 = PASS
+R10_SOURCE_WORK_EQUALITY                       = PASS
+R10_C2_TARGET_INTERNAL_CONSISTENCY              = PASS
+R10_SAME_MULTIAXIAL_REINSERTION_ARCHITECTURE    = PASS
+R10_AS_TINY_LOCAL_SOURCE_PATCH                  = FAIL_DESCRIPTION
+R10_AS_WHOLE_RETAINED_TENSILE_BRANCH_REBUILD    = PASS_DESCRIPTION
+R10_ORIGINAL_INTENT_VS_EXECUTED_TARGET           = HOLD_RECONCILIATION
+STRUCTURAL_Pu_CALIBRATION                       = NO
+```
+
+The existing R10 and R10B numerical results remain valid as records of the **executed R10 target**. This audit does not yet decide whether that executed target should remain the final physical material target for publication/generalization.
+
+---

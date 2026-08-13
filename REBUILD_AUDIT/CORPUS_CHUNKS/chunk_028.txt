@@ -1,0 +1,1800 @@
+NO NEW MATERIAL PHYSICS
+NO STRUCTURAL CALIBRATION
+```
+
+If that cannot be achieved at N48-level complexity, the project must explicitly record the representation-capacity boundary rather than silently escalating polynomial order.
+
+====================================================================================================
+FILE: governance/NC_ENERGY_POTENTIAL_D15_GATE_DECISION_20260810.md
+SIZE: 2875
+SHA256: 1c6245848265d39165c836886ac252207035d8276a884b540e17a02d84ff399e
+ENCODING: utf-8
+LINES: 80
+====================================================================================================
+# NC ENERGY POTENTIAL + D15 GATE DECISION
+
+**Date:** 2026-08-10
+
+## Decision
+
+```text
+NC_ENERGY_POTENTIAL_AND_D15_FEASIBILITY_GATE = FAIL__STOP_AT_GATE
+```
+
+The gate was executed exactly at material + D15-feasibility level. No Case21/Swartz structural solution followed.
+
+## What passed
+
+- material-energy contract: PASS;
+- energy-equivalent tensile preprocessing: PASS;
+- single global current-work potential concept: PASS IN PRINCIPLE;
+- finite polynomial potential -> invariant polynomial -> D15 exact moments: PASS;
+- formal structural spatial quadrature count: ZERO.
+
+For a 2x2 equivalent-uniaxial strain tensor `Eu`, Cayley-Hamilton gives
+
+\[
+E_u^2-J_1E_u+J_2I=0,
+\]
+
+so with `s_n=tr(Eu^n)`:
+
+\[
+s_0=2,\qquad s_1=J_1,\qquad s_n=J_1s_{n-1}-J_2s_{n-2}.
+\]
+
+Thus any finite polynomial material potential reduces exactly to a finite polynomial in `J1,J2`; after inserting the frozen Nguyen second-order kinematics, D15 exact moments close it with zero spatial numerical quadrature.
+
+## What failed
+
+### Anchor-exact low-parameter global polynomial
+
+A degree-7 stress polynomial uniquely fixed by compression peak/residual anchors plus retained tensile work developed catastrophic interior oscillation:
+
+```text
+minimum stress ≈ -12965.289 fc at lambda ≈ -7.2363
+```
+
+Therefore anchor exactness does not make a low-order global polynomial mechanically admissible.
+
+### Energy-first low-order global potential
+
+A single global Chebyshev potential was fitted to MATERIAL work only, while exact anchor constraints were enforced. Only degrees 8, 10 and 12 were tested. At N=12 the potential error was much smaller, but derivatives were still mechanically unacceptable:
+
+```text
+stress max abs error     ≈ 0.879 fc
+stress P95 abs error     ≈ 0.406 fc
+tangent max abs error    ≈ 9.919 (normalized)
+spurious compression in tension ≈ 0.810 fc
+```
+
+Hence an energy function can look much better than its first/second derivatives. This directly confirms the need to gate the derivative chain, not only the energy fit.
+
+## Fail-fast boundary
+
+No attempt was made to increase global polynomial degree beyond N=12.
+
+No structural global target was fitted.
+
+No offline spatial quadrature was used to generate a production structural operator.
+
+No Case21 ultimate load and no Swartz24 load was calculated after this failure.
+
+## Current consequence
+
+The energy-potential philosophy remains valid, but the **current low-order global polynomial grammar is rejected**.
+
+A new material-potential grammar may only be explored after explicit user approval. Any future grammar must first prove:
+
+1. few physically meaningful material parameters;
+2. no runtime TT/TC/CC spatial material partition;
+3. explicit stress and tangent from the same potential;
+4. zero-spatial-quadrature closure before structural calculation;
+5. no rescue by hidden high-degree/global coefficient inflation.
+
+====================================================================================================
+FILE: governance/NC_POSTPEAK_C2_SCALAR_TARGET_RULE_20260810.md
+SIZE: 1941
+SHA256: dc5a1b2ecdc57e0d029ae3d567dda60209d4afd7f28e8aa7012de1bc211e059c
+ENCODING: utf-8
+LINES: 77
+====================================================================================================
+# NC POSTPEAK C2 SCALAR TARGET RULE — 2026-08-10
+
+## Identity
+
+This rule belongs to the existing G18/G20/G27 unified current-map route. It is a material-target rule, not a runtime TT/TC/CC state machine and not a structural calibration rule.
+
+## Source anchor
+
+Nguyen Eqs. 3.69–3.73 use a post-crushing bilinear compression law: stress falls linearly from the peak `sigma_p` at `eps_p` to `0.1 sigma_p` at `gamma2 eps_p`, then remains at the 10% residual level with zero tangent. Current source baseline: `gamma2=10`.
+
+The source bilinear handoff contains tangent jumps at the compression peak and at residual onset. G20/G21 already permit C1/C2 regularization for the memoryless analytic production current surface.
+
+## R06 C2 target
+
+Let
+
+```text
+s = (-lambda-1)/9,     0 <= s <= 1
+sigma/fc = -1 + 0.9 q(s)
+```
+
+The exact source line is `q=s`.
+
+R06 keeps the source line exactly except for two endpoint C2 bridges. The normalized start bridge is
+
+```text
+g(tau) = 3 tau^5 - 8 tau^4 + 6 tau^3
+```
+
+with
+
+```text
+g(0)=g'(0)=g''(0)=0
+g(1)=1
+g'(1)=1
+g''(1)=0
+```
+
+The end bridge is symmetric.
+
+Frozen R06 bridge width:
+
+```text
+delta_s = 0.05
+Delta_lambda = 9 delta_s = 0.45 per endpoint
+```
+
+Selection rule: local increase of compression magnitude relative to the exact source bilinear line must not exceed 1% fc. Executed R06 value:
+
+```text
+max extra compression = 0.888889% fc
+max conservative reduction = 0.888889% fc
+```
+
+Endpoint conditions:
+
+```text
+U(-1)=-1
+U'(-1)=0
+U(-10)=-0.1
+U'(-10)=0
+```
+
+## Status
+
+```text
+NC_POSTPEAK_C2_SCALAR_TARGET = PASS
+```
+
+This target may be used as the NC material-level postpeak target in later compact scalar compilation.
+
+## Prohibitions
+
+- no Case21/Swartz Pu calibration of `delta_s`;
+- no runtime spatial/material-state split is implied;
+- no inference that the same numerical postpeak target applies to UHPC;
+- UHPC must define its own postpeak/hardening/softening target from UHPC sources.
+
+====================================================================================================
+FILE: governance/NZ_SCCM_ROOT_CAUSE_DIAGNOSTIC_PAUSE_20260810.md
+SIZE: 4273
+SHA256: 146bf749c25680945c75fbbb63c02d56c4a952543719cd448aa392f11b7da70f
+ENCODING: utf-8
+LINES: 84
+====================================================================================================
+# NZ-SCCM 根因诊断暂停 — 2026-08-10
+
+**Status:** CURRENT PAUSE / NO NEW COMPILER ROUTE AUTHORIZED
+
+## 1. 本轮裁决
+
+暂停 P2R 及任何新的 compiler/basis 试探。当前不允许继续“换函数族—拟合—再救积分”的试错链。
+
+## 2. 当前证据指向的主根因
+
+困难不是一般意义上的“矩阵理论太复杂”，也不是 Nguyen 二阶运动学本身。Case21 的 I1/I2 已经是有限多项式场，且 polynomial material 下 D15/Beta exact moments 可直接闭合。
+
+真正困难集中在四个要求同时成立：
+
+1. 强多轴混凝土非线性，尤其拉伸/开裂附近的窄尺度激活；
+2. 不允许按 TT/TC/CC 等材料状态或空间区域分区；
+3. 要求一个统一连续 current material map；
+4. 同时要求 whole-halfwave 零空间积分、零辅助积分、零 ODE 步进，并最终得到低复杂度直接公式。
+
+这形成“复杂度搬运”问题：
+
+- 若保留材料状态分支，复杂度在 state/domain partition；
+- 禁止分支后，用 Pi_eta/H 等光滑激活把复杂度搬进全局材料函数；
+- rational compiler 又把复杂度搬进 poles/resolvents/algebraic periods；
+- Picard-Fuchs 再把复杂度搬进 15x15 auxiliary state system；
+- global polynomial 则把同一复杂度表现为高阶振荡和巨大系数。
+
+因此不是复杂度消失，而是在不同表示之间迁移。
+
+## 3. 当前最直接的材料证据
+
+P2-A degree<=16 global polynomial screen：
+
+- U max normalized error ≈ 2.43%
+- C ≈ 2.44%
+- C2 ≈ 0.51%
+- T ≈ 32.58%
+- V=T^8 ≈ 43.28%
+
+所以“一般材料非线性”不是准确描述；主要困难明显集中在 tensile activation / cracking-like narrow transition 及其高次放大 V=T^8。
+
+当前 lambda 全域约从 -2.439 到 0.732，跨度约 3.17；而 T 在 lambda≈0~0.05 内由 0 快速升至接近 1，存在约 60 倍量级的多尺度分离。single global low-degree polynomial 因此天然困难。
+
+## 4. 一个更重要的疑点
+
+当前 frozen NC / source-shaped U,C,C2,T,V 只是 regression/material oracle，不是 final NC source truth。特别是 V=T^8 与相关 interaction 必须重新审计其身份：
+
+- 是 Nguyen/Foster 原始材料关系必需的物理结构；
+- 还是我们为了把旧二维 frozen operator 写成统一 source-shaped map 而引入的 compiler/surrogate 结构。
+
+如果属于后者，则当前大量解析困难可能是在忠实保留一个中间 surrogate，而不是在忠实保留最终物理材料本构。
+
+## 5. 结构侧不是主根因，但会放大材料难度
+
+Case21：I1 对厚度变量线性，I2 对 s=I1 二次。对 polynomial primitive，这一结构仍直接可积；一旦 primitive 含 denominator / square-root / sharp activation，经过矩阵函数复合与 whole-domain contraction 后就会形成 algebraic-period complexity。因此 second-order kinematics 是复杂度放大器，不是原始病灶。
+
+## 6. 在继续任何新路线前必须完成的三个诊断
+
+### D1 — source provenance audit
+逐式追溯 U,C,T、Pi_eta、H、C2、T^8 以及 source-shaped interaction 到 Nguyen/Foster/我方 compiler，明确哪些是 SOURCE_PHYSICS，哪些是 SMOOTHING，哪些是 SURROGATE/COMPILER。
+
+### D2 — necessity/domain audit
+解析地确定 Case21/Swartz family 实际需要覆盖的主应变/等效 lambda 范围和拉伸激活范围，区分“物理必需域”与此前为了全局保险设置的宽泛 oracle square。不得用试验 Pu 反标或缩域。
+
+### D3 — incompatibility audit
+在不拟合任何新函数的前提下，判断以下四项是否可同时满足：
+
+STRONG_MULTAXIAL_PHYSICS + ONE_UNIFIED_MAP + NO_DOMAIN_PARTITION + DIRECT_ZERO_QUADRATURE_LOW_COMPLEXITY_FORMULA。
+
+若数学上只有通过高阶、多分支、大 special-function system 才能同时满足，则应重新讨论哪一条是可合理调整的建模约束，而不是继续换 compiler。
+
+## 7. 当前禁止事项
+
+在 D1-D3 完成前：
+
+- NO P2R basis search
+- NO new polynomial/rational/spline/special-function compiler fit
+- NO Case21 Pu rerun
+- NO Swartz24
+- NO UHPC production fit
+- NO PF/GKZ/ODE rescue
+- NO spatial/material numerical integration
+
+当前唯一允许的下一阶段是 ROOT_CAUSE_DIAGNOSTIC，不是新的计算路线。
+
+====================================================================================================
+FILE: governance/P1_N48_TANGENT_FIDELITY_DECISION_20260811.md
+SIZE: 2297
+SHA256: 69c040f055e085b029b3a9aefdefb3b038ae43fa20d5c388ab92050da1a46869
+ENCODING: utf-8
+LINES: 69
+====================================================================================================
+# GOVERNANCE DECISION — P1 N48 tangent fidelity audit
+
+**Date:** 2026-08-11
+
+## Decision
+
+The Swartz24 P1 current-tangent audit is accepted as a diagnostic result.
+
+```text
+R10_MATERIAL_TARGET = FROZEN / NOT CHANGED
+SWARTZ24_FROZEN_Pu_VALUES = PRESERVED AS VALUE-CLOSURE RECORD
+N48_ORDER = 48
+N48_TANGENT_FIDELITY = FAIL_DIAGNOSTIC
+FIRST_CLEAR_DEVIATION = R10_TARGET -> N48_FIRST_DERIVATIVE
+STRUCTURAL_CALIBRATION = PROHIBITED
+AUTOMATIC_MATERIAL_ROUTE_CHANGE = PROHIBITED
+AUTOMATIC_ORDER_ESCALATION = PROHIBITED
+```
+
+## Basis
+
+At the exact R10 zero tensile coordinate,
+
+\[
+C(0)=T(0)=T^7(0)=0,
+\]
+
+and
+
+\[
+C'(0)=T'(0)=(T^7)'(0)=0.
+\]
+
+The current global N48 Chebyshev representation does not preserve the first-derivative anchors. Across the 24 current panel compiler intervals, the audit finds
+
+```text
+T48'(0) = approximately 8.69 ... 11.36
+R10 target T'(0) = 0
+```
+
+and large downstream changes in the equivalent current tangent matrix.
+
+Using a Zhou-form directional-stiffness decomposition, the equivalent mixed/torsional quantity H from N48 is approximately 4.72–6.79 times the R10-target tangent value, and the corresponding center-state stability proxy is inflated approximately 3.28–4.42 times.
+
+## Interpretation boundary
+
+This diagnostic does NOT prove that the frozen blind Pu values must be discarded. Those remain valid records of the executed R10→N48→D15 value-closure chain.
+
+It DOES mean that the physical interpretation of the same-expression derivative limit condition L=0 cannot be treated as fully source-faithful until R10-to-N48 tangent representation fidelity is resolved.
+
+Attard and Zhou are used only for independent interpretation:
+
+- Attard: orthotropic tangent-stability benchmark;
+- Zhou Siming: directional stiffness decomposition and Navier stability logic.
+
+Neither source replaces the R10 material operator.
+
+## Next gate
+
+The next permitted task is narrowly defined:
+
+```text
+PRESERVE R10
+PRESERVE ONE_CONTINUOUS_COMPLETE_HALFWAVE
+PRESERVE ZERO FORMAL SPATIAL QUADRATURE
+PRESERVE SIMPLE N48-SCALE ANALYTIC REPRESENTATION IF POSSIBLE
+-> repair/redefine only the analytic representation so that required material values AND first derivatives/anchor identities are faithfully represented
+-> re-audit tangent before any material or structural retuning
+```
+
+====================================================================================================
+FILE: governance/PF1_PATH_INVARIANTS_LOCK_20260810.md
+SIZE: 3962
+SHA256: 07cfda6d1d1e34da1cb7112c9f5c6f8db913dc76629e8ca93de49f5218a4f7e6
+ENCODING: utf-8
+LINES: 100
+====================================================================================================
+# PF1 PATH INVARIANTS LOCK — 2026-08-10
+
+**Status:** CURRENT GOVERNANCE / HARD EXECUTION BOUNDARY  
+**Trigger:** user explicitly reiterated that the fundamental restrictions must not change and the route must not drift while executing PF1.
+
+## 1. Structural problem identity is frozen
+
+PF1 is a mathematical closure task only. It is not authorized to change the structural mechanics problem.
+
+The following remain frozen:
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+KINEMATICS = NGUYEN_SECOND_ORDER / CURRENT CASE21 FINITE ANALYTIC KINEMATICS
+STRUCTURAL_TARGETS = P(D,q), Rq(D,q), L(D,q)
+L = P_,D Rq_,q - P_,q Rq_,D
+```
+
+No alternative structural residual, limit criterion, effective-width substitute, FE eigenproblem, load calibration, or different generalized-coordinate problem may replace these targets during PF1.
+
+## 2. Formal integration identity is immutable
+
+```text
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+FORMAL_INTEGRATION = ANALYTIC_EXACT
+ELEMENT_INTEGRATION = PROHIBITED
+MATERIAL_POINT_GRID = PROHIBITED
+SPATIAL_CELLS = PROHIBITED
+GAUSS_SIMPSON_ADAPTIVE = PROHIBITED_IN_FORMAL_OPERATOR
+COLLOCATION_AS_FORMAL_OPERATOR = PROHIBITED
+```
+
+Auxiliary variables, algebraic curves, periods, differential systems, special functions, analytic continuation, and finite matrix recurrences are allowed only when they analytically represent the same whole-halfwave integral and introduce no hidden spatial/material-point quadrature.
+
+## 3. Current material-route identity is frozen during PF1
+
+PF1 must start from the already accepted current architecture:
+
+```text
+M1R source-shaped rational primitive compiler
+-> invariant / Cayley-Hamilton resolvent reduction
+-> s = I1 exact inner elimination
+-> canonical single/pair resolvent outer periods
+```
+
+PF1 is not authorized to:
+
+- return to M1 high-degree free two-dimensional polynomial surfaces;
+- change the frozen-NC oracle to improve structural results;
+- calibrate any material coefficient against Case21 / Swartz24 / UCFT Pu;
+- introduce TT/TC/CC spatial partitions;
+- replace the current route by coarea/pushforward before PF1 is actually shown to fail;
+- start UHPC production fitting or shell/Y production closure.
+
+## 4. PF1 authorized scope
+
+PF1 may only attempt:
+
+```text
+canonical M1R single-resolvent outer algebraic kernel
+-> genus-2 de-Rham basis
+-> exact Griffiths/Hermite reduction
+-> finite Gauss-Manin connection in physical parameters
+-> relative/logarithmic-period extension
+-> pair-resolvent extension
+-> y-direction closure
+-> finite whole-halfwave Picard-Fuchs / Gauss-Manin system
+```
+
+Every accepted reduction must be an identity modulo explicitly recorded exact differentials / endpoint terms. Numerical sampling may be used only as an independent audit of an already-derived identity and can never define the formal operator.
+
+## 5. Fail-fast rule
+
+If any PF1 stage requires one of the following as a production ingredient, PF1 must stop at that stage and report FAIL/HOLD rather than silently changing route:
+
+```text
+spatial quadrature
+material-point integration
+space subdivision / cells
+adaptive integration
+uncertified black-box Integral objects
+structure-based material refitting
+replacement of P/Rq/L
+replacement of the one-complete-halfwave domain
+```
+
+Only after a genuine PF1 mathematical failure may the already-retained next candidate `joint pushforward/coarea` be opened, and that transition itself requires a new recorded checkpoint.
+
+## 6. GitHub checkpoint discipline
+
+PF1 execution follows `CONTINUOUS_CHECKPOINT_SYNC`:
+
+1. this invariant lock is committed before the long derivation;
+2. each stable PASS/FAIL/HOLD mathematical stage is committed;
+3. `current/CURRENT_STATE.md` is updated only after a stable new state exists;
+4. historical identities are not overwritten.
+
+This file does not add a new theory. It freezes the boundary within which the already-authorized PF1 next step must be executed.
+
+====================================================================================================
+FILE: governance/PF1_R05_GOAL_RELEVANCE_CHECKPOINT_20260810.md
+SIZE: 2075
+SHA256: 9656e56ff630359bb7ae83c9f805e6bde3c0e0f3311cbef41bbf4c6af97e6ac9
+ENCODING: utf-8
+LINES: 57
+====================================================================================================
+# PF1-R05 GOAL RELEVANCE CHECKPOINT — 2026-08-10
+
+**Status:** CURRENT EXECUTION CHECKPOINT / NO THEORY CHANGE
+
+## 1. User-reiterated execution constraint
+
+PF1-R05 may continue only while every mathematical object directly reduces the actual NZ-SCCM whole-halfwave `P(D,q)`, `Rq(D,q)` and their analytic tangent/`L` under the already frozen M1R route.
+
+The purpose is **not** to develop generic hyperelliptic/GKZ mathematics for its own sake.
+
+## 2. Frozen project identity
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+KINEMATICS = NGUYEN_SECOND_ORDER
+STRUCTURAL_TARGETS = P(D,q), Rq(D,q), L(D,q)
+MATERIAL_ROUTE = M1R source-shaped rational primitives
+INNER_ROUTE = invariant/Cayley-Hamilton resolvents -> s=I1 exact elimination
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+NO spatial cells
+NO material-point grid
+NO structure-based material refit
+NO Case21/Swartz Pu calibration
+```
+
+## 3. R05 authorized goal
+
+Start only from the **actual R04 physical symmetric endpoint kernel**:
+
+```text
+Beta(x) Beta(y)
+× actual rational coefficients
+× Phi(actual rational pullback)
+```
+
+where
+
+```text
+Phi(z)=2F1(1/2,1;3/2;z)=atanh(sqrt(z))/sqrt(z)
+```
+
+R05 may derive exact differential identities, endpoint-compatible creative telescoping, finite rational/algebraic period systems, and finite special-function/Picard-Fuchs objects **only if they eliminate the same physical x/y whole-halfwave integral**.
+
+## 4. Relevance stop rule
+
+Stop at HOLD rather than continue if the next mathematical construction:
+
+- does not reduce an actual M1R `P/Rq` block;
+- requires numerical x/y or auxiliary quadrature;
+- creates spatial/material sampling, cells or collocation;
+- changes `P`, `Rq`, `L`, kinematics, material coefficients, or the halfwave domain;
+- becomes a generic mathematical detour with no explicit mapping back to the physical kernel;
+- produces a finite formal system but no credible path to a stable evaluator and analytic `D,q` derivatives.
+
+Only a stable route-relevant result may update `current/CURRENT_STATE.md`.
+
+====================================================================================================
+FILE: governance/PF1_R06_PRODUCTION_COMPLEXITY_SELF_AUDIT_20260810.md
+SIZE: 7942
+SHA256: 7f6c348c50e0b7b6bafd7687be7ef96a1587c5b5d502aa4765a95e76ac953e8e
+ENCODING: utf-8
+LINES: 268
+====================================================================================================
+# PF1-R06 生产复杂度自检与路线纠偏 — 2026-08-10
+
+**Status:** CURRENT GOVERNANCE CORRECTION / PF1-R07 CANCELLED
+
+## 0. 用户质疑
+
+用户指出：R06 已形成 `15×15` connection，225 个位置中 211 个非零，且仍缺 initial values、branch patch、generic connection、production evaluator。若继续推进，很可能只是把积分包装成“解析矩阵”，并产生明显数值/符号膨胀。
+
+本文件对此做正式自检。
+
+## 1. 先区分一个事实：R06 本身不是空间数值积分
+
+R06 代码没有调用 Gauss/Simpson/adaptive quadrature、空间采样、材料点积分，也没有数值 ODE 求解。它在 witness
+
+```text
+D=1, M=1, nu=1/5, r=2
+```
+
+上，以 `Q(tau)` 为系数字段，利用 polynomial coefficient matching + SymPy `linsolve` 求出 rational-function connection coefficients。
+
+因此：
+
+```text
+R06_15X15_MATRIX != spatial numerical quadrature
+R06_15X15_MATRIX != material-point integration
+```
+
+但这只说明它是一个 **exact symbolic differential representation witness**，并不说明它是可接受的 production analytic operator。
+
+## 2. 用户的核心判断成立：R06 已越过工程可接受复杂度边界
+
+### 2.1 15×15 / 211 nonzero 已是明显的辅助状态膨胀
+
+R06 witness：
+
+```text
+master periods = 15
+connection entries = 225
+nonzero entries = 211
+symbolic entry characters ≈ 2.68e5
+max entry characters = 1699
+```
+
+并且当前 M1R 有：
+
+```text
+27 scalar poles
+106 pair-pole blocks
+```
+
+pair block 虽可复用 single-pole period family，但仅 single-pole bookkeeping 已达到：
+
+```text
+27 pole families × 15 master periods = 405 master-period components
+```
+
+再叠加 `P/Rq` weights、`D/M/q` derivatives、branch/basis patch 与 pair assembly，已经明显违背项目原先追求的：
+
+```text
+small finite analytic operator
+cost grows with a small number of named analytic terms
+not with a large hidden auxiliary state system
+```
+
+### 2.2 R06 只有 witness connection，不是 actual production closed form
+
+当前 explicit symbolic `Omega_tau` 只在：
+
+```text
+D=1, M=1, nu=1/5, r=2
+```
+
+的 rational witness 上生成。
+
+它没有给出 current actual `(D,M,nu,r)` 的统一显式 closed form；`D/M` 也仅在 `tau=1/7` witness point 验证 reduction。
+
+因此不能把：
+
+```text
+PASS_EXACT_SYMBOLIC_15X15_WITNESS
+```
+
+解释为：
+
+```text
+PRODUCTION_ANALYTIC_OPERATOR_CLOSED
+```
+
+### 2.3 canonical result artifact 甚至没有逐项冻结完整矩阵
+
+R06 result artifact 只冻结：
+
+```text
+shape
+nonzero count
+common denominator
+cross-check
+```
+
+而完整 15×15 symbolic matrix 仅“由脚本可重新生成”，没有逐项作为可读公式列入 canonical theory/result。
+
+这与项目的“公式本身透明、可手工审计”目标不一致。
+
+### 2.4 initial-value problem 是真正的隐藏数值积分风险
+
+即使 connection equation 写成：
+
+```text
+dI/dtau = Omega_tau(tau) I
+```
+
+生产 evaluator 仍必须知道：
+
+1. analytic initial values `I(tau0)`；
+2. branch continuation；
+3. singular-point crossing / basis patch；
+4. how to evaluate the system along physical `tau=B(q)^2`.
+
+如果后续通过：
+
+```text
+original x/y numerical integral -> initialize I
+```
+
+则直接违反 zero-quadrature 目标。
+
+如果后续通过：
+
+```text
+numerical ODE stepping in tau
+```
+
+虽然它不再是“空间 quadrature”，但对本项目的实际目的而言，本质上仍变成一个需要步进、误差控制、奇点绕行和状态传播的数值积分器。它不符合用户要求的紧凑直接解析计算路线。
+
+因此从本文件开始，production gate 进一步收紧：
+
+```text
+N_auxiliary_ODE_steps = 0
+N_auxiliary_numerical_integration = 0
+```
+
+finite differential systems 只可作为数学存在性/分类工具，不再自动获得 production 身份。
+
+## 3. 真正出错的位置
+
+错误不在 R06 的 polynomial IBP algebra；该 algebra 作为数学 audit 可以成立。
+
+真正的路线错误发生在更早一层：
+
+```text
+先选择高精度 rational primitive representation
+-> 再试图把它强行编译成 whole-halfwave exact operator
+```
+
+R01 rational primitives 的材料拟合表现很好，但其 denominator 产生：
+
+```text
+27 scalar poles
+resolvent denominators Delta_r
+common driver D_r(x,y;tau)
+finite algebraic periods
+Picard-Fuchs / master connections
+```
+
+也就是说，我们在选择材料 compiler representation 时，只把“材料空间精度”作为强门槛，却没有把：
+
+```text
+最终 whole-halfwave contraction 的直接可积性 + operator complexity
+```
+
+同时作为硬门槛。
+
+结果是：材料函数变简单了，结构积分却变得比原问题更重。
+
+这是当前最关键的自检结论。
+
+## 4. 对 R03-R06 的重新定级
+
+R03-R06 不删除，也不判为数学错误；它们保留为：
+
+```text
+ANALYTIC_FEASIBILITY_AUDIT / NON-PRODUCTION
+```
+
+具体：
+
+```text
+PF1_R03_GENUS2_GAUSS_MANIN = RETAIN_AUDIT_ONLY
+PF1_R04_PHI_ENDPOINT_REDUCTION = RETAIN_AUDIT_ONLY
+PF1_R05_COMMON_RATIONAL_DRIVER = RETAIN_AUDIT_ONLY
+PF1_R06_15X15_CONNECTION_WITNESS = RETAIN_AUDIT_ONLY
+PF1_R06_PRODUCTION_ACCEPTANCE = FAIL_COMPLEXITY_GATE
+PF1_R07 = CANCELLED
+FORMAL_WHOLE_HALFWAVE_GATE_A = HOLD
+```
+
+这里 `FAIL_COMPLEXITY_GATE` 不是说 exact identities 错，而是说该表示不满足项目的 production simplicity / transparency / no-hidden-stepping 要求。
+
+## 5. 新增 production analytic complexity gate
+
+以后任何材料 compiler 表示，除了 Gate A / Gate B，还必须先过 Gate C：
+
+```text
+Gate C = production analytic complexity
+```
+
+Gate C 最低要求：
+
+```text
+1. original x/y/z numerical quadrature = 0
+2. auxiliary numerical quadrature = 0
+3. auxiliary ODE stepping = 0
+4. no hidden initial-value integration
+5. no branch-by-branch spatial/material state propagation
+6. final P, Rq and derivatives must be direct finite formulas
+7. named special functions are allowed only as direct evaluable functions
+8. any auxiliary matrix > 3x3 is presumptive FAIL unless analytically eliminated to a named scalar/small function family
+9. formula complexity must scale with finite material basis terms, not with spatial points, ODE steps, poles×master states, or singular patches
+10. canonical theory must expose the actual formulas, not merely a script that regenerates a very large matrix
+```
+
+## 6. 当前应该回退到哪一层
+
+不回退结构运动学、不回退 invariants、不回退 source-shaped biaxial physics。
+
+保留：
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+Nguyen second-order kinematics
+I1/I2 exact invariant foundation
+source-shaped U/C/C2/T/V material algebra
+D15 / exact moment philosophy
+Gate B nonlinear material target
+```
+
+只回退 **material compiler representation**：
+
+```text
+RATIONAL_PRIMITIVE_PRODUCTION_COMPILER = HOLD / NOT ACCEPTED
+```
+
+下一步不再做 PF1-R07，而是先进行一个小规模、fail-fast 的 integrability-first screen：
+
+```text
+M1R-P2 = source-shaped finite 1D polynomial / orthogonal-polynomial primitive compiler screen
+```
+
+目的不是恢复旧 M1 simple 2D polynomial fit，而是保持同一 source-shaped algebra：
+
+```text
+U(lambda), C(lambda), C2(lambda), T(lambda), V(lambda)
+```
+
+分别使用有限一维 polynomial / orthogonal-polynomial analytic representation，然后再组成同一二维 source algebra。
+
+如果这些一维 primitive 在合理阶次下可以达到材料误差门槛，则其与 Case21 finite invariant field 复合后直接回到有限 polynomial exact moments，不再需要 poles、resolvent period systems 或 parameter ODE。
+
+如果合理阶次下仍失败，则立即停，不用更高阶/更大矩阵强行救活。
+
+## 7. 当前正式下一任务
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK = M1R_P2_INTEGRABILITY_FIRST_PRIMITIVE_COMPILER_SCREEN
+PF1_R07 = CANCELLED
+```
+
+本文件只完成路线自检和治理纠偏，不在同一轮偷偷开始 P2 拟合或 Case21 计算。
+
+====================================================================================================
+FILE: governance/PRIORITY_RESET_20260810.md
+SIZE: 15332
+SHA256: c864e729eddec2a719c7a73d7a0a5bb585508fabdd315062630cf892fe53611f
+ENCODING: utf-8
+LINES: 264
+====================================================================================================
+# NZ-SCCM 项目优先级调整：Case21 工程解析收口、材料 operator 重构与总体 solution-operator 架构比较
+
+**日期：2026-08-10**
+
+## 0. 本轮治理结论
+
+当前正式空间约束继续保持：
+
+- ONE_CONTINUOUS_COMPLETE_HALFWAVE
+- N_formal_spatial_sampling = 0
+- N_formal_spatial_quadrature = 0
+- N_formal_spatial_subdomains = 1
+
+但 `TIGHT_STRICT_REMAINDER_CERTIFICATE` 从 Case21 工程生产硬门槛降级为可选数学附录。Case21 正式收口改用 `ENGINEERING_ANALYTIC_CONVERGENCE`：解析阶次由内部收敛指标决定，独立高精度数值积分只在收敛之后用于 audit，不参与选阶、调参或选根。
+
+当前 frozen Nguyen/Foster operator 不再被视为永久最终材料理论。它继续作为 Case21/Swartz benchmark 与解析求解回归基准；新的普通混凝土材料 operator 可以在“只用材料级证据、不用结构承载力反标”的条件下重建。
+
+长期建议采用“双层体系”：
+
+1. Physics / analytic core：材料状态更新 + 连续结构方程 + 规则问题的解析/全局谱求解；
+2. General operator surrogate：针对任意几何、边界和荷载的近似 solution operator；它不能被称作严格解析理论。
+
+---
+
+## 1. Case21 工程解析收口规则
+
+### 1.1 正式 evaluator 身份
+
+保持一个完整代表半波、一个统一解析表示。禁止空间 cells、Gauss/Simpson/adaptive quadrature、Chebyshev collocation、material-point grid 进入正式 evaluator。
+
+### 1.2 阶次选择不得参考历史 338/342 或独立 audit
+
+采用纯内部 p-refinement。每一级只增加全域解析阶次，不增加空间子域。解析阶次方向可依据“最后若干 coefficient shells 的内部衰减”选择，但不得依据 audit 误差选择。
+
+### 1.3 建议工程停止准则
+
+对连续三个已接受的全域阶次 N1<N2<N3，要求每次相邻阶次均同时满足：
+
+- Pu 相对变化 <= 0.05%；
+- Pc 相对变化 <= 0.05%；
+- D 和 q 的相对变化 <= 0.10%；
+- 在同一候选根处，Rq 的跨阶次差异除以三个能量项绝对值之和 <= 5e-4；
+- 极限条件 L 的归一化残量达到非线性求根内部容差，并且根随阶次稳定。
+
+只有三次连续满足才记为 `ENGINEERING_ANALYTIC_CONVERGENCE_PASS`。
+
+### 1.4 audit 规则
+
+内部 PASS 之后才做独立高精度空间数值积分。audit 不改变阶次、不改变根、不改变材料参数。建议验收：Pu/Pc 正式解析值与 audit 差异 <=0.2%，且远小于材料/模型误差；若超限，则回到解析表示诊断，而不是按 audit 选择“更接近”的阶次。
+
+### 1.5 RC
+
+钢筋保持 exact Ps(D,q), Rq,s(D,q)。RC 重新做同样的三个连续阶次 root convergence；最后重新核验所有钢筋 |eps_s|<0.00265。
+
+---
+
+## 2. strict certificate 的新身份
+
+严格 outward-rounded、theorem-level remainder certificate 不删除，但移入可选数学附录/方法学支线。它适合：
+
+- 给代表算例建立“严格存在区间”；
+- 发表解析方法学论文时证明误差；
+- 审计新的 coefficient algebra。
+
+它不再阻断 Case21、Swartz 工程验证，只要正式解析误差经内部 p-refinement 和独立 audit 显著小于材料/模型误差。
+
+---
+
+## 3. 材料 operator 与结构 solution operator 必须分离
+
+### 3.1 Material operator
+
+对于一般路径依赖材料，正确接口应是状态更新：
+
+`(sigma_{n+1}, z_{n+1}, C_alg) = M(epsilon_{n+1}, z_n, Delta t, material parameters)`
+
+其中 z 是塑性、损伤、裂缝、硬化等内部变量。只有在单调、无路径依赖的特殊 current-law 近似中，才可以退化成 memoryless `sigma=M(epsilon)`。
+
+### 3.2 Structural solution operator
+
+`S(geometry, material, BC, load fields, imperfections, load history) -> displacement/stress/internal-variable fields, equilibrium path, stability, ultimate load`。
+
+任意边界、任意荷载主要属于结构边值问题的 solution operator 能力，而不是材料函数本身的能力。
+
+---
+
+## 4. A-F 路线结论
+
+### A. 当前 Nguyen algebraic Foster current operator
+
+优点：可解释、低成本、二维多轴 current response 明确、解析矩阵友好，已经形成 Case21/Swartz benchmark。
+
+缺点：当前 frozen 版本是 memoryless current operator，不是任意加载路径材料；没有 free-energy/dissipation 结构；只覆盖当前二维板所需状态；UHPC 不能只换 fc 后直接继承。
+
+**建议身份：长期 benchmark，不再作为“最终统一材料理论”的默认冠军。**
+
+### B. 文献约束的 compact symbolic/rational analytic law
+
+可由三应力不变量的光滑压力敏感强度面（Menetrey-Willam、Ottosen、Bigoni-Piccolroaz 类）+ 少参数 hardening/softening 构成。优点是多轴、光滑、可解释、可能非常适合解析矩阵和全域积分。
+
+但若只做 current envelope，就不能正确描述卸载/重载；若加入塑性/损伤内部变量，它逐渐变成 C 类。
+
+**建议身份：近期最重要的“解析材料桥梁候选”，尤其适合单调稳定/极限问题；不能单独承担一般循环材料。**
+
+### C. generalized-standard-material / energy+dissipation / internal variables
+
+优点：history、热力学和一致切线最完整。Nguyen & Houlsby 2008 已有混凝土专用、基于两个势函数的 coupled damage-plasticity 模型，参数强调从材料试验识别。
+
+关键风险：经典 GSM 的 normality/associated structure 对 concrete dilatancy 可能过强。Grassl-Jirasek/CDPM2 为了混凝土多轴压缩的体积膨胀采用 non-associated flow。因此最终更合理的是“thermodynamic internal-variable core + 可证明 admissible 的 non-associated extension/bipotential/variational extension”，而不是机械地要求所有混凝土必须是 classical GSM。
+
+**建议身份：长期 physics material core 的首选框架，但应允许 C+ 非关联热力学扩展。**
+
+### D. physics-constrained symbolic regression
+
+EUCLID 已演示从 kinematics/reaction data 中发现 free energy、dissipation potential 和 internal variables；2026 的 grammar-based symbolic regression 已直接针对 thermodynamically admissible dissipation potentials。优势是可得到紧凑、可解释的闭式形式。
+
+当前对普通/UHPC 混凝土的直接成熟证据仍不足。因此不能直接生产部署，但非常适合作为“材料级数据 -> compact potential”的发现工具。
+
+**建议身份：作为 C/E 的模型发现工具，而不是自由搜索结构 Pu 的拟合器。**
+
+### E. invariant / tensor-basis constitutive representation
+
+这不是独立材料物理，而是强大的表示层。它把 isotropic/objective tensor map 写成少数 invariants 的标量函数和固定 tensor basis，可显著减少自由度，并有利于 objectivity、symmetry、一致切线和解析矩阵。
+
+**建议身份：应嵌入 B/C/D/F，作为新的材料 operator 的默认表示骨架。**
+
+### F. physics-augmented neural constitutive model
+
+TANN/iCANN/PANN 已展示把 free energy、dissipation、objectivity、convexity 等直接编码到网络结构，并能处理 internal variables/history。能力强，但并不产生适合 Case21 全域解析积分的有限 symbolic operator；训练数据需求和解释成本也更高。
+
+**建议身份：暂不作为 analytic core；以后作为复杂材料 surrogate、跨材料 family surrogate 或 Route 3 solution-operator 的组成部分。**
+
+---
+
+## 5. 普通混凝土/UHPC 材料候选建议
+
+### 5.1 近期 benchmark 组
+
+- A: 当前 frozen Nguyen/Foster current operator；
+- CDPM2: 作为成熟 multiaxial damage-plasticity benchmark；
+- Nguyen-Houlsby 2008 thermodynamic coupled damage-plasticity：作为 thermodynamic benchmark；
+- B 类 smooth invariant elastoplastic/rational law：作为 analytic-compact benchmark。
+
+这些模型必须只用材料级数据校准/识别，不使用 Case21 或 Swartz Pu。
+
+### 5.2 新 operator 的推荐骨架
+
+`invariant/tensor basis (E) + thermodynamic internal variables (C+) + compact scalar potentials (B/D)`。
+
+核心变量建议至少考虑：elastic strain、plastic strain 或等价 inelastic strain、tensile damage、compressive damage、pressure/confinement-sensitive hardening variable；若未来需要循环加载，再加入 crack closure/stiffness recovery 或 kinematic-type history。具体变量数量应由材料试验和 identifiability 决定，不宜提前堆叠。
+
+### 5.3 UHPC
+
+已有上传材料试验证据显示 UHPC 三轴行为显著受围压和钢纤维参数影响，且已有 Willam-Warnke / Drucker-Prager 类 failure criteria 拟合。因此 UHPC 不应仅通过替换普通混凝土的 fc/Ec 来获得。新框架应共享 C+/E 的“理论骨架”，但 scalar potentials/parameters 必须使用 UHPC 自己的单轴、双轴/三轴和拉伸/断裂材料数据确定。
+
+---
+
+## 6. 任意边界/荷载的总体理论架构
+
+### Route 1：一个完整半波 + 全域解析矩阵
+
+定位：规则矩形板、轴压稳定、单/少数已知全局模态。
+
+优势：可审计、物理透明、最快、最接近解析理论。
+
+局限：不应被强迫承担任意几何/边界/荷载。
+
+### Route 2：global Ritz / spectral / operator basis
+
+定位：扩展到更多边界条件、荷载分布和光滑参数化几何。只增加全局解析模态；如果材料有内部变量，相应内部变量场也用全局 basis 表示。
+
+优势：仍保留“全局而非空间 cell”的理论身份，能系统逼近不同 BC/load。
+
+局限：强局部化裂缝、尖角、任意拓扑会使 global basis 阶数快速增长；不能保证成为真正 universal exact solver。
+
+### Route 3：modern neural/operator-learning solver
+
+定位：geometry/BC/load/material parameter -> solution field 的近似 solution operator。
+
+DeepONet/FNO 已奠定 function-to-function operator learning；更新的 geometry-aware/boundary-conditioned neural operators正在针对可变几何和边界条件扩展。
+
+优势：重复推断极快、可覆盖大参数空间。
+
+局限：它是训练分布上的近似 operator；存在 generalization、training-data 和 verification 问题，不能改名为“严格解析理论”。
+
+---
+
+## 7. 推荐双层体系
+
+### Layer A — Physics / analytic core
+
+- C+/E 材料状态更新；
+- Route 1 Case21/规则板 exact/engineering-analytic benchmark；
+- Route 2 global Ritz/spectral 扩展；
+- 输出 residual、energy、tangent、stability、limit state；
+- 为实验和高保真 FE 提供物理一致的中间标准。
+
+### Layer B — General operator surrogate
+
+- 学习完整 structural solution operator；
+- 输入 geometry/BC/load/material parameters/history；
+- 输出 field/path/ultimate-load surrogate；
+- 训练数据来自 analytic core + validated FE + experiments；
+- 使用 physics residual、energy/dissipation 和 invariance 作为 hard/soft constraints；
+- 必须保留 uncertainty/OOD detection，不能覆盖 Layer A 的物理身份。
+
+最终不应强迫 Case21 的一个积分公式承担 arbitrary geometry/BC/load。
+
+---
+
+## 8. 下一阶段路线图
+
+### Phase 0：现在
+关闭 Case21 `ENGINEERING_ANALYTIC_CONVERGENCE`：不再死磕 theorem-level tail，按预注册三阶内部收敛准则求 concrete 与 RC root，最后做 audit。
+
+### Phase 1：材料证据矩阵
+整理普通混凝土和 UHPC 的材料级证据；明确可用于参数识别的单轴压、单轴拉、双轴压、拉压、三轴围压、卸载/重载、断裂能数据。结构 Pu 全部排除在 calibration 外。
+
+### Phase 2：三模型并行 benchmark
+A frozen Nguyen；B compact invariant analytic；C+ thermodynamic internal-variable。E 作为共同 representation。只在材料级测试上比较。
+
+### Phase 3：选材料 core
+选择材料精度/解释性/热力学/解析成本的 Pareto winner；D symbolic regression 只在 constrained grammar 中帮助压缩 potentials；F 暂不作为主模型。
+
+### Phase 4：回到结构
+将 winner 接入 Route 1 Case21/Swartz，然后推广到 UHPC；对比材料改变是否改善全样本，而不是逐板调参。
+
+### Phase 5：Route 2
+建立 general global Ritz/spectral basis，扩展边界、荷载和模态；保持全局 basis 理论，不以空间 cells 为核心。
+
+### Phase 6：Route 3
+在物理 core 已稳定后研究 geometry/BC/load neural operator；作为 general surrogate，不冒充 analytic theory。
+
+---
+
+## 9. 最终推荐
+
+1. Case21：立即按 engineering analytic convergence 收口；strict theorem certificate 降级为可选附录。
+2. 当前 Nguyen/Foster：保留为 benchmark/regression，不再视为永久 final material law。
+3. 新材料长期主线：`C+ thermodynamic internal-variable framework + E invariant/tensor basis`。
+4. B compact symbolic/rational law：作为解析友好、单调多轴问题的重要竞争候选/桥梁。
+5. D：作为 constrained discovery layer；禁止使用结构 Pu 训练。
+6. F：后置；只有材料数据和物理基准足够时再研究。
+7. 总体结构：Route 1 + Route 2 组成 physics/analytic core，Route 3 为独立近似 solution-operator layer。
+
+---
+
+## 10. 主要文献索引（用于后续独立审核）
+
+- Menétrey, P.; Willam, K.J. (1995). *Triaxial Failure Criterion for Concrete and its Generalization*. ACI Structural Journal 92(3), 311–318.
+- Ottosen, N.S. (1977). *A Failure Criterion for Concrete*. Journal of Engineering Mechanics 103(4), 527–535.
+- Poltronieri, F.; Piccolroaz, A.; Bigoni, D. (2014/2016). *A simple and robust elastoplastic constitutive model for concrete*.
+- Grassl, P.; Jirásek, M. (2006). *Damage-plastic model for concrete failure*. International Journal of Solids and Structures 43, 7166–7196.
+- Grassl, P.; Xenos, D.; Nyström, U.; Rempling, R.; Gylltoft, K. (2013). *CDPM2: A damage-plasticity approach to modelling the failure of concrete*. International Journal of Solids and Structures 50, 3805–3816.
+- Einav, I.; Houlsby, G.T.; Nguyen, G.D. (2007). *Coupled damage and plasticity models derived from energy and dissipation potentials*. International Journal of Solids and Structures 44, 2487–2508.
+- Nguyen, G.D.; Houlsby, G.T. (2008). *A coupled damage–plasticity model for concrete based on thermodynamic principles: Part I: model formulation and parameter identification*. IJNAMG 32, 353–389.
+- Flaschel, M.; Kumar, S.; De Lorenzis, L. (2023). *Automated discovery of generalized standard material models with EUCLID*. CMAME 405, 115867.
+- Califano, F.; Ciambella, J. (2026). *Discovering Thermodynamically Admissible Dissipation Potentials via Grammar-Based Symbolic Regression*.
+- Fuhg, J.N.; Bouklas, N.; Jones, R.E. (2022/2023). tensor-basis constitutive representation papers.
+- Masi, F.; Stefanou, I.; Vannucci, P.; Maffi-Berthier, V. (2020). *Thermodynamics-based Artificial Neural Networks for constitutive modeling*.
+- Holthusen, H. et al. (2024). *Theory and implementation of inelastic Constitutive Artificial Neural Networks*. CMAME 428, 117063.
+- Lu, L. et al. (2021). *Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators*.
+- Li, Z. et al. (2021). *Fourier Neural Operator for Parametric Partial Differential Equations*.
+- Zhong, W.; Meidani, H. (2024). *Physics-Informed Geometry-Aware Neural Operator*.
+
+====================================================================================================
+FILE: governance/R09A_TENSION_SENSITIVITY_DECISION_20260810.md
+SIZE: 1945
+SHA256: 4e06ba955c7d66ea758bd98c3ccd59047020f67b230c97510dfc8c07239408a1
+ENCODING: utf-8
+LINES: 63
+====================================================================================================
+# R09A TENSION SENSITIVITY DECISION — 2026-08-10
+
+## Locked conclusion
+
+For Case21 axial-compression stability, the direct load is compression dominated, but the tensile constitutive level is not mechanically negligible because it shifts the coupled equilibrium/stationary coordinates `(D,q)` and therefore changes the compression-side contribution itself.
+
+Executed monotone saturation brackets:
+
+```text
+SAT03: u_inf = 0.03 fc -> Pu = 322.401942 kN
+SAT05: u_inf = 0.05 fc -> Pu = 334.822979 kN
+SAT07: u_inf = 0.07 fc -> Pu = 345.811115 kN
+```
+
+The spread is
+
+```text
+Delta Pu = 23.409173 kN
+Delta Pu / mean Pu = 7.001495 %
+```
+
+Therefore:
+
+```text
+COMPRESSION_DOMINATES_DIRECT_LOAD = PASS
+TENSILE_SHAPE_CAN_BE_STRONGLY_SIMPLIFIED = PASS
+TENSILE_CAPACITY_LEVEL_IS_NEGLIGIBLE = FAIL
+```
+
+## Production implication
+
+The project no longer needs a high-complexity source-faithful tensile peak/softening shape. A simple explicit monotone law is admissible and preferred.
+
+However, the one retained tensile-capacity level must be defined independently of Case21/Swartz experimental Pu. It must come from:
+
+1. the selected material source / constitutive evidence; or
+2. an explicit conservative design convention declared before structural validation.
+
+The Case21 experiment may validate the frozen tensile level but may not select it.
+
+## Current simple family retained for screening
+
+For `lambda >= 0`:
+
+\[
+u_t(\lambda)=u_\infty\frac{r}{1+r},
+\qquad
+r=\frac{\kappa\lambda}{u_\infty},
+\]
+
+\[
+u_t'(\lambda)=\frac{\kappa}{(1+\kappa\lambda/u_\infty)^2}.
+\]
+
+This family is retained because it is explicit, monotone, nonoscillatory, has the correct initial tangent, and carries only one tensile-capacity parameter.
+
+## Next task
+
+```text
+R09B_SOURCE_GROUNDED_TENSION_CAPACITY_LEVEL
+```
+
+R09B must freeze the NC tensile-capacity level from material evidence / a declared conservative material rule before any further multiaxial correction is considered.
+
+====================================================================================================
+FILE: governance/R09C_ZERO_NUMERICAL_GATE_STOP_20260810.md
+SIZE: 3234
+SHA256: 0813cb545811e40a2bf7b90d9cdbae5c26e130c5ec88532164855531639959da
+ENCODING: utf-8
+LINES: 63
+====================================================================================================
+# R09C ZERO-NUMERICAL GATE — STOP DECISION
+
+Date: 2026-08-10
+
+## User gate
+
+User instruction:
+
+> 1. 这符合咱们的零数值的要求吗？
+> 2. 如果符合，就执行；如果不符合，就停止。
+
+## Decision
+
+`R09C_ENERGY_POTENTIAL_STRUCTURAL_TARGET_PRECHECK = STOP_NOT_EXECUTED`
+
+Reason:
+
+The proposed R09C implementation would identify a whole-structure potential `W(D,q)` from already evaluated structural response data. Under the current R07R/R08/R09A proof-of-concept machinery, those structural response data are generated by offline high-accuracy spatial quadrature over the complete halfwave. Although the final fitted `W(D,q)` and all of its derivatives would be explicit, the coefficient-identification chain would still contain spatial numerical integration.
+
+Therefore this implementation does **not** satisfy the project's formal zero-spatial-numerical-integration doctrine.
+
+## Important distinction
+
+The **energy-potential principle itself is compatible** with the zero-numerical doctrine if and only if:
+
+1. the material potential `Psi(epsilon1,epsilon2)` is an explicit analytic function (or finite analytic piecewise function) with explicit derivatives;
+2. the whole-halfwave structural potential
+   `W(D,q)=Integral_Omega Psi(epsilon(D,q,x,y,z)) dV + W_s(D,q)`
+   is generated by D15 exact moments / finite analytic contraction / accepted small named closed-form kernels;
+3. no spatial Gauss/Simpson/adaptive/offline numerical quadrature is used to determine `W`, its coefficients, or its derivatives;
+4. `P`, `Rq`, and the tangent/limit condition are obtained by differentiating that same analytic `W`.
+
+Under those conditions:
+
+`P = (1/c_D) W_,D`,
+`Rq = W_,q`,
+`L = (1/c_D)(W_,DD W_,qq - W_,Dq^2)`
+
+would satisfy the zero-numerical formal route.
+
+However, that analytic generation has **not yet been demonstrated for the current material potential**. Therefore no structural-energy fitting/precheck is authorized now.
+
+## Material fitting boundary
+
+Material-level parameter identification from material test/source data is not, by itself, spatial numerical integration. It may be used to define an explicit analytic `Psi`, provided the formal structural operator thereafter uses only analytic contraction. Numerical optimization for material coefficients is a data-identification step, not a spatial quadrature operator.
+
+But numerically integrating stress curves to create a hidden material-energy table and then interpolating it should not be promoted as the formal material operator when an analytic primitive can be constructed directly.
+
+## Current action
+
+- No R09C execution.
+- No new structural `W(D,q)` global fit.
+- No new Case21 rerun under this energy-target route.
+- R09A results remain diagnostic only.
+- Energy-potential formulation is retained as a *candidate analytic architecture*, not as an accepted production implementation.
+
+## Next admissible work
+
+Only an **analytic feasibility derivation** is admissible before any execution:
+
+`explicit material Psi -> analytic whole-halfwave W via D15/named kernels -> explicit P,Rq,Hessian`.
+
+If that analytic derivation cannot be completed without spatial numerical quadrature, the energy-potential structural route must remain stopped.
+
+====================================================================================================
+FILE: governance/R10B_FIDELITY_AND_COEFFICIENT_REFREEZE_DECISION_20260811.md
+SIZE: 1920
+SHA256: e7e94f62e4e650c0055ef77d5898f82fc05a25b41cd3998e1bb4d9da1ea1f4c1
+ENCODING: utf-8
+LINES: 48
+====================================================================================================
+# GOVERNANCE DECISION — R10B FIDELITY AUDIT AND COEFFICIENT RE-FREEZE
+
+**Updated:** 2026-08-11 16:31 +08:00
+
+## Decision
+
+The R10B representation-fidelity audit remains accepted:
+
+```text
+R10B_REPRESENTATION_FIDELITY_AUDIT
+= PASS_ENGINEERING_WITH_REPRODUCIBILITY_GAP
+```
+
+The exact historical coefficient generator and arrays remain unrecovered. They must not be invented retroactively.
+
+However, the project priority is now explicitly **simplicity over unnecessary compiler refinement**. The earlier N112 re-freeze is therefore superseded.
+
+The governing compiler order is restored to the already successful historical engineering order:
+
+\[
+\boxed{N_M=48}.
+\]
+
+The coefficient rule is the compact formula given in
+
+- `current/theory/NZ_SCCM_R10B_COEFFICIENT_GENERATION_CONTRACT_V1_20260811.md`
+
+and implemented by
+
+- `current/theory/r10b_coefficient_generator_v1.py`.
+
+The theory shall not publish long decimal coefficient arrays. It shall publish the closed R10 material formula and one general expression defining all \(a_n^{(F)}\).
+
+Historical R10B already produced a complete N48 zero-spatial stationary root. The archived N96 fixed-D engineering audit differed by about 0.051%, which is accepted for the project's engineering purpose. No theorem-level or near-zero compiler error is required.
+
+Therefore:
+
+```text
+MATERIAL_COMPILER_ORDER = 48
+N112_REPRODUCTION_BASELINE = SUPERSEDED
+N112_COEFFICIENT_TABLE = NON_GOVERNING
+LONG_DECIMAL_COEFFICIENT_LISTS = NOT_THEORY
+R10_CLOSED_PARAMETER_FORMULA = GOVERNING_MATERIAL_DESCRIPTION
+```
+
+If N48 later proves inadequate for another material, first recover or choose the simplest already-closed material expression consistent with the material evidence. Do not automatically increase polynomial order and do not create a new material route without explicit user approval.
+
+No Case21/Swartz structural result is used to tune the material formula or coefficient values.
+
+====================================================================================================
+FILE: governance/R10B_ZERO_SPATIAL_CASE21_DECISION_20260811.md
+SIZE: 2992
+SHA256: 105b62c318791b309333dd7485a41a4499c8e9dd57f27b7e46028899bab64f78
+ENCODING: utf-8
+LINES: 85
+====================================================================================================
+# R10B ZERO-SPATIAL CASE21 DECISION
+
+Date: 2026-08-11
+
+## Decision
+
+```text
+R10B_ZERO_SPATIAL_CASE21 = PASS_ENGINEERING
+```
+
+R10B keeps the frozen R10 one-dimensional energy smoothing unchanged and recompiles it through a Case21-local spectral/material compiler, the same multiaxial current map, Nguyen second-order kinematics, Cayley-Hamilton tensor-Chebyshev coefficient algebra, and exact complete-halfwave moments.
+
+Formal counts:
+
+```text
+N_formal_spatial_sampling   = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+The numerical FFT backend is used only for coefficient-index convolution. It does not evaluate the physical-space integrand and is not spatial quadrature/collocation.
+
+The 1D material-coordinate Chebyshev compiler may use material-coordinate samples to derive fixed finite representation coefficients. Those coefficients are not free material parameters and are never chosen from Case21/Swartz Pu.
+
+## Formal Case21 root
+
+```text
+Nmat = 48
+Nspatial-Cheb = 28
+D_u  = 0.8449505
+q_u  = 0.001779254542005754
+A_u  = 2.1706905412470197 mm
+Pc   = 337.39660909142 kN
+Ps   = 30.922943404456966 kN
+Pu   = 368.31955249587696 kN
+R    = -2.2383016926141863e-05 kN mm
+L_normalized = 4.029999719717427e-07
+```
+
+Experiment is used after material freeze only:
+
+```text
+Pf = 368.312750 kN
+error = +0.0018469346708655486 %
+```
+
+This agreement must not be used to retune R10.
+
+## Derivative gate
+
+`P_D,P_q,R_D,R_q` are propagated through the same retained coefficient algebra by forward chain-rule jets. Finite-difference production derivatives are not used.
+
+The equilibrium-branch identity
+
+\[
+\frac{dP}{dD}\bigg|_{R=0}
+=\frac{P_DR_q-P_qR_D}{R_q}
+=\frac{L}{R_q}
+\]
+
+is used to select the branch maximum and audit the same explicit limit equation.
+
+## Order gate
+
+A higher-order N96 equilibrium check at the N48 stationary D gives `P=368.50804285212683 kN`, differing by `0.18849035625 kN = 0.0511757671%` from the N48 formal root. N96 is not a separately optimized stationary root.
+
+Under the current governance, theorem-level tight remainder certification is not an engineering hard gate. The 0.051% order sensitivity is accepted for continued development but remains recorded transparently.
+
+## Prohibitions retained
+
+- do not modify the R10 scalar because Case21 agrees with experiment;
+- do not use structural capacity to choose material/compiler parameters;
+- do not replace coefficient algebra by spatial Gauss/Simpson/adaptive quadrature;
+- do not fit whole-structure P/R/U surfaces from spatial samples;
+- do not copy the Case21 spectral intervals directly into Swartz24 production;
+- do not start Swartz24 capacity calculation until a common 24-panel spectral/search-domain precheck is passed.
+
+## Next task
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK
+= R11_SWARTZ24_COMMON_SPECTRAL_DOMAIN_AND_ZERO_SPATIAL_BATCH_PRECHECK
+```
+
+R11 must establish a common or panel-governed analytic D-q/spectral contract for all 24 source panels before any batch Pu calculation.
+
+====================================================================================================
+FILE: governance/R10_1D_ENERGY_SMOOTHING_DECISION_20260810.md
+SIZE: 3390
+SHA256: c739eeee3c44842b0094d62af0503421d5bdf83a1275cd9b5ff5ab60cfd1d41a
+ENCODING: utf-8
+LINES: 115
+====================================================================================================
+# R10 GOVERNANCE DECISION — 1D ENERGY SMOOTHING
+
+**Date:** 2026-08-10 23:52 +08:00
+
+## Decision
+
+R10 validates the corrected material route:
+
+```text
+multidimensional/current NC operator
+→ internal 1D Foster tensile scalar
+→ 1D material-energy smoothing only
+→ SAME multidimensional current operator
+→ Case21 same-equation audit
+```
+
+The user's intended route is therefore retained.
+
+```text
+R10_1D_ENERGY_SMOOTHING = PASS
+MULTIAXIAL_REINSERTION = PASS
+CASE21_SAME_EXECUTION_AUDIT = PASS
+STRUCTURAL_CALIBRATION_TO_Pf = NO
+SWARTZ24 = NOT_STARTED
+```
+
+## Frozen R10 scalar
+
+The source scalar is
+
+\[
+u_{t,src}(t)=\rho T_{Foster}(t),\qquad 0\le t\le10x_{cr}.
+\]
+
+Its retained material work is
+
+\[
+W_{src}=0.031741235181249904.
+\]
+
+R10 adopts a two-piece C2 quintic scalar patch preserving:
+
+- origin stress = 0;
+- origin tangent = \(\kappa\);
+- zero curvature at the origin;
+- one rounded peak at \(t=x_{cr}\);
+- zero first and second derivative at the rounded peak;
+- residual \(0.03f_c\) at \(10x_{cr}\);
+- zero first and second derivative at the residual onset;
+- total scalar work exactly equal to the source work.
+
+The energy equation fixes the peak uniquely:
+
+\[
+\boxed{h=0.09799750427197301}.
+\]
+
+No Case21 or Swartz capacity is used to select \(h\).
+
+## Same-execution Case21 audit
+
+With the same structural evaluator and reinforcement model:
+
+```text
+SOURCE_FOSTER Pu        = 342.334029463 kN
+ENERGY_SMOOTHED_1D Pu   = 368.723464127 kN
+Delta Pu                = +26.389434664 kN
+Case21 experiment       = 368.312750000 kN
+Energy-smoothed error   = +0.111512329 %
+```
+
+This close agreement is an observed consequence after the material scalar was frozen and is not a calibration basis.
+
+## Formal-production boundary
+
+The R10 Case21 reinsertion calculation uses 48×48×28 full-halfwave Gauss only as a **same-equation audit**. It is not the formal production operator.
+
+Therefore:
+
+```text
+FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
+```
+
+The next step is strictly a compiler/reintegration task. Material retuning is prohibited until R10B is completed.
+
+## R10B mandatory task
+
+```text
+CURRENT_RECOMMENDED_NEXT_TASK
+= R10B_RECOMPILE_FROZEN_ENERGY_SMOOTH_SCALAR_IN_EXISTING_ZERO_SPATIAL_D15_BACKEND
+```
+
+R10B must:
+
+1. keep the R10 scalar formula and all values frozen;
+2. replace the old Foster scalar in the existing nested-D15 material compiler with the R10 C2 scalar;
+3. retain the same multidimensional U/C/T, CC/TC/TT and spectral architecture;
+4. retain one continuous complete halfwave and Nguyen second-order kinematics;
+5. use zero formal spatial sampling/quadrature;
+6. obtain explicit finite representations of \(P(D,q)\) and \(R_q(D,q)\);
+7. obtain \(P_D,P_q,R_{q,D},R_{q,q}\) from the same representation;
+8. solve \(R_q=0\) and \(L=P_D R_{q,q}-P_qR_{q,D}=0\);
+9. include reinforcement before root solving;
+10. compare the formal result with the R10 audit value only after the zero-spatial result exists;
+11. stop before Swartz24.
+
+## Prohibited after R10
+
+- changing \(h\) because of the 0.1115% Case21 agreement;
+- changing the smoothing interval or endpoint conditions to improve Case21;
+- adding free scalar coefficients;
+- refitting the multidimensional interaction;
+- using structural Gauss integration as production;
+- fitting a whole-structure P/R/U surface from numerical spatial integration;
+- starting Swartz24 before R10B zero-spatial closure.
+
+====================================================================================================
+FILE: governance/R10_MATERIAL_TARGET_INTENT_AUDIT_DECISION_20260811.md
+SIZE: 2514
+SHA256: 27bff5c96329b278e550e1b029705b0a6ae84b047eeccd18c49e9d7b48306026
+ENCODING: utf-8
+LINES: 64
+====================================================================================================
+# GOVERNANCE DECISION — R10 MATERIAL-TARGET INTENT AUDIT
+
+**Date:** 2026-08-11 16:01 +08:00
+
+## Decision
+
+The R10 material-target audit is complete. Its purpose was to identify exactly what the executed R10 target is; it was **not** authorization to invent or select a new R10A material law during recovery.
+
+The following identities are governing:
+
+```text
+R10_EXECUTED_FORMULA_RECOVERY                 = PASS
+R10_SOURCE_WORK_EQUALITY                       = PASS
+R10_C2_TARGET_INTERNAL_CONSISTENCY             = PASS
+R10_SAME_MULTIAXIAL_REINSERTION_ARCHITECTURE   = PASS
+R10_AS_TINY_LOCAL_SOURCE_PATCH                 = FAIL_DESCRIPTION
+R10_AS_WHOLE_RETAINED_TENSILE_BRANCH_REBUILD   = PASS_DESCRIPTION
+R10_MATERIAL_TARGET_AUDIT                      = PASS_COMPLETE
+NEW_R10_TARGET_SELECTED_DURING_RECOVERY         = NO
+STRUCTURAL_Pu_CALIBRATION                       = NO
+```
+
+The existing R10/R10B numerical records remain the governing executed records. The audit establishes only that the executed R10 replaces the whole retained tensile interval
+
+\[
+0\le t\le10x_{cr}
+\]
+
+with two C2 quintic branches while conserving total source work and enforcing the documented anchors.
+
+Material-coordinate audit found approximately:
+
+```text
+max |u_R10-u_source|                         ~= 0.01831
+absolute redistributed work / source work   ~= 9.89 %
+positive relocated work / source work        ~= 4.95 %
+first-moment shift of tensile work           ~= -5.90 %
+```
+
+These facts correct the description of R10. They do **not** by themselves replace R10 with a new local-patch law.
+
+## Recovery-sequence correction
+
+The agreed recovery order is restored exactly as:
+
+```text
+1. audit the R10 material target;                         DONE
+2. audit R10B representation fidelity to that R10 target; NEXT
+3. recover or explicitly re-freeze the coefficient-generation rule;
+4. output the formal coefficient table and derivation.
+```
+
+The previously created `R10A_MATERIAL_TARGET_INTENT_RECONCILIATION` detour is revoked as recovery overreach and removed from the current branch.
+
+## Immediate next task
+
+```text
+CURRENT_RECOVERY_NEXT_TASK
+= R10B_REPRESENTATION_FIDELITY_AUDIT
+```
+
+This task must compare the frozen executed R10 scalar/current-map objects with the retained R10B finite analytic representation and available N48/N96 evidence. It must not change R10 material physics, introduce a new material target, or start Swartz24.
+
+Only after that fidelity audit may coefficient-generator recovery/re-freezing proceed.
+
+====================================================================================================
+FILE: governance/R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_DECISION_20260812.md
+SIZE: 2273
+SHA256: bd34676c27be8e566af0cac1ea2558b750358cb0d65b3c6b55f45d7a82f74f0b
+ENCODING: utf-8
+LINES: 102
+====================================================================================================
+# GOVERNANCE DECISION — UPDATED R10 → N48-C1/MM → D15 PAPER-STYLE DERIVATION
+
+**Date:** 2026-08-12
+
+## Decision
+
+The canonical paper-style derivation is now:
+
+- `current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md`
+
+It supersedes the earlier direct-N48 paper-style derivation **for explanatory/theory-writing purposes only**. Historical Case21 and Swartz24 value-closure records are preserved and are not silently recalculated.
+
+## Governing chain
+
+```text
+material parameters
+-> frozen closed R10 current operator
+-> primitives {U,C,T,T^7}
+-> degree-48 analytic compiler
+   U/C/T^7 = N48-C1
+   T       = N48-C1-CONSTRAINED-MINIMAX
+-> Cayley-Hamilton 2D lift
+-> current stress / same-expression tangent
+-> D15 complete-halfwave exact moments
+-> Zhou Dx-Dy-H tangent-stability acceptance gate
+```
+
+## Frozen boundaries
+
+```text
+R10_MATERIAL_TARGET = FROZEN
+MATERIAL_COMPILER_ORDER = 48
+NEW_MATERIAL_MECHANISM = NO
+ORDER_ESCALATION = NO
+FORMAL_SPATIAL_QUADRATURE = 0
+FORMAL_SPATIAL_SAMPLING = 0
+FORMAL_SPATIAL_SUBDOMAINS = 1_COMPLETE_HALFWAVE
+STRUCTURAL_CALIBRATION = NO
+SWARTZ24_Pu_RECALCULATION = NO
+```
+
+## Coefficient identity
+
+For all primitives, the direct Chebyshev-root coefficients remain the base formula
+
+\[
+a_n^{(F,0)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j).
+\]
+
+For \(F\in\{U,C,T^7\}\), production-candidate coefficients use the explicit C1 minimum-disturbance correction
+
+\[
+\mathbf a^{(F,C1)}
+=
+\mathbf a^{(F,0)}
++
+\mathbf H^{-1}\mathbf G^T
+(\mathbf G\mathbf H^{-1}\mathbf G^T)^{-1}
+(\mathbf d_F-\mathbf G\mathbf a^{(F,0)}).
+\]
+
+For \(T\), the governing updated coefficient identity is the degree-48 strict-C1 constrained minimax definition over the full compiler hull.
+
+## D15 term identity
+
+Each material coefficient enters D15 through
+
+\[
+\mathscr D[F_{ab}^{(n)}]
+=
+a_n^{(F,*)}
+\sum_{i,j,k}
+\phi_{ijk,ab}^{(F,n)}M_iM_jZ_k.
+\]
+
+Thus the canonical chain is
+
+\[
+\boxed{
+\text{R10}
+\to a_n^{(F,*)}
+\to(A_n,B_n)
+\to\mathbf F_{48}^{(n)}
+\to\mathbf S
+\to c_{ijk}
+\to c_{ijk}M_iM_jZ_k.
+}
+\]
+
+## Status
+
+```text
+UPDATED_PAPER_STYLE_DERIVATION = COMPLETE
+SYMBOL_DEFINITIONS = COMPLETE
+R10_REOPEN = NO
+N48_ORDER = 48
+NEAR_ZERO_T_VALUE_GATE = PASS
+ZHOU_Dx_Dy_H_GATE = PASS
+CURRENT_NEXT_TASK = USER_DIRECTED
+```
+
+====================================================================================================
+FILE: governance/R10_N48_D15_PAPER_STYLE_DERIVATION_DECISION_20260811.md
+SIZE: 2096
+SHA256: c57142af9733dd72efc19fed6626c6850cb25c614555e80a3dc20def5c159d38
+ENCODING: utf-8
+LINES: 88
+====================================================================================================
+# GOVERNANCE DECISION — R10 → N48 → D15 PAPER-STYLE THEORY EXPRESSION
+
+**Date:** 2026-08-11 16:38 +08:00
+
+## Decision
+
+The paper-style derivation in
+
+- `current/theory/NZ_SCCM_R10_N48_D15_PAPER_STYLE_DERIVATION_20260811.md`
+
+is accepted as the governing explanatory form for the current ordinary-concrete analytic chain.
+
+The theory shall be presented as
+
+```text
+material parameters
+-> closed Foster/R10 scalar formulas
+-> SAME multidimensional current map
+-> one N48 coefficient formula
+-> Cayley-Hamilton finite matrix recurrence
+-> finite complete-halfwave coefficient field
+-> D15 exact moment contraction
+```
+
+The following identities are frozen:
+
+```text
+MATERIAL_THEORY = CLOSED_R10_PARAMETER_FORMULA
+MATERIAL_COMPILER_ORDER = 48
+CHEBYSHEV_COEFFICIENTS = DERIVED_COMPILER_QUANTITIES
+LONG_DECIMAL_COEFFICIENT_LIST_IN_THEORY = PROHIBITED
+N112_REQUIREMENT = SUPERSEDED
+CASE21_NUMERICAL_RECLOSURE_IN_THIS_STEP = NO
+ZERO_SPATIAL_D15 = RETAINED
+```
+
+## Required paper-style notation
+
+For every major equation group, parameters must be defined in `式中，...表示...` form or an equivalent symbol table.
+
+Long decimal substitutions are not to replace transparent symbolic combinations when a closed parameter form exists. Examples include
+
+\[
+10h-6\rho,\qquad 8\rho-15h,\qquad 6h-3\rho,
+\]
+
+rather than their decimal evaluations.
+
+The 49 N48 material coefficients are defined by one general expression,
+
+\[
+a_n^{(F)}=
+\frac{2-\delta_{n0}}{49}
+\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),
+\qquad F\in\{U,C,T,T^7\},
+\]
+
+and are not individual constitutive parameters.
+
+The term-by-term analytic chain is
+
+\[
+a_n^{(F)}
+\rightarrow
+(A_n,B_n)
+\rightarrow
+\mathbf F_{48}
+\rightarrow
+\mathbf S
+\rightarrow
+c_{ijk}
+\rightarrow
+c_{ijk}M_iM_jZ_k.
+\]
+
+This is the governing explanation of how a closed material term enters D15.
+
+## Scope boundary
+
+This decision authorizes theory presentation only. It does not authorize:
+
+- Case21 numerical solution;
+- compiler-order escalation;
+- material-law replacement;
+- structural calibration;
+- Swartz24 calculation.
+
+The next action remains user-directed.
+
+====================================================================================================
+FILE: governance/R10_R10B_IDENTITY_AND_INTERPRETATION_CLARIFICATION_20260811.md
+SIZE: 10964
+SHA256: d315fef0f6c8b5d23f3c3f89f10bfb4972182ec0fc1535816a0c79903cfbde04
+ENCODING: utf-8
+LINES: 358
+====================================================================================================
+# GOVERNANCE CLARIFICATION — R10 MATERIAL CHANGE VS R10B ANALYTIC COMPILATION
+
+**Date:** 2026-08-11 14:28 +08:00  
+**Status:** CURRENT GOVERNING INTERPRETATION CLARIFICATION  
+**Scope:** identity/interpretation only; does not alter the frozen R10/R10B numerical results.
+
+## 1. Why this clarification is necessary
+
+Recent recovery discussion mixed three different objects:
+
+1. the source Foster multidimensional current operator;
+2. the R10 material-target modification;
+3. the R10B finite analytic compiler representation.
+
+This produced incorrect or unsupported statements such as:
+
+- treating `material degree = 48` as a total coefficient count;
+- inferring `147` coefficients from an assumed implementation layout;
+- treating a forensic least-squares/DCT hypothesis as the historical R10B coefficient generator;
+- describing R10 as only a tiny local `lambda`-patch when the executed R10 formula reconstructs the retained tensile scalar interval in the internal coordinate `t`;
+- blurring material-model change with finite-representation truncation.
+
+These interpretations are revoked as governing statements.
+
+---
+
+## 2. Evidence hierarchy for R10/R10B recovery
+
+Apply the repository source-of-truth policy strictly:
+
+```text
+current/ + current governance

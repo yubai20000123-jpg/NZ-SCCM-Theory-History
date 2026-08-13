@@ -1,0 +1,1800 @@
+\varepsilon_{c,\max},
+\qquad
+\lambda_{\min}(K_T),
+\qquad
+\frac{dN}{d\lambda}.
+\]
+
+有效路径在UHPC峰值边界、总轴力峰值或无法继续维持有效平衡时终止。
+
+---
+
+# 6. 完整不降阶L0的完整计算过程
+
+完整L0保留同样的物理层0边界，但不再把运动学和局部幅值压缩到B1约束子空间。
+
+## 6.1 一般面内Ritz场
+
+给定轴向压缩参数 \(\lambda\)，采用：
+
+\[
+u(X,Y)
+=
+-\lambda X
++
+\sum_{r=1}^{n_u}q_{u,r}U_r(X,Y),
+\]
+
+\[
+v(X,Y)
+=
+\sum_{s=1}^{n_v}q_{v,s}V_s(X,Y).
+\]
+
+其中 \(n_u,n_v\) 通过模态收敛确定，不固定为2和2。
+
+## 6.2 多个整板面外模态
+
+整体初始缺陷：
+
+\[
+W_{g0}
+=
+\sum_{\alpha=1}^{n_g}
+\eta_{0,\alpha}\Psi_\alpha(X,Y).
+\]
+
+加载新增整体挠曲：
+
+\[
+\widehat W_g
+=
+\sum_{\alpha=1}^{n_g}
+\eta_\alpha\Psi_\alpha(X,Y).
+\]
+
+当前整体挠曲：
+
+\[
+W_{gt}
+=
+W_{g0}+\widehat W_g.
+\]
+
+因此完整L0允许一阶/高阶整体模态、模态间耦合和局部屈曲诱导的整体模态重构。
+
+## 6.3 每块局部子板独立幅值
+
+完整L0对每个上、下钢壳局部子板分别设置：
+
+\[
+A_i^+,\qquad A_i^-.
+\]
+
+若每块子板保留多个局部模态，则为：
+
+\[
+A_{i\beta}^\pm.
+\]
+
+不再采用：
+
+\[
+A_i^\pm=\omega_i^\pm A^\pm.
+\]
+
+因此各块局部幅值均由各自局部平衡方程独立确定。
+
+## 6.4 完整未知向量
+
+\[
+\boxed{
+\mathbf q=
+\begin{bmatrix}
+\mathbf q_u\\
+\mathbf q_v\\
+\boldsymbol\eta\\
+\mathbf A^+\\
+\mathbf A^-
+\end{bmatrix}
+}
+\]
+
+## 6.5 各区域独立构形
+
+UHPC只采用整体挠曲：
+
+\[
+W_c=W_{gt}.
+\]
+
+第 \(i\) 块钢壳子板采用：
+
+\[
+W_{s,i}^{\pm}
+=
+W_{gt}
++
+s_\pm
+\left(
+w_{\ell0,i}^\pm+
+A_i^\pm\psi_{\ell i}^\pm
+\right).
+\]
+
+整体初始缺陷、局部初始缺陷、整体新增模态和局部新增幅值全部独立，不相互替代。
+
+## 6.6 完整几何非线性应变
+
+在UHPC全体域和每一块钢壳子区域分别计算：
+
+\[
+\boldsymbol\varepsilon_m
+=
+\boldsymbol\varepsilon_L(\mathbf q_u,\mathbf q_v,\lambda)
++
+\frac12
+\left[
+\mathcal G(W_t)-\mathcal G(W_0)
+\right].
+\]
+
+UHPC厚度坐标处：
+
+\[
+\boldsymbol\varepsilon_c(z)
+=
+\boldsymbol\varepsilon_m
+-
+z\boldsymbol\kappa_g.
+\]
+
+钢壳第 \(i\) 块子板则使用其自己的 \(W_{s,i}^{\pm}\)。
+
+## 6.7 各局部子板独立半波搜索
+
+对于每块局部子板，分别在候选集合内搜索：
+
+\[
+m_i^\pm\in\mathcal M_i^\pm.
+\]
+
+每块子板可以选择不同纵向半波数。
+
+## 6.8 积分点材料更新
+
+在所有UHPC体积分点和所有钢壳子板积分点独立更新：
+
+\[
+\sigma_c,\ E_{c,t},
+\]
+
+\[
+\sigma_s,\ E_{s,t}.
+\]
+
+材料更新直接作用于内力、残量、Jacobian、稳定特征值和局部子板切线。
+
+## 6.9 每块局部子板的连续Galerkin残量
+
+完整L0不再通过Case级状态机决定“启用哪个局部方程”，而是为每个局部幅值建立连续残量：
+
+\[
+R_{A_i^\pm}=0.
+\]
+
+其物理内容包括局部膜内力虚功、局部弯曲虚功、整体—局部交叉虚功、当前材料切线和初始缺陷作用。
+
+## 6.10 完整残量系统
+
+\[
+\boxed{
+\mathbf R=
+\begin{bmatrix}
+\mathbf R_{q_u}\\
+\mathbf R_{q_v}\\
+\mathbf R_\eta\\
+\mathbf R_{A^+}\\
+\mathbf R_{A^-}
+\end{bmatrix}
+=
+\mathbf0
+}
+\]
+
+## 6.11 完整一致Jacobian
+
+\[
+\mathbf K_T=
+\begin{bmatrix}
+K_{uu}&K_{uv}&K_{u\eta}&K_{uA^+}&K_{uA^-}\\
+K_{vu}&K_{vv}&K_{v\eta}&K_{vA^+}&K_{vA^-}\\
+K_{\eta u}&K_{\eta v}&K_{\eta\eta}&K_{\eta A^+}&K_{\eta A^-}\\
+K_{A^+u}&K_{A^+v}&K_{A^+\eta}&K_{A^+A^+}&K_{A^+A^-}\\
+K_{A^-u}&K_{A^-v}&K_{A^-\eta}&K_{A^-A^+}&K_{A^-A^-}
+\end{bmatrix}.
+\]
+
+不得预先删除耦合块。
+
+## 6.12 Schur凝聚
+
+\[
+R_c^{\mathrm{cond}}
+=
+R_c-K_{cA}K_{AA}^{-1}R_A,
+\]
+
+\[
+K_c^{\mathrm{cond}}
+=
+K_{cc}
+-
+K_{cA}K_{AA}^{-1}K_{Ac}.
+\]
+
+但这只是对同一完整方程组的精确消元，不等于删除局部变量或预设局部幅值。凝聚后局部变量仍必须恢复并满足 \(R_A=0\)。
+
+## 6.13 完美板分岔
+
+当初始整体和局部缺陷均为零时：
+
+\[
+\boldsymbol\eta=\mathbf0,
+\qquad
+\mathbf A^\pm=\mathbf0
+\]
+
+可以是精确平凡分支。
+
+完整L0通过：
+
+\[
+\lambda_{\min}(K_T)=0
+\]
+
+或Schur凝聚后的局部/整体切线特征值判定分岔。
+
+分岔后沿相应零特征向量播种，再通过Newton和伪弧长续接进入新的平衡支路。
+
+## 6.14 路径推进
+
+完整L0采用预测步、Newton修正、线搜索、必要时伪弧长、SVD或稳定线性求解、接受/拒绝路径步、状态提交和事件细化。
+
+求解器不得采用经验放大式替代路径平衡，也不得先把Case分类为S0/S1/S2后调用不同求解器。
+
+## 6.15 峰值与收敛
+
+完整L0不仅检查路径步长，还必须检查 \(n_u,n_v,n_g\)、局部模态数量和积分阶次的收敛；同时检查 \(N_u,\boldsymbol\eta_u,\mathbf A_u^\pm\) 以及事件顺序是否稳定。
+
+完整理论可以逐步退化为旧B1验证模型，但反向不成立。
+
+---
+
+# 7. 两套模型的核心差异总表
+
+| 项目 | L0-B1-TC-EP | 完整不降阶L0 |
+|---|---|---|
+| 物理层级 | 层0 | 层0 |
+| 是否增加层1机制 | 否 | 否 |
+| 理论身份 | 低阶约束路径模型 | 正式完整层0母体系 |
+| 面内位移 | 固定少量Ritz项 | 一般Ritz自由度 |
+| 整体面外位移 | 单一预选整体模态 | 多个整体面外模态 |
+| 局部幅值 | 同侧统一母幅值或预定比例 | 每侧每块子板独立幅值 |
+| 局部状态 | S0/S1e/S1p/S2实际参与历史闭合 | 连续Galerkin残量，状态名称仅作输出标签 |
+| Jacobian | 低阶整体切线 | 完整分块一致Jacobian |
+| 模态竞争 | 很有限 | 显式保留 |
+| 设计用途 | 历史Case计算、低阶验证、机制理解 | 正式参数计算和后续设计化简母数据 |
+
+---
+
+# 8. 最本质的数学关系
+
+可以把B1理解为完整L0近似空间中的一个受约束子空间。
+
+完整L0允许：
+
+\[
+\mathbf A^\pm=
+[A_1^\pm,A_2^\pm,\ldots,A_n^\pm]^{\mathsf T}.
+\]
+
+B1强制：
+
+\[
+\mathbf A^\pm
+=
+A^\pm
+[\omega_1^\pm,\omega_2^\pm,\ldots,\omega_n^\pm]^{\mathsf T}.
+\]
+
+同样，完整整体模态空间为：
+
+\[
+\boldsymbol\eta=
+[\eta_1,\eta_2,\ldots,\eta_{n_g}]^{\mathsf T},
+\]
+
+B1强制：
+
+\[
+\eta_2=\eta_3=\cdots=\eta_{n_g}=0.
+\]
+
+因此：
+
+\[
+\boxed{
+\mathcal V_{B1}\subset\mathcal V_{\mathrm{full\ L0}}
+}
+\]
+
+完整L0可以退化到B1型低阶模型，但不能反向由B1推出完整L0，因为B1已经丢失被删除整体模态方向、各子板独立幅值差、高阶面内位移模式、被删除的交叉Jacobian块，以及模态竞争和子板间非同步演化。
+
+---
+
+# 9. 这对历史A1、B1、B2结果意味着什么
+
+完整不降阶L0的存在，**不否定**历史A1、B1、B2在L0-B1-TC-EP假设下的严格计算状态。
+
+准确关系是：
+
+\[
+\boxed{
+\text{历史结果是在B1约束子空间中的平衡路径结果。}
+}
+\]
+
+而完整L0要回答的是：
+
+\[
+\boxed{
+\text{解除这些约束后，完整层0近似空间中的平衡路径和峰值是什么。}
+}
+\]
+
+两者数值可能不同，原因不是物理层级变化，而是允许的变形空间不同。
+
+所以最终身份应锁定为：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{L0-B1-TC-EP：历史层0低阶约束路径，结果在其假设内成立；}\\
+&\text{完整不降阶L0：当前正式层0母体系，不是层1升级；}\\
+&\text{二者差异来自运动学、局部幅值和矩阵耦合是否降阶，}\\
+&\text{而不是来自不同材料物理层级。}
+\end{aligned}
+}
+\]
+
+====================================================================================================
+FILE: history/UCFT/PathA/路径A与极限承载力.txt
+SIZE: 22211
+SHA256: 8022f8a9efa471772f7c3f4484b174676448c5d29032b95585757452fb215c04
+ENCODING: utf-8
+LINES: 1089
+====================================================================================================
+下面这版可以直接作为项目源内容添加。它的定位是：**UCFT 板轴压承载力理论体系中的 Nguyen-UHPC 材料模块锁定稿**。后续进入云露专题或总矩阵推导时，应以这里的层级边界为准。
+
+---
+
+# UCFT 板轴压承载力理论体系：Nguyen-UHPC 材料模块锁定稿  
+## 层 0 主线 + 层 1 参数接口
+
+## 0. 模块定位
+
+本模块用于 UCFT 板轴压承载力矩阵解析迭代体系中的 UHPC 核心板材料点计算。其目标不是完整复制 Nguyen 的普通钢筋混凝土墙板有限元材料子程序，而是迁移 Nguyen 的：
+
+\[
+\boxed{
+\text{面内状态}
+\rightarrow
+\text{主应变}
+\rightarrow
+\text{材料状态}
+\rightarrow
+\text{主方向应力}
+\rightarrow
+\text{切线矩阵}
+\rightarrow
+\text{稳定矩阵}
+}
+\]
+
+这一“状态—切线—矩阵”框架。
+
+Nguyen 原文研究对象是钢筋混凝土墙板的面外稳定有限元分析，包含 perfect wall 屈曲分析和含小初始缺陷/偏心的近似切线模量有限元分析；其 perfect wall 中混凝土采用四节点 16 自由度矩形单元、非线性弹性材料行为，并允许屈曲前面内开裂；含缺陷部分则限制于小缺陷、小偏心、无面外弯曲裂缝且混凝土应力—应变关系可用抛物线近似的情形。fileciteturn125file0
+
+因此，本体系对 Nguyen 的迁移原则是：
+
+\[
+\boxed{
+\text{迁移 Nguyen 的框架，不直接迁移 Nguyen 的普通混凝土参数。}
+}
+\]
+
+其中，UHPC 的单轴受压、单轴受拉本构由 UCFT 项目已锁定的 UHPC 本构提供；双轴、拉压、剪切保持、围压等高级效应只作为层 1 参数接口保留。
+
+---
+
+## 1. Nguyen 原框架中可迁移与不可直接迁移的内容
+
+Nguyen 在第 3.4 节明确说明，为建立墙板屈曲公式，需要知道切线矩阵 \(D_t\) 以及初始应力场 \(S_{ij}\)；由于研究对象可能处于任意双轴面内加载，包括压缩、面内偏心和剪切，混凝土应力—应变关系取决于加载状态，包括 undamaged、cracked 和 crushed 等状态。Nguyen 进一步使用 Kupfer 等双轴强度关系的 Foster/Gilbert 修正版，用于确定混凝土板的初始应力场、割线模量和切线模量。fileciteturn124file7
+
+但这些参数来源于普通混凝土/钢筋混凝土墙板，不应直接用于 UHPC。尤其包括：
+
+1. Kupfer/Foster-Gilbert 普通混凝土双轴强度包络参数；
+2. Saenz 普通混凝土受压曲线；
+3. Darwin–Pecknold 等效单轴应变模型中的 dilation constants；
+4. Vecchio–Collins / MCFT 拉压耦合压强度折减；
+5. 普通 RC tension stiffening 参数；
+6. shear retention factor；
+7. compression-compression 或 tension-compression crushed 后双线性关系。
+
+Nguyen 在算例中采用 Foster 建议的一组普通 RC 材料参数，例如 \(a_1,a_2,\beta_1,\beta_2,\beta_3,\gamma_1,\gamma_2\)，并说明这些参数用于每一加载步确定 tangent moduli 和 initial stresses；其中 \(a_1,a_2\) 分别取 10.0、0.3，\(\beta_1,\beta_2,\beta_3\) 取 0.7、0.3、10.0，\(\gamma_1=0.0\)、\(\gamma_2=10\)，Poisson 比取 0.18。fileciteturn124file16 这些值不是 UHPC 专属参数，不能无条件作为 UCFT-UHPC 材料模块参数。
+
+---
+
+## 2. 如果直接迁移 Nguyen 普通混凝土参数，会导致什么后果？
+
+直接迁移并不会产生统一方向的误差，而是不同机制的误差方向不同：
+
+| Nguyen 普通混凝土参数/规则 | 直接迁移到 UHPC 的后果 | 倾向 |
+|---|---|---|
+| 双轴压缩增强包络 | 可能把 UHPC 双轴压缩增强估得过大 | 偏危险 |
+| Saenz 普通混凝土受压曲线 | 对 140 MPa 级 UHPC 峰值应变、切线退化和峰后形态不可靠 | 方向不确定，常偏危险 |
+| Vecchio–Collins 拉压折减 | 可能过度削弱纤维 UHPC 压向强度，也可能漏掉真实拉压软化 | 不稳定 |
+| 普通 RC tension stiffening | 不能代表 UHPC 纤维桥联拉伸行为 | 方向不确定 |
+| shear retention factor，尤其 \(0.1G\) | 可能严重低估纤维 UHPC 开裂后剪切刚度 | 常偏保守但路径可能失真 |
+| 压碎后双线性 | 可能让 UHPC 峰后继续稳定承载过多 | 偏危险 |
+| dilation constants | 影响双轴耦合和切线矩阵，但 UHPC 未标定 | 方向不确定 |
+
+所以当前判断不是“Nguyen 参数不能用”，而是：
+
+\[
+\boxed{
+\text{Nguyen 普通混凝土参数不能作为 UHPC 主线参数；只能作为结构化模板或扩展接口。}
+}
+\]
+
+---
+
+## 3. 层 0 主线：最小可算通 UHPC 材料模块
+
+层 0 的目标是保证 UCFT 板轴压矩阵解析迭代体系能够闭合：
+
+\[
+N(\lambda)
+=
+N_c(\lambda)
++
+N_s^+(\lambda)
++
+N_s^-(\lambda)
+\]
+
+\[
+N_u
+=
+\max_{\lambda\in\mathcal P_{valid}}N(\lambda)
+\]
+
+层 0 不引入双轴增强、不引入拉压耦合折减、不引入剪切保持退化、不引入压缩峰后双线性。它只迁移 Nguyen 的状态—切线—矩阵结构，并用 UHPC 单轴受压/受拉本构替换 Nguyen 普通混凝土本构。
+
+---
+
+## 3.1 输入量
+
+材料点输入全局面内应变：
+
+\[
+\boldsymbol\varepsilon_{xy}
+=
+\begin{bmatrix}
+\varepsilon_x\\
+\varepsilon_y\\
+\gamma_{xy}
+\end{bmatrix}
+\]
+
+其中 \(\varepsilon_x,\varepsilon_y,\gamma_{xy}\) 由 UCFT 板的位移场或 Ritz 矩阵场提供。
+
+---
+
+## 3.2 主应变转换
+
+\[
+\varepsilon_{1,2}
+=
+\frac{\varepsilon_x+\varepsilon_y}{2}
+\pm
+\sqrt{
+\left(
+\frac{\varepsilon_x-\varepsilon_y}{2}
+\right)^2
++
+\left(
+\frac{\gamma_{xy}}{2}
+\right)^2
+}
+\]
+
+\[
+\tan 2\theta
+=
+\frac{\gamma_{xy}}
+{\varepsilon_x-\varepsilon_y}
+\]
+
+约定：
+
+\[
+\varepsilon_1\ge \varepsilon_2
+\]
+
+拉应变为正，压应变为负。
+
+---
+
+## 3.3 主方向 UHPC 单轴本构
+
+层 0 中，每个主方向独立调用 UHPC 单轴受压或受拉本构：
+
+\[
+\sigma_i^{(0)}
+=
+\begin{cases}
+\sigma_t^{UHPC}(\varepsilon_i), & \varepsilon_i\ge 0\\[4pt]
+-\sigma_c^{UHPC}(|\varepsilon_i|), & \varepsilon_i<0
+\end{cases}
+\]
+
+对应物理切线：
+
+\[
+E_i^{phys}
+=
+\begin{cases}
+\dfrac{d\sigma_t^{UHPC}}{d\varepsilon_i}, & \varepsilon_i\ge 0\\[8pt]
+\dfrac{d\sigma_c^{UHPC}}{d|\varepsilon_i|}, & \varepsilon_i<0
+\end{cases}
+\]
+
+这里的 UHPC 受压/受拉曲线采用项目已锁定的 UHPC 单轴本构，不采用 Nguyen 的 Saenz 普通混凝土曲线。Nguyen 的等效单轴应变思想可以作为“主方向调用单轴曲线”的理论启发，但具体单轴曲线必须 UHPC 化。fileciteturn122file0
+
+---
+
+## 3.4 算法切线正则化
+
+为避免材料软化或屈服平台导致矩阵奇异，进入刚度矩阵的切线采用算法正则化：
+
+\[
+E_i^{alg}
+=
+\max(E_i^{phys},E_{min})
+\]
+
+其中：
+
+\[
+E_{min}=\eta_E E_c
+\]
+
+建议：
+
+\[
+\eta_E=10^{-6}\sim10^{-4}
+\]
+
+注意：正则化只用于切线刚度矩阵，不改变应力计算：
+
+\[
+\sigma_i=\sigma_i^{UHPC}(\varepsilon_i)
+\]
+
+---
+
+## 3.5 层 0 剪切模量
+
+层 0 不追踪固定裂缝方向，也不引入 Nguyen 的 shear retention factor。采用简化有效剪切模量：
+
+\[
+G_{12}^{(0)}
+=
+\frac{E_G}{2(1+\nu_c)}
+\]
+
+\[
+E_G
+=
+\sqrt{
+E_1^{alg}E_2^{alg}
+}
+\]
+
+若需要更稳定的初版计算，也可以采用：
+
+\[
+G_{12}^{(0)}=G_0=\frac{E_c}{2(1+\nu_c)}
+\]
+
+并在后续敏感性分析中比较二者差异。
+
+---
+
+## 3.6 主方向切线矩阵
+
+\[
+\mathbf D_{12}^{(0)}
+=
+\begin{bmatrix}
+E_1^{alg} & 0 & 0\\
+0 & E_2^{alg} & 0\\
+0 & 0 & G_{12}^{(0)}
+\end{bmatrix}
+\]
+
+该写法保留 Nguyen 的主方向切线矩阵思想，但删除普通混凝土 dilation constants、剪切保持系数和压碎后双线性关系。
+
+---
+
+## 3.7 坐标转换
+
+主方向应力转回全局坐标：
+
+\[
+\boldsymbol\sigma_{xy}
+=
+\mathbf T_{\sigma}^{-1}(\theta)
+\boldsymbol\sigma_{12}
+\]
+
+主方向切线矩阵转回全局坐标：
+
+\[
+\mathbf D_{xy}^{(0)}
+=
+\mathbf T_{\sigma}^{-1}(\theta)
+\mathbf D_{12}^{(0)}
+\mathbf T_{\varepsilon}(\theta)
+\]
+
+其中 \(\mathbf T_\varepsilon\) 与 \(\mathbf T_\sigma\) 分别为应变和应力转换矩阵。
+
+---
+
+## 3.8 压缩峰值终止
+
+层 0 中，UHPC 不进入压缩峰后继续承载：
+
+\[
+|\varepsilon_i^-|
+\ge
+\varepsilon_{c0}
+\quad
+\Rightarrow
+\quad
+\text{UHPC 压缩峰值终止}
+\]
+
+Nguyen 在 cracked concrete crushing 中确实设置了压碎后双线性关系、压碎后切线模量以及剪切模量更新；但这些属于普通钢筋混凝土墙板材料程序，第一版 UCFT 不直接迁移。fileciteturn124file8
+
+---
+
+# 4. 层 1 参数接口：UHPC 文献驱动修正
+
+层 1 不改变矩阵框架，只在材料点内部引入可插拔修正函数：
+
+\[
+\boxed{
+\chi_{cc},\quad
+\chi_{tc},\quad
+\chi_{tt},\quad
+\beta_{UHPC},\quad
+\chi_{conf}
+}
+\]
+
+分别对应：
+
+1. 压—压双轴增强；
+2. 拉—压耦合压强度折减；
+3. 拉—拉双向受拉修正；
+4. 开裂后剪切保持；
+5. 三轴/围压扩展。
+
+层 1 的原则是：
+
+\[
+\boxed{
+\text{函数接口先建立，具体参数由 UHPC 文献或后续试验/有限元标定。}
+}
+\]
+
+---
+
+## 4.1 压—压双轴增强接口 \(\chi_{cc}\)
+
+### 4.1.1 状态判别
+
+当：
+
+\[
+\varepsilon_1<0,\quad \varepsilon_2<0
+\]
+
+进入压—压状态。
+
+定义压应变比：
+
+\[
+r_c
+=
+\frac{\min(|\varepsilon_1|,|\varepsilon_2|)}
+{\max(|\varepsilon_1|,|\varepsilon_2|)}
+\in[0,1]
+\]
+
+### 4.1.2 接口定义
+
+\[
+f_{c,bi}
+=
+\chi_{cc}(r_c)f_c
+\]
+
+\[
+\chi_{cc}(0)=1
+\]
+
+\[
+\chi_{cc}(1)=\chi_{cc,max}
+\]
+
+建议先采用光滑插值函数：
+
+\[
+\chi_{cc}(r_c)
+=
+1+
+(\chi_{cc,max}-1)
+\sin^2
+\left(
+\frac{\pi r_c}{2}
+\right)
+\]
+
+### 4.1.3 参数建议
+
+层 0 默认：
+
+\[
+\chi_{cc}=1
+\]
+
+即不考虑双轴压缩增强，偏保守。
+
+层 1 可取：
+
+\[
+1.00\le \chi_{cc,max}\le 1.16
+\]
+
+原因是 UHPFRC 数值/材料模型文献中有研究采用双轴压缩强度约为单轴强度 1.16 倍的设定；D’Alessandro、Roberts-Wollmann 和 Cousins 的 ACI Materials Journal 论文专门研究 UHPC direct biaxial behavior，可作为 UHPC 双轴包络标定的重要文献来源；Liu 等 2024 年针对无筋 UHPC 单元双轴应力状态的试验研究提出了 UHPC 双轴压缩强度包络分段函数，后续应优先核对并替换当前占位函数。([concrete.org](https://www.concrete.org/publications/internationalconcreteabstractsportal.aspx?id=51722404&m=details&utm_source=chatgpt.com))
+
+### 4.1.4 当前锁定
+
+\[
+\boxed{
+\chi_{cc}\text{ 是层 1 接口，不进入层 0 主线。}
+}
+\]
+
+---
+
+## 4.2 拉—压耦合压强度折减接口 \(\chi_{tc}\)
+
+### 4.2.1 状态判别
+
+当：
+
+\[
+\varepsilon_1>0,\quad
+\varepsilon_2<0
+\]
+
+进入拉—压状态。定义：
+
+\[
+\varepsilon_t=\varepsilon_1
+\]
+
+\[
+\varepsilon_c=|\varepsilon_2|
+\]
+
+### 4.2.2 接口定义
+
+压向有效强度：
+
+\[
+f_{c,eff}
+=
+\chi_{tc}(\varepsilon_t)f_c
+\]
+
+压向应力：
+
+\[
+\sigma_c
+=
+-\sigma_c^{UHPC}
+\left(
+\varepsilon_c;
+f_{c,eff}
+\right)
+\]
+
+拉向应力：
+
+\[
+\sigma_t
+=
+\sigma_t^{UHPC}(\varepsilon_t)
+\]
+
+### 4.2.3 建议工程化函数
+
+为保持可计算性，建议采用分段线性折减接口：
+
+\[
+\chi_{tc}(\varepsilon_t)
+=
+\chi_B+
+(\chi_A-\chi_B)
+\max
+\left(
+1-\frac{\varepsilon_t}{\varepsilon_B},
+0
+\right)
+\]
+
+其中：
+
+\[
+\varepsilon_B=0.0025
+\]
+
+纤维 UHPC 可先取：
+
+\[
+\chi_A=1.00,\quad
+\chi_B=0.70
+\]
+
+无纤维 UHPC 可先取：
+
+\[
+\chi_A=1.00,\quad
+\chi_B=0.50
+\]
+
+### 4.2.4 文献依据
+
+Fehling、Leutbecher、Röder 和 Stürwald 的 UHPC 双轴加载研究专门讨论 UHPC/UHPFRC 板件在双轴压—拉状态下的结构行为，可作为 \(\chi_{tc}\) 的基础来源。([bau.uni-siegen.de](https://www.bau.uni-siegen.de/subdomains/massivbau/publikationen/download/structural_behavior_of_uhpc_under_biaxial_loading.pdf?utm_source=chatgpt.com)) Lee 等 2017 年在 *Materials and Structures* 发表的 UHPFRC 面内构件双轴拉—压强度研究，关键词即包括 biaxial panel test、compression-softening behaviour、failure criteria、tension-stiffening behaviour 和 UHPFRC；该文是 \(\chi_{tc}\) 的直接文献来源。([link.springer.com](https://link.springer.com/article/10.1617/s11527-016-0918-1?utm_source=chatgpt.com)) Liu 等 2023 年关于 biaxial tension-softened UHPC 的研究提出了受拉后 UHPC 压缩应力—应变关系，适合作为后续替换该线性接口的正式本构来源。([sciencedirect.com](https://www.sciencedirect.com/science/article/abs/pii/S0950061823026831?utm_source=chatgpt.com))
+
+### 4.2.5 当前锁定
+
+\[
+\boxed{
+\chi_{tc}\text{ 是层 1 中最优先启用的 UHPC 双轴修正接口。}
+}
+\]
+
+若后续路径中出现明显拉—压混合区，应对：
+
+\[
+\chi_{tc}=1.00
+\]
+
+与：
+
+\[
+\chi_{tc}(\varepsilon_t)
+\]
+
+两种路径做敏感性分析。
+
+---
+
+## 4.3 拉—拉双向受拉接口 \(\chi_{tt}\)
+
+### 4.3.1 状态判别
+
+当：
+
+\[
+\varepsilon_1>0,\quad
+\varepsilon_2>0
+\]
+
+进入拉—拉状态。
+
+### 4.3.2 接口定义
+
+如果 UHPC 受拉本构中区分弹性极限与峰值抗拉强度，则：
+
+\[
+f_{t,el}^{bi}
+=
+\chi_{tt,el}f_{t,el}
+\]
+
+\[
+f_{t,u}^{bi}
+=
+\chi_{tt,u}f_{t,u}
+\]
+
+当前建议：
+
+\[
+\chi_{tt,el}=0.82
+\]
+
+\[
+\chi_{tt,u}=1.00
+\]
+
+若当前 UHPC 单轴受拉本构只有单一软化曲线，没有明确弹性极限，则层 1 暂取：
+
+\[
+\chi_{tt}=1.00
+\]
+
+仅保留接口。
+
+### 4.3.3 文献依据
+
+Shen 等关于 UHPFRC 等双向拉伸响应的研究采用 ring-on-ring 试验和反分析确定等双拉响应，是 \(\chi_{tt}\) 的主要来源；该类研究说明 UHPFRC 的等双向拉伸与单轴拉伸不能简单等同，至少应保留双拉修正接口。([link.springer.com](https://link.springer.com/article/10.1617/s11527-020-01553-1?utm_source=chatgpt.com))
+
+### 4.3.4 当前锁定
+
+\[
+\boxed{
+\chi_{tt}\text{ 暂不进入层 0 主线；层 1 中保留。}
+}
+\]
+
+---
+
+## 4.4 开裂后剪切保持接口 \(\beta_{UHPC}\)
+
+### 4.4.1 Nguyen 原规则
+
+Nguyen 对开裂后混凝土采用 shear retention factor。其 tension-compression cracked 状态中，剪切模量等于剪切保持因子与开裂前剪切模量的乘积；文中还给出 Foster 建议的 \(\beta\) 参数，并将 \(\beta_1,\beta_2,\beta_3\) 等作为材料常数。fileciteturn124file11 对 tension-tension cracked 状态，Nguyen 还采用了大幅降低的开裂后剪切模量。
+
+这些是普通混凝土/RC wall 开裂后剪切退化参数，不直接迁移到 UHPC。
+
+### 4.4.2 UHPC 化接口
+
+定义：
+
+\[
+G_{12}^{cr}
+=
+\beta_{UHPC}G_0
+\]
+
+其中：
+
+\[
+0.10\le \beta_{UHPC}\le 1.00
+\]
+
+建议第一轮敏感性取：
+
+\[
+\beta_{UHPC}=1.00,\quad0.50,\quad0.30
+\]
+
+不建议第一版直接取：
+
+\[
+\beta_{UHPC}=0.10
+\]
+
+除非明确模拟普通混凝土式双向贯通裂缝。
+
+### 4.4.3 文献依据
+
+UHPC 的开裂后剪切传递机制与普通混凝土不同，钢纤维桥联、裂缝面摩阻和残余拉应力都会参与剪切传递。已有 UHPC 剪切传递与纤维桥联相关研究可作为后续标定 \(\beta_{UHPC}\) 的来源。([ouci.dntb.gov.ua](https://ouci.dntb.gov.ua/en/works/9jK8y5o7/?utm_source=chatgpt.com))
+
+### 4.4.4 当前锁定
+
+\[
+\boxed{
+\beta_{UHPC}\text{ 是层 1 敏感性参数，不进入层 0 主线。}
+}
+\]
+
+---
+
+## 4.5 三轴/围压扩展接口 \(\chi_{conf}\)
+
+### 4.5.1 当前不进入主线
+
+当前 UCFT 板材料点按面内状态处理：
+
+\[
+\sigma_3=0
+\]
+
+若没有显式计算钢壳对 UHPC 的厚向围压或侧向约束压力，则不能直接引入三轴增强。
+
+### 4.5.2 接口定义
+
+若后续能够得到等效围压 \(p_l\)，可定义：
+
+\[
+f_{c,conf}
+=
+\chi_{conf}
+(p_l,\rho_f,l_f/d_f)f_c
+\]
+
+当前取：
+
+\[
+\chi_{conf}=1
+\]
+
+### 4.5.3 文献依据
+
+项目来源中王淑楠 UHPC 三轴受压研究显示，围压从 0 增至 40 MPa 时，UHPC 峰值应力和峰值应变最大分别提高 161.7% 和 224.7%，并基于 Willam-Warnke 五参数模型建立 UHPC 破坏准则；这说明围压对 UHPC 多轴强度影响显著，但必须以明确围压输入为前提。fileciteturn124file6 Wu 等 2022 年关于 UHPC 三轴强度与破坏准则的研究也基于三轴试验建立了 UHPC 破坏准则，可作为后续 \(\chi_{conf}\) 扩展来源。([journals.sagepub.com](https://journals.sagepub.com/doi/10.1177/13694332221080603?utm_source=chatgpt.com))
+
+### 4.5.4 当前锁定
+
+\[
+\boxed{
+\chi_{conf}\text{ 保留为扩展接口；当前主线取 }1。
+}
+\]
+
+---
+
+# 5. 层 0 与层 1 的统一状态表
+
+| 材料状态 | 判别条件 | 层 0 主线 | 层 1 参数接口 |
+|---|---|---|---|
+| 压—压 | \(\varepsilon_1<0,\varepsilon_2<0\) | 两方向调用 UHPC 单轴受压 | \(\chi_{cc}(r_c)\) |
+| 拉—压 | \(\varepsilon_1>0,\varepsilon_2<0\) | 拉向调用 UHPC 受拉，压向调用 UHPC 受压 | \(\chi_{tc}(\varepsilon_t)\) |
+| 拉—拉 | \(\varepsilon_1>0,\varepsilon_2>0\) | 两方向调用 UHPC 受拉 | \(\chi_{tt,el},\chi_{tt,u}\) |
+| 开裂后剪切 | 任一拉向进入开裂/软化 | \(G_{12}=G_0\) 或 \(G_{12}^{(0)}\) | \(\beta_{UHPC}\) |
+| 压缩峰值 | \(|\varepsilon_i^-|\ge\varepsilon_{c0}\) | 路径终止 | 若启用峰后，需独立 UHPC 损伤模型 |
+| 围压增强 | 有等效 \(\sigma_3\) 或 \(p_l\) | 不考虑 | \(\chi_{conf}\) |
+
+---
+
+# 6. 层 1 修正后的主方向应力
+
+## 6.1 压—压状态
+
+\[
+f_{c,eff}
+=
+\chi_{cc}(r_c)f_c
+\]
+
+\[
+\sigma_i
+=
+-\sigma_c^{UHPC}
+\left(
+|\varepsilon_i|;
+f_{c,eff}
+\right)
+\]
+
+层 0 默认：
+
+\[
+\chi_{cc}=1
+\]
+
+---
+
+## 6.2 拉—压状态
+
+\[
+\sigma_t
+=
+\sigma_t^{UHPC}(\varepsilon_t)
+\]
+
+\[
+f_{c,eff}
+=
+\chi_{tc}(\varepsilon_t)f_c
+\]
+
+\[
+\sigma_c
+=
+-\sigma_c^{UHPC}
+\left(
+\varepsilon_c;
+f_{c,eff}
+\right)
+\]
+
+建议层 1 初始函数：
+
+\[
+\chi_{tc}(\varepsilon_t)
+=
+\chi_B+
+(\chi_A-\chi_B)
+\max
+\left(
+1-\frac{\varepsilon_t}{0.0025},
+0
+\right)
+\]
+
+纤维 UHPC 初始取：
+
+\[
+\chi_A=1.0,\quad
+\chi_B=0.70
+\]
+
+无纤维 UHPC 初始取：
+
+\[
+\chi_A=1.0,\quad
+\chi_B=0.50
+\]
+
+---
+
+## 6.3 拉—拉状态
+
+若受拉本构包含弹性极限：
+
+\[
+f_{t,el}^{bi}
+=
+0.82f_{t,el}
+\]
+
+\[
+f_{t,u}^{bi}
+=
+f_{t,u}
+\]
+
+若受拉本构没有弹性极限，则暂取：
+
+\[
+\chi_{tt}=1
+\]
+
+---
+
+## 6.4 开裂后剪切状态
+
+\[
+G_{12}^{cr}
+=
+\beta_{UHPC}G_0
+\]
+
+推荐敏感性参数：
+
+\[
+\beta_{UHPC}=1.00,\quad0.50,\quad0.30
+\]
+
+层 0 默认：
+
+\[
+\beta_{UHPC}=1.00
+\]
+
+---
+
+# 7. 切线矩阵的一致性处理
+
+层 1 中，如果应力引入 \(\chi_{cc}\)、\(\chi_{tc}\)、\(\chi_{tt}\) 或 \(\beta_{UHPC}\)，严格一致切线应包含：
+
+\[
+\frac{\partial \chi}{\partial \varepsilon_i}
+\]
+
+即：
+
+\[
+E_i^t
+=
+\frac{\partial \sigma_i}{\partial \varepsilon_i}
++
+\frac{\partial \sigma_i}{\partial \chi}
+\frac{\partial \chi}{\partial \varepsilon_i}
+\]
+
+但第一版建议采用更稳的割线修正版：
+
+\[
+\boxed{
+\text{应力使用层 1 修正，切线采用当前单轴曲线算法切线。}
+}
+\]
+
+即：
+
+\[
+\sigma_i=\sigma_i(\chi f)
+\]
+
+\[
+E_i^{alg}=\max(E_i^{phys},E_{min})
+\]
+
+暂不显式纳入 \(\partial\chi/\partial\varepsilon_i\)。
+
+这样做不是严格一致切线，但更利于矩阵路径稳定。待层 0 主线和云露钢壳模块算通后，再升级一致切线。
+
+---
+
+# 8. 是否仍然是矩阵解析解？
+
+即使引入层 1，体系仍然可以保持矩阵解析迭代形式：
+
+\[
+\mathbf R(\mathbf q,\lambda,\boldsymbol\alpha)=0
+\]
+
+\[
+\mathbf K_T
+=
+\frac{\partial \mathbf R}{\partial \mathbf q}
+\]
+
+\[
+\boldsymbol\alpha^j
+=
+\mathcal H
+(
+\boldsymbol\alpha^{j-1},
+\boldsymbol\varepsilon^j
+)
+\]
+
+其中 \(\boldsymbol\alpha\) 包括：
+
+\[
+\chi_{cc},\quad
+\chi_{tc},\quad
+\chi_{tt},\quad
+\beta_{UHPC},\quad
+\chi_{conf}
+\]
+
+只要位移场仍采用有限项 Ritz / Galerkin 展开：
+
+\[
+u=\sum q_u\phi_u
+\]
+
+\[
+v=\sum q_v\phi_v
+\]
+
+\[
+W=\sum q_w\phi_w
+\]
+
+则它仍是：
+
+\[
+\boxed{
+\text{带材料状态更新的矩阵解析迭代模型}
+}
+\]
+
+而不是传统有限元网格模型。
+
+但如果未来要完整追踪固定裂缝方向、压碎后损伤、卸载/再加载、裂缝带宽正则化和局部化耗能，则会越来越接近 Nguyen 式有限元材料程序。
+
+---
+
+# 9. 正式采用决策
+
+## 9.1 主线采用
+
+\[
+\boxed{
+\text{层 0 作为 UCFT 板轴压理论主线。}
+}
+\]
+
+即：
+
+\[
+\chi_{cc}=1
+\]
+
+\[
+\chi_{tc}=1
+\]
+
+\[
+\chi_{tt}=1
+\]
+
+\[
+\beta_{UHPC}=1
+\]
+
+\[
+\chi_{conf}=1
+\]
+
+但保留 Nguyen 的：
+
+\[
+\text{面内状态}
+\rightarrow
+\text{主应变}
+\rightarrow
+\text{主方向本构}
+\rightarrow
+\text{切线矩阵}
+\rightarrow
+K_T
+\]
+
+框架。
+
+---
+
+## 9.2 层 1 保留接口
+
+\[
+\boxed{
+\chi_{cc}(r_c)
+=
+1+
+(\chi_{cc,max}-1)
+\sin^2
+\left(
+\frac{\pi r_c}{2}
+\right)
+}
+\]
+
+\[
+\boxed{
+\chi_{tc}(\varepsilon_t)
+=
+\chi_B+
+(\chi_A-\chi_B)
+\max
+\left(
+1-\frac{\varepsilon_t}{0.0025},
+0
+\right)
+}
+\]
+
+\[
+\boxed{
+f_{t,el}^{bi}=0.82f_{t,el},\qquad
+f_{t,u}^{bi}=f_{t,u}
+}
+\]
+
+\[
+\boxed{
+G_{12}^{cr}
+=
+\beta_{UHPC}G_0
+}
+\]
+
+\[
+\boxed{
+\chi_{conf}=1
+\quad
+\text{until equivalent confinement is explicitly computed}
+}
+\]
+
+---
+
+# 10. 当前边界声明
+
+本模块的理论边界必须写清楚：
+
+\[
+\boxed{
+\text{本模块迁移 Nguyen 的状态—切线—矩阵框架，不迁移 Nguyen 普通混凝土参数。}
+}
+\]
+
+\[
+\boxed{
+\text{层 0 保证 UCFT 矩阵解析迭代可运行。}
+}
+\]
+
+\[
+\boxed{
+\text{层 1 为 UHPC 文献驱动的参数接口，用于逐步引入双轴压缩增强、拉压折减、双拉修正、剪切保持和围压增强。}
+}
+\]
+
+\[
+\boxed{
+\text{压缩峰后、固定裂缝方向、损伤正则化、卸载再加载暂不进入当前主线。}
+}
+\]
+
+---
+
+# 11. 后续使用规则
+
+后续进入总矩阵推导或 Case 计算时，按以下顺序启用：
+
+1. **先用层 0 跑通 UCFT 板轴压路径**；
+2. 若路径中 UHPC 主体基本处于压—压状态，则优先检查 \(\chi_{cc}\) 敏感性；
+3. 若路径中出现明显拉—压混合区，则优先启用 \(\chi_{tc}\)；
+4. 若出现大范围拉—拉开裂，则启用 \(\chi_{tt}\) 和 \(\beta_{UHPC}\)；
+5. 若后续显式得到钢壳约束产生的等效围压，再启用 \(\chi_{conf}\)；
+6. 在云露钢壳局部屈后模块未闭合前，不应让 UHPC 层 1 的高级修正掩盖钢壳局部屈曲反馈缺口。
+
+最终，UCFT 材料模块应表述为：
+
+\[
+\boxed{
+\text{Nguyen 框架迁移 + UHPC 单轴本构主线 + UHPC 双轴参数接口。}
+}
+\]
+
+这一定义能够保证后续矩阵解析迭代体系有完整的应力、切线、膜力和稳定矩阵输入，同时避免把普通混凝土参数错误套用于 UHPC。
+
+====================================================================================================
+FILE: history/UCFT/v5/UCFT_V5_SOURCE_LOCATOR.md
+SIZE: 2706
+SHA256: 9c5029ff1cff199ac888ed05628be0c9fb5dd297690b55525856f31b93e68dd8
+ENCODING: utf-8
+LINES: 34
+====================================================================================================
+# UCFT v5 / v5-all-buckling source locator
+
+本文件只做历史来源定位，不把 v5 恢复为当前 NZ-SCCM production 主线。
+
+## 原始模块
+
+| 模块 | File Library ID | 已有独立完整性审计 SHA-256 | 历史角色 |
+|---|---|---|---|
+| `UCFT板轴压承载力理论体系_v5_局部钢壳屈曲判别与有效纵向应力闭合模块.md` | `file_00000000db2872069ee416c3cbb9c68a` | `cdbfea27fbdd2f14a63b6c18f1b24a6cc8ed65c10d76f5e619bbb27bb554f2e0` | 局部钢壳屈曲、云露弹性大挠度屈后、孙立鹏 Bleich–R-O、分区分侧有效应力 |
+| `UCFT板轴压承载力理论体系_v5_材料模块与上下钢壳非对称模块.md` | `file_00000000b8f8720684fe5da6ac6b6875` | `f7e7f90b0da2c5130d5b6a9a112863e1305aae9919d60266b783760cd361554a` | 当时 UHPC 单轴本构、R-O 钢材、上下钢壳非对称、材料切线接口 |
+| `UCFT板轴压承载力理论体系_v5_四边简支整板稳定矩阵元素积分与后屈曲路径闭合模块.md` | `file_000000001d5072068196284a9fda1703` | `10ec572ed920852fe8b192af089232c98545247630b58aa8564b76350c84fc8b` | 四边简支整板形函数、局部—整体耦合、矩阵积分、后屈曲路径 |
+| `UCFT板轴压承载力理论体系_v5-all-buckling_总集成与一致性校核模块.md` | `file_00000000f22c72099a3b0caa4222a431` | `31d8e9b7051d31c98a41150efef87cc12f0c55e7b82a473b90d9436a79515c8c` | 三模块总集成；历史 `Nu=max_lambda N(lambda)` 路径定义 |
+| `UCFT板轴压承载力理论体系_v4-locked-B1_原则边界.md.txt` | `file_0000000086247206b0046d62f398e7c9` | `ef81de2949c3a2a1eb4c1d5c608734c2deef56968a98e728ce5dfb16caad9a1a` | v5 的历史上位原则边界 |
+
+上述 SHA 来自 `BLIND12_THEORY_SOURCE_AUDIT.md` 对这些文件的全文行数/哈希审计，不是本轮重新计算的 GitHub blob SHA。
+
+## 必须保留的历史力学含义
+
+v5 曾明确锁定：
+
+- PBL 主要以钢壳局部子板强固支边界体现；
+- PBL 不单独作为轴压承载项；
+- PBL 不作为显式弹簧能量项；
+- 总承载力路径历史表达为 `N(lambda)=Nc+Ns+ + Ns-`，`Nu=max_lambda N(lambda)`；
+- 局部屈曲事件、整板稳定事件、材料破坏事件均不自动等同于总承载力峰值；
+- 云露只提供 Kármán 大挠度/薄膜效应/Galerkin 局部钢壁板思想，UCFT 整板矩阵是项目重建，不得冒充云露原文。
+
+## 当前身份
+
+这些文件属于 `HISTORICAL_THEORY_SOURCE`。
+
+它们必须保留以恢复 steel-shell/Y、PBL、UHPC 材料来源和 UCFT 局部—整体耦合思想，但不能覆盖后来的完整 Layer-0 / N–Y / NZ-SCCM 治理。
+
+特别是其中早期 UHPC 单轴材料闭合不能恢复为当前最终 UHPC 多轴 production operator。
+
+====================================================================================================
+FILE: history/ledgers/HISTORICAL_COMPONENT_LEDGER.md
+SIZE: 14231
+SHA256: db2bdcc065812056558d42d185201ea9d0cfa80f0c19c79cbb8b94bf5f8d70cb
+ENCODING: utf-8
+LINES: 330
+====================================================================================================
+# NZ-SCCM 历史组件台账（正式组合基线 v1.0）
+
+## 1. 台账目的
+
+本台账不把任何历史阶段整体判定为“成功”或“失败”，而是把公式、代码、测试和边界拆成可继承组件。当前正式基线只组合已经验证且不违反最新硬约束的组件。
+
+## 2. 当前组合结论
+
+\[
+\boxed{
+\text{m=1连续完整半波}
++\text{D15精确矩引擎}
++\text{D12/D16材料门禁}
++\text{D18/D19零求积状态前沿审计核心}
+}
+\]
+
+材料生产关系仍为 **OPEN**。D19R材料代码、Liu-TC和D13曲线只作为来源/形状参照，不进入正式零积分矩阵。
+
+## 3. 组件明细
+
+### H01 · DRS · Direct dual-reaction scan concept
+- 当前身份：`REFERENCE_ONLY`
+- 作用层：`history`
+- 理论依据：Continuous half-wave response P,Q_A with root scans
+- 继承内容：Root enumeration discipline and separation of physical branches
+- 排除边界：3x3 spatial Gauss as formal production; scan/bisection as final analytical matrix
+- 证据：MODEL_CHANGE_HISTORY_RECOVERED_20260805.md
+- 手算：not inherited
+- 测试：historical
+
+### H02 · D11 · m=1 continuous complete-halfwave kinematics
+- 当前身份：`ACTIVE_PRODUCTION_CORE`
+- 作用层：`kinematics`
+- 理论依据：phi=sin(pi x/b)sin(pi y/l), von Karman strains
+- 继承内容：Full continuous halfwave and A0A+A^2/2 membrane term
+- 排除边界：D11 P4 as complete concrete/UHPC model
+- 证据：D11 report + D15 compiler
+- 手算：M1_GEOMETRIC_MOMENTS_HAND_CALC.md
+- 测试：D15 exact-moment tests
+
+### H03 · D11 · Direct equilibrium/limit equations
+- 当前身份：`RETAIN_CONDITIONAL`
+- 作用层：`solver`
+- 理论依据：U_A=0; det Hessian=0; P=U_delta/l
+- 继承内容：Direct algebraic equilibrium and limit-point identity when an admissible energy potential exists
+- 排除边界：Claim that every nonsymmetric material tangent admits scalar-potential Hessian
+- 证据：D11 report
+- 手算：formula-level
+- 测试：D11 machine regression in D15 report
+
+### H04 · D11 · 22-term P4 energy
+- 当前身份：`ACTIVE_REGRESSION_ONLY`
+- 作用层：`tests`
+- 理论依据：Theory-derived c3,c4 from compression peak and zero tangent
+- 继承内容：Machine regression and proof of zero spatial quadrature
+- 排除边界：Formal material law or production prediction
+- 证据：D11 report
+- 手算：available in source report
+- 测试：D15 machine precision regression
+
+### H05 · D12 · Material admissibility gate
+- 当前身份：`ACTIVE_GATE`
+- 作用层：`material_gate`
+- 理论依据：Reject disconnected branch, tensile overshoot, order nonconvergence
+- 继承内容：Shape and branch admissibility must precede panel accuracy
+- 排除边界：Accepting a material law because one panel load is close
+- 证据：D12_CANDIDATE_GATE_SUMMARY.csv
+- 手算：curve checks
+- 测试：historical candidate table
+
+### H06 · D13 · SAGP continuous single-valued potential
+- 当前身份：`REFERENCE_ONLY`
+- 作用层：`material_reference`
+- 理论依据：Continuous shape-limited potential; Case21 near experiment
+- 继承内容：Reference curves and evidence that smooth low-dimensional route can be predictive
+- 排除边界：Its 32x32x20 quadrature implementation from production
+- 证据：MODEL_CHANGE_HISTORY + D14 report
+- 手算：not formal baseline
+- 测试：historical convergence
+
+### H07 · D14 · GRC10 panel-level Chebyshev condensation
+- 当前身份：`REJECTED_FORMAL`
+- 作用层：`rejected`
+- 理论依据：198 coefficients from offline continuous integration
+- 继承内容：Diagnostic comparison only
+- 排除边界：Formal analytical identity or production matrix
+- 证据：D14 report
+- 手算：not applicable
+- 测试：Case21 reproduction only
+
+### H08 · D15 · Exact sparse trigonometric-thickness moment compiler
+- 当前身份：`ACTIVE_PRODUCTION_CORE`
+- 作用层：`matrix`
+- 理论依据：Finite sin/cos monomials and exact zeta powers
+- 继承内容：J_pq, Z_m, sparse expansion, exact condensation to r^i q^j
+- 排除边界：None in mathematical engine; material coefficients remain separate
+- 证据：d15_exact_moment_compiler.py
+- 手算：D15R_HAND_CALC + M1 hand calc
+- 测试：test_d15_exact_moment_original.py
+
+### H09 · D15 · I1,I2 and Newton principal power sums
+- 当前身份：`ACTIVE_MATH_CORE`
+- 作用层：`matrix`
+- 理论依据：p_j=I1 p_{j-1}-I2 p_{j-2}
+- 继承内容：Eliminate explicit eigenvalue radicals for finite invariant bases
+- 排除边界：Assumption that one scalar potential is sufficient for all NSC/UHPC states
+- 证据：D15 report and compiler
+- 手算：p2 identity
+- 测试：mapping regression
+
+### H10 · D15 · Original 156 mapping artifact vs 155 nonzero rebuild
+- 当前身份：`OPEN_PROVENANCE`
+- 作用层：`audit`
+- 理论依据：Original report counts 156; independent current compiler counts 155 nonzero
+- 继承内容：Both records without forced reconciliation
+- 排除边界：Inventing a zero row to force equality
+- 证据：D15 report; D15R mapping CSV
+- 手算：count table
+- 测试：explicit 155 test
+
+### H11 · D15 · UHPC-L0 single-axis principal potential
+- 当前身份：`REJECTED_MATERIAL_IDENTITY`
+- 作用层：`rejected`
+- 理论依据：a2..a6 power-sum potential, beta terms zero
+- 继承内容：Formula grammar and exact-moment compatibility only
+- 排除边界：Formal UHPC material identity; permanent beta=0; loss of six-state information
+- 证据：D15 report and later user lock
+- 手算：not active
+- 测试：not production
+
+### H12 · D15R · Finite coaxial vector operator a(I1,I2)I+b(I1,I2)E
+- 当前身份：`OPEN_MATH_INTERFACE`
+- 作用层：`material_open`
+- 理论依据：Allows analytic tangent, possibly nonsymmetric
+- 继承内容：Mathematical container for future theory-derived finite operators
+- 排除边界：Treating arbitrary fitted coefficients as material theory
+- 证据：common_isotropic_vector_operator.py
+- 手算：derivatives explicit
+- 测试：central-difference audit only
+
+### H13 · D16 · Exact-moment integrability classification
+- 当前身份：`ACTIVE_GATE`
+- 作用层：`material_gate`
+- 理论依据：Finite polynomial branches close; rational/exponential/WW need separate treatment
+- 继承内容：Classify every candidate term before admission
+- 排除边界：Forcing nonintegrable source formulas into high-order fits
+- 证据：D16_EXACT_MOMENT_INTEGRABILITY_AUDIT.csv
+- 手算：classification table
+- 测试：documentary
+
+### H14 · D17 · Thickness principal-threshold front
+- 当前身份：`RETAIN_THEORY_SOURCE_ARTIFACT_PENDING`
+- 作用层：`state_front`
+- 理论依据：At fixed in-plane position, threshold equation is quadratic in z
+- 继承内容：Analytical thickness-event concept and 755-root validation result
+- 排除边界：Thickness material-point discretization
+- 证据：Recovered history; original D17 zip hash only
+- 手算：not locally recovered
+- 测试：historical 755-root result
+
+### H15 · D18 · u=sin^2X,v=sin^2Y algebraic in-plane front
+- 当前身份：`ACTIVE_AUDIT_CORE`
+- 作用层：`state_front`
+- 理论依据：F=P0+sqrt(uv)P1; squared cubic in v
+- 继承内容：Physical root filtering, exact full/incomplete Beta measures
+- 排除边界：Treating squared roots without unsquared sign check
+- 证据：inplane_algebraic_state_front.py
+- 手算：D19 front hand calc
+- 测试：D19 root tests
+
+### H16 · D19 · Exact topology-event partition
+- 当前身份：`ACTIVE_AUDIT_CORE`
+- 作用层：`state_front`
+- 理论依据：V0,V1,leading coefficient, discriminant,resultant events
+- 继承内容：Grid-free topology partition and branch-count constancy
+- 排除边界：u-grid topology scans
+- 证据：d19_event_topology_core_zero_quadrature.py
+- 手算：event-polynomial inspection
+- 测试：composite equivalence tests
+
+### H17 · D19 · Analytic front derivative
+- 当前身份：`ACTIVE_AUDIT_CORE`
+- 作用层：`state_front`
+- 理论依据：dv/dtheta=-F_theta/F_v using unsquared physical equation
+- 继承内容：Event-aware analytical derivative
+- 排除边界：Using derivative at singular topology event
+- 证据：d19_event_topology_core_zero_quadrature.py
+- 手算：D19 front hand calc
+- 测试：finite-difference audit
+
+### H18 · D19 · Outer 1D state-front quadrature audit
+- 当前身份：`REJECTED_FORMAL`
+- 作用层：`rejected`
+- 理论依据：quad over u after incomplete-Beta inner integral
+- 继承内容：Historical comparison only
+- 排除边界：Any formal or production use under zero-integration lock
+- 证据：branch_event_system_original_with_1d_audit.py
+- 手算：Simpson audit historical only
+- 测试：original D19 test only
+
+### H19 · D19 · Liu 2023 TC compression scalar branch
+- 当前身份：`REFERENCE_ONLY`
+- 作用层：`material_reference`
+- 理论依据：zeta_sigma and softened compression equations
+- 继承内容：Compression-direction scalar law, tangent and event locations as source reference
+- 排除边界：Calling it a complete 2D TC/TCX state
+- 证据：liu2023_tc_compression.py; D19 report
+- 手算：formula reproduction
+- 测试：Liu tangent tests
+
+### H20 · D19R · Path-closed NSC/UHPC response-tangent interface
+- 当前身份：`REFERENCE_ONLY`
+- 作用层：`material_reference`
+- 理论依据：U/TC/TT/CC/TCX/CCX point response with AD tangent
+- 继承内容：Source registry, state vocabulary, stress/tangent regression cases
+- 排除边界：Gauss panel evaluator; project-derived U->TC entry as formal theory
+- 证据：path_closed_materials_D19R_reference_only.py
+- 手算：not production
+- 测试：D19R regression historical
+
+### H21 · D19C · Panel-level Chebyshev residual surfaces
+- 当前身份：`REJECTED`
+- 作用层：`rejected`
+- 理论依据：Offline Gauss sampling and piecewise Chebyshev surfaces
+- 继承内容：Five false-branch cases as counterexamples
+- 排除边界：Formal matrix, production roots, reported population accuracy
+- 证据：D19C/v0.6.3 reports
+- 手算：not admissible
+- 测试：direct-balance failures
+
+### H22 · v0.6.1 · Fixed m=1 representative halfwave
+- 当前身份：`HARD_LOCK`
+- 作用层：`kinematics`
+- 理论依据：One complete representative halfwave; repeated symmetric waves not independent candidates
+- 继承内容：m=1 for every Swartz panel and later representative-halfwave use
+- 排除边界：m>1 search, modal envelope, minimum over m
+- 证据：D19C M1 correction report + user lock
+- 手算：shape definition
+- 测试：configuration audit
+
+### H23 · v0.6.3 · NSC-only Source-U enhancement
+- 当前身份：`REJECTED`
+- 作用层：`rejected`
+- 理论依据：Nguyen-specific extra secant/dilatancy/equivalent-strain information
+- 继承内容：Diagnostic evidence that simultaneous changes destroy attribution
+- 排除边界：Formal common NSC/UHPC baseline
+- 证据：v0.6.3 diagnostic report
+- 手算：not active
+- 测试：not active
+
+### H24 · v0.6.3 · Pseudo-arclength path continuation
+- 当前身份：`DISABLED`
+- 作用层：`solver`
+- 理论依据：Continuation across folds
+- 继承内容：May be reconsidered only after true formal residual exists
+- 排除边界：Using it to validate a proxy branch
+- 证据：v0.6.3 diagnostic history
+- 手算：not active
+- 测试：not active
+
+### H25 · v0.5.4-v0.5.8 · High-order/anchor/P6 reconstructed material functions
+- 当前身份：`REJECTED`
+- 作用层：`rejected`
+- 理论依据：Orthogonal fits, anchor inversion, global dual-peak P6
+- 继承内容：Failure modes and conditioning warnings only
+- 排除边界：All coefficients and material identities
+- 证据：v0.5.4-v0.5.8 reports
+- 手算：not active
+- 测试：historical negative controls
+
+### H26 · Current · Zero numerical integration
+- 当前身份：`HARD_LOCK`
+- 作用层：`contract`
+- 理论依据：No Gauss/Simpson/adaptive/offline spatial integration or panel proxy
+- 继承内容：Finite theory-derived matrix terms only
+- 排除边界：All spatial quadrature in formal path
+- 证据：user lock 2026-08-06
+- 手算：required
+- 测试：static forbidden-import scan
+
+### H27 · Current · Theory-derived terms only
+- 当前身份：`HARD_LOCK`
+- 作用层：`contract`

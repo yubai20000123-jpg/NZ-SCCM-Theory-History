@@ -1,0 +1,1800 @@
+| generic high-genus obstruction定位 | PASS |
+| `I_Pz` finite analytic series exact monomial integration | PASS |
+| `I_Rz` finite analytic series exact monomial integration | PASS |
+| 后续 a/b 解析矩积分 | PASS |
+| formal spatial sampling | **0** |
+| formal spatial quadrature | **0** |
+| concrete-only equilibrium/limit | PASS as central analytic-series solution |
+| reinforcement closed form | PASS |
+| RC equilibrium/limit | PASS as central analytic-series solution |
+| steel elastic-range check at new RC root | PASS |
+| experiment comparison | PASS |
+| tight outward-rounded strict remainder certificate | **UNRESOLVED** |
+
+---
+
+# 18. Final numerical summary
+
+## Concrete-only
+
+\[
+\boxed{
+D_{u,c}\approx0.7927130,
+\quad
+q_{u,c}\approx0.0020269882,
+\quad
+A_{u,c}\approx2.472926\ \mathrm{mm},
+\quad
+P_{u,c}\approx338.3175\ \mathrm{kN}
+}
+\]
+
+## RC Case21
+
+\[
+\boxed{
+D_u\approx0.70538385,
+\quad
+q_u\approx0.0021930282,
+\quad
+A_u\approx2.675494\ \mathrm{mm}
+}
+\]
+
+\[
+\boxed{
+P_c\approx316.6423\ \mathrm{kN},
+\quad
+P_s\approx25.6909\ \mathrm{kN},
+\quad
+P_u\approx342.3332\ \mathrm{kN}
+}
+\]
+
+\[
+\boxed{
+P_u/P_{f,exp}-1\approx-7.05367\%
+}
+\]
+
+### Final identity
+
+```text
+N_formal_spatial_sampling   = 0
+N_formal_spatial_quadrature = 0
+```
+
+上一轮 338.3184 / 342.3339 kN 只在本轮 root 完成之后作为 verification target 比较，没有参与系数生成、展开区域、根选择或材料参数。
+
+====================================================================================================
+FILE: history/Case21/piecewise_analytic/REVOCATION_NOTICE.md
+SIZE: 901
+SHA256: f4e0f28b3eebd5985920be6f0c9ed4c45efdc89b0e18e9abbb149c9f6145ac1e
+ENCODING: utf-8
+LINES: 23
+====================================================================================================
+# Formal revocation notice — spatial analytic subdivision
+
+Effective immediately for the NZ-SCCM Case21 direct-analytic branch:
+
+- `fixed analytic cells` — REVOKED as formal theory;
+- `na × nb × nz seed partition` — REVOKED;
+- `NeedSplit` — REVOKED;
+- adaptive analytic cell splitting — REVOKED;
+- convergence-driven spatial subdivision — REVOKED;
+- branch-driven spatial subdivision — REVOKED.
+
+The previous implementation beginning at the former “finite analytic Taylor model / analytic cells” stage is retained only as historical verification material. It may not generate, certify, or select any formal Case21 result.
+
+The governing spatial contract is now
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+N_formal_spatial_sampling    = 0
+N_formal_spatial_quadrature  = 0
+N_formal_spatial_subdomains  = 1
+```
+
+The one formal subdomain is the complete representative half-wave itself.
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/BASELINE_GATE_STATUS.json
+SIZE: 1197
+SHA256: 2e1e58cf4777ea999e9395dd9cbfd65edca9e1860eddc8ff9f9f784984798c18
+ENCODING: utf-8
+LINES: 41
+====================================================================================================
+{
+  "version": "NZ_SCCM_HISTORICAL_COMPOSITE_BASELINE_v1.0",
+  "created": "2026-08-06T01:19+08:00",
+  "identity": "historical component composite; not a new material model",
+  "hard_locks": {
+    "m": 1,
+    "zero_numerical_spatial_integration": true,
+    "theory_derived_terms_only": true,
+    "panel_load_calibration": false,
+    "special_value_fitting": false,
+    "hand_calculation_required": true,
+    "nsc_uhpc_information_level_symmetry_required": true
+  },
+  "active": [
+    "D11/D15 m=1 continuous kinematics",
+    "D15 exact sparse moment compiler",
+    "D12 material admissibility gate",
+    "D16 integrability gate",
+    "D18/D19 zero-quadrature front topology audit core"
+  ],
+  "reference_only": [
+    "D13 SAGP",
+    "Liu 2023 TC scalar compression",
+    "D19R path materials"
+  ],
+  "rejected": [
+    "D14 panel Chebyshev",
+    "D19C panel proxy",
+    "m>1 envelope",
+    "v0.6.3 NSC-only Source-U",
+    "v0.5.4-v0.5.8 reconstructed material coefficients"
+  ],
+  "open": [
+    "formal NSC finite analytic material",
+    "formal UHPC finite analytic material",
+    "D15 156 vs 155 count",
+    "D17 exact source recovery",
+    "Yunlu coupling"
+  ],
+  "production_authorized": false
+}
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D12/D12_CANDIDATE_GATE_SUMMARY.csv
+SIZE: 1107
+SHA256: fb3ee7e09c5cd5e9b302800a390a98acf30468d7d63a10525ec826c55afce297
+ENCODING: utf-8
+LINES: 7
+====================================================================================================
+index,candidate,material_rule,primary_branch_limit_kN,status,reason
+0,DAEM-P4-v0.1,axial-direction P4 nonlinear potential only,514.268712,RETAIN_DIAGNOSTIC_BASELINE,connected to origin; exact analytical integration; but +23.076% vs D4
+1,TC5 peak-tangent,same fifth-order stress polynomial in x and y; zero tangent at compression and tension peaks,11.266487,REJECT,first origin-connected limit occurs at 11.266 kN; 325.773 kN root is disconnected
+2,TS5 alpha2=0.3,compression peak plus tension-stiffening endpoint anchors,373.229309,REJECT,tensile stress overshoots to 9.474 MPa = 4.463 ft
+3,TS5 alpha2=0.5,compression peak plus tension-stiffening endpoint anchors,375.36464,REJECT,tensile stress overshoots to 9.548 MPa = 4.497 ft
+4,TS5 alpha2=0.7,compression peak plus tension-stiffening endpoint anchors,377.529988,REJECT,tensile stress overshoots to 9.623 MPa = 4.533 ft
+5,Chebyshev source projection,"single global source-projected polynomial, nominal alpha2=0.5",320.393–427.310 within valid orders,REJECT,plate peak does not converge with polynomial order; some orders leave certified strain domain
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D15/D15_UHPC_SOURCE_CONSTRAINT_REGISTRY.csv
+SIZE: 1288
+SHA256: d5ea021ffdc846e2a9075100da12ad491380949cf29ebf51dec5c7dee94e1f4c
+ENCODING: utf-8
+LINES: 7
+====================================================================================================
+index,id,scope,source,constraint,matrix_action,status
+0,UHPC-L0-COMP,UHPC_L0,Hu Wenxu / locked UCFT material module,"sigma_c/fc=(n*xi-xi^2)/(1+(n-2)*xi), 0<=xi<=1; sigma_c/fc=xi/[2(xi-1)^2+xi], xi>1",calibrate a3..a6 only from material curve; no panel-load fitting,SOURCE_LOCKED
+1,UHPC-L0-TENS,UHPC_L0,Hu Wenxu / locked UCFT material module,sigma_t=fct*exp(1/mt)*xi_t*exp[-xi_t^mt/mt],material-only calibration and certification of a3..a6,SOURCE_LOCKED
+2,UHPC-L0-BOUNDARY,UHPC_L0,Current locked Layer-0 contract,beta11=beta21=beta31=beta02=beta12=beta03=0,no biaxial/confinement enhancement in Layer 0,PROJECT_LOCKED
+3,UHPC-L1-DP,UHPC_L1_OPTIONAL,Zhou Jun 2023,tau_oct^u/fc=0.00995+1.394*(sigma_oct^u/fc),material-level calibration/validation of beta coefficients only,SOURCE_OPTIONAL
+4,UHPC-L1-WW,UHPC_L1_OPTIONAL,Wang Shunan et al. 2024,"Willam-Warnke meridians with a0=b0=0.1775,a1=-1.4554,a2=-0.1576,b1=-0.7806,b2=-0.1763; fiber factors kc,kt",material-level calibration/validation of beta coefficients only,SOURCE_OPTIONAL
+5,FHWA-TENSION-QUAL,UHPC_MATERIAL_QUALIFICATION,FHWA 2024 workshop manual / AASHTO UHPC guide context,"direct-tension interface: f_t,cr; f_t,loc; epsilon_t,loc; AASHTO T397 testing",optional material-data replacement for project tensile curve,EXTERNAL_PRIMARY
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D15/NZ_SCCM_DAEM_v0.5_D15_精确矩生成与UHPC解析矩公式报告.md
+SIZE: 5238
+SHA256: dc6bed6bbfa4a51ef7c5ff2a9fc9e6125cc1c8c095f55a62a213690a8cec1e4b
+ENCODING: utf-8
+LINES: 213
+====================================================================================================
+# D15：精确解析矩生成器与 UHPC 解析矩公式
+
+## 1. 对 D14 的实质修正
+
+D14 的 198 个数值系数来自板级离线投影。本轮不再拟合全局残量，而是从连续应变场和材料势逐项生成精确矩。
+
+采用无量纲变量：
+
+\[
+X=\pi x/b,\qquad Y=\pi y/\ell,\qquad \zeta=z/b,
+\]
+
+\[
+\alpha=\ell/b,\qquad \tau=t/b,\qquad a_0=A_0/b,
+\qquad r=\delta/\varepsilon_0,\qquad q=A/b.
+\]
+
+连续应变为：
+
+\[
+\bar\varepsilon_x=\frac{\pi^2}{\varepsilon_0}
+\left[
+\left(a_0q+\frac{q^2}{2}\right)\cos^2X\sin^2Y
++q\zeta\sin X\sin Y
+\right],
+\]
+
+\[
+\bar\varepsilon_y=-r+\frac{\pi^2}{\alpha^2\varepsilon_0}
+\left[
+\left(a_0q+\frac{q^2}{2}\right)\sin^2X\cos^2Y
++q\zeta\sin X\sin Y
+\right],
+\]
+
+\[
+\bar\gamma=\frac{2\pi^2}{\alpha\varepsilon_0}
+\left[
+\left(a_0q+\frac{q^2}{2}\right)
+\sin X\cos X\sin Y\cos Y
+-q\zeta\cos X\cos Y
+\right].
+\]
+
+每个空间单项式只调用两个精确矩：
+
+\[
+J_{pq}=\int_0^\pi \sin^pX\cos^qX\,dX,
+\qquad
+Z_m=\int_{-\tau/2}^{\tau/2}\zeta^m\,d\zeta.
+\]
+
+余弦奇次或厚度奇次自动为零；其余项由 Beta/Gamma 函数化为精确有理数与 \(\pi\) 的组合。这里不存在 Gauss 点、采样网格或板级回归系数。
+
+## 2. UHPC 主应变势不需要显式求主应变
+
+定义二维应变张量不变量：
+
+\[
+I_1=\bar\varepsilon_x+\bar\varepsilon_y,
+\qquad
+I_2=\bar\varepsilon_x\bar\varepsilon_y-\frac{\bar\gamma^2}{4}.
+\]
+
+两个主应变的幂和满足 Newton 递推：
+
+\[
+p_0=2,\qquad p_1=I_1,
+\qquad p_j=I_1p_{j-1}-I_2p_{j-2}.
+\]
+
+因此：
+
+\[
+p_j=\bar\varepsilon_1^j+\bar\varepsilon_2^j
+\]
+
+始终是 \(\bar\varepsilon_x,\bar\varepsilon_y,\bar\gamma\) 的有限多项式，不需要显式特征值平方根，也没有主方向状态判断。
+
+## 3. UHPC-L0 解析矩
+
+定义无量纲材料势：
+
+\[
+\widehat\Psi_{L0}
+=
+\sum_{j=2}^6\frac{a_j}{j}p_j+b_2I_2.
+\]
+
+二次系数取：
+
+\[
+a_2=\frac{n_c}{1-\nu^2},
+\qquad
+b_2=\frac{n_c\nu}{1-\nu^2},
+\qquad
+n_c=\frac{E_c\varepsilon_{c0}}{f_c}.
+\]
+
+本轮已经符号验证，该二次部分严格恢复各向同性平面应力弹性能。\(a_3\sim a_6\) 只允许由 UHPC 材料曲线识别，不能用板承载力识别。
+
+当前项目层 0 明确不采用围压增强或双轴经验修正，因此：
+
+\[
+\beta_{11}=\beta_{21}=\beta_{31}
+=\beta_{02}=\beta_{12}=\beta_{03}=0.
+\]
+
+## 4. UHPC-L1 可选扩展
+
+只有理论层级明确升级后，才允许：
+
+\[
+\begin{aligned}
+\widehat\Psi_{L1}
+={}&\widehat\Psi_{L0}
++\beta_{11}I_1I_2
++\beta_{21}I_1^2I_2
++\beta_{31}I_1^3I_2\\
+&+\beta_{02}I_2^2
++\beta_{12}I_1I_2^2
++\beta_{03}I_2^3.
+\end{aligned}
+\]
+
+这些系数只能由 UHPC 多轴材料数据约束，不得由 Swartz 板或 UCFT 板承载力反算。
+
+## 5. 精确全局矩
+
+本轮生成了 **156 条** 精确的“材料基—全局单项式”映射：
+
+\[
+\widehat U(r,q)
+=\sum_k c_k\sum_{p,s}M_{kps}r^pq^s.
+\]
+
+每个 \(M_{kps}\) 都是 \(\alpha,\tau,a_0,\varepsilon_0\) 的显式符号函数，不是拟合数。
+
+实际能量、平衡残量、轴力和极限条件为：
+
+\[
+U=\frac{f_c\varepsilon_0\alpha b^3}{\pi^2}\widehat U,
+\]
+
+\[
+R_A=\frac{f_c\varepsilon_0\alpha b^2}{\pi^2}
+\widehat U_{,q}=0,
+\]
+
+\[
+P=\frac{f_cb^2}{\pi^2}\widehat U_{,r},
+\]
+
+\[
+\widehat D
+=\widehat U_{,rr}\widehat U_{,qq}
+-\widehat U_{,rq}^2=0.
+\]
+
+运行时只需评价有限多项式并求两个代数方程，不存在空间积分循环。
+
+## 6. D11 机器精度回归
+
+使用同一精确矩引擎重新生成 D11 P4 能量，得到：
+
+\[
+\delta_u/\varepsilon_0=1.176946009764341,
+\]
+
+\[
+A_u/b=0.012862137357895,
+\qquad
+A_u=15.691807576631\ \mathrm{mm},
+\]
+
+\[
+P_u=514.268712063680\ \mathrm{kN}.
+\]
+
+与 D11 冻结值的差为：
+
+\[
+\Delta P=-2.274e-13\ \mathrm{kN}.
+\]
+
+因此精确矩引擎通过机器精度回归，且回归使用的空间积分点数和板级投影数均为 0。
+
+## 7. UHPC 来源链与当前边界
+
+项目来源锁定的 UHPC 受压曲线为胡文旭型峰前/峰后有理式；受拉曲线为纤维参数控制的指数型关系。UHPC 材料参数接口已经写入 JSON，但 \(a_3\sim a_6\) 尚未冻结为生产数值，原因是：
+
+1. 原受压、受拉函数不是有限多项式；
+2. 原点处项目定义的弹性极限切线与受拉指数函数的单侧导数并不天然相同；
+3. 必须先完成材料层形状约束识别和认证域审计，不能再用板荷载决定材料系数。
+
+周俊 Drucker–Prager 关系和王淑楠 Willam–Warnke 关系已登记为 UHPC-L1 材料约束，但不进入当前 L0。
+
+## 8. 当前门禁
+
+```text
+D15_EXACT_GEOMETRY_MOMENT_ENGINE       = PASS
+D15_RUNTIME_SPATIAL_QUADRATURE         = ZERO
+D15_OFFLINE_PLATE_PROJECTION           = ZERO
+D15_D11_MACHINE_PRECISION_REGRESSION   = PASS
+D15_UHPC_L0_ANALYTICAL_MATRIX_FORMULA  = PASS
+D15_UHPC_L1_OPTIONAL_MATRIX_FORMULA    = PASS
+D15_UHPC_NUMERIC_A3_TO_A6              = PENDING
+D15_UHPC_NUMERIC_BETA                  = LOCKED_ZERO_IN_L0 / PENDING_IN_L1
+D15_UHPC_PANEL_CALCULATION             = NOT STARTED
+D15_PRODUCTION_USE                     = NOT AUTHORIZED
+```
+
+下一门禁只剩材料层系数识别：在不使用板结果的前提下，对 \(a_3\sim a_6\) 进行形状受约束识别，并验证同一系数集能够同时恢复 UHPC 受压、受拉和初始泊松响应。
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D15R/D15R_HISTORY_EQUIVALENCE_REPORT.md
+SIZE: 2920
+SHA256: ce41d37b9fcfef455d3c5ecde6864f5b70041744e722f7aef20c03aeb61be984
+ENCODING: utf-8
+LINES: 73
+====================================================================================================
+# D15R：历史等价性核验与精确矩恢复报告
+
+## 1. 核验结论
+
+用户记忆正确。当前提出的“有限项材料函数 + 不变量 + 精确空间矩”并不是一条全新路线，其直接历史对应物是 D15。
+
+D15 已经完成：
+
+1. 用 `I1、I2` 和主应变幂和递推消除显式主应变根式；
+2. 用有限材料基生成精确三角矩和厚度矩；
+3. 生成有限的材料基—全局单项式映射；
+4. 运行时不使用空间积分或板级投影。
+
+因此本阶段不再重造一个平行模型，而是恢复 D15 精确矩引擎，并把 D15 后来被否决的材料简化与仍可保留的数学引擎分开。
+
+## 2. D15 中可直接继承与不可直接继承的部分
+
+### 可直接继承
+
+- `m=1` 连续完整半波运动学；
+- 精确三角矩 `J_pq`；
+- 精确厚度矩 `Z_h`；
+- Newton 幂和递推；
+- 有限材料基到全局单项式的自动展开；
+- 零空间求积运行结构。
+
+### 不可直接继承
+
+- UHPC-L0 仅按两个主方向单轴曲线的材料身份；
+- 所有多轴系数 `beta=0` 的永久设置；
+- 取消 U/TC/TT/CC/TCX 状态信息的材料解释；
+- 未经形状约束和认证域审计的 `a3...a6`；
+- 单一标量势必然要求切线主对称的限制。
+
+## 3. 本轮恢复结果
+
+恢复的十二个历史 D15 材料基为：
+
+- `p2/2 ... p6/6`；
+- `I2`；
+- 六个 `beta` 多轴项。
+
+程序通过精确 Beta/Gamma 矩和厚度幂矩，生成 **155 条非零全局映射**。历史报告写为 156 条。本轮没有人为补一条零项来凑数；差异暂标记为计数口径开放项，可能来自历史零项、元数据项或其他计数对象。
+
+这项差异不影响精确矩原理，但必须在找到历史原 CSV 后逐行核对，不能靠猜测消除。
+
+## 4. 正确的后继材料接口
+
+Nguyen 来源切线不一定对称，因此不能先验要求普通混凝土和 UHPC 全部来自一个标量势。二维各向同性、主方向共轴的有限解析向量接口可写为：
+
+\[
+\boldsymbol\sigma
+=a(I_1,I_2)\mathbf I+b(I_1,I_2)\mathbf E.
+\]
+
+该形式仍然完全由有限多项式组成，并能保持零空间求积；当 `a,b` 不满足势函数可积条件时，一致切线可以非对称。
+
+本轮只实现并验证了这一数学接口，没有识别普通混凝土或 UHPC 系数，也没有改变冻结的 D19R 来源材料。
+
+## 5. 当前门禁
+
+```text
+D15_ROUTE_IDENTIFICATION                  = PASS
+D15_EXACT_MOMENT_ENGINE_REACTIVATION      = PASS
+RUNTIME_SPATIAL_QUADRATURE                = ZERO
+OFFLINE_SPATIAL_QUADRATURE                = ZERO
+PANEL_LEVEL_PROJECTION                    = ZERO
+COMMON_VECTOR_OPERATOR_INTERFACE          = PASS_MATHEMATICAL_ONLY
+NSC_SOURCE_CONSTRAINED_COEFFICIENTS        = OPEN
+UHPC_SOURCE_CONSTRAINED_COEFFICIENTS       = OPEN
+SWARTZ24                                   = NOT_AUTHORIZED
+YUNLU_COUPLING                             = NOT_STARTED
+```
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D15R/D15R_V054_HAND_CALC.md
+SIZE: 5733
+SHA256: eaf5ef093bf5c3827b8b062b2bcaee81cb9353dace06e04695717e7120363168
+ENCODING: utf-8
+LINES: 382
+====================================================================================================
+# D15R v0.5.4 材料系数识别手算校核
+
+## 1. 本轮手算对象
+
+本轮不计算板承载力，只核对三个对象：
+
+1. D15 精确矩生成器是否可直接使用；
+2. 普通混凝土与 UHPC 是否采用同一有限解析语法；
+3. 候选材料函数在一个材料状态点上的应力和切线如何形成。
+
+正式空间积分次数为零。材料系数通过有限线性方程组识别，不包含板面或厚度数值积分。
+
+---
+
+## 2. D15 精确矩的独立核对
+
+活动编译器采用稀疏多项式递推，独立核对程序采用普通 SymPy 表达式直接展开。两者分别计算
+
+\[
+J_{pq}=\int_0^\pi\sin^pX\cos^qX\,dX
+\]
+
+和
+
+\[
+Z_h=\int_{-\tau/2}^{\tau/2}\zeta^h\,d\zeta.
+\]
+
+其中
+
+\[
+J_{pq}=0\quad(q\text{为奇数}),
+\]
+
+\[
+J_{pq}=\frac{\Gamma((p+1)/2)\Gamma((q+1)/2)}
+{\Gamma((p+q+2)/2)}\quad(q\text{为偶数}),
+\]
+
+\[
+Z_h=0\quad(h\text{为奇数}),
+\qquad
+Z_h=\frac{\tau^{h+1}}{2^h(h+1)}\quad(h\text{为偶数}).
+\]
+
+独立重建与活动编译器逐项比较：
+
+\[
+N_{\mathrm{active}}=155,
+\qquad
+N_{\mathrm{independent}}=155,
+\qquad
+N_{\mathrm{different}}=0.
+\]
+
+因此当前 D15 精确矩生成器可以直接使用。历史记录中的“156”仍是计数口径问题，不能人为补一条零项。
+
+---
+
+## 3. 双方共同的归一化
+
+定义
+
+\[
+e_i=\frac{\varepsilon_i}{\varepsilon_{c0}},
+\qquad
+s_i=\frac{\sigma_i}{f_c}.
+\]
+
+### 3.1 普通混凝土
+
+输入：
+
+\[
+E=30000\ \mathrm{MPa},\quad
+f_c=40\ \mathrm{MPa},\quad
+\varepsilon_{c0}=0.002,\quad
+f_t=3.5\ \mathrm{MPa}.
+\]
+
+故
+
+\[
+m=\frac{E\varepsilon_{c0}}{f_c}
+=\frac{30000\times0.002}{40}
+=\boxed{1.5},
+\]
+
+\[
+r_t=\frac{f_t}{f_c}
+=\frac{3.5}{40}
+=\boxed{0.0875},
+\]
+
+\[
+e_t=\frac{r_t}{m}
+=\frac{0.0875}{1.5}
+=\boxed{0.0583333333}.
+\]
+
+### 3.2 UHPC
+
+输入：
+
+\[
+E=43400\ \mathrm{MPa},\quad
+f_c=141.1\ \mathrm{MPa},\quad
+\varepsilon_{c0}=0.0035,\quad
+f_t=7.3\ \mathrm{MPa}.
+\]
+
+故
+
+\[
+m=\frac{43400\times0.0035}{141.1}
+=\boxed{1.07654145996},
+\]
+
+\[
+r_t=\frac{7.3}{141.1}
+=\boxed{0.05173635719},
+\]
+
+\[
+e_t=\frac{r_t}{m}
+=\boxed{0.04805793285}.
+\]
+
+两种材料使用相同的五个单轴约束：
+
+\[
+f(0)=0,
+\qquad
+f'(0)=m,
+\]
+
+\[
+f(-1)=-1,
+\qquad
+f'(-1)=0,
+\]
+
+\[
+f(e_t)=r_t.
+\]
+
+这些条件来自材料参数，不使用板承载力。
+
+---
+
+## 4. 共同有限材料语法
+
+单轴部分取同阶多项式：
+
+\[
+f(e)=\sum_{n=0}^{24}c_ne^n.
+\]
+
+多轴修正采用
+
+\[
+I_1=e_1+e_2,
+\qquad
+I_2=e_1e_2,
+\]
+
+\[
+\xi=\frac{I_1+1.25}{1.95},
+\qquad
+\eta=\frac{I_2}{2.56},
+\]
+
+\[
+\phi_{pq}=T_p(\xi)\eta^q,
+\qquad
+q\ge1,
+\qquad
+p+2q\le14.
+\]
+
+每个修正算子包含
+
+\[
+13+11+9+7+5+3+1=\boxed{49}
+\]
+
+个基函数。`a`、`b`两个算子共98个修正系数，加上25个单轴系数，总数为
+
+\[
+25+2\times49=\boxed{123}.
+\]
+
+最终主应力为
+
+\[
+s_1=f(e_1)+a_c(I_1,I_2)+b_c(I_1,I_2)e_1,
+\]
+
+\[
+s_2=f(e_2)+a_c(I_1,I_2)+b_c(I_1,I_2)e_2.
+\]
+
+由于每个多轴基均有因子 \(I_2^q\)，在单轴路径中
+
+\[
+I_2=e_1e_2=0,
+\]
+
+所以
+
+\[
+a_c=b_c=0.
+\]
+
+这保证多轴识别不会修改已锁定的单轴锚点。
+
+---
+
+## 5. 材料点手工代入示例
+
+取统一材料点
+
+\[
+e_1=0.20,
+\qquad
+e_2=-1.00.
+\]
+
+则
+
+\[
+I_1=-0.80,
+\qquad
+I_2=-0.20,
+\]
+
+\[
+\xi=\frac{-0.80+1.25}{1.95}
+=\boxed{0.2307692308},
+\]
+
+\[
+\eta=\frac{-0.20}{2.56}
+=\boxed{-0.078125}.
+\]
+
+例如最低阶多轴基为
+
+\[
+\phi_{01}=T_0(\xi)\eta=-0.078125.
+\]
+
+其他基按同样方式计算，然后代入随包提供的系数表求和。
+
+### 5.1 普通混凝土
+
+冻结源模型在该点为TC状态：
+
+\[
+(s_1,s_2)_{\mathrm{source}}
+=(0.0709722222,-1.0000000000).
+\]
+
+候选有限函数给出：
+
+\[
+(s_1,s_2)_{\mathrm{candidate}}
+=(0.0692311175,-0.8813673006).
+\]
+
+对应物理应力：
+
+\[
+\sigma_1=0.0692311175\times40
+=\boxed{2.76924470\ \mathrm{MPa}},
+\]
+
+\[
+\sigma_2=-0.8813673006\times40
+=\boxed{-35.2546920\ \mathrm{MPa}}.
+\]
+
+压向误差约为
+
+\[
+\frac{-0.8813673006-(-1)}{1}
+=\boxed{11.8633\%}.
+\]
+
+因此该候选不能被冻结为正式普通混凝土函数。
+
+### 5.2 UHPC
+
+冻结源模型在该点为TCX状态：
+
+\[
+(s_1,s_2)_{\mathrm{source}}
+=(0.1789951841,-0.9662687325).
+\]
+
+候选有限函数给出：
+
+\[
+(s_1,s_2)_{\mathrm{candidate}}
+=(0.1785988100,-0.9490592766).
+\]
+
+对应物理应力：
+
+\[
+\sigma_1=0.1785988100\times141.1
+=\boxed{25.2002941\ \mathrm{MPa}},
+\]
+
+\[
+\sigma_2=-0.9490592766\times141.1
+=\boxed{-133.862263\ \mathrm{MPa}}.
+\]
+
+该点应力吻合较好，但不能据此忽略全域切线门禁。
+
+---
+
+## 6. 切线为何必须单独检查
+
+候选函数的切线由其解析导数唯一确定，不使用数值差分。以普通混凝土示例点为例，候选归一化切线为
+
+\[
+[D_{11},D_{12},D_{21},D_{22},D_{33}]
+=
+[0.2307463,-0.0028075,-0.4179982,-0.3098268,0.3960827].
+\]
+
+冻结源模型为
+
+\[
+[-0.1166667,0,0,0,0.4462384].
+\]
+
+UHPC候选为
+
+\[
+[0.2593297,-0.0000412,0.5437306,0.1967601,0.4698575],
+\]
+
+冻结源模型为
+
+\[
+[0.3453880,0,0.5105125,0,0.4771933].
+\]
+
+这说明仅看应力误差不足以批准材料函数。普通混凝土的切线偏差尤其明显。
+
+---
+
+## 7. 为什么当前系数不能直接塞入原始单项式矩阵
+
+候选识别在缩放正交基 \(T_p(\xi)\eta^q\) 中进行。若全部展开为原始 \(I_1^pI_2^q\)，普通混凝土最大系数达到
+
+\[
+5.3296\times10^{11},
+\]
+
+UHPC最大系数达到
+
+\[
+2.9055\times10^{10}.
+\]
+
+用双精度逐项求和时，大正项和大负项相互抵消。5000个独立材料点的回代审计中，普通混凝土最大绝对应力误差达到3343.36，而真实归一化应力量级不足2。
+
+所以：
+
+\[
+\boxed{
+\text{D15精确矩公式正确}
+\neq
+\text{任意高阶原始单项式系数都数值稳定}
+}
+\]
+
+当前123系数候选只能作为材料识别审计对象，不能作为正式精确矩输入。
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D16/NZ_SCCM_UHPC_FSAM_v0.1_D16_完整状态来源与方程门禁报告.md
+SIZE: 6738
+SHA256: 472d378d0175ba9695c259df763e9baab9c1285a76edb4e6f9b656af8fc87af0
+ENCODING: utf-8
+LINES: 270
+====================================================================================================
+# UHPC-FSAM v0.1：完整状态来源注册、显式方程恢复与解析矩门禁报告
+
+> Archive identity: complete text recovered from File Library `file_000000003c588230b6557f5355bac9a9`. Historical D16 artifact; retained for provenance and not allowed to override later current-operator governance without explicit supersession review.
+
+## 1. 本阶段任务
+
+本阶段执行以下工作：
+
+1. 废止UHPC“仅单轴主曲线”的层0材料边界；
+2. 以Nguyen普通混凝土U、TC、TT、CC、TCX为母架构；
+3. 增加UHPC特有的三轴受约束状态C3；
+4. 检索并注册UHPC单轴、双轴、三轴和真三轴代表性来源；
+5. 只实现来源中明确给出的公式；
+6. 建立普通混凝土与UHPC状态的一一对应关系；
+7. 判断每一类方程能否进入有限精确解析矩；
+8. 不用板级试验荷载拟合任何材料参数。
+
+## 2. 状态族
+
+正式状态族冻结为：
+
+\[
+\mathcal S_{\mathrm{UHPC}}
+=
+\{U,TC,TT,CC,TCX,C3\}.
+\]
+
+### U
+
+未开裂、未压碎多轴状态。Wang等2024的Willam-Warnke五参数面可作为三维强度边界；D'Alessandro等的直接双轴试验用于校核拉压象限及纤维取向影响。
+
+### TC
+
+一个主方向开裂受拉，另一个主方向受压。Fehling等证明压缩强度在较小横向拉应变下显著降低，并建议双线性折减；Liu等给出UHPC专用应力软化和应变软化研究，但本阶段尚未取得其完整公式，因此TC不能宣告闭合。
+
+### TT
+
+两个主方向处于开裂受拉或多轴拉伸状态。FHWA给出直接拉伸、开裂强度、后开裂承载和纤维取向锚点；Looney和Volz提供多轴拉伸破坏面数据，但完整系数仍未冻结。
+
+### CC
+
+双压峰后/压碎状态。Wang等2024的W-W面提供破坏包络；Zhang等2023提供主动围压下峰值应力、峰值应变、残余应力及全过程曲线，轴对称三轴条件下已经具备显式闭合。
+
+### TCX
+
+先拉裂、后压碎状态。它必须由TC软化峰值和CC/C3峰后关系共同组成。当前没有一篇已定位来源给出完整TCX闭合，故标为材料级综合模型开放项，不得擅自拼接。
+
+### C3
+
+三个主应力均为压应力的受约束状态。W-W、DP、Ottosen、主动围压曲线和真三轴试验共同约束该状态。轴对称主动围压已有显式关系，任意不等三轴应力状态尚未形成完整一致切线。
+
+## 3. 已恢复的显式公式
+
+### 3.1 Wang等2024 W-W破坏面
+
+应力不变量：
+
+\[
+f(\sigma)
+=
+f(I_1,J_2,J_3)
+=
+f(\rho,\xi,\theta)=0.
+\]
+
+受拉、受压子午线：
+
+\[
+\frac{\xi_t}{f_{cu}}
+=
+a_2\left(\frac{k_t\rho_t}{f_{cu}}\right)^2
++a_1\left(\frac{k_t\rho_t}{f_{cu}}\right)+a_0,
+\]
+
+\[
+\frac{\xi_c}{f_{cu}}
+=
+b_2\left(\frac{k_c\rho_c}{f_{cu}}\right)^2
++b_1\left(\frac{k_c\rho_c}{f_{cu}}\right)+b_0.
+\]
+
+材料常数：
+
+\[
+a_0=b_0=0.1775,\quad
+a_1=-1.4554,\quad
+a_2=-0.1576,
+\]
+
+\[
+b_1=-0.7806,\quad
+b_2=-0.1763.
+\]
+
+纤维增强系数：
+
+\[
+k_c=1+0.055\lambda_{sf}+0.118\lambda_{pf},
+\]
+
+\[
+k_t=1+0.0257\lambda_{sf}.
+\]
+
+这些系数是材料三轴/双轴数据回归结果，不是板承载力拟合。
+
+### 3.2 Zhou等2023 DP校核线
+
+\[
+\frac{\tau_{\mathrm{oct}}^u}{f'_c}
+=
+0.00995
++
+1.394
+\frac{\sigma_{\mathrm{oct}}^u}{f'_c}.
+\]
+
+该式适合作为受压子午线独立校核，不足以单独定义全过程本构。
+
+### 3.3 Wang等2024围压峰值关系
+
+\[
+\frac{\sigma_{cc}}{f_f}
+=
+1+4.122\frac{\sigma_{\mathrm{conf}}}{f_f},
+\]
+
+\[
+\frac{\varepsilon_{cc}}{\varepsilon_f}
+=
+1+6.320\frac{\sigma_{\mathrm{conf}}}{f_f},
+\]
+
+\[
+\frac{E_{cc}}{E_f}
+=
+1+1.232\frac{\sigma_{\mathrm{conf}}}{f_f}.
+\]
+
+### 3.4 Zhang等2023主动围压全过程
+
+峰值应力：
+
+\[
+\frac{f_{cc}}{f'_{co}}
+=
+1+(3.1-16V_s)
+\left(\frac{f_l}{f'_{co}}\right)^{0.7}.
+\]
+
+峰值应变：
+
+\[
+\frac{\varepsilon_{cc}}{\varepsilon_{co}}
+=
+1+(12+100V_s)
+\left(\frac{f_l}{f'_{co}}\right)^{1.05}.
+\]
+
+残余应力：
+
+\[
+\frac{f_{cr}}{f'_{co}}
+=
+9V_s+4.7\frac{f_l}{f'_{co}}.
+\]
+
+上升段采用Popovics式：
+
+\[
+\frac{\sigma_c}{f_{cc}}
+=
+\frac{x r}{r-1+x^r},
+\qquad
+x=\frac{\varepsilon_c}{\varepsilon_{cc}},
+\]
+
+\[
+r=
+\frac{E_c}{E_c-f_{cc}/\varepsilon_{cc}}.
+\]
+
+下降段：
+
+\[
+\sigma_c
+=
+f_{cr}
++
+\frac{f_{cc}-f_{cr}}
+{1+n(x-1)^2},
+\qquad
+n=\frac{2}{1+100V_s}.
+\]
+
+## 4. 实际实现和测试
+
+源码 `src/uhpc_explicit_equations.py` 已实现：
+
+- W-W纤维增强系数；
+- W-W偏平面插值；
+- W-W拉压子午线；
+- Zhou DP峰值关系；
+- Wang围压峰值应力、峰值应变和弹性模量；
+- Zhang峰值、残余、Popovics上升段和有理下降段；
+- Fehling双线性趋势的参数化形状函数。
+
+测试结果：
+
+```text
+D16 explicit-equation tests: PASS (18 checks)
+```
+
+Fehling函数只实现论文所给的双线性形状，不冻结其初始折减参数，因为论文明确说明该量受到构件几何和配筋干扰；它不能作为通用UHPC材料常数。
+
+## 5. 解析矩门禁
+
+### 已经可以有限精确积分
+
+- 连续板应变基；
+- 有限应变多项式材料项；
+- 弹性和多项式切线项；
+- 已知固定状态域内的多项式残量。
+
+### 不能直接凝结成有限普通多项式
+
+- W-W偏平面平方根与Lode角；
+- Popovics幂函数；
+- Zhang有理下降段；
+- 指数型纤维桥接；
+- 未知移动状态域。
+
+这些公式仍是解析材料公式，但“解析材料公式”不等于其三维空间积分必然具有有限项初等闭式。
+
+当前最主要的障碍是：
+
+\[
+\Omega_U,\Omega_{TC},\Omega_{TT},
+\Omega_{CC},\Omega_{TCX},\Omega_{C3}
+\]
+
+的空间边界会随荷载变化。几何矩已闭合，状态域尚未闭合。
+
+## 6. 来源门禁结论
+
+```text
+D16_NSC_BOTTOM_LOGIC                     = PASS
+D16_UHPC_LAYER0                          = ABOLISHED
+D16_UHPC_FULL_STATE_FAMILY               = ESTABLISHED
+D16_WW_FAILURE_SURFACE                   = PASS
+D16_DP_INDEPENDENT_CHECK                 = PASS
+D16_AXISYMMETRIC_TRIAXIAL_CURVE          = PASS
+D16_TC_COMPLETE_FORMULA                  = OPEN
+D16_TT_COMPLETE_FORMULA                  = OPEN
+D16_TCX_COMPLETE_FORMULA                 = OPEN
+D16_TRUE_TRIAXIAL_CONSISTENT_TANGENT     = OPEN
+D16_FULL_UHPC_ANALYTICAL_MATRIX          = NOT YET AUTHORIZED
+```
+
+## 7. 下一阶段
+
+下一阶段应按以下顺序闭合，不得直接进入UHPC板承载力计算：
+
+1. 获取并逐式恢复Liu 2023 TC软化关系；
+2. 从FHWA/AASHTO直接拉伸关系和Looney多轴拉伸数据确定TT包络及桥接关系；
+3. 确定TCX的唯一材料级组合规则；
+4. 选定W-W主破坏面，并以DP和Ottosen作独立校核；
+5. 建立任意三轴应力状态下的C3应力更新和一致切线；
+6. 完成六状态材料域扫描与自然转换审计；
+7. 再研究状态域的解析积分或低维全局状态闭合。
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D16_D18_RECOVERY_LOCATOR.md
+SIZE: 6159
+SHA256: 860190f645361b85dcfe91165418374400fd31ee900fd7db8fd9bb48bb862f63
+ENCODING: utf-8
+LINES: 142
+====================================================================================================
+# D16–D18 Recovery Locator and Role Ledger
+
+**Purpose:** preserve what D16, D17 and D18 actually established, where the original artifacts are, and what they did **not** authorize. This file is a recovery aid; where it conflicts with an original report/code artifact, the original artifact wins.
+
+## Source locators
+
+### D16
+- Original report: `NZ_SCCM_UHPC_FSAM_v0.1_D16_完整状态来源与方程门禁报告.md`
+- File Library ID: `file_000000003c588230b6557f5355bac9a9`
+- Complete-text archive in this repo: `history/D_series/D16/NZ_SCCM_UHPC_FSAM_v0.1_D16_完整状态来源与方程门禁报告.md`
+- Raw reconstructed dialogue sources:
+  - `00_按时间重建的完整对话正文.txt` — `file_000000006e10820686cb6f86d20c7569`
+  - `00_按时间重建的完整对话正文_R02.md` — `file_000000000ec88206a74063658767b20b`
+  - TURN 0001–0148 original shared dialogue — `file_00000000b7788209a161cd5ec2db852a`
+
+### D17
+- Original report: `NZ_SCCM_ANALYTICAL_MATRIX_v0.2_D17_REPORT.md`
+- File Library ID: `file_000000007d1081fd84f4ce14c9de8db8`
+- Complete-text archive in this repo: `history/D_series/D17/NZ_SCCM_ANALYTICAL_MATRIX_v0.2_D17_REPORT.md`
+- Deliverable ZIP SHA source: `NZ_SCCM_ANALYTICAL_MATRIX_v0.2_D17_DELIVERABLE.zip.sha256`
+- File Library ID: `file_00000000da9881f8ae446cc5d6f9c53d`
+- ZIP SHA-256: `0e0226f8b7cadc0117dc8ea13b023d001c60bcaf533981f0a568fe38abbc2e71`
+
+### D18
+- Deliverable ZIP hash file: `NZ_SCCM_ANALYTICAL_MATRIX_v0.3_D18_DELIVERABLE.zip.sha256`
+- File Library ID: `file_00000000931481fb93c28dd40397e473`
+- ZIP SHA-256: `cc0c33a42aaa32da1fe0960903219433e91a605dc2704a3475e8c103a1beb391`
+- Core source: `inplane_algebraic_state_front.py`
+- File Library ID: `file_000000005b588208afa008801f236b78`
+- Complete-text recovery mirror in this repo: `history/D_series/D18/inplane_algebraic_state_front.py`
+- Event-system source: `branch_event_system.py`
+- File Library ID: `file_0000000073a4820b8a21860085f6cad1`
+- `branch_event_system.py` is **not yet claimed byte-exact or complete-text migrated** because the File Library viewer truncates the long file. Keep the locator rather than store a truncated pseudo-original.
+
+## D16 role
+
+D16 was a **source registration + explicit-equation + analytic-integrability gate**, not an authorization to calculate UHPC plate capacity with an allegedly complete constitutive operator.
+
+Its historical result was:
+
+```text
+D16_NSC_BOTTOM_LOGIC                     = PASS
+D16_UHPC_LAYER0                          = ABOLISHED
+D16_UHPC_FULL_STATE_FAMILY               = ESTABLISHED
+D16_WW_FAILURE_SURFACE                   = PASS
+D16_DP_INDEPENDENT_CHECK                 = PASS
+D16_AXISYMMETRIC_TRIAXIAL_CURVE          = PASS
+D16_TC_COMPLETE_FORMULA                  = OPEN
+D16_TT_COMPLETE_FORMULA                  = OPEN
+D16_TCX_COMPLETE_FORMULA                 = OPEN
+D16_TRUE_TRIAXIAL_CONSISTENT_TANGENT     = OPEN
+D16_FULL_UHPC_ANALYTICAL_MATRIX          = NOT YET AUTHORIZED
+```
+
+The state family was `U, TC, TT, CC, TCX, C3`. This was a source/provenance framework, not proof that each state had a complete stress update/history/tangent.
+
+## D17 role
+
+D17 eliminated **through-thickness material-point discretization for principal-strain threshold locations**. At fixed `(X,Y)`, with strain tensor affine in thickness `z`, a principal-strain threshold is obtained from:
+
+```text
+c2*z^2 + c1*z + c0 = 0
+```
+
+The original report records:
+
+```text
+D17 exact thickness-front tests: PASS (755 random roots + fixtures)
+```
+
+But it also records:
+
+```text
+D17_IN_PLANE_MOVING_STATE_DOMAIN = OPEN
+D17_FULL_PANEL_PRODUCTION         = NOT AUTHORIZED
+```
+
+Thus “755 roots PASS” means the thickness-front implementation was checked; it does not mean the full plate material operator or ultimate-capacity path was solved.
+
+## D18 role
+
+D18 moved the **in-plane** principal-threshold front into algebraic variables:
+
+```text
+u = sin^2(X)
+v = sin^2(Y)
+```
+
+At fixed `u`, the squared algebraic threshold equation is represented as a cubic in `v`. The source code preserves both:
+
+- the unsquared physical equation, used to reject spurious roots introduced by squaring;
+- the polynomial/cubic representation, used to obtain algebraic front roots.
+
+The later event system records that topology events are roots of boundary polynomials, cubic leading coefficient, cubic discriminant and the `P0=P1` resultant; it explicitly states that **no u-grid is used to locate topology events**.
+
+However, the event-system file also contains an adaptive one-dimensional audit evaluator. Therefore:
+
+```text
+D18_ALGEBRAIC_FRONT = RETAINED_HISTORICAL_TOOL
+D18_NO_U_GRID_EVENT_LOCATION = SUPPORTED_BY_SOURCE
+D18_AUDIT_QUAD_PRESENT = YES
+D18_FULL_ZERO_QUADRATURE_PRODUCTION = NOT IMPLIED
+```
+
+This distinction prevents later recovery from turning an audit implementation into a formal zero-quadrature operator.
+
+## D16 → D17 → D18 → D19 logical chain
+
+```text
+D16: what material states/equations are actually sourced?
+  -> D17: where do principal-threshold state changes occur through thickness?
+  -> D18: how can those fronts be represented algebraically in-plane?
+  -> D19: where do algebraic branches enter/exit/merge/split, and how are moving-front derivatives handled?
+```
+
+Historical recovery sources summarize the roles as:
+
+- D17: fixed plate position -> threshold in thickness from a quadratic equation;
+- D18: `u=sin^2X, v=sin^2Y` -> algebraic in-plane front; fixed `u` gives a cubic in `v`;
+- D19: entry/exit/merge/split/spurious-root/front-derivative handling.
+
+## Non-equivalence rule
+
+The following implication is prohibited:
+
+```text
+D17/D18/D19 state-front machinery closed
+=> complete NC/UHPC material operator closed
+```
+
+It is false. State-domain geometry and material-state constitutive closure are separate layers. D16 itself left TC/TT/TCX and true-triaxial consistent tangent OPEN.
+
+## Current historical identity
+
+```text
+D16 = RETAINED_AS_SOURCE_AND_INTEGRABILITY_AUDIT
+D17 = RETAINED_AS_EXACT_THICKNESS_FRONT_TOOL
+D18 = RETAINED_AS_ALGEBRAIC_INPLANE_FRONT_TOOL
+D19 = RETAINED_AS_STATE_FRONT_EVENT/DERIVATIVE_AUDIT
+
+NONE_OF_THE_ABOVE = CURRENT_MATERIAL_OPERATOR_BY_ITSELF
+```
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D17/NZ_SCCM_ANALYTICAL_MATRIX_v0.2_D17_REPORT.md
+SIZE: 2838
+SHA256: 41b223637cb3198782e6fb80e7459953bc746f4bf037a22528043aa659bfa6b0
+ENCODING: utf-8
+LINES: 120
+====================================================================================================
+# D17：精确厚度状态前沿与解析矩透明化报告
+
+> Archive identity: complete text recovered from File Library `file_000000007d1081fd84f4ce14c9de8db8`. Historical D17 artifact. Deliverable ZIP hash source: `file_00000000da9881f8ae446cc5d6f9c53d`, ZIP SHA-256 `0e0226f8b7cadc0117dc8ea13b023d001c60bcaf533981f0a568fe38abbc2e71`.
+
+## 1. 阶段目标
+
+本阶段先解决两个基础问题：
+
+1. 用完全展开的例子证明矩阵系数来自理论积分，而不是拟合；
+2. 消除厚度方向材料点离散，用解析方程直接求开裂或压碎前沿。
+
+## 2. 透明系数例子
+
+本阶段对
+
+\[
+U_y=\frac12E\int_\Omega\varepsilon_y^2dV
+\]
+
+完成符号积分。完整展开系数见：
+
+`results/D17_ELASTIC_EPSY2_EXACT_COEFFICIENTS.csv`
+
+精确积分恒等式见：
+
+`results/D17_TRANSPARENT_MOMENT_TABLE.csv`
+
+## 3. 厚度状态前沿
+
+固定 \(X,Y\) 后：
+
+\[
+\mathbf E(z)=
+\begin{bmatrix}
+a_x+b_xz & (a_\gamma+b_\gamma z)/2\\
+(a_\gamma+b_\gamma z)/2 & a_y+b_yz
+\end{bmatrix}.
+\]
+
+任意主应变阈值 \(\lambda_*\) 满足：
+
+\[
+\det[\mathbf E(z)-\lambda_*\mathbf I]=0.
+\]
+
+展开得到：
+
+\[
+c_2=b_xb_y-\frac14b_\gamma^2,
+\]
+
+\[
+c_1=(a_x-\lambda_*)b_y+(a_y-\lambda_*)b_x
+-\frac12a_\gamma b_\gamma,
+\]
+
+\[
+c_0=(a_x-\lambda_*)(a_y-\lambda_*)
+-\frac14a_\gamma^2.
+\]
+
+所以厚度边界由：
+
+\[
+c_2z^2+c_1z+c_0=0
+\]
+
+直接确定。
+
+## 4. 实现与测试
+
+建立：
+
+`src/exact_thickness_state_front.py`
+
+测试结果：
+
+```text
+D17 exact thickness-front tests: PASS (755 random roots + fixtures)
+```
+
+## 5. Case 21形式演示
+
+使用D13 Case 21极限点的 \((\delta,A)\) 作为纯运动学演示，在板中心、四分点和靠边位置对以下阈值分区：
+
+- 单轴压缩峰值应变；
+- 零应变；
+- \(f_t/E_c\)拉裂应变。
+
+结果见：
+
+`results/D17_CASE21_THICKNESS_PARTITION_DEMO.csv`
+
+该演示不是新的Case 21承载力结果，只证明厚度方向不需要材料积分点。
+
+## 6. 本阶段门禁
+
+```text
+D17_TRANSPARENT_MATRIX_COEFFICIENT_DERIVATION = PASS
+D17_EXACT_TRIGONOMETRIC_MOMENTS              = PASS
+D17_EXACT_THICKNESS_MOMENTS                  = PASS
+D17_EXACT_THICKNESS_STATE_FRONT              = PASS
+D17_RANDOM_ROOT_TESTS                        = PASS
+
+D17_IN_PLANE_MOVING_STATE_DOMAIN             = OPEN
+D17_UHPC_TC_COMPLETE_FORMULA                  = OPEN
+D17_UHPC_TT_COMPLETE_FORMULA                  = OPEN
+D17_UHPC_TCX_CLOSURE                          = OPEN
+D17_FULL_PANEL_PRODUCTION                     = NOT AUTHORIZED
+```
+
+## 7. 下一阶段
+
+下一阶段同时推进：
+
+1. 将面内阈值方程变换为 \(u=\sin^2X,v=\sin^2Y\) 下的代数曲线；
+2. 研究不完全Beta函数或有限代数矩能否积分移动状态区；
+3. 继续获取Liu 2023完整TC公式和Looney多轴拉伸系数。
+
+如果来源全文仍无法取得，不得虚构公式。
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D18/inplane_algebraic_state_front.py
+SIZE: 6569
+SHA256: 29977ec7136c5f05a1c0fa2ba0622083a662c6850e421b1ad0ddcfa8d667c0ab
+ENCODING: utf-8
+LINES: 150
+====================================================================================================
+from __future__ import annotations
+
+from dataclasses import dataclass
+import math
+from typing import List
+
+import numpy as np
+from scipy.special import beta, betainc
+
+
+@dataclass(frozen=True)
+class InPlanePrincipalThresholdFront:
+    """Principal-strain threshold front at a fixed thickness z."""
+
+    S: float
+    A: float
+    delta: float
+    kx: float
+    ky: float
+    z: float
+    lam: float
+
+    def strain_components(self, u: float, v: float):
+        uv = max(0.0, u*v)
+        cc = max(0.0, (1.0-u)*(1.0-v))
+        ex = self.S*self.kx**2*(1.0-u)*v + self.z*self.A*self.kx**2*math.sqrt(uv)
+        ey = -self.delta + self.S*self.ky**2*u*(1.0-v) + self.z*self.A*self.ky**2*math.sqrt(uv)
+        ga = (
+            2.0*self.S*self.kx*self.ky*math.sqrt(max(0.0, u*(1.0-u)*v*(1.0-v)))
+            - 2.0*self.z*self.A*self.kx*self.ky*math.sqrt(cc)
+        )
+        return ex, ey, ga
+
+    def principal_strains(self, u: float, v: float):
+        ex, ey, ga = self.strain_components(u, v)
+        mean = 0.5*(ex+ey)
+        radius = math.sqrt(0.25*(ex-ey)**2 + 0.25*ga**2)
+        return mean+radius, mean-radius
+
+    def p0_p1(self, u: float, v: float):
+        S,A,delta,kx,ky,z,lam = (
+            self.S,self.A,self.delta,self.kx,self.ky,self.z,self.lam
+        )
+        p0 = (
+            A*A*kx*kx*ky*ky*z*z*(u+v-1.0)
+            - S*delta*kx*kx*v
+            - S*kx*kx*lam*v
+            - S*ky*ky*lam*u
+            + delta*lam + lam*lam
+            + u*v*(S*delta*kx*kx + S*kx*kx*lam + S*ky*ky*lam)
+        )
+        p1 = A*z*(
+            S*kx*kx*ky*ky*(2.0-u-v)
+            - delta*kx*kx
+            - lam*(kx*kx+ky*ky)
+        )
+        return p0, p1
+
+    def physical_equation(self, u: float, v: float):
+        p0, p1 = self.p0_p1(u, v)
+        return p0 + math.sqrt(max(0.0, u*v))*p1
+
+    def polynomial_equation(self, u: float, v: float):
+        p0, p1 = self.p0_p1(u, v)
+        return p0*p0 - u*v*p1*p1
+
+    def cubic_coefficients_in_v(self, u: float):
+        S,A,delta,kx,ky,z,lam = (
+            self.S,self.A,self.delta,self.kx,self.ky,self.z,self.lam
+        )
+        return (
+            A**4*kx**4*ky**4*u**2*z**4 - 2*A**4*kx**4*ky**4*u*z**4 + A**4*kx**4*ky**4*z**4 - 2*A**2*S*kx**2*ky**4*lam*u**2*z**2 + 2*A**2*S*kx**2*ky**4*lam*u*z**2 + 2*A**2*delta*kx**2*ky**2*lam*u*z**2 - 2*A**2*delta*kx**2*ky**2*lam*z**2 + 2*A**2*kx**2*ky**2*lam**2*u*z**2 - 2*A**2*kx**2*ky**2*lam**2*z**2 + S**2*ky**4*lam**2*u**2 - 2*S*delta*ky**2*lam**2*u - 2*S*ky**2*lam**3*u + delta**2*lam**2 + 2*delta*lam**3 + lam**4,
+            2*A**4*kx**4*ky**4*u*z**4 - 2*A**4*kx**4*ky**4*z**4 - A**2*S**2*kx**4*ky**4*u**3*z**2 + 4*A**2*S**2*kx**4*ky**4*u**2*z**2 - 4*A**2*S**2*kx**4*ky**4*u*z**2 + 2*A**2*S*delta*kx**4*ky**2*z**2 + 2*A**2*S*kx**4*ky**2*lam*z**2 - A**2*delta**2*kx**4*u*z**2 - 2*A**2*delta*kx**4*lam*u*z**2 - 2*A**2*delta*kx**2*ky**2*lam*u*z**2 + 2*A**2*delta*kx**2*ky**2*lam*z**2 - A**2*kx**4*lam**2*u*z**2 - 2*A**2*kx**2*ky**2*lam**2*u*z**2 + 2*A**2*kx**2*ky**2*lam**2*z**2 - A**2*ky**4*lam**2*u*z**2 - 2*S**2*delta*kx**2*ky**2*lam*u**2 + 2*S**2*delta*kx**2*ky**2*lam*u - 2*S**2*kx**2*ky**2*lam**2*u**2 + 2*S**2*kx**2*ky**2*lam**2*u - 2*S**2*ky**4*lam**2*u**2 + 2*S*delta**2*kx**2*lam*u - 2*S*delta**2*kx**2*lam + 4*S*delta*kx**2*lam**2*u - 4*S*delta*kx**2*lam**2 + 2*S*delta*ky**2*lam**2*u + 2*S*kx**2*lam**3*u - 2*S*kx**2*lam**3 + 2*S*ky**2*lam**3*u,
+            A**4*kx**4*ky**4*z**4 - 2*A**2*S**2*kx**4*ky**4*u**2*z**2 + 4*A**2*S**2*kx**4*ky**4*u*z**2 - 2*A**2*S*delta*kx**4*ky**2*z**2 - 2*A**2*S*kx**4*ky**2*lam*z**2 + S**2*delta**2*kx**4*u**2 - 2*S**2*delta**2*kx**4*u + S**2*delta**2*kx**4 + 2*S**2*delta*kx**4*lam*u**2 - 4*S**2*delta*kx**4*lam*u + 2*S**2*delta*kx**4*lam + 2*S**2*delta*kx**2*ky**2*lam*u**2 - 2*S**2*delta*kx**2*ky**2*lam*u + S**2*kx**4*lam**2*u**2 - 2*S**2*kx**4*lam**2*u + S**2*kx**4*lam**2 + 2*S**2*kx**2*ky**2*lam**2*u**2 - 2*S**2*kx**2*ky**2*lam**2*u + S**2*ky**4*lam**2*u**2,
+            -A**2*S**2*kx**4*ky**4*u*z**2,
+        )
+
+    def physical_roots_v(self, u: float, tol: float = 1.0e-8) -> List[float]:
+        coeff = list(self.cubic_coefficients_in_v(u))
+        scale = max(1.0e-30, max(abs(x) for x in coeff))
+        while len(coeff) > 1 and abs(coeff[-1]) <= 1.0e-13*scale:
+            coeff.pop()
+        roots = np.roots(list(reversed(coeff)))
+        accepted: List[float] = []
+        for root in roots:
+            if abs(root.imag) > 1.0e-8:
+                continue
+            value = float(root.real)
+            if value < -tol or value > 1.0+tol:
+                continue
+            value = min(1.0, max(0.0, value))
+            p0, p1 = self.p0_p1(u, value)
+            residual = self.physical_equation(u, value)
+            local_scale = max(
+                1.0e-14,
+                abs(p0),
+                abs(math.sqrt(max(0.0, u*value))*p1)
+            )
+            if abs(residual) <= tol*local_scale:
+                if all(abs(value-old) > 1.0e-7 for old in accepted):
+                    accepted.append(value)
+        return sorted(accepted)
+
+    def midplane_boundary_v(self, u: float):
+        if abs(self.z) > 1.0e-14:
+            raise ValueError("midplane_boundary_v requires z=0")
+        C0 = self.delta*self.lam + self.lam*self.lam
+        Cu = -self.S*self.ky*self.ky*self.lam
+        Cv = -self.S*self.delta*self.kx*self.kx - self.S*self.kx*self.kx*self.lam
+        Cuv = (
+            self.S*self.delta*self.kx*self.kx
+            + self.S*self.kx*self.kx*self.lam
+            + self.S*self.ky*self.ky*self.lam
+        )
+        denominator = Cv + Cuv*u
+        if abs(denominator) <= 1.0e-16:
+            return None
+        return -(C0+Cu*u)/denominator
+
+
+def full_panel_beta_moment(p: int, q: int, r: int, s: int) -> float:
+    if q % 2 or s % 2:
+        return 0.0
+    ax = 0.5*(p+1)
+    bx = 0.5*(q+1)
+    ay = 0.5*(r+1)
+    by = 0.5*(s+1)
+    return float(beta(ax,bx)*beta(ay,by))
+
+
+def incomplete_beta_interval(v0: float, v1: float, r: int, s: int) -> float:
+    if s % 2:
+        raise ValueError("odd cosine power cancels only after full symmetric pairing")
+    a = 0.5*(r+1)
+    b = 0.5*(s+1)
+    return float(beta(a,b)*(betainc(a,b,v1)-betainc(a,b,v0)))
+
+
+def front_moment_representation(p: int, q: int, r: int, s: int) -> str:
+    if q % 2 or s % 2:
+        return "0 by full-panel reflection symmetry"
+    ax = f"({p}+1)/2"
+    bx = f"({q}+1)/2"
+    ay = f"({r}+1)/2"
+    by = f"({s}+1)/2"
+    return (
+        "Integral_0^1 u^(a_x-1)(1-u)^(b_x-1) "
+        "Sum_j[B_vplus(a_y,b_y)-B_vminus(a_y,b_y)] du; "
+        f"a_x={ax}, b_x={bx}, a_y={ay}, b_y={by}"
+    )
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D19/D19_TEST_LOG.txt
+SIZE: 126
+SHA256: 1e87d48bbadb6df00fe701452d1140ef44583dec1123de1c9393df4eacff0039
+ENCODING: utf-8
+LINES: 1
+====================================================================================================
+D19 tests: PASS (178 topology intervals, 45 analytic root derivatives, 80 Liu tangent checks, 1 full front-moment derivative)
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D19R/D19R_FROZEN_MATERIAL_INTEGRABILITY_AUDIT.csv
+SIZE: 3988
+SHA256: 3cd82ee001e3574ec25d5ae88c632ddf135989ac2217992c5459dc9d23e588e1
+ENCODING: utf-8
+LINES: 13
+====================================================================================================
+index,material,state,source_method,frozen_formula_structure,state_boundary,covered_by_D19_front,finite_D19_beta_moment_basis,strict_zero_quadrature_status,reason
+0,COMMON_GEOMETRY,all,_principal_dual + _global_from_principal,principal values contain sqrt((ex-ey)^2+gamma^2); spectral rotation contains division by that radius,fixed principal-strain threshold lambda,YES for each fixed lambda,CONDITIONAL,NOT_CLOSED_GENERAL,Only when the same affine law acts on both principal values does the spectral radical cancel; otherwise the projector/radius remains.
+1,NSC,U/TT pre-crack both principal directions,NSCPathClosedModel._tension,sigma=E*epsilon in both principal directions,epsilon_i=0 and epsilon_i=ft/E,YES,YES,CLOSED_FOR_THIS_SUBREGION,Same linear map on both eigenvalues gives global sigma=E*epsilon; only finite geometric/state moments are required.
+2,NSC,TT both principal directions in same linear softening segment,NSCPathClosedModel._tension,same affine law sigma=a*epsilon+b applied to both eigenvalues,epsilon_i=ft/E and epsilon_i=alpha1*ft/E,YES,YES_CONDITIONAL,CLOSED_ONLY_AFTER_SUBPARTITION,The common affine spectral function reduces to a*epsilon_tensor+b*I. Mixed tensile subsegments do not cancel the spectral projector.
+3,NSC,TC/U compression branch,NSCPathClosedModel._compression,rational Saenz-type function E*c/[1+a*x+x^2],c=eps_c0; t=0; t=ft/E,YES for fixed strain thresholds,NO,NOT_CLOSED,Rational function of an algebraic principal strain is outside the finite beta-moment basis.
+4,NSC,TC/TCX coupling,NSCPathClosedModel._tc_gamma,gamma=1/(0.8+0.34*t/eps_c0) multiplied by compression law,"fixed t threshold where raw gamma reaches 1, plus t/crack and c/peak thresholds",YES for each fixed strain threshold,NO,NOT_CLOSED,Product of two rational/algebraic principal-strain functions cannot be represented by the current finite moment table.
+5,NSC,CC/CCX,NSCPathClosedModel._cc_enhancement + _compression,"k=1+3.65*alpha/(1+alpha)^2, alpha=min(c1,c2)/max(c1,c2), then rational/affine compression",c_i=eps_c0; eigenvalue ordering already fixed,PARTIAL,NO,NOT_CLOSED,Continuous ratio of principal strains introduces a non-polynomial spectral function even before the compression denominator.
+6,UHPC,U/TT pre-peak both principal directions,UHPCPathClosedModel._tension,sigma=E*epsilon in both principal directions,epsilon_i=0 and epsilon_i=eps_t_peak,YES,YES,CLOSED_FOR_THIS_SUBREGION,Same linear law on both principal values cancels the spectral projector.
+7,UHPC,TT post-peak,UHPCPathClosedModel._tension,"ft*(e*xi)^(1/m)*exp(-xi^m/m), generally noninteger m",epsilon_i=eps_t_peak,YES,NO,NOT_CLOSED,Generalized exponential of an algebraic principal strain is not a finite beta moment and no exact implemented special-function primitive exists over the moving 2D state domain.
+8,UHPC,U/CC compression,UHPCPathClosedModel._compression_hu,rational function of x=c/eps_c0 on both pre- and post-peak branches,c=eps_c0,YES,NO,NOT_CLOSED,Rational function of the principal-strain radical is outside the finite moment basis.
+9,UHPC,TC/TCX compression,UHPCPathClosedModel._tc_compression,"damage/exponential tension law times Liu zeta with sqrt, times x^1.8 rational compression",t=eps_t_peak; t=0.0035; c=eps_c0; damage clip limits,PARTIAL,NO,NOT_CLOSED,"Contains exponential, square-root softening and noninteger power 1.8. Damage clip boundaries are not all represented by one fixed-lambda front."
+10,UHPC,CC/CCX W-W active cap,WillamWarnkeUHPC.cap/rho_limit,stress-invariant surface with nested square roots and Lode angle acos,failure_index(stress)=1,NO,NO,NOT_CLOSED_AND_FRONT_MISSING,Current D19 front is a fixed principal-strain threshold. The W-W activation boundary is stress-based and depends on the nonlinear trial law.
+11,UHPC,Zhou DP audit,ZhouDPAudit.residual,octahedral stress invariant audit only,not active in runtime material law,NOT_APPLICABLE,NOT_APPLICABLE,AUDIT_ONLY,It is not part of the equilibrium stress update and must not be stacked onto W-W.
+
+====================================================================================================
+FILE: history/NZ_SCCM/D_series/D19R/D19R_V052_EXECUTION_REPORT.md
+SIZE: 8748
+SHA256: b8833ce0cf01a458dcec38334dce57587b3d721f7aea9131351af72fa2100a4a
+ENCODING: utf-8
+LINES: 395
+====================================================================================================
+# NZ-SCCM D19R v0.5.2：冻结材料可积性与状态前沿手算审计
+
+## 1. 本轮任务边界
+
+本轮从 v0.5.1 回退基线直接复制建立审计分支，未修改 `src/` 与 `tests/` 中任何理论代码。逐文件 SHA-256 比较结果为 **9/9 完全一致**。
+
+本轮没有：
+
+- 新增普通混凝土或 UHPC 材料机制；
+- 改写 U、TC、TT、CC、TCX 或 CCX 状态关系；
+- 恢复 Source-U、Darwin–Pecknold、Chebyshev 板级代理或伪弧长；
+- 运行 Swartz 24 板承载力计算；
+- 调整任何材料参数。
+
+实际执行内容只有两项：
+
+1. 对冻结的 NSC/UHPC 各材料分支逐项检查，判断其能否进入 D19 当前的有限 Beta 状态矩基底；
+2. 选取 D19 原测试中的一个明确状态前沿，给出可人工复核的根、前沿导数、内层不完全 Beta 积分及完整状态矩审计。
+
+## 2. 回归测试
+
+```text
+D19 tests: PASS
+178 topology intervals
+45 analytic root derivatives
+80 Liu tangent checks
+1 full front-moment derivative
+
+D19R tests: PASS
+12 material tangents
+2 full matrix Jacobians
+6 UHPC path states
+```
+
+这些结果只证明原 D19/D19R 代码未被破坏，不等于完整零求积解析矩已经闭合。
+
+## 3. D19 当前真正实现到哪一步
+
+固定厚度坐标 `z` 后，主应变阈值前沿写为：
+
+\[
+F(u,v)=P_0(u,v)+\sqrt{uv}\,P_1(u,v)=0,
+\]
+
+平方后为关于 `v` 的三次代数方程。D19 能够精确求出：
+
+- `v=0`、`v=1` 边界事件；
+- 三次方程降阶事件；
+- 判别式事件；
+- 物理根与平方伪根相交事件；
+- 各拓扑区间内的物理前沿根；
+- 前沿速度 `dv/dq=-F_q/F_v`。
+
+对固定 `u`，`v` 方向的状态矩可写成不完全 Beta 函数，因此**内层积分已经解析闭合**。
+
+但是，源码 `state_front_moment_audit()` 随后仍调用一维自适应积分，对 `u` 方向积分：
+
+\[
+M_{pqrs}^{(S)}
+=\int_{u_a}^{u_b}w_u(u)
+\left[
+B_{v_+(u)}(a_y,b_y)-B_{v_-(u)}(a_y,b_y)
+\right]du.
+\]
+
+因此当前准确身份是：
+
+\[
+\boxed{\text{精确拓扑分区 + 解析内层 Beta 积分 + 一维外层数值积分}}
+\]
+
+不是完全零数值积分的闭式状态矩。
+
+此外，当前 `branch_event_system.py` 的状态矩模块针对**固定 z**工作。完整厚度状态前沿的统一积分并未在该模块中实现，所以整板矩阵还存在厚度闭合缺口。
+
+## 4. 冻结材料逐项可积性结论
+
+完整清单见 `results/D19R_FROZEN_MATERIAL_INTEGRABILITY_AUDIT.csv`。
+
+### 4.1 可以进入当前有限矩基底的范围
+
+仅有少数子区域可以严格化为有限几何/状态矩：
+
+1. NSC 与 UHPC 的双主方向共同线弹性拉伸区：
+   \[
+   \sigma_i=E\varepsilon_i.
+   \]
+   因两个特征值使用同一个线性函数，主方向投影中的根式相消，回到：
+   \[
+   \boldsymbol\sigma=E\boldsymbol\varepsilon.
+   \]
+
+2. NSC 两个主方向同时位于同一条仿射拉伸软化段时：
+   \[
+   \sigma_i=a\varepsilon_i+b,
+   \]
+   可化为：
+   \[
+   \boldsymbol\sigma=a\boldsymbol\varepsilon+b\mathbf I.
+   \]
+   但必须进一步划分两个主应变是否确实位于同一子段。
+
+### 4.2 不能进入当前有限矩基底的冻结分支
+
+NSC 主要障碍：
+
+- Saenz 型压缩有理式；
+- TC 折减系数与压缩曲线的乘积；
+- CC 中主压应变比控制的双压增强；
+- 不同主方向位于不同材料子段时保留的谱投影根式。
+
+UHPC 主要障碍：
+
+- Hu 压缩有理式；
+- 纤维拉伸峰后的广义指数函数；
+- Liu 分支中的 `x^1.8`、有理分母与拉向软化平方根；
+- 拉伸损伤与指数曲线的组合；
+- W-W 面中的应力不变量、Lode 角和嵌套根式。
+
+这些都不是 D19 当前有限 Beta 矩表中的有限线性组合。
+
+### 4.3 W-W 状态边界的额外问题
+
+D19 当前前沿表示的是：
+
+\[
+\varepsilon_i=\lambda,
+\]
+
+即固定主应变阈值。
+
+W-W 激活边界则是：
+
+\[
+F_{WW}(\sigma_1,\sigma_2,0)=1,
+\]
+
+并且 `sigma_i` 已经是非线性材料函数。它不是当前固定主应变阈值前沿，现有 D19 三次前沿系统不能直接表示该边界。
+
+所以 UHPC CC/CCX 若启用 W-W 活动截断，当前不仅缺少积分闭式，还缺少对应的状态前沿方程。
+
+## 5. 手算审计样例
+
+### 5.1 输入
+
+采用 D19 原测试中的几何和路径点：
+
+\[
+b=\ell=1220\ \mathrm{mm},\quad t=19.3\ \mathrm{mm},\quad m=1,
+\]
+
+\[
+A_0=6.1\ \mathrm{mm},\quad
+A=0.020736941436b=25.29906855192\ \mathrm{mm},
+\]
+
+\[
+\delta=1.155541949276\times0.00209
+=0.00241508267398684,
+\]
+
+\[
+S=A_0A+\frac12A^2
+=474.345752964086\ \mathrm{mm^2},
+\]
+
+\[
+k_x=k_y=\frac{\pi}{1220}
+=0.00257507594556540\ \mathrm{mm^{-1}},
+\]
+
+选择下表面：
+
+\[
+z=-t/2=-9.65\ \mathrm{mm},
+\]
+
+并检查主压应变阈值：
+

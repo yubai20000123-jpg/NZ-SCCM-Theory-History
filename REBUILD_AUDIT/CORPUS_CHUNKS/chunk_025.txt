@@ -1,0 +1,1783 @@
+
+### 2.3 推荐用途
+
+Attard 应作为：
+
+- `TANGENT_STABILITY_INDEPENDENT_BENCHMARK`；
+- `DIRECTIONAL_TANGENT_SENSITIVITY_DIAGNOSTIC`；
+- `MODE_NUMBER / SLENDERNESS TREND CHECK`。
+
+暂不授权：
+
+- 用 Attard 单轴材料替换 R10；
+- 把 Eyt=0.4Ec 写入 current-map；
+- 用 Attard Ncr 作为当前 Pu 的校准目标。
+
+---
+
+## 3. Doh, Fragomeni & Kim — *Brief Review of Studies on Concrete Wall Panels in One and Two Way Action*
+
+### 3.1 来源身份
+
+这是**二级综述**，价值在于整理试验/理论范围，而不是优先于 Swartz、Attard 等原始来源。
+
+### 3.2 有用内容
+
+#### A. 明确区分 one-way 与 two-way wall action
+
+综述将侧边支承、轴压下发生二维板屈曲的墙板单独归为 two-way action；指出该领域研究远少于 one-way wall，现行规范/经验式覆盖有限。
+
+#### B. 汇总不同试验组的关键边界差异
+
+特别有用的是不同研究的：
+
+- slenderness/thinness；
+- aspect ratio；
+- concrete strength；
+- eccentricity；
+- reinforcement；
+- support condition。
+
+这为后续建立“外部验证矩阵”非常有用。
+
+例如综述明确提醒：
+
+- Swartz：高 slenderness、近同心加载；
+- Saheb & Desayi：存在 t/6 偏心；
+- Attard：理论分析；
+- Fragomeni/Maheswaran-Sanjayan：更高强混凝土、不同试验控制条件。
+
+因此不同数据库不能混在一起用一个误差平均值评价模型。
+
+#### C. Saheb & Desayi 的 ultimate-strength 规律
+
+综述转述其结论：two-way wall 的极限强度随 thinness/slenderness 增大而非线性降低，竖向钢筋增加可提高极限强度，而横向钢筋影响较小。
+
+这与 Swartz“钢筋对初始 Pcr 小、对总 capacity 重要”形成互补：**初始稳定与最终 Pu 的钢筋敏感性可以不同。**
+
+#### D. Attard 对 Swartz 与 Saheb 的不同适配性
+
+综述指出 Attard 的切线模量方法与 Swartz 的近同心试验较吻合，但与 Saheb & Desayi 的偏心试验不吻合，原因与加载偏心条件不同。
+
+**项目意义**：这是一个很重要的治理提醒——未来扩展验证时，必须先按 `eccentricity / boundary / load control` 分类，不能看到同样是“RC wall”就直接混算。
+
+#### E. 试验加载控制方式也是变量
+
+综述提到 Maheswaran & Sanjayan 使用一系列千斤顶维持近 constant loading，与常规试验机的 displacement-controlled 加载不同，且不同经验公式对这些试验可能出现大幅高估或低估。
+
+**项目意义**：Pu 验证数据库未来应增加 `load_control` 字段。
+
+### 3.3 推荐用途
+
+该综述适合作为：
+
+- `LITERATURE_SCOPE_MAP`；
+- `FUTURE_VALIDATION_MATRIX_GUIDE`；
+- `BOUNDARY/ECCENTRICITY/LOAD_CONTROL CLASSIFICATION`。
+
+不适合作为：
+
+- 当前材料公式的一级来源；
+- 经验系数校准来源；
+- 替代 Swartz/Attard 原文的精确公式证据。
+
+---
+
+## 4. 三份资料共同形成的新证据链
+
+三份补充资料放在一起，当前最值得锁定的不是“再改材料”，而是以下诊断结构：
+
+\[
+\boxed{
+\text{current material tangent state}
+\;\times\;
+\text{ideal/real support stiffness}
+\;\times\;
+\text{post-buckling membrane redistribution}
+\;\times\;
+\text{reinforcement post-buckling contribution}
+}
+\]
+
+具体而言：
+
+1. **Swartz 原始数据**：`fcr/fcyl` 越高，当前 Pu 越倾向低估；
+2. **Attard**：材料靠近峰值时 tangent modulus 快速降到零，稳定对切线极端敏感；
+3. **A Method**：高荷载发生膜应变重新分配，且侧支承相对刚度改变一/双鼓曲区；
+4. **Swartz Buckling Tests**：钢筋对初始 Pcr 小，但对 total capacity 和 post-buckling ductility 重要；
+5. **综述**：偏心、边界、加载控制不同会显著改变外部验证结果。
+
+因此后续优先级建议为：
+
+```text
+P1 = tangent-state / fcr-fc regime audit
+P2 = post-buckling membrane redistribution audit
+P3 = support-stiffness / observed-mode sensitivity audit
+P4 = reinforcement-postbuckling interaction audit
+P5 = external validation matrix segmented by eccentricity/boundary/load-control
+```
+
+上述均为机制诊断，不授权试验反标。
+
+====================================================================================================
+FILE: evidence/literature/NZ_SCCM_ZHOU_ATTARD_TANGENT_STABILITY_INTERPRETATION_20260811.md
+SIZE: 5953
+SHA256: 1f41b6f05f89ef55c5a79c44dd4e43c397116091a9ef65de7ca2ef0fcc6ebb80
+ENCODING: utf-8
+LINES: 148
+====================================================================================================
+# Zhou–Attard tangent-stability interpretation for NZ-SCCM P1
+
+**Date:** 2026-08-11  
+**Identity:** SOURCE-BASED INTERPRETATION / DIAGNOSTIC ONLY  
+**Material change:** NONE
+
+## 1. Attard source role
+
+Attard, *Buckling of Reinforced Concrete Walls* (UNICIV Report, 1994), formulates the out-of-plane perturbation of a simply supported reinforced-concrete wall as an orthotropic tangent-plate problem. In source notation the governing form is
+
+\[
+D_{xt}w_{,xxxx}+2D_{xyt}w_{,xxyy}+D_{yt}w_{,yyyy}=-N_xw_{,xx}.
+\]
+
+The directional bending tangent rigidities depend on directional tangent moduli. Attard takes the loaded direction as the current concrete tangent modulus and, for the unloaded transverse direction, introduces the approximate bending/cracking value
+
+\[
+E_{xt}=E_t,\qquad E_{yt}\approx0.4E_c.
+\]
+
+For the Navier shape
+
+\[
+w=C_1\sin\frac{m\pi x}{a}\sin\frac{\pi y}{b},
+\]
+
+the orthotropic buckling coefficient depends on the ratio \(E_{yt}/E_{xt}\); minimizing with respect to the longitudinal half-wave number gives the well-known fourth-root half-wave dependence and a minimum coefficient proportional to \(4\sqrt{E_{yt}/E_{xt}}\).
+
+### NZ-SCCM use boundary
+
+Attard is used only as an **independent tangent-stability diagnostic**. The assumption \(E_{yt}=0.4E_c\) is NOT imported into R10, N48, or the current multidimensional material map.
+
+At a finite-amplitude NZ-SCCM ultimate state, the Attard formula is not treated as a second solver. It is used to ask whether the local current tangent still resembles the positive-tangent orthotropic regime for which the perturbation formula was developed.
+
+---
+
+## 2. Zhou Siming source role
+
+Zhou Siming, *Stability performance of multi-celled concrete-filled steel tubular walls under complex boundary conditions* (Zhejiang University doctoral dissertation, 2022), derives three-edge and four-edge simply-supported orthotropic plate/shell stability theories by an energy method.
+
+The source explicitly separates and defines directional and torsional stiffness constants, including
+
+- primary-direction bending stiffness \(D_y\);
+- secondary-direction bending stiffness \(D_x\);
+- free torsional stiffness \(D_{xy}\);
+- Poisson-related additional torsional stiffness \(D_\mu\);
+- combined torsional/Poisson stiffness \(H\), with the source relation
+
+\[
+H=D_{xy}+D_\mu.
+\]
+
+For four-edge simply-supported walls, Zhou's conclusions emphasize that axial stability is jointly contributed by
+
+\[
+D_y,\qquad D_x,\qquad H,
+\]
+
+rather than by one loaded-direction elastic modulus alone. The dissertation also shows that the boundary between strength control and stability control shifts strongly when moving from elastic to elastoplastic response: for the investigated composite-wall system the critical width/thickness scale changes substantially between elastic and elastoplastic states.
+
+### NZ-SCCM use boundary
+
+The present P1 audit does NOT import Zhou's composite-wall section formulas into the Swartz RC wall material model. Instead, Zhou's decomposition is used as a **theoretical language for auditing the current tangent**.
+
+For the current RC tangent matrix, define the diagnostic mapping
+
+\[
+D_x^{eq}=C_{xx,t}\frac{t^3}{12},\qquad
+D_y^{eq}=C_{yy,t}\frac{t^3}{12},
+\]
+
+\[
+D_\mu^{eq}=\frac{C_{xy,t}+C_{yx,t}}{2}\frac{t^3}{12},\qquad
+D_{66}^{eq}=G_t\frac{t^3}{12},
+\]
+
+\[
+H^{eq}=D_\mu^{eq}+2D_{66}^{eq}.
+\]
+
+For one square representative half-wave,
+
+\[
+N_{cr,Z}^{proxy}
+=
+\frac{
+D_x^{eq}\alpha^4+2H^{eq}\alpha^2\beta^2+D_y^{eq}\beta^4
+}{\beta^2}.
+\]
+
+This is a **Zhou-form equivalent audit mapping**, not a new production equation and not a claim that Zhou used these RC current-tangent definitions.
+
+---
+
+## 3. Why Zhou's framing matters to the P1 result
+
+The P1 audit shows that the exact R10 material-target tangent and the current N48 derivative produce very different stiffness decompositions at the theoretical ultimate states.
+
+Using the R10 target tangent, the three Swartz groups have approximately the following average contribution structure in the square-halfwave Zhou-form proxy:
+
+```text
+R10 target:
+Dx      ~ 47–50%
+2H      ~ 46–51%
+Dy      ~ -2% to +3%
+steel   = small
+```
+
+This is physically interpretable near the compression peak: the loaded-direction tangent \(D_y\) can collapse or become slightly negative while transverse bending and torsional/Poisson coupling still contribute materially to stability.
+
+Using the current N48 derivative, the structure changes to approximately
+
+```text
+N48 tangent:
+Dx      ~ 12–13%
+2H      ~ 75%
+Dy      ~ 11%
+steel   = small
+```
+
+Across the 24 panels, the N48-based equivalent \(H\) is about 4.72–6.79 times the R10-target value, with an average factor about 6.21. The corresponding center-state Zhou-form stability margin is inflated by about 3.28–4.42 times, average about 3.97.
+
+Therefore Zhou's key theoretical point — **stability is a stiffness-combination problem, not a single-modulus problem** — makes the N48 issue clearer: the discrepancy is not merely an error in one loaded-direction tangent modulus. The compiler derivative changes the entire \(D_x-D_y-H\) balance, with especially strong inflation of the mixed/torsional contribution.
+
+---
+
+## 4. Current source-based decision
+
+```text
+ATTARD = INDEPENDENT_ORTHOTROPIC_TANGENT_DIAGNOSTIC
+ZHOU = DIRECTIONAL_STIFFNESS_AND_NAVIER_STABILITY_AUDIT_LANGUAGE
+ATTARD_0p4Ec_IMPORTED_INTO_R10 = NO
+ZHOU_COMPOSITE_WALL_SECTION_FORMULAS_IMPORTED_INTO_RC_MATERIAL = NO
+R10_MATERIAL_CHANGED = NO
+N48_TANGENT_FIDELITY = FAIL_DIAGNOSTIC
+```
+
+The source review therefore supports the following order of diagnosis:
+
+```text
+R10 target tangent
+-> N48 derivative fidelity
+-> directional stiffness decomposition (Dx, Dy, H)
+-> full-field generalized tangent
+-> only after those pass, diagnose missing post-buckling structural freedom or material physics.
+```
+
+This ordering prevents a compiler-derivative defect from being misidentified as a new concrete material mechanism.
+
+====================================================================================================
+FILE: evidence/materials/NC/Nguyen_AppendixB/01_stab_conc_interface.txt
+SIZE: 7564
+SHA256: d85b45c43138938ff834cbb582133889d345beec051fc77a92dedb8bf601e202
+ENCODING: utf-8
+LINES: 220
+====================================================================================================
+c             program to <>brain element suesses and tangent moduli from
+c             the concrete element for input to the stability analysis
+C             program
+C
+c......................................................................
+
+              subroutine stab_conc(d,ul,xl,ix,d,s,p,ndf,ndm,nst,istale,epscr,
+      &                   emod4,fl5,firsl,fl4,emax,epsmax,estore,
+      &                   epsstore,epslcr,isw)
+
+              implicit real*8(a-h,o-z)
+              logical tll ,fl2,tl3,tl4,fl5,firsl
+              character* 1 Sll ,812
+              commonm(l)
+              common/dev/in,io,inio
+              common/cdata/o,head(20),numnp,numel,nUllll1l8l,Den,neq,ngp,
+ipr
+              common/eldaaa/dm,n,ma,mel,iel,nel
+              common/sttes.1_seuwatise1110,nodc_dala(l0,2)
+              dimension d(l),ul(ndf,1),xl(ndm,1),ix(l),d(l),s(nSl,l),p(l),
+      &                 shp(3,9),sg(9),tg(9),wg(9),sig(6).eps(6),wd(2),
+      &                istale(3,ngp,numel),epscr(ngp,numel),
+      &                emod4(3 ,ngp,numel),emax(3,ngp,numel),
+      &                epsmax(3,ngp,numel),estore(3,ngp,numel),
+      &                epsstore(3,ngp,numel),epslcr(ngp,numel)
+              data wd/'RESS ', 'RAIN'I
+
+c....         set constants
+
+              fc      =d(6)
+              ft = d(7)
+              eO =d(9)
+              xnu =d(lO)
+              thic =d(ll)
+              epscu = d(12)
+              epstf = d(13)
+              epscf = d(l4)
+              alpbal = d(lS)
+
+
+
+                                                                                312
+        alpha2 = d(l6)
+        betal = d(l 7)
+        beta2 = d(l8)
+        beta3 = d(l9)
+        gammal = d(20)
+        gamma2 = d(21)
+        isopt = inl(d(22))
+
+
+        l=d(S)
+        call e3pgauss(1Jint.sg,tg,wg)
+
+        dol=lJint
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c.... calculale tangent moduli
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c....     compute element shape functions
+
+          call e3sbape(sg(l),tg(l),xl,shp,xsj,ndm,nel,ix,.false.)
+
+c.... compute strains
+          do 310i=l,3
+310       eps(i)=().OdO
+          do 320 j=l,nel
+          eps(l )=eps(l)+shp(l J)*ul(l J)
+          eps(3)=eps(3)+sbp(2j)*ul(2j)
+320       eps(2)=eps(2)+sbp(lj)*ul(2j)+sbp(2J)*ul(lj)
+
+c....     compute principal strains
+
+          eps(2)=eps(2)/l.OdO
+          call e3pstres(eps,eps(4),eps(5),sig(6))
+          eps(2)=eps(2)*2.0dO
+
+c....     compute axial moduli (el,e2)
+
+          sig(4)=d(l)•(estore(l,l,n)•eps(4)+xnu•estore(2J,n)•eps(5))
+          sig(S)=d(l)•(estore(2,l,n)•eps(S)+xnu•estore(lJ,n)•eps(4))
+
+c....     ttansfer to appropriate stress/strain model to calculale moduli
+
+315       continue
+
+          if(eps(4).eq.0.0.and.eps(S).eq.O.O)lben
+            el=eO
+            e2=eO
+            sig(6)=().0dO
+          else if(istate(l J,n).eq. l .and.eps(S).ge. O.O)tben
+            call Sbnodtt(eps(4).eps(5),epstf,ft.e(),el,e2,istate(2,l,n),
+    &                alpbal,alpba2,l)
+          else if(istate(lJ,n).eq. l .and.eps(S).ILO.O)tben
+
+
+
+                                                                            313   •
+                 call stmodtc(eps(4),eps(5),epscu,epscr(l.n).epslcr(l.n),
+    &                    epscf,epstf,ft,fc,e0,el,e2,alpbal,alpha2,
+    &                    gammal .gamma2,.true.,istare(2J,n), l ,nJ)
+            else
+                 call stmoduc(d,sig(4),.1ig(5),epscu,eps(4),eps(5),e0,el,
+    &                    e2,xnu,fc,ft,epsa(l,n),istare(1J,n),
+    &                    istate(2J,n).gamma2, 1,nJ)
+
+            endif
+
+        elt=el
+        e2t=e2
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c.... calculate eJemmt stresses
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+•••••••••••••••••••••
+c....       compute element shape functions
+
+            call e3shape(sg(l),tg(l),xl,sbp,xsj,ndm,nel,ix,.false.)
+
+c....       compute strains
+
+            do401 i=l.3
+401         eps(i)=0.0
+            do 402 j= 1,nel
+              eps(l)=eps(l)+shp(lJ)*ul{lJ)
+              eps(3)=eps(3)+sbp(2j)*ul(2j)
+402           eps(2)=eps(2)+shp(lj)•ul(2J)+shp(2j)•ul(1J)
+
+c....       compute principal strains
+
+            eps(2)=eps(2)/l.OdO
+            call e3psUes(eps,eps(4),eps(5),.1ig(6))
+            eps(2)=eps(2)*2.0dO
+
+c....       compute axial moduli (el,e2)
+
+            sig(4)=d(t)•(estore(1J.n)•eps(4)+xnu•estore(2J.n)•eps(5))
+            sig(5)=d(t)•(estore(2J.n)•eps(5)+xnu•estore(tJ.n)•eps(4))
+
+c....       transfer to appropriate stress/strain model to calculate moduli
+
+        el=emod4(1J,n)
+        e2=emod4(2J,n)
+
+c....       compute strains and coordinates
+
+            do410i=l,3
+410         eps(i)=().OdO
+            xx=O.OdO
+            yy=O.OdO
+            do 420 j=l,nel
+            xx=xx+shp(3j)*x1(1J)
+
+
+                                                                              314
+                 yy=yy+sbp(3j)*xl(2j)
+                 eps(l)=eps(l)+sbp(lj)*ul(lJ)
+                 eps(3)=eps(3)+sbp(2j)*ul(2J)
+420              eps(2)=eps(2)+sbp(lj)*ul(2J)+sbp(2J)*ul(l J)
+
+c....            calculate principal strains
+
+                 eps(2)=eps(2)/l.OdO
+                 call e3pstres(eps.eps(4),eps(S),eps(6))
+                 eps(2)=eps(2)*2.0dO
+
+c....            compute streaes
+
+c....            if element cracked use modified constilutive matrix else
+c....            use matrix as defined by darwin and pecknold
+
+                 if(istale(l,1,n).eq.l) then
+
+c....              calculate shear retention factor
+
+                   if(istale(2,l,n).eq. l) then
+                     beta=O.ldO
+                   else
+                     call e3sbret(beta,betal,beta2,beta3,epsa(l,n),eps(4))
+                   endif
+
+                   dll=el
+                   dl2=0.0dO
+                   d22=e2
+                   d33=beta*e2*0.5dO/{l.OdO+xnu)
+                 else
+                   el2=sign(dsqrt(el *e2),e2)
+                   di l=d{l)*el
+                   dl2=d(2)*el2
+                   d22=d(l)*e2
+                   d33=d(3)*{el+e2-2.0dO*xnu*el2)
+                   beta=l.O
+                 endif
+
+c....            transform d matrix to the global co-ordinate system
+
+                 call e3dtrans(dl l,dl2,dl3,d22,d23,d33,sig(6))
+
+c....            calculate global stresses
+
+                 sig(l)=dll*eps(l)+dl2*eps(3)+dl3*eps(2)
+                 sig(3)=dl2*eps(l)+d22*eps{3)+d23*eps(2)
+                 sig(2)=dl3*eps(l)+d23*eps(3)+d33*eps(2)
+                 call e3pstres(sig,sig(4),sig(5),sig(6))
+
+c....            print stability data to scrarch file
+
+            write(inio)sig(l),sig(2),sig(3),sig(6),thic,xnu,elt,e2t,bela
+
+        end do
+
+
+
+
+                                                                             315
+        return
+        end
+
+====================================================================================================
+FILE: evidence/materials/NC/Nguyen_AppendixB/02_concrete_state_moduli.txt
+SIZE: 13811
+SHA256: c1f5da0a99d05006fab2086aa8b0084c5c4b648e9e8b0892947f9fdeea2e6867
+ENCODING: utf-8
+LINES: 482
+====================================================================================================
+        subroutine
+stmodcc(gamma2,epsl.eps2,eps lp.eps2p,siglp,sig2p,
+   &               eO,el ,e2,xnu.d,iopt)
+
+c....        subroutine to determine modulus along principal axes
+c....        post crushing for compression/compression state
+
+c....        eps lp= major principal axis equivalent uniuial aushiog strain
+c....        eps2p= minor principal axis equivalent uniaxia1 crushing strain
+c....        eps 1 = major principal strain
+c....        eps2 = minor principa 1 strain
+c....        siglp= stress in coocretc along major principal axis at aushiog
+c....        sig2p= stress in concrete along minor principal axis at crushing
+c....        iopt = 1,2 calculate taogent,secant modulus
+c....        eO = initial modulus
+c....        el = modulus along major principal axis
+c....        e2 = modulus along minor principal axis
+
+             implicit rea1•8(a-h,o-z)
+             dimension d(l)
+
+             ebarl=siglp/epslp
+             ebar2=sig2p/eps2p
+c            sigbarl=d(l)•(ebarl *epsl+xou•ebar2•eps2)
+c            sigbar2=d(l)•(ebar2•eps2+xou•ebarl •epsl)
+
+c---------------
+c.... corrections to code 14/12.,94
+
+             temp=xou*sqrt(abs(ebarl •ebar2))
+             temp=sigo(temp,ebarl)
+             sigbarl=d(l)•(ebarl *epsl+temp•eps2)
+             sigbar2=d(l)•(ebar2*eps2+temp•epsl)
+c-------------------
+             epslu=sigbarl/ebarl
+             eps2u=sigbar2/ebar2
+
+c....        11'811Sfer to option
+
+             goto(l,2),iopt
+
+c....        compute tangent modulus
+
+1            if(epslu.gt.0.0) thea
+               el=-eOl1.0d6
+             elseif(epslu.gt.gamma2•epslp) then
+               el=-0.9dO*siglp/(epslp•(gamma2-t.OdO))
+             else
+               el=-e0/l.Od6
+             eodif
+
+
+
+                                                                                316
+          if(eps2u.gt.gamma2•eps2p) then
+            e2=-0.9dO•sig2pl(eps2p•(gamma2- t .OdO))
+          else
+            e2=-e0/l .Od6
+          endif
+
+          return
+
+c....     compute secant moduli
+
+2         if(epslu.gt.gamma2•epstp) then
+            sigl=sigtp•(l.Od0-0.9dO•(epsl u-epslp)/epslp/(gamma2-
+1.0d0))
+          else
+           sig 1=0. tdO•sig 1p
+          endif
+
+          if(eps2u.gt.gamma2•eps2p) then
+            sig2=sig2p•(t.Od0-0.9dO*(eps2u-eps2p)/eps2p/(gamma2-
+1.0dO))
+          else
+            sig2=0.tdO•sig2p
+          endif
+
+          el=sigl/epslu
+          e2=sig2/eps2u
+
+          if(el.gt.ebarl) el=ebarl
+          if(e2.gt.ebar2) e2=ebar2
+          if(el.lLe0/1000.0dO) el=e0/1000.0dO
+          if(e2.1Le0/1000.0dO) e2=e0/1000.0dO
+
+          return
+          end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+          subroutine stmodtc(epsl.eps2,epscu,epsa,epslcr,epscf,epstfJt,
+    &                 fc,e0,el,e2,alpbal,alpba2,gammal,gamma2,
+    &                 first,ist2,iopt,nJ)
+
+c....     subroutine to determine modulus along principal axes
+c....     post cracking for tension/compression state
+
+c....     epsl = major principal sttain
+c....     eps2 = minor principal sttain
+c....     epsa = sttain at which first cracking took place
+c....     epslcr = sttain in major principal direction at which crushing
+c....           took place
+c....     epscu = sttain at die ullimalc stress (prior to yield)
+c....     epscf = compression failure strain
+c....     epstf = tension failure sttain
+c....     epsa = sttain at change point for decending branch
+c....     fc = concrete compressive strength
+
+
+                                                                           317
+c....   ft  = concrete tensile strength
+c....   iopt = 1,2 calcularc tangent,secant modulus
+c....   eO = initial modulus
+c....   el = modulus along major principal axis
+c....   e2 = modulus along minor principal axis
+
+        implicit real *8(a-b,o-z)
+        logical first
+        common/cdalWo,bead(20),numnp,numel,nUIIUIUlt,Dal,neq,ngp,
+ipr
+
+c....   if epsl is negative due to excessive out of balance forces
+c....   during iteration then resuain epsl to equal zero
+
+        if(epsl.lL0.0) epsl=O.OdO
+
+c....   check for aushing
+
+        if(isl2.ne.2) then
+          call e3elcrack(dwn.eps2,dum.epscu.dwn,dum,dwn,ist2, 1,n,l)
+          if(ist2.eq.2) epslcr--epsl
+        endif
+
+c....   calcularc major principal axis stress
+
+        fcl=e3tenstr(alpbal,alpba2,epsl,epstf,ft,e:O*epscr)
+
+c....   calculate minor principal axis stress
+
+        if(isl2.ne.2) then
+          epslc=epsl
+        else
+         epslc=epslcr
+        endif
+
+        gamma3=1.0d0/(0.8d0-0.34dO*epslc/epscu)
+        gamma=max(gamma1 .gamma3)
+        f3=gamma*fc
+        fc2max=max(f3Jc)
+
+        if (isl2.ne.2) then
+          fc2=fc2max*(2.0dO*eps2/epscu-(eps2/epscu)**2.0dO)
+        else if (eps2.gtgamma2*epscu) tbm
+          fc2=fc2max*(l.Od0-0.9dO*(eps2-epscu)/((gamma2-
+1.0dO)*epscu))
+        else
+          fc2=0.ldO*fc2max
+        endif
+
+c....   ttansfer to appropriale option
+
+        goto(l,2),iopt
+
+c....   calcularc tangmt modulus
+
+1       epsa=(alpbal-(alpbal-1.0dO)*(epscr*eO,'ft-alpba2))*epstf
+
+
+                                                                       318
+        if((epsl.le.epsa).or.(epsl.ge.alpbal •epstt·)) then
+          el=O.OdO
+        else
+          el=ft•(I.OdO-alpba2}/epstf/(l.OdO-alpbal)
+        endif
+
+        if(eps2.gt.epscu) then
+          e2=fc2max-2.0dO*(l .OdO-eps2/epscu)/epscu
+        elseif(eps2.gt.gamma2•epscu) then
+          e2=0.9dO•fc2mu/epscu/(l.OdO-gamma2)
+        else
+          e2=0.0dO
+        endif
+
+        return
+
+c....   calculate secant modulus
+
+2       if(epsl.eq.0.0.or.fc l .Je.O.O)then
+          el=eO
+        else
+          el=fcl/epsl
+           if(el.gt.eO) el=eO
+           if(elJLe0/100(>.0) el=e0/1000.0dO
+        endif
+
+        e2=fc2/eps2
+
+        return
+        end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+        subroutine stmodU(epsl,eps2,epstf,ft,eO,el,e2,ist2,alphal,
+    &               alpha2,iopt)
+
+c....   subroutine to determine modulus along principal axes
+c....   post crushing for tension/teDsion stale
+
+c....   epsl = major principal slrain
+c....   eps2 = minor principal strain
+c....   epslf = tension failure strain
+c....   ft = concrete tensile sttengtb
+c....   iopt = 1,2 cak:ulale tangen~t modulus
+c....   eO = initial modulus
+c....   el = modulus along major principal axis
+c....   e2 = modulus along minor principal axis
+
+        implicit reat•8(a-b~z)
+
+        if(eps2.1LO.O)eps2=0.ld-20
+
+c....   transfer to appropriate segment
+
+        goto(l,2),iopt
+
+
+
+                                                                     319
+c....    calculate tangent modulus
+
+l        if(epsl.lLepstt) then
+           el=eO
+         elseif(eps ULalphal •epsU) then
+           e l=ft•( l .OdO-alpba2)/epstf/(l.OdO-alpbal)
+         else
+           el=O.OdO
+         endif
+
+         if(eps2.1Lepstt) then
+           e2=e0
+         elseif(eps2JLalpbal •epsU) then
+           e2=ft•(l.OdO-alpha2)/epstf/(l.OdO-alpbal)
+         else
+           e2=0.0dO
+         endif
+
+         return
+
+c....    calculate secant modulus
+
+2        continue
+
+c....    on convergence check for cracking in minor principal direction
+
+         if(iopt.eq.2.and.eps2.ge.epstf) ist2=1
+
+         fcl=e3tensU(alpbal,alpba2.epsl.epstf,ft,ft)
+         el=fcl/epsl
+         if(ist2.eq. l) then
+           fc2=e3tensU(alphal.alpba2.eps2,epstf,ft,ft)
+           e2=fc2Jeps2
+         else
+           e2=e0
+         endif
+
+         return
+         end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+        subroutine
+stmoduc(d,sig l ,ag2.epscu,eps l.eps2,e0,cl ,c2,xnu,fc,
+   &                 ft,epscr,istl ,isl2,gamma2,iopt,n,l)
+
+c....    subroutine to calculate the moduli along the principal
+c....    axes for the uncracked concrae element
+
+         implicit real*8(a-h,o-z)
+         dimension d(l)
+
+c....    iopt = 1,2 calcularc the tangent,secant moduli
+c....    irout = 1    element in biaxial compression
+
+
+                                                                          320
+c....   irout = 2   element in tension/compression
+c....   irout = 3   element in biaxial tension
+
+c....   calculate sttess ratio
+
+        if(abs(sig2).ge. ld-12) then
+          alpha=sig l/sig2
+        else
+          alpha=sign(sig l/ld-12,.1ig2)
+        endif
+
+
+c....   detennine element sttess state
+
+        irout=2
+        if(sigl.lLO.O)irout=l
+        if(sig2.ge.O.O)irout=3
+
+c....   transfer to appropriate segment depending on stress state
+
+        goto(l,2,3).irout
+
+c....   biaxial compression
+
+1       continue
+
+c....   calculate peak stresses
+
+        sig2p=((l .Od0+3.65dO*alpba)/(1.0dO+alpba)**2.0dO)*fc
+        siglp=alpha*sig2p
+
+c....   calculate strains corresponding to peak stresses
+
+        sigip=sigl p
+        do 100 i=l,2
+        if(sigip.lt.fc)then
+          epsip=epscu*(3.0dO*sigip/fc-2.0dO)
+        else
+          sf=sigiplfc
+          epsip=epscu*(0.35dO*sf+2.25dO*sf*sf-1.6dO*sf**3.0dO)
+        endif
+        if(epsip.gL(2.0dO*sigip/e0)) epsip=2.0dO*sigip/eO
+        if(i.eq.1) epslp=epsip
+        if(i.eq.2) eps2p=epsip
+100     sigip=sig2p
+
+c....   calculate principal stresses by iteration
+
+        if(iopt.eq.2) then
+          call e3itstress(sigl,sig2,epsl.eps2,.1iglp,sig2p,epslp.eps2p,
+    &                 xnuJc,eO,d(l).irout)
+        endif
+
+c....   calculate equivalent uniaxial strains
+
+        call e3equni(e0,fc,sigl,siglplfc,epslp,epslu)
+
+
+
+                                                                          321
+        call e3equni(e0,fc,sig2,sig2p/fc,eps2p,eps2u)
+
+c....   calcuJar.e element moduli (el,e2)
+
+        if(iopt.eq.1.and.eps2u/eps2pJL 1.0) then
+           e l=suanmod(eO,eps 1u/epslp,sig 1p/epslp)
+          e2=suanmod(e0,eps2u/eps2p,sig2p/eps2p)
+        elseif(iopt.eq.1) then
+          call stmodcc(gamma2,epsl ,eps2.epsl p,eps2p,sig 1p,sig2p,
+    &              e0,el,e2,xnu,d,1)
+        elseif(eps2u/eps2p.1L 1.0) then
+          el=stsecmod(eO,epslu/epslp,siglp/epslp)
+          e2=stsecmod(e0,eps2u/eps2p,sig2p/eps2p)
+        else
+          call stmodcc(gamma2,epsl,eps2.epslp,eps2p,siglp,sig2p,
+    &              e0,el,e2,xnu,d,2)
+        endif
+
+        return
+
+c....   tension/compres.,ion
+
+2       continue
+
+c....   calcuJar.e peak stresses
+
+        if(alpha.le.O.7SdO*ft/fc) then
+           sig 1p=fc/(alpha*fc/ft+0.5dO)*alpha
+        else
+           siglp=3.0dO*fc/(alpha*fc/ft+3.0dO)*alpba
+        endif
+        if(alpha.gL-0.2dO) then
+           sig2p=((l.Od0+-3.28dO*alpba)/(1.0dO+-alpba)**2.0dO)*fc
+        else
+         sig2p=0.5375dO*fc
+        endif
+
+c....   calculate strains corresponding to peak stresses
+
+        epslp=siglp/eO
+        sf=sig2p/fc
+        eps2p=epscu*(0.3SdO*sf+2.25dO*sf*sf-1.6dO*sf**3.0dO)
+        if(eps2p.gL(2.0dO*sig2p/e0)) eps2p=2.0dO*sig2p/eO
+
+c....   calculate principal stresses by iteration
+
+        if(iopt.eq.2) then
+          call e3itstteu(sigl ,sig2,eps 1,eps2,sigl p,sig2p,eps lp,eps2p,
+    &                xnu,fc,eO,d(l),irout)
+        endif
+
+c....   calculate equivalent uniaxial strains
+
+        call e3equni(e0,fc,sig2,sig2p/fc,eps2p,eps2u)
+
+c....   calculate element moduli (el,e2)
+
+
+                                                                            322
+        el=eO
+        if(iopt.eq. l )then
+          e2=suanmod(e0,eps2u/eps2p,sig2p,'eps2p)
+          esec=stsecmod(e0,eps2u/eps2p,sig2p/eps2p)
+        else
+          e2=stsecmod(e0.eps2u/eps2p,sig2p/eps2p)
+          esec=e2
+        endif
+
+c....   calculate principal suesses (sl,s2) for current strain stale
+
+        sl=d(l)*el*epsl+d(2)*dsqrt(el*esec)*eps2
+        s2=esec•eps2u
+
+        return
+
+c....   biaxial tension
+
+3       el=eO
+        e2=eO
+
+c....   calculate peak suesses
+
+        siglp=ft
+        sig2p=ft
+
+c....   calculate strain conespooding to peak SlreSS on I-axis
+
+        epslp=siglp/eO
+c....   calculate principal suesses for current strain stale
+
+        sl=d(t)•eO*epsl+d(2)•eO•eps2
+        s2=d(2)•eO•epst +d(t)•eO*eps2
+        return
+        end
+
+
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+        function stsecmod(eO,eip,es)
+
+c....   function to calculate the secant modulus for
+c....   concrete in compression
+
+        implicit rea1•8(a-h.o-z)
+
+        stsecmod=eO/(l.OdO+(eO/es-2.0dO)*eip+eip*eip)
+        if(stsecmodJLe0/1000.0dO) stsecmod=e0/1000.0dO
+
+        return
+        end
+
+
+
+
+                                                                       323
+••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+••••••••••••••
+              function suanmod{eO,eip,es)
+
+c....         function to calculate the tangent modulus fOI'
+c....         concrete in compression
+
+              implicit rea1•8(a-h,o-z)
+
+              e=eO•(t .OdO-eip•eip)
+              sttanmod=e/{(1.0dO+{eO/es-2.0dO)*eip+eip*eip)**2.0dO)
+              if{suanmod.lt.e0/1000.0dO) sttanmod=e0/1000.0dO
+
+              return
+              end
+
+c......................................................................
+C
+
+====================================================================================================
+FILE: evidence/materials/NC/Nguyen_AppendixB/03_stab_bar2_rebar.txt
+SIZE: 3726
+SHA256: 5282f6919ec6da9b159451618e8acb1960e36f3ec687fdc2a6f64de0565f165b
+ENCODING: utf-8
+LINES: 131
+====================================================================================================
+c       program to obtain element stresses and langent moduli from
+c       the 2-node steel element fOI' input to the stability analysis
+C       program
+C
+c......................................................................
+
+              subroutine stab_bar2{d.ul.xl.ix,s.p,ndf,ndm.nst,emax,epsmax,
+      &                     estore,epsstore,isw)
+
+              implicit   real*8{a-h,o-z)
+              Jogical    yield,residual
+              cbaracter*8 stale
+
+              commoo/dev/in,io,inio
+              commoo/cdala/o,head{20),numnp,numel,nummat,nen,neq,ngp,
+ipr
+              commoo/eldara/dm,n,ma,mct,iel,nel
+              common/stress_set_data{ISetDO,node_dala{l0,2)
+
+              dimension d(l),ul{ndf,l),xl{ndm,l),ix{l),s(nst,l),p(l),
+      &                emax(3,ngp,numel).epsmax(3,ngp,numel),
+      &                estore{3,ngp,nwnel),epsstore(3,ngp,numel)
+
+c....         set constants
+
+              area=d{l)
+              el=d{2)
+              e2=d{3)
+              e3=d{4)
+              ysttain=d(S)
+              fsttain=d(6)
+              rstrain=d{7)
+              hr=d(8)
+
+c....         compute element {tangent) stiffness malrix
+
+              dx=xl(l,2)-xl(l,1)
+              dy=xl{2,2)-x1(2,1)
+
+
+                                                                             324
+        elen=sqrt(dx*dx+dy*dy)
+        cs=dx/eleb
+        sn=dy/eleo
+        dl=(ul(l,2)-ul(l,l))*cs+(ul(2,2)-ul(2,l))*sn
+        strain=d]/elen
+
+c....   calculate tangent modulus
+
+        if (abs(strain).ge.abs(epsmax(\,l,n))) lhen
+
+         if (rsttain.gt.0.0 .and. abs(strain).gt.rsttain) then
+           et= O.OdO
+         else if (ysttain.gt.0.0 .and. abs(sttain).gt.ysttain) then
+           et=e2
+         else
+           et= el+2.<>d0-e3*abs(sttain)
+         end if
+
+        else
+         e~l
+        endif
+
+c....   compute and output element forces
+
+        dx=xl(l,2)-xl(l,l)
+        dy=xl(2,2)-xl(2, 1)
+        elen=sqrt(dx*dx+dy*dy)
+        cs=dx/elen
+        sn=dy/elen
+        dl=(ul(l,2)-ul(l,l))*cs+(ul(2,2)-ul(2,l))*sn
+        strain=d]/elen
+        yield=.false.
+        ~idual=.false.
+
+c....   compute element stress
+
+        if(abs(sttain).ge.abs(epsmax(l ,l ,n))) then
+
+         if (rsttain.gt.0.0 .and. abs(strain).gt.rsttain) then
+           ~idual=.ttue.
+           if (strain.ge.O.OdO) then
+             sttess=el *ystrain+e3*ystrain*ystrain
+    &                     +e2*(rstrain-ystrain)
+           else
+             stress=-el *ystrain-e3*ystrain*ystrain
+    &                   -e2*(rstrain-ystrain)
+           endif
+
+         else if (ysttain.gt.0.0 .and. abs(sttain).gt.ysttain) then
+           yield=.ttue.
+           if (strain.ge.0.0dO) then
+             sttess=el *ystrain+e3*ystrain*ystrain
+    &                     +e2*(strain-ystrain)
+           else
+                stress=-el *ystrain-e3*ystrain*ystrain
+    &                   +e2*(suain+ystrain)
+
+
+                                                                      325
+                    endif
+
+                 else
+                   if (strain.ge.0.0dO) then
+                     stress=el *strain+e3*strain*strain
+                   else
+                      stress=el *strain-e3*strain*strain
+                   e.nd if
+
+                 end if
+
+              else
+                stress=epsmax(l .1 .n)*emax(l .1.n)-(epsmax( 1.1.n)-suain)*el
+              endif
+
+c•••• compute secant modulus
+
+      if (abs(strain).ILl.Od-6) then
+          es=el
+      else
+        es=stress/suain
+      e.nd if
+
+c•••• write data to scrarcb file
+
+      write(inio)area,et.stress,br
+
+      return
+           e.nd
+
+c.....................................................••..•.••...••••.••
+
+====================================================================================================
+FILE: evidence/materials/NC/Nguyen_AppendixB/04_stability_matrix_assembly.txt
+SIZE: 4072
+SHA256: 0af06e375ee104a6c66cd9401b8d0f504af166882c7c7432d301c55fa723c579
+ENCODING: utf-8
+LINES: 176
+====================================================================================================
+c Start to assemble the structure sliffneu and stability matrice
+C
+C
+ccccccccccccccacccccccccccca:c
+
+• if(tl.eq.'B' .or.tl.eq.'b') then
+     do 30 jj=1,ndiag
+30      skb(jJ)=().OdO
+
+
+c Continue Mohamed Work
+
+
+                                                                   284
+C
+c..Calculare element stiffneu + stability matrices
+C
+    kj=O
+    do k=l,numel
+
+c.... determine in the element is sreel OI' concrete
+       if (ix(4,k).eq.0) then
+        if(ix(3,k).eq.0) then
+         read(inio)area.et,stress,br
+        else
+         et=O.OdO
+         stress=O.OdO
+         do ii=l,2.
+         read(inio)area.etl,stre.1Sl,br
+         et=et+0.5dO*etl
+         streu=stress+stressl
+         enddo
+       endif
+
+        ll=lx(l,k)
+        12=IX(2,k)
+        ax=x(l,il)-x(l,i2)
+        ay=x(2,il )-x(2,i2)
+        a=sqn(ax*ax+ay*ay)
+        a2=a*a
+        a3=a2*a
+        ekb(l, 1)= 12.0dO/a3
+        ekb(l,2)=6.0dO/a2
+        ekb(l,3)=-12.0dO/a3
+        ekb(l,4)=6.0dO/a2
+        ekb(2,2)=4.0dO/a
+        ekb(2,3)=-6.0dO/a2
+        ekb(2,4)=2.0dO/a
+        ekb(3,3)= 12.0dO/a3
+        ekb(3,4)=-6.0dO/a2
+        ekb(4,4)=4.0dO/a
+        sb(l ,1 )=6.0d0/(5.0dO*a)
+        sb(l,2)=0.ldO
+        sb(l ,3)=-6.0dO/(S.OdO*a)
+        sb(l,4)=0.ldO
+        sb(2,2)=2.dO*a/1S.OdO
+        sb(2,3)=-0. ld0
+        sb(2,4)=-a/30.0dO
+        sb(3,3)=6.0dO/(S.OdO*a)
+        sb(3,4)=-0. ld0
+        sb(4,4)=2.0dO*a/1S.OdO
+        do i=l,3
+         do j=i+l,4
+          ekb(j,i)=ekb(ij)
+          sb(j,i)=sb(iJ)
+         enddo
+        enddo
+        cc l=area*br*br*et
+        cc2=area*stress
+        do i=l,4
+
+
+
+                                                       28S
+          do j=l,4,
+           e.kb(iJ)=ccl *e.kb(ij)
+           sb(ij)=cc2*sb(ij)
+           cb(iJ)=ekb(iJ)+sb(iJ)
+         enddo
+         enddo
+C
+c finish calculating beam stiffnes.1 and stability matrix
+C   Asambling the structures matrix
+C
+         do 10020 i=l,4
+          if(g(k,i).eq.0) gOIO 10020
+         il=g(k.1)
+         do 10025 j=i,4
+           if(g(kj).eq.0) go&o 10025
+            jl=g(kJ)
+              ii=il
+              jj=jl
+               if(il .gLj 1) then
+                ii=jl
+                jj=il .
+               endif
+               kj=jdiag(iJ)
+          skb(kj-jj+ii)=skb(kj-jj+ii}K:b(ij)
+10025           continue
+10020          continue
+
+C
+c Finish working with beam element and start to work with conaete
+element
+C
+
+
+
+        else
+
+         doj=l,9
+          kj=kj+l
+          read(inio) sig(l ),sig(2),sig(3),sig(6),thic
+    &             ,xnu.elt,e2t,betag
+C
+           fxx(J)=sig(l)
+           fxy(J)=sig(2)
+           fyy(J)=sig(3)
+           fbeta(j)=sig(6)
+           f(3)=xnu
+           vl=xnu
+           v2--xnu
+           f(4)=tbic
+           felt(j)=elt
+           fe2t(j)=e2t
+           istal(lJ)=istate(l j,k)
+           istal(2J)=istate(2j,k)
+           betu(j)=betag
+           if(istaa(lJ).ne.l.and.istaa(2J).ne.l) then
+            fel2t(J)=(elt-vl *elt+e2t-v2*e2t)l(4.0dO*(l.OdO-vl *v2))
+            el2t(kj)=fel2t(J)
+
+
+                                                                       286
+            else
+         fe 12t(J)=e12t(kj)
+         endif
+
+        enddo
+
+        ial=ix(l,k)
+        ia2--ix(2,k)
+        ia3--ix(3,k)
+        a=abs(x(l ,ial )-x(l ,ia2))
+        b=abs(x(2,ia2)-x(2,ia3))
+         if(a.Je.O.OOOldO) then
+          a=abs(x(l ,ia2)-x(l ,ia3))
+          b=abs(x(2,ia2)-x(2,ial))
+         endif
+        f(l)=a
+        f(2)=b
+
+         call qgmm(ek.es.f,fxx,fxyJyy.tbeta,fe 1tJe2t,fel2t,
+    &                betas,istat)
+
+         call conl(c,t)
+         call m3m(ek.c,eek)
+         call m3m(es,c,ees)
+         call m2m(eek.ees,c)
+
+c   assamble the suucture mattice for concrete
+       do 1510 i=l,16
+        if(g(k,i).eq.0) goto 1510
+        il=g(k,i)
+        do lSOj=i,16
+         if(g(kj).eq.O) goto 150
+          jl=g{kJ)
+            ii=il
+            jj=jl
+             if(il .gLj 1) then
+              ii=jl
+              jj=il
+             endif
+            kj=jdiag(jJ)
+         skb(kj-jj+ii)=skb(kj-jj+ii}+c(ij)
+150      continue
+
+====================================================================================================
+FILE: evidence/materials/NC/Nguyen_AppendixB/README.md
+SIZE: 2562
+SHA256: 92c6c429adc2beff64630e14f7dc59f7f5b3ff79732f19fc6201569619487196
+ENCODING: utf-8
+LINES: 43
+====================================================================================================
+# Nguyen Appendix B — effective evidence package
+
+Authoritative source: `Nguyen-011325526.pdf`
+
+- PDF SHA-256: `de4369d427540716e965bd9188ef0aaac77146eab3f054a433703f772e20111e`
+- frozen full `pdftotext -layout` extraction SHA-256: `cb1bd34ca0c0ccb6eb0abfeb7e0151da56baad0b3a228b9dddb8ca60512938f4`
+- frozen Appendix-B slice: extracted-text lines `12581–15437`, SHA-256 `39079268da5513bd3c20419e5732580d3b3b54e836926317d026672b534d2da1`
+
+Following `EFFECTIVE_SOURCE_EXCERPT_POLICY.md`, Appendix B is **not** mirrored in full. Only source-code regions that materially constrain the project are archived.
+
+## Archived excerpts
+
+1. `01_stab_conc_interface.txt`
+   - frozen Appendix-B extracted-text lines: `1919–2138` within the Appendix-B slice used during recovery
+   - local excerpt SHA-256: `d85b45c43138938ff834cbb582133889d345beec051fc77a92dedb8bf601e202`
+   - role: concrete element → principal strains → state-dependent modulus calls → transformed tangent/stress → stability scratch data.
+
+2. `02_concrete_state_moduli.txt`
+   - lines `2142–2623`
+   - SHA-256: `c1f5da0a99d05006fab2086aa8b0084c5c4b648e9e8b0892947f9fdeea2e6867`
+   - role: `stmodcc`, `stmodtc`, tension/tension state routine, `stmoduc`, compression secant/tangent helpers; direct source provenance for U/TC/TT/CC material-state logic.
+
+3. `03_stab_bar2_rebar.txt`
+   - lines `2624–2754`
+   - SHA-256: `b51fb2a15de9c6f95ae2c25746ea14b094c3b57228aa8004d7903d1c772d0f3e`
+   - role: reinforcement stress/tangent source interface used by stability analysis.
+
+4. `04_stability_matrix_assembly.txt`
+   - lines `285–460`
+   - SHA-256: `0af06e375ee104a6c66cd9401b8d0f504af166882c7c7432d301c55fa723c579`
+   - role: source assembly of element stiffness + geometric/stability contribution for steel and concrete elements.
+
+## Current-theory boundary
+
+These are **PRIMARY_SOURCE_PROGRAM_PROVENANCE** excerpts. They preserve exactly how Nguyen's source implementation generated tangent/stress information for stability analysis and how state-specific material routines were called.
+
+They do **not** authorize reintroduction of:
+
+- Gauss/material-point discretization as the formal NZ-SCCM operator;
+- the full historical load-step/history machine as the current material interface;
+- Chapter-4 FE architecture as the current zero-formal-spatial-quadrature production route.
+
+The current project may derive or audit a compact current-state operator against these source equations, but any transformation must be identified as a project transformation rather than a verbatim Nguyen law.
+
+====================================================================================================
+FILE: evidence/materials/NC/Nguyen_source_map.md
+SIZE: 1173
+SHA256: 7a697d777f1ec070b59bafae0fb5d411622143e86bc027bfe255949a60fe2d6f
+ENCODING: utf-8
+LINES: 16
+====================================================================================================
+# Nguyen source map — ordinary concrete / RC panels
+
+- Source PDF: `Nguyen-011325526.pdf`
+- PDF SHA-256: `de4369d427540716e965bd9188ef0aaac77146eab3f054a433703f772e20111e`
+- Role: primary source / numerical-source oracle.
+
+## Effective regions
+
+- Chapter 3: 2D concrete states U/TC/TT/CC/TCX, equivalent-uniaxial relations, Saenz compression, tension stiffening/shear retention, reinforcement relation.
+- Chapter 4: Q4 + Hermite out-of-plane + discrete reinforcement + stability matrix and source numerical route.
+- Chapter 6: imperfection/eccentricity, second-order kinematics, layered/coupled formulation; the thesis distinguishes derived full coupling from its implemented approximate solution.
+- Appendix B: selected original program routines are preserved in `Nguyen_AppendixB/`.
+
+## Current-use boundary
+
+Nguyen material physics/source equations may constrain the current operator, but Nguyen's FE/Gauss/material-point architecture is historical numerical provenance and does not override the current formal zero-spatial-quadrature rule. Project transformations derived from Nguyen/Foster must be labelled as project transformations, not verbatim Nguyen equations.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/LOCAL_THESES_SOURCE_MAP.md
+SIZE: 1490
+SHA256: e15f21b03645f74d8cf59b34406eb5b998847001a593ea9a87b235531bf49745
+ENCODING: utf-8
+LINES: 27
+====================================================================================================
+# Local UHPC thesis source map
+
+This file keeps the three locally available Chinese UHPC theses visible after the old full-text mirrors are moved to `archive/`.
+
+## 周俊 — UHPC三轴受压力学性能研究
+
+- PDF SHA-256: `37531c8f73765fea9192bef094a88edd7d7eacc5756b51640a7353b65ed72e59`
+- Role: triaxial compression / octahedral strength evidence; historical DP-type strength relation.
+- Use: confinement and triaxial strength/failure qualification.
+- Not a complete loading-history constitutive law by itself.
+
+## 王淑楠 — 超高性能混凝土三轴受压力学性能及破坏准则
+
+- PDF SHA-256: `e6e24cf47b21b1faa09f13ceb97a599321283c154578da92ef844b5d8e5c27dd`
+- DOI: `10.14006/j.jzjgxb.2022.0765`
+- Role: triaxial full-process evidence and Willam–Warnke five-parameter failure-surface qualification.
+- Use: independent multiaxial/failure-surface constraint.
+- Do not double-count a W-W/DP failure surface inside a current stress operator without an explicit theory decision.
+
+## 胡文旭 — 钢-预制UHPC开孔板组合桥面板界面抗剪性能研究
+
+- PDF SHA-256: `a554649f440bdb5d6523dc174aab68e1128aa6e4f9d19ebb9b67a9e19b544909`
+- Role: historical UHPC uniaxial material/interface source used in early UCFT development.
+- Use: source provenance and uniaxial material comparison.
+- Not a final 2D/multiaxial UHPC operator.
+
+When equations, figures or exact numerical values are needed, return to the authoritative PDFs using the catalog/File Library locator.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/audits/D19_LIU_TC_CLOSURE_MATRIX.csv
+SIZE: 1645
+SHA256: aa66dbf2dc28e981814a61f131145c410d7064cafe9c31cf154adccd330c7791
+ENCODING: utf-8
+LINES: 15
+====================================================================================================
+index,component,status,source,note
+0,"TC compressive uniaxial backbone, ascending",CLOSED,Liu 2023 Eq.(12),Modified MC2010-type branch with exponent 1.8
+1,"TC compressive uniaxial backbone, descending",CLOSED,Liu 2023 Eq.(12),Rational descending branch
+2,Peak compressive stress softening,CLOSED,Liu 2023 Eq.(10),"Platform 0.8 to eps_r=0.0035, then inverse-square-root decay"
+3,Peak compressive strain softening,CLOSED,Liu 2023 Eq.(11),zeta_epsilon=1
+4,Softened compressive stress-strain law,CLOSED,Liu 2023 Eq.(13),"Rising, peak and descending branches"
+5,Analytic compression sub-tangent d sigma_c/d eps_c,CLOSED_DERIVED,Analytic derivative of Eq.(13),Piecewise tangent; cusp at eps_c=eps0
+6,Analytic coupling tangent d sigma_c/d eps_r,CLOSED_DERIVED,"Analytic derivative of Eqs.(10),(13)",Kink at eps_r=0.0035
+7,Tensile-direction stress law sigma_t,OPEN,Not supplied by Liu 2023,Needed for full TC vector stress
+8,Crack shear transfer tau_12,OPEN,Not supplied by Liu 2023,Needed for full plane-stress TC state
+9,Tensile unloading/reloading and crack closure,OPEN,SLR tests described but no general update law,History operator absent
+10,U to TC entry continuity,OPEN,Eq.(10) is only for eps_r>0 and begins at 0.8,No unique continuous transition from unsoftened U curve
+11,Arbitrary biaxial loading-path validity,OPEN,Calibration uses compression-after-tension S.L.R. path,Not a general all-path 2D law
+12,TCX compressive postpeak scalar branch,PARTIAL_CLOSED,Liu 2023 Eq.(13) descending branch,"Cracked-state history, shear and transition still open"
+13,Full TC state loop,NOT_CLOSED,Closure audit,Only compressive scalar sub-branch is closed
+
+====================================================================================================
+FILE: evidence/materials/UHPC/audits/NZ_SCCM_G16R_signed_excess坐标_材料参数重审_U候选_D可识别性门禁.md
+SIZE: 8639
+SHA256: 641522cffba468b1dbbf0c2b36914a55a47eefc63de801ba3d517aa22c3aac1f
+ENCODING: utf-8
+LINES: 187
+====================================================================================================
+# NZ-SCCM G16R：signed/excess 二维交互坐标、材料参数重审与生产面可识别性门禁
+
+日期：2026-08-07
+
+## 0. 总裁决
+
+用户最新边界已执行：唯一不可修改材料标量为 `fc=141.1 MPa`。
+`Ec、eps_c0、ft、nu` 均重新接受材料来源审计；禁止使用板 `Pcr/Pu` 或结构试验反标材料。
+
+```text
+SIGNED_EXCESS_COORDINATE = PASS
+MATERIAL_PARAMETER_REAUDIT = PASS
+OLD_ft_7.3 = RETIRED
+GLOBAL_U_DEGREE70 = NUMERIC SOURCE-ANCHOR CANDIDATE PASS
+
+PRODUCTION_D = FAIL / NOT IDENTIFIABLE FROM CURRENT FROZEN SOURCE ROLES
+ACTUAL_P_R_A_L = NOT AUTHORIZED
+NEW_Pcr_Pu = NOT AUTHORIZED
+
+G16R_DECISION =
+PARTIAL_PASS_COORDINATE_AND_U
+FAIL_D_IDENTIFIABILITY
+PASS_TO_G16R2
+```
+
+## 1. 材料参数重审
+
+| parameter                         |   old_value |   G16R_value | decision               |
+|:----------------------------------|------------:|-------------:|:-----------------------|
+| fc_MPa                            |    141.1    |    141.1     | IMMUTABLE_BY_USER      |
+| Ec_MPa                            |  43400      |  43400       | RETAINED_AFTER_REAUDIT |
+| eps_c0                            |      0.0035 |      0.0035  | RETAINED_AFTER_REAUDIT |
+| nu                                |      0.2    |      0.2     | RETAINED_AFTER_REAUDIT |
+| ft_old_reference_MPa              |      7.3    |    nan       | RETIRED                |
+| ft_peak_project_MPa               |    nan      |     10.7348  | UPDATED_FROM_HIEW_2PCT |
+| ft_effective_cracking_project_MPa |    nan      |      9.76772 | UPDATED_FROM_HIEW_2PCT |
+| ft_localization_project_MPa       |    nan      |     10.348   | UPDATED_FROM_HIEW_2PCT |
+| eps_t_cr                          |    nan      |      0.00042 | UPDATED_FROM_HIEW_2PCT |
+| eps_t_peak                        |    nan      |      0.0038  | UPDATED_FROM_HIEW_2PCT |
+| eps_t_loc                         |    nan      |      0.0069  | UPDATED_FROM_HIEW_2PCT |
+| eps_t_lim                         |    nan      |      0.00759 | UPDATED_FROM_HIEW_2PCT |
+
+本轮没有为了“必须改参数”而机械修改 `Ec、eps_c0、nu`。
+`Ec=43.4 GPa` 位于 Hiew 2%钢纤维系列 41.6–44.7 GPa 的受压弹模范围内；
+`nu=0.20` 也与该系列一致；`eps_c0=0.0035` 没有发现必须推翻的来源冲突。
+
+真正发生更新的是拉伸幅值。旧 `ft=7.3 MPa` 退出生产材料参数。
+以固定 `fc=141.1 MPa` 与 Hiew 2%系列56 d抗压强度中位值之间的材料级尺度比
+`s_f=0.967100754` 转移直接拉伸锚点，得到：
+
+- `f_t,cr = 9.7677 MPa`
+- `f_t,peak = 10.7348 MPa`
+- `f_t,loc = 10.3480 MPa`
+- `eps_t,cr = 0.000420`
+- `eps_t,peak = 0.003800`
+- `eps_t,loc = 0.006900`
+- `eps_t,lim = 0.007590`
+
+其中 `eps_t,cr` 按 Hiew/AASHTO 的 0.02% offset effective cracking 语义处理，
+不再错误强制满足 `f_cr=E*eps_cr`。
+
+## 2. G16 的 Poisson 假软化冲突已解除
+
+现有等效单轴坐标的逆变换为：
+
+`eps1 = eps_c0 (x - nu y)`
+
+`eps2 = eps_c0 (y - nu x)`
+
+定义方向1的 signed/excess 横向交互应变：
+
+`eps2_ex = eps2 + nu eps1 = (1-nu^2) eps_c0 y`
+
+故严格有：
+
+`y=0 -> eps2_ex=0`
+
+这意味着真正单轴压缩的普通 Poisson 横向膨胀不会再触发 TC cracked-softening。
+离散恒等式检查最大绝对误差为 `8.674e-19`。
+
+## 3. 新的单轴全域 U(x)
+
+G12 degree-54 不再复用。
+
+本轮以 Wu-type smooth 压缩参考 + Hiew 2%直接拉伸锚点建立材料级参考，
+随后用一个 **degree-70 全域有限多项式** 表达 `U(x)`，没有运行时拉/压分支。
+
+强制精确满足：
+- `U(0)=0`
+- `U'(0)=Ec eps_c0 / fc`
+- `U(-1)=-1`
+- `U'(-1)=0`
+- Hiew有效开裂点
+- Hiew拉伸峰值及峰值零切线
+- Hiew局部化点
+- Hiew拉伸极限点
+
+锚点审计：
+
+| anchor               |        x |   target_stress_MPa |   U_stress_MPa |   stress_error_MPa |
+|:---------------------|---------:|--------------------:|---------------:|-------------------:|
+| ORIGIN               |  0       |             0       |    3.91631e-15 |        3.91631e-15 |
+| COMP_PEAK            | -1       |          -141.1     | -141.1         |        0           |
+| HIEW_EFFECTIVE_CRACK |  0.12    |             9.76772 |    9.76772     |        2.4869e-14  |
+| HIEW_TENSION_PEAK    |  1.08571 |            10.7348  |   10.7348      |        1.06581e-13 |
+| HIEW_LOCALIZATION    |  1.97143 |            10.348   |   10.348       |        1.61648e-13 |
+| HIEW_TENSION_LIMIT   |  2.16857 |             0       |    1.76234e-13 |        1.76234e-13 |
+
+全域材料参考误差：
+- 最大应力误差 = `1.2887 MPa`
+- RMS应力误差 = `0.6846 MPa`
+- 导数极值审计最大符号越界 = `1.209e-05`
+
+因此本轮将 degree-70 U 标记为：
+`NUMERIC SOURCE-ANCHOR CANDIDATE PASS`，
+但由于整个二维面尚未冻结，不单独宣称其为最终不可修改系数集。
+
+## 4. D(x,y) 的真正阻断
+
+材料语法仍为：
+
+`F(x,y)=U(x)+x*y*D(x,y)`
+
+新 excess 坐标使 Diab/Ferche TC 压缩软化只由“超出自由 Poisson 的横向拉伸”驱动。
+D 次数扫描：
+
+|   D_total_degree |   coefficient_count |   Diab_holdout_max_abs_error_MPa |   Diab_holdout_RMS_error_MPa |   Liu_CC_TT_fit_max_abs_error_MPa |   Liu_TC_path_holdout_max_abs_error_MPa |
+|-----------------:|--------------------:|---------------------------------:|-----------------------------:|----------------------------------:|----------------------------------------:|
+|                4 |                  15 |                         39.6356  |                    14.5921   |                        29.7601    |                                 550.583 |
+|                6 |                  28 |                          9.85541 |                     3.40871  |                         1.48341   |                                1154.51  |
+|                8 |                  45 |                          6.34684 |                     2.02001  |                         0.717972  |                                 382.217 |
+|               10 |                  66 |                          3.75113 |                     1.23426  |                         0.169994  |                                 246.817 |
+|               12 |                  91 |                          2.54397 |                     0.746657 |                         0.0350134 |                                 158.668 |
+
+以 degree-10 为例：
+- Diab current-TC holdout 最大误差 = `3.751 MPa`
+- Liu CC/TT 拟合最大误差 = `0.170 MPa`
+- 未参与拟合的 Liu TC 路径 holdout 最大误差 = `246.817 MPa`
+
+这里的失败不是“次数不足”。
+
+TC状态 `x<0,y>0` 中，压缩方向使用 `D(x,y)`，
+而同一物理点的拉伸方向通过交换主方向使用 `D(y,x)`，即落在 `x>0,y<0` 区域。
+
+当前冻结来源角色只给出了：
+- Diab/Ferche：TC压缩方向 current softening；
+- Liu CC/TT：稀疏双轴峰值资格；
+- Liu proportional/sequential TC：已冻结为 path-dependent holdout；
+- Leutbecher：预裂/路径相关独立验证。
+
+因此 `D(x>0,y<0)` 没有路径无关的 current-value 生产来源。
+不同正则化能保持已知来源误差较小，却会使这个未见区域的预测显著漂移。
+所以不能挑一个“看起来合适”的 D10/D12 系数冒充材料定律。
+
+## 5. 正式门禁
+
+```text
+G16R-01  fc=141.1 USER LOCK                    PASS
+G16R-02  companion parameter re-audit          PASS
+G16R-03  old ft=7.3                            RETIRED
+G16R-04  signed/excess coordinate              PASS
+G16R-05  exact uniaxial-axis protection        PASS
+G16R-06  degree-70 global U candidate           PASS_NUMERIC
+G16R-07  Diab current TC compression side      PASS
+G16R-08  Liu CC/TT sparse qualification        PASS
+G16R-09  opposite TC tensile current sector    FAIL_UNIDENTIFIED
+G16R-10  production D freeze                   NOT_AUTHORIZED
+G16R-11  actual P/R_A/L                        NOT_AUTHORIZED
+G16R-12  new Pcr/Pu                            NOT_AUTHORIZED
+```
+
+## 6. 唯一下一步：G16R2
+
+G16R2只剩一个材料理论决策：
+
+如何在不使用板承载力、不引入材料历史积分点的前提下，
+为 `x>0,y<0` 的 TC 拉伸方向提供合法 current-value closure？
+
+合法路径只有两类：
+
+1. 采用一套路径无关、同时给出TC两主方向应力的材料级 current source；
+2. 明确修改 G14 的来源角色合同，将某一条实测TC路径
+   （最自然的是 proportional TC）指定为项目 current-map 的 canonical closure，
+   其余路径继续作为外部误差带/验证。
+
+在这一步正式解决以前，本轮不把任何诊断 D 系数送入 G15，
+也不计算新的 Pcr/Pu。
+
+====================================================================================================
+FILE: evidence/materials/UHPC/audits/UHPC_STATE_EQUATION_LEDGER.csv
+SIZE: 6077
+SHA256: b80349022177d1d844e99ec078021ba791587f2317763b3deb1295cac23de70b
+ENCODING: utf-8
+LINES: 8
+====================================================================================================
+index,material,state,subroute_or_subregion,source_equations,appendix_b_or_source_object,independent_local_unknowns,state_entry_hold_exit,history_variables,stress_operator_summary,consistent_tangent_summary,finite_scalar_fragments,global_spectral_or_invariant_closure,state_front_or_history_closure,strict_zero_quadrature_status,specific_blocker,retained_use
+0,UHPC,U,Initial isotropic linear elastic subregion,Initial tangent Ec from locked UHPC material parameters,Historical UHPC source registry / D19R initial branch,0,Before any tensile/compressive nonlinear branch or multiaxial surface activates,None in initial elastic subregion,Same isotropic linear law in both principal directions,Constant elastic tangent,Complete linear operator,YES: sigma=2G E+lambda_ps I1 I,Initial subregion only; general U transition surface is not closed,ADMISSIBLE_FOR_ZERO_QUADRATURE_MATRIX_SUBREGION,None inside fixed elastic subregion; full U remains open,Formal exact elastic initialization and regression kernel
+1,UHPC,U,General pre-failure multiaxial state,Hu uniaxial compression/tension; W-W/DP strength constraints; D16 full-state register,UHPC source registry; full multiaxial operator not frozen,Undefined until one full multiaxial closure is selected from theory,Inside tensile/compressive failure surfaces,"Candidate max tensile/equivalent compressive strains, active meridian, fiber orientation; not fully frozen",Only uniaxial curves and failure constraints are recovered; no complete 2D/3D pre-failure stress operator,Not fully defined,Initial linear segment only,OPEN,Stress-based W-W surface and general path closure missing,OPEN_SOURCE_OPERATOR_INCOMPLETE,Incomplete source stress/tangent operator; Hu rational/exponential branches are not finite D15 polynomials,Source registry and boundary constraints only
+2,UHPC,TC,Liu tension-compression softened compression scalar branch,Liu 2023 recovered scalar formulas: zeta_sigma and normalized compression backbone,liu2023_tc_compression.py; D19R _tc_compression,0 for recovered scalar formula; full 2D TC operator not defined,TC entry/exit and crack/shear laws incomplete in recovered source set,Tensile strain/damage indicator and compressive peak variables in recovered scalar branch; full crack history open,Compression softening factor includes piecewise constant/square-root zeta; backbone includes x^1.8 rational ascending and rational descending; tension direction and shear not closed,Exact scalar derivative recovered; full 2D consistent tangent absent,Constant zeta subsegment only; remaining backbone non-polynomial,NO,"Damage clip, tensile thresholds and full source transition graph incomplete",OPEN_SOURCE_OPERATOR_INCOMPLETE_AND_NOT_FINITE,"Square root, noninteger 1.8 power and rational denominator; missing tension-direction stress, crack shear and complete state transition",TC compression scalar source oracle and derivative audit
+3,UHPC,TT,Fiber-bridged multi/two-direction tension,Hu/FHWA-type uniaxial tensile relation; D16 source register identifies TT requirement,UHPC tension source registry; no frozen full TT operator,Not closed,Multiaxial tensile surface/cracking and pullout limits not frozen,"Cracking/localization strain, crack opening, fiber slip/orientation, maxima; not closed",Recovered uniaxial generalized exponential only; two-direction coupling and shear unavailable,Uniaxial analytic derivative exists; full TT tangent unavailable,Initial linear segment only,NO for postpeak/full TT,Multiple crack/fiber history fields and tensile surface unresolved,OPEN_SOURCE_OPERATOR_INCOMPLETE_AND_NOT_FINITE,Generalized exponential/noninteger power; missing multi-direction interaction and shear; distributed crack/fiber histories,Initial elastic branch and uniaxial source qualification only
+4,UHPC,CC,Biaxial compression / axisymmetric triaxial fragments,Hu uniaxial rational compression; Zhou DP and Wang W-W failure constraints; D16 register,UHPC source registries; W-W cap audit,Full arbitrary biaxial/3D stress-strain closure not selected,Compression surface activation; CC-to-C3 depends on confinement/third principal stress,"Peak stress/strain, confinement, residual and active meridian; partially specified",Strength/failure surfaces recovered; complete arbitrary-path stress update not frozen,Not fully defined for general CC/C3,None beyond initial elastic; isolated residual/axisymmetric formulas are not a full state,NO,W-W boundary is stress-based with nested roots/Lode angle; D19 fixed-strain front does not cover it,OPEN_SOURCE_OPERATOR_INCOMPLETE_AND_NOT_FINITE,Hu rational law; W-W square roots and acos; DP is only a failure audit; general stress-strain/tangent and C3 closure missing,Failure-envelope constraints and axisymmetric source checks
+5,UHPC,TCX,Cracked tension-compression after compression peak,Only Liu scalar compression postpeak fragment and historical state name recovered,D19/D19R partial TC compression branch,Not closed,No complete source transition/handoff rule frozen,"Crack, tensile damage, compression peak/residual and fiber histories; incomplete",Postpeak compression scalar fragment only; tension and shear parts missing,Scalar compression derivative only,No full-state finite operator,NO,Incomplete transitions and histories,OPEN_SOURCE_OPERATOR_INCOMPLETE_AND_NOT_FINITE,Same non-polynomial Liu terms as TC plus missing full TCX stress/tangent/history laws,Partial scalar source reference only
+6,UHPC,C3,True triaxial compression/confinement,Zhou DP; Wang W-W and triaxial source constraints,D16 UHPC full-state source register,General 3D closure not frozen,Third principal compression/confinement active,"Pressure, deviatoric state, Lode angle, peak/residual and fiber descriptors",Failure surfaces/experimental constraints only,Not defined as complete production operator,None sufficient for full C3,NO,3D stress-based moving surface not represented by current 2D D15/D19 front,OUTSIDE_CURRENT_2D_MATRIX_AND_OPEN,Current matrix is 2D plate-state; full 3D constitutive operator and exact stress-surface moments absent,Future C3 source boundary only
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Diab_Ferche_2026_compression_softening_synthesis.md
+SIZE: 2564
+SHA256: 2fe910039fb8d4b9c82cde9ff7fb601db24d5c781a0f4b26af3942207c3c3216
+ENCODING: utf-8
+LINES: 49
+====================================================================================================
+# Diab & Ferche 2026 — compression-softening synthesis evidence
+
+## Source identity
+
+- file: `Diab_Ferche_2026_UHPC_compression_softening.pdf`
+- ChatGPT File Library ID: `file_00000000438882118a44003e65279d5b`
+- DOI recorded in source: `10.1002/suco.70191`
+- evidence identity: `PRIMARY/SYNTHESIS_SOURCE / UHPC_COMPRESSION_SOFTENING`
+
+## Effective evidence retained
+
+The paper synthesizes cracked-UHPC compression-softening data from multiple experimental programs, including Fehling, Lee, Leutbecher, Liu and other studies, and compares existing softening models with a proposed model.
+
+The source writes the cracked-UHPC peak compressive strength as
+
+```text
+f_p = beta * f'_c
+```
+
+where `beta` is a compression-softening factor governed by transverse tensile/cracking response.
+
+A source modeling choice is that `beta` is applied to compressive strength but not to the strain at peak compressive strength, citing experimental observations that the peak strain is similar between uniaxial compression and biaxial tension-compression in the referenced study.
+
+The compiled evidence indicates:
+
+- fibre reinforcement at about 1% already materially reduces the severity of compression softening relative to non-fibre UHPC;
+- within the compiled roughly 1.0%–2.5% fibre range, no clear monotonic additional fibre-content trend was discerned;
+- transverse tensile strain and the presence of fibre reinforcement are therefore identified as dominant variables in the compiled response.
+
+Its comparison table/figure combines heterogeneous programs with different specimen dimensions, reinforcement ratios, fibre types and fibre contents. This makes the paper valuable as a **cross-source trend synthesis**, but not a substitute for the individual primary test programs when precise material identification is required.
+
+## USED FOR
+
+- cross-checking TC compression-softening trend and scale across multiple studies;
+- identifying a compact candidate softening-factor structure;
+- checking whether a proposed UHPC TC current reduction behaves consistently with the broader literature;
+- provenance for historical project composite TC interaction candidates.
+
+## NOT USED FOR
+
+- overriding the individual Liu/Lee/Leutbecher primary data;
+- assuming that fibre content above 1% has literally zero effect for every UHPC mixture;
+- defining the full tensile-direction stress or crack shear law;
+- creating a general arbitrary-path material operator from `beta` alone;
+- structural ultimate-load calibration.
+
+## Current identity
+
+`SOURCE_ONLY / CROSS_STUDY_TC_SYNTHESIS`
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/FHWA_HRT_23_077_design_locator.md
+SIZE: 2045
+SHA256: 24ff1108123efd91893e5f9103dcacbd9335e199a447506d235a7e4a3968b2c8
+ENCODING: utf-8
+LINES: 40
+====================================================================================================
+# FHWA-HRT-23-077 — UHPC design/material qualification locator
+
+## Source identity
+
+- file: `FHWA_HRT_23_077_UHPC_design.pdf`
+- ChatGPT File Library ID: `file_000000002fac820ba9e9f5aed3ca142e`
+- report: FHWA-HRT-23-077, *Structural Design with Ultra-High Performance Concrete*, October 2023.
+- official locator: `https://highways.dot.gov/sites/fhwa.dot.gov/files/FHWA-HRT-23-077.pdf`
+- evidence identity: `OFFICIAL_DESIGN_GUIDE / MATERIAL_PARAMETER_QUALIFICATION`
+
+## Effective evidence retained
+
+The guide treats UHPC tensile response using material parameters tied to direct tensile testing, including:
+
+- modulus of elasticity `Ec`;
+- effective cracking strength `ft,cr`;
+- crack localisation strength `ft,loc`;
+- crack localisation strain `epsilon_t,loc`.
+
+It identifies crack localisation as the transition to tensile softening and notes that softening is associated with localisation into a principal crack and fibre pullout. It also gives typical material-property ranges and test methods. The guide permits Poisson's ratio to be determined experimentally and provides a default design assumption when not tested.
+
+The guide's design tension models deliberately do not include post-localisation softening capacity in the strain-based structural design model. This is a **design simplification**, not evidence that the physical post-localisation material response does not exist.
+
+## USED FOR
+
+- official terminology and material-test/qualification boundary;
+- checking plausible ranges for `Ec`, `ft,cr`, `ft,loc`, `epsilon_t,loc`, compressive strain and Poisson ratio;
+- distinguishing qualification parameters from project historical parameter guesses;
+- confirming the significance of crack localisation in UHPC tension.
+
+## NOT USED FOR
+
+- replacing Hiew direct-tension post-localisation constitutive evidence;
+- replacing Liu/Lee/Leutbecher biaxial material tests;
+- defining a full multiaxial material operator;
+- calibrating material parameters from structural Pu.
+
+## Current identity
+
+`AUXILIARY_OFFICIAL_QUALIFICATION_SOURCE`
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Hiew_2024_direct_tension.md
+SIZE: 5223
+SHA256: f8670b65d8588df6c8425dd20ed73bad47501b50767246aebedf5267d1c6e520
+ENCODING: utf-8
+LINES: 93
+====================================================================================================
+# Hiew et al. 2024 — direct-tension evidence
+
+## Source identity
+
+- file: `Hiew_2024_UHPC_unified_tension_2pct.pdf`
+- ChatGPT File Library ID: `file_0000000087e882079606fbbb13dd1e2d`
+- paper: S.Y. Hiew et al., *A unified tensile constitutive model for mono/hybrid fibre-reinforced ultra-high-performance concrete (UHPC)*, Cement and Concrete Composites 150 (2024) 105553.
+- DOI: `10.1016/j.cemconcomp.2024.105553`
+- official OA locator: `https://research.monash.edu/files/599317955/589510091_oa.pdf`

@@ -1,0 +1,1800 @@
+
+不得使用
+
+\[
+P_u=P_{u,c}+A_sf_y
+\]
+
+作为正式极限承载力。
+
+---
+
+# 6. Case21 reinforcement mapping
+
+Swartz/Nguyen：reinforcement 为 isotropic two-way mesh。Table 5.1 的
+
+\[
+p=0.75\%
+\]
+
+是 nominal total steel ratio；Case21 为一层、\(h_r=0\)。
+
+项目统一映射：
+
+\[
+\rho_{s,{\rm dir,layer}}
+=
+\frac{p}{2n_{\rm layers}}.
+\]
+
+所以 Case21：
+
+\[
+\boxed{
+\rho_{s,x}=\rho_{s,y}=0.00375,
+\qquad z_s=0.
+}
+\]
+
+这只确定钢筋材料/面积密度接口；具体连续线族的积分仍由同一板运动学直接生成，不引入钢筋 Gauss points。
+
+---
+
+# 7. Steel-shell slot
+
+当前 NZ-SCCM 主线尚未冻结一个来源明确的 steel-shell current law \(M_{\rm shell}\)。  
+因此本文件**不擅自填入**理想弹塑、Ramberg--Osgood 或其他钢壳本构。
+
+结构接口保留为
+
+\[
+P_{\rm shell}
+=
+-\int_{\Omega_s}\sigma_{y,s}\,dA,
+\]
+
+\[
+R_{q,\rm shell}
+=
+\int_{\Omega_s}
+\boldsymbol\sigma_s^T
+\boldsymbol\varepsilon_{,q}\,dA,
+\]
+
+但在 \(M_{\rm shell}\) 来源冻结以前：
+
+\[
+\boxed{M_{\rm shell}=\text{UNSPECIFIED BY CURRENT LOCKED SOURCE}.}
+\]
+
+这不是遗漏，而是为了遵守“不添加”。
+
+---
+
+# 8. 以后数学求解器的输入
+
+求解工具只能接收以上已显式定义的函数：
+
+\[
+\boxed{
+M_{\rm NC},\quad M_s,\quad
+P_c,\quad R_{q,c},\quad
+P_s,\quad R_{q,s}.
+}
+\]
+
+工具可以使用：
+- 直接符号积分；
+- 已有特殊函数；
+- rule-based integration；
+- 精确代数化简；
+- 任意精度特殊函数评价；
+- 严格 ball/interval arithmetic 作为误差证书；
+- 必要时对当前实际 integrand 做临时有限解析展开并给余项。
+
+工具不得把正式结果替换为空间材料点求和。
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.md
+SIZE: 9980
+SHA256: d71beb2bb4ea518006b596620797b89c342e103028867b664286022c00e632a8
+ENCODING: utf-8
+LINES: 335
+====================================================================================================
+# NZ-SCCM Current Target Geometric Regularization R01
+
+**Date:** 2026-08-10  
+**Status:** `PASS_DIAGNOSTIC / SAME_ROUTE / NO Pu RUN`
+
+## 0. Purpose and identity
+
+This step executes the already-authorized `EXISTING_PATH_CONSERVATIVE_CURRENT_TARGET_REFORMULATION` after the full-startup recovery. It is **not** a new material route.
+
+Retained architecture:
+
+```text
+G18/G27 invariant current-map architecture
+-> G20/G21 smooth conservative strength-domain philosophy
+-> G26 moment-first D15
+-> G28/G30 direct P,Rq,L kernel
+```
+
+No Case21/Swartz structural ultimate load is used to choose any material smoothing parameter. No formal spatial numerical quadrature, material-point grid, spatial cell, auxiliary quadrature, or ODE propagation is introduced.
+
+## 1. Source/current reference used only for geometric diagnosis
+
+For the current Case21 ordinary-concrete reference operator, use the already explicit source-shaped scalar coordinates:
+
+```text
+kappa = 2.0005129533678754
+rho   = 0.1
+xcr   = rho/kappa = 0.04998717945397425
+eta_pi = xcr/20 = 0.0024993589726987125
+eta_r = 0.05
+m_t = -7/90
+```
+
+Smooth sign split:
+
+\[
+\Pi_\eta(z)=\frac{z^2(\sqrt{z^2+\eta^2}+z)}{2(z^2+\eta^2)}.
+\]
+
+For principal equivalent-uniaxial coordinate \(\lambda\):
+
+\[
+c=\Pi_\eta(-\lambda),\qquad t=\Pi_\eta(\lambda),
+\]
+
+\[
+C=\frac{\kappa c}{1+(\kappa-2)c+c^2},
+\]
+
+\[
+r=\frac{t}{x_{cr}},
+\]
+
+\[
+H(r;r_0)=\frac12[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}]
+-\frac12[-r_0+\sqrt{r_0^2+\eta_r^2}],
+\]
+
+\[
+T=r+(m_t-1)H(r;1)-m_tH(r;10),
+\]
+
+\[
+U=\kappa\lambda-C+\kappa c+\rho T-\kappa t.
+\]
+
+Current biaxial reference:
+
+\[
+s_1=U_1-a_{cc}C_1^2C_2+C_1T_2-\rho a_tT_1T_2^8,
+\]
+
+\[
+s_2=U_2-a_{cc}C_2^2C_1+C_2T_1-\rho a_tT_2T_1^8,
+\]
+
+with
+
+```text
+a_cc = 0.1072329249362415
+a_t  = 1-2^(-1/8) = 0.08299595679532878
+```
+
+This operator remains a regression/reference current target, not final source truth. R01 uses it only to identify where geometric sharpness actually resides.
+
+## 2. Four-dimensional current-map interpretation
+
+The constitutive object is a two-input/two-output map
+
+\[
+(\varepsilon_1,\varepsilon_2)\mapsto(\sigma_1,\sigma_2).
+\]
+
+Its graph is a two-dimensional manifold embedded in the four-dimensional coordinate space
+
+\[
+(\varepsilon_1,\varepsilon_2,\sigma_1,\sigma_2).
+\]
+
+For principal strains with zero principal shear, the current reference first maps to equivalent-uniaxial principal coordinates
+
+\[
+\lambda_1=\frac{\varepsilon_1+\nu\varepsilon_2}{(1-\nu^2)\varepsilon_0},
+\qquad
+\lambda_2=\frac{\nu\varepsilon_1+\varepsilon_2}{(1-\nu^2)\varepsilon_0},
+\]
+
+then evaluates \((s_1,s_2)\), with \(\sigma_i=f_c s_i\).
+
+The visualization package therefore provides two complementary projections:
+
+1. `(lambda1,lambda2,sigma1/fc)` with color = `sigma2/fc`, and the swapped projection;
+2. actual Case21 `(eps1,eps2,sigma1)` in microstrain/MPa with color = `sigma2`, and the swapped projection.
+
+## 3. Key executed finding: the true scale separation is about 1268.6:1
+
+The previous summary that the global material interval (~3.17) had to resolve a ~0.05 tension transition was incomplete.
+
+The current reference contains **three much thinner regularization layers**:
+
+### 3.1 Sign-split layer near \(\lambda=0\)
+
+Controlled by
+
+\[
+\eta_\Pi=\frac{x_{cr}}{20}=0.0024993589727.
+\]
+
+### 3.2 Crack/tension-stiffening transition near \(r=1\)
+
+Nominal location
+
+\[
+\lambda\simeq x_{cr}=0.049987179454.
+\]
+
+Because the smoothing width in \(r\) is \(\eta_r=0.05\), the corresponding width in \(\lambda\) is approximately
+
+\[
+\Delta\lambda_{H}\simeq \eta_r x_{cr}=0.0024993589727.
+\]
+
+### 3.3 Second Foster transition near \(r=10\)
+
+Nominal location
+
+\[
+\lambda\simeq10x_{cr}=0.49987179454,
+\]
+
+with the same order of local transition width.
+
+The current qualification interval used by the old global primitive screen is
+
+\[
+\lambda\in[-2.4390243902,\ 0.7317073171],
+\]
+
+with width
+
+\[
+\Delta\lambda_{global}=3.1707317073.
+\]
+
+Therefore
+
+\[
+\boxed{
+\frac{\Delta\lambda_{global}}{\Delta\lambda_H}
+\approx1268.62
+}
+\]
+
+rather than merely ~60.
+
+This is the central R01 diagnosis:
+
+> the main analytic pressure is a **thin-layer / curvature-concentration problem on the current surface**, not a generic failure of the unified invariant current-map architecture.
+
+## 4. Executed curvature localization
+
+A dense material-coordinate diagnostic of \(T(\lambda)\) was used only to locate curvature concentration; it is not a structural integration rule and is not part of the production operator.
+
+The strongest local curvature locations found were:
+
+| feature | lambda | T | dT/dlambda | d2T/dlambda2 |
+|---|---:|---:|---:|---:|
+| sign-split neighborhood | 0.000684 | 0.002281 | 7.08560 | +11582.93 |
+| r=1 transition | 0.050080 | 0.973725 | 9.24396 | -4330.02 |
+| r=10 transition | 0.499882 | 0.302537 | -0.777566 | +311.28 |
+
+These three narrow ridges are then pulled through both principal coordinates and through the biaxial interaction terms. That is why a globally smooth-looking stress surface can still be expensive to represent with one small global polynomial/rational basis.
+
+## 5. Important distinction: strength-envelope corner vs current-map ridge
+
+G20 already addressed the **strength-domain** geometric incompatibility:
+
+- CC: smooth conservative compression ellipse;
+- TC: degree-12 C1 Bernstein connection with tangent matching at both axes;
+- TT: p=8 superellipse;
+- NC source kinks around cracking: narrow C2 quintic regularization.
+
+So the current problem is **not** simply that the outer \((\sigma_1,\sigma_2)\) failure envelope still has a literal corner.
+
+The remaining problem is that the full map
+
+\[
+(\varepsilon_1,\varepsilon_2)\mapsto(\sigma_1,\sigma_2)
+\]
+
+contains narrow high-curvature transition ridges in the strain directions. A smooth outer strength envelope alone does not remove those ridges.
+
+## 6. Same-route target reformulation decision by sector
+
+### 6.1 CC: retain unchanged
+
+Keep the already-frozen low-parameter compression target
+
+\[
+\boxed{c_i^*=c_i(1+a_{cc}c_1c_2)},
+\qquad a_{cc}=0.1072329249362415.
+\]
+
+Reason: current evidence does not identify the compression-dominant CC region as the source of the sharp global approximation pressure. There is no basis to sacrifice the established biaxial compression enhancement merely to simplify the compiler.
+
+### 6.2 TC/CT: retain the existing conservative low-parameter target
+
+Keep
+
+\[
+\boxed{c^*=c(1-\tau)},
+\]
+
+with the tensile component not amplified.
+
+This target was already established as deliberately conservative relative to the G20 C1 TC envelope. R01 therefore does not invent a new TC surface.
+
+### 6.3 TT: quantify an admissible contraction corridor, but freeze nothing yet
+
+G20 p=8 remains the current outer admissible reference:
+
+\[
+\tau_1^8+\tau_2^8=1.
+\]
+
+For visualization and a material-only next screen, R01 compares two simpler conservative inner candidates:
+
+\[
+\tau_1^p+\tau_2^p=1,
+\qquad p=4,2.
+\]
+
+Equal-biaxial strengths are:
+
+| p | equal-biaxial strength | reduction vs p=8 |
+|---:|---:|---:|
+| 8 | 0.917004 ft | 0% |
+| 4 | 0.840896 ft | 8.2996% |
+| 2 | 0.707107 ft | 22.8895% |
+
+Decision:
+
+```text
+TT p=4 = AUTHORIZED FOR MATERIAL-ONLY SCREEN
+TT p=2 = LOWER-BOUND DIAGNOSTIC ONLY
+NO TT EXPONENT FROZEN BY R01
+```
+
+The p=4 candidate is moderate enough to test; p=2 is presently too aggressive to freeze because it removes ~22.9% of equal-biaxial tensile strength relative to the already-conservative p=8 reference.
+
+## 7. What smoothing is actually allowed next
+
+The primary reformulation target is the **tensile current-map transition corridor**, not CC.
+
+The next same-route material-only construction may widen/regularize the current-map transition corridor only if all of the following are preserved:
+
+```text
+1. sigma(0,0)=0
+2. initial elastic tangent is preserved
+3. uniaxial tensile strength ft anchor is preserved
+4. no stress increase above the accepted material target
+5. stress and tangent come from the same smooth current map
+6. no runtime TT/TC/CC state partition is reintroduced
+7. no Case21/Swartz Pu is used to choose smoothing width or coefficients
+8. resulting expression must remain plausible under Gate A/B/C before D15 compilation
+```
+
+This means the acceptable simplification is **not** “delete tension” or “flatten every transition”. It is a controlled geometric rounding of narrow strain-space ridges while keeping the physically important axis anchors and conservative stress side.
+
+## 8. Visual artifact manifest
+
+The executed local package contains:
+
+```text
+02_current_map_4D_sigma1_color_sigma2.png
+03_current_map_4D_sigma2_color_sigma1.png
+04_tensile_utilization_transitions.png
+05_tensile_curvature_concentration.png
+06_TT_strength_domain_contraction_candidates.png
+10_actual_eps1_eps2_sigma1_color_sigma2.png
+11_actual_eps1_eps2_sigma2_color_sigma1.png
+12_TC_slice_eps2_minus700.png
+13_TC_slice_eps2_minus1300.png
+```
+
+Package identity:
+
+```text
+NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.zip
+SHA256 = e6c4ebeb3615bc0c276f0d887497f29bbe7776adf8287f526da0925aa48d8e38
+```
+
+The PNG binaries are session artifacts; the repository stores the formulas, metrics, visualization manifest and regeneration code so the figures can be reproduced without relying on a chat-only image.
+
+## 9. Gate result and next task
+
+```text
+TARGET_SURFACE_REFORMULATION_R01 = PASS_DIAGNOSTIC
+ROUTE_SWITCH = NO
+CC = RETAIN
+TC = RETAIN_EXISTING_CONSERVATIVE_TARGET
+TT_P4 = AUTHORIZED_FOR_MATERIAL_ONLY_SCREEN
+TT_P2 = DIAGNOSTIC_ONLY
+PRIMARY_COMPLEXITY_SOURCE = THREE_THIN_TENSILE_TRANSITION_LAYERS
+CASE21_PU = NOT_RUN
+SWARTZ24 = NOT_RUN
+```
+
+Only next task:
+
+```text
+TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02
+```
+
+R02 must remain on the same G18/G20/G27 current-map route. It should construct a very small number of explicit C2 conservative transition-corridor candidates and evaluate **material stress + tangent + surface shape + algebraic complexity before D15**. It must not reopen compiler-family hunting or use structural Pu to select a material approximation.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_results.json
+SIZE: 3668
+SHA256: 6a1e1b393d2937199c27985b86e2a6c4247a4458a74c3ee590ed7c1f6b5f6afa
+ENCODING: utf-8
+LINES: 119
+====================================================================================================
+{
+  "stage": "CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01",
+  "date": "2026-08-10",
+  "identity": "SAME_ROUTE_TARGET_SURFACE_REFORMULATION_DIAGNOSTIC",
+  "route_switch": false,
+  "formal_spatial_numerical_quadrature": 0,
+  "structural_Pu_used_for_material_selection": false,
+  "reference_constants": {
+    "kappa": 2.0005129533678754,
+    "rho": 0.1,
+    "xcr": 0.04998717945397425,
+    "eta_pi": 0.0024993589726987125,
+    "eta_r": 0.05,
+    "a_cc": 0.1072329249362415,
+    "a_t": 0.08299595679532878
+  },
+  "qualification_lambda_domain": {
+    "min": -2.4390243902439024,
+    "max": 0.7317073170731706,
+    "width": 3.170731707317073
+  },
+  "transition_layers": {
+    "nominal": [
+      {
+        "name": "sign_split",
+        "lambda": 0.0,
+        "characteristic_width": 0.0024993589726987125
+      },
+      {
+        "name": "Foster_r1",
+        "lambda": 0.04998717945397425,
+        "characteristic_width": 0.0024993589726987125
+      },
+      {
+        "name": "Foster_r10",
+        "lambda": 0.49987179453974245,
+        "characteristic_width": 0.0024993589726987125
+      }
+    ],
+    "global_to_local_scale_ratio": 1268.6179704284086,
+    "curvature_peaks": [
+      {
+        "feature": "zero_split",
+        "lambda": 0.000684,
+        "T": 0.0022811504399414344,
+        "dT_dlambda": 7.085595946517278,
+        "d2T_dlambda2": 11582.934730380706
+      },
+      {
+        "feature": "crack_transition_r1",
+        "lambda": 0.05008,
+        "T": 0.9737245017520775,
+        "dT_dlambda": 9.243955096139974,
+        "d2T_dlambda2": -4330.018635319083
+      },
+      {
+        "feature": "postcrack_transition_r10",
+        "lambda": 0.499882,
+        "T": 0.3025372808732116,
+        "dT_dlambda": -0.7775661027004271,
+        "d2T_dlambda2": 311.2814103705186
+      }
+    ]
+  },
+  "sector_decisions": {
+    "CC": {
+      "target": "c_i*=c_i(1+a_cc*c1*c2)",
+      "status": "RETAIN_UNCHANGED"
+    },
+    "TC_CT": {
+      "target": "c*=c(1-tau); tensile component not amplified",
+      "status": "RETAIN_EXISTING_CONSERVATIVE_TARGET"
+    },
+    "TT": {
+      "outer_reference_p": 8,
+      "candidates": [
+        {
+          "p": 8,
+          "equal_biaxial_strength_over_ft": 0.9170040432046712,
+          "reduction_vs_p8_percent": 0.0,
+          "status": "CURRENT_OUTER_REFERENCE"
+        },
+        {
+          "p": 4,
+          "equal_biaxial_strength_over_ft": 0.8408964152537145,
+          "reduction_vs_p8_percent": 8.29959567953288,
+          "status": "AUTHORIZED_FOR_MATERIAL_ONLY_SCREEN"
+        },
+        {
+          "p": 2,
+          "equal_biaxial_strength_over_ft": 0.7071067811865476,
+          "reduction_vs_p8_percent": 22.88945872960295,
+          "status": "LOWER_BOUND_DIAGNOSTIC_ONLY"
+        }
+      ],
+      "frozen_new_p": false
+    }
+  },
+  "primary_complexity_source": "THREE_THIN_TENSILE_CURRENT_MAP_TRANSITION_LAYERS",
+  "gate": "PASS_DIAGNOSTIC",
+  "case21_Pu": "NOT_RUN",
+  "swartz24": "NOT_RUN",
+  "next_task": "TENSILE_CURRENT_MAP_TRANSITION_CORRIDOR_R02",
+  "visual_artifact_package": {
+    "filename": "NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810.zip",
+    "sha256": "e6c4ebeb3615bc0c276f0d887497f29bbe7776adf8287f526da0925aa48d8e38",
+    "files": [
+      "02_current_map_4D_sigma1_color_sigma2.png",
+      "03_current_map_4D_sigma2_color_sigma1.png",
+      "04_tensile_utilization_transitions.png",
+      "05_tensile_curvature_concentration.png",
+      "06_TT_strength_domain_contraction_candidates.png",
+      "10_actual_eps1_eps2_sigma1_color_sigma2.png",
+      "11_actual_eps1_eps2_sigma2_color_sigma1.png",
+      "12_TC_slice_eps2_minus700.png",
+      "13_TC_slice_eps2_minus1300.png"
+    ]
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_20260810.md
+SIZE: 4896
+SHA256: 6dbbddcbd44bbb40f686fda023d7a4a7ff8f212b7e70b84e3463356b48d394ff
+ENCODING: utf-8
+LINES: 124
+====================================================================================================
+# NZ-SCCM EXACT RANK-4 BRANCH KERNEL CLASSIFICATION R04
+
+Date: 2026-08-10
+
+## 1. User correction accepted
+Production spectral qualification must NOT be defined by Swartz24 geometry.
+The primary domain is the admissible spectral domain of the selected constitutive model.
+Swartz/Case21 spectra are only structural reachable subdomains used after material qualification.
+
+This is essential for UHPC portability: NC and UHPC may have different scalar strain/strength validity ranges, while the invariant structural and D15 machinery remains identical.
+
+## 2. Source support for the ordinary-concrete domain contract
+Nguyen Chapter 3 uses equivalent-uniaxial strains to represent biaxial/in-plane response.
+Nguyen explicitly states Saenz Eq. (3.39) is valid for concrete strengths up to 70 MPa.
+Nguyen/Foster tension stiffening has a finite transition from eps_cr to alpha1 eps_cr with alpha1=10, followed by a constant residual tensile branch.
+Nguyen post-crushing response evolves from peak compression to gamma2 eps_p, then a residual plateau; the project G21 source audit records gamma2=10 for the exact source branch before the current smooth-conservative replacement.
+
+These facts define the DOMAIN INTERFACE, but do not yet freeze final numerical lambda_min/lambda_max because the final compact NC production current operator itself remains open.
+
+## 3. Exact primitive algebra
+Eliminating R=sqrt(z^2+eta^2) from Pi_eta gives:
+
+```text
+4*eta^4*p^2 + 8*eta^2*p^2*z^2 - 4*eta^2*p*z^3 - eta^2*z^4 + 4*p^2*z^4 - 4*p*z^5 = 0
+```
+
+This is quadratic in p=Pi_eta(z), therefore Pi_eta and C are algebraic degree <=2 over the scalar lambda field.
+
+For H, after subtracting its fixed normalization constant:
+
+```text
+hbar^2-(r-r0)hbar-eta_r^2/4=0.
+```
+
+Each H therefore adds at most one quadratic extension.
+
+Generic scalar-field upper bounds:
+
+```text
+C(lambda):   degree <=2
+T(lambda):   degree <=8
+T(lambda)^8: degree <=8
+U(lambda):   degree <=8
+```
+
+These are algebraic-extension upper bounds, not claims of irreducibility.
+
+## 4. After structural spectral substitution
+
+```text
+lambda± = mu ± sqrt(Q)
+```
+
+Generic extension-degree upper bounds over the structural invariant base:
+
+```text
+U(lambda+)          <=16
+C+^2 C-             <=8
+C+ T-               <=32
+T+ T-^8             <=128
+```
+
+The last term has the highest compositum complexity. Raising T to the 8th power does not increase the scalar field degree, but combining the two spectral branches does.
+
+## 5. Appell/Carlson classification
+Appell F1 directly closes kernels that reduce to bilinear sin^2 denominators such as
+
+```text
+1/(a+b s+c t+d s t)
+```
+
+and small parameter-derivative families.
+
+Carlson RF/RD/RJ directly close genus-1 elliptic kernels built from one cubic/quartic square root.
+
+The exact full Pi+H1+H10 source-shaped tension tower is generically neither class:
+
+- it contains nested quadratic extensions;
+- after lambda± substitution the generic algebraic degree is far above a single elliptic square root;
+- therefore the full exact source-shaped law does NOT obtain a small direct Appell/Carlson production closure merely by recognizing the plotted surface as saddle-like.
+
+This is a productive negative result: Appell/Carlson remain a kernel library, but not a magic wrapper for the full frozen source oracle.
+
+## 6. Rank-4 term classification
+
+| term | generic structural extension bound | direct named-kernel status |
+|---|---:|---|
+| U(lambda+) | <=16 | no generic Appell/Carlson closure |
+| C+^2 C- | <=8 | simplest nonlinear term; further reduction may become elliptic |
+| C+ T- | <=32 | no generic small named kernel |
+| T+ T-^8 | <=128 | FAIL direct exact production complexity |
+
+Exact rank-4 separability itself remains retained. The failure is only the attempt to integrate the full exact source tension tower by a small universal named special function.
+
+## 7. Main consequence
+The next task should NOT be another spatial integration theory.
+
+The remaining problem is one-dimensional material design:
+construct/identify compact scalar branch primitives on the MATERIAL-NATIVE spectral domain, while preserving:
+
+- source strength/strain applicability;
+- stress and same-map tangent;
+- smooth conservative target philosophy;
+- exact rank<=4 or invariant reconstruction;
+- direct D15/Beta or small named-kernel closure.
+
+Only after that material-domain closure is frozen should structural reachable spectra be used for verification or optional acceleration.
+
+## 8. R04 status
+
+```text
+EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04 = PASS_WITH_NEGATIVE_SPECIAL_FUNCTION_RESULT
+FULL_SOURCE_EXACT_APPELL_CLOSURE = FAIL_GENERIC
+FULL_SOURCE_EXACT_CARLSON_CLOSURE = FAIL_GENERIC
+MATERIAL_NATIVE_SPECTRAL_DOMAIN_GOVERNANCE = PASS
+SWARTZ24_AS_PRODUCTION_SPECTRAL_DOMAIN = REJECT
+ROUTE_SWITCH = NO
+CASE21_PU = NOT_RUN
+SWARTZ24_PU = NOT_RUN
+```
+
+```text
+NEXT = MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05
+```
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION_R04_results.json
+SIZE: 2200
+SHA256: c9bbe512caad8f8a30338de37ac4b21906e4dc158da56057157193ca8cb8ce78
+ENCODING: utf-8
+LINES: 54
+====================================================================================================
+{
+  "stage": "R04",
+  "identity": "EXACT_RANK4_BRANCH_KERNEL_CLASSIFICATION",
+  "status": "PASS_WITH_NEGATIVE_SPECIAL_FUNCTION_RESULT",
+  "material_domain_governance": {
+    "primary_domain": "MATERIAL_ADMISSIBLE_SPECTRAL_DOMAIN",
+    "secondary_domain": "STRUCTURAL_REACHABLE_SUBDOMAIN",
+    "swartz24_as_production_spectral_domain": "REJECT",
+    "uhpc_transfer": "same compiler architecture; UHPC obtains its own material-native spectral range"
+  },
+  "exact_algebra": {
+    "Pi_eta_relation": "4 eta^4 p^2 + 8 eta^2 p^2 z^2 - 4 eta^2 p z^3 - eta^2 z^4 + 4 p^2 z^4 - 4 p z^5 = 0",
+    "H_relation": "hbar^2-(r-r0)hbar-eta_r^2/4=0",
+    "scalar_degree_upper_bounds": {
+      "C(lambda)": 2,
+      "T(lambda)": 8,
+      "T(lambda)^8": 8,
+      "U(lambda)": 8
+    },
+    "after_lambda_pm_structural_degree_upper_bounds": {
+      "U(lambda_plus)": 16,
+      "C_plus^2_C_minus": 8,
+      "C_plus_T_minus": 32,
+      "T_plus_T_minus^8": 128
+    }
+  },
+  "named_kernel_gate": {
+    "finite_polynomial_D15": "PASS_DIRECT",
+    "bilinear_sin2_denominator_Appell_F1": "PASS_DIRECT",
+    "small_parameter_derivative_Appell_family": "PASS_CONDITIONAL",
+    "single_quartic_or_cubic_sqrt_Carlson": "PASS_CONDITIONAL",
+    "full_Pi_H1_H10_tower_Appell": "FAIL_GENERIC",
+    "full_Pi_H1_H10_tower_Carlson": "FAIL_GENERIC",
+    "large_PF_Gauss_Manin_ODE": "FAIL_PRODUCTION"
+  },
+  "source_domain_facts": {
+    "Nguyen_equivalent_uniaxial_framework": true,
+    "Saenz_strength_applicability": "up to 70 MPa as stated by Nguyen",
+    "tension_transition": "eps_cr to alpha1*eps_cr, alpha1=10, then residual plateau",
+    "postcrush_transition": "eps_p to gamma2*eps_p, then residual plateau; project source audit gamma2=10",
+    "final_NC_lambda_bounds": "NOT_FROZEN"
+  },
+  "decision": {
+    "EXACT_RANK4_SEPARABILITY": "PASS_RETAIN",
+    "MATERIAL_NATIVE_DOMAIN_GOVERNANCE": "PASS_PROMOTE",
+    "FULL_SOURCE_EXACT_APPELL_CLOSURE": "FAIL_GENERIC",
+    "FULL_SOURCE_EXACT_CARLSON_CLOSURE": "FAIL_GENERIC",
+    "MATRIX_FUNCTION_DIVIDED_DIFFERENCE": "PASS_SUPPORT",
+    "ROUTE_SWITCH": "NO",
+    "CASE21_PU": "NOT_RUN",
+    "SWARTZ24_PU": "NOT_RUN",
+    "NEXT": "MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_20260810.md
+SIZE: 6689
+SHA256: 2e5de1d06c0d1d8c32ce6030fc39349cac17324c60d8c6929d2dd23eefbf1cde
+ENCODING: utf-8
+LINES: 227
+====================================================================================================
+# NZ-SCCM R07R — EXPLICIT SURFACE SIMPLIFICATION AND CAPACITY CHAIN
+
+Date: 2026-08-10
+
+## 1. Purpose
+
+Execute the latest priority reset:
+
+> do not pursue minimum pointwise material regression error;  
+> allow deliberate under-use of sharp material peaks;  
+> allow 4D current surfaces or whole/global target functions;  
+> require the final capacity to come from explicit formulas and explicit derivatives.
+
+This R07R deliberately tests the simplest end-to-end route.
+
+## 2. Explicit material family
+
+For each candidate,
+
+\[
+u(\lambda)=\lambda\frac{N_5(\lambda)}{D_6(\lambda)},
+\]
+
+\[
+N_5(\lambda)=\kappa+a_1\lambda+a_2\lambda^2+a_3\lambda^3+a_4\lambda^4+a_5\lambda^5,
+\]
+
+\[
+D_6(\lambda)=1+b_1\lambda+b_2\lambda^2+b_3\lambda^3+b_4\lambda^4+b_5\lambda^5+b_6\lambda^6.
+\]
+
+Derivative:
+
+\[
+u'(\lambda)=\frac{(N+\lambda N')D-\lambda ND'}{D^2}.
+\]
+
+The 2x2 current stress is the matrix/spectral function
+
+\[
+\boldsymbol\sigma=f_c\,u(\mathbf E_u).
+\]
+
+Therefore the principal stresses are simply
+
+\[
+\sigma_i=f_c\,u(\lambda_i),
+\]
+
+and the full tensor is reconstructed with the standard 2x2 divided difference. No TT/TC/CC runtime state machine is used.
+
+## 3. Deliberate material under-use candidates
+
+These were frozen **before** any Case21 capacity evaluation:
+
+```text
+A_FC100_FT90 : compression peak retention = 100%; tensile peak retention = 90%
+B_FC97_FT90  : compression peak retention = 97%;  tensile peak retention = 90%
+C_FC95_FT80  : compression peak retention = 95%;  tensile peak retention = 80%
+```
+
+All candidates retain:
+
+- zero stress at the origin;
+- initial slope through the fixed `kappa` coefficient;
+- about 10% compression residual;
+- about 3% tensile residual plateau;
+- no pole in the material fitting window `[-10,3]`.
+
+Executed material summary:
+
+| candidate | compression peak retention | tensile peak retention | min denominator | min compression sigma/fc | max tension sigma/fc |
+|---|---:|---:|---:|---:|---:|
+| A_FC100_FT90 | 1.00 | 0.90 | 0.608916 | -1.000300 | 0.091368 |
+| B_FC97_FT90 | 0.97 | 0.90 | 0.601166 | -0.970283 | 0.091388 |
+| C_FC95_FT80 | 0.95 | 0.80 | 0.799914 | -0.950244 | 0.081494 |
+
+This step intentionally does **not** force the fitted function to reproduce the sharp local source peak or transition ridge.
+
+## 4. Minimal multiaxial choice in R07R
+
+R07R deliberately starts from the minimal scalar matrix-function surface
+
+\[
+\boldsymbol\sigma=f_c\,u(\mathbf E_u)
+\]
+
+with **no additional `J2/CC/TC` enhancement**.
+
+This is not a claim that biaxial enhancement is unnecessary. It is a controlled simplification experiment answering:
+
+> how far can the explicit capacity theory go before extra multiaxial complexity is actually needed?
+
+Any later multiaxial correction must improve a demonstrated deficiency rather than be carried automatically from the old source oracle.
+
+## 5. Whole-structure explicit target
+
+For each material candidate, high-accuracy full-halfwave response values were generated on a fixed `D-q` box and compressed into explicit finite Chebyshev surfaces:
+
+\[
+P(D,q)=\sum_{i=0}^{10}\sum_{j=0}^{10}p_{ij}T_i(\xi_D)T_j(\xi_q),
+\]
+
+\[
+R_q(D,q)=\sum_{i=0}^{10}\sum_{j=0}^{10}r_{ij}T_i(\xi_D)T_j(\xi_q).
+\]
+
+with
+
+```text
+D in [0.35, 1.40]
+q in [0.003, 0.033]
+```
+
+and
+
+\[
+\xi_D=\frac{2D-(0.35+1.40)}{1.40-0.35},
+\qquad
+\xi_q=\frac{2q-(0.003+0.033)}{0.033-0.003}.
+\]
+
+Each surface has 121 coefficients.
+
+The production evaluation of this **candidate global target** uses no spatial integration: it evaluates the finite polynomial above.
+
+The derivatives are obtained from the same coefficient arrays:
+
+\[
+P_{,D},\quad P_{,q},\quad R_{q,D},\quad R_{q,q},
+\]
+
+and
+
+\[
+L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}.
+\]
+
+## 6. Independent off-grid global-target validation
+
+| candidate | P max abs error kN | P P95 kN | Rq max abs error kN | Rq P95 kN |
+|---|---:|---:|---:|---:|
+| A_FC100_FT90 | 3.7091 | 1.6441 | 0.4481 | 0.2420 |
+| B_FC97_FT90 | 3.7584 | 1.6186 | 0.4547 | 0.2492 |
+| C_FC95_FT80 | 3.5594 | 1.9059 | 0.4208 | 0.2781 |
+
+The global target reproduces the underlying explicit material-surface audit in the present Case21 box to the few-kN/sub-kN level.
+
+## 7. Explicit stationary roots — concrete only
+
+The root equations are
+
+\[
+R_q(D,q)=0,
+\]
+
+\[
+L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0.
+\]
+
+Executed roots:
+
+| candidate | D* | q* | A* mm | Pu explicit global target kN | direct material-surface audit P at same root kN |
+|---|---:|---:|---:|---:|---:|
+| A_FC100_FT90 | 0.914265 | 0.0210447 | 25.6745 | 317.4186 | 317.8396 |
+| B_FC97_FT90 | 0.912204 | 0.0211055 | 25.7487 | 309.8781 | 310.2823 |
+| C_FC95_FT80 | 0.886755 | 0.0206359 | 25.1758 | 306.1928 | 306.6491 |
+
+Case21 RC experiment, shown only after the material candidates were frozen:
+
+\[
+P_f=368.312750\ \mathrm{kN}.
+\]
+
+These R07R values are **not final RC capacities**, because reinforcement is not yet inserted into the same explicit `P,Rq,L` equations.
+
+Relative to the old crack-free G31 concrete-only value
+
+\[
+476.935634\ \mathrm{kN},
+\]
+
+deliberate smoothing/under-use alone reduces the concrete-only stationary capacity to roughly the 306–318 kN band.
+
+This is a major mechanical consequence: removing/under-using sharp material capacity is not merely a cosmetic numerical smoothing.
+
+## 8. Formal-status caveat
+
+The present global `P/Rq` coefficient identification used high-accuracy numerical full-halfwave integration **offline**.
+
+The final runtime formula is fully explicit and differentiable, but this identification step is not yet identical to the older zero-quadrature D15 derivation doctrine.
+
+Therefore R07R is classified as:
+
+```text
+R07R = PASS_PROOF_OF_CONCEPT_EXPLICIT_END_TO_END_CHAIN
+FORMAL_ZERO_QUADRATURE_PRODUCTION_STATUS = HOLD
+```
+
+until the project chooses one of two routes:
+
+A. accept offline identification of an explicit whole-structure target as a legitimate data-processing step; or  
+B. regenerate the same `P/Rq` coefficient data with analytic D15 / named-kernel evaluation.
+
+This distinction is intentionally visible and not hidden.
+
+## 9. R07R decision
+
+```text
+ultra-close material point fitting = REJECTED AS OBJECTIVE
+explicit smooth low-parameter material formula = PASS PROOF OF CONCEPT
+explicit material derivatives = PASS
+explicit P(D,q), Rq(D,q) = PASS PROOF OF CONCEPT
+explicit L(D,q) = PASS
+stationary concrete-only Case21 roots = PASS DIAGNOSTIC
+reinforcement = OPEN
+source-grounded extra multiaxial enhancement = OPEN
+final RC Pu = OPEN
+```
+
+Recommended next task:
+
+```text
+R08_EXPLICIT_REINFORCEMENT_AND_MINIMUM_MULTAXIAL_CORRECTION
+```
+
+First add reinforcement to the **same explicit** `P,Rq,L` chain. Only after that, inspect whether a small source-grounded multiaxial correction is actually required.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R_results.json
+SIZE: 5759
+SHA256: f9da224cb36f9cf656f7636e0d4b302263bf7d559d8f4e00a226aa0cd585a86c
+ENCODING: utf-8
+LINES: 56
+====================================================================================================
+{
+  "identity": "EXPLICIT_SURFACE_SIMPLIFICATION_AND_CAPACITY_CHAIN_R07R",
+  "material_family": {
+    "formula": "u(lambda)=lambda*N5(lambda)/D6(lambda)",
+    "N5": "kappa+a1 lambda+a2 lambda^2+a3 lambda^3+a4 lambda^4+a5 lambda^5",
+    "D6": "1+b1 lambda+b2 lambda^2+b3 lambda^3+b4 lambda^4+b5 lambda^5+b6 lambda^6",
+    "derivative": "u'=[(N+lambda N')D-lambda N D']/D^2",
+    "stress_map": "sigma=fc*u(Eu) by the 2x2 spectral/matrix-function definition",
+    "candidate_anchors": {
+      "A_FC100_FT90": {"compression_peak_retention": 1.0, "tension_peak_retention": 0.9},
+      "B_FC97_FT90": {"compression_peak_retention": 0.97, "tension_peak_retention": 0.9},
+      "C_FC95_FT80": {"compression_peak_retention": 0.95, "tension_peak_retention": 0.8}
+    },
+    "material_coefficients": {
+      "A_FC100_FT90": {
+        "a1_to_a5": [-21.60951652650123,65.17163361856788,-35.17003915779724,9.37209898252596,0.9073313825179325],
+        "b1_to_b6": [-13.335214680245512,101.47763381103519,197.8314085197898,273.30773818467605,67.3894640178561,8.672290867373826]
+      },
+      "B_FC97_FT90": {
+        "a1_to_a5": [-21.892101557071744,66.28499697243461,-36.56946949360141,10.06800644584206,0.9305366625262373],
+        "b1_to_b6": [-13.343616944285818,99.42528836334657,192.78419168180844,282.81558151250397,73.33786772230195,9.778913016428326]
+      },
+      "C_FC95_FT80": {
+        "a1_to_a5": [-17.85917556964468,50.827221181764955,-27.574577623746542,7.446294942317058,0.6918502435643061],
+        "b1_to_b6": [-8.253716953622826,78.06783785035147,138.464396365054,208.85979709270293,54.36153487112089,7.279411458248072]
+      }
+    }
+  },
+  "global_capacity_target": {
+    "P_formula": "sum_{i=0}^{10} sum_{j=0}^{10} p_ij T_i(xi_D) T_j(xi_q)",
+    "Rq_formula": "sum_{i=0}^{10} sum_{j=0}^{10} r_ij T_i(xi_D) T_j(xi_q)",
+    "xi_D": "(2D-(0.35+1.4))/(1.4-0.35)",
+    "xi_q": "(2q-(0.003+0.033))/(0.033-0.003)",
+    "derivatives": "analytic Chebyshev derivatives from the same coefficient arrays",
+    "L": "P_D Rq_q - P_q Rq_D"
+  },
+  "validation": [
+    {"candidate":"A_FC100_FT90","P_validation_max_abs_kN":3.709120176493883,"P_validation_p95_abs_kN":1.6441432838411174,"Rq_validation_max_abs_kN":0.4481128350363499,"Rq_validation_p95_abs_kN":0.24197763709958142,"P_coefficient_count":121,"Rq_coefficient_count":121},
+    {"candidate":"B_FC97_FT90","P_validation_max_abs_kN":3.758449186835776,"P_validation_p95_abs_kN":1.618576742778771,"Rq_validation_max_abs_kN":0.45474307821435533,"Rq_validation_p95_abs_kN":0.2491868125182073,"P_coefficient_count":121,"Rq_coefficient_count":121},
+    {"candidate":"C_FC95_FT80","P_validation_max_abs_kN":3.5593608892111774,"P_validation_p95_abs_kN":1.9059088226324548,"Rq_validation_max_abs_kN":0.42076802727139484,"Rq_validation_p95_abs_kN":0.2781348866091031,"P_coefficient_count":121,"Rq_coefficient_count":121}
+  ],
+  "capacity": [
+    {"candidate":"A_FC100_FT90","root_success":true,"D_star":0.9142646422375108,"q_star":0.021044685814798254,"A_star_mm":25.67451669405387,"Pu_explicit_global_target_kN_concrete_only":317.4185750884934,"Rq_at_explicit_root_kN":-4.206412995699793e-12,"L_at_explicit_root":-1.7619458958506584e-07,"audit_material_surface_P_kN_at_same_root":317.8395862789432,"audit_material_surface_Rq_kN_at_same_root":0.08123376679698775,"P_global_minus_audit_kN":-0.4210111904498035,"lambda_plus_min_audit":-0.8960144984729633,"lambda_plus_max_audit":1.4772073287005043,"lambda_minus_min_audit":-1.8123144299228895,"lambda_minus_max_audit":0.5461183889055127,"Case21_experiment_RC_kN_for_scale_only":368.31275,"concrete_only_minus_RC_experiment_percent":-13.81819524616147},
+    {"candidate":"B_FC97_FT90","root_success":true,"D_star":0.9122035994036376,"q_star":0.021105480704515428,"A_star_mm":25.74868645950882,"Pu_explicit_global_target_kN_concrete_only":309.8780565012432,"Rq_at_explicit_root_kN":-2.042366276100438e-11,"L_at_explicit_root":-1.3078097254037857e-06,"audit_material_surface_P_kN_at_same_root":310.2823016825137,"audit_material_surface_Rq_kN_at_same_root":0.07844696463927502,"P_global_minus_audit_kN":-0.40424518127053943,"lambda_plus_min_audit":-0.8985307379819243,"lambda_plus_max_audit":1.4842651476638882,"lambda_minus_min_audit":-1.8127919627614932,"lambda_minus_max_audit":0.5545353335364065,"Case21_experiment_RC_kN_for_scale_only":368.31275,"concrete_only_minus_RC_experiment_percent":-15.865509271334432},
+    {"candidate":"C_FC95_FT80","root_success":true,"D_star":0.8867549199836908,"q_star":0.02063590100853973,"A_star_mm":25.17579923041847,"Pu_explicit_global_target_kN_concrete_only":306.19278380597854,"Rq_at_explicit_root_kN":2.1402879468723768e-11,"L_at_explicit_root":-1.6350531950592995e-06,"audit_material_surface_P_kN_at_same_root":306.6490569329974,"audit_material_surface_Rq_kN_at_same_root":0.08882085342326404,"P_global_minus_audit_kN":-0.4562731270188465,"lambda_plus_min_audit":-0.8790390485039206,"lambda_plus_max_audit":1.4301878607000185,"lambda_minus_min_audit":-1.767772439309823,"lambda_minus_max_audit":0.5291698136391618,"Case21_experiment_RC_kN_for_scale_only":368.31275,"concrete_only_minus_RC_experiment_percent":-16.866091709836674}
+  ],
+  "status": {
+    "R07R": "PASS_PROOF_OF_CONCEPT_EXPLICIT_END_TO_END_CHAIN",
+    "MATERIAL_PEAK_UNDERUSE": "EXECUTED_BEFORE_STRUCTURAL_VALIDATION",
+    "CASE21_RESULTS": "CONCRETE_ONLY_DIAGNOSTIC_NOT_FINAL_RC",
+    "STEEL": "NOT_INCLUDED",
+    "MULTIAXIAL_EXTRA_ENHANCEMENT": "NOT_INCLUDED_IN_THIS_MINIMAL_R07R",
+    "GLOBAL_TARGET_IDENTIFICATION": "OFFLINE_HIGH_ACCURACY_QUADRATURE_USED_FOR_COEFFICIENT_IDENTIFICATION; production evaluation itself is explicit polynomial",
+    "FORMAL_ZERO_QUADRATURE_PRODUCTION_STATUS": "HOLD_PENDING_USER_ACCEPTANCE_OF_GLOBAL_TARGET_IDENTIFICATION_ROUTE"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_INVARIANT_COORDINATE_LIFT_EXACT_REDUCTION_R01_20260810.md
+SIZE: 11098
+SHA256: f108ea9cf8ea24a37cd4104df5adc6fc4c8ae69afe6201bf3687d5c2448ddb4f
+ENCODING: utf-8
+LINES: 457
+====================================================================================================
+# NZ-SCCM 不变量坐标升维/降维解析化审计 R01
+
+**日期：2026-08-10**  
+**身份：CURRENT MATHEMATICAL ROUTE / EXACT TRANSFORMATION CANDIDATE**
+
+## 0. 背景
+
+用户提出：既然原三重空间积分对强非线性材料很困难，是否可以通过四重甚至更高重积分，从更高维度把复杂复合关系变简单。
+
+本文件正式把这一想法纳入 NZ-SCCM 数学主线。核心判断不是“积分维数越高越先进”，而是：
+
+> 是否存在**辅助变量 / 不变量坐标 / pushforward measure**，使原本难处理的材料非线性在更高维表示中变成低阶代数、可分离核或可精确消元的积分。
+
+正式边界不变：
+
+```text
+NO ELEMENT INTEGRATION
+NO SPATIAL QUADRATURE
+NO MATERIAL-POINT GRID
+ONE CONTINUOUS COMPLETE HALFWAVE
+```
+
+允许临时引入辅助积分变量，但最终 production formula 必须满足：
+
+```text
+AUXILIARY INTEGRALS = ANALYTICALLY ELIMINATED OR FINITE CLOSED SPECIAL FUNCTIONS
+NUMERICAL QUADRATURE OVER AUXILIARY VARIABLES = PROHIBITED IN FORMAL OPERATOR
+```
+
+---
+
+## 1. “升维”在数学上能做什么
+
+### 1.1 Laplace / Gamma lift
+
+对正量 Q，可用 Gamma/Laplace integral representation 把负幂变成辅助参数积分，例如
+
+\[
+Q^{-\alpha}=\frac1{\Gamma(\alpha)}\int_0^\infty t^{\alpha-1}e^{-tQ}\,dt.
+\]
+
+这会把一个含分母的三重积分变成四重积分。
+
+优点：分母消失。
+
+缺点：若 Q 是 Case21 的三角—厚度多项式，空间 integrand 变成 `exp(-t Q)`，通常不再属于有限 D15 polynomial moment algebra。因此**仅仅增加 t 维并没有自动解决问题**。
+
+### 1.2 auxiliary-field / Hubbard-Stratonovich 类 lift
+
+平方非线性可通过 Gaussian auxiliary field 线性化。这类变换在多体理论中非常有效，因为升维后可利用 Gaussian structure。
+
+对 NZ-SCCM 的必要条件是：升维后的空间变量依赖必须变成可精确解析积分的 Gaussian/Bessel/hypergeometric kernel；否则只把原困难移到了新变量。
+
+### 1.3 algebraic variable + delta constraint
+
+例如对
+
+\[
+r=\sqrt{g(X,Y,z)}
+\]
+
+可引入独立 r 并写成带 `delta(r^2-g)` 的四重积分。形式上根号从 integrand 中消失，但约束曲面仍携带原来的代数复杂度；若 level-set geometry 没有变简单，这种 lift 是同义改写而不是求解。
+
+### 1.4 coarea / pushforward representation
+
+对材料不变量映射
+
+\[
+\Phi:\Omega^3\to\mathbb R^2,
+\qquad
+\Phi=(I_1,I_2),
+\]
+
+定义 joint pushforward density
+
+\[
+\rho_{D,q}(s,t)
+=\int_{\Omega}
+\delta(s-I_1)\delta(t-I_2)\,dV.
+\]
+
+于是任意只依赖材料不变量的积分可写成
+
+\[
+\boxed{
+\int_\Omega F(I_1,I_2)\,dV
+=\iint F(s,t)\rho_{D,q}(s,t)\,dsdt
+}.
+\]
+
+这可以理解为先写成五重 delta-lift，再利用 coarea/pushforward 消元到二维材料空间。
+
+潜在优势：**强材料非线性 F 与几何/运动学密度 rho 分离**。
+
+真正困难：一般 analytic/polynomial map 的 pushforward density 存在 Jacobian singularities 和复杂 fiber geometry；现代数学可研究其 integrability/regularity，但一般没有自动的初等闭式。
+
+---
+
+## 2. Case21 出现一个比一般 coarea 更强的特殊结构
+
+从当前已证明的不变量：
+
+令
+
+\[
+u=\sin X,\qquad v=\sin Y,\qquad z=\zeta,
+\]
+
+\[
+H=u^2+v^2-2u^2v^2,
+\qquad
+K=\nu u^2-v^2+(1-\nu)u^2v^2,
+\]
+
+\[
+M=C_m(q),\qquad B=C_b(q).
+\]
+
+则
+
+\[
+I_1=(\nu-1)D+MH+2Buvz.
+\]
+
+定义
+
+\[
+\boxed{
+a(u,v)=(\nu-1)D+MH
+}
+\]
+
+所以
+
+\[
+\boxed{I_1=a+2Buvz}.
+\]
+
+**因此 I1 对厚度坐标 z 是严格 affine。**
+
+这使我们不需要先做一般五维 coarea，而可以直接把第三个空间坐标换成材料坐标：
+
+\[
+\boxed{s=I_1}.
+\]
+
+当 `Buv != 0`：
+
+\[
+\boxed{
+z=\frac{s-a}{2Buv},
+\qquad
+dz=\frac{ds}{2Buv}.
+}
+\]
+
+区间端点：
+
+\[
+\boxed{s_\pm=a\pm2Buv}.
+\]
+
+`u=0` 或 `v=0` 是 measure-zero 退化边界；生产公式取连续极限。`B=0` 对应 q=0 的独立退化状态，应单独取极限而不是数值除零。
+
+---
+
+## 3. I2 在新坐标 s=I1 下只变成二次多项式
+
+原式：
+
+\[
+\begin{aligned}
+I_2={}&-\nu D^2+DMK+BD(\nu-1)uvz\\
+&+BMuvz(2-u^2-v^2)\\
+&+B^2z^2(u^2+v^2-1).
+\end{aligned}
+\]
+
+利用
+
+\[
+uvz=\frac{s-a}{2B}
+\]
+
+和
+
+\[
+B^2z^2=\frac{(s-a)^2}{4u^2v^2},
+\]
+
+得到**严格恒等式**：
+
+\[
+\boxed{
+\begin{aligned}
+I_2(s;u,v)={}&-\nu D^2+DMK\\
+&+\frac{D(\nu-1)}2(s-a)\\
+&+\frac M2(2-u^2-v^2)(s-a)\\
+&+\frac{u^2+v^2-1}{4u^2v^2}(s-a)^2.
+\end{aligned}
+}
+\]
+
+所以固定 `(u,v,D,q)` 时：
+
+\[
+\boxed{I_2=\alpha_0(u,v)+\alpha_1(u,v)s+\alpha_2(u,v)s^2}.
+\]
+
+这一步已经用独立 SymPy substitution 做 exact identity check。
+
+### 3.1 一个重要现象
+
+显式 `B` 从 `I2(s;u,v)` 的系数中消失；B 只通过积分区间
+
+\[
+[s_-,s_+]
+\]
+
+控制当前厚度扫过的 I1 范围。
+
+这说明弯曲幅值的一个主要作用可以被解释为：
+
+> 在固定 `(u,v)` 上改变材料不变量 I1 的穿越区间，而 I2 沿该区间按固定二次轨道演化。
+
+这是新的材料—结构几何解释。
+
+---
+
+## 4. 原三重积分的精确材料坐标变换
+
+因为当前所有目标 integrand 在 X/Y 方向只依赖 `u=sin X,v=sin Y`，有
+
+\[
+\int_0^\pi f(\sin X)dX
+=2\int_0^1\frac{f(u)}{\sqrt{1-u^2}}du.
+\]
+
+因此
+
+\[
+\mathscr M[F]
+=4\int_0^1\int_0^1
+\frac{du\,dv}{\sqrt{1-u^2}\sqrt{1-v^2}}
+\int_{-1}^{1}F\,dz.
+\]
+
+再换元 `s=I1`：
+
+\[
+\boxed{
+\mathscr M[F]
+=\frac{2}{B}
+\int_0^1\int_0^1
+\frac{1}{uv\sqrt{1-u^2}\sqrt{1-v^2}}
+\left[
+\int_{s_-}^{s_+}
+F\big(s,I_2(s;u,v),u,v\big)\,ds
+\right]du\,dv
+}
+\]
+
+（对 `B>0`；一般写 `|B|` 并保持方向一致）。
+
+这不是 numerical integration proposal，而是一个 exact coordinate transformation。
+
+形式上的 `1/(uv)` 在 u/v->0 时由 `[s_-,s_+]` 同时收缩而消去，需在最终公式中使用连续极限。
+
+---
+
+## 5. 为什么这一变换对强非线性 rational material 特别重要
+
+假设新材料 scalar functions 使用有限低参数有理形式：
+
+\[
+A(I_1,I_2)=\frac{P_A(I_1,I_2)}{Q_A(I_1,I_2)},
+\qquad
+B_m(I_1,I_2)=\frac{P_B(I_1,I_2)}{Q_B(I_1,I_2)}.
+\]
+
+由于 `I2(s;u,v)` 对 s 只有二次，而所有 structural weights `Xyy, I1_q, Gq` 在换元后也是 s 的有限有理/多项式表达，因此固定 `(u,v)` 时：
+
+\[
+\boxed{
+P\text{ 和 }Rq\text{ 的材料方向 integrand 是 }s\text{ 的 rational function}
+}
+\]
+
+有限有理函数对 s 可通过 Hermite reduction / partial fractions **精确积分**，结果为有限代数项、log、atan/atanh 等，不需要 s-quadrature。
+
+因此：
+
+\[
+\boxed{
+\text{strong rational material nonlinearity does not automatically require high-degree polynomial expansion}
+}
+\]
+
+至少有一整个“厚度/材料不变量方向”可以精确消去。
+
+---
+
+## 6. 一个具体强非线性例子：Saenz 型 rational primitive
+
+考虑
+
+\[
+R(s)=\frac{\kappa s}{1+a s+s^2},
+\qquad a=\kappa-2.
+\]
+
+当 `4-a^2>0`，一个显式原函数为
+
+\[
+\boxed{
+\mathcal R(s)
+=\frac\kappa2\ln(s^2+a s+1)
+-\frac{\kappa a}{\sqrt{4-a^2}}
+\arctan\left(\frac{2s+a}{\sqrt{4-a^2}}\right)
+}
+\]
+
+且
+
+\[
+\mathcal R'(s)=R(s).
+\]
+
+因此若某一材料 primitive 直接作用于 affine invariant `s=I1`，则
+
+\[
+\boxed{
+\int_{-1}^{1}R(a+c z)\,dz
+=\frac{\mathcal R(a+c)-\mathcal R(a-c)}{c}
+}
+\]
+
+完全闭式；`c->0` 连续极限为 `2R(a)`。
+
+这说明“强峰值/峰后 rational curve”与“解析积分”并不天然冲突。
+
+---
+
+## 7. 这是不是已经解决全部三重积分？
+
+**没有。**
+
+当前只证明：
+
+1. material nonlinear direction 可利用 `s=I1` 精确消去一维；
+2. rational `A/B` 在该方向不需要高阶 polynomial surrogate；
+3. 剩余是 `(u,v)` 二维 weighted analytic integral，其中会出现 s-antiderivative 在 `s_±=a±2Buv` 的边界值。
+
+这些边界值可能包含：
+
+- algebraic roots；
+- log；
+- atan/atanh；
+- 更一般情况下的 elliptic / hypergeometric functions。
+
+所以后续仍必须证明**剩余二维积分也能解析闭合**。
+
+---
+
+## 8. 更高维方法的正式 Gate
+
+今后任何 4D/5D/auxiliary-integral 路线都按以下规则审计。
+
+### H4-PASS 条件
+
+升维后必须至少满足一种：
+
+1. 辅助变量可在符号上完全消元；
+2. 每一维都能按 Beta/Gamma/elementary/specified special-function closed form 完成；
+3. 最终只有有限 named special functions，且可解析求导形成 tangent；
+4. 不存在 auxiliary numerical quadrature；
+5. 不依赖空间 sampling / cells / material points。
+
+### H4-FAIL 条件
+
+若只是
+
+```text
+3D hard integral
+-> introduce t
+-> 4D integral
+-> numerical quadrature in t
+```
+
+则对 NZ-SCCM 正式理论没有意义，判 FAIL。
+
+---
+
+## 9. 解析函数复杂度分级
+
+为兼顾可计算性与人工审计，建议：
+
+### Class A — 首选
+
+- finite polynomial/rational algebra；
+- Beta/Gamma；
+- log / atan / atanh；
+- finite radicals with explicit real branch control。
+
+### Class B — 可研究
+
+- elliptic integrals；
+- Appell / generalized hypergeometric；
+- Meijer-G / GKZ-hypergeometric periods；
+
+前提是有限、可稳定求值、可解析求导、来源明确。
+
+### Class C — 不允许作为正式闭合
+
+- unevaluated auxiliary integrals；
+- black-box CAS Integral object；
+- adaptive quadrature；
+- Monte Carlo / sparse grid / cubature。
+
+---
+
+## 10. 与现代多重积分理论的关系
+
+多维积分本身并不是近年才出现；现代进展主要是把复杂积分识别为 integral transforms、periods、hypergeometric/GKZ systems、coarea/pushforward measures，并通过 auxiliary parameters、symmetry 与 algebraic geometry 改写其结构。
+
+本路线后续参考：
+
+- NIST DLMF §1.14 integral transforms；§5.9 Gamma/Laplace-type integral representations；§16.15 two-variable Appell integral representations；
+- Panzer (2015), *Feynman integrals and hyperlogarithms*：Schwinger parameters 与多变量解析积分算法；
+- de la Cruz (2019), *Feynman integrals as A-hypergeometric functions*：parametric integrals 与 GKZ systems；
+- Negro (2021), *Sample distribution theory using Coarea Formula*：coarea 下 pushforward density；
+- Glazer, Hendel, Sodin (2022), *Integrability of pushforward measures by analytic maps*：analytic-map pushforward density 的 integrability/singularity structure。
+
+这些文献只作为数学工具来源，不改变 NZ-SCCM 的结构或材料物理。
+
+---
+
+## 11. 当前推荐路线
+
+M1-R01 simple additive polynomial 已 FAIL-screen。新的最高优先级改为：
+
+\[
+\boxed{
+\text{M1R rational/algebraic source-shaped material}
++\text{ invariant coordinate }s=I_1
++\text{ exact inner elimination}
+}
+\]
+
+下一步不是直接做四维数值积分，而是：
+
+1. 选择一个真正具有 compression peak/postpeak + tension + TC/CC 的低参数 rational/invariant material prototype；
+2. 对 `P`、`Rq` 分别执行 `s=I1` 的 exact rational integration；
+3. 检查剩余 `(u,v)` 二维 integrals 是否落入 Class A 或有限 Class B；
+4. 若能闭合，再做材料级 Gate B；
+5. 若剩余二维仍不可接受，再测试 joint pushforward/coarea 或 GKZ/Appell special-function route；
+6. 全过程禁止用结构 Pu 反标材料。
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_M1R_OUTER_RESOLVENT_HYPERELLIPTIC_CLASSIFICATION_R02_20260810.md
+SIZE: 11363
+SHA256: 0df22960b96426cd085af7c557b96eda63a3c2ac7ae8c017c17303d7ad3c661d
+ENCODING: utf-8
+LINES: 602
+====================================================================================================
+# NZ-SCCM M1R outer resolvent / hyperelliptic classification R02
+
+**日期：2026-08-10**  
+**身份：CURRENT ANALYTIC CLASSIFICATION — EXACT RESOLVENT REDUCTION PASS / WHOLE-HALFWAVE GATE A STILL HOLD**
+
+## 0. 本轮任务
+
+承接 R01 的当前停点：
+
+```text
+M1R_R01_S_INNER_INTEGRATION = PASS_CLASS_A
+M1R_R01_OUTER_XY = CLASS_B_CANDIDATE / NOT_YET_CLOSED
+FORMAL_WHOLE_HALFWAVE_GATE_A = HOLD
+```
+
+本轮不计算 Case21 Pu，不重新拟合材料；唯一任务是对 **actual M1R factor family** 做进一步精确结构化：
+
+```text
+actual 1D rational primitives
+-> scalar pole / resolvent decomposition
+-> invariant matrix resolvent blocks
+-> exact s-factor classification
+-> exact endpoint algebra
+-> outer (x,y) algebraic-period genus classification
+```
+
+正式边界不变：
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+NO element integration
+NO material-point grid
+```
+
+---
+
+## 1. R01 五个 rational primitive 有一个更强的共同结构
+
+R01 的五个 scalar primitives：
+
+```text
+U, C, C2, T, V
+```
+
+其 numerator degree 与 denominator degree 相同：
+
+| primitive | denominator degree |
+|---|---:|
+| U | 4 |
+| C | 4 |
+| C2 | 4 |
+| T | 10 |
+| V | 5 |
+
+所以每个 primitive 都可严格写成：
+
+\[
+\boxed{
+r_f(\lambda)=c_f+\sum_{j=1}^{d_f}\frac{\rho_{fj}}{\lambda-r_{fj}}
+}
+\]
+
+其中 `r_fj` 是 scalar denominator 的根。
+
+R01 固定系数的 pole audit：
+
+- U：4 个 simple complex poles；
+- C：4 个 simple complex poles；
+- C2：4 个 simple complex poles；
+- T：10 个 simple complex poles；
+- V：4 个 complex poles + 1 个 real pole；
+- 唯一 real pole 为 `1.9861419915007628`，仍高于当前材料诊断区间上界 `0.731707317...`；
+- 各 primitive 内部最小 pole separation 均非零。
+
+因此 actual R01 primitive 不需要按高阶 denominator 整体进入矩阵函数；可先做 **finite scalar partial-fraction decomposition**。
+
+---
+
+## 2. 单 pole 的二维 matrix resolvent 完全闭式
+
+令归一化二维应变张量为 \(\mathbf X\)，不变量：
+
+\[
+I_1=\operatorname{tr}\mathbf X,\qquad
+I_2=\det\mathbf X.
+\]
+
+对一个 scalar pole \(r\)，定义：
+
+\[
+\mathbf R_r=(\mathbf X-r\mathbf I)^{-1}.
+\]
+
+二维 Cayley–Hamilton 给出：
+
+\[
+\boxed{
+\mathbf R_r
+=
+\frac{(I_1-r)\mathbf I-\mathbf X}
+{\Delta_r}
+}
+\]
+
+其中：
+
+\[
+\boxed{
+\Delta_r=I_2-rI_1+r^2.
+}
+\]
+
+“交换主方向”的 `oth` operator 同样有极简式：
+
+\[
+\boxed{
+\mathbf R_r^{\rm oth}
+=
+\frac{\mathbf X-r\mathbf I}{\Delta_r}.
+}
+\]
+
+这两个式子完全避免在结构域逐点求 principal eigenvectors。
+
+---
+
+## 3. source-shaped interaction 只产生二体 resolvent block，不产生三体及更高乘积
+
+R01 source algebra：
+
+\[
+\widehat{\boldsymbol\sigma}
+=
+U(\mathbf X)
+-a_{cc}C_2(\mathbf X)C^{\rm oth}(\mathbf X)
++C(\mathbf X)T^{\rm oth}(\mathbf X)
+-\rho a_t T(\mathbf X)V^{\rm oth}(\mathbf X).
+\]
+
+由于每个 primitive 是：
+
+```text
+constant + finite sum of single resolvents
+```
+
+所以整个 M1R stress 精确落到：
+
+```text
+constant block
++ single-resolvent blocks
++ pair-resolvent blocks
+```
+
+不存在 triple-resolvent / higher product。
+
+对一对 poles \(r,t\)：
+
+\[
+\boxed{
+\mathbf R_r\mathbf R_t^{\rm oth}
+=
+\frac{
+[I_2-t(I_1-r)]\mathbf I+(t-r)\mathbf X
+}{
+\Delta_r\Delta_t
+}.
+}
+\]
+
+该恒等式已由 Cayley–Hamilton basis multiplication 独立 exact check。
+
+R01 的 raw pair counts：
+
+```text
+C2 x C^oth : 4 x 4   = 16
+C  x T^oth : 4 x 10  = 40
+T  x V^oth : 10 x 5  = 50
+TOTAL PAIR BLOCKS     = 106
+```
+
+五个 primitive 总 scalar poles = 27。把同一 pole 上不同 single contributions 合并后，整个 stress 最多为：
+
+```text
+1 constant
++ 27 consolidated single-pole blocks
++ 106 pair-pole blocks
+= 134 finite complex blocks
+```
+
+共轭项可在 real implementation 中成对合并；134 是解析分类计数，不是空间自由度，也不是材料点数。
+
+---
+
+## 4. 这使 R01 的 s-inner 结论进一步加强
+
+Case21 exact coordinate：
+
+\[
+s=I_1.
+\]
+
+对每个 pole：
+
+\[
+\Delta_r(s)=I_2(s)-rs+r^2.
+\]
+
+因为 `I2(s)` 对 s 严格二次，所以：
+
+\[
+\boxed{\deg_s\Delta_r=2.}
+\]
+
+因此：
+
+### single block
+
+\[
+\frac{N(s)}{\Delta_r(s)}
+\]
+
+### pair block
+
+\[
+\frac{N(s)}{\Delta_r(s)\Delta_t(s)}
+\]
+
+其中：
+
+- P 的 single numerator 至多一次；
+- Rq 的 single numerator 至多二次；
+- P 的 pair numerator 至多二次；
+- Rq 的 pair numerator 至多三次。
+
+所以 pair block 虽然总 denominator degree 为 4，但 **无需求 quartic roots**。它保持两个已知 quadratic factors；可用 factor-aware Bezout / partial fraction：
+
+\[
+\frac{N}{\Delta_r\Delta_t}
+=
+\frac{A_r(s)}{\Delta_r}
++
+\frac{A_t(s)}{\Delta_t},
+\]
+
+或在 resultant 接近退化时使用解析 confluent limit。
+
+因此 R01 中“quadratic scalar factor 可能形成 quartic s denominator”的上界虽然正确，但 actual pole-resolvent canonicalization 给出更强结论：
+
+\[
+\boxed{
+\text{actual transcendental s-antiderivatives only require quadratic factors.}
+}
+\]
+
+正式升级：
+
+```text
+M1R_R02_RESOLVENT_CANONICALIZATION = PASS_EXACT
+M1R_R02_S_ROOT_COMPLEXITY = QUADRATIC_ONLY
+N_s_quadrature = 0
+```
+
+---
+
+## 5. endpoint algebra 比 R01 预期更简单
+

@@ -1,0 +1,1800 @@
+
+====================================================================================================
+FILE: .github/workflows/rebuild_fulltext_corpus.yml
+SIZE: 4048
+SHA256: 2904019accc877fc5ba6439cf6a2c2fb1f43915ee957cb98eba0b87cc15372fa
+ENCODING: utf-8
+LINES: 98
+====================================================================================================
+name: Rebuild full-text corpus
+
+on:
+  push:
+    branches: [canonical-rebuild-20260813]
+    paths-ignore:
+      - 'REBUILD_AUDIT/**'
+
+permissions:
+  contents: write
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build complete repository text corpus, manifest, and chunks
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, csv, shutil
+
+          root = Path('.')
+          outdir = root / 'REBUILD_AUDIT'
+          outdir.mkdir(exist_ok=True)
+          chunkdir = outdir / 'CORPUS_CHUNKS'
+          if chunkdir.exists():
+              shutil.rmtree(chunkdir)
+          chunkdir.mkdir()
+          corpus = outdir / 'FULL_TEXT_CORPUS.txt'
+          manifest = outdir / 'FILE_MANIFEST.csv'
+          treefile = outdir / 'ALL_FILES_TREE.txt'
+
+          exclude_roots = {'.git', 'REBUILD_AUDIT'}
+          files = []
+          for p in root.rglob('*'):
+              if not p.is_file():
+                  continue
+              if any(x in exclude_roots for x in p.parts):
+                  continue
+              files.append(p)
+          files.sort(key=lambda p: p.as_posix())
+
+          rows=[]
+          with corpus.open('w', encoding='utf-8', newline='\n') as cf:
+              for p in files:
+                  b=p.read_bytes()
+                  sha=hashlib.sha256(b).hexdigest()
+                  rel=p.as_posix()
+                  try:
+                      text=b.decode('utf-8'); enc='utf-8'; is_text=True
+                  except UnicodeDecodeError:
+                      try:
+                          text=b.decode('utf-8-sig'); enc='utf-8-sig'; is_text=True
+                      except UnicodeDecodeError:
+                          text=''; enc='binary-or-non-utf8'; is_text=False
+                  lines=text.count('\n') + (1 if text and not text.endswith('\n') else 0) if is_text else 0
+                  rows.append([rel,len(b),sha,enc,lines,'TEXT' if is_text else 'BINARY'])
+                  cf.write('\n' + '='*100 + '\n')
+                  cf.write(f'FILE: {rel}\nSIZE: {len(b)}\nSHA256: {sha}\nENCODING: {enc}\nLINES: {lines}\n')
+                  cf.write('='*100 + '\n')
+                  if is_text:
+                      cf.write(text)
+                      if text and not text.endswith('\n'): cf.write('\n')
+                  else:
+                      cf.write('[BINARY CONTENT NOT INLINED]\n')
+
+          with manifest.open('w',encoding='utf-8',newline='') as f:
+              w=csv.writer(f); w.writerow(['path','size_bytes','sha256','encoding','line_count','kind']); w.writerows(rows)
+          treefile.write_text('\n'.join(p.as_posix() for p in files)+'\n',encoding='utf-8')
+
+          all_lines=corpus.read_text(encoding='utf-8').splitlines(True)
+          chunk_size=1800
+          chunk_rows=[]
+          for i in range(0,len(all_lines),chunk_size):
+              n=i//chunk_size+1
+              cp=chunkdir / f'chunk_{n:03d}.txt'
+              cp.write_text(''.join(all_lines[i:i+chunk_size]),encoding='utf-8')
+              chunk_rows.append([n,i+1,min(i+chunk_size,len(all_lines)),cp.stat().st_size,cp.as_posix()])
+          with (outdir/'CORPUS_CHUNK_INDEX.csv').open('w',encoding='utf-8',newline='') as f:
+              w=csv.writer(f); w.writerow(['chunk','global_start_line','global_end_line','size_bytes','path']); w.writerows(chunk_rows)
+          print(f'files={len(files)} corpus_lines={len(all_lines)} corpus_bytes={corpus.stat().st_size} chunks={len(chunk_rows)}')
+          PY
+      - name: Commit audit corpus
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add REBUILD_AUDIT
+          if git diff --cached --quiet; then
+            echo 'No corpus changes'
+          else
+            git commit -m 'Build complete repository chunked full-text audit corpus'
+            git push
+          fi
+
+====================================================================================================
+FILE: README.md
+SIZE: 1209
+SHA256: 0e5491d29ed7760a6f3fbda0de1766235ac3fbcc07ccd7c267cd60145544f1a2
+ENCODING: utf-8
+LINES: 21
+====================================================================================================
+# NZ-SCCM Theory History
+
+本仓库是“轴压稳定矩阵理论推导 / NZ-SCCM”的长期工作仓库。
+
+## 只从两个入口开始
+
+1. `START_HERE.md` — 新对话/新工作入口。
+2. `current/CURRENT_STATE.md` — 当前理论、当前 Case21 状态、当前未闭合项。
+
+## 四个工作层
+
+- `current/`：当前仍有效、会直接影响下一步计算/推导的文件。
+- `governance/`：证据等级、恢复、同步、来源摘录和项目优先级规则。
+- `evidence/`：原始来源定位、有效原文摘录、材料证据、来源数据与审计台账。
+- `history/`：被替代、失败、回滚、历史求解器、D/G/R/UCFT 路线与原始历史/恢复定位。
+
+迁移期全文镜像、旧 checkpoint、R2 snapshot 等已从当前 `main` 删除，避免 GitHub 搜索污染；如确需恢复，使用 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 指向的历史 commit。
+
+## 使用原则
+
+后续工作不要全仓加载。先读 `START_HERE.md`，再按当前任务最小化读取。文献事实以原始 PDF/正式来源为最高证据；项目历史以原始用户—助手对话/原始执行工件为最高证据。结构承载力不得用于反标材料参数。
+
+====================================================================================================
+FILE: START_HERE.md
+SIZE: 3212
+SHA256: 5904bbfd1ee0b3da8291237b7ee215ab659332b75c332777c3f892c84eee3d39
+ENCODING: utf-8
+LINES: 56
+====================================================================================================
+# START HERE
+
+## 先读 semantic_v2，不按 legacy 文件树/文件名猜身份
+
+本仓库存在历史/当前工件混放和旧命名遗留。目录名、文件名及其中的 `current`、`fresh`、`production`、`PASS`、日期等只具有**定位作用**，不自动决定文件是否当前有效。
+
+新的首选入口已经重建为：
+
+`semantic_v2/00_index/README.md`
+
+新对话或中断恢复时，按下面顺序读取：
+
+1. `semantic_v2/00_index/README.md`
+2. `semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__CONTENT_FIRST_NAMING_AND_TREE_POLICY__GOVERNANCE.md`
+3. `semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__CONTENT_SEMANTIC_TREE__SEMANTIC_MANIFEST.md`
+4. `semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__AUDITED_ARTIFACTS__SEMANTIC_MANIFEST.csv`
+5. `semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__ARTIFACT_SUPERSESSION__SUPERSESSION_MAP.csv`
+6. `semantic_v2/00_index/20260813_1328__NZSCCM__REPOSITORY__LEGACY_TO_CANONICAL__RENAME_MAP.csv`
+7. `current/CURRENT_STATE.md`
+8. `governance/SOURCE_OF_TRUTH_POLICY.md`
+9. `governance/RECOVERY_PROTOCOL.md`
+10. 根据当前任务沿 semantic_v2 locator 回到 legacy 原文件正文，并以**正文内容 + supersession/revocation 链**判定身份。
+
+```text
+PATH_NAME_ONLY_CLASSIFICATION = PROHIBITED
+LEGACY_CURRENT_DIRECTORY_SEMANTIC_PURITY = FALSE
+CONTENT_AUDIT_BEFORE_USE = REQUIRED
+```
+
+## 当前核心入口
+
+- NC + Rebar production contract：沿 `semantic_v2/20_theory/nc_rebar_panel/` 的 20260812_2245 canonical locator。
+- Case21 production execution：沿 `semantic_v2/30_workflows/case21/` 的 20260812_1734 canonical locator。
+- Case21 current input/coefficient：沿 `semantic_v2/40_execution/case21/`。
+- Case21 current result：沿 `semantic_v2/50_results/case21/`。
+- Swartz24 current result：沿 `semantic_v2/50_results/swartz24/`。
+- superseded direct-N48 等旧执行结果：沿 `semantic_v2/80_history/`，不得因旧文件仍在 `current/` 而复活。
+
+## Audit levels
+
+- `A_DIRECT_CONTENT_AUDIT`：本轮已直接打开正文并按内容/时间链确定身份。
+- `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER`：通过已读 source registry / history ledger 确认稳定 source/history 角色；真正引用其技术内容时仍需打开 leaf 原件。
+- `C_NOT_YET_DIRECT_CONTENT_AUDITED`：只知道 locator，禁止从文件名推断当前身份。
+
+## 迁移纪律
+
+当前 semantic_v2 是非破坏性重构。旧文件不因为已有 canonical 名就立刻移动/删除；先完成内容分类和 rename/supersession map，再进行可追溯迁移。任何 legacy 文件移动后必须留下 locator 或保证 Git 历史/映射能够无歧义恢复。
+
+## 来源与历史
+
+- 原始 PDF/正式来源 > 有 provenance 的有效摘录 > 历史全文镜像 > 项目解释 > 总结。
+- 原始用户—助手对话/原始执行工件 > recovery summary。
+- 文件名和所在目录不属于 source-of-truth 层级。
+- 查上传来源：`evidence/catalog/SOURCE_REGISTRY.md` + `MASTER_SOURCE_INVENTORY.csv`，但具体技术结论仍回原件核对。
+- pre-clean 资产：`history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md`。
+- 不用 Case21、Swartz24、UCFT 的结构 Pu 反标材料。
+
+====================================================================================================
+FILE: current/CONTENT_INDEX.md
+SIZE: 880
+SHA256: 83193a5450d66efe76d97a985013e38ff7a39a98bf140484df561de1466da02c
+ENCODING: utf-8
+LINES: 17
+====================================================================================================
+# LEGACY CONTENT INDEX — superseded by semantic_v2
+
+This file was the first content-first correction to the legacy `current/` tree. It remains as provenance, but the repository-wide semantic reconstruction now lives under:
+
+`semantic_v2/00_index/README.md`
+
+Use the semantic_v2 naming policy, semantic tree, audited-artifact manifest, supersession map and legacy-to-canonical rename map before selecting any legacy artifact.
+
+```text
+LEGACY_CURRENT_DIRECTORY_SEMANTIC_PURITY = FALSE
+PATH_NAME_ONLY_CLASSIFICATION = PROHIBITED
+PRIMARY_SEMANTIC_ENTRY = semantic_v2/00_index/README.md
+```
+
+The earlier warning remains valid: `current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv` is a superseded direct-N48 result table despite its legacy path/name. Do not use it as the current C1/MM + general-D15 root table.
+
+No theory or result is changed by this redirect.
+
+====================================================================================================
+FILE: current/CONTENT_SEMANTIC_MANIFEST_20260813.csv
+SIZE: 4724
+SHA256: 2d1b0540da04539bdf450c74283831ddf1e82dd7bc9b45642fb356013b5adcde
+ENCODING: utf-8
+LINES: 13
+====================================================================================================
+artifact_path,content_role,content_identity,current_status,supersedes,superseded_by_or_incorporated_by,contains_theory,contains_code,contains_inputs,contains_roots,contains_derivatives,contains_KZ,case_coverage,compiler_or_execution_identity,content_audit_status,notes
+current/CURRENT_STATE.md,current_state_index,CURRENT_STATE_POINTER,ACTIVE_POINTER_LAYER,,UNKNOWN,yes,no,yes,yes,yes,yes,Case21+Swartz24,"R10;N48-C1/MM;general-D15 stated",CONTENT_AUDITED,"Contains final Case21 values and Swartz24 status; primary theory pointer still names 17:34 theory"
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md,theory_baseline,CURRENT_GOVERNING_THEORY_BASELINE,ACTIVE_MECHANICS_BASELINE,,current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,yes,no,no,no,no,yes,general,"R10;N48-C1/MM;CH;Nguyen;general-D15;P,Rq,L,KZ",CONTENT_AUDITED,"Self-declares current governing theory baseline at 17:34"
+current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md,production_theory_and_execution_contract,CURRENT_PRODUCTION_THEORY_EXECUTION_CONTRACT,CURRENT_PRODUCTION,"2026-08-11 fresh Swartz24 operational baseline + 2026-08-12 formal closure",,yes,no,yes,no,yes,yes,Swartz24+compatible RC panels,"R10;U/C/T7=N48-C1;T=N48-C1-MM;CH;Nguyen;general-D15",CONTENT_AUDITED,"Later file explicitly self-declares CURRENT PRODUCTION THEORY + EXECUTION CONTRACT"
+current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv,current_result_table,CURRENT_SWARTZ24_PU_FAILURE_COMPARISON,CURRENT_RESULT,, ,no,no,yes,no,no,no,Cases1-24,"final current Pu values only",CONTENT_AUDITED,"Contains final current Pu and experimental Pf; does not contain Du/qu"
+current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md,current_execution_report,CURRENT_SWARTZ24_COMPLETION_REPORT,CURRENT_RESULT_REPORT,, ,yes,no,yes,yes,no,partial,Cases1-24,"C1/MM+general-D15; roots printed for 19-24",CONTENT_AUDITED,"Contains current roots for Cases19-24 and 24/24 Pu"
+current/results/NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv,historical_result_table,OLD_DIRECT_N48_SWARTZ24_ROOT_DERIVATIVE_TABLE,HISTORICAL_SUPERSEDED,,current production C1/MM+general-D15 results,no,no,yes,yes,yes,no,Cases1-24,"direct-N48 predecessor",CONTENT_AUDITED,"Misleading path/name: under current/results and says FRESH, but content contains old Case1 Pu=599.515895 etc. Do not use as current roots"
+current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md,calculation_process_and_backend_lineage,N48C1MM_COEFFICIENT_D15_PROCESS,RETAINED_METHOD_LINEAGE,,later general-D15 correction/final Case21 closure,yes,yes,yes,yes,yes,no,Case21,"FFT coefficient convolution; finite power coefficients; D15; directional AD",CONTENT_AUDITED,"Important implementation process; associated fresh candidate chronology must not be confused with final Case21 state"
+current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md,blocking_audit,GENERAL_D15_QQ_CORRECTION_AUDIT,HISTORICAL_CORRECTION_AUDIT,"earlier fresh Case21 branch",later corrected final Case21 branch,yes,no,yes,yes,yes,yes,Case21,"general-D15 Qq correction",CONTENT_AUDITED,"Proves an earlier fresh candidate was not on canonical general-D15 equilibrium branch"
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md,current_case_result,CURRENT_CASE21_THEORY_FREEZE,CURRENT_RESULT,"earlier fresh candidates",current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md,yes,no,yes,yes,yes,yes,Case21,"corrected general-D15 primary branch",PARTIALLY_CONTENT_AUDITED,"Known final theory freeze from current state package; full row-by-row manifest audit pending"
+current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md,current_case_result,CURRENT_CASE21_FULL_CLOSURE,CURRENT_RESULT,"current theory freeze",,yes,no,yes,yes,yes,yes,Case21,"corrected general-D15 + KZ",PARTIALLY_CONTENT_AUDITED,"Final Case21 closure referenced by CURRENT_STATE"
+current/audits/NZ_SCCM_AUG11_13_EXECUTION_HISTORY_RECOVERY_AUDIT_20260813_1249.md,recovery_audit,RECOVERY_AUDIT_ONLY,AUDIT_ONLY,, ,no,no,no,no,no,no,repository,"history recovery",CONTENT_AUDITED,"Corrects earlier overstatement that historical calculation process was missing"
+current/audits/NZ_SCCM_SWARTZ24_CHECKPOINT_RECOVERY_FAIL_AT_CASE21_REGRESSION_20260813_1221.md,recovery_failure_record,NEW_REBUILD_BACKEND_FAILURE,AUDIT_ONLY,, ,no,yes,yes,no,no,no,Case21,"failed rebuilt dense coefficient backend",CONTENT_AUDITED,"Does not imply historical production backend was absent"
+
+====================================================================================================
+FILE: current/CURRENT_STATE.md
+SIZE: 7742
+SHA256: 3aa05bf0fca0bce8a8b4c54cc0b6bee5e2badc91b43f7fd6e5d40f7d788e230f
+ENCODING: utf-8
+LINES: 320
+====================================================================================================
+# CURRENT STATE — NZ-SCCM
+
+**Updated:** 2026-08-13 00:47 +08:00  
+**Purpose:** 唯一当前工作入口；正式文件采用“内容描述 + YYYYMMDD_HHMM”时间戳命名。
+
+## 0. Current governing baseline
+
+Theory:
+
+- `current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md`
+
+Case21 contract:
+
+- `current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md`
+
+Naming governance:
+
+- `current/governance/NZ_SCCM_TIMESTAMP_NAMING_AND_BASELINE_DECISION_20260812_1734.md`
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+KINEMATICS = NGUYEN_SECOND_ORDER
+R10_MATERIAL_TARGET = FROZEN
+N48_ORDER = 48
+CAYLEY_HAMILTON = GOVERNING
+EXACT_MOMENT_ENGINE = D15_GENERAL_TRIG_MOMENTS
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+STRUCTURAL_CALIBRATION = NO
+PANEL_LEVEL_SURROGATE = NO
+```
+
+---
+
+## 1. Current fresh Case21 evidence package
+
+Raw input freeze:
+
+- `current/case21/NZ_SCCM_CASE21_RAW_INPUT_FREEZE_20260812_1734.md`
+
+Fresh material coefficients:
+
+- `current/case21/NZ_SCCM_CASE21_FRESH_MATERIAL_COEFFICIENTS_20260812_1802.csv`
+
+Theory result frozen before experiment:
+
+- `current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md`
+
+Experiment-only source opened after theory freeze:
+
+- `current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md`
+
+Final closure:
+
+- `current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_FULL_CLOSURE_20260812_1802.md`
+
+Swartz24 current fresh completion / failure comparison:
+
+- `current/results/NZ_SCCM_SWARTZ24_FRESH_PU_COMPLETION_FAILURE_COMPARISON_AND_EXTERNAL_PANEL_SCREEN_20260813_0047.md`
+- `current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv`
+
+---
+
+## 2. Isolation status
+
+```text
+HISTORICAL_CASE21_D_Q_P_Pu_ROOT_PATH_USED = NO
+HISTORICAL_CASE21_ANALYTIC_RESULT_USED = NO
+HISTORICAL_FE_GAUSS_SIMPSON_RESULT_USED = NO
+HISTORICAL_MATERIAL_POINT_HISTORY_USED = NO
+EXPERIMENT_USED_DURING_SOLVE = NO
+EXPERIMENT_USED_FOR_ROOT_SELECTION = NO
+EXPERIMENT_USED_FOR_PARAMETER_TUNING = NO
+FORMAL_SPATIAL_SAMPLING = 0
+FORMAL_SPATIAL_QUADRATURE = 0
+FORMAL_SPATIAL_SUBDOMAINS = 1
+```
+
+---
+
+## 3. Fresh Case21 current result
+
+Corrected general-D15 primary branch first `+ -> -` load maximum:
+
+\[
+\boxed{D_u=0.7822850963110681},
+\]
+
+\[
+\boxed{q_u=0.0017707520964949533},
+\]
+
+\[
+\boxed{A_u=2.160317557723843\ \mathrm{mm}},
+\]
+
+\[
+\boxed{P_u^{theory}=365.580427565\ \mathrm{kN}}.
+\]
+
+Load components:
+
+\[
+P_c=336.968777333\ \mathrm{kN},
+\qquad
+P_s=28.611650232\ \mathrm{kN}.
+\]
+
+Residual gates:
+
+\[
+R_{norm}=1.5607568553\times10^{-6}<10^{-5},
+\]
+
+\[
+|L_{norm}|=4.0119433896\times10^{-6}<10^{-5}.
+\]
+
+Continuous compiler-domain certificate: PASS.
+
+Reinforcement whole-field elastic-branch certificate: PASS.
+
+---
+
+## 4. Current tangent control
+
+Zero-state regression:
+
+\[
+\boxed{K_Z(0,0)=823.416805664979\ \mathrm{N/mm}}
+\]
+
+```text
+ZERO_STATE_TANGENT_REGRESSION = PASS
+```
+
+At the first load maximum:
+
+\[
+K_{Z,c}^{mat}=765.4620815266977,
+\]
+
+\[
+K_{Z,c}^{geo}=-719.5765678312335,
+\]
+
+\[
+K_{Z,s}^{mat}=0,
+\]
+
+\[
+K_{Z,s}^{geo}=-45.50598684467001\ \mathrm{N/mm},
+\]
+
+hence
+
+\[
+\boxed{K_Z=+0.37952685079415716\ \mathrm{N/mm}>0}.
+\]
+
+First tangent-zero on the same corrected primary branch:
+
+\[
+D_T=0.7824254327857517,
+\qquad
+q_T=0.0017710077550576295,
+\]
+
+with
+
+\[
+K_Z\approx0.
+\]
+
+Since
+
+\[
+D_T-D_u=0.0001403364746835889>10^{-4},
+\]
+
+current classification:
+
+```text
+PRELIMIT_TANGENT_STABILITY = PASS
+LIMIT_POINT_CONTROL = YES
+COUPLED_LIMIT_TANGENT_CONTROL = NO
+```
+
+The coefficient-space tangent implementation was independently rechecked at unloaded and loaded Case21 during the 2026-08-13 Swartz24 continuation and reproduces the governing tangent to numerical roundoff / coefficient-set micro-difference.
+
+---
+
+## 5. Material compiler fidelity record
+
+Current timestamped Case21 contract requires reporting but does not freeze a new numerical cutoff for global E1. Fresh records:
+
+| primitive | E0 value metric | E1 tangent metric |
+|---|---:|---:|
+| U | 0.00245360402031 | 0.906633445993 |
+| C | 0.0140129840394 | 1.21310364652 |
+| T | 0.0895720993894 | 199.312325124 |
+| T7 | 0.112736914660 | 64.1319479976 |
+
+No new threshold, N48-order change or R10 modification was introduced in this calculation.
+
+---
+
+## 6. Case21 experimental quantities: distinguish Pcr from Pf
+
+Nguyen Chapter 5 table labels Case21 experimental buckling/critical load as:
+
+\[
+P_{cr,exp}=336\ \mathrm{kN}.
+\]
+
+This is a **buckling/critical** quantity and must not be used as the ultimate/failure-load accuracy metric.
+
+The Swartz experimental **failure/ultimate** load used for current Pu validation is:
+
+\[
+\boxed{P_{f,exp}=368.3127497435694\ \mathrm{kN}}.
+\]
+
+With
+
+\[
+P_u^{theory}=365.580427565\ \mathrm{kN},
+\]
+
+the ultimate-load comparison is:
+
+\[
+\Delta P=-2.7323221785694\ \mathrm{kN},
+\]
+
+\[
+\boxed{\delta_{Pu/Pf}=-0.741848\%}.
+\]
+
+The older `+8.8037%` value is specifically `Pu_theory` versus experimental `Pcr=336 kN`; it remains a buckling-vs-limit diagnostic only, not a failure-load error.
+
+---
+
+## 7. Swartz24 current fresh completion
+
+User authorization supersedes the earlier `SWARTZ24_RECALCULATION = NOT AUTHORIZED` state.
+
+```text
+SWARTZ24_RECALCULATION_AUTHORIZED = YES
+SWARTZ24_FRESH_PU_VALUES = 24/24 AVAILABLE
+SWARTZ24_FAILURE_LOAD_COMPARISON = COMPLETE
+SWARTZ24_FULL_L_KZ_PRODUCTION_GATE = PENDING_24_PANEL_BULK_COMPLETION
+CASE21_FULL_L_KZ_GATE = PASS
+```
+
+Current 24-panel failure-load comparison statistics:
+
+```text
+mean signed error = -2.8105 %
+MAE               = 12.0600 %
+RMSE(error %)      = 13.5244 %
+median |error|     = 11.7819 %
+mean Pu/Pf         = 0.97190
+|error| <= 5%      = 4/24
+|error| <= 10%     = 8/24
+|error| <= 15%     = 17/24
+```
+
+Thickness/slenderness group diagnostics:
+
+|Group|Cases|mean signed error|MAE|
+|---|---|---:|---:|
+|b/t ~ 48|1–8|+6.313%|13.135%|
+|b/t ~ 38.3|9–16|-11.849%|14.662%|
+|b/t ~ 63.1|17–24|-2.896%|8.383%|
+
+The strongest systematic bias is the Case9–16 thick-panel group. This is treated as a model-form/current-tangent/post-buckling redistribution diagnostic; no R10/N48/group-factor calibration is authorized or performed.
+
+---
+
+## 8. Additional uploaded physical-panel screen
+
+```text
+ADDITIONAL_UPLOADED_PHYSICAL_RC_PANEL_DATASETS
+BOTH_STRUCTURE_COMPATIBLE_AND_INPUT_COMPLETE = 0
+```
+
+Current classifications:
+
+- Ernst (1952): `INPUT_INCOMPLETE`.
+- Saheb & Desayi (1990): `OUT_OF_CURRENT_SCOPE + INPUT_INCOMPLETE` because the tests use constant eccentricity `e=t/6` and the uploaded material lacks a complete specimen-by-specimen current-contract input table.
+- Attard (1994): `REFERENCE_ANALYTICAL_ONLY`.
+- Sanjayan/Maheswaran-related tests referenced by Nguyen: `INPUT_INCOMPLETE / POSSIBLE_BOUNDARY_MISMATCH`.
+- Nguyen high-strength/parametric cases: `NUMERICAL_REFERENCE_ONLY`.
+- Uploaded steel-wall/CFT/UHPC material/interface tests: `OUT_OF_CURRENT_SCOPE` for the present ordinary-RC-panel production contract.
+
+No missing parameter is inferred from experimental Pu/Pf.
+
+---
+
+## 9. Current status
+
+```text
+CASE21_ZERO_SPATIAL_ANALYTIC_CALCULATION = COMPLETE
+CASE21_19_ITEM_CONTRACT = COMPLETE
+CASE21_CALCULATION_CLOSURE = PASS
+CASE21_CONTROL = FIRST +->- LIMIT POINT
+CASE21_PRELIMIT_TANGENT_STABILITY = PASS
+CASE21_THEORY_Pu = 365.580427565 kN
+CASE21_FAILURE_LOAD_Pf = 368.3127497435694 kN
+CASE21_Pu_VS_Pf_ERROR = -0.741848 %
+NGUYEN_CASE21_336_kN = EXPERIMENTAL_Pcr / NOT Pf
+SWARTZ24_FRESH_Pu = 24/24 AVAILABLE
+SWARTZ24_Pu_VS_FAILURE_COMPARISON = COMPLETE
+SWARTZ24_FULL_L_KZ_GATE = PENDING_BULK_COMPLETION
+ADDITIONAL_COMPATIBLE_INPUT_COMPLETE_PHYSICAL_RC_PANEL_DATASETS = 0
+CURRENT_NEXT_TASK = BULK_24_PANEL_L_KZ_GATE_OR_USER_DIRECTED
+```
+
+====================================================================================================
+FILE: current/README.md
+SIZE: 1172
+SHA256: 67b8e670defad915f633310e759536b599863b575c5ea44894b2c9afa90aca94
+ENCODING: utf-8
+LINES: 22
+====================================================================================================
+# CURRENT WORKSPACE
+
+## Important: directory name is not semantic status
+
+This directory is **not presently semantically pure**. It contains a mixture of current production artifacts, retained predecessors, historical result tables, correction audits and old exploratory branches. Therefore a file must not be treated as current-valid merely because it is under `current/`.
+
+Mandatory entry points:
+
+1. `CONTENT_INDEX.md`
+2. `CONTENT_SEMANTIC_MANIFEST_20260813.csv`
+3. `CURRENT_STATE.md`
+4. `../governance/CONTENT_SEMANTIC_IDENTITY_RULE_20260813.md`
+
+```text
+PATH_NAME_IS_LOCATOR_ONLY = YES
+PATH_NAME_CONFERS_CURRENT_STATUS = NO
+CONTENT_AUDIT_REQUIRED_BEFORE_USE = YES
+```
+
+The previous statement that this directory contains only files directly used for the next step is no longer relied upon as a factual description of the actual tree. The actual recursive tree shows old PF1/M1R/R09-era artifacts and superseded Swartz24 result tables still under `current/`.
+
+Do not perform destructive cleanup by filename. First classify content in the semantic manifest; only then may a later controlled migration move/rename artifacts while preserving provenance and supersession.
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_AUG11_13_EXECUTION_HISTORY_RECOVERY_AUDIT_20260813_1249.md
+SIZE: 7880
+SHA256: f13866644b0de84a560e91162df12ac09556666c40eff821cba5ec3b96ff7c7b
+ENCODING: utf-8
+LINES: 169
+====================================================================================================
+# NZ-SCCM Aug11–13 execution-history recovery audit
+
+**Timestamp:** 2026-08-13 12:49 +08:00  
+**Identity:** HISTORY RECOVERY / EXECUTION ARTIFACT LOCATOR / NO THEORY CHANGE
+
+## 0. Correction of the previous audit statement
+
+The earlier statement that the Cases1–18 “calculation process is missing” was too broad and is corrected here.
+
+The correct distinction is:
+
+```text
+ACTIVE_CURRENT_RESUMABLE_EXECUTION_ARTIFACT = INCOMPLETE
+HISTORICAL_CALCULATION_PROCESS = PRESENT
+HISTORICAL_BACKEND_STRATEGY = PRESENT
+EXACT_FINAL_AUG12_13_TRANSIENT_TOOL_SOURCE = NOT YET LOCATED
+CURRENT_CORRECTED_CASES1_18_ROOT_COORDINATES = NOT YET LOCATED
+```
+
+Thus “not retained in the active current package” must not be interpreted as “the historical process did not exist” or “all implementation evidence was lost.”
+
+## 1. Git pre-clean recovery
+
+The repository itself preserves `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md`, which states that migration-era full-text mirrors, checkpoints, snapshots and migration metadata were intentionally removed from active `main` but remain recoverable from Git history.
+
+Authoritative recovery commits:
+
+- `5c83f82da95d42efa33cbf2192c95545ab009017` — last useful migration-era working tree before cleanup; includes old `sources_text/`, `checkpoints/`, `snapshots/` and pre-clean layout.
+- `41fc94aea846f05ed98d7099703ec49c9356cf9e` — staging tree immediately before atomic reorganization.
+
+The pre-clean tree contains historical executable artifacts such as old Case21 direct-analytic Python/Sage scripts. These are history evidence only and are not promoted to the current C1/MM + general-D15 production identity.
+
+## 2. Current N48-C1/MM calculation process is explicitly archived
+
+Git commit:
+
+`1e459fb91abb187ffa78156c6412d6ef6aacdd84`
+
+message:
+
+`Add complete fresh Case21 N48-C1/MM calculation process`
+
+The archived process file is:
+
+`current/results/NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md`
+
+It explicitly records the implementation strategy used in the successful fresh calculation:
+
+1. finite analytic coefficient algebra;
+2. FFT convolution may accelerate coefficient-sequence convolution but does not sample physical space;
+3. floating coefficient convolution applies a `1e-5` noise-cleanup threshold solely to remove floating FFT noise;
+4. finite power coefficients are formed in `u=sin X`, `v=sin Y`, `zeta` and then converted to the finite Chebyshev basis;
+5. final spatial contraction is D15 exact analytic moments;
+6. the same coefficient expression carries directional/forward automatic differentiation for `P_D`, `P_q`, `Rq_D`, `Rq_q`.
+
+Therefore the backend implementation concept is not missing.
+
+## 3. Recovered executable ancestor / backend lineage
+
+File Library retains:
+
+`global_one_halfwave_cheb_algebraic.py`
+
+This Aug-09 executable ancestor contains:
+
+- `from scipy.signal import fftconvolve`;
+- a global multivariate coefficient object (`C3`);
+- Laurent/Chebyshev convolution for coefficient multiplication;
+- no spatial cells, no adaptive subdivision, no spatial collocation and no DCT;
+- exact analytic moment integration;
+- coefficient-space construction of concrete `Pc` and `Rq`.
+
+Its own header correctly labels it only as a convergence-study candidate, so it is **not** the final Aug12/13 production executable. It is retained as source-code lineage explaining the successful coefficient-space/FFT architecture.
+
+## 4. General-D15 correction chronology
+
+Commit:
+
+`e1828b2c193a0f08c6467177f979c2641d209c84`
+
+records the Case21 tangent/general-D15 consistency audit. It shows that an earlier fresh branch had an incorrect `Qq` realization under the governing general-D15 definition, while the coefficient-space tangent implementation reproduced the exact unloaded tangent target. The later current Case21 result superseded that earlier fresh candidate.
+
+Final current Case21 is frozen in `current/CURRENT_STATE.md` with:
+
+- `D_u = 0.7822850963110681`
+- `q_u = 0.0017707520964949533`
+- `A_u = 2.160317557723843 mm`
+- `Pc = 336.968777333 kN`
+- `Ps = 28.611650232 kN`
+- `Pu = 365.580427565 kN`
+- `R_norm = 1.5607568553e-6`
+- `|L_norm| = 4.0119433896e-6`
+- Case21 same-branch KZ audit complete.
+
+## 5. Swartz24 final execution evidence and retained current roots
+
+The final current execution freeze explicitly states that Cases19,20,22,23,24 were continued through fresh `R10 -> N48-C1/MM -> current-map -> general-D15` equilibrium-limit calculations, with Case21 using the already frozen current closure.
+
+Retained current root coordinates:
+
+|Case|D_u|q_u|Pu / kN|
+|---:|---:|---:|---:|
+|19|0.895498262463|0.001490667301|356.402209|
+|20|0.841997608509|0.001686144683|347.898637|
+|21|0.782285096311|0.001770752096|365.580428|
+|22|0.829956917853|0.001656490263|367.553168|
+|23|0.925495201721|0.001295223916|375.917916|
+|24|0.922369098591|0.001430121260|441.642463|
+
+The same freeze contains 24/24 final current Pu values, including Cases1–18, but does not print current corrected `(D_u,q_u)` for Cases1–18.
+
+## 6. Search for Cases1–18 current corrected roots
+
+The following locations were searched:
+
+- active Git `current/`, `governance/`, `history/`, `recovery/`;
+- pre-clean recovery tree;
+- Aug11–13 File Library files by exact final Pu values, final Case21 root, current 19–24 roots, `run_id`, `/mnt/data`, `fftconvolve`, `directional automatic differentiation`, `general-D15`, `N48-C1` and related terms;
+- available personal prior-conversation retrieval for exact Aug12–13 tool execution.
+
+Result:
+
+```text
+CASES1_18_CURRENT_Pu = PRESENT 18/18
+CASES1_18_OLD_DIRECT_N48_ROOTS = PRESENT 18/18 (HISTORICAL ONLY)
+CASES1_18_CURRENT_CORRECTED_Du_qu = NOT YET LOCATED
+FINAL_AUG12_13_PYTHON_RUN_ID = NOT YET LOCATED
+FINAL_AUG12_13_TRANSIENT_TOOL_CODE = NOT YET LOCATED
+```
+
+No old direct-N48 root is substituted for a current C1/MM + general-D15 root.
+
+## 7. Why exact final tool code is not in the visible Git chronology
+
+Comparison of the Git history across the final Case21 closure to the 24-panel Pu freeze shows reports/contracts/results being committed, but no corresponding final batch executable was committed in that interval. This is consistent with the final 24-panel computation having been executed in transient chat/Python runtime and only the results/report being committed.
+
+This is an execution-archive failure, not evidence that the computation did not happen.
+
+## 8. Original Conversation JSON status
+
+File Library contains raw Conversation JSON exports from the earlier project history. These exports demonstrably preserve tool messages with fields such as:
+
+- `author.role = tool`
+- Python `execution_output`
+- `aggregate_result.code`
+- `run_id`
+- exact final expression output.
+
+However, the currently located raw exports terminate before the final Aug12–13 C1/MM + general-D15 Swartz24 continuation. No raw Aug12–13 conversation export containing the final batch tool call has yet been located in the accessible File Library.
+
+Therefore the raw-JSON route is proven capable of recovering exact code, but the specific final execution export has not yet been found.
+
+## 9. Current recovery verdict
+
+```text
+PRE_CLEAN_HISTORY_RECOVERY = PASS
+HISTORICAL_N48C1MM_CALCULATION_PROCESS = RECOVERED
+BACKEND_ALGORITHM_IDENTITY = RECOVERED
+BACKEND_EXECUTABLE_LINEAGE = RECOVERED
+FINAL_AUG12_13_EXACT_TRANSIENT_BACKEND_SOURCE = NOT_YET_LOCATED
+CASES19_24_CURRENT_ROOTS = RECOVERED 6/6
+CASES1_18_CURRENT_Pu = RECOVERED 18/18
+CASES1_18_CURRENT_CORRECTED_ROOTS = NOT_YET_LOCATED
+OLD_DIRECT_N48_ROOT_SUBSTITUTION = PROHIBITED / NOT USED
+THEORY_CHANGED = NO
+RECALCULATION_PERFORMED = NO
+```
+
+The next recovery target is not “invent a new solver”; it is exclusively to locate the final Aug12–13 transient execution record or an equivalent exact artifact carrying the current Cases1–18 `(D_u,q_u)` and the exact production source used to generate them.
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_CASE1_CASE14_CASE21_BLANK_CHAT_PROMPT_20260811.txt
+SIZE: 1792
+SHA256: 2ff8d96554562fec5677608710eff94789408589d9df48c0be1953d9df9f3709
+ENCODING: utf-8
+LINES: 23
+====================================================================================================
+你现在是“NZ-SCCM R10→N48→D15 三代表板独立复算与错误审计助手”。
+
+我会上传《NZ_SCCM_CASE1_CASE14_CASE21_盲算输入_20260811.md》。
+
+严格执行：
+1. 只使用该文件理论、公式和三板原始输入。
+2. 不搜索、不调用、不回忆本项目其他对话中的 Case1/14/21 历史 D、q、Pu、根、荷载路径。
+3. 不使用试验荷载参与求解、选根、参数调整。
+4. 正式结构积分禁止 Gauss、Simpson、自适应积分、空间 Chebyshev collocation、材料点网格、空间 cells。
+5. 一维材料 N48 根点仅用于生成解析系数，不是空间离散。
+6. 从闭式 R10 重新生成 U/C/T/T^7 的 N48。
+7. 用 Cayley–Hamilton 构造二维 current-map。
+8. 用 Nguyen 连续二阶半波运动学。
+9. 将待积量变成有限解析系数，只用 D15 的 M_i M_j Z_k 收缩计算 Pc 与 Rq,c。
+10. 钢筋必须在求根前进入 P、Rq、L；Case14 必须正确处理对称双层钢筋。
+11. 联立求解 Rq(D,q)=0 与 L(D,q)=P_D Rq_q-P_q Rq_D=0。
+12. 导数来自同一解析表达，不用有限差分生产导数。
+13. 每板输出：kappa、xcr、eta、Wsrc、h、N48区间、至少前4个 U/C/T/T7 系数、谱域证书、Cm、Cb、D15轴力收缩、D15残量收缩、钢筋应变支、Pc、Ps、Rq,c、Rq,s、D、q、四个导数、L。
+14. 三板理论值全部冻结后立即停止，不自行搜索试验值。
+15. 若任何环节不能仅凭文件闭合，在首次缺口处停止并给 BLOCKED；不得换理论、调参或补空间数值积分。
+16. 特别检查 Pc 截面力量纲、S 与 e_,q 功共轭、T=u_sm/rho、xcr=rho/kappa、q0q+q²/2、T^7 编译身份、D15 零空间身份和 Case14 双层层合。
+
+最终给 PASS / FAIL / BLOCKED，并指出首个实质问题（若有）。
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_CASE1_CASE14_CASE21_BLIND_INPUT_20260811.md
+SIZE: 6773
+SHA256: b9fb18a7ef49de0985ac7823448e91a636c7ff904ff95c7b2f1395b0713a1b84
+ENCODING: utf-8
+LINES: 289
+====================================================================================================
+# NZ-SCCM 三个代表板独立复算与可行性审计包
+## Case 1、Case 14、Case 21：闭式 R10 → N48 → Cayley–Hamilton → D15 → \(R_q=0,L=0\)
+
+**用途**：供另一个全新聊天/独立审计者从公式重新实现并复算，用于判断当前零空间解析计算是否真正闭合、是否存在明显量纲错误、共轭错误、错误积分或把历史结果偷偷作为输入的问题。
+
+**为什么选 Case 1、14、21**：Nguyen 对 Swartz 24 块板的三组分别以 panel 1、panel 14、panel 21 展示/讨论代表性屈曲形态；三者分别对应约 \(b/t\approx48\)、\(38\)、\(63\)，跨越三个板厚/宽厚比组。
+
+## 0. 执行合同
+
+\[
+\text{DOMAIN}=\text{ONE CONTINUOUS COMPLETE HALFWAVE},\qquad m=1
+\]
+
+\[
+N_{\rm formal,spatial\,sampling}=0,\quad
+N_{\rm formal,spatial\,quadrature}=0,\quad
+N_{\rm formal,spatial\,subdomains}=1.
+\]
+
+正式结构积分禁止 Gauss、Simpson、adaptive quadrature、空间 Chebyshev collocation、材料点网格和空间 cells。允许一维材料坐标 N48 编译、有限系数代数、Cayley–Hamilton 递推、D15 闭式矩以及最终在广义变量 \(D,q\) 上低维求根。
+
+试验值只能在理论结果冻结以后比较。
+
+# 1. 闭式 R10 current material operator
+
+\[
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad
+x_{cr}=\frac{\rho}{\kappa},\qquad
+\rho=0.1,\qquad
+\eta=\frac{x_{cr}}{20}.
+\]
+
+物理面内应变：
+\[
+\mathbf E=\begin{bmatrix}\varepsilon_x&\gamma_{xy}/2\\\gamma_{xy}/2&\varepsilon_y\end{bmatrix}.
+\]
+
+等效单轴张量：
+\[
+\mathbf E_u=\frac{(1-\nu)\mathbf E+\nu\,{\rm tr}(\mathbf E)\mathbf I}{1-\nu^2},\qquad
+\mathbf X=\frac{\mathbf E_u}{\varepsilon_0}.
+\]
+
+主值：
+\[
+\mu=\frac{X_{11}+X_{22}}2,\quad
+\delta=\frac{X_{11}-X_{22}}2,\quad
+r_X=\sqrt{\delta^2+X_{12}^2},\qquad
+\lambda_\pm=\mu\pm r_X.
+\]
+
+平滑拉压坐标：
+\[
+\Pi_\eta(z)=\frac{z^2(\sqrt{z^2+\eta^2}+z)}{2(z^2+\eta^2)},
+\]
+\[
+t_i=\Pi_\eta(\lambda_i),\qquad c_i=\Pi_\eta(-\lambda_i).
+\]
+
+压缩函数：
+\[
+C_i=\frac{\kappa c_i}{1+(\kappa-2)c_i+c_i^2}.
+\]
+
+Foster 源拉伸：
+\[
+r=t/x_{cr},\qquad m_t=-7/90,\qquad \eta_r=0.05,
+\]
+\[
+H(r,r_0)=\frac12[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}]-\frac12[-r_0+\sqrt{r_0^2+\eta_r^2}],
+\]
+\[
+T_{\rm src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10).
+\]
+
+材料功：
+\[
+W_{\rm src}=\rho x_{cr}\int_0^{10}T_{\rm src}(r)\,dr,\qquad
+\int_0^{10}T_{\rm src}(r)\,dr\approx6.349875.
+\]
+
+R10：
+\[
+h=\frac15\left[\frac{W_{\rm src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right],\qquad u_r=0.03.
+\]
+
+上升支：
+\[
+u_1(\tau)=\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5.
+\]
+
+下降支：
+\[
+u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5).
+\]
+
+\[
+T_i=u_{\rm sm}(t_i)/\rho,
+\]
+\[
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i.
+\]
+
+二维主应力：
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
+\]
+\[
+s_-=U_--a_{cc}C_-^2C_+ +C_-T_+ -\rho a_tT_-T_+^8,
+\]
+其中 \(a_{cc}=0.1072329249\)，\(a_t=1-2^{-1/8}\)。谱返回后 \(\boldsymbol\sigma=f_c\mathbf S\)。
+
+# 2. N48 材料解析目标函数
+
+唯一编译目标：
+\[
+F\in\{U,C,T,T^7\}.
+\]
+
+\[
+\lambda_c=(\lambda_a+\lambda_b)/2,\qquad
+\lambda_h=(\lambda_b-\lambda_a)/2,\qquad
+\xi=(\lambda-\lambda_c)/\lambda_h.
+\]
+
+\[
+F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi).
+\]
+
+\[
+\theta_j=\frac{(j+1/2)\pi}{49},\qquad
+\lambda_j=\lambda_c+\lambda_h\cos\theta_j.
+\]
+
+\[
+\boxed{a_n^{(F)}=\frac{2-\delta_{n0}}{49}\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j)}
+\]
+
+这里没有结构 \(P_u\) 拟合；只有材料函数的有限解析编译。
+
+# 3. Cayley–Hamilton 提升
+
+\[
+\mathbf Y=(\mathbf X-\lambda_c\mathbf I)/\lambda_h,\quad K_1={\rm tr}\mathbf Y,\quad K_2=\det\mathbf Y.
+\]
+
+\[
+\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=0.
+\]
+
+\[
+\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y,
+\]
+\[
+A_0=1,\ B_0=0,\quad A_1=0,\ B_1=1,
+\]
+\[
+A_{n+1}=-2K_2B_n-A_{n-1},
+\]
+\[
+B_{n+1}=2A_n+2K_1B_n-B_{n-1}.
+\]
+
+然后构造 \(\mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\)，以及
+\[
+\mathbf{CC}=\det(\mathbf C)\mathbf C,
+\]
+\[
+\mathbf{TC}=\mathbf C[{\rm tr}(\mathbf T)\mathbf I-\mathbf T],
+\]
+\[
+\mathbf{TT}=\det(\mathbf T)[{\rm tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}],
+\]
+\[
+\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}.
+\]
+
+# 4. Nguyen 连续二阶完整半波运动学
+
+本三个板：
+\[
+b=\ell=1220\ {\rm mm},\qquad q_0=1/400.
+\]
+
+\[
+X=\pi x/b,\qquad Y=\pi y/\ell,\qquad \zeta=2z/t_p,\qquad q=A/b.
+\]
+
+\[
+C_m=\frac{\pi^2}{\varepsilon_0}\left(q_0q+\frac12q^2\right),
+\]
+\[
+C_b=\frac{\pi^2}{2\varepsilon_0}\frac{t_p}{b}q.
+\]
+
+\[
+e_x=\nu D+C_m\cos^2X\sin^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+\[
+e_y=-D+C_m\sin^2X\cos^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+\[
+g_{xy}=2C_m\sin X\cos X\sin Y\cos Y-2C_b\cos X\cos Y\,\zeta.
+\]
+
+\[
+\varepsilon_x=\varepsilon_0e_x,\quad\varepsilon_y=\varepsilon_0e_y,\quad\gamma_{xy}=\varepsilon_0g_{xy}.
+\]
+
+# 5. D15
+
+\[
+Q=\sum_{ijk}c_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta).
+\]
+
+\[
+M_n=\begin{cases}\pi,&n=0,\\2\sin(n\pi/2)/n,&n\ge1,\end{cases}\qquad
+Z_k=\begin{cases}0,&k\ {\rm odd},\\2/(1-k^2),&k\ {\rm even}.\end{cases}
+\]
+
+\[
+\mathscr D[Q]=\sum c_{ijk}M_iM_jZ_k.
+\]
+
+轴力：
+\[
+P_c=-\frac{f_cbt_p}{2\pi^2}\mathscr D[S_{yy}].
+\]
+
+功共轭：
+\[
+\mathbf e=\mathbf E/\varepsilon_0=(1+\nu)\mathbf X-\nu{\rm tr}(\mathbf X)\mathbf I,
+\]
+\[
+Q_q=\mathbf S:\mathbf e_{,q}.
+\]
+
+\[
+R_{q,c}=f_c\varepsilon_0J_\Omega\mathscr D[Q_q],\qquad J_\Omega=\frac{b\ell t_p}{2\pi^2}.
+\]
+
+# 6. 钢筋与联立
+
+\[
+E_s=200000\ {\rm MPa},\qquad \varepsilon_y=0.00265,\qquad f_y=530\ {\rm MPa}.
+\]
+
+只要最终连续钢筋场满足 \(|\varepsilon_s|<\varepsilon_y\)，使用 \(\sigma_s=E_s\varepsilon_s\)。
+
+加载方向总钢筋轴力：
+\[
+P_s=\rho_{s,y}bt_pE_s\varepsilon_0\left(D-\frac{C_m}{4}\right).
+\]
+
+钢筋幅值广义残量按所有层与两个方向解析求和：
+\[
+R_{q,s}=\sum_{\alpha,\ell}\int_\Omega\sigma_{s,\alpha}^{(\ell)}\frac{\partial\varepsilon_{s,\alpha}^{(\ell)}}{\partial q}\,dA.
+\]
+
+总体系：
+\[
+P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}.
+\]
+
+极限点：
+\[
+\boxed{R_q(D,q)=0}
+\]
+\[
+\boxed{L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0.}
+\]
+
+# 7. 三板盲算输入（无理论答案、无试验荷载）
+
+|Case|t/mm|fc/MPa|E0/MPa|eps0|nu|总配筋率|层数/位置|N48区间|
+|---:|---:|---:|---:|---:|---:|---:|:---|:---|
+|1|25.40|22.81|21730|0.00210|0.18|0.20%|1层，z=0|[-1.12,0.105]|
+|14|32.26|16.82|17995|0.00187|0.18|0.75%|2层，z=±12.63 mm|[-1.17,0.105]|
+|21|19.30|21.23|20321|0.00209|0.18|0.75%|1层，z=0|[-1.01,0.105]|
+
+共同输入：
+\[
+b=\ell=1220\ {\rm mm},\quad q_0=1/400,
+\]
+\[
+E_s=200000\ {\rm MPa},\quad\varepsilon_y=0.00265,\quad f_y=530\ {\rm MPa}.
+\]
+
+请独立生成 N48、独立组装二维 current-map、独立进行 D15 收缩并联立 \(R_q=L=0\)。本文件故意不提供三个板的最终 \(D,q,P_u\) 和试验荷载。
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_CASE1_CASE14_CASE21_FULL_REPRODUCTION_AUDIT_PACKAGE_20260811.md
+SIZE: 12040
+SHA256: ca8ad0632a755857fe87f857caacf1224c45f85781a2f320157ebb54efb9fb51
+ENCODING: utf-8
+LINES: 542
+====================================================================================================
+# NZ-SCCM 三个代表板独立复算与可行性审计包
+## Case 1、Case 14、Case 21：闭式 R10 → N48 → Cayley–Hamilton → D15 → \(R_q=0,L=0\)
+
+**用途**：供另一个全新聊天/独立审计者从公式重新实现并复算，用于判断当前零空间解析计算是否真正闭合、是否存在明显量纲错误、共轭错误、错误积分或把历史结果偷偷作为输入的问题。
+
+**为什么选 Case 1、14、21**：Nguyen 对 Swartz 24 块板的三组分别以 panel 1、panel 14、panel 21 展示/讨论代表性屈曲形态；三者分别对应约 \(b/t\approx48\)、\(38\)、\(63\)，跨越三个板厚/宽厚比组。
+
+## 0. 执行合同
+
+\[
+\text{DOMAIN}=\text{ONE CONTINUOUS COMPLETE HALFWAVE},\qquad m=1
+\]
+
+\[
+N_{\rm formal,spatial\,sampling}=0,\quad N_{\rm formal,spatial\,quadrature}=0,\quad N_{\rm formal,spatial\,subdomains}=1.
+\]
+
+正式结构积分禁止 Gauss、Simpson、adaptive quadrature、空间 Chebyshev collocation、材料点网格和空间 cells。允许一维材料坐标 N48 编译、有限系数代数、Cayley–Hamilton 递推、D15 闭式矩以及最终在广义变量 \(D,q\) 上低维求根。试验值只能在理论结果冻结以后比较。
+
+# 1. 闭式 R10 current material operator
+
+\[
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad x_{cr}=\frac{\rho}{\kappa},\qquad \rho=0.1,\qquad \eta=\frac{x_{cr}}{20}.
+\]
+
+\[
+\mathbf E=\begin{bmatrix}\varepsilon_x&\gamma_{xy}/2\\\gamma_{xy}/2&\varepsilon_y\end{bmatrix},\qquad
+\mathbf E_u=\frac{(1-\nu)\mathbf E+\nu\,{\rm tr}(\mathbf E)\mathbf I}{1-\nu^2},\qquad
+\mathbf X=\frac{\mathbf E_u}{\varepsilon_0}.
+\]
+
+\[
+\mu=\frac{X_{11}+X_{22}}2,\quad \delta=\frac{X_{11}-X_{22}}2,\quad r_X=\sqrt{\delta^2+X_{12}^2},\quad \lambda_\pm=\mu\pm r_X.
+\]
+
+\[
+\Pi_\eta(z)=\frac{z^2(\sqrt{z^2+\eta^2}+z)}{2(z^2+\eta^2)},\qquad t_i=\Pi_\eta(\lambda_i),\quad c_i=\Pi_\eta(-\lambda_i).
+\]
+
+\[
+C_i=\frac{\kappa c_i}{1+(\kappa-2)c_i+c_i^2}.
+\]
+
+Foster 源拉伸：
+\[
+r=t/x_{cr},\qquad m_t=-7/90,\qquad \eta_r=0.05,
+\]
+\[
+H(r,r_0)=\frac12[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}]-\frac12[-r_0+\sqrt{r_0^2+\eta_r^2}],
+\]
+\[
+T_{\rm src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10).
+\]
+
+\[
+W_{\rm src}=\rho x_{cr}\int_0^{10}T_{\rm src}(r)\,dr,\qquad \int_0^{10}T_{\rm src}(r)\,dr\approx6.349875.
+\]
+
+取 \(u_r=0.03\)：
+\[
+h=\frac15\left[\frac{W_{\rm src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right].
+\]
+
+上升支：
+\[
+u_1(\tau)=\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5.
+\]
+
+下降支：
+\[
+u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5).
+\]
+
+\[
+T_i=u_{\rm sm}(t_i)/\rho,
+\qquad
+U_i=\kappa\lambda_i-C_i+\kappa c_i+\rho T_i-\kappa t_i.
+\]
+
+\[
+s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8,
+\]
+\[
+s_-=U_--a_{cc}C_-^2C_+ + C_-T_+ -\rho a_tT_-T_+^8,
+\]
+其中 \(a_{cc}=0.1072329249\)，\(a_t=1-2^{-1/8}\)。谱返回后物理应力为 \(\boldsymbol\sigma=f_c\mathbf S\)。
+
+# 2. N48 材料解析目标函数
+
+唯一编译目标：
+\[
+F\in\{U,C,T,T^7\}.
+\]
+
+\[
+\lambda_c=(\lambda_a+\lambda_b)/2,\qquad \lambda_h=(\lambda_b-\lambda_a)/2,\qquad \xi=(\lambda-\lambda_c)/\lambda_h.
+\]
+
+\[
+F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F)}\mathcal C_n(\xi).
+\]
+
+\[
+\theta_j=\frac{(j+1/2)\pi}{49},\qquad \lambda_j=\lambda_c+\lambda_h\cos\theta_j.
+\]
+
+\[
+\boxed{a_n^{(F)}=\frac{2-\delta_{n0}}{49}\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j)}.
+\]
+
+这里没有结构 \(P_u\) 拟合；只有材料函数的有限解析编译。
+
+# 3. Cayley–Hamilton 提升
+
+\[
+\mathbf Y=(\mathbf X-\lambda_c\mathbf I)/\lambda_h,\quad K_1={\rm tr}\mathbf Y,\quad K_2=\det\mathbf Y.
+\]
+
+\[
+\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=0.
+\]
+
+\[
+\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y,
+\]
+\[
+A_0=1,\ B_0=0,\quad A_1=0,\ B_1=1,
+\]
+\[
+A_{n+1}=-2K_2B_n-A_{n-1},\qquad B_{n+1}=2A_n+2K_1B_n-B_{n-1}.
+\]
+
+再构造
+\[
+\mathbf{CC}=\det(\mathbf C)\mathbf C,
+\]
+\[
+\mathbf{TC}=\mathbf C[{\rm tr}(\mathbf T)\mathbf I-\mathbf T],
+\]
+\[
+\mathbf{TT}=\det(\mathbf T)[{\rm tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}],
+\]
+\[
+\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}.
+\]
+
+# 4. Nguyen 连续二阶完整半波运动学
+
+三个代表板均采用
+\[
+b=\ell=1220\ {\rm mm},\qquad q_0=1/400.
+\]
+
+\[
+X=\pi x/b,\quad Y=\pi y/\ell,\quad \zeta=2z/t_p,\quad q=A/b.
+\]
+
+\[
+C_m=\frac{\pi^2}{\varepsilon_0}\left(q_0q+\frac12q^2\right),\qquad C_b=\frac{\pi^2}{2\varepsilon_0}\frac{t_p}{b}q.
+\]
+
+\[
+e_x=\nu D+C_m\cos^2X\sin^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+\[
+e_y=-D+C_m\sin^2X\cos^2Y+C_b\sin X\sin Y\,\zeta,
+\]
+\[
+g_{xy}=2C_m\sin X\cos X\sin Y\cos Y-2C_b\cos X\cos Y\,\zeta.
+\]
+
+\[
+\varepsilon_x=\varepsilon_0e_x,\quad \varepsilon_y=\varepsilon_0e_y,\quad \gamma_{xy}=\varepsilon_0g_{xy}.
+\]
+
+# 5. D15 零空间解析积分
+
+\[
+Q=\sum_{ijk}c_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta).
+\]
+
+\[
+M_n=\begin{cases}\pi,&n=0,\\2\sin(n\pi/2)/n,&n\ge1,\end{cases}\qquad
+Z_k=\begin{cases}0,&k\text{ odd},\\2/(1-k^2),&k\text{ even}.\end{cases}
+\]
+
+\[
+\boxed{\mathscr D[Q]=\sum c_{ijk}M_iM_jZ_k}.
+\]
+
+混凝土轴力：
+\[
+\boxed{P_c=-\frac{f_cbt_p}{2\pi^2}\mathscr D[S_{yy}]}.
+\]
+
+物理功共轭：
+\[
+\mathbf e=\mathbf E/\varepsilon_0=(1+\nu)\mathbf X-\nu{\rm tr}(\mathbf X)\mathbf I,
+\]
+\[
+Q_q=\mathbf S:\mathbf e_{,q}.
+\]
+
+\[
+R_{q,c}=f_c\varepsilon_0J_\Omega\mathscr D[Q_q],\qquad J_\Omega=\frac{b\ell t_p}{2\pi^2}.
+\]
+
+# 6. 钢筋与极限联立
+
+\[
+E_s=200000\ {\rm MPa},\qquad \varepsilon_y=0.00265,\qquad f_y=530\ {\rm MPa}.
+\]
+
+若最终连续钢筋场满足 \(|\varepsilon_s|<\varepsilon_y\)，则 \(\sigma_s=E_s\varepsilon_s\)。加载方向总钢筋轴力为
+\[
+P_s=\rho_{s,y}bt_pE_s\varepsilon_0\left(D-\frac{C_m}{4}\right).
+\]
+
+钢筋幅值广义残量：
+\[
+R_{q,s}=\sum_{\alpha,\ell}\int_\Omega\sigma_{s,\alpha}^{(\ell)}\frac{\partial\varepsilon_{s,\alpha}^{(\ell)}}{\partial q}\,dA.
+\]
+
+\[
+P=P_c+P_s,\qquad R_q=R_{q,c}+R_{q,s}.
+\]
+
+\[
+\boxed{R_q(D,q)=0},
+\]
+\[
+\boxed{L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0}.
+\]
+
+# Case 1：逐项复算记录
+
+## 1.1 输入
+\[
+t_p=25.40\ {\rm mm},\quad f_c=22.81\ {\rm MPa},\quad E_0=21730\ {\rm MPa},\quad \varepsilon_0=0.00210,\quad \nu=0.18.
+\]
+\[
+\rho_{s,tot}=0.20\%,\qquad \text{中面单层钢筋 }z=0,
+\]
+\[
+[\lambda_a,\lambda_b]=[-1.12,0.105].
+\]
+
+## 1.2 R10
+\[
+\kappa=2.000570,\quad x_{cr}=0.0499858,\quad \eta=0.0024993,
+\]
+\[
+W_{src}=0.03174033,\qquad h=0.0979975.
+\]
+
+## 1.3 N48
+\[
+\lambda_c=-0.5075,\qquad \lambda_h=0.6125.
+\]
+
+|函数|a0|a1|a2|a3|
+|---|---:|---:|---:|---:|
+|U|-0.5961799|0.5817486|0.1886941|-0.0140869|
+|C|0.6126927|-0.5502477|-0.1615733|0.0347070|
+|T|0.1654462|0.3151309|0.2707760|0.2053650|
+|T^7|0.1288327|0.2475590|0.2186527|0.1749495|
+
+## 1.4 联立极限状态
+\[
+D_u=0.9940492,\qquad q_u=0.000773995,\qquad A_u=0.9443\ {\rm mm}.
+\]
+\[
+C_m=0.0105018,\qquad C_b=0.0378671.
+\]
+\[
+\lambda\in[-1.0447,0.0506]\subset[-1.12,0.105].
+\]
+
+## 1.5 D15 混凝土轴力
+\[
+K_P=\frac{f_cbt_p}{2\pi^2}/1000=35.808744\ {\rm kN},
+\]
+\[
+\mathscr D[S_{yy}]=-16.3818242,
+\]
+\[
+P_c=586.613\ {\rm kN}.
+\]
+
+## 1.6 D15 幅值残量
+\[
+J_\Omega=1915241.9\ {\rm mm^3},\qquad K_R=91.742003\ {\rm kN\,mm},
+\]
+\[
+\mathscr D[Q_q]=1.1231377,
+\]
+\[
+R_{q,c}=103.039\ {\rm kN\,mm}.
+\]
+
+## 1.7 钢筋
+\[
+\bar\varepsilon_{s,y}=-0.0020820,
+\]
+\[
+P_s=12.903\ {\rm kN},\qquad R_{q,s}=-103.039\ {\rm kN\,mm},
+\]
+\[
+R_q=-2.799\times10^{-5}\ {\rm kN\,mm}.
+\]
+
+## 1.8 同源导数与极限式
+\[
+P_{,D}=18.6177,\quad P_{,q}=-150824,
+\]
+\[
+R_{q,D}=-836.875,\quad R_{q,q}=6.77957\times10^6.
+\]
+\[
+P_{,D}R_{q,q}\approx1.262200\times10^8,\qquad P_{,q}R_{q,D}\approx1.262209\times10^8.
+\]
+\[
+L=-911.212,\qquad L_{norm}=-3.610\times10^{-6}.
+\]
+\[
+\boxed{P_u=599.516\ {\rm kN}}.
+\]
+
+## 1.9 最后比较试验
+\[
+P_{f,exp}=490.194\ {\rm kN},\qquad \text{error}=+22.30\%.
+\]
+
+# Case 14：逐项复算记录
+
+## 14.1 输入
+\[
+t_p=32.26\ {\rm mm},\quad f_c=16.82\ {\rm MPa},\quad E_0=17995\ {\rm MPa},\quad \varepsilon_0=0.00187,\quad \nu=0.18.
+\]
+\[
+\rho_{s,tot}=0.75\%,\qquad \text{对称双层钢筋 }z=\pm12.63\ {\rm mm},
+\]
+\[
+[\lambda_a,\lambda_b]=[-1.17,0.105].
+\]
+
+## 14.2 R10
+\[
+\kappa=2.000633,\quad x_{cr}=0.0499842,\quad \eta=0.0024992,
+\]
+\[
+W_{src}=0.03173933,\qquad h=0.0979975.
+\]
+
+## 14.3 N48
+\[
+\lambda_c=-0.5325,\qquad \lambda_h=0.6375.
+\]
+
+|函数|a0|a1|a2|a3|
+|---|---:|---:|---:|---:|
+|U|-0.6049691|0.5761272|0.2018389|-0.0101496|
+|C|0.6211847|-0.5451431|-0.1750202|0.0307626|
+|T|0.1622382|0.3095869|0.2675999|0.2054050|
+|T^7|0.1258480|0.2422806|0.2152898|0.1742890|
+
+## 14.4 联立极限状态
+\[
+D_u=1.0872558,\qquad q_u=0.000441917,\qquad A_u=0.5391\ {\rm mm}.
+\]
+\[
+C_m=0.0063463,\qquad C_b=0.0308371.
+\]
+\[
+\lambda\in[-1.1276,0.0403]\subset[-1.17,0.105].
+\]
+
+## 14.5 D15 混凝土轴力
+\[
+K_P=33.536709\ {\rm kN},\qquad \mathscr D[S_{yy}]=-17.0003013,
+\]
+\[
+P_c=570.134\ {\rm kN}.
+\]
+
+## 14.6 D15 幅值残量
+\[
+J_\Omega=2432508.0\ {\rm mm^3},\qquad K_R=76.510648\ {\rm kN\,mm},
+\]
+\[
+\mathscr D[Q_q]=4.5647994,
+\]
+\[
+R_{q,c}=349.256\ {\rm kN\,mm}.
+\]
+
+## 14.7 钢筋
+\[
+\bar\varepsilon_{s,y}=-0.0020302,
+\]
+\[
+P_s=59.927\ {\rm kN},\qquad R_{q,s}=-349.256\ {\rm kN\,mm},
+\]
+\[
+R_q=-2.550\times10^{-6}\ {\rm kN\,mm}.
+\]
+
+## 14.8 同源导数与极限式
+\[
+P_{,D}=12.6193,\quad P_{,q}=-174080,
+\]
+\[
+R_{q,D}=-967.805,\quad R_{q,q}=1.33507\times10^7.
+\]
+\[
+P_{,D}R_{q,q}\approx1.684760\times10^8,\qquad P_{,q}R_{q,D}\approx1.684760\times10^8.
+\]
+\[
+L=0.00902644,\qquad L_{norm}=2.679\times10^{-11}.
+\]
+\[
+\boxed{P_u=630.061\ {\rm kN}}.
+\]
+
+## 14.9 最后比较试验
+\[
+P_{f,exp}=716.164\ {\rm kN},\qquad \text{error}=-12.02\%.
+\]
+
+# Case 21：逐项复算记录
+
+## 21.1 输入
+\[
+t_p=19.30\ {\rm mm},\quad f_c=21.23\ {\rm MPa},\quad E_0=20321\ {\rm MPa},\quad \varepsilon_0=0.00209,\quad \nu=0.18.
+\]
+\[
+\rho_{s,tot}=0.75\%,\qquad \text{中面单层钢筋 }z=0,
+\]
+\[
+[\lambda_a,\lambda_b]=[-1.01,0.105].
+\]
+
+## 21.2 R10
+\[
+\kappa=2.000513,\quad x_{cr}=0.0499872,\quad \eta=0.0024994,
+\]
+\[
+W_{src}=0.03174124,\qquad h=0.0979975.
+\]
+
+## 21.3 N48
+\[
+\lambda_c=-0.4525,\qquad \lambda_h=0.5575.
+\]
+
+|函数|a0|a1|a2|a3|
+|---|---:|---:|---:|---:|
+|U|-0.5725245|0.5896062|0.1583082|-0.0213950|
+|C|0.5898865|-0.5566570|-0.1304207|0.0418748|
+|T|0.1732978|0.3285239|0.2779514|0.2042676|
+|T^7|0.1358016|0.2598423|0.2263622|0.1762424|
+
+## 21.4 联立极限状态
+\[
+D_u=0.8359179,\qquad q_u=0.001789789,\qquad A_u=2.1835\ {\rm mm}.
+\]
+\[
+C_m=0.0286934,\qquad C_b=0.0668533.
+\]
+\[
+\lambda\in[-0.9296,0.0937]\subset[-1.01,0.105].
+\]
+
+## 21.5 D15 混凝土轴力
+\[
+K_P=25.324297\ {\rm kN},\qquad \mathscr D[S_{yy}]=-13.3311398,
+\]
+\[
+P_c=337.602\ {\rm kN}.
+\]
+
+## 21.6 D15 幅值残量
+\[
+J_\Omega=1455282.2\ {\rm mm^3},\qquad K_R=64.571892\ {\rm kN\,mm},
+\]
+\[
+\mathscr D[Q_q]=4.8210841,
+\]
+\[
+R_{q,c}=311.307\ {\rm kN\,mm}.
+\]
+
+## 21.7 钢筋
+\[
+\bar\varepsilon_{s,y}=-0.0017321,
+\]
+\[
+P_s=30.588\ {\rm kN},\qquad R_{q,s}=-311.307\ {\rm kN\,mm},
+\]
+\[
+R_q=1.346\times10^{-9}\ {\rm kN\,mm}.
+\]
+
+## 21.8 同源导数与极限式
+\[
+P_{,D}=111.46,\quad P_{,q}=-75581.6,
+\]
+\[
+R_{q,D}=-1417.52,\quad R_{q,q}=961233.
+\]
+\[
+P_{,D}R_{q,q}\approx1.071388\times10^8,\qquad P_{,q}R_{q,D}\approx1.071387\times10^8.
+\]
+\[
+L=49.7771,\qquad L_{norm}=2.323\times10^{-7}.
+\]
+\[
+\boxed{P_u=368.189\ {\rm kN}}.
+\]
+
+## 21.9 最后比较试验
+\[
+P_{f,exp}=368.313\ {\rm kN},\qquad \text{error}=-0.03\%.
+\]
+
+# 7. 独立审计时必须逐项检查
+
+1. \(x_{cr}=\rho/\kappa\) 是否写反；
+2. \(T=u_{\rm sm}/\rho\) 是否写反；
+3. \(h\) 是否只由材料功得到；
+4. N48 根点是否只是材料坐标点；
+5. \(T^7\) 是否作为标量目标函数直接编译；
+6. \(q_0q+\frac12q^2\) 是否保留；
+7. \(P_c\) 是否保持截面力量纲；
+8. \(Q_q=\mathbf S:\mathbf e_{,q}\) 是否保持物理功共轭；
+9. D15 是否只有 \(M_iM_jZ_k\) 收缩；
+10. 钢筋是否在求 \(R_q,L\) 前已进入总体系；
+11. 导数是否来自同一解析表达而不是有限差分；
+12. 是否同时满足 \(R_q=0\) 与 \(L=0\)；
+13. 是否在理论冻结后才读取试验值。
+
+若独立复算与这里不同，必须指出首次分歧层级：`R10 / N48 / CH / KINEMATICS / D15 / STEEL / Rq / L`，不得通过调参把最后 \(P_u\) 调回来。
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_CASE21_N48C1MM_INDEPENDENT_REPRO_BLOCKED_R10_20260812.md
+SIZE: 2038
+SHA256: a3434e4d20b8a325dab4e1dedc435cb348940479e33eb2d341b14a7c5c9e7833
+ENCODING: utf-8
+LINES: 85
+====================================================================================================
+# NZ-SCCM Case21 更新版 fresh package 独立盲算审计结论：BLOCKED at R10
+
+**日期：2026-08-12**  
+**身份：INDEPENDENT REPRODUCIBILITY AUDIT RESULT**  
+**来源：用户在空白聊天中仅以 `NZ_SCCM_CASE21_N48C1MM_D15_FRESH_FULL_CALCULATION_20260812.md` 为唯一输入执行的独立审计。**
+
+## 1. 审计裁决
+
+```text
+OVERALL = BLOCKED
+FIRST_SUBSTANTIVE_DIVERGENCE = R10
+```
+
+通过项：
+
+\[
+\kappa=\frac{E_0\varepsilon_0}{f_c},\qquad
+x_{cr}=\frac{0.1}{\kappa},\qquad
+\eta=\frac{x_{cr}}{20}
+\]
+
+可由文件原始输入独立重算，与文件列值一致。
+
+## 2. 首个阻断
+
+原 fresh full-calculation 文件使用
+
+\[
+T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10)
+\]
+
+但未在同一文件中定义 \(H(r,r_0)\)。因此报告给出的
+
+\[
+\int_0^{10}T_{src}(r)dr
+\]
+
+不能由该文件本身重新生成。
+
+首次阻断因此必须记为：
+
+```text
+FIRST_BLOCK = R10 / FOSTER_SOURCE_H_NOT_DEFINED
+```
+
+## 3. 同一文件中进一步发现的自包含缺口
+
+即使补上 \(H\)，原文件还未自包含定义：
+
+- \(\Pi_\eta(z)\)；
+- 完整 \(u_{sm}(t)\) 分段定义；
+- \(\tau(t)\)、\(s(t)\) 与全部分支区间；
+- N48-C1 中的 \(\mathbf H,\mathbf G,\mathbf d_F\)；
+- \(T\) constrained-minimax 的唯一、可复现数值生产合同。
+
+因此原文件中的 N48 系数、\(D,q,P_u\) 等只能视为**该报告声明的结果**，不能标记为“独立复算已通过”。
+
+## 4. 治理修正
+
+此前状态
+
+```text
+CASE21_N48C1MM_D15_FRESH_CLOSURE = COMPLETE
+```
+
+必须降级为
+
+```text
+CASE21_N48C1MM_D15_FRESH_NUMERICAL_RECORD = PRESERVED
+CASE21_N48C1MM_D15_INDEPENDENT_REPRO = BLOCKED_AT_R10
+CASE21_N48C1MM_D15_FRESH_CLOSURE_ACCEPTED = NO
+```
+
+先前数值结果不得删除，但在新的自包含盲算合同通过独立复算以前，不得作为“闭合已验证”的生产基线。
+
+## 5. 下一门禁
+
+只做一件事：
+
+```text
+BUILD_SELF_CONTAINED_CASE21_BLIND_CONTRACT_V2
+-> SECOND_BLANK_CHAT_REPRODUCTION
+```
+
+不改 R10，不升阶，不重调结构，不使用试验值。
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md
+SIZE: 6774
+SHA256: ba2f7f324f82f9c6ee0f9af5f1d585fe922dc0b5b095e5300ec0f3c514fa334e
+ENCODING: utf-8
+LINES: 266
+====================================================================================================
+# NZ-SCCM Case21 tangent-gate + general-D15 consistency recheck
+
+**Date:** 2026-08-12  
+**Identity:** CURRENT BLOCKING AUDIT / NO HISTORICAL GAUSS INPUT
+
+## 0. Purpose
+
+This audit was triggered by the question whether the fresh Case21 calculation had actually completed the Zhou/Navier current-tangent check. The answer was no. The current canonical theory defines the full-field current-tangent modal audit, but the fresh Case21 result file had only completed the low-dimensional `Rq/L` limit-point calculation and the steel elastic-branch check.
+
+The present audit therefore does two things only:
+
+1. check the current-tangent implementation identity and zero-state regression;
+2. before accepting any tangent result at the reported Case21 limit candidate, independently re-evaluate the same candidate with the **governing general D15 trigonometric moments**.
+
+No historical FE/Gauss/Simpson/material-point result is used.
+
+```text
+HISTORICAL_GAUSS_FE_RESULT_USED = NO
+HISTORICAL_CASE21_ROOT_USED_AS_TARGET = NO
+FORMAL_SPATIAL_SAMPLING = 0
+FORMAL_SPATIAL_QUADRATURE = 0
+FORMAL_SPATIAL_SUBDOMAINS = 1
+```
+
+---
+
+## 1. Governing current-tangent identity
+
+The canonical theory defines
+
+\[
+\mathbb C_t(X,Y,\zeta;D,q)=\frac{\partial\boldsymbol\sigma}{\partial\mathbf E}
+\]
+
+and for the basic Navier perturbation
+
+\[
+\varphi=\sin X\sin Y,
+\]
+
+\[

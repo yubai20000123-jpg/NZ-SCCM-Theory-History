@@ -1,0 +1,1800 @@
+====================================================================================================
+# NZ-SCCM USER-SKETCH SMOOTH MATERIAL + EXPLICIT REINFORCEMENT R08
+
+**Date:** 2026-08-10
+
+## 1. Correction to R07R
+
+The R07R rational candidates were smoother than the source in a global fitting sense, but they still created an artificial tensile overshoot / dip / rebound sequence. That is not the intended material-data simplification.
+
+The preferred processing is:
+
+```text
+source/reference data
+-> deliberately discard the sharp local peak/cut
+-> replace it by a low-parameter monotone smooth cap
+-> then assess the structural consequence
+```
+
+## 2. Explicit user-sketch scalar target
+
+Compression:
+
+- `lambda < -10`: residual `-0.10 fc`;
+- `-10 <= lambda < -1`: retained R06 C2 source-faithful postpeak target;
+- `-1 <= lambda < 0`: Saenz compression.
+
+Tension:
+
+- `0 <= lambda <= lambda_p`: quintic Hermite rise;
+- `lambda_p <= lambda <= lambda_r`: quintic Hermite decay;
+- `lambda >= lambda_r`: residual `0.03 fc`.
+
+Material anchors:
+
+\[
+\lambda_p=x_{cr}=0.049987179454,
+\qquad u(\lambda_p)=0.09,
+\]
+
+\[
+\lambda_r=10x_{cr}=0.49987179454,
+\qquad u(\lambda_r)=0.03.
+\]
+
+At the origin:
+
+\[
+u(0)=0,
+\qquad u'(0)=\kappa=2.00051295337.
+\]
+
+At `lambda_p` and `lambda_r`, the tangent is zero.
+
+With local coordinate `tau`, the actual quintic coefficients are:
+
+```text
+rise: [0, 0.1, 0, 0.3, -0.55, 0.24]
+fall: [0.09, 0, 0, -0.6, 0.9, -0.36]
+```
+
+Executed shape audit:
+
+```text
+rise monotone non-decreasing = PASS
+fall monotone non-increasing = PASS
+peak = 0.09 fc
+residual = 0.03 fc
+slope at origin = kappa
+slope at peak = 0
+slope at residual = 0
+```
+
+Therefore the tensile target has no secondary undershoot or rebound.
+
+## 3. Explicit reinforcement
+
+Case21 source mapping:
+
+```text
+rho_x = rho_y = 0.00375
+Es = 200000 MPa
+fy = 530 MPa
+```
+
+Let
+
+\[
+S=q_0q+\frac12q^2,
+\qquad
+C_m=\frac{\pi^2S}{\varepsilon_0}.
+\]
+
+The loading-direction steel load is exactly
+
+\[
+P_s(D,q)
+=
+\frac{\rho_y t b E_s\varepsilon_0}{1000}
+\left(D-\frac{C_m}{4}\right)
+\quad [\mathrm{kN}].
+\]
+
+The steel amplitude residual is exactly
+
+\[
+R_s(D,q)
+=
+\frac{\rho_y tE_s\pi^2(q_0+q)b\ell}{1000}
+\left[
+\frac{\varepsilon_0D(\nu-1)}4
++
+\frac{9\pi^2S}{32}
+\right]
+\quad [\mathrm{kN\,mm}].
+\]
+
+Steel enters the SAME limit equations:
+
+\[
+P=P_c+P_s,
+\qquad
+R=R_c+R_s,
+\]
+
+\[
+L=P_D R_q-P_qR_D.
+\]
+
+No after-the-fact `As fy` addition is used.
+
+## 4. First coarse whole-structure target — rejected
+
+A first degree-(11,11) Chebyshev target on
+
+```text
+D in [0.35,1.30]
+q in [0.001,0.030]
+```
+
+was generated, but its `Rc` off-grid error was too large and the predicted stationary root did not close the underlying total residual closely enough.
+
+The resulting coarse value `335.047660 kN` is therefore **REJECTED** and must not be used as the R08 result.
+
+## 5. Mandatory local explicit refinement
+
+The mechanically located low-q branch was found from an audit-only solution of the same material + reinforcement equations, not from the experimental load. The local explicit box was then fixed as
+
+```text
+D in [0.60,0.84]
+q in [0.012,0.0215]
+```
+
+and degree sequence `12,14,16,18` was executed.
+
+| degree | Pc max abs (kN) | Pc P95 (kN) | Rc max abs (kN mm) | explicit Pu (kN) | audit P at same root (kN) | audit R at same root (kN mm) |
+|---:|---:|---:|---:|---:|---:|---:|
+|12|0.114036|0.072741|17.907647|335.674859|335.738639|10.625278|
+|14|0.092249|0.057296|16.933842|335.632742|335.659526|4.644755|
+|16|0.090718|0.067868|17.484157|335.598945|335.595458|-0.467684|
+|18|0.087275|0.059938|15.998997|335.589783|335.585377|-1.021793|
+
+Degree 18 is retained as the final R08 explicit local target.
+
+## 6. Final explicit RC Case21 result
+
+\[
+D_u=0.708108615160,
+\]
+
+\[
+q_u=0.0166001000745,
+\qquad
+A_u=q_ub=20.252122\ \mathrm{mm}.
+\]
+
+\[
+P_c=317.266522\ \mathrm{kN},
+\]
+
+\[
+P_s=18.323261\ \mathrm{kN},
+\]
+
+\[
+\boxed{P_u=335.589783\ \mathrm{kN}}.
+\]
+
+Case21 experiment:
+
+\[
+P_f=368.312750\ \mathrm{kN}.
+\]
+
+Therefore
+
+\[
+\boxed{
+\frac{P_u}{P_f}-1=-8.884560\%
+}
+\]
+
+for this **minimal scalar current-surface + analytic reinforcement** model.
+
+Independent underlying-material audit at the same root gives
+
+```text
+P_total_audit = 335.585377 kN
+R_total_audit = -1.021793 kN mm
+```
+
+so the explicit target and the audit response at the retained root agree closely in load.
+
+## 7. Reinforcement elasticity check
+
+At the final state:
+
+```text
+y-rebar strain range = [-0.00147995, +0.00028949]
+x-rebar strain range = [+0.00026639, +0.00203583]
+yield strain = 0.00265
+```
+
+Thus all reinforcement remains elastic, and the exact elastic steel expressions used above are consistent.
+
+## 8. Interpretation
+
+The user's sketch is smoother than the R07R rational curves in the intended physical sense:
+
+- R07R rational regression: globally smooth but introduced a local tensile undershoot / rebound;
+- R08 user-sketch target: one rounded tensile peak followed by one monotone decay to residual, with no secondary local oscillation.
+
+Therefore the R07R rational tensile oscillation is rejected as unnecessary.
+
+The current Case21 result remains below experiment by about `8.88%`. This should **not** be repaired by restoring a sharper tensile peak. The next physical question is whether a small source-grounded multiaxial compression / TC enhancement is required.
+
+## 9. Formal-status boundary
+
+Runtime evaluation of the retained local `Pc(D,q), Rc(D,q)` target and all derivatives is explicit and finite.
+
+However, the coefficients were still identified offline from high-accuracy full-halfwave numerical integration. Therefore:
+
+```text
+R08_EXPLICIT_RC_CHAIN = PASS_DIAGNOSTIC
+FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION = HOLD
+```
+
+This is the same disclosed proof-of-concept boundary as R07R.
+
+## 10. Next task
+
+```text
+R09_MINIMUM_SOURCE_GROUNDED_MULTIAXIAL_CORRECTION
+```
+
+Do not restore the full historical CC/TC/TT complexity. Add only the smallest multiaxial correction needed by source mechanics and then re-evaluate the same explicit `P,R,L` chain.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_USER_SKETCH_SMOOTH_AND_RC_CASE21_R08_results.json
+SIZE: 2289
+SHA256: 2a00ce5bfa73494ff6184a6e10715da45b16d5573b2acc8173d5703201942bf8
+ENCODING: utf-8
+LINES: 63
+====================================================================================================
+{
+  "identity": "USER_SKETCH_SMOOTH_AND_RC_CASE21_R08",
+  "user_sketch_shape": {
+    "tension_peak_lambda": 0.04998717945397425,
+    "tension_peak_sigma_over_fc": 0.09,
+    "tension_residual_lambda": 0.49987179453974245,
+    "tension_residual_sigma_over_fc": 0.03,
+    "slope_at_origin": 2.0005129533678754,
+    "slope_at_peak": 0.0,
+    "slope_at_residual": 0.0,
+    "rise_coefficients_tau_power": [0.0, 0.1, 0.0, 0.3, -0.55, 0.24],
+    "fall_coefficients_tau_power": [0.09, 0.0, 0.0, -0.6, 0.9, -0.36],
+    "rise_monotone_non_decreasing": true,
+    "fall_monotone_non_increasing": true
+  },
+  "reinforcement": {
+    "rho_x": 0.00375,
+    "rho_y": 0.00375,
+    "Es_MPa": 200000.0,
+    "fy_MPa": 530.0,
+    "eps_y": 0.00265,
+    "all_reinforcement_elastic_at_final_root": true,
+    "eps_y_rebar_range": [-0.0014799470056844127, 0.0002894945363822081],
+    "eps_x_rebar_range": [0.0002663904610231943, 0.002035832003089815]
+  },
+  "coarse_global_target": {
+    "status": "REJECTED",
+    "reason": "Rc off-grid/root residual error too large",
+    "rejected_Pu_kN": 335.04766030570596
+  },
+  "refined_local_explicit_target": {
+    "degree_D": 18,
+    "degree_q": 18,
+    "D_domain": [0.6, 0.84],
+    "q_domain": [0.012, 0.0215],
+    "Pc_max_abs_validation_kN": 0.08727489914144826,
+    "Pc_p95_abs_validation_kN": 0.059938392662425594,
+    "Rc_max_abs_validation_kNmm": 15.99899696476814,
+    "Rc_p95_abs_validation_kNmm": 10.895525379533755,
+    "audit_total_P_kN_at_same_root": 335.5853768252458,
+    "audit_total_R_kNmm_at_same_root": -1.0217933664688417,
+    "P_explicit_minus_audit_kN": 0.004406333192207512
+  },
+  "Case21_RC": {
+    "D_u": 0.7081086151600061,
+    "q_u": 0.016600100074508167,
+    "A_u_mm": 20.252122090899963,
+    "Pc_kN": 317.2665222395855,
+    "Ps_kN": 18.32326091885251,
+    "Pu_kN": 335.589783158438,
+    "experiment_kN": 368.31275,
+    "error_percent": -8.884559886010457
+  },
+  "status": {
+    "USER_SKETCH_TENSION_SHAPE": "PASS",
+    "R07R_RATIONAL_TENSILE_OSCILLATION": "REJECTED_AS_UNNECESSARY",
+    "ANALYTIC_REINFORCEMENT_COUPLING": "PASS",
+    "RC_CASE21_EXPLICIT_LIMIT": "PASS_DIAGNOSTIC",
+    "FINAL_MULTIXIAL_NC": "OPEN",
+    "FORMAL_ZERO_SPATIAL_QUADRATURE_PRODUCTION": "HOLD",
+    "next_task": "R09_MINIMUM_SOURCE_GROUNDED_MULTIAXIAL_CORRECTION"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/nz_sccm_case21_invariant_exact_moments_v1.py
+SIZE: 4110
+SHA256: 8d7148137a1093c15141d1fc87dad03c8624726f12f3fe74232f233db53131e2
+ENCODING: utf-8
+LINES: 134
+====================================================================================================
+"""
+NZ-SCCM Case21 invariant / exact-moment audit V1.
+
+Purpose
+-------
+1. Verify the closed-form I1 and I2 identities against the frozen Case21
+   normalized Nguyen second-order kinematics.
+2. Provide a transparent exact monomial moment functional for fields written as
+       sum c[a,b,h] * sin(X)^a * sin(Y)^b * zeta^h.
+3. Verify several hand-calculation checksums used in the accompanying report.
+
+This file performs symbolic algebra only.  It is NOT a spatial quadrature,
+material-point grid, element integration, or production material model.
+"""
+from __future__ import annotations
+
+import sympy as sp
+
+
+# -----------------------------------------------------------------------------
+# Symbols
+# -----------------------------------------------------------------------------
+D, nu = sp.symbols("D nu")
+M, B = sp.symbols("M B")       # M=C_m(q), B=C_b(q)
+Mq, Bq = sp.symbols("M_q B_q")
+u, v, z = sp.symbols("u v z")  # u=sin X, v=sin Y, z=zeta
+
+
+# -----------------------------------------------------------------------------
+# Compact invariant blocks
+# -----------------------------------------------------------------------------
+H = u**2 + v**2 - 2*u**2*v**2
+K = nu*u**2 - v**2 + (1-nu)*u**2*v**2
+W = u*v*z
+
+I1 = (nu-1)*D + M*H + 2*B*W
+I2 = (
+    -nu*D**2
+    + D*M*K
+    + B*D*(nu-1)*W
+    + B*M*W*(2-u**2-v**2)
+    + B**2*z**2*(u**2+v**2-1)
+)
+
+I1q = Mq*H + 2*Bq*W
+I2q = (
+    D*Mq*K
+    + Bq*D*(nu-1)*W
+    + (Bq*M+B*Mq)*W*(2-u**2-v**2)
+    + 2*B*Bq*z**2*(u**2+v**2-1)
+)
+
+Xyy = -D + M*u**2*(1-v**2) + B*W
+Gq = sp.expand(I1*I1q - I2q)  # X:X_q
+
+
+# -----------------------------------------------------------------------------
+# Direct verification from original e_x,e_y,g_xy
+# -----------------------------------------------------------------------------
+# Use independent cx,cy symbols first, then impose cx^2=1-u^2,
+# cy^2=1-v^2.  On X,Y in [0,pi], u,v are nonnegative.
+cx, cy = sp.symbols("c_x c_y")
+ex = nu*D + M*cx**2*v**2 + B*u*v*z
+ey = -D + M*u**2*cy**2 + B*u*v*z
+hxy = M*u*cx*v*cy - B*cx*cy*z  # g_xy / 2
+
+I1_direct = sp.expand(ex + ey)
+I2_direct = sp.expand(ex*ey - hxy**2)
+
+subs_trig = {cx**2: 1-u**2, cy**2: 1-v**2}
+
+assert sp.expand(I1_direct.subs(subs_trig) - I1) == 0
+assert sp.expand(I2_direct.subs(subs_trig) - I2) == 0
+
+
+# -----------------------------------------------------------------------------
+# Exact analytic monomial moments
+# -----------------------------------------------------------------------------
+def S(n: int):
+    """Integral_0^pi sin(X)^n dX, exact."""
+    n = int(n)
+    return sp.sqrt(sp.pi) * sp.gamma(sp.Rational(n+1, 2)) / sp.gamma(sp.Rational(n+2, 2))
+
+
+def Z(h: int):
+    """Integral_-1^1 zeta^h dzeta, exact."""
+    h = int(h)
+    return sp.Integer(0) if h % 2 else sp.Rational(2, h+1)
+
+
+def exact_moment(expr):
+    """
+    Exact integral over X,Y in [0,pi], zeta in [-1,1] for an expression
+    polynomial in u=sin X, v=sin Y, z=zeta.
+    """
+    poly = sp.Poly(sp.expand(expr), u, v, z)
+    out = sp.Integer(0)
+    for (a, b, h), coeff in poly.terms():
+        out += coeff * S(a) * S(b) * Z(h)
+    return sp.simplify(out)
+
+
+# -----------------------------------------------------------------------------
+# Hand-calculation checksums
+# -----------------------------------------------------------------------------
+checks = {
+    "JPA00": exact_moment(1),
+    "JPB00": exact_moment(Xyy),
+    "JqA00": exact_moment(I1q),
+    "JqB00": exact_moment(Gq),
+    "M_I1": exact_moment(I1),
+    "M_I2": exact_moment(I2),
+}
+
+expected = {
+    "JPA00": 2*sp.pi**2,
+    "JPB00": sp.pi**2*(-2*D + M/sp.Integer(2)),
+    "JqA00": sp.pi**2*Mq,
+    "JqB00": sp.pi**2*(Mq*((nu-1)*D/sp.Integer(2) + 5*M/sp.Integer(8))
+                          + sp.Rational(2, 3)*B*Bq),
+    "M_I1": sp.pi**2*(2*(nu-1)*D + M),
+    "M_I2": -sp.pi**2*D*(4*nu*D + (1-nu)*M)/sp.Integer(2),
+}
+
+for key in checks:
+    assert sp.simplify(checks[key] - expected[key]) == 0, key
+
+
+if __name__ == "__main__":
+    print("I1 =", sp.factor(I1))
+    print("I2 =", sp.factor(I2))
+    print("All exact-moment checks passed.")
+    for key, value in checks.items():
+        print(f"{key} = {sp.factor(value)}")
+
+====================================================================================================
+FILE: current/theory/nz_sccm_current_operator_explicit_v1.py
+SIZE: 3756
+SHA256: 740e8862b1f428e66c779ea17c2ffefdec1f53ae7da5b98f9d85669ea24811c2
+ENCODING: utf-8
+LINES: 134
+====================================================================================================
+"""
+NZ-SCCM explicit current material operators.
+No compiler, no spatial quadrature, no hidden material-point grid.
+
+Ordinary-concrete operator exactly matches the algebraic-Foster current target
+used by the successful historical Case21 regression packages.
+The later exploratory tanh tension-smoothing variant is intentionally excluded.
+"""
+from __future__ import annotations
+
+import sympy as sp
+
+
+def nc_parameters(fc, E0, eps0, nu):
+    rho = sp.Rational(1, 10)
+    kappa = E0 * eps0 / fc
+    xcr = rho / kappa
+    eta = xcr / 20
+    return {
+        "fc": fc, "E0": E0, "eps0": eps0, "nu": nu,
+        "rho": rho, "kappa": kappa, "xcr": xcr, "eta": eta,
+        "eta_r": sp.Rational(1, 20),
+        "m_t": -sp.Rational(7, 90),
+        "a_cc": sp.Float("0.1072329249362415", 30),
+        "a_t": 1 - 2 ** (-sp.Rational(1, 8)),
+    }
+
+
+def Pi_eta(z, eta):
+    return z**2 * (sp.sqrt(z**2 + eta**2) + z) / (2 * (z**2 + eta**2))
+
+
+def foster_H(r, r0, eta_r=sp.Rational(1, 20)):
+    return (
+        sp.Rational(1, 2) * ((r-r0) + sp.sqrt((r-r0)**2 + eta_r**2))
+        - sp.Rational(1, 2) * ((-r0) + sp.sqrt(r0**2 + eta_r**2))
+    )
+
+
+def nc_principal_response(lam, pars):
+    rho = pars["rho"]
+    kappa = pars["kappa"]
+    xcr = pars["xcr"]
+    eta = pars["eta"]
+    eta_r = pars["eta_r"]
+    m_t = pars["m_t"]
+
+    c = Pi_eta(-lam, eta)
+    t = Pi_eta(lam, eta)
+
+    C = kappa*c / (1 + (kappa-2)*c + c**2)
+
+    rr = t/xcr
+    T = rr + (m_t-1)*foster_H(rr, 1, eta_r) - m_t*foster_H(rr, 10, eta_r)
+
+    U = kappa*lam - C + kappa*c + rho*T - kappa*t
+    return U, C, T, c, t
+
+
+def M_NC(eps_x, eps_y, gamma_xy, fc, E0, eps0, nu):
+    """
+    Returns (sigma_x, sigma_y, tau_xy) using the exact explicit current operator.
+    """
+    p = nc_parameters(fc, E0, eps0, nu)
+
+    X11 = (eps_x + nu*eps_y) / ((1-nu**2)*eps0)
+    X22 = (nu*eps_x + eps_y) / ((1-nu**2)*eps0)
+    X12 = gamma_xy / (2*(1+nu)*eps0)
+
+    mu = (X11 + X22)/2
+    delta = (X11 - X22)/2
+    rad = sp.sqrt(delta**2 + X12**2)
+    lp = mu + rad
+    lm = mu - rad
+
+    Up, Cp, Tp, cp, tp = nc_principal_response(lp, p)
+    Um, Cm, Tm, cm, tm = nc_principal_response(lm, p)
+
+    acc = p["a_cc"]
+    at = p["a_t"]
+    rho = p["rho"]
+
+    sp_ = Up - acc*Cp**2*Cm + Cp*Tm - rho*at*Tp*Tm**8
+    sm_ = Um - acc*Cm**2*Cp + Cm*Tp - rho*at*Tm*Tp**8
+
+    Savg = (sp_ + sm_)/2
+    Sdiff = (sp_ - sm_)/2
+
+    # Continuous spectral extension at rad=0.
+    Sxx = sp.Piecewise((Savg, sp.Eq(rad, 0)), (Savg + Sdiff*delta/rad, True))
+    Syy = sp.Piecewise((Savg, sp.Eq(rad, 0)), (Savg - Sdiff*delta/rad, True))
+    Sxy = sp.Piecewise((sp.Integer(0), sp.Eq(rad, 0)), (Sdiff*X12/rad, True))
+
+    return fc*Sxx, fc*Syy, fc*Sxy
+
+
+# Nguyen / Swartz reinforcement constants
+ES_REBAR = sp.Integer(200000)       # MPa
+EPSY_REBAR = sp.Rational(265, 100000)  # 0.00265
+FY_REBAR = ES_REBAR * EPSY_REBAR   # 530 MPa
+EPSF_REBAR = sp.Rational(4, 100)   # 0.04
+EW_REBAR = sp.Integer(0)            # post-yield tangent modulus
+
+
+def M_REBAR(eps_s):
+    """
+    Source-defined reinforcement law for |eps_s| <= 0.04.
+    No post-failure branch is invented.
+    """
+    ae = sp.Abs(eps_s)
+    return sp.Piecewise(
+        (ES_REBAR*eps_s, ae <= EPSY_REBAR),
+        (FY_REBAR*sp.sign(eps_s), ae <= EPSF_REBAR),
+        (sp.nan, True),  # source-defined range exhausted
+    )
+
+
+def rebar_strain(eps_x, eps_y, gamma_xy, theta):
+    c = sp.cos(theta)
+    s = sp.sin(theta)
+    return eps_x*c**2 + eps_y*s**2 + gamma_xy*s*c
+
+
+CASE21 = {
+    "fc": sp.Float("21.23"),
+    "E0": sp.Float("20321.0"),
+    "eps0": sp.Float("0.00209"),
+    "nu": sp.Float("0.18"),
+    "p_total": sp.Float("0.0075"),
+    "n_layers": 1,
+    "rho_s_x_per_layer": sp.Float("0.00375"),
+    "rho_s_y_per_layer": sp.Float("0.00375"),
+    "z_s_mm": sp.Float("0.0"),
+}
+
+====================================================================================================
+FILE: current/theory/nz_sccm_current_target_geometric_regularization_r01.py
+SIZE: 12067
+SHA256: eaf90e1b7962ed7410e228494628723ddf775cb04400a93eff7773b28cea21a8
+ENCODING: utf-8
+LINES: 328
+====================================================================================================
+from pathlib import Path
+import json
+import math
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+OUT = Path("NZ_SCCM_CURRENT_TARGET_GEOMETRIC_REGULARIZATION_R01_20260810")
+OUT.mkdir(parents=True, exist_ok=True)
+
+# Case21 ordinary-concrete regression/reference constants.
+nu = 0.18
+eps0 = 0.00209
+fc = 21.23
+kappa = 2.0005129533678754
+rho = 0.1
+xcr = rho / kappa
+eta_pi = xcr / 20.0
+eta_r = 0.05
+m_t = -7.0 / 90.0
+a_cc = 0.1072329249362415
+a_t = 1.0 - 2.0 ** (-1.0 / 8.0)
+
+lam_min = -2.4390243902439024
+lam_max = 0.7317073170731706
+qualification_width = lam_max - lam_min
+local_transition_width = eta_r * xcr
+
+
+def Pi_eta(z, eta=eta_pi):
+    z = np.asarray(z, dtype=float)
+    return z * z * (np.sqrt(z * z + eta * eta) + z) / (2.0 * (z * z + eta * eta))
+
+
+def H(r, r0, eta=eta_r):
+    r = np.asarray(r, dtype=float)
+    return (
+        0.5 * ((r - r0) + np.sqrt((r - r0) ** 2 + eta**2))
+        - 0.5 * ((-r0) + np.sqrt(r0**2 + eta**2))
+    )
+
+
+def primitives(lam):
+    lam = np.asarray(lam, dtype=float)
+    c = Pi_eta(-lam)
+    t = Pi_eta(lam)
+    C = kappa * c / (1.0 + (kappa - 2.0) * c + c * c)
+    r = t / xcr
+    T = r + (m_t - 1.0) * H(r, 1.0) - m_t * H(r, 10.0)
+    U = kappa * lam - C + kappa * c + rho * T - kappa * t
+    return U, C, T
+
+
+def source_shaped_map(lam1, lam2):
+    U1, C1, T1 = primitives(lam1)
+    U2, C2, T2 = primitives(lam2)
+    s1 = U1 - a_cc * C1 * C1 * C2 + C1 * T2 - rho * a_t * T1 * T2**8
+    s2 = U2 - a_cc * C2 * C2 * C1 + C2 * T1 - rho * a_t * T2 * T1**8
+    return s1, s2
+
+
+def material_principal_from_actual_strain(e1, e2):
+    lam1 = (e1 + nu * e2) / ((1.0 - nu**2) * eps0)
+    lam2 = (nu * e1 + e2) / ((1.0 - nu**2) * eps0)
+    s1, s2 = source_shaped_map(lam1, lam2)
+    return fc * s1, fc * s2, lam1, lam2
+
+
+# ----------------------------------------------------------------------
+# A. Thin-layer curvature diagnosis in material coordinates only.
+# ----------------------------------------------------------------------
+x = np.linspace(-0.02, 0.60, 310001)
+T = primitives(x)[2]
+dx = x[1] - x[0]
+dT = np.gradient(T, dx)
+d2T = np.gradient(dT, dx)
+
+windows = {
+    "zero_split": (0.0, 0.01),
+    "crack_transition_r1": (0.03, 0.07),
+    "postcrack_transition_r10": (0.45, 0.55),
+}
+peaks = []
+for name, (lo, hi) in windows.items():
+    mask = (x >= lo) & (x <= hi)
+    ids = np.where(mask)[0]
+    i = ids[np.argmax(np.abs(d2T[mask]))]
+    peaks.append(
+        {
+            "feature": name,
+            "lambda_at_peak_curvature": float(x[i]),
+            "T": float(T[i]),
+            "dT_dlambda": float(dT[i]),
+            "d2T_dlambda2": float(d2T[i]),
+        }
+    )
+
+metrics = {
+    "kappa": kappa,
+    "rho": rho,
+    "xcr": xcr,
+    "eta_pi": eta_pi,
+    "eta_r": eta_r,
+    "local_transition_width_eta_r_times_xcr": local_transition_width,
+    "qualification_lambda_min": lam_min,
+    "qualification_lambda_max": lam_max,
+    "qualification_width": qualification_width,
+    "global_to_local_scale_ratio": qualification_width / local_transition_width,
+    "r1_nominal_lambda": xcr,
+    "r10_nominal_lambda": 10.0 * xcr,
+    "curvature_peaks": peaks,
+}
+(OUT / "01_transition_metrics.json").write_text(
+    json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+
+# ----------------------------------------------------------------------
+# B. 4D current-map projections in lambda coordinates.
+# ----------------------------------------------------------------------
+g = np.linspace(-1.15, 0.65, 49)
+L1, L2 = np.meshgrid(g, g)
+S1, S2 = source_shaped_map(L1, L2)
+
+fig = plt.figure(figsize=(9, 7))
+ax = fig.add_subplot(111, projection="3d")
+sc = ax.scatter(L1.ravel(), L2.ravel(), S1.ravel(), c=S2.ravel(), s=9)
+ax.set_xlabel(r"$\lambda_1=\varepsilon_{1u}/\varepsilon_0$")
+ax.set_ylabel(r"$\lambda_2=\varepsilon_{2u}/\varepsilon_0$")
+ax.set_zlabel(r"$\sigma_1/f_c$")
+cb = fig.colorbar(sc, ax=ax, shrink=0.72)
+cb.set_label(r"$\sigma_2/f_c$")
+ax.set_title("4D current map: geometry in $(\\lambda_1,\\lambda_2,\\sigma_1)$, color = $\\sigma_2$")
+fig.tight_layout()
+fig.savefig(OUT / "02_current_map_4D_sigma1_color_sigma2.png", dpi=220)
+plt.close(fig)
+
+fig = plt.figure(figsize=(9, 7))
+ax = fig.add_subplot(111, projection="3d")
+sc = ax.scatter(L1.ravel(), L2.ravel(), S2.ravel(), c=S1.ravel(), s=9)
+ax.set_xlabel(r"$\lambda_1=\varepsilon_{1u}/\varepsilon_0$")
+ax.set_ylabel(r"$\lambda_2=\varepsilon_{2u}/\varepsilon_0$")
+ax.set_zlabel(r"$\sigma_2/f_c$")
+cb = fig.colorbar(sc, ax=ax, shrink=0.72)
+cb.set_label(r"$\sigma_1/f_c$")
+ax.set_title("4D current map: geometry in $(\\lambda_1,\\lambda_2,\\sigma_2)$, color = $\\sigma_1$")
+fig.tight_layout()
+fig.savefig(OUT / "03_current_map_4D_sigma2_color_sigma1.png", dpi=220)
+plt.close(fig)
+
+# ----------------------------------------------------------------------
+# C. T(lambda) and curvature concentration.
+# ----------------------------------------------------------------------
+xt = np.linspace(-0.02, 0.62, 12000)
+Tt = primitives(xt)[2]
+
+fig, ax = plt.subplots(figsize=(9, 5.5))
+ax.plot(xt, Tt, label="current T(lambda)")
+for xx, lab in [(0.0, "0"), (xcr, "r=1"), (10 * xcr, "r=10")]:
+    ax.axvline(xx, label=lab)
+ax.set_xlabel(r"$\lambda$")
+ax.set_ylabel(r"$T(\lambda)$")
+ax.set_title("Current tensile utilization and its three narrow transition locations")
+ax.legend()
+ax.grid(True, alpha=0.25)
+fig.tight_layout()
+fig.savefig(OUT / "04_tensile_utilization_transitions.png", dpi=220)
+plt.close(fig)
+
+_dT = np.gradient(Tt, xt[1] - xt[0])
+_d2T = np.gradient(_dT, xt[1] - xt[0])
+fig, ax = plt.subplots(figsize=(9, 5.5))
+ax.semilogy(xt, np.abs(_d2T) + 1.0e-12)
+for xx, lab in [(0.0, "0"), (xcr, "r=1"), (10 * xcr, "r=10")]:
+    ax.axvline(xx, label=lab)
+ax.set_xlabel(r"$\lambda$")
+ax.set_ylabel(r"$|d^2T/d\lambda^2|$")
+ax.set_title("Curvature concentration: global approximation pressure")
+ax.legend()
+ax.grid(True, alpha=0.25)
+fig.tight_layout()
+fig.savefig(OUT / "05_tensile_curvature_concentration.png", dpi=220)
+plt.close(fig)
+
+# ----------------------------------------------------------------------
+# D. TT strength-envelope diagnostic contraction corridor.
+# ----------------------------------------------------------------------
+rows = []
+fig, ax = plt.subplots(figsize=(6.8, 6.4))
+for p in [8, 4, 2]:
+    tau1 = np.linspace(0.0, 1.0, 1200)
+    tau2 = np.maximum(0.0, 1.0 - tau1**p) ** (1.0 / p)
+    ax.plot(tau1, tau2, label=f"p={p}")
+    eq = 2.0 ** (-1.0 / p)
+    rows.append(
+        {
+            "TT_superellipse_p": p,
+            "equal_biaxial_strength_over_ft": eq,
+            "relative_reduction_vs_p8_percent": 100.0
+            * (2.0 ** (-1.0 / 8.0) - eq)
+            / (2.0 ** (-1.0 / 8.0)),
+        }
+    )
+ax.set_aspect("equal", adjustable="box")
+ax.set_xlim(0.0, 1.02)
+ax.set_ylim(0.0, 1.02)
+ax.set_xlabel(r"$\sigma_1/f_t$")
+ax.set_ylabel(r"$\sigma_2/f_t$")
+ax.set_title("TT strength-domain smoothing / conservative contraction corridor")
+ax.legend()
+ax.grid(True, alpha=0.25)
+fig.tight_layout()
+fig.savefig(OUT / "06_TT_strength_domain_contraction_candidates.png", dpi=220)
+plt.close(fig)
+
+pd.DataFrame(rows).to_csv(OUT / "07_TT_contraction_metrics.csv", index=False)
+
+# ----------------------------------------------------------------------
+# E. Actual (eps1, eps2, sigma1, sigma2) visualization.
+# ----------------------------------------------------------------------
+emicro = np.linspace(-2600.0, 1100.0, 55)
+E1m, E2m = np.meshgrid(emicro, emicro)
+E1 = E1m * 1.0e-6
+E2 = E2m * 1.0e-6
+Sig1, Sig2, Lam1, Lam2 = material_principal_from_actual_strain(E1, E2)
+
+fig = plt.figure(figsize=(9, 7))
+ax = fig.add_subplot(111, projection="3d")
+sc = ax.scatter(E1m.ravel(), E2m.ravel(), Sig1.ravel(), c=Sig2.ravel(), s=8)
+ax.set_xlabel(r"$\varepsilon_1$ ($\mu\varepsilon$)")
+ax.set_ylabel(r"$\varepsilon_2$ ($\mu\varepsilon$)")
+ax.set_zlabel(r"$\sigma_1$ (MPa)")
+cb = fig.colorbar(sc, ax=ax, shrink=0.72)
+cb.set_label(r"$\sigma_2$ (MPa)")
+ax.set_title(r"Current map in $(\varepsilon_1,\varepsilon_2,\sigma_1)$; color = $\sigma_2$")
+fig.tight_layout()
+fig.savefig(OUT / "10_actual_eps1_eps2_sigma1_color_sigma2.png", dpi=220)
+plt.close(fig)
+
+fig = plt.figure(figsize=(9, 7))
+ax = fig.add_subplot(111, projection="3d")
+sc = ax.scatter(E1m.ravel(), E2m.ravel(), Sig2.ravel(), c=Sig1.ravel(), s=8)
+ax.set_xlabel(r"$\varepsilon_1$ ($\mu\varepsilon$)")
+ax.set_ylabel(r"$\varepsilon_2$ ($\mu\varepsilon$)")
+ax.set_zlabel(r"$\sigma_2$ (MPa)")
+cb = fig.colorbar(sc, ax=ax, shrink=0.72)
+cb.set_label(r"$\sigma_1$ (MPa)")
+ax.set_title(r"Current map in $(\varepsilon_1,\varepsilon_2,\sigma_2)$; color = $\sigma_1$")
+fig.tight_layout()
+fig.savefig(OUT / "11_actual_eps1_eps2_sigma2_color_sigma1.png", dpi=220)
+plt.close(fig)
+
+# TC slices that make the ridge easier to see than the 4D projections.
+e1m_line = np.linspace(-200.0, 1200.0, 3000)
+for e2m_fixed, fname in [
+    (-700.0, "12_TC_slice_eps2_minus700.png"),
+    (-1300.0, "13_TC_slice_eps2_minus1300.png"),
+]:
+    sig1, sig2, _, _ = material_principal_from_actual_strain(
+        e1m_line * 1.0e-6, np.full_like(e1m_line, e2m_fixed) * 1.0e-6
+    )
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+    ax.plot(e1m_line, sig1, label=r"$\sigma_1$")
+    ax.plot(e1m_line, sig2, label=r"$\sigma_2$")
+    ax.axvline(0.0, label=r"$\varepsilon_1=0$")
+    ax.set_xlabel(r"$\varepsilon_1$ ($\mu\varepsilon$)")
+    ax.set_ylabel("principal stress (MPa)")
+    ax.set_title(rf"TC slice: fixed $\varepsilon_2={e2m_fixed:.0f}\,\mu\varepsilon$")
+    ax.legend()
+    ax.grid(True, alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(OUT / fname, dpi=220)
+    plt.close(fig)
+
+# ----------------------------------------------------------------------
+# F. Same-route sector decision artifact.
+# ----------------------------------------------------------------------
+sector_df = pd.DataFrame(
+    [
+        {
+            "sector": "CC",
+            "retained_target": "c_i*=c_i(1+a_cc*c1*c2)",
+            "status_this_step": "RETAIN_UNCHANGED",
+            "reason": "Compression-dominant region; no evidence that CC is the source of analytic sharpness.",
+        },
+        {
+            "sector": "TC/CT",
+            "retained_target": "c*=c(1-tau); tensile component not amplified",
+            "status_this_step": "RETAIN_AS_CONSERVATIVE_TARGET",
+            "reason": "Already frozen as a deliberately conservative low-parameter target relative to G20 C1 TC envelope.",
+        },
+        {
+            "sector": "TT",
+            "retained_target": "G20 p=8 outer reference; p=4/p=2 inner diagnostic corridor",
+            "status_this_step": "P4_MODERATE_CANDIDATE__P2_STRONG_DIAGNOSTIC",
+            "reason": "Final p must be decided by material-level stress/tangent/shape gate, never structural Pu.",
+        },
+        {
+            "sector": "Tensile current-map transition",
+            "retained_target": "preserve origin elastic tangent and uniaxial ft; regularize transition ridges conservatively",
+            "status_this_step": "PRIMARY_REFORMULATION_TARGET",
+            "reason": "Three thin lambda layers dominate curvature and global approximation pressure.",
+        },
+    ]
+)
+sector_df.to_csv(OUT / "08_sector_reformulation_decision.csv", index=False)
+
+manifest = {
+    "formal_spatial_quadrature": 0,
+    "note": "Material-coordinate diagnostics only; no structural spatial numerical integration.",
+    "visuals": [
+        "02_current_map_4D_sigma1_color_sigma2.png",
+        "03_current_map_4D_sigma2_color_sigma1.png",
+        "04_tensile_utilization_transitions.png",
+        "05_tensile_curvature_concentration.png",
+        "06_TT_strength_domain_contraction_candidates.png",
+        "10_actual_eps1_eps2_sigma1_color_sigma2.png",
+        "11_actual_eps1_eps2_sigma2_color_sigma1.png",
+        "12_TC_slice_eps2_minus700.png",
+        "13_TC_slice_eps2_minus1300.png",
+    ],
+}
+(OUT / "14_visual_manifest.json").write_text(
+    json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+)
+
+print(json.dumps(metrics, ensure_ascii=False, indent=2))
+print(pd.DataFrame(rows).to_string(index=False))
+print("R01 complete; formal structural spatial quadrature = 0")
+
+====================================================================================================
+FILE: current/theory/nz_sccm_frozen_nc_invariant_surface_screen_r01.py
+SIZE: 3875
+SHA256: 86caa9d50fa5044aafba154fa0436ad61b72176553622213e73b4058d9360193
+ENCODING: utf-8
+LINES: 137
+====================================================================================================
+"""
+Diagnostic-only nonlinear material-space screen for the proposed invariant A/B representation.
+
+This script does NOT use Case21 Pu, Swartz24, spatial X/Y/zeta samples, element
+integration, or material-point integration.  It uses the frozen NC current
+operator only as a deliberately difficult nonlinear material oracle.
+
+Goal: test whether a naive low/moderate total-degree global invariant surface
+    s_i = A(mu,r2) + B(mu,r2) e_i
+is sufficient as an ARCHITECTURE PROOF.  It is not a final material fit.
+"""
+from __future__ import annotations
+
+import math
+import numpy as np
+from numpy.linalg import cond, lstsq
+from numpy.polynomial.chebyshev import chebval
+
+# Frozen Case21 NC parameters (benchmark/oracle only)
+FC = 21.23
+E0 = 20321.0
+EPS0 = 0.00209
+NU = 0.18
+RHO = 0.1
+KAPPA = E0*EPS0/FC
+XCR = RHO/KAPPA
+ETA = XCR/20.0
+ETA_R = 0.05
+MT = -7.0/90.0
+ACC = 0.1072329249362415
+AT = 1.0 - 2.0**(-1.0/8.0)
+
+
+def Pi_eta(z):
+    return z*z*(np.sqrt(z*z+ETA*ETA)+z)/(2.0*(z*z+ETA*ETA))
+
+
+def H(r, r0):
+    return (
+        0.5*((r-r0)+np.sqrt((r-r0)**2+ETA_R**2))
+        - 0.5*((-r0)+math.sqrt(r0**2+ETA_R**2))
+    )
+
+
+def principal_response(lam):
+    c = Pi_eta(-lam)
+    t = Pi_eta(lam)
+    C = KAPPA*c/(1.0+(KAPPA-2.0)*c+c*c)
+    rr = t/XCR
+    T = rr + (MT-1.0)*H(rr, 1.0) - MT*H(rr, 10.0)
+    U = KAPPA*lam - C + KAPPA*c + RHO*T - KAPPA*t
+    return U, C, T
+
+
+def frozen_nc_diag(e1, e2):
+    """Normalized stresses s1,s2 for physical principal strains EPS0*(e1,e2)."""
+    x1 = (e1 + NU*e2)/(1.0-NU**2)
+    x2 = (NU*e1 + e2)/(1.0-NU**2)
+    U1,C1,T1 = principal_response(x1)
+    U2,C2,T2 = principal_response(x2)
+    s1 = U1 - ACC*C1**2*C2 + C1*T2 - RHO*AT*T1*T2**8
+    s2 = U2 - ACC*C2**2*C1 + C2*T1 - RHO*AT*T2*T1**8
+    return float(s1), float(s2)
+
+
+# Deliberately broad MATERIAL-space stress-test domain, not a frozen validity domain.
+EMIN, EMAX = -2.0, 0.6
+MC = 0.5*(EMIN+EMAX)
+MS = 0.5*(EMAX-EMIN)
+R2MAX = ((EMAX-EMIN)/2.0)**2
+
+
+def Tn(n, x):
+    c = np.zeros(n+1)
+    c[n] = 1.0
+    return chebval(x, c)
+
+
+def features(e1, e2, degree):
+    mu = 0.5*(e1+e2)
+    r2 = (0.5*(e1-e2))**2
+    xi = (mu-MC)/MS
+    eta = 2.0*r2/R2MAX - 1.0
+    terms = [(i,j) for i in range(degree+1) for j in range(degree+1-i)]
+    tx = [Tn(i,xi) for i in range(degree+1)]
+    ty = [Tn(j,eta) for j in range(degree+1)]
+    phi = np.array([tx[i]*ty[j] for i,j in terms])
+    return phi, terms
+
+
+def fit_degree(degree, ntrain=35):
+    grid = np.linspace(EMIN, EMAX, ntrain)
+    rows, rhs = [], []
+    for e1 in grid:
+        for e2 in grid:
+            s1,s2 = frozen_nc_diag(e1,e2)
+            phi,terms = features(e1,e2,degree)
+            rows.append(np.r_[phi, e1*phi]); rhs.append(s1)
+            rows.append(np.r_[phi, e2*phi]); rhs.append(s2)
+    mat = np.vstack(rows)
+    vec = np.array(rhs)
+    coef = lstsq(mat, vec, rcond=1e-12)[0]
+    return coef, terms, cond(mat)
+
+
+def test_degree(degree, ntrain=35, ntest=34):
+    coef,terms,kappa = fit_degree(degree,ntrain)
+    step = (EMAX-EMIN)/ntest
+    test = np.linspace(EMIN+step/2.0, EMAX-step/2.0, ntest)
+    errors = []
+    for e1 in test:
+        for e2 in test:
+            s1,s2 = frozen_nc_diag(e1,e2)
+            phi,_ = features(e1,e2,degree)
+            n = len(phi)
+            aa = coef[:n] @ phi
+            bb = coef[n:] @ phi
+            errors += [abs(aa+bb*e1-s1), abs(aa+bb*e2-s2)]
+    errors = np.asarray(errors)
+    return {
+        "degree": degree,
+        "ncoeff": 2*len(terms),
+        "condition": kappa,
+        "mae": errors.mean(),
+        "p95": np.quantile(errors,0.95),
+        "max": errors.max(),
+    }
+
+
+if __name__ == "__main__":
+    print("degree,ncoeff,condition,mae,p95,max")
+    for degree in (2,4,6,8,10,12):
+        r = test_degree(degree)
+        print(
+            f"{r['degree']},{r['ncoeff']},{r['condition']:.6e},"
+            f"{r['mae']:.6f},{r['p95']:.6f},{r['max']:.6f}"
+        )
+
+====================================================================================================
+FILE: current/theory/nz_sccm_invariant_coordinate_lift_r01.py
+SIZE: 1326
+SHA256: 686494d290d8a9f769433867e74d952a1992f1bdb7c33263a570422473b371e5
+ENCODING: utf-8
+LINES: 51
+====================================================================================================
+"""Exact symbolic checks for NZ-SCCM invariant-coordinate lift R01.
+
+No spatial quadrature is used.  The script verifies:
+1) I1 is affine in z;
+2) z -> s=I1 inverse/Jacobian;
+3) I2 becomes quadratic in s exactly;
+4) Saenz-type rational primitive differentiates exactly.
+"""
+from __future__ import annotations
+import sympy as sp
+
+u,v,z,D,M,B,nu,s,kappa,a = sp.symbols(
+    "u v z D M B nu s kappa a", positive=True
+)
+
+H = u**2 + v**2 - 2*u**2*v**2
+K = nu*u**2 - v**2 + (1-nu)*u**2*v**2
+W = u*v*z
+
+I1 = (nu-1)*D + M*H + 2*B*W
+I2 = (
+    -nu*D**2 + D*M*K + B*D*(nu-1)*W
+    + B*M*W*(2-u**2-v**2)
+    + B**2*z**2*(u**2+v**2-1)
+)
+
+abase = (nu-1)*D + M*H
+z_of_s = (s-abase)/(2*B*u*v)
+
+I2_s_expected = (
+    -nu*D**2 + D*M*K
+    + D*(nu-1)*(s-abase)/2
+    + M*(2-u**2-v**2)*(s-abase)/2
+    + (u**2+v**2-1)*(s-abase)**2/(4*u**2*v**2)
+)
+
+assert sp.simplify(I1.subs(z,z_of_s)-s) == 0
+assert sp.simplify(I2.subs(z,z_of_s)-I2_s_expected) == 0
+assert sp.simplify(sp.diff(I1,z)-2*B*u*v) == 0
+assert sp.Poly(sp.together(I2_s_expected),s).degree() == 2
+
+# Saenz-type rational primitive check
+Delta = 4-a**2
+R = kappa*s/(1+a*s+s**2)
+primitive = (
+    kappa*sp.log(s**2+a*s+1)/2
+    - kappa*a/sp.sqrt(Delta)*sp.atan((2*s+a)/sp.sqrt(Delta))
+)
+assert sp.simplify(sp.diff(primitive,s)-R) == 0
+
+print("PASS: exact invariant-coordinate identities")
+
+====================================================================================================
+FILE: current/theory/nz_sccm_m1_structured_matrix_polynomial_screen_r01.py
+SIZE: 3961
+SHA256: c228284c167aa55283d998a4f7b8e10806118baa33509211fc8404333305fdec
+ENCODING: utf-8
+LINES: 144
+====================================================================================================
+"""NZ-SCCM M1-R01 material-space screen.
+
+Purpose
+-------
+Test a structured analytic material representation
+
+    s_i = p(e_i) + A_c(mu,r2) + B_c(mu,r2) e_i
+
+against the frozen Case21 NC current operator used only as a nonlinear
+material oracle. No structural Pu, no spatial coordinates, no spatial
+quadrature and no material-point history are used.
+
+This script reproduces the R01 screen documented in
+NZ_SCCM_M1_STRUCTURED_MATRIX_POLYNOMIAL_SCREEN_R01_20260810.md.
+"""
+from __future__ import annotations
+
+import numpy as np
+import scipy.linalg as la
+from numpy.polynomial.chebyshev import chebvander
+
+NU = 0.18
+KAPPA = 2.0005129533678754
+RHO = 0.1
+XCR = 0.04998717945397425
+ETA = XCR / 20.0
+ETA_R = 0.05
+MT = -7.0 / 90.0
+ACC = 0.1072329249362415
+AT = 1.0 - 2.0 ** (-1.0 / 8.0)
+EMIN, EMAX = -2.0, 0.6
+R2MAX = ((EMAX - EMIN) / 2.0) ** 2
+
+
+def pi_eta(z):
+    return z**2 * (np.sqrt(z*z + ETA*ETA) + z) / (2.0 * (z*z + ETA*ETA))
+
+
+def foster_h(r, r0):
+    return 0.5 * ((r-r0) + np.sqrt((r-r0)**2 + ETA_R**2)) - 0.5 * ((-r0) + np.sqrt(r0**2 + ETA_R**2))
+
+
+def principal_response(lam):
+    c = pi_eta(-lam)
+    t = pi_eta(lam)
+    C = KAPPA*c / (1.0 + (KAPPA-2.0)*c + c*c)
+    rr = t / XCR
+    T = rr + (MT-1.0)*foster_h(rr, 1.0) - MT*foster_h(rr, 10.0)
+    U = KAPPA*lam - C + KAPPA*c + RHO*T - KAPPA*t
+    return U, C, T
+
+
+def frozen_oracle(e1, e2):
+    """Return normalized principal stresses s_i=sigma_i/fc.
+
+    e1,e2 are raw principal strains normalized by eps0.
+    """
+    x1 = (e1 + NU*e2) / (1.0 - NU**2)
+    x2 = (NU*e1 + e2) / (1.0 - NU**2)
+    U1,C1,T1 = principal_response(x1)
+    U2,C2,T2 = principal_response(x2)
+    s1 = U1 - ACC*C1**2*C2 + C1*T2 - RHO*AT*T1*T2**8
+    s2 = U2 - ACC*C2**2*C1 + C2*T1 - RHO*AT*T2*T1**8
+    return s1, s2
+
+
+def scale_e(e):
+    return 2.0*(e-EMIN)/(EMAX-EMIN) - 1.0
+
+
+def scale_r2(r2):
+    return 2.0*r2/R2MAX - 1.0
+
+
+def correction_indices(d):
+    return [(m,n) for m in range(d+1) for n in range(d+1-m) if (m,n)!=(0,0)]
+
+
+def design_rows(e1, e2, pdeg, corrdeg):
+    e1 = np.asarray(e1).ravel()
+    e2 = np.asarray(e2).ravel()
+    mu = (e1 + e2) / 2.0
+    r2 = ((e1 - e2) / 2.0) ** 2
+
+    Tp1 = chebvander(scale_e(e1), pdeg)
+    Tp2 = chebvander(scale_e(e2), pdeg)
+
+    idx = correction_indices(corrdeg)
+    Tm = chebvander(scale_e(mu), corrdeg)
+    Tr = chebvander(scale_r2(r2), corrdeg)
+    C = np.column_stack([Tm[:,m]*Tr[:,n] for m,n in idx])
+
+    F1 = np.hstack([Tp1, C, C*e1[:,None]])
+    F2 = np.hstack([Tp2, C, C*e2[:,None]])
+    return np.vstack([F1,F2])
+
+
+def fit_model(pdeg=12, corrdeg=8, ngrid=45, rank_tol=1e-11):
+    values = np.linspace(EMIN, EMAX, ngrid)
+    E1,E2 = np.meshgrid(values, values, indexing="ij")
+    e1,e2 = E1.ravel(),E2.ravel()
+    s1,s2 = frozen_oracle(e1,e2)
+    F = design_rows(e1,e2,pdeg,corrdeg)
+    y = np.r_[s1,s2]
+
+    Q,R,piv = la.qr(F, mode="economic", pivoting=True)
+    diag = np.abs(np.diag(R))
+    rank = int(np.sum(diag > rank_tol*diag[0]))
+    selected = np.sort(piv[:rank])
+    Fs = F[:,selected]
+    coef_s, *_ = np.linalg.lstsq(Fs,y,rcond=None)
+    coef = np.zeros(F.shape[1])
+    coef[selected] = coef_s
+    sing = np.linalg.svd(Fs,compute_uv=False)
+    cond = float(sing[0]/sing[-1])
+    return coef, rank, cond
+
+
+def evaluate(coef,pdeg,corrdeg,ngrid=101):
+    values = np.linspace(EMIN, EMAX, ngrid)
+    E1,E2 = np.meshgrid(values, values, indexing="ij")
+    e1,e2 = E1.ravel(),E2.ravel()
+    s1,s2 = frozen_oracle(e1,e2)
+    F = design_rows(e1,e2,pdeg,corrdeg)
+    yp = F @ coef
+    n = len(e1)
+    err = np.r_[np.abs(yp[:n]-s1),np.abs(yp[n:]-s2)]
+    return {
+        "mean": float(np.mean(err)),
+        "p95": float(np.quantile(err,0.95)),
+        "max": float(np.max(err)),
+        "rmse": float(np.sqrt(np.mean(err**2))),
+    }
+
+
+def main():
+    for d in (4,8,10,12):
+        coef,rank,cond = fit_model(12,d)
+        stats = evaluate(coef,12,d)
+        print({"pdeg":12,"corrdeg":d,"rank":rank,"cond":cond,**stats})
+
+
+if __name__ == "__main__":
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_m1r_outer_resolvent_hyperelliptic_r02.py
+SIZE: 6830
+SHA256: 81a5df5ac3ba72b8688cfec4bd765f6508ab07cc0d890a95f056d2e756a55daf
+ENCODING: utf-8
+LINES: 108
+====================================================================================================
+"""NZ-SCCM M1R outer resolvent / hyperelliptic classification R02.
+
+Formal purpose
+--------------
+Exact structural classification only. No Case21 Pu, no Swartz24, no spatial
+quadrature, no material-point integration.
+
+Checks
+------
+1. R01 rational primitives have finite simple scalar-pole decompositions.
+2. 2D matrix resolvent and "oth" identities.
+3. Pair-resolvent source block exact Cayley-Hamilton reduction.
+4. Delta_r(s)=I2(s)-r*s+r^2 is quadratic in s.
+5. Endpoint identity Delta_r(s±)=E_r±sqrt(xy) O_r.
+6. Gamma_r=4xy*disc_s(Delta_r) is polynomial of bidegree <=(3,3),
+   total degree 4.
+7. One exact rational specialization gives a square-free degree-5
+   hyperelliptic curve, proving generic genus >= 2 behavior is present.
+
+This script is an analytic architecture audit, not a production special-function
+evaluator.
+"""
+from __future__ import annotations
+
+import json
+import numpy as np
+import sympy as sp
+
+FC = 21.23
+E0 = 20321.0
+EPS0 = 0.00209
+KAPPA = E0 * EPS0 / FC
+
+U_COEF = np.array([-9.786990860138413,20.2150042396063,-10.648551770753837,-2.1990006614651056,27.740854104357723,21.454401259317827,32.84751931776155])
+C_COEF = np.array([-0.9442135131854792,8.475283733893267,-19.155032651471718,11.717171611700422,2.502734679618874,36.42244419918754,31.105995105744704,36.19639777683384])
+C2_COEF = np.array([-0.22001900119107273,1.235734615177478,-1.4750318560416769,0.02930272701903502,2.4695146543890787,6.3090038864234,4.550686012252086,2.6723789248563734])
+T_COEF = np.array([5.2832456515727308e+00,5.9036380076624050e+02,1.6827160529299152e+04,3.4424484696375992e+05,2.3654301901438353e+06,-5.3855760768061061e+05,-1.9558929506678067e+07,4.6747916139120964e+05,3.6048668340100557e+07,1.6064437897170084e+07,-1.4488932046500764e+02,1.5542658904204591e+04,-5.2992374395863095e+05,9.7304263129297085e+06,-8.4085213382741570e+07,4.6193321040738773e+08,-1.4278058956538005e+09,2.5022789964268451e+09,-2.4676258484463243e+09,1.1691624735294776e+09])
+V_COEF = np.array([-2.6397090716844929e+00,8.5521709459697178e+01,4.7435950866466396e+02,-7.6967479847511470e+02,-7.2653855232676938e+02,-4.5562216690418325e+01,9.5670115797598226e+02,-1.0491501141642168e+04,6.6993892415682218e+04,-3.1190274492658256e+04])
+
+
+def primitive_polynomials():
+    out = {}
+    n1,n2,n3,d1,d2,d3,d4 = U_COEF
+    out['U']=(np.array([0.0,KAPPA,n1,n2,n3]),np.array([1.0,d1,d2,d3,d4]))
+    for name,coef,m in (('C',C_COEF,3),('C2',C2_COEF,3),('T',T_COEF,9),('V',V_COEF,4)):
+        num=np.zeros(m+2); num[1:]=coef[:m+1]
+        den=np.r_[1.0,coef[m+1:]]
+        out[name]=(num,den)
+    return out
+
+
+def pole_audit():
+    out={}
+    for name,(num,den) in primitive_polynomials().items():
+        roots=np.roots(den[::-1])
+        minsep=min(abs(roots[i]-roots[j]) for i in range(len(roots)) for j in range(i+1,len(roots)))
+        q,_=np.polydiv(num[::-1],den[::-1])
+        dder=np.array([k*den[k] for k in range(1,len(den))])
+        residues=[]
+        for root in roots:
+            Nv=sum(num[k]*root**k for k in range(len(num)))
+            Dp=sum(dder[k-1]*root**(k-1) for k in range(1,len(den)))
+            residues.append(Nv/Dp)
+        errs=[]
+        for lam in (-2.0,-0.5,0.1,0.7):
+            exact=np.polyval(num[::-1],lam)/np.polyval(den[::-1],lam)
+            recon=q[-1]+sum(res/(lam-root) for res,root in zip(residues,roots))
+            errs.append(abs(exact-recon))
+        out[name]={'degree':int(len(den)-1),'quotient_constant':float(np.real(q[-1])),'min_pole_separation':float(minsep),'real_poles':[float(z.real) for z in roots if abs(z.imag)<1e-10],'partial_fraction_reconstruction_max_abs':float(max(errs))}
+    return out
+
+
+def symbolic_audit():
+    x,y,s,D,M,B,nu,r,t=sp.symbols('x y s D M B nu r t', nonzero=True)
+    H=x+y-2*x*y
+    K=nu*x-y+(1-nu)*x*y
+    a=(nu-1)*D+M*H
+    I2=(-nu*D**2+D*M*K+D*(nu-1)*(s-a)/2+M*(2-x-y)*(s-a)/2+(x+y-1)*(s-a)**2/(4*x*y))
+    Dr=sp.expand(I2-r*s+r**2); Dt=sp.expand(I2-t*s+t**2)
+    Ar,Br=(s-r)/Dr,-1/Dr
+    Ato,Bto=-t/Dt,1/Dt
+    Aprod=sp.factor(Ar*Ato-Br*Bto*I2)
+    Bprod=sp.factor(Ar*Bto+Br*Ato+Br*Bto*s)
+    target_A=sp.factor((I2-t*(s-r))/(Dr*Dt)); target_B=sp.factor((t-r)/(Dr*Dt))
+    E=sp.factor(-nu*D**2+D*M*K+B**2*(x+y-1)-r*a+r**2)
+    O=sp.factor(B*(D*(nu-1)+M*(2-x-y)-2*r))
+    w=sp.symbols('w')
+    def reduce_w2(expr):
+        poly=sp.Poly(sp.expand(expr),w); out=0
+        for (k,),coef in poly.terms():
+            out += coef*(x*y)**(k//2) if k%2==0 else coef*(x*y)**((k-1)//2)*w
+        return sp.factor(out)
+    endpoint_plus_ok=sp.simplify(reduce_w2(Dr.subs(s,a+2*B*w))-(E+w*O))==0
+    endpoint_minus_ok=sp.simplify(reduce_w2(Dr.subs(s,a-2*B*w))-(E-w*O))==0
+    Qr=sp.factor(4*x*y*Dr)
+    Gamma=sp.factor(sp.discriminant(Qr,s)/(4*x*y)); pg=sp.Poly(Gamma,x,y)
+    spec={D:sp.Integer(1),M:sp.Integer(1),nu:sp.Rational(1,5),r:sp.Integer(2),y:sp.Rational(1,3)}
+    Gamma_spec=sp.factor(Gamma.subs(spec)); P5=sp.factor(x*(1-x)*Gamma_spec)
+    gcd=sp.gcd(sp.Poly(P5,x),sp.Poly(sp.diff(P5,x),x)); discr=sp.factor(sp.discriminant(sp.Poly(P5,x),x))
+    return {'pair_resolvent_A_identity':bool(sp.simplify(Aprod-target_A)==0),'pair_resolvent_B_identity':bool(sp.simplify(Bprod-target_B)==0),'Delta_r_degree_s':int(sp.Poly(Dr,s).degree()),'endpoint_plus_identity':bool(endpoint_plus_ok),'endpoint_minus_identity':bool(endpoint_minus_ok),'E_total_degree_xy':int(sp.Poly(E,x,y).total_degree()),'O_total_degree_xy':int(sp.Poly(O,x,y).total_degree()),'endpoint_product_total_degree_xy':int(sp.Poly(sp.expand(E**2-x*y*O**2),x,y).total_degree()),'Gamma_degree_x':int(pg.degree(x)),'Gamma_degree_y':int(pg.degree(y)),'Gamma_total_degree':int(pg.total_degree()),'Gamma_term_count':int(len(pg.terms())),'Gamma_x3_coefficient':str(sp.factor(sp.Poly(Gamma,x).coeff_monomial(x**3))),'Gamma_y3_coefficient':str(sp.factor(sp.Poly(Gamma,y).coeff_monomial(y**3))),'genus_witness_Gamma':str(Gamma_spec),'genus_witness_P5':str(P5),'genus_witness_degree':int(sp.Poly(P5,x).degree()),'genus_witness_gcd_degree':int(sp.Poly(gcd,x).degree()),'genus_witness_discriminant':str(discr),'genus_witness_genus':2}
+
+
+def main():
+    result={'status':{'M1R_R02_RESOLVENT_CANONICALIZATION':'PASS_EXACT','M1R_R02_ACTUAL_S_FACTORS':'QUADRATIC_ONLY','M1R_R02_ENDPOINT_ALGEBRA':'PASS_EXACT','M1R_R02_GENERIC_OUTER_CLASS_A':'FAIL','M1R_R02_GENERIC_ORDINARY_ELLIPTIC':'INSUFFICIENT','M1R_R02_GENERIC_SIMPLE_APPELL':'NOT_GENERAL','M1R_R02_OUTER_PERIOD_CLASS':'HYPERELLIPTIC_RELATIVE / PICARD_FUCHS','FORMAL_WHOLE_HALFWAVE_GATE_A':'HOLD'},'canonical_block_counts':{'scalar_poles_total':27,'single_pole_blocks_consolidated_max':27,'pair_C2_C':16,'pair_C_T':40,'pair_T_V':50,'pair_total':106,'constant_plus_single_plus_pair_complex_blocks_max':134},'pole_audit':pole_audit(),'symbolic_audit':symbolic_audit()}
+    print(json.dumps(result,indent=2,ensure_ascii=False))
+
+if __name__=='__main__':
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_m1r_p2a_integrability_first_primitive_screen.py
+SIZE: 5475
+SHA256: 708319b9f87b8b66cf8f5530ef4dadd0ef49ffc5e194560be860123d27f1e195
+ENCODING: utf-8
+LINES: 145
+====================================================================================================
+"""NZ-SCCM M1R-P2A integrability-first primitive polynomial screen.
+
+This is a MATERIAL-SPACE offline compiler screen only.
+It does not perform structural spatial quadrature, auxiliary quadrature,
+material-point integration, Case21 Pu, Swartz24, or ODE propagation.
+
+Source functions are the exact frozen benchmark primitives from M1R-R01,
+not the R01 rational approximants.
+
+Screen:
+- one global interval lambda in [LAM_MIN,LAM_MAX]
+- one global degree-n polynomial, n=2..16
+- Chebyshev basis used only for coefficient conditioning
+- coefficients obtained by discrete minimax LP on 4001 material-coordinate samples
+- independent validation on 100001 points
+- degree-16 confirmation repeated on 20001 LP samples / 200001 validation points
+- production expression, if accepted, must be converted to ordinary powers of xi
+
+P2A fail-fast gate:
+A primitive is not a low-order production candidate if its best degree<=16
+global polynomial still has normalized max error > 0.10.  A desired direct
+production candidate should be <=0.05.  P2A stops if any primitive fails.
+"""
+from __future__ import annotations
+import json, math
+import numpy as np
+from numpy.polynomial import Chebyshev, Polynomial
+from numpy.polynomial.chebyshev import chebvander
+from scipy.optimize import linprog
+
+FC=21.23
+E0=20321.0
+EPS0=0.00209
+NU=0.18
+RHO=0.1
+KAPPA=E0*EPS0/FC
+XCR=RHO/KAPPA
+ETA=XCR/20.0
+ETA_R=0.05
+MT=-7.0/90.0
+EMIN,EMAX=-2.0,0.6
+LAM_MIN=EMIN/(1.0-NU)
+LAM_MAX=EMAX/(1.0-NU)
+LAM_C=0.5*(LAM_MIN+LAM_MAX)
+LAM_S=0.5*(LAM_MAX-LAM_MIN)
+NAMES=("U","C","C2","T","V")
+
+
+def Pi_eta(z):
+    z=np.asarray(z,dtype=float)
+    return z*z*(np.sqrt(z*z+ETA*ETA)+z)/(2.0*(z*z+ETA*ETA))
+
+
+def H(r,r0):
+    r=np.asarray(r,dtype=float)
+    return 0.5*((r-r0)+np.sqrt((r-r0)**2+ETA_R**2))-0.5*((-r0)+math.sqrt(r0**2+ETA_R**2))
+
+
+def exact_primitives(lam):
+    lam=np.asarray(lam,dtype=float)
+    c=Pi_eta(-lam)
+    t=Pi_eta(lam)
+    C=KAPPA*c/(1.0+(KAPPA-2.0)*c+c*c)
+    rr=t/XCR
+    T=rr+(MT-1.0)*H(rr,1.0)-MT*H(rr,10.0)
+    U=KAPPA*lam-C+KAPPA*c+RHO*T-KAPPA*t
+    return np.vstack((U,C,C*C,T,T**8))
+
+
+def minimax_fit(index,degree,nfit):
+    xi=np.linspace(-1.0,1.0,nfit)
+    lam=LAM_C+LAM_S*xi
+    yy=exact_primitives(lam)[index]
+    A=chebvander(xi,degree)
+    obj=np.r_[np.zeros(degree+1),1.0]
+    Aub=np.vstack((np.c_[A,-np.ones(nfit)],np.c_[-A,-np.ones(nfit)]))
+    bub=np.r_[yy,-yy]
+    bounds=[(None,None)]*(degree+1)+[(0.0,None)]
+    res=linprog(obj,A_ub=Aub,b_ub=bub,bounds=bounds,method="highs")
+    if not res.success:
+        raise RuntimeError(res.message)
+    return res.x[:-1],float(res.x[-1])
+
+
+def validate(index,degree,cheb_coef,nval):
+    xi=np.linspace(-1.0,1.0,nval)
+    lam=LAM_C+LAM_S*xi
+    yy=exact_primitives(lam)[index]
+    pred=chebvander(xi,degree)@cheb_coef
+    err=np.abs(pred-yy)
+    scale=float(np.max(np.abs(yy)))
+    return {
+        "mean_abs":float(np.mean(err)),
+        "p95_abs":float(np.quantile(err,0.95)),
+        "max_abs":float(np.max(err)),
+        "p95_norm":float(np.quantile(err,0.95)/scale),
+        "max_norm":float(np.max(err)/scale),
+        "source_scale":scale,
+        "pred_min":float(np.min(pred)),
+        "pred_max":float(np.max(pred)),
+        "source_min":float(np.min(yy)),
+        "source_max":float(np.max(yy)),
+        "lambda_at_max_error":float(lam[np.argmax(err)]),
+    }
+
+
+def main():
+    table=[]
+    for i,name in enumerate(NAMES):
+        for degree in range(2,17):
+            cc,lp_t=minimax_fit(i,degree,4001)
+            met=validate(i,degree,cc,100001)
+            table.append({"primitive":name,"degree":degree,"lp_grid_t":lp_t,**met})
+
+    robust16={}
+    for i,name in enumerate(NAMES):
+        cc,lp_t=minimax_fit(i,16,20001)
+        met=validate(i,16,cc,200001)
+        power=Chebyshev(cc,domain=[-1,1],window=[-1,1]).convert(kind=Polynomial).coef
+        robust16[name]={
+            **met,
+            "lp_grid_t":lp_t,
+            "chebyshev_coefficients":[float(v) for v in cc],
+            "power_xi_coefficients":[float(v) for v in power],
+            "relaxed_10pct_gate": "PASS" if met["max_norm"]<=0.10 else "FAIL",
+            "desired_5pct_gate": "PASS" if met["max_norm"]<=0.05 else "FAIL",
+        }
+
+    overall="PASS" if all(v["relaxed_10pct_gate"]=="PASS" for v in robust16.values()) else "FAIL"
+    result={
+        "identity":"M1R_P2A_INTEGRABILITY_FIRST_PRIMITIVE_COMPILER_SCREEN",
+        "source":"exact frozen M1R-R01 primitive oracle; rational R01 coefficients are not used as fit targets",
+        "interval":{"lambda_min":LAM_MIN,"lambda_max":LAM_MAX,"lambda_center":LAM_C,"lambda_halfspan":LAM_S,"xi":"(lambda-LAM_C)/LAM_S"},
+        "source_constants":{"KAPPA":KAPPA,"XCR":XCR,"ETA":ETA,"ETA_R":ETA_R,"MT":MT,"RHO":RHO},
+        "method":{"family":"one global degree-n polynomial in xi","degrees":"2..16","fit":"discrete minimax LP in Chebyshev basis","screen_fit_points":4001,"screen_validation_points":100001,"robust16_fit_points":20001,"robust16_validation_points":200001},
+        "screen_table":table,
+        "robust_degree16":robust16,
+        "gate":{"relaxed_max_norm":0.10,"desired_max_norm":0.05,"overall":overall,"reason":"T and V remain far above even the relaxed 10% gate at degree 16"},
+        "formal_counts":{"structural_spatial_sampling":0,"structural_spatial_quadrature":0,"auxiliary_quadrature":0,"auxiliary_ode_steps":0,"material_coordinate_samples_are_offline_fit_only":True},
+    }
+    print(json.dumps(result,indent=2,ensure_ascii=False))
+
+
+if __name__=="__main__":
+    main()
+
+====================================================================================================
+FILE: current/theory/nz_sccm_m1r_source_shaped_rational_r01.py
+SIZE: 8715
+SHA256: 66fd88e9eac7c48cec41cbc91e328a8b42771af1ea8b14afcdb3f735853bc9a2
+ENCODING: utf-8
+LINES: 306
+====================================================================================================
+"""NZ-SCCM M1R source-shaped rational primitive screen R01.
+
+Purpose
+-------
+Material-space architecture/regression screen only.  This script does NOT use
+Case21 Pu, Swartz24, spatial quadrature, element integration or material points.
+It treats the frozen Nguyen/Foster ordinary-concrete current operator as a
+strong nonlinear MATERIAL oracle and tests a source-shaped 1D rational compiler.
+
+Formal status
+-------------
+M1R_R01_FROZEN_NC_ORACLE_REGRESSION = PASS_SCREEN
+FINAL_NC_SOURCE_CALIBRATION = NOT_YET_DONE
+FINAL_GATE_B = NOT_YET_FROZEN
+M1R_R01_S_INNER_INTEGRATION = PASS_CLASS_A
+M1R_R01_OUTER_XY = CLASS_B_CANDIDATE / NOT_YET_CLOSED
+"""
+from __future__ import annotations
+
+import math
+import numpy as np
+
+# Frozen NC benchmark/oracle parameters.
+FC = 21.23
+E0 = 20321.0
+EPS0 = 0.00209
+NU = 0.18
+RHO = 0.1
+KAPPA = E0 * EPS0 / FC
+XCR = RHO / KAPPA
+ETA = XCR / 20.0
+ETA_R = 0.05
+MT = -7.0 / 90.0
+ACC = 0.1072329249362415
+AT = 1.0 - 2.0 ** (-1.0 / 8.0)
+
+EMIN, EMAX = -2.0, 0.6
+LAM_MIN = EMIN / (1.0 - NU)
+LAM_MAX = EMAX / (1.0 - NU)
+LAM_C = 0.5 * (LAM_MIN + LAM_MAX)
+LAM_S = 0.5 * (LAM_MAX - LAM_MIN)
+
+# R01 fixed rational coefficients.
+# U: [n1,n2,n3,d1,d2,d3,d4], with exact origin slope KAPPA.
+U_COEF = np.array([
+    -9.786990860138413,
+    20.2150042396063,
+    -10.648551770753837,
+    -2.1990006614651056,
+    27.740854104357723,
+    21.454401259317827,
+    32.84751931776155,
+])
+
+# Generic zero-rational arrays are [n0..nm,d1..dd].
+C_COEF = np.array([
+    -0.9442135131854792,
+    8.475283733893267,
+    -19.155032651471718,
+    11.717171611700422,
+    2.502734679618874,
+    36.42244419918754,
+    31.105995105744704,
+    36.19639777683384,
+])
+
+C2_COEF = np.array([
+    -0.22001900119107273,
+    1.235734615177478,
+    -1.4750318560416769,
+    0.02930272701903502,
+    2.4695146543890787,
+    6.3090038864234,
+    4.550686012252086,
+    2.6723789248563734,
+])
+
+T_COEF = np.array([
+    5.2832456515727308e+00,
+    5.9036380076624050e+02,
+    1.6827160529299152e+04,
+    3.4424484696375992e+05,
+    2.3654301901438353e+06,
+    -5.3855760768061061e+05,
+    -1.9558929506678067e+07,
+    4.6747916139120964e+05,
+    3.6048668340100557e+07,
+    1.6064437897170084e+07,
+    -1.4488932046500764e+02,
+    1.5542658904204591e+04,
+    -5.2992374395863095e+05,
+    9.7304263129297085e+06,
+    -8.4085213382741570e+07,
+    4.6193321040738773e+08,
+    -1.4278058956538005e+09,
+    2.5022789964268451e+09,
+    -2.4676258484463243e+09,
+    1.1691624735294776e+09,
+])
+
+V_COEF = np.array([
+    -2.6397090716844929e+00,
+    8.5521709459697178e+01,
+    4.7435950866466396e+02,
+    -7.6967479847511470e+02,
+    -7.2653855232676938e+02,
+    -4.5562216690418325e+01,
+    9.5670115797598226e+02,
+    -1.0491501141642168e+04,
+    6.6993892415682218e+04,
+    -3.1190274492658256e+04,
+])
+
+
+def Pi_eta(z):
+    return z * z * (np.sqrt(z * z + ETA * ETA) + z) / (2.0 * (z * z + ETA * ETA))
+
+
+def H(r, r0):
+    return (
+        0.5 * ((r - r0) + np.sqrt((r - r0) ** 2 + ETA_R ** 2))
+        - 0.5 * ((-r0) + math.sqrt(r0 ** 2 + ETA_R ** 2))
+    )
+
+
+def exact_primitives(lam):
+    """Frozen benchmark scalar primitives U,C,C^2,T,T^8."""
+    c = Pi_eta(-lam)
+    t = Pi_eta(lam)
+    C = KAPPA * c / (1.0 + (KAPPA - 2.0) * c + c * c)
+    r = t / XCR
+    T = r + (MT - 1.0) * H(r, 1.0) - MT * H(r, 10.0)
+    U = KAPPA * lam - C + KAPPA * c + RHO * T - KAPPA * t
+    return U, C, C * C, T, T ** 8
+
+
+def rational_zero(lam, coef, m, d):
+    """lambda*(n0+...+nm lambda^m)/(1+d1 lambda+...+dd lambda^d)."""
+    num_coef = coef[: m + 1]
+    den_coef = coef[m + 1 :]
+    num = lam * sum(num_coef[k] * lam ** k for k in range(m + 1))
+    den = 1.0 + sum(den_coef[k - 1] * lam ** k for k in range(1, d + 1))
+    return num / den
+
+
+def rational_U(lam):
+    n1, n2, n3, d1, d2, d3, d4 = U_COEF
+    num = lam * (KAPPA + n1 * lam + n2 * lam ** 2 + n3 * lam ** 3)
+    den = 1.0 + d1 * lam + d2 * lam ** 2 + d3 * lam ** 3 + d4 * lam ** 4
+    return num / den
+
+
+def compiled_primitives(lam):
+    return (
+        rational_U(lam),
+        rational_zero(lam, C_COEF, 3, 4),
+        rational_zero(lam, C2_COEF, 3, 4),
+        rational_zero(lam, T_COEF, 9, 10),
+        rational_zero(lam, V_COEF, 4, 5),
+    )
+
+
+def equivalent_lambdas(e1, e2):
+    den = 1.0 - NU ** 2
+    return (e1 + NU * e2) / den, (NU * e1 + e2) / den
+
+
+def source_shaped_response(p1, p2):
+    U1, C1, C21, T1, V1 = p1
+    U2, C2, C22, T2, V2 = p2
+    s1 = U1 - ACC * C21 * C2 + C1 * T2 - RHO * AT * T1 * V2
+    s2 = U2 - ACC * C22 * C1 + C2 * T1 - RHO * AT * T2 * V1
+    return float(s1), float(s2)
+
+
+def frozen_nc(e1, e2):
+    l1, l2 = equivalent_lambdas(e1, e2)
+    return source_shaped_response(exact_primitives(l1), exact_primitives(l2))
+
+
+def m1r_nc(e1, e2):
+    l1, l2 = equivalent_lambdas(e1, e2)
+    return source_shaped_response(compiled_primitives(l1), compiled_primitives(l2))
+
+
+def metrics(errors):
+    a = np.asarray(errors, dtype=float)
+    return {
+        "mean": float(np.mean(a)),
+        "p95": float(np.quantile(a, 0.95)),
+        "max": float(np.max(a)),
+    }
+
+
+def full_domain_screen(n=101):
+    grid = np.linspace(EMIN, EMAX, n)
+    errors = []
+    for e1 in grid:
+        for e2 in grid:
+            se = frozen_nc(e1, e2)
+            sa = m1r_nc(e1, e2)
+            errors.extend((abs(sa[0] - se[0]), abs(sa[1] - se[1])))
+    return metrics(errors)
+
+
+def path_screen(path, n=401):
+    errors = []
+    if path == "e2=0":
+        for e1 in np.linspace(EMIN, EMAX, n):
+            e2 = 0.0
+            se, sa = frozen_nc(e1, e2), m1r_nc(e1, e2)
+            errors.extend((abs(sa[0] - se[0]), abs(sa[1] - se[1])))
+    elif path == "equal_CC":
+        for e in np.linspace(-2.0, 0.0, n):
+            se, sa = frozen_nc(e, e), m1r_nc(e, e)
+            errors.extend((abs(sa[0] - se[0]), abs(sa[1] - se[1])))
+    elif path == "equal_TT":
+        for e in np.linspace(0.0, 0.6, n):
+            se, sa = frozen_nc(e, e), m1r_nc(e, e)
+            errors.extend((abs(sa[0] - se[0]), abs(sa[1] - se[1])))
+    elif path == "TC_ratio":

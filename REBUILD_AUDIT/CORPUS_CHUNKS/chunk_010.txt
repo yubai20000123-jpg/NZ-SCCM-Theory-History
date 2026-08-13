@@ -1,0 +1,1800 @@
+\]
+
+with `alpha1=10`, source `gamma2=10`, and project-conservative `alpha2=0.30`.
+
+For the current ordinary-concrete material instance
+
+```text
+fc     = 21.23 MPa
+E0     = 20321 MPa
+eps_p  = 0.00209
+rho    = ft/fc = 0.10
+kappa  = E0 eps_p / fc = 2.0005129533678754
+lambda_cr = 0.04998717945397425
+```
+
+therefore
+
+\[
+\boxed{
+\Lambda_{M,NC}^{active}
+=[-10,\ 0.49987179453974245]
+}
+\]
+
+This interval is defined by material source landmarks. It is not derived from Case21 or Swartz24 geometry.
+
+## 3. Hard landmarks and allowed regularization
+
+Hard:
+
+- `sigma(0)=0`;
+- initial elastic tangent;
+- compression peak position/value and zero tangent;
+- tensile cracking/peak scale.
+
+Governed C1/C2 conservative regularization remains allowed for:
+
+- source postcrush evolution toward the residual level;
+- Foster tension-stiffening transition toward the residual level;
+- finite source state handoff jumps/history that are deliberately not retained as a runtime material-state machine.
+
+## 4. New material-level blocker exposed by the correct domain
+
+A pure Saenz continuation is not a valid final deep-postpeak closure over the full source-native interval.
+
+At
+
+\[
+\lambda=-\gamma_2=-10,
+\]
+
+its normalized stress is
+
+\[
+\sigma_{Saenz}/f_c=-0.1980605304506671,
+\]
+
+while the Nguyen source postcrush residual landmark is approximately
+
+\[
+\sigma_{res}/f_c=-0.10.
+\]
+
+The Saenz continuation therefore retains about `1.980605` times the magnitude of the source residual at this endpoint.
+
+This does **not** reopen the discarded history-state machine. It means that the G21-approved smooth conservative postpeak replacement must now be frozen explicitly as a one-dimensional material target before any final production coefficients are accepted.
+
+## 5. Representation candidates actually executed
+
+The frozen smooth source-shaped `U(lambda)` is used here only as a representation benchmark/oracle. It is not promoted to source truth.
+
+### Candidate A — one global polynomial in lambda
+
+A single Chebyshev polynomial is fitted directly on the full material-native active interval.
+
+Observed behavior: the large interval together with narrow tensile features produces slow convergence and poor tangent behavior. It is not preferred.
+
+### Candidate B — material-scale compactification
+
+Define
+
+\[
+\boxed{
+\chi(\lambda)=\frac{\lambda}{\sqrt{\lambda^2+1}}
+}
+\]
+
+where the scale `1` is the normalized compression-peak material scale, not a structurally calibrated parameter.
+
+Then use
+
+\[
+\boxed{
+U_n(\lambda)=\sum_{j=0}^{n}a_jT_j(z(\chi))
+}
+\]
+
+where `z` maps the finite `chi` interval corresponding to `Lambda_M,NC^active` linearly to `[-1,1]`.
+
+This changes the approximation geometry without introducing a material-state partition.
+
+### Candidate C — degree-9 landmark Hermite polynomial in chi
+
+Values and tangents were enforced exactly at five material landmarks. The resulting global polynomial oscillated severely and is rejected.
+
+## 6. Executed material benchmark results
+
+### Direct lambda polynomial
+
+```text
+n=16: stress P95=2.0004% fc, max=8.4155% fc; tangent P95=13.4949% of initial tangent
+n=24: stress P95=0.9286% fc, max=5.4155% fc; tangent P95= 6.9042%
+n=32: stress P95=0.6004% fc, max=4.0395% fc; tangent P95= 6.4718%
+```
+
+### Compactified softsign coordinate
+
+```text
+n=16: stress P95=0.4118% fc, max=2.4134% fc; tangent P95=3.5923%
+n=24: stress P95=0.1276% fc, max=1.5627% fc; tangent P95=2.3531%
+n=32: stress P95=0.0692% fc, max=1.1274% fc; tangent P95=1.9274%
+```
+
+The local maximum tangent error remains much larger than P95 because the benchmark itself contains narrow transition ridges. Therefore `n=24` is retained only as the preferred **material representation screen candidate**, not as a production material law.
+
+### Landmark Hermite
+
+```text
+stress P95 = 278.871%
+stress max = 637.629%
+predicted stress range = [-2.858, 5.658] fc
+```
+
+Hence:
+
+```text
+LANDMARK_HERMITE_CHI_DEG9 = FAIL_SHAPE_OSCILLATION
+```
+
+## 7. Explicit n=24 compactified candidate coefficients
+
+For
+
+\[
+U_{24}(\lambda)=\sum_{j=0}^{24}a_jT_j(z(\chi)),
+\]
+
+the executed coefficients are
+
+```text
+[-0.38049750626801876,
+  0.46214650922308365,
+  0.16581119072094055,
+ -0.29885874435694976,
+  0.06595966423250248,
+ -0.007932761229459124,
+  0.04809867363422755,
+ -0.015510262890830547,
+ -0.0009227675022769609,
+ -0.017198305779106214,
+  0.007239746262201731,
+  0.002654531018208474,
+  0.008264778907591685,
+ -0.0038280445595166098,
+ -0.002091827649876472,
+ -0.003822952548261491,
+  0.0030487174840213623,
+  0.0022965627142429892,
+  0.002470546046856801,
+ -0.0017322946952345714,
+ -0.0012636996252178288,
+ -0.0007135708194736261,
+  0.0020709420416114193,
+  0.001625585937042219,
+  0.0015281764663161055]
+```
+
+These coefficients are **not production coefficients**. They belong to the frozen smooth benchmark screen only.
+
+## 8. Why compactification is a genuine complexity reduction
+
+`chi=lambda/sqrt(lambda^2+1)` generates only one quadratic algebraic extension. Any finite polynomial in `chi` remains in the same degree `<=2` scalar field; increasing polynomial degree does not increase the algebraic field degree.
+
+After the structural substitution
+
+\[
+\lambda_\pm=\mu\pm\sqrt{Q},
+\]
+
+the generic algebraic extension upper bound becomes `<=4`.
+
+R04 found the old `Pi+H1+H10` source-shaped `U` to have scalar upper degree `<=8` and structural upper degree `<=16`. Thus the compactified candidate lowers the algebraic nesting substantially.
+
+This is a representation reduction, not a new material theory.
+
+## 9. Relation to G27 production grammar
+
+G27 remains
+
+\[
+\boldsymbol\sigma
+=U(\mathbf E_u)+J_2[A(J_1,J_2)\mathbf I+B(J_1,J_2)\mathbf E_u].
+\]
+
+Production does **not** require permanent retention of the old source-shaped `C,T,T^8` primitive grammar. Those primitives remain benchmark/reference objects. R05 therefore focuses first on the compact uniaxial scalar master `U`; the low-parameter multiaxial interaction layer `A,B` remains a separate later material-closure task.
+
+## 10. R05 decision
+
+```text
+MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05
+= PASS_DOMAIN_AND_COMPACTIFICATION_SCREEN__HOLD_FINAL_NC_SCALAR
+
+MATERIAL_NATIVE_DOMAIN_CONTRACT = PASS
+GLOBAL_LAMBDA_POLYNOMIAL = NOT_PREFERRED
+LANDMARK_HERMITE_CHI_DEG9 = FAIL_SHAPE_OSCILLATION
+SOFTSIGN_DELTA1_N24 = PREFERRED_MATERIAL_SCREEN_CANDIDATE_NOT_PRODUCTION
+SOFTSIGN_DELTA1_N32 = DIAGNOSTIC_UPPER_ORDER_ONLY
+FINAL_NC_SCALAR_U = OPEN
+CASE21_PU = NOT_RUN
+SWARTZ24_PU = NOT_RUN
+ROUTE_SWITCH = NO
+```
+
+The final NC scalar stays open specifically because the deep-postpeak smooth-conservative closure has not yet been uniquely frozen on the newly correct material-native domain.
+
+## 11. Unique next task
+
+```text
+NC_POSTPEAK_SCALAR_CLOSURE_AND_SOFTSIGN_D15_KERNEL_PRECHECK_R06
+```
+
+R06 must do two things before any structural Pu calculation:
+
+1. freeze a low-parameter C1/C2 conservative NC postpeak scalar continuation consistent with the source peak/residual landmarks;
+2. substitute the compactified `P_n(chi)` representation into the Case21 invariant algebra and determine whether its degree-4 structural algebra reduces to finite D15/Beta or a genuinely small Carlson/Appell/other named kernel.
+
+If the compactified kernel again requires a large PF/ODE system, it fails Gate C immediately.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_MATERIAL_NATIVE_1D_PRIMITIVE_REFORMULATION_R05_results.json
+SIZE: 4523
+SHA256: 53bc91874e3398d0e77755d4b5598d576fabef12e545001eca425fa48677e675
+ENCODING: utf-8
+LINES: 57
+====================================================================================================
+{
+  "status": "PASS_DOMAIN_AND_COMPACTIFICATION_SCREEN__HOLD_FINAL_NC_SCALAR",
+  "domain_contract": {
+    "coordinate": "lambda = equivalent-uniaxial strain / eps_peak_compression, compression negative",
+    "symbolic_active_domain": "[-gamma2, alpha1*(rho/kappa)]",
+    "gamma2": 10.0,
+    "alpha1": 10.0,
+    "alpha2_project": 0.3,
+    "rho_ft_over_fc": 0.1,
+    "kappa_E0eps0_over_fc": 2.0005129533678754,
+    "xcr_rho_over_kappa": 0.04998717945397425,
+    "numeric_active_domain_for_current_NC_instance": [-10.0, 0.49987179453974245],
+    "status": "MATERIAL_SOURCE_NATIVE_ACTIVE_TRANSITION_DOMAIN_FROZEN_FOR_R05",
+    "structural_domain_role": "verification only after material qualification"
+  },
+  "postpeak_incompatibility": {
+    "lambda": -10.0,
+    "Saenz_continuation_sigma_over_fc": -0.1980605304506671,
+    "source_postcrush_residual_sigma_over_fc": -0.1,
+    "Saenz_magnitude_over_source_residual_magnitude": 1.980605304506671,
+    "decision": "pure Saenz continuation cannot define the final deep-postpeak material-native NC scalar target"
+  },
+  "candidate_metrics": [
+    {"candidate":"GLOBAL_CHEB_LAMBDA","degree":16,"stress_p95_abs_over_fc":0.020003648790507825,"stress_max_abs_over_fc":0.0841549847719022,"tangent_p95_abs_over_initial":0.1349489684781103,"tangent_max_abs_over_initial":0.5695339759391751},
+    {"candidate":"GLOBAL_CHEB_LAMBDA","degree":24,"stress_p95_abs_over_fc":0.009285801384994907,"stress_max_abs_over_fc":0.054155185247934584,"tangent_p95_abs_over_initial":0.06904155041769082,"tangent_max_abs_over_initial":0.7181336773254198},
+    {"candidate":"GLOBAL_CHEB_LAMBDA","degree":32,"stress_p95_abs_over_fc":0.006004310007142966,"stress_max_abs_over_fc":0.04039508984978507,"tangent_p95_abs_over_initial":0.06471799407494801,"tangent_max_abs_over_initial":0.8458617043335133},
+    {"candidate":"SOFTSIGN_CHEB_CHI_DELTA1","degree":16,"stress_p95_abs_over_fc":0.004117532357147735,"stress_max_abs_over_fc":0.02413430289905874,"tangent_p95_abs_over_initial":0.035922754869953236,"tangent_max_abs_over_initial":0.45308040052338566},
+    {"candidate":"SOFTSIGN_CHEB_CHI_DELTA1","degree":24,"stress_p95_abs_over_fc":0.0012764954701481868,"stress_max_abs_over_fc":0.015626766460405103,"tangent_p95_abs_over_initial":0.023530630771365274,"tangent_max_abs_over_initial":1.364619551434169},
+    {"candidate":"SOFTSIGN_CHEB_CHI_DELTA1","degree":32,"stress_p95_abs_over_fc":0.0006920794758508986,"stress_max_abs_over_fc":0.011274229087195747,"tangent_p95_abs_over_initial":0.019273952284580363,"tangent_max_abs_over_initial":0.7172193791489347},
+    {"candidate":"LANDMARK_HERMITE_CHI_DEG9","degree":9,"stress_p95_abs_over_fc":2.788711787644239,"stress_max_abs_over_fc":6.376294517409079,"tangent_p95_abs_over_initial":8.394681215916801,"tangent_max_abs_over_initial":13.002805805794642,"predicted_min_sigma_over_fc":-2.857961157676364,"predicted_max_sigma_over_fc":5.657605847651861}
+  ],
+  "preferred_candidate_definition": {
+    "chi": "lambda/sqrt(lambda^2+1)",
+    "z": "affine map from chi(active-domain endpoints) to [-1,1]",
+    "U24": "sum_j=0^24 a_j T_j(z)",
+    "identity": "benchmark representation only; not final NC production law"
+  },
+  "preferred_candidate_coefficients_n24": [-0.38049750626801876,0.46214650922308365,0.16581119072094055,-0.29885874435694976,0.06595966423250248,-0.007932761229459124,0.04809867363422755,-0.015510262890830547,-0.0009227675022769609,-0.017198305779106214,0.007239746262201731,0.002654531018208474,0.008264778907591685,-0.0038280445595166098,-0.002091827649876472,-0.003822952548261491,0.0030487174840213623,0.0022965627142429892,0.002470546046856801,-0.0017322946952345714,-0.0012636996252178288,-0.0007135708194736261,0.0020709420416114193,0.001625585937042219,0.0015281764663161055],
+  "algebraic_complexity": {
+    "softsign_scalar_field_degree_upper": 2,
+    "softsign_after_lambda_plus_minus_degree_upper": 4,
+    "old_source_shaped_U_scalar_degree_upper": 8,
+    "old_source_shaped_U_after_lambda_plus_minus_degree_upper": 16
+  },
+  "decision": {
+    "material_native_domain_contract": "PASS",
+    "final_NC_scalar_U": "OPEN",
+    "global_lambda_polynomial": "NOT_PREFERRED",
+    "landmark_Hermite": "FAIL_SHAPE_OSCILLATION",
+    "softsign_delta1_n24": "PREFERRED_MATERIAL_SCREEN_CANDIDATE_NOT_PRODUCTION",
+    "softsign_delta1_n32": "DIAGNOSTIC_UPPER_ORDER_ONLY",
+    "next_task": "NC_POSTPEAK_SCALAR_CLOSURE_AND_SOFTSIGN_D15_KERNEL_PRECHECK_R06",
+    "case21_Pu_run": false,
+    "swartz24_Pu_run": false,
+    "route_switch": false
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_20260810.md
+SIZE: 6319
+SHA256: c6ad686ec85a65744980451ce3f591c145bb77efe935342d455bf7efc11893d4
+ENCODING: utf-8
+LINES: 179
+====================================================================================================
+# NC ENERGY POTENTIAL + D15 FEASIBILITY GATE
+
+Date: 2026-08-10
+
+## Scope
+
+This execution implements ONLY the approved gate:
+
+1. material energy contract;
+2. one unified low-parameter potential concept;
+3. zero-spatial-quadrature / D15 closure test.
+
+NO Case21 ultimate-capacity solution is executed.
+NO Swartz24 calculation is executed.
+NO structural experimental capacity is used to select a material parameter.
+
+## Source boundary
+
+Nguyen Chapter 3 uses the equivalent-uniaxial-strain concept for undamaged biaxial concrete and explicitly distinguishes TT, TC, CC and crushed states. In TC, the compression capacity is reduced by the coexisting tensile strain. Therefore the original source is NOT silently relabelled as an exact scalar potential. The present energy potential is a controlled current-work replacement candidate for the project.
+
+## Material energy contract
+
+fc = 21.23 MPa
+E0 = 20321.0 MPa
+eps0 = 0.00209
+nu = 0.18
+kappa = 2.00051295336788
+
+Material spectral interval used by the gate:
+lambda in [-10.0, 0.499871794539742]
+
+Compression reference:
+- -10 <= lambda < -1: retained R06/R08 C2 postpeak;
+- -1 <= lambda < 0: retained Saenz branch.
+
+Tension:
+R08 tensile work is used as the neutral material-energy reference:
+
+Et_R08 = 0.0297423717751347
+
+The simple monotone saturation potential
+
+phi_t(lambda)
+= u_inf*lambda
+- u_inf^2/kappa * ln(1+kappa*lambda/u_inf)
+
+is required to preserve that material tensile work at lambda=0.499871794539742.
+
+This gives
+
+u_inf = 0.0742211076392931
+
+This number is obtained only from MATERIAL WORK. It is not fitted to Case21.
+
+## Candidate 1 — minimum anchor-exact global polynomial
+
+Stress grammar:
+
+u_A(lambda)
+= kappa lambda + sum_(n=2)^7 a_n lambda^n
+
+The six algebraic constants are uniquely determined by:
+- compression peak stress and zero tangent at lambda=-1;
+- compression residual and zero tangent at lambda=-10;
+- tension endpoint stress from the energy-equivalent saturation target;
+- total tensile work Et_R08.
+
+They are derived constants, NOT free material fitting parameters.
+
+a2..a7 =
+[-6.17386072034511 -5.24326704803289 13.07305520434379 13.28327445555494
+  2.24669642792592  0.10537055102603]
+
+Result:
+
+minimum stress inside material domain
+= -12965.289024 fc
+
+at lambda
+= -7.236296
+
+Therefore:
+
+ANCHOR_EXACT_LOW_PARAMETER_GLOBAL_POLYNOMIAL = FAIL
+
+The polynomial satisfies the anchors but oscillates catastrophically between them.
+
+## Candidate 2 — energy-first single global potential
+
+A single Chebyshev potential is used only as a diagnostic D15-compatible grammar:
+
+phi_N(lambda) = sum a_n T_n(xi(lambda))
+
+The fit objective uses MATERIAL potential values only.
+The following quantities are imposed exactly:
+- phi(0)=0;
+- u(0)=0;
+- u'(0)=kappa;
+- u(-1)=-1;
+- u'(-1)=0;
+- u(-10)=-0.10;
+- u'(-10)=0;
+- retained tensile work phi(lambda_hi)=Et_R08.
+
+Only N=8,10,12 are executed. Degree escalation stops at N=12.
+
+Metrics:
+
+ potential_max_abs  potential_p95_abs  stress_max_abs_fc  stress_p95_abs_fc  tangent_max_abs_normalized  tangent_p95_abs_normalized  max_spurious_tension_in_compression_fc  max_spurious_compression_in_tension_fc  compression_overshoot_beyond_fc  potential_degree_N  max_invariant_monomials_before_D15
+        135.055197         126.124869         105.476529          93.058239                   86.766694                   71.986324                              105.185120                                0.682103                        53.236538                   8                                  25
+          4.144058           3.491604           5.723855           4.761838                    9.910178                    8.354566                                5.533162                                0.748071                         4.331491                  10                                  36
+          0.231823           0.166272           0.879333           0.405728                    9.918593                    5.441321                                0.328363                                0.810240                         0.083387                  12                                  49
+
+At N=12 the potential itself is much closer to the reference, but differentiating that same potential still produces unacceptable stress/tangent errors and sign violations.
+
+Therefore:
+
+ENERGY_FIRST_LOW_ORDER_GLOBAL_POTENTIAL_N_LE_12 = FAIL
+
+## D15 closure
+
+For any finite polynomial potential p_N(Eu),
+
+Psi_N = fc eps0 tr[p_N(Eu)].
+
+For a 2x2 equivalent-uniaxial strain tensor Eu, Cayley-Hamilton gives
+
+Eu^2 - J1 Eu + J2 I = 0.
+
+Define s_n = tr(Eu^n). Then
+
+s_0=2,
+s_1=J1,
+s_n = J1 s_(n-1) - J2 s_(n-2).
+
+Therefore every tr(Eu^n) is a finite polynomial in J1,J2.
+
+After inserting the already-derived Case21 kinematics,
+
+J1 = I1(D,q,x,y,z),
+J2 = I2(D,q,x,y,z),
+
+each invariant monomial is a finite trigonometric-thickness polynomial and is exactly evaluable by D15 moments.
+
+Hence:
+
+D15_POLYNOMIAL_EXACT_CLOSURE = PASS
+FORMAL_SPATIAL_GAUSS = 0
+FORMAL_SPATIAL_SIMPSON = 0
+FORMAL_SPATIAL_ADAPTIVE_QUADRATURE = 0
+FORMAL_MATERIAL_POINT_GRID = 0
+
+Complexity:
+
+                candidate  potential_polynomial_degree  invariant_monomial_upper_count  formal_spatial_quadrature  D15_exact_closure
+       anchor_stress_deg7                            8                              25                          0               True
+ energy_potential_cheb_N8                            8                              25                          0               True
+energy_potential_cheb_N10                           10                              36                          0               True
+energy_potential_cheb_N12                           12                              49                          0               True
+
+## Gate decision
+
+The mathematical D15 closure works.
+
+The current low-parameter global-polynomial material potential does NOT.
+
+This is an important distinction:
+
+D15 feasibility = PASS
+material-potential adequacy = FAIL
+
+Overall:
+
+NC_ENERGY_POTENTIAL_AND_D15_FEASIBILITY_GATE = FAIL__STOP_AT_GATE
+
+No attempt is made to raise the global degree beyond N=12.
+No Case21 structural calculation follows.
+
+A future route, if explicitly approved by the user, must use a DIFFERENT low-parameter potential grammar and must prove zero-spatial-quadrature closure before any structural calculation.
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_FEASIBILITY_GATE_results.json
+SIZE: 3810
+SHA256: 367bdd7e3d5ee856d6351e5f8d7dff461a1214be506276bd6dc4e3f5b9ce4c50
+ENCODING: utf-8
+LINES: 58
+====================================================================================================
+{
+  "material_contract": {
+    "identity": "NC_ENERGY_REFERENCE_FOR_FEASIBILITY_GATE_ONLY",
+    "fc_MPa": 21.23,
+    "E0_MPa": 20321.0,
+    "eps0": 0.00209,
+    "nu": 0.18,
+    "kappa": 2.0005129533678754,
+    "material_lambda_domain": [-10.0, 0.49987179453974245],
+    "compression_reference": {
+      "-10_to_-1": "R06/R08 C2 source-faithful postpeak",
+      "-1_to_0": "Saenz branch",
+      "u(-10)": -0.09999999999999998,
+      "u'(-10)": -0.0,
+      "u(-1)": -1.0,
+      "u'(-1)": 0.0
+    },
+    "tension_energy_reference": {
+      "R08_tensile_work_dimensionless": 0.029742371775134682,
+      "energy_equivalent_saturation_uinf_over_fc": 0.07422110763929314,
+      "u(lambda_hi)": 0.06909295219715181,
+      "u'(lambda_hi)": 0.009550120841911912
+    }
+  },
+  "anchor_exact_candidate": {
+    "identity": "ANCHOR_EXACT_GLOBAL_STRESS_POLY_DEG7__REJECTED",
+    "derived_constants_a2_to_a7": [-6.173860720345113,-5.24326704803289,13.073055204343794,13.283274455554938,2.2466964279259174,0.10537055102603261],
+    "minimum_stress_over_domain_fc": -12965.289024389858,
+    "maximum_stress_over_domain_fc": 0.15112264351455057,
+    "lambda_at_minimum": -7.236295558455062,
+    "lambda_at_maximum": 0.15020858062087328,
+    "verdict": "FAIL_CATASTROPHIC_GLOBAL_OSCILLATION"
+  },
+  "energy_first_low_order_metrics": [
+    {"potential_degree_N":8,"potential_max_abs":135.055197,"potential_p95_abs":126.124869,"stress_max_abs_fc":105.476529,"stress_p95_abs_fc":93.058239,"tangent_max_abs_normalized":86.766694,"tangent_p95_abs_normalized":71.986324,"max_spurious_tension_in_compression_fc":105.185120,"max_spurious_compression_in_tension_fc":0.682103,"compression_overshoot_beyond_fc":53.236538,"max_invariant_monomials_before_D15":25},
+    {"potential_degree_N":10,"potential_max_abs":4.144058,"potential_p95_abs":3.491604,"stress_max_abs_fc":5.723855,"stress_p95_abs_fc":4.761838,"tangent_max_abs_normalized":9.910178,"tangent_p95_abs_normalized":8.354566,"max_spurious_tension_in_compression_fc":5.533162,"max_spurious_compression_in_tension_fc":0.748071,"compression_overshoot_beyond_fc":4.331491,"max_invariant_monomials_before_D15":36},
+    {"potential_degree_N":12,"potential_max_abs":0.231823,"potential_p95_abs":0.166272,"stress_max_abs_fc":0.879333,"stress_p95_abs_fc":0.405728,"tangent_max_abs_normalized":9.918593,"tangent_p95_abs_normalized":5.441321,"max_spurious_tension_in_compression_fc":0.328363,"max_spurious_compression_in_tension_fc":0.810240,"compression_overshoot_beyond_fc":0.083387,"max_invariant_monomials_before_D15":49}
+  ],
+  "d15_closure_complexity": [
+    {"candidate":"anchor_stress_deg7","potential_polynomial_degree":8,"invariant_monomial_upper_count":25,"formal_spatial_quadrature":0,"D15_exact_closure":true},
+    {"candidate":"energy_potential_cheb_N8","potential_polynomial_degree":8,"invariant_monomial_upper_count":25,"formal_spatial_quadrature":0,"D15_exact_closure":true},
+    {"candidate":"energy_potential_cheb_N10","potential_polynomial_degree":10,"invariant_monomial_upper_count":36,"formal_spatial_quadrature":0,"D15_exact_closure":true},
+    {"candidate":"energy_potential_cheb_N12","potential_polynomial_degree":12,"invariant_monomial_upper_count":49,"formal_spatial_quadrature":0,"D15_exact_closure":true}
+  ],
+  "gate_decision": {
+    "gate_name":"NC_ENERGY_POTENTIAL_AND_D15_FEASIBILITY_GATE",
+    "source_material_contract":"PASS",
+    "energy_equivalent_tension_preprocessing":"PASS",
+    "single_global_potential_concept":"PASS_IN_PRINCIPLE",
+    "D15_polynomial_exact_closure":"PASS",
+    "anchor_exact_low_parameter_global_polynomial":"FAIL",
+    "energy_first_low_order_global_potential_N8_N10_N12":"FAIL",
+    "formal_spatial_quadrature_used_in_structure":0,
+    "case21_executed":false,
+    "swartz24_executed":false,
+    "next_status":"STOP_AT_GATE"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_20260810.md
+SIZE: 6411
+SHA256: f0cfc4e8e1ad4149f754930cfb5cae38e68106f4da9ff997ab2e6e10c22e5667
+ENCODING: utf-8
+LINES: 250
+====================================================================================================
+# NZ-SCCM NC POSTPEAK SCALAR CLOSURE AND D15 PRECHECK R06
+
+**Date:** 2026-08-10
+
+## 1. Identity and source basis
+
+This is a continuation of the existing G18/G20/G27 unified current-map route. No 2D material refit, no spatial quadrature, no Case21/Swartz Pu calibration.
+
+Nguyen Eqs. 3.69–3.73 use a post-crushing bilinear law: `sigma=sigma_p` at `eps=eps_p`, linear descent to `0.1 sigma_p` at `eps=gamma2 eps_p`, followed by a residual plateau with zero tangent. Current source baseline uses `gamma2=10`.
+
+The exact source contains tangent jumps at the peak and residual onset. G20/G21 already authorize C1/C2 regularization for the memoryless analytic current surface.
+
+## 2. R06 C2 postpeak compression closure
+
+Use
+
+```text
+s=(-lambda-1)/9,      0<=s<=1
+sigma/fc=-1+0.9 q(s)
+```
+
+The exact Nguyen source branch is `q=s`.
+
+R06 retains that source line exactly except for two endpoint C2 bridges of width
+
+```text
+delta_s=0.05
+Delta_lambda=0.45 per endpoint
+```
+
+The normalized start bridge is
+
+```text
+g(tau)=3 tau^5-8 tau^4+6 tau^3
+```
+
+satisfying
+
+```text
+g(0)=g'(0)=g''(0)=0
+g(1)=1, g'(1)=1, g''(1)=0
+```
+
+and the end bridge is symmetric.
+
+The width was selected only by a material-level gate: local additional compression relative to the exact source line must remain <=1% fc.
+
+Executed values:
+
+```text
+max additional compression = 0.888889% fc
+max conservative reduction = 0.888889% fc
+U(-1)=-1
+U'(-1)=0
+U(-10)=-0.1
+U'(-10)=0
+```
+
+Therefore:
+
+```text
+NC_POSTPEAK_C2_SCALAR_TARGET = PASS
+```
+
+This C2 target is a material target for later unified compilation, not a runtime material-state branch.
+
+## 3. Full R06 scalar target used in representation screening
+
+```text
+[-10,-1]             R06 C2 source-faithful postcrush target
+[-1,0]               normalized Saenz compression skeleton
+[0,alpha1*xcr]       retained current smooth tensile benchmark
+```
+
+No structural Pu was used.
+
+## 4. Direct polynomial candidate
+
+A degree-64 direct polynomial in `lambda` is the first tested direct polynomial to satisfy the simple R06 material screen:
+
+```text
+max stress error              = 1.981970% fc
+stress P95                    = 0.185018% fc
+tangent P95                   = 3.365831% of initial tangent
+local tangent max             = 185.101% in narrow transition neighborhoods
+```
+
+The main advantage is formal: a polynomial scalar matrix function has guaranteed finite polynomial/Beta-D15 closure after invariant reduction.
+
+The main disadvantage is Gate-C footprint. Generic Cayley-Hamilton reduction of degree 64 produces:
+
+```text
+A(J1,J2) unique invariant pairs = 1025
+B(J1,J2) unique invariant pairs = 1056
+union unique (J1,J2) pairs      = 1088
+A+B pair count                   = 2081
+```
+
+Thus:
+
+```text
+GLOBAL_LAMBDA_N64 = PASS_MATERIAL_SCREEN / HOLD_GATE_C
+```
+
+## 5. Softsign compactification
+
+```text
+chi_s=lambda/sqrt(1+lambda^2)
+```
+
+At degree 48:
+
+```text
+max stress error = 0.988210% fc
+tangent P95      = 1.991297% of initial tangent
+```
+
+It reduces scalar approximation order, but direct D15 closure of the resulting algebraic degree-4 structural kernel has not been demonstrated.
+
+```text
+SOFTSIGN_N48 = PASS_MATERIAL_SCREEN / HOLD_KERNEL
+```
+
+## 6. Möbius compactification
+
+Define
+
+```text
+chi_M=lambda/(1-lambda)
+```
+
+with material pole `lambda_p=1`, which lies outside the current NC material-native tension domain (`lambda_M,max=0.49987179454`).
+
+For the 2x2 equivalent-uniaxial tensor `E`:
+
+\[
+\boxed{\chi_M(E)=E(I-E)^{-1}=\frac{E-J_2 I}{1-J_1+J_2}}
+\]
+
+Therefore the entire spectral denominator becomes one invariant scalar:
+
+\[
+\boxed{\Delta_M=1-J_1+J_2=(1-\lambda_+)(1-\lambda_-)}.
+\]
+
+On the full NC material square:
+
+```text
+Delta_M >= (1-lambda_M,max)^2 = 0.250128221897 > 0
+```
+
+so there is no pole inside the material-admissible domain and no eigenvalue-state partition is required.
+
+Material screens:
+
+```text
+Möbius n=24:
+  max stress error = 2.081055% fc
+  tangent P95      = 4.417013%
+
+Möbius n=48:
+  max stress error = 0.984912% fc
+  tangent P95      = 2.369704%
+```
+
+After Case21 substitution:
+
+\[
+\Delta_M=1-I_1+I_2=A_0(s,t)+A_1(s,t)\zeta+A_2(s,t)\zeta^2,
+\]
+
+where `s=sin^2 X`, `t=sin^2 Y`. Explicitly, with `r=sqrt(s t)`:
+
+```text
+A0 = -D^2 nu - D M nu s t + D M nu s + D M s t - D M t
+     - D nu + D + 2 M s t - M s - M t + 1
+
+A1 = B D nu r - B D r - B M r s - B M r t + 2 B M r - 2 B r
+
+A2 = B^2(s+t-1)
+```
+
+For fixed `s,t`, integer-power thickness integrals
+
+\[
+\int\frac{d\zeta}{(a+b\zeta+c\zeta^2)^m}
+\]
+
+are elementary-recursive and reduce to rational endpoint terms plus the `m=1` log/atan/artanh master.
+
+However, the remaining in-plane master contains the quadratic discriminant as a nontrivial polynomial in `s,t`. R06 has not proved a small Beta/Appell/Carlson closure.
+
+Therefore:
+
+```text
+MOBIUS_COMPACTIFICATION = PROMOTED_FOR_KERNEL_SCREEN
+MOBIUS_D15_KERNEL = HOLD_NOT_YET_CLOSED
+```
+
+## 7. R06 head-to-head interpretation
+
+```text
+Direct lambda polynomial:
+  integration identity = solved
+  material representation = acceptable at n=64
+  Gate C footprint = high
+
+Softsign:
+  material representation = efficient
+  exact structural kernel = unresolved
+
+Möbius:
+  no spectral square root in matrix form
+  one invariant denominator Delta_M
+  exact remaining 2D master = unresolved
+```
+
+There is no justification to choose a compiler from material error alone.
+
+## 8. Formal R06 decision
+
+```text
+R06 = PASS_POSTPEAK_C2__HOLD_FINAL_COMPILER
+NC_POSTPEAK_C2_SCALAR_TARGET = PASS
+GLOBAL_LAMBDA_N64 = PASS_MATERIAL_SCREEN / HOLD_GATE_C
+SOFTSIGN_N48 = PASS_MATERIAL_SCREEN / HOLD_KERNEL
+MOBIUS_N24_N48 = PROMISING / HOLD_KERNEL
+CASE21_PU = NOT_RUN
+SWARTZ24_PU = NOT_RUN
+ROUTE_SWITCH = NO
+```
+
+## 9. Next task
+
+```text
+R07_HEAD_TO_HEAD_KERNEL_COMPLEXITY_DECISION_GLOBAL_POLY64_VS_MOBIUS24
+```
+
+R07 is not allowed to fit a new material family. It must compare only two already executed candidates:
+
+1. degree-64 direct polynomial: exact moment recurrence and actual D15 operation/term footprint without naive full expansion;
+2. degree-24 Möbius: exact thickness elimination of `Delta_M^{-m}`, parity/symmetry reduction, then a hard classification of the remaining 2D master.
+
+Decision rule:
+
+```text
+if Möbius requires PF / large ODE / large master connection -> FAIL
+if direct polynomial has an auditable finite recurrence of acceptable size -> prefer direct polynomial
+otherwise HOLD and return to material target, not blind compiler search
+```
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_NC_POSTPEAK_SCALAR_CLOSURE_AND_D15_PRECHECK_R06_results.json
+SIZE: 2465
+SHA256: a104b30abf22c0663344ea637f480f8b80221c6e00663dbfdafbbc5a5a3f259e
+ENCODING: utf-8
+LINES: 66
+====================================================================================================
+{
+  "status": "PASS_POSTPEAK_C2__HOLD_FINAL_COMPILER",
+  "source_landmarks": {
+    "gamma2": 10.0,
+    "alpha1": 10.0,
+    "xcr": 0.04998717945397425,
+    "material_native_domain": [-10.0, 0.49987179453974245]
+  },
+  "postpeak_C2": {
+    "bridge_polynomial": "3*tau^5 - 8*tau^4 + 6*tau^3",
+    "delta_s": 0.05,
+    "bridge_width_lambda": 0.45,
+    "max_extra_compression_vs_source_over_fc": 0.00888888879999783,
+    "max_conservative_reduction_vs_source_over_fc": 0.008888888799997718,
+    "peak_endpoint": {"U": -1.0, "dU_dlambda": 0.0},
+    "residual_endpoint": {"U": -0.1, "dU_dlambda": 0.0}
+  },
+  "selected_candidates": {
+    "GLOBAL_LAMBDA_N64": {
+      "stress_p95_over_fc": 0.0018501811031416,
+      "stress_max_over_fc": 0.0198197023240438,
+      "tangent_p95_over_initial": 0.0336583139794768,
+      "tangent_max_over_initial": 1.851013858333645,
+      "kernel": "FINITE_POLYNOMIAL_D15_DIRECT",
+      "A_unique_invariant_pairs": 1025,
+      "B_unique_invariant_pairs": 1056,
+      "union_unique_invariant_pairs": 1088,
+      "status": "PASS_MATERIAL_SCREEN_HOLD_GATE_C"
+    },
+    "SOFTSIGN_N48": {
+      "stress_max_over_fc": 0.0098821038900422,
+      "tangent_p95_over_initial": 0.0199129653999401,
+      "kernel": "ALGEBRAIC_DEGREE4_NOT_CLOSED",
+      "status": "PASS_MATERIAL_SCREEN_HOLD_KERNEL"
+    },
+    "MOBIUS_N24": {
+      "stress_max_over_fc": 0.0208105530874105,
+      "tangent_p95_over_initial": 0.0441701317868899,
+      "kernel": "RATIONAL_INVARIANT_DENOMINATOR",
+      "status": "PROMISING_HOLD_KERNEL"
+    },
+    "MOBIUS_N48": {
+      "stress_max_over_fc": 0.0098491172020195,
+      "tangent_p95_over_initial": 0.0236970425125294,
+      "kernel": "RATIONAL_INVARIANT_DENOMINATOR",
+      "status": "PASS_MATERIAL_SCREEN_HOLD_KERNEL"
+    }
+  },
+  "mobius_identity": {
+    "scalar": "chi=lambda/(1-lambda)",
+    "matrix": "chi(E)=(E-J2 I)/(1-J1+J2)",
+    "Delta_M": "1-J1+J2=(1-lambda_plus)(1-lambda_minus)",
+    "material_square_lower_bound": 0.25012822189689765,
+    "Case21_form": "Delta_M=1-I1+I2=A0+A1*zeta+A2*zeta^2",
+    "thickness_integral": "elementary-recursive for integer denominator powers",
+    "remaining_2D_master": "NOT_YET_SMALL_NAMED_KERNEL_CLOSED"
+  },
+  "decision": {
+    "NC_POSTPEAK_C2_SCALAR_TARGET": "PASS",
+    "FINAL_NC_COMPILER": "OPEN",
+    "CASE21_PU": "NOT_RUN",
+    "SWARTZ24_PU": "NOT_RUN",
+    "ROUTE_SWITCH": false,
+    "NEXT": "R07_HEAD_TO_HEAD_KERNEL_COMPLEXITY_DECISION_GLOBAL_POLY64_VS_MOBIUS24"
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_CANONICAL_ERRATA_20260812.md
+SIZE: 1038
+SHA256: 829b184f860a3922630d0ff823418c8aa0964df149b7b3b6fb9a91bb42b3b27d
+ENCODING: utf-8
+LINES: 43
+====================================================================================================
+# ERRATA — NC-R1 FORMAL CLOSURE CANONICAL
+
+**Applies to:** `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md`
+
+This errata contains editorial-symbol corrections only; no equation, physics, compiler identity, D15 identity, root rule, or stability interpretation is changed.
+
+## Equation (29)
+
+Where the canonical file renders the three branch symbols as `\nu_1`, `\nu_2`, `\nu_r`, read them as the intended Roman stress-utilization symbols
+
+\[
+\boxed{
+u_{sm}(t)=
+\begin{cases}
+u_1(t/x_{cr}),&0\le t\le x_{cr},\\
+u_2[(t-x_{cr})/(9x_{cr})],&x_{cr}<t\le10x_{cr},\\
+u_r,&t>10x_{cr}.
+\end{cases}}
+\]
+
+with
+
+```text
+u_sm -> u_sm
+u_1  -> u_1
+u_2  -> u_2
+u_r  -> u_r
+```
+
+That is, the normative equation is
+
+\[
+\boxed{u_{sm}(t)=
+\begin{cases}u_1(t/x_{cr}),&0\le t\le x_{cr},\\u_2[(t-x_{cr})/(9x_{cr})],&x_{cr}<t\le10x_{cr},\\u_r,&t>10x_{cr}.
+\end{cases}}
+\]
+
+The definitions of `u_1`, `u_2`, and `u_r` are Equations (24), (27), and (26), respectively.
+
+```text
+ERRATA_IDENTITY = EDITORIAL_ONLY
+THEORY_CHANGE = NO
+```
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md
+SIZE: 61159
+SHA256: f4e6fb109e6d1f695feb40bbfa637f5433082aab85900569a7b32aad6d845801
+ENCODING: utf-8
+LINES: 1892
+====================================================================================================
+# NZ-SCCM NC + Rebar 正式闭合理论推导
+## 材料参数 → R10 → N48-C1/MM → Cayley–Hamilton → Nguyen 二阶连续完整半波 → D15 广义精确矩 → Rebar 闭合 → P、R_q、L → NC-R1 极限根
+
+**日期：2026-08-12**  
+**身份：CURRENT GOVERNING FORMAL THEORY-WRITING BASELINE — FORMAL CLOSURE**  
+**说明：本文件不建立新材料理论、不提高 N48 阶数、不增加空间积分点、不建立新求解器；只闭合独立审计暴露的正式表达、钢筋、D15 基、坐标重标度说明以及 Zhou current-tangent 审计接口。**
+
+---
+
+# 0 理论目标、核心思想与固定边界
+
+当前理论的核心目标是：在固定加载模式、固定边界条件和一个连续完整代表半波内，把连续材料—结构问题预先编译为有限解析系数，再由精确矩消去全部结构空间积分，使轴压极限承载力最终由两个广义变量 \(D,q\) 的有限低维方程直接确定，而不是依赖“空间积分点 + 材料点状态历史 + 加载步推进”的迭代体系。
+
+其主链为
+
+\[
+\boxed{
+\text{材料/几何输入}
+\rightarrow R10
+\rightarrow N48\text{-}C1/MM
+\rightarrow \mathrm{CH}
+\rightarrow \mathrm{Nguyen\ 二阶半波}
+\rightarrow \mathrm{D15\ 精确矩}
+\rightarrow P(D,q),R_q(D,q),L(D,q)
+\rightarrow P_u
+}
+\tag{1}
+\]
+
+式中，R10 表示当前冻结的普通混凝土 current material target；N48-C1/MM 表示 48 阶材料解析编译层；CH 表示二维 Cayley–Hamilton 张量降阶；Nguyen 二阶半波表示含初始缺陷的连续二阶运动学；D15 表示有限三角—厚度项的精确矩引擎；\(D\) 表示平均轴压广义变量；\(q\) 表示加载后附加挠曲无量纲幅值；\(P\) 表示轴向荷载观测量；\(R_q\) 表示与 \(q\) 共轭的广义平衡残量；\(L\) 表示 \(P\) 沿平衡支的切向驻值函数；\(P_u\) 表示 NC-R1 生产定义下的极限承载力。
+
+固定边界为
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+KINEMATICS = NGUYEN_SECOND_ORDER
+R10_MATERIAL_TARGET = FROZEN
+N48_ORDER = 48
+U_COMPILER  = N48-C1
+C_COMPILER  = N48-C1
+T7_COMPILER = N48-C1
+T_COMPILER  = N48-C1-CONSTRAINED-MINIMAX
+CAYLEY_HAMILTON = GOVERNING
+EXACT_MOMENT_ENGINE = D15_GENERAL_TRIG_MOMENTS
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+STRUCTURAL_CALIBRATION = NO
+```
+
+需要特别区分：本理论**不要求结构极限荷载通过加载步迭代得到**。材料解析系数一经按材料参数生成并冻结，结构层的 \(P,R_q,L\) 都是有限低维解析函数；联合根可以由 resultant、Gröbner/elimination、all-real-root isolation 或其他低维数学后端求取。某一数学后端内部是否使用 Newton/exchange 等数值迭代，不构成理论本身的“加载步/材料点迭代”，也不改变零正式空间离散身份。
+
+本文采用来源标签：
+
+```text
+[MATERIAL_INPUT]          材料基本输入
+[GEO_INPUT]               几何输入
+[R10_PROJECT_FROZEN]      当前项目冻结 R10 物理目标/常数
+[R10_DERIVED]             由 R10 关系确定
+[COMPILER_CONTRACT]       N48-C1/MM 材料编译合同
+[MATHEMATICAL_IDENTITY]   数学恒等式
+[NGUYEN_SOURCE]           Nguyen 二阶运动学/钢筋来源物理
+[D15_EXACT_MOMENT]        D15 历史精确三角矩
+[PROJECT_REBAR_MAPPING]   当前连续/弥散钢筋解析映射
+[NC_R1_GOVERNANCE]        NC-R1 根生产合同
+[ZHOU_SOURCE]             周思铭正交各向异性稳定刚度语言
+[PROJECT_ZHOU_AUDIT]      当前 current-tangent 的 Zhou-form 解析投影审计
+```
+
+---
+
+# 1 普通混凝土基本材料量
+
+普通混凝土输入为
+
+\[
+\boxed{f_c,\qquad E_0,\qquad \varepsilon_0,\qquad \nu}
+\tag{2}
+\]
+
+式中，\(f_c\) 为普通混凝土单轴抗压强度，单位 MPa，[MATERIAL_INPUT]；\(E_0\) 为初始弹性模量，单位 MPa，[MATERIAL_INPUT]；\(\varepsilon_0\) 为 R10 参考压缩应变，无量纲，[MATERIAL_INPUT]；\(\nu\) 为泊松比，无量纲，[MATERIAL_INPUT]。上述参数不得由板级 \(P_u\) 反标。
+
+定义
+
+\[
+\boxed{\kappa=\frac{E_0\varepsilon_0}{f_c}}
+\tag{3}
+\]
+
+式中，\(\kappa\) 为 R10 无量纲初始斜率，[R10_DERIVED]；其余符号见式（2）。
+
+当前 R10 拉伸强度尺度冻结为
+
+\[
+\boxed{\rho=0.1}
+\tag{4}
+\]
+
+式中，\(\rho\) 为相对于 \(f_c\) 的无量纲拉伸强度尺度，[R10_PROJECT_FROZEN]；它是材料层冻结量，不是结构折减系数。
+
+定义拉伸特征坐标
+
+\[
+\boxed{x_{cr}=\frac{\rho}{\kappa}}
+\tag{5}
+\]
+
+式中，\(x_{cr}\) 为无量纲拉伸特征应变坐标，[R10_DERIVED]；\(\rho\) 与 \(\kappa\) 分别由式（4）和式（3）确定。
+
+定义平滑尺度
+
+\[
+\boxed{\eta=\frac{x_{cr}}{20}}
+\tag{6}
+\]
+
+式中，\(\eta\) 为 R10 在零主等效应变附近使用的无量纲平滑尺度，[R10_DERIVED]。
+
+---
+
+# 2 物理应变与等效单轴应变张量
+
+二维物理面内应变张量为
+
+\[
+\boxed{
+\mathbf E=
+\begin{bmatrix}
+\varepsilon_x & \gamma_{xy}/2\\
+\gamma_{xy}/2 & \varepsilon_y
+\end{bmatrix}}
+\tag{7}
+\]
+
+式中，\(\mathbf E\) 为物理面内应变张量；\(\varepsilon_x,\varepsilon_y\) 分别为 \(x,y\) 方向法向应变；\(\gamma_{xy}\) 为工程剪应变，因此张量剪应变为 \(\gamma_{xy}/2\)。
+
+R10 等效单轴应变张量定义为
+
+\[
+\boxed{
+\mathbf E_u=
+\frac{(1-\nu)\mathbf E+\nu\operatorname{tr}(\mathbf E)\mathbf I}
+{1-\nu^2}}
+\tag{8}
+\]
+
+式中，\(\mathbf E_u\) 为等效单轴应变张量，[R10_PROJECT_FROZEN]；\(\operatorname{tr}(\mathbf E)=\varepsilon_x+\varepsilon_y\)；\(\mathbf I\) 为二维单位张量；\(\nu\) 见式（2）。
+
+定义无量纲等效应变张量
+
+\[
+\boxed{\mathbf X=\frac{\mathbf E_u}{\varepsilon_0}}
+\tag{9}
+\]
+
+式中，\(\mathbf X\) 为 R10 的无量纲二维等效应变张量，[R10_DERIVED]；\(\varepsilon_0\) 见式（2）。
+
+其分量为
+
+\[
+\boxed{
+X_{11}=\frac{\varepsilon_x+\nu\varepsilon_y}{(1-\nu^2)\varepsilon_0},
+\qquad
+X_{22}=\frac{\nu\varepsilon_x+\varepsilon_y}{(1-\nu^2)\varepsilon_0}}
+\tag{10}
+\]
+
+式中，\(X_{11},X_{22}\) 分别为 \(\mathbf X\) 的两个法向分量；其余符号见式（2）、（7）。
+
+剪切分量为
+
+\[
+\boxed{X_{12}=X_{21}=\frac{\gamma_{xy}}{2(1+\nu)\varepsilon_0}}
+\tag{11}
+\]
+
+式中，\(X_{12}\) 为等效应变张量的剪切分量；式中 2 来自工程剪应变与张量剪应变的换算。
+
+定义
+
+\[
+\boxed{
+\mu=\frac{X_{11}+X_{22}}2,
+\qquad
+\delta=\frac{X_{11}-X_{22}}2,
+\qquad
+r_X=\sqrt{\delta^2+X_{12}^2}}
+\tag{12}
+\]
+
+式中，\(\mu\) 为两个主值平均值；\(\delta\) 为两个法向分量半差；\(r_X\) 为二维对称张量主值半径，[MATHEMATICAL_IDENTITY]。
+
+两个主等效应变为
+
+\[
+\boxed{\lambda_\pm=\mu\pm r_X}
+\tag{13}
+\]
+
+式中，\(\lambda_+\) 与 \(\lambda_-\) 分别为 \(\mathbf X\) 的较大与较小主值，[MATHEMATICAL_IDENTITY]。
+
+---
+
+# 3 R10 平滑拉压坐标
+
+定义项目平滑单侧非负坐标
+
+\[
+\boxed{
+\Pi_\eta(z)=
+\frac{z^2\left(\sqrt{z^2+\eta^2}+z\right)}{2(z^2+\eta^2)}}
+\tag{14}
+\]
+
+式中，\(z\) 为任意无量纲主应变坐标；\(\Pi_\eta(z)\ge0\) 为 R10 项目定义的 smooth nonnegative one-sided coordinate，[R10_PROJECT_FROZEN]；\(\eta\) 见式（6）。其满足 \(\Pi_\eta(0)=0\)、\(\Pi_\eta'(0)=0\)，正大 \(z\) 时渐近于 \(z\)，负大 \(z\) 时趋近于 0。它**不宣称**是严格单调 softplus，也不要求 \(\Pi_\eta(z)-\Pi_\eta(-z)=z\)。
+
+对任一主值 \(\lambda\)，定义
+
+\[
+\boxed{c(\lambda)=\Pi_\eta(-\lambda),\qquad t(\lambda)=\Pi_\eta(\lambda)}
+\tag{15}
+\]
+
+式中，\(c(\lambda)\) 为平滑压缩坐标；\(t(\lambda)\) 为平滑拉伸坐标；二者均非负，[R10_DERIVED]。
+
+---
+
+# 4 R10 压缩 primitive
+
+定义
+
+\[
+\boxed{
+C(\lambda)=
+\frac{\kappa c(\lambda)}{1+(\kappa-2)c(\lambda)+c(\lambda)^2}}
+\tag{16}
+\]
+
+式中，\(C(\lambda)\) 为无量纲压缩 primitive，[R10_PROJECT_FROZEN]；\(\kappa\) 见式（3）；\(c(\lambda)\) 见式（15）。该式为材料目标，不由结构荷载识别。
+
+---
+
+# 5 Foster 源拉伸材料功与 R10 C2 重构
+
+定义拉伸材料坐标
+
+\[
+\boxed{r=\frac{t}{x_{cr}}}
+\tag{17}
+\]
+
+式中，\(r\) 为按 \(x_{cr}\) 归一化后的拉伸材料坐标；\(t\) 见式（15）；\(x_{cr}\) 见式（5）。
+
+冻结源参数为
+
+\[
+\boxed{m_t=-\frac7{90},\qquad \eta_r=0.05}
+\tag{18}
+\]
+
+式中，\(m_t\) 为 Foster 源下降段斜率参数；\(\eta_r\) 为源平滑铰宽度；二者均属于当前 source-informed/project-frozen 材料目标，[R10_PROJECT_FROZEN]。
+
+定义平滑铰函数
+
+\[
+\boxed{
+H(r,r_0)=
+\frac12\left[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}\right]
+-\frac12\left[-r_0+\sqrt{r_0^2+\eta_r^2}\right]}
+\tag{19}
+\]
+
+式中，\(H(r,r_0)\) 为源平滑铰函数；\(r_0\) 为铰中心，当前使用 \(r_0=1\) 与 \(r_0=10\)；\(\eta_r\) 见式（18）。
+
+Foster 源拉伸利用函数定义为
+
+\[
+\boxed{T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10)}
+\tag{20}
+\]
+
+式中，\(T_{src}\) 为源拉伸利用函数；\(m_t,H\) 分别见式（18）、（19）。
+
+源归一化拉应力为
+
+\[
+\boxed{u_{t,src}(t)=\rho\,T_{src}(t/x_{cr})}
+\tag{21}
+\]
+
+式中，\(u_{t,src}\) 为 Foster 源归一化拉应力；\(\rho\) 见式（4）；\(t/x_{cr}\) 即式（17）的 \(r\)。
+
+定义源材料功
+
+\[
+\boxed{
+W_{src}=\int_0^{10x_{cr}}u_{t,src}(t)\,dt
+=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr}
+\tag{22}
+\]
+
+式中，\(W_{src}\) 为一维材料坐标上的归一化拉伸材料功，[R10_DERIVED]；该积分不是 \(x,y,z\) 结构空间积分，不计入 formal spatial quadrature。
+
+定义上升段局部坐标
+
+\[
+\boxed{\tau=\frac{t}{x_{cr}},\qquad 0\le\tau\le1}
+\tag{23}
+\]
+
+式中，\(\tau\) 为 R10 C2 重构上升段局部坐标；\(t,x_{cr}\) 见式（15）、（5）。
+
+上升段为
+
+\[
+\boxed{
+u_1(\tau)=
+\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5}
+\tag{24}
+\]
+
+式中，\(u_1\) 为归一化拉应力上升段；\(h\) 为待由材料功闭合确定的峰值；\(\rho\) 见式（4）；\(\tau\) 见式（23）。该五次式满足零点/峰点所需的 C2 端点条件。
+
+定义下降段坐标
+
+\[
+\boxed{s=\frac{t-x_{cr}}{9x_{cr}},\qquad 0\le s\le1}
+\tag{25}
+\]
+
+式中，\(s\) 为 \(x_{cr}<t\le10x_{cr}\) 上的局部下降段坐标。
+
+冻结残余拉应力尺度
+
+\[
+\boxed{u_r=0.03}
+\tag{26}
+\]
+
+式中，\(u_r\) 为 \(t=10x_{cr}\) 及其后的归一化残余拉应力，[R10_PROJECT_FROZEN]。
+
+下降段为
+
+\[
+\boxed{u_2(s)=h+(u_r-h)(10s^3-15s^4+6s^5)}
+\tag{27}
+\]
+
+式中，\(u_2\) 为归一化拉应力下降段；\(h\) 为峰值；\(u_r\) 见式（26）；\(s\) 见式（25）。
+
+由材料功闭合得
+
+\[
+\boxed{h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)}
+\tag{28}
+\]
+
+式中，\(h\) 为 R10 拉伸峰值，[R10_DERIVED]；\(W_{src}\) 见式（22）；\(x_{cr}\) 见式（5）；\(\rho\) 见式（4）；\(u_r\) 见式（26）。该式只由材料功确定，不含板级 \(P_u\)。
+
+完整 R10 拉伸函数为
+
+\[
+\boxed{
+u_{sm}(t)=
+\begin{cases}
+u_1(t/x_{cr}),&0\le t\le x_{cr},\\[1mm]
+u_2[(t-x_{cr})/(9x_{cr})],&x_{cr}<t\le10x_{cr},\\[1mm]
+u_r,&t>10x_{cr}.
+\end{cases}}
+\tag{29}
+\]
+
+式中，\(u_{sm}\) 为 R10 C2 重构后的完整归一化拉应力；\(u_1,u_2,u_r\) 分别见式（24）、（27）、（26）。
+
+定义拉伸 primitive
+
+\[
+\boxed{T(\lambda)=\frac{u_{sm}[\Pi_\eta(\lambda)]}{\rho}}
+\tag{30}
+\]
+
+式中，\(T(\lambda)\) 为无量纲拉伸 primitive；\(u_{sm}\) 见式（29）；\(\Pi_\eta\) 见式（14）；\(\rho\) 见式（4）。
+
+定义独立七次 primitive
+
+\[
+\boxed{T^{(7)}(\lambda)=[T(\lambda)]^7}
+\tag{31}
+\]
+
+式中，\(T^{(7)}\) 为双拉相互作用使用的七次拉伸 primitive；正式编译时直接把闭式 \(T^7\) 作为独立一维目标。
+
+---
+
+# 6 R10 current master 与二维相互作用
+
+定义一维 current master
+
+\[
+\boxed{U(\lambda)=\kappa\lambda-C(\lambda)+\kappa c(\lambda)+\rho T(\lambda)-\kappa t(\lambda)}
+\tag{32}
+\]
+
+式中，\(U\) 为一维 current master；\(\kappa\) 见式（3）；\(C\) 见式（16）；\(c,t\) 见式（15）；\(T\) 见式（30）；\(\rho\) 见式（4）。
+
+双压相互作用系数冻结为
+
+\[
+\boxed{a_{cc}=0.1072329249362415}
+\tag{33}
+\]
+
+式中，\(a_{cc}\) 为 NC 双压低参数物理目标系数，[R10_PROJECT_FROZEN]。其项目来源身份为：使等双压目标点接触当前保守 CC 包络，同时保持单轴坐标轴不变的低参数二维物理目标；它**不是** Nguyen/Foster 原式中的直接常数，也**不是**用板级 \(P_u\) 反标得到的结构参数。
+
+双拉相互作用系数为
+
+\[
+\boxed{a_t=1-2^{-1/8}}
+\tag{34}
+\]
+
+式中，\(a_t\) 为 NC 双拉低参数物理目标系数，[R10_PROJECT_FROZEN]；该取值保持单轴轴线不变，并使等双拉目标按当前 \(p=8\) 包络衰减至 \(2^{-1/8}\) 的相应尺度。
+
+对 \(\lambda_\pm\) 分别计算 \(U_\pm,C_\pm,T_\pm\)，定义主方向无量纲应力
+
+\[
+\boxed{s_+=U_+-a_{cc}C_+^2C_-+C_+T_- -\rho a_tT_+T_-^8}
+\tag{35}
+\]
+
+式中，\(s_+\) 为较大主等效应变方向无量纲应力；\(U_+,C_+,T_+\) 表示把 \(\lambda_+\) 代入式（32）、（16）、（30）；\(C_-,T_-\) 为 \(\lambda_-\) 对应值；\(a_{cc},a_t,\rho\) 分别见式（33）、（34）、（4）。
+
+另一主方向为
+
+\[
+\boxed{s_-=U_- -a_{cc}C_-^2C_+ +C_-T_+ -\rho a_tT_-T_+^8}
+\tag{36}
+\]
+
+式中，\(s_-\) 为较小主等效应变方向无量纲应力；其余符号与式（35）同义并交换 \(+/-\) 下标。
+
+物理主应力为
+
+\[
+\boxed{\sigma_\pm=f_c s_\pm}
+\tag{37}
+\]
+
+式中，\(\sigma_\pm\) 为物理主应力，单位 MPa；\(f_c\) 见式（2）；\(s_\pm\) 见式（35）、（36）。
+
+R10 零点 C1 身份为
+
+\[
+\boxed{U(0)=0,\qquad U'(0)=\kappa}
+\tag{38}
+\]
+
+式中，撇号表示对真实材料坐标 \(\lambda\) 求导；\(\kappa\) 见式（3）。
+
+以及
+
+\[
+\boxed{C(0)=T(0)=T^{(7)}(0)=0}
+\tag{39}
+\]
+
+式中，\(C,T,T^{(7)}\) 分别见式（16）、（30）、（31）。
+
+一阶导数满足
+
+\[
+\boxed{C'(0)=T'(0)=[T^{(7)}]'(0)=0}
+\tag{40}
+\]
+
+式中，导数均相对于真实 \(\lambda\)；式（38）—（40）是 N48-C1/MM 的强制材料锚点。
+
+---
+
+# 7 N48 材料解析编译
+
+对每个具体材料/板合同，在任何结构根求取前冻结材料编译区间
+
+\[
+\boxed{\lambda\in[\lambda_a,\lambda_b],\qquad \lambda_a<\lambda_b}
+\tag{41}
+\]
+
+式中，\(\lambda_a,\lambda_b\) 分别为主等效应变编译域下、上界，[COMPILER_CONTRACT]；它们不得依据试验荷载或已知理论根事后调整。对新材料参数/新板，必须在结构求解前给定并通过完整连续域覆盖审计。
+
+定义
+
+\[
+\boxed{\lambda_c=\frac{\lambda_a+\lambda_b}{2},\qquad \lambda_h=\frac{\lambda_b-\lambda_a}{2}}
+\tag{42}
+\]
+
+式中，\(\lambda_c\) 为编译域中心；\(\lambda_h>0\) 为半宽。
+
+标准材料坐标为
+
+\[
+\boxed{\xi(\lambda)=\frac{\lambda-\lambda_c}{\lambda_h}\in[-1,1]}
+\tag{43}
+\]
+
+式中，\(\xi\) 为第一类 Chebyshev 多项式的标准材料自变量，[MATHEMATICAL_IDENTITY]。
+
+第一类 Chebyshev 多项式定义为
+
+\[
+\boxed{\mathcal C_n(\xi)=\cos[n\arccos(\xi)]}
+\tag{44}
+\]
+
+式中，\(n=0,\ldots,48\) 为材料解析阶次；\(\mathcal C_n\) 为第 \(n\) 阶第一类 Chebyshev 多项式。
+
+定义 49 个材料根坐标
+
+\[
+\boxed{\theta_j=\frac{(j+1/2)\pi}{49},\qquad \lambda_j=\lambda_c+\lambda_h\cos\theta_j,\quad j=0,\ldots,48}
+\tag{45}
+\]
+
+式中，\(j\) 为材料节点索引；\(\theta_j\) 为 Chebyshev 根角度；\(\lambda_j\) 为材料坐标。49 个 \(\lambda_j\) 不是结构空间点。
+
+对 \(F\in\{U,C,T,T^{(7)}\}\)，direct N48 系数为
+
+\[
+\boxed{a_n^{(F,0)}=\frac{2-\delta_{n0}}{49}\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j),\quad n=0,\ldots,48}
+\tag{46}
+\]
+
+式中，\(a_n^{(F,0)}\) 为 primitive \(F\) 的 direct N48 第 \(n\) 阶系数；\(\delta_{n0}\) 为 Kronecker delta；\(F(\lambda_j)\) 直接来自闭式 R10。
+
+对应基准多项式
+
+\[
+\boxed{F_{48}^{(0)}(\lambda)=\sum_{n=0}^{48}a_n^{(F,0)}\mathcal C_n[\xi(\lambda)]}
+\tag{47}
+\]
+
+式中，\(F_{48}^{(0)}\) 为 direct N48 基准表示；其当前用途是 C1/MM 的基准系数，不是最终 production tangent identity。
+
+---
+
+# 8 N48-C1 约束系数
+
+定义根点矩阵
+
+\[
+\boxed{V_{jn}=\cos(n\theta_j)}
+\tag{48}
+\]
+
+式中，\(\mathbf V\) 为 \(49\times49\) Chebyshev 根点矩阵；\(j,n=0,\ldots,48\)。
+
+由离散正交性
+
+\[
+\boxed{\mathbf H=\mathbf V^T\mathbf V=\operatorname{diag}\left(49,\frac{49}{2},\ldots,\frac{49}{2}\right)}
+\tag{49}
+\]
+
+式中，\(\mathbf H\) 为 N48-C1 的正定权矩阵，[MATHEMATICAL_IDENTITY]。
+
+其逆为
+
+\[
+\boxed{\mathbf H^{-1}=\frac1{49}\operatorname{diag}(1,2,\ldots,2)}
+\tag{50}
+\]
+
+式中，\(\mathbf H^{-1}\) 为式（49）的显式逆。
+
+零材料坐标在标准域的位置为
+
+\[
+\boxed{\xi_0=-\frac{\lambda_c}{\lambda_h}}
+\tag{51}
+\]
+
+式中，\(\xi_0=\xi(0)\)。
+
+C1 约束矩阵为
+
+\[
+\boxed{
+\mathbf G=
+\begin{bmatrix}
+\mathcal C_0(\xi_0)&\cdots&\mathcal C_{48}(\xi_0)\\
+\lambda_h^{-1}\mathcal C'_0(\xi_0)&\cdots&\lambda_h^{-1}\mathcal C'_{48}(\xi_0)
+\end{bmatrix}}
+\tag{52}
+\]
+
+式中，\(\mathbf G\) 为 \(2\times49\) 约束矩阵；第一行约束 \(F(0)\)；第二行约束真实材料导数 \(dF/d\lambda|_0\)；\(\lambda_h^{-1}\) 来自链式法则。
+
+目标向量为
+
+\[
+\boxed{\mathbf d_U=(0,\kappa)^T,\qquad \mathbf d_C=\mathbf d_T=\mathbf d_{T^{(7)}}=(0,0)^T}
+\tag{53}
+\]
+
+式中，\(\mathbf d_F\) 为 primitive \(F\) 在 \(\lambda=0\) 的函数值/一阶导数目标，直接来自式（38）—（40）。
+
+对 \(F\in\{U,C,T^{(7)}\}\)，最终 N48-C1 系数为
+
+\[
+\boxed{
+\mathbf a^{(F,C1)}=
+\mathbf a^{(F,0)}+
+\mathbf H^{-1}\mathbf G^T
+(\mathbf G\mathbf H^{-1}\mathbf G^T)^{-1}
+(\mathbf d_F-\mathbf G\mathbf a^{(F,0)})}
+\tag{54}
+\]
+
+式中，\(\mathbf a^{(F,C1)}\) 为 49 维最终 C1 系数；\(\mathbf a^{(F,0)}\) 来自式（46）；\(\mathbf H,\mathbf G,\mathbf d_F\) 分别见式（49）、（52）、（53）。由于 \(\mathbf H\) 正定且 \(\mathbf G\) 满行秩，该式是带等式约束的最小扰动二次问题唯一闭式解。
+
+---
+
+# 9 T constrained-minimax 的唯一生产系数闭合
+
+定义可行系数集合
+
+\[
+\boxed{\mathcal F_T=\{\mathbf a\in\mathbb R^{49}:\mathbf G\mathbf a=\mathbf d_T\}}
+\tag{55}
+\]
+
+式中，\(\mathcal F_T\) 为严格满足 \(T(0)=T'(0)=0\) 的所有 48 阶系数向量集合；\(\mathbf G,\mathbf d_T\) 见式（52）、（53）。
+
+对任意 \(\mathbf a\in\mathcal F_T\)，定义
+
+\[
+\boxed{p_{\mathbf a}(\lambda)=\sum_{n=0}^{48}a_n\mathcal C_n[\xi(\lambda)]}
+\tag{56}
+\]
+
+式中，\(p_{\mathbf a}\) 为系数向量 \(\mathbf a\) 对应的 48 阶材料多项式；\(a_n\) 为第 \(n\) 个系数；\(\mathcal C_n,\xi\) 见式（44）、（43）。
+
+主最小极大误差定义为
+
+\[
+\boxed{E_T^*=\min_{\mathbf a\in\mathcal F_T}\|p_{\mathbf a}-T_{R10}\|_{L^\infty([\lambda_a,\lambda_b])}}
+\tag{57}
+\]
+
+式中，\(E_T^*\) 为严格 C1 条件下当前 48 阶空间可达到的最小全域最大绝对误差；\(T_{R10}\) 为式（30）的闭式 R10 拉伸 primitive；\(L^\infty\) 表示编译域最大绝对范数。
+
+定义所有主最优解构成的集合
+
+\[
+\boxed{\mathcal S_T^*=\{\mathbf a\in\mathcal F_T:\|p_{\mathbf a}-T_{R10}\|_\infty=E_T^*\}}
+\tag{58}
+\]
+
+式中，\(\mathcal S_T^*\) 为 constrained-minimax 的最优解集合；它允许数学上存在多个等价主最优解。
+
+以式（54）同样生成的 \(\mathbf a^{(T,C1)}\) 作为唯一二级参考，最终生产系数定义为
+
+\[
+\boxed{
+\mathbf a^{(T,MM)}=
+\underset{\mathbf a\in\mathcal S_T^*}{\operatorname{argmin}}
+\frac12(\mathbf a-\mathbf a^{(T,C1)})^T\mathbf H(\mathbf a-\mathbf a^{(T,C1)})}
+\tag{59}
+\]
+
+式中，\(\mathbf a^{(T,MM)}\) 为最终唯一 T-minimax 系数；\(\mathbf a^{(T,C1)}\) 为 T 的 C1 最小扰动参考系数；\(\mathbf H\) 为式（49）的正定矩阵。由于 \(\mathcal S_T^*\) 为闭凸最优集合且二级目标严格凸，式（59）给出唯一生产系数。该二级选择不改变主 minimax 最优误差 \(E_T^*\)，不增加材料物理，也不提高阶数。
+
+最终四个系数身份为
+
+\[
+\boxed{
+\mathbf a^{(F,*)}=
+\begin{cases}
+\mathbf a^{(F,C1)},&F\in\{U,C,T^{(7)}\},\\
+\mathbf a^{(T,MM)},&F=T.
+\end{cases}}
+\tag{60}
+\]
+
+式中，上标 \((*)\) 表示当前 governing coefficient identity。
+
+最终一维解析 primitive 为
+
+\[
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F,*)}\mathcal C_n[\xi(\lambda)]}
+\tag{61}
+\]
+
+式中，\(F_{48}\) 为最终有限材料解析函数；\(a_n^{(F,*)}\) 见式（60）。
+
+当前材料编译审计至少报告
+
+\[
+\boxed{E_F^{(0)}=\|F_{48}-F_{R10}\|_{L^\infty([\lambda_a,\lambda_b])}}
+\tag{62}
+\]
+
+式中，\(E_F^{(0)}\) 为 primitive \(F\) 的全域值误差；它是材料表示审计量，不是结构拟合误差。
+
+并报告尺度化一阶误差
+
+\[
+\boxed{E_F^{(1)}=\lambda_h\|F'_{48}-F'_{R10}\|_{L^\infty([\lambda_a,\lambda_b])}}
+\tag{63}
+\]
+
+式中，\(E_F^{(1)}\) 为一阶材料切线误差的无量纲尺度化指标；\(\lambda_h\) 见式（42）。当前不追加未经审计的新全域硬阈值；保留已冻结的 C1 锚点、near-zero T value、O(1) coefficient、CH/D15 compatibility 与 Zhou-form tangent diagnostic gates，并对新 compiler 区间重新报告式（62）—（63）。
+
+---
+
+# 10 Cayley–Hamilton 二维提升
+
+定义标准化张量
+
+\[
+\boxed{\mathbf Y=\frac{\mathbf X-\lambda_c\mathbf I}{\lambda_h}}
+\tag{64}
+\]
+
+式中，\(\mathbf Y\) 为标准化二维等效应变张量；\(\mathbf X\) 见式（9）；\(\lambda_c,\lambda_h\) 见式（42）；\(\mathbf I\) 为二维单位张量。
+
+定义不变量
+
+\[
+\boxed{K_1=\operatorname{tr}(\mathbf Y),\qquad K_2=\det(\mathbf Y)}
+\tag{65}
+\]
+
+式中，\(K_1\) 为 \(\mathbf Y\) 的迹；\(K_2\) 为行列式，[MATHEMATICAL_IDENTITY]。
+
+二维 Cayley–Hamilton 恒等式为
+
+\[
+\boxed{\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=\mathbf0}
+\tag{66}
+\]
+
+式中，\(\mathbf0\) 为二维零张量。
+
+因此
+
+\[
+\boxed{\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y}
+\tag{67}
+\]
+
+式中，\(A_n=A_n(K_1,K_2)\)、\(B_n=B_n(K_1,K_2)\) 为第 \(n\) 阶 CH 标量系数。
+
+初值为
+
+\[
+\boxed{A_0=1,\ B_0=0,\qquad A_1=0,\ B_1=1}
+\tag{68}
+\]
+
+式中，\(A_0,B_0,A_1,B_1\) 分别对应 \(\mathcal C_0(\mathbf Y)=\mathbf I\) 与 \(\mathcal C_1(\mathbf Y)=\mathbf Y\)。
+
+递推为
+
+\[
+\boxed{A_{n+1}=-2K_2B_n-A_{n-1}}
+\tag{69}
+\]
+
+式中，\(A_{n+1}\) 为下一阶单位张量系数；\(K_2\) 见式（65）；\(B_n,A_{n-1}\) 为当前/前一阶系数。
+
+以及
+
+\[
+\boxed{B_{n+1}=2A_n+2K_1B_n-B_{n-1}}
+\tag{70}
+\]
+
+式中，\(B_{n+1}\) 为下一阶 \(\mathbf Y\) 系数；\(K_1\) 见式（65）；其余符号见式（67）—（69）。
+
+primitive \(F\) 的第 \(n\) 个 N48 系数进入二维张量的单项贡献为
+
+\[
+\boxed{\mathbf F_{48}^{(n)}=a_n^{(F,*)}(A_n\mathbf I+B_n\mathbf Y)}
+\tag{71}
+\]
+
+式中，\(\mathbf F_{48}^{(n)}\) 为第 \(n\) 项二维 primitive；\(a_n^{(F,*)}\) 见式（60）；\(A_n,B_n\) 见式（67）。
+
+全部求和
+
+\[
+\boxed{\mathbf F_{48}=\sum_{n=0}^{48}\mathbf F_{48}^{(n)}=A_F\mathbf I+B_F\mathbf Y}
+\tag{72}
+\]
+
+式中，\(\mathbf F_{48}\) 可依次代表 \(\mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\)；\(A_F=\sum a_n^{(F,*)}A_n\)，\(B_F=\sum a_n^{(F,*)}B_n\)。
+
+---
+
+# 11 二维 current stress tensor
+
+定义双压项
+
+\[
+\boxed{\mathbf{CC}=\det(\mathbf C)\,\mathbf C}
+\tag{73}
+\]
+
+式中，\(\mathbf{CC}\) 为双压相互作用张量；\(\mathbf C\) 为式（72）得到的二维压缩 primitive。
+
+定义拉压项
+
+\[
+\boxed{\mathbf{TC}=\mathbf C[\operatorname{tr}(\mathbf T)\mathbf I-\mathbf T]}
+\tag{74}
+\]
+
+式中，\(\mathbf{TC}\) 为拉压相互作用张量；\(\mathbf C,\mathbf T\) 分别为二维压缩/拉伸 primitive；\(\operatorname{tr}(\mathbf T)\) 为 \(\mathbf T\) 的迹。
+
+定义双拉项
+
+\[
+\boxed{\mathbf{TT}=\det(\mathbf T)[\operatorname{tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}]}
+\tag{75}
+\]
+
+式中，\(\mathbf{TT}\) 为双拉相互作用张量；\(\mathbf T^{(7)}\) 为独立编译的七次拉伸 primitive。
+
+无量纲 current stress tensor 为
+
+\[
+\boxed{\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}}
+\tag{76}
+\]
+
+式中，\(\mathbf S\) 为无量纲二维 current stress；\(\mathbf U,\mathbf{CC},\mathbf{TC},\mathbf{TT}\) 见式（72）—（75）；\(a_{cc},\rho,a_t\) 分别见式（33）、（4）、（34）。
+
+物理应力为
+
+\[
+\boxed{\boldsymbol\sigma=f_c\mathbf S}
+\tag{77}
+\]
+
+式中，\(\boldsymbol\sigma\) 为物理面内应力张量；\(f_c\) 见式（2）；\(\mathbf S\) 见式（76）。
+
+由于 \(\mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\) 均为同一 \(\mathbf Y\) 的多项式，它们两两可交换；式（73）—（77）与主值式（35）—（37）严格等价，并在重复特征值时保持方向无关。
+
+---
+
+# 12 Nguyen 二阶连续完整代表半波

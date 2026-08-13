@@ -1,0 +1,1789 @@
+- evidence identity: `PRIMARY_SOURCE / UNIAXIAL_MONOTONIC_DIRECT_TENSION`
+
+## Effective evidence retained
+
+The paper uses direct-tension testing and proposes an idealized tensile stress–strain model organized into three main regimes:
+
+`elastic -> strain-hardening -> strain-softening`, with the strain-softening regime further passing through peak -> localisation -> fibre pull-out decay.
+
+The source explicitly defines the elastic branch (Eq. 14):
+
+```text
+sigma_t(epsilon_t) = E_t * epsilon_t
+```
+
+for `epsilon_t <= epsilon_t,cr`.
+
+For the first strain-softening segment, from peak to localisation, Eq. (16) is:
+
+```text
+sigma_t(epsilon_t)
+= f_t,peak
++ (f_t,loc - f_t,peak)/(epsilon_t,loc - epsilon_t,peak)
+  * (epsilon_t - epsilon_t,peak)
+```
+
+for `epsilon_t,peak < epsilon_t <= epsilon_t,loc`.
+
+Beyond localisation the paper uses a decreasing exponential fibre-pullout relation, Eq. (17), with fitted coefficients `C1` and `C2`. Table 7 supplies the relevant fitted coefficients and goodness-of-fit for individual UHPC fibre series. `C1/C2` are therefore **material/fibre-series parameters**, not structure-level fitting coefficients.
+
+The paper also provides mechanics-/empirical-based predictive equations for effective cracking strength/strain, peak strength/strain, localisation strength/strain and tensile strain limit as functions of fibre characteristics/content. Table 6 contains the experimental tensile parameters by series.
+
+## 2%-fibre experimental evidence — Table 6
+
+The following values are source-table means, retained because the project repeatedly considers a 2% steel-fibre UHPC but has **not** frozen one fibre geometry as universally representative.
+
+| series | fibre system | Et (GPa) | ft,el (MPa) | ft,cr (MPa) | eps_t,cr (%) | ft,peak (MPa) | eps_t,peak (%) | ft,loc (MPa) | eps_t,loc (%) | eps_t,lim (%) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SL-2.0 | 2% straight | 47.8 | 9.6 | 9.8 | 0.041 | 11.6 | 0.386 | 9.9 | 0.619 | 0.752 |
+| HL-2.0 | 2% hooked-end | 48.9 | 10.1 | 10.3 | 0.040 | 11.4 | 0.664 | 10.8 | 0.855 | 0.990 |
+| SL-HL-2.0 | 1% straight + 1% hooked-end | 48.2 | 9.3 | 10.2 | 0.041 | 11.2 | 0.374 | 10.6 | 0.675 | 0.741 |
+
+These values show why the project must not silently collapse “2% steel fibre” into a single universal tensile law: peak strengths are relatively close, but peak/localisation strains and post-peak capacity differ materially with fibre geometry/hybridisation.
+
+## Constitutive-model parameters — Table 7
+
+The paper then feeds predictive/model parameters into its unified constitutive law. For the same 2% series:
+
+| series | Et (GPa) | eps_t,cr (%) | ft,cr (MPa) | eps_t,peak (%) | ft,peak (MPa) | eps_t,loc (%) | ft,loc (MPa) | eps_t,lim (%) | C1 | C2 | R2 for Eq.(17) fit |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SL-2.0 | 47.8 | 0.040 | 10.0 | 0.380 | 11.7 | 0.624 | 9.9 | 0.759 | 0.289 | 0.456 | 0.979 |
+| HL-2.0 | 49.0 | 0.042 | 10.3 | 0.674 | 11.1 | 0.872 | 10.8 | 1.000 | -1.092 | 0.401 | 0.987 |
+| SL-HL-2.0 | 48.3 | 0.042 | 10.1 | 0.380 | 11.0 | 0.690 | 10.7 | 0.741 | 0.326 | 0.403 | 0.976 |
+
+Important distinction: Table 6 contains measured/derived experimental tensile parameters; Table 7 contains the parameters used by the proposed constitutive model, including fitted Eq.(17) coefficients. The two tables must not be mixed without labeling.
+
+## Project consequence
+
+The old historical UHPC-C0 use of one 2%-fibre representative anchor remains a calculable baseline only. If a future production UHPC operator needs one fixed tensile branch, it must either:
+
+- specify the intended fibre system (SL / HL / hybrid) and use a source-consistent parameter set; or
+- explicitly define and justify a material-level representative/uncertainty rule.
+
+It may not choose the branch or interpolate its parameters by matching Case21, Swartz24 or UCFT structural ultimate loads.
+
+## USED FOR
+
+- selecting the physical form of the UHPC monotonic uniaxial tensile branch;
+- direct-tension crack/peak/localisation/softening source constraints;
+- fibre-series material parameters and trend checks;
+- preventing ordinary-concrete Foster tension-stiffening from being copied blindly into UHPC.
+
+## NOT USED FOR
+
+- full biaxial TC/TT/CC stress update;
+- arbitrary loading-history closure;
+- shear-transfer law;
+- triaxial failure surface;
+- calibration from Case21/Swartz/UCFT ultimate load.
+
+## Current identity
+
+`SOURCE_ONLY_FOR_UHPC_TENSION / HIGH_PRIORITY`
+
+Any project current-state simplification derived from this source must be labelled as a project transformation. Hiew's paper itself considers monotonic direct tension and does not by itself define the complete two-dimensional UHPC material operator.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Lee_2017_TC_validation.md
+SIZE: 2628
+SHA256: 2b00acf907e57a43cefd9636352d1005eff42d9da98f097fcd5034d865d19d8d
+ENCODING: utf-8
+LINES: 47
+====================================================================================================
+# Lee et al. 2017 — biaxial tension-compression validation evidence
+
+## Source identity
+
+- file: `Lee_2017_UHPFRC_biaxial_TC_30_panels.pdf`
+- ChatGPT File Library ID: `file_00000000ae4c8211812e4a9f0c2e3373`
+- paper: J.-H. Lee et al., *Biaxial tension–compression strength behaviour of UHPFRC in-plane elements*, Materials and Structures 50 (2017) 20.
+- DOI: `10.1617/s11527-016-0918-1`
+- evidence identity: `PRIMARY_SOURCE / TC_INDEPENDENT_VALIDATION`
+
+## Effective evidence retained
+
+The study tests 30 panel specimens under different transverse tensile strains using sequential tension-then-compression loading. The experimental program varies:
+
+- applied tensile strain (up to about 0.003 in the reported program);
+- fibre volume fraction (0, 1.0 or 1.5% depending on series);
+- concrete mix/compressive strength;
+- presence/absence of transverse bar reinforcement.
+
+The reported material-level findings include:
+
+- steel fibres materially increase tension-stiffening; the paper reports a tension-stiffening bond factor for fibre-reinforced UHPC roughly twice that of the non-fibre case in the studied configurations;
+- under the largest transverse tensile loading levels, UHPFRC compressive strength decreases by roughly 10–30%, while UHPC without fibres decreases by roughly 30–50%;
+- sequential loading is explicitly treated as a lower/conservative boundary for transverse-tension-induced compression reduction;
+- the test set is dominated by compression failure in the TC quadrant and does not span the complete tension-failure region.
+
+The paper also proposes schematic biaxial failure criteria, but those criteria combine the panel results with external references and assumptions needed to convert element response to material strength.
+
+## USED FOR
+
+- independent validation of TC compression-softening trends;
+- checking the beneficial effect of steel fibres on the transverse-tension penalty;
+- lower-bound/conservative sequential-loading evidence;
+- material-level range check for a future TC interaction law.
+
+## NOT USED FOR
+
+- direct transfer of the reported 10–30% reduction to a different 2%-fibre UHPC without qualification;
+- complete TT/CC/C3 constitutive closure;
+- arbitrary path update law;
+- exact current-operator coefficient fitting from structural ultimate loads.
+
+## Current identity
+
+`SOURCE_ONLY / INDEPENDENT_TC_VALIDATION`
+
+This is especially useful as an external check because its fibre contents, reinforcement configuration and loading protocol differ from the project's historical 2%-fibre UHPC-C0 baseline. That difference is evidence, not something to be erased by calibration.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Leutbecher_2020_DataS1_numeric_locator.md
+SIZE: 2462
+SHA256: 8d68a77d6403d3e408c63e12bc0b462efef756954b935e9adcace875b41a6cb5
+ENCODING: utf-8
+LINES: 54
+====================================================================================================
+# Leutbecher 2020 Data S1 — individual panel numeric evidence locator
+
+## Source identity
+
+- file: `Leutbecher_2020_DataS1_31_biaxial_tests.pdf`
+- ChatGPT File Library ID: `file_00000000e4a4820baf5e0f5aad438601`
+- role: supplementary primary data for the 31 panel tests evaluated in Leutbecher 2020.
+- parent paper DOI: `10.1002/suco.201900451`
+- evidence identity: `PRIMARY_SUPPLEMENTARY_NUMERIC_DATA`
+
+## Why the file is retained separately
+
+The main paper provides interpretation/modeling; Data S1 preserves specimen-level values and stress-strain diagrams. It should be used when numerical material identification or independent reprocessing is required, rather than fitting to figures reproduced in later papers.
+
+## Example source records confirming the data structure
+
+### Panel RC1-1 — no fibres, uniaxial compression reference
+
+- fibre content: none;
+- applied tensile strain: none;
+- maximum panel compressive stress `sigma_2,min = -131.1 MPa`;
+- concrete compressive stress `sigma_c2,min = -125.7 MPa`;
+- peak compressive strain `epsilon_2,min = -3.04 per mille`;
+- accompanying cylinder mean `fc,cyl = 135.8 MPa`, `Ec,cyl = 42,246 MPa`.
+
+### Panel MRC2-5 — fibre+bar TC example
+
+- fibre content `rho_f = 1.0% by volume`;
+- applied transverse tensile strain `epsilon_1,max = 2.54 per mille`;
+- nominal maximum tensile stress `sigma_1,max = 11.40 MPa`;
+- maximum panel compressive stress `sigma_2,min = -132.1 MPa`;
+- concrete compressive stress `sigma_c2,min = -125.4 MPa`;
+- peak compressive strain `epsilon_2,min = -3.85 per mille`;
+- accompanying cylinder mean `fc,cyl = 163.4 MPa`, `Ec,cyl = 44,565 MPa`.
+
+The complete 31-record supplementary file remains the authoritative numerical source. These examples are stored only to make the available variables and units immediately visible during future recovery.
+
+## USED FOR
+
+- specimen-level TC material identification;
+- direct re-evaluation of transverse-strain versus compression-strength/stiffness reduction;
+- separating fibre, bar and plain-UHPC series;
+- future material-level regression/qualification where justified.
+
+## NOT USED FOR
+
+- replacing the complete Data S1 file with these two examples;
+- structural Pu calibration;
+- claiming all 31 tests have identical material/fibre configuration;
+- general arbitrary-path closure without an explicit constitutive framework.
+
+## Current identity
+
+`PRIMARY_NUMERIC_DATA_LOCATOR / HIGH_PRIORITY_WHEN_PARAMETER_IDENTIFICATION_IS_REOPENED`
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Leutbecher_2020_TC_strength_stiffness.md
+SIZE: 2879
+SHA256: a54243f3e46bd1a6ef6914901fcc5b207c800c603a0488644d171eaa4ee9b586
+ENCODING: utf-8
+LINES: 53
+====================================================================================================
+# Leutbecher 2020 — TC compressive strength and stiffness evidence
+
+## Source identity
+
+- file: `Leutbecher_2020_UHPFRC_TC.pdf`
+- ChatGPT File Library ID: `file_00000000df84820bb12fe27517028963`
+- supplementary data file registered separately: `Leutbecher_2020_DataS1_31_biaxial_tests.pdf`, File Library ID `file_00000000e4a4820baf5e0f5aad438601`
+- paper: Torsten Leutbecher, *Structural behavior of ultra-high performance (fiber-reinforced) concrete compression struts subjected to transverse tension and cracking*, Structural Concrete 21 (2020) 2154–2167.
+- DOI: `10.1002/suco.201900451`
+- evidence identity: `PRIMARY_SOURCE / TC_STRENGTH_STIFFNESS_MODEL_EVIDENCE`
+
+## Effective evidence retained
+
+The paper re-evaluates biaxial UHP(FR)C panel tests to quantify not only compressive-strength reduction under transverse tension/cracking, but also reduction of compressive stiffness. This distinction is important because a constitutive operator needs more than a peak-strength envelope.
+
+The reported program contains 46 total panel tests, of which 31 are treated as relevant for compression-strut strength/stiffness evaluation. The relevant specimens include plain UHPC, fibre-only UHPFRC, bar-reinforced UHPC, and combined bar+fibre UHPFRC series.
+
+For the fibre-containing series reported in the article, the steel fibres are smooth straight fibres with approximately:
+
+- length `17 mm`;
+- diameter `0.15 mm`;
+- tensile strength about `2500 MPa`;
+- fibre volume fraction `1.0%`.
+
+The source conclusions/evidence emphasize:
+
+- transverse tension and cracks parallel to compression reduce compressive strength;
+- a pronounced reduction is already visible at small transverse tensile strain/crack width;
+- the reduction tends to stabilize at larger tensile strain;
+- compressive stiffness also decreases;
+- UHPFRC generally shows less reduction in strength and stiffness than plain UHPC;
+- a stress–strain modeling proposal is developed from the evaluated panel data.
+
+## USED FOR
+
+- TC compression-strength reduction evidence;
+- TC compressive-stiffness/tangent qualification;
+- material-level comparison between fibre and non-fibre UHPC;
+- identifying whether a future compact TC law captures the early reduction and later stabilization trend;
+- Data S1 as a high-value source of individual panel data when numerical identification is needed.
+
+## NOT USED FOR
+
+- direct parameter transfer to 2%-fibre UHPC without material qualification;
+- full tensile-direction stress, crack-shear, unloading/reloading or general path closure;
+- complete CC/TT/C3 law;
+- structural Pu calibration.
+
+## Current identity
+
+`SOURCE_ONLY / HIGH_PRIORITY_TC_STRENGTH_AND_STIFFNESS`
+
+This source is more informative than a strength envelope alone because it constrains both strength and stiffness, but it still does not by itself close the full two-dimensional material state/update problem.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Liu_2024_biaxial_strength_path.md
+SIZE: 3404
+SHA256: e678d38e000c1287503a41823e786c0e12c5a2b3b76bb4231cdf9b582c229fec
+ENCODING: utf-8
+LINES: 56
+====================================================================================================
+# Liu et al. 2024 — complete planar biaxial strength and path evidence
+
+## Source identity
+
+- file: `Liu_2024_UHPC_biaxial_full.pdf`
+- ChatGPT File Library ID: `file_0000000012988211ab7b3fbcacf060ab`
+- title: *Experimental study on the mechanical properties of non-reinforced UHPC element under biaxial stress states*
+- formal article identity recorded by the project: Construction and Building Materials 456 (2024) 139265; DOI `10.1016/j.conbuildmat.2024.139265`.
+- SSRN preprint locator: `https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4926706`
+- evidence identity: `PRIMARY_SOURCE / PLANAR_BIAXIAL_STRENGTH_AND_PATH`
+
+## Effective evidence retained
+
+The PBET program contains four categories of unreinforced UHPC planar tests:
+
+1. biaxial compression (CC);
+2. biaxial tension (TT);
+3. tension-compression with sequential loading (TC-SL);
+4. tension-compression with proportional loading (TC-PL).
+
+The preprint test matrix includes three CC specimens, two TT specimens, five sequential-TC specimens and four proportional-TC specimens used in the reported conclusions.
+
+### CC
+
+The paper reports biaxial compression strengthening relative to uniaxial compression. The improvement is limited near the equal-compression ratio and more pronounced for unequal compression ratios. A conservative piecewise CC strength envelope combines elliptic and parabolic forms.
+
+### TT
+
+The measured biaxial tensile peak stress is close to the uniaxial tensile strength. Unequal biaxial tension can show apparent strengthening, but the proposed design/strength envelope conservatively takes biaxial tensile strength as the uniaxial tensile strength.
+
+### TC and loading path
+
+The sequential path first establishes tensile stress and associated tensile stress/strain redistribution, holds the tension, and then applies compression to failure. The proportional path develops tension and compression together. The paper reports a significant loading-path effect: the sequential path generally produces a larger loss of compression capacity and is used as the conservative controlling path for the proposed TC envelope.
+
+The proposed TC strength envelope is piecewise: a low-compression segment controlled by tensile capacity and a descending segment toward the uniaxial compression point. The source therefore contains both **strength-interaction information** and explicit evidence that the same nominal biaxial stress quadrant cannot generally be represented without regard to loading path.
+
+## USED FOR
+
+- CC/TT/TC material-level strength-envelope qualification;
+- testing the sign and magnitude trend of a future two-dimensional interaction kernel;
+- explicit evidence that TC response/strength can be loading-path sensitive;
+- independent material-level check of any current-state approximation.
+
+## NOT USED FOR
+
+- direct identification of a unique arbitrary-path stress-strain operator;
+- replacing Hiew's direct-tension constitutive law;
+- supplying crack shear transfer, unloading/reloading, or crack closure;
+- multiplying the strength envelope directly into the current stress tensor without a declared constitutive derivation;
+- structural Pu calibration.
+
+## Current identity
+
+`SOURCE_ONLY_FOR_BIAXIAL_STRENGTH_AND_PATH_QUALIFICATION / HIGH_PRIORITY`
+
+The complete biaxial strength envelope is a failure/strength boundary. It is not by itself a complete constitutive mapping `sigma = M(epsilon,state)`.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/README.md
+SIZE: 2457
+SHA256: 6f1e3501f250d02846a6c179c46a34e49a88809a8f296b5f71aceeb3a43cf027
+ENCODING: utf-8
+LINES: 39
+====================================================================================================
+# UHPC core sources — effective evidence package
+
+This directory follows `EFFECTIVE_SOURCE_EXCERPT_POLICY.md`: preserve only material evidence that constrains the UHPC operator, plus precise source locators and non-use boundaries. It is **not** a full-PDF mirror.
+
+## Primary files in this package
+
+1. `Hiew_2024_direct_tension.md`
+   - direct tensile constitutive stages and source equations/parameter roles.
+2. `Liu_2024_biaxial_strength_path.md`
+   - CC/TT/TC planar strength tests, complete biaxial envelope and loading-path effect.
+3. `Lee_2017_TC_validation.md`
+   - independent 30-panel TC evidence for fibre tension-stiffening and compression-softening.
+4. `Leutbecher_2020_TC_strength_stiffness.md`
+   - independent panel evidence that transverse tension/cracking reduces both compressive strength and stiffness; source modeling role.
+5. `Shen_2020_TT_equi_biaxial.md`
+   - equi-biaxial tensile strength, elastic-limit and hardening-strain coordinates for TT qualification.
+6. `Diab_Ferche_2026_compression_softening_synthesis.md`
+   - cross-study UHPC compression-softening synthesis and `beta*f'c` modeling role.
+7. `FHWA_HRT_23_077_design_locator.md`
+   - official design/material-qualification terminology and parameter-range locator; auxiliary, not a replacement for material experiments.
+8. `TC_AND_MULTIAXIAL_CLOSURE_BOUNDARY.md`
+   - explicit list of what these sources do **not** close in the current project.
+
+## Governing interpretation
+
+These sources constrain different aspects of UHPC and must not be collapsed into one undocumented formula:
+
+- Hiew: **uniaxial monotonic direct tension**;
+- Liu 2024: **planar biaxial strength envelope + loading-path sensitivity**;
+- Lee 2017: **TC lower-bound / independent strength trend validation**;
+- Leutbecher 2020: **TC compressive-strength and stiffness reduction + model evidence**;
+- Shen 2020: **TT strain-coordinate qualification**;
+- Diab/Ferche 2026: **cross-study compression-softening synthesis**;
+- FHWA-HRT-23-077: **official design/material qualification boundary**;
+- Zhou / Wang thesis sources elsewhere in the repository: **triaxial/failure-surface qualification**.
+
+A complete production material operator still requires a declared mapping from current strain/state to full stress vector and a consistent tangent. A strength envelope alone is not that operator.
+
+No Case21/Swartz/UCFT structural ultimate load may be used to calibrate any coefficient in these source laws.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/Shen_2020_TT_equi_biaxial.md
+SIZE: 2053
+SHA256: 886816479e18a83cae15ab84dc2988d279f325160296a0927c3044aa849e4f4d
+ENCODING: utf-8
+LINES: 42
+====================================================================================================
+# Shen et al. 2020/2021 — equi-biaxial tensile evidence
+
+## Source identity
+
+- file: `Shen_2020_UHPFRC_equi_biaxial_tension.pdf`
+- ChatGPT File Library ID: `file_000000008170820baafcc59cc6a730fd`
+- title: *An analytical inverse analysis to determine equi-biaxial tensile properties of strain-hardening UHPFRC from ring-on-ring test*
+- Materials and Structures 53:123.
+- source locator: `https://link.springer.com/article/10.1617/s11527-020-01553-1`
+- evidence identity: `PRIMARY_SOURCE / TT_STRAIN_COORDINATE_QUALIFICATION`
+
+## Effective evidence retained
+
+The source derives equi-biaxial tensile properties by inverse analysis of ring-on-ring tests and independently derives uniaxial tensile properties from 4PBT for comparison.
+
+For the reported UHPFRC:
+
+- mean equi-biaxial elastic modulus: about `59,000 MPa`;
+- mean equi-biaxial elastic-limit stress: `9.14 MPa`;
+- mean equi-biaxial strain at end of hardening/localisation-related point: `1.27%`;
+- mean equi-biaxial tensile strength: `14.08 MPa`.
+
+The source comparison states that the equi-biaxial elastic-limit stress is about 18% lower than the corresponding uniaxial value (`11.16 MPa`), while equi-biaxial tensile strength is nearly equal to the uniaxial tensile strength (`13.99 MPa`). The equi-biaxial strain at the end of hardening is only about 28% of the reported uniaxial value.
+
+This is important because it provides **strain-coordinate evidence in the TT quadrant**, not only a strength-envelope point.
+
+## USED FOR
+
+- TT material-level qualification;
+- checking whether a future multidirectional tensile interaction law preserves near-uniaxial peak strength while reducing hardening strain capacity;
+- distinguishing strength interaction from deformation-capacity interaction.
+
+## NOT USED FOR
+
+- direct transfer of the reported numerical ratios to a different UHPC fibre system without qualification;
+- shear-transfer or arbitrary crack-history law;
+- full general TT tensor update;
+- structural Pu calibration.
+
+## Current identity
+
+`SOURCE_ONLY / HIGH_VALUE_TT_STRAIN_EVIDENCE`
+
+====================================================================================================
+FILE: evidence/materials/UHPC/core_sources/TC_AND_MULTIAXIAL_CLOSURE_BOUNDARY.md
+SIZE: 2915
+SHA256: 80f1d76da2d7194dbdaeab5600f67a921765bcfc64056eda3c2c85d90c8395c1
+ENCODING: utf-8
+LINES: 52
+====================================================================================================
+# UHPC TC / multiaxial closure boundary
+
+This file prevents an evidence-aggregation error: having Hiew + Liu + Lee + Leutbecher + triaxial strength sources does **not** automatically mean a complete UHPC production constitutive operator has been recovered.
+
+## What is already source-closed or strongly constrained
+
+Historical `D19_LIU_TC_CLOSURE_MATRIX.csv` records the Liu-2023 TC compression sub-branch as follows:
+
+- ascending compressive uniaxial backbone: `CLOSED`;
+- descending compressive backbone: `CLOSED`;
+- peak compressive stress softening: `CLOSED`;
+- peak compressive strain softening: `CLOSED`;
+- softened compressive stress–strain relation: `CLOSED`;
+- analytic `d sigma_c / d epsilon_c`: `CLOSED_DERIVED`;
+- analytic coupling `d sigma_c / d epsilon_r`: `CLOSED_DERIVED`.
+
+The four primary sources in this directory additionally constrain:
+
+- monotonic direct-tension shape and fibre parameters (Hiew);
+- planar CC/TT/TC strength and loading-path dependence (Liu 2024);
+- TC compression-softening lower-bound/trend data (Lee);
+- TC compressive-strength **and stiffness** reduction (Leutbecher).
+
+## What remains OPEN if a full 2D/history-capable material law is claimed
+
+The same historical closure audit explicitly leaves open:
+
+- tensile-direction stress law inside a complete TC vector update;
+- crack shear transfer `tau_12`;
+- tensile unloading/reloading and crack closure;
+- unique U -> TC entry continuity;
+- arbitrary biaxial loading-path validity;
+- complete TCX transition/history loop;
+- complete full TC state loop.
+
+The broader `UHPC_STATE_EQUATION_LEDGER.csv` also leaves general TT multidirectional coupling/shear/history incomplete and does not freeze a complete arbitrary-biaxial/3D CC/C3 stress–strain+tangent operator. Zhou-DP and Wang-Willam-Warnke evidence are retained as strength/failure qualifications rather than silently multiplied into a 2D current stress update.
+
+## Consequence for NZ-SCCM
+
+A project may deliberately define a reduced monotonic/current-state material operator for the present plate problem. If so, it must state the approximation explicitly and demonstrate material-level qualification against these sources. It must **not** claim that the original literature supplied a unique general memoryless `sigma = M(epsilon)` law.
+
+Likewise, a future history-capable operator must introduce its state variables/update law transparently rather than hiding them inside a fitted structural surrogate.
+
+## Structural calibration prohibition
+
+Neither route may use Case21, Swartz24 or UCFT ultimate load to identify the missing material mechanisms or coefficients. Structural tests are reserved for downstream validation of the already-defined material/structural operator.
+
+## Current status tag
+
+`UHPC_EVIDENCE_SET = STRONG_FOR_UNIAXIAL_TENSION + PLANAR_STRENGTH + TC_STRENGTH_STIFFNESS`
+
+`GENERAL_UHPC_2D_CONSTITUTIVE_OPERATOR = NOT_CLOSED_BY_SOURCES_ALONE`
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/G12_SOURCE_ROLE_LEDGER_RECOVERED.csv
+SIZE: 1562
+SHA256: e625dc51f72ab016f655dcfef336557c4560c787d0bc5b7c0893d6cfa41e0715
+ENCODING: utf-8
+LINES: 11
+====================================================================================================
+source,role,production_identity,notes
+Hu thesis 2% fiber UHPC,project material identity/parameter scale,SOURCE_MATERIAL_ANCHOR,"2% steel fiber; historical axial fc 136.9 MPa, ft 7.2 MPa, E 45.1 GPa; later project governance reopens all except user-required fc=141.1 MPa"
+Hiew 2024,uniaxial tensile shape and strain anchors,SOURCE_EXPLICIT_UNIAXIAL,"2% SL/HL/hybrid direct tension; amplitude transfer must be declared"
+Liu 2023,TC compression-softening comparison,SOURCE_EXPLICIT_TC,"zeta_sigma and zeta_epsilon relations; sequential/precracked evidence"
+Diab & Ferche 2026,smooth current TC interaction oracle,SOURCE_SYNTHESIS_ORACLE,"historical beta=(1+2500 eps_t)^(-0.20); floor handling must remain explicit"
+Leutbecher 2020 + Data S1,TC strength/stiffness validation,EXTERNAL_VALIDATION,"31 biaxial tests"
+Lee 2017,TC magnitude/shape validation,EXTERNAL_VALIDATION,"fibre-UHPC softening-magnitude check; 30 panel specimens"
+Liu 2024 CC/TT,biaxial peak stress + peak-strain qualification,SOURCE_BIAXIAL_PEAK_QUALIFICATION,"four PBET loading groups; prior missing-strain statement was retracted in historical G12"
+Liu 2024 proportional/sequential TC,loading-path effect and envelope validation,PATH_DEPENDENT_VALIDATION_ONLY,"not exact identity rows for a path-independent current map"
+Shen 2020,equi-biaxial tension ratio/strain evidence,EXTERNAL_VALIDATION,"different material/fibre system; ratio/trend evidence"
+FHWA HRT-23-077,qualification/design-domain boundary,DESIGN_BOUNDARY,"mixture-specific qualification; not a replacement for biaxial experiments"
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/G12_source_Diab_beta_table.csv
+SIZE: 373
+SHA256: 458472fe8c8774cb6d4a0b5bc760e3641938e57c498040e5c263680d8b41156d
+ENCODING: utf-8
+LINES: 9
+====================================================================================================
+eps_t,beta_smooth_raw,beta_reported_with_floor
+0.0,1.0,1.0
+0.00025,0.9074638365613298,0.9074638365613298
+0.0005,0.8502830004171938,0.8502830004171938
+0.001,0.7783705415511708,0.7783705415511708
+0.002,0.6988271187715792,0.6988271187715792
+0.0035,0.6341603382935574,0.6341603382935574
+0.005,0.5942008193220011,0.5942008193220011
+0.00752,0.5503854722862587,0.5503854722862587
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/G12_source_Hiew_2pct_summary.csv
+SIZE: 280
+SHA256: 4f1033535401607af59f7ff5d2310c61bf00d1507bccaf050e2adaee9ea9aa13
+ENCODING: utf-8
+LINES: 4
+====================================================================================================
+series,Vf_percent,Et_GPa,eps_cr_percent,f_cr_MPa,eps_peak_percent,f_peak_MPa,eps_loc_percent,f_loc_MPa,eps_lim_percent
+SL-2.0,2.0,47.8,0.04,10.0,0.38,11.7,0.624,9.9,0.759
+HL-2.0,2.0,49.0,0.042,10.3,0.674,11.1,0.872,10.8,1.0
+SL-HL-2.0,2.0,48.3,0.042,10.1,0.38,11.0,0.69,10.7,0.741
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/G12_source_Leutbecher_key_MRC2_biaxial.csv
+SIZE: 528
+SHA256: e44a744a5fb9bf34bf79ac21468fa53b7659d6d8acb133b6e7443d69728105fa
+ENCODING: utf-8
+LINES: 9
+====================================================================================================
+panel,applied_transverse_tensile_strain_per_mille,concrete_peak_compressive_stress_MPa,companion_cylinder_fc_MPa,strength_ratio,panel_E_GPa,cylinder_E_GPa,stiffness_ratio
+MRC2-1,0.65,-118.3,162.8,0.73,39.3,40.0,0.98
+MRC2-2,0.7,-140.3,167.7,0.84,43.7,45.7,0.96
+MRC2-3,0.77,-124.5,168.1,0.74,40.3,42.6,0.95
+MRC2-4,1.64,-129.8,167.7,0.77,40.2,45.7,0.88
+MRC2-5,2.54,-125.4,163.4,0.77,36.4,44.6,0.82
+MRC2-6,3.25,-120.7,163.4,0.74,35.8,44.6,0.8
+MRC2-7,2.0,-124.9,164.6,0.76,39.1,43.7,0.89
+MRC2-8,4.34,-114.2,168.1,0.68,31.2,42.6,0.73
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/G12_source_Liu2024_sequential_TC.csv
+SIZE: 452
+SHA256: 3780bff1994fe82bb46f28b22077de31aed39400043c08adbab40c8de1ca5544
+ENCODING: utf-8
+LINES: 6
+====================================================================================================
+specimen,peak_compressive_stress_MPa,peak_tensile_strain_microstrain,uniaxial_compressive_strength_MPa,reported_softening_coefficient,Table8_size_corrected_compression_coeff,Table8_size_corrected_tension_coeff
+US-TC-4.0,-98.28,5828,-127.09,0.773,-0.91,0.46
+US-TC-4.5,-74.46,6827,-122.11,0.609,-0.717,0.501
+US-TC-5.0,-75.7,4428,-132.64,0.571,-0.671,0.507
+US-TC-5.5,-80.1,10452,-142.61,0.562,-0.661,0.706
+US-TC-6.0,-70.1,13415,-141.56,0.495,-0.583,0.716
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/PRIMARY_SOURCE_LOCATOR_20260810.md
+SIZE: 6377
+SHA256: e8603ea068dee52a22dcc69c32ce0bdfcb034b0ade75106f748aa2f87a3187fa
+ENCODING: utf-8
+LINES: 58
+====================================================================================================
+# UHPC primary-source locator — 2026-08-10
+
+This file records File Library originals that are authoritative source documents but are not yet byte-exact binaries in this GitHub repository.
+
+Evidence rule: original PDF > extracted/search mirror > evidence note > project interpretation.
+
+| source | File Library ID | pages / identity recovered | role in project | current GitHub binary status | public locator |
+|---|---|---|---|---|---|
+| Hiew et al. 2024, *A unified tensile constitutive model for mono/hybrid fibre-reinforced UHPC* | `file_0000000087e882079606fbbb13dd1e2d` | 24 pages; Cement and Concrete Composites 150 (2024) 105553 | `SOURCE_EXPLICIT_UNIAXIAL`: tensile elastic -> strain-hardening -> peak -> localization -> fibre-pullout softening; 2% SL/HL/hybrid anchors | FILE_LIBRARY_ONLY | DOI `10.1016/j.cemconcomp.2024.105553`; Monash OA copy `https://research.monash.edu/files/599317955/589510091_oa.pdf` |
+| Liu et al. 2024, *Experimental study on the mechanical properties of non-reinforced UHPC element under biaxial stress states* | `file_0000000012988211ab7b3fbcacf060ab` | 37-page uploaded preprint; four PBET groups: CC, TT, sequential TC, proportional TC | `SOURCE_BIAXIAL_PEAK_QUALIFICATION` for CC/TT; `PATH_DEPENDENT_VALIDATION_ONLY` for proportional/sequential TC | FILE_LIBRARY_ONLY | DOI `10.1016/j.conbuildmat.2024.139265`; SSRN `https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4926706` |
+| Leutbecher 2020, *Structural behavior of UHP(FR)C compression struts subjected to transverse tension and cracking* | `file_00000000df84820bb12fe27517028963` | 14 pages; 31 relevant panel tests out of 46 total | `EXTERNAL_VALIDATION`: TC strength and stiffness; crack/transverse-strain dependence | FILE_LIBRARY_ONLY | DOI `10.1002/suco.201900451`; `https://onlinelibrary.wiley.com/doi/full/10.1002/suco.201900451` |
+| Leutbecher 2020 Data S1, 31 biaxial tests | `file_00000000e4a4820baf5e0f5aad438601` | uploaded supplementary PDF; exact original retained in File Library | `EXTERNAL_VALIDATION_DATA`: panel-level TC test ledger supporting source identification | FILE_LIBRARY_ONLY | Wiley supporting information linked from DOI `10.1002/suco.201900451` |
+| Lee et al. 2017, *Biaxial tension-compression strength behaviour of UHPFRC in-plane elements* | `file_00000000ae4c8211812e4a9f0c2e3373` | 17 pages; 30 panel specimens, five target transverse tensile strain levels per series | `EXTERNAL_VALIDATION`: TC softening magnitude/shape and fibre effect | FILE_LIBRARY_ONLY | DOI `10.1617/s11527-016-0918-1`; `https://link.springer.com/article/10.1617/s11527-016-0918-1` |
+| Shen et al. 2020, equi-biaxial tensile UHPFRC inverse analysis | `file_000000008170820baafcc59cc6a730fd` | 15 pages | `EXTERNAL_VALIDATION`: TT strain/strength ratio evidence; material/fibre system differs from project UHPC | FILE_LIBRARY_ONLY | DOI/source page `https://link.springer.com/article/10.1617/s11527-020-01553-1` |
+| Diab & Ferche 2026, UHPC compression-softening synthesis | `file_00000000438882118a44003e65279d5b` | uploaded OA article | `SOURCE_SYNTHESIS_ORACLE`: smooth TC interaction synthesis; not an original two-dimensional panel campaign | FILE_LIBRARY_ONLY | DOI `10.1002/suco.70191`; author OA PDF retained in source registry |
+| FHWA-HRT-23-077, *Structural Design with Ultra-High Performance Concrete* | `file_000000002fac820ba9e9f5aed3ca142e` | uploaded official report | `DESIGN_BOUNDARY`: qualification/design limits, not substitute for biaxial test evidence | FILE_LIBRARY_ONLY | `https://highways.dot.gov/sites/fhwa.dot.gov/files/FHWA-HRT-23-077.pdf` |
+
+## Recovered source-specific anchors
+
+### Hiew 2024 — 2% fibre rows used historically
+
+The uploaded original contains Table 6 with the complete tensile parameter family. Historical G12 extraction retained the following 2% fibre summaries:
+
+```text
+series,Vf_percent,Et_GPa,eps_cr_percent,f_cr_MPa,eps_peak_percent,f_peak_MPa,eps_loc_percent,f_loc_MPa,eps_lim_percent
+SL-2.0,2.0,47.8,0.040,10.0,0.380,11.7,0.624,9.9,0.759
+HL-2.0,2.0,49.0,0.042,10.3,0.674,11.1,0.872,10.8,1.000
+SL-HL-2.0,2.0,48.3,0.042,10.1,0.380,11.0,0.690,10.7,0.741
+```
+
+These are source anchors, not a permanent project parameter freeze. Project governance later retained only the user-required `fc = 141.1 MPa` as mandatory UHPC strength input; other UHPC parameters remain source-revisable.
+
+### Liu 2024 — experimental identity
+
+The uploaded preprint explicitly contains four test groups:
+
+- CC proportional loading;
+- TT proportional loading;
+- TC sequential loading (first tension, hold tension, then increase compression);
+- TC proportional loading.
+
+The source states that TC strength is strongly affected by loading path. Therefore sequential/proportional TC rows cannot be promoted to exact identity constraints for a path-independent current map without an explicit modelling decision.
+
+### Leutbecher 2020
+
+The paper reports 31 relevant panel tests divided into C, FRC, RC and MRC series. For the reinforced series, transverse tensile strain is a key variable and both compressive strength and stiffness reduction are reported. This source is retained as validation evidence and as a check against over-aggressive UHPC TC interaction laws.
+
+### Lee 2017
+
+The uploaded source tests 30 panel specimens under sequential tension-then-compression loading. It reports substantially less compression-softening for fibre-reinforced UHPFRC than for fibre-free UHPC at high transverse tensile loading. The project uses this as an independent magnitude/shape check, not as the sole constitutive law.
+
+### Shen 2020
+
+The uploaded source provides equi-biaxial tensile stress/strain evidence. Historical extracted averages include approximately 59 GPa equi-biaxial elastic modulus, 9.14 MPa elastic-limit stress, 1.27% strain at end of hardening and 14.08 MPa tensile strength for that UHPFRC system. Because the material system differs, these are validation ratios/trends rather than direct project UHPC parameter identities.
+
+## Migration boundary
+
+None of the above File-Library-only PDFs is claimed here as a GitHub byte-exact binary. Their exact File Library IDs are retained so future ChatGPT sessions can recover the original upload. If a proper binary Git push/upload channel becomes available, the PDF itself should be copied under `sources/UHPC/` and its SHA-256 recorded without overwriting this locator history.
+
+====================================================================================================
+FILE: evidence/materials/UHPC/source_data/README.md
+SIZE: 2091
+SHA256: d90683541696aa5608abb7239dd704e6fc1a1d85b9ffd1c784b13ca358b63b8a
+ENCODING: utf-8
+LINES: 31
+====================================================================================================
+# UHPC source-data provenance
+
+This directory contains **source locators and historical extracted datasets**, not the authoritative PDF originals and not a frozen production constitutive model.
+
+Evidence order:
+
+`original PDF > mechanically/reproducibly extracted source table > source-role ledger > project interpretation > historical fitted/current operator`.
+
+## Historical G12 extracted datasets
+
+The following small CSV files were recovered from the original 2026-08-07 G12 execution trail and are archived here without silently converting them into current model parameters:
+
+- `G12_source_Hiew_2pct_summary.csv`
+- `G12_source_Leutbecher_key_MRC2_biaxial.csv`
+- `G12_source_Liu2024_sequential_TC.csv`
+- `G12_source_Diab_beta_table.csv`
+- `G12_SOURCE_ROLE_LEDGER_RECOVERED.csv`
+
+The corresponding PDF/File-Library identities are recorded in `PRIMARY_SOURCE_LOCATOR_20260810.md`.
+
+## Critical modelling boundaries
+
+1. **Hiew 2024** rows are direct-tension source anchors. They do not permanently freeze project `Ec`, `ft`, peak strain, localization strain or tensile limit.
+2. **Liu 2024 sequential TC** rows are loading-path-dependent evidence. They must not be imposed as exact pointwise constraints on a path-independent current-state map without an explicit modelling decision.
+3. **Leutbecher** rows are external TC strength/stiffness validation data from a different specimen/material setup.
+4. **Diab/Ferche beta** is a historical synthesis-oracle table. Its use in a later smooth current operator is a modelling choice, not an original experimental constitutive identity.
+5. The historical `G12_source_Liu2024_peak_coordinates.csv` is **not archived yet** because only partial rows have been recovered in the current session. No incomplete reconstruction will be presented as the original file.
+
+## Current UHPC parameter governance
+
+Only the user-required project compressive strength `fc = 141.1 MPa` is mandatory. Previously paired `Ec`, `eps_c0`, `ft`, `nu` values are not immutable and may be replaced when the selected UHPC constitutive framework/source chain requires it.
+
+====================================================================================================
+FILE: evidence/mathematics/NZ_SCCM_R04_NAMED_KERNEL_AND_MATRIX_FUNCTION_EVIDENCE_20260810.md
+SIZE: 2667
+SHA256: 101f1500845237b18fc1eb741c6b3cb88fa275690df93a0f779f9d53b083a0ed
+ENCODING: utf-8
+LINES: 53
+====================================================================================================
+# NZ-SCCM R04 NAMED KERNEL AND MATRIX-FUNCTION EVIDENCE — 2026-08-10
+
+## 1. Purpose
+
+Support the R04 classification of which mature special-function families are genuinely relevant to the existing G18/G20/G27 + D15 mainline.
+
+This note does not authorize a route switch and does not grant a named special function production status unless the actual reduced NZ-SCCM kernel matches its algebraic class.
+
+## 2. Appell F1
+
+NIST DLMF §16.15 gives the Euler integral representation of the Appell F1 two-variable hypergeometric function. This supports the previously verified master kernel for denominators reducible to a bilinear `sin^2` form such as
+
+```text
+1/(a+b sin^2 X+c sin^2 Y+d sin^2 X sin^2 Y).
+```
+
+R03 already numerically cross-checked one representative Appell F1 master value to approximately machine precision with an independent audit-only quadrature.
+
+R04 restriction: the exact `Pi_eta + H1 + H10` source-shaped tensile tower does not generically reduce to this Appell class.
+
+## 3. Carlson symmetric elliptic integrals
+
+NIST DLMF Chapter 19, especially §19.36, describes stable computation of Carlson symmetric elliptic integrals and the duplication method. Repeated duplication reduces variable differences by factors of four before evaluation of a fixed polynomial expansion.
+
+This makes `RF`, `RD`, `RJ` attractive as stable numerical backends for **named exact genus-1 kernels**.
+
+R04 restriction: they do not provide a generic wrapper for nested radical towers of algebraic degree far above one cubic/quartic square-root extension.
+
+## 4. 2x2 matrix functions
+
+Higham and Al-Mohy, *Computing Matrix Functions*, Acta Numerica 19 (2010), provides the general matrix-function framework and numerical theory relevant to stable evaluation and Frechet derivatives.
+
+For the present 2x2 symmetric tensor, the project uses the coalescence-safe form
+
+```text
+X = mu I + Y,   Y^2 = r_s^2 I
+f(X)=f_e I+f_o Y
+f_e=[f(mu+r_s)+f(mu-r_s)]/2
+f_o=[f(mu+r_s)-f(mu-r_s)]/(2 r_s) -> f'(mu)
+```
+
+This is a spectral reconstruction device. It prevents artificial singularity when principal values coalesce, but it does not by itself perform the whole-halfwave structural integration.
+
+## 5. R04 evidence conclusion
+
+```text
+Appell F1 = DIRECT KERNEL ONLY WHEN ACTUAL DENOMINATOR MATCHES
+Carlson RF/RD/RJ = DIRECT KERNEL ONLY FOR ELLIPTIC/GENUS-1 REDUCTIONS
+2x2 matrix functions = STABLE SPECTRAL RECONSTRUCTION SUPPORT
+FULL SOURCE PI+H1+H10 TOWER = NO GENERIC SMALL NAMED-KERNEL CLOSURE FOUND
+```
+
+Therefore R04 returns the main difficulty to one-dimensional material scalar design on the material-native domain instead of expanding the spatial integration machinery.
+
+====================================================================================================
+FILE: evidence/mathematics/NZ_SCCM_SPECIAL_FUNCTION_AND_SADDLE_SURFACE_RESEARCH_R03_20260810.md
+SIZE: 5757
+SHA256: ab2952c573406d048c375201bde4b97c01683372f72b925f13028266e8a841a0
+ENCODING: utf-8
+LINES: 112
+====================================================================================================
+# NZ-SCCM R03 — Saddle-like geometry, matrix functions, special functions, and stable exact kernels
+
+## Scope
+This note records external mathematical research used only to interpret and extend the existing G18/G20/G27 current-map + D15 mainline. It does not authorize a route switch.
+
+## 1. Is the current stress surface a saddle surface?
+R03 directly computed the Hessian determinant of the current reference principal surface `s1(lambda1,lambda2)` on a material-coordinate rectangle. About 30.6% of the inspected interior points had `det(H)<0`, so there are substantial locally saddle-like regions. However, the same surface also contains mostly convex-like regions and small concave-like regions. It is therefore not a single global hyperbolic paraboloid.
+
+Conclusion: the visual resemblance to a saddle is geometrically meaningful locally, but it is not by itself an integration theorem.
+
+## 2. Stronger result than “saddle-like”: exact separability
+The source-shaped reference map already has an exact separated form:
+
+```text
+s_plus = U(lambda_plus)
+         - a_cc C(lambda_plus)^2 C(lambda_minus)
+         + C(lambda_plus) T(lambda_minus)
+         - rho a_t T(lambda_plus) T(lambda_minus)^8
+```
+
+with the symmetric expression for `s_minus`.
+
+Hence each principal stress surface has separated rank <=4 exactly. The numerical SVD is only a confirmation; generic 2D surface fitting is unnecessary for this reference architecture.
+
+This is the most important dimensional-reduction result of R03.
+
+## 3. 2x2 matrix-function representation
+For a symmetric 2x2 equivalent-uniaxial tensor
+
+```text
+X = mu I + Y,     Y^2 = r_s^2 I
+```
+
+any scalar matrix function can be written
+
+```text
+f(X) = f_e(mu,r_s) I + f_o(mu,r_s) Y
+```
+
+where
+
+```text
+f_e = [f(mu+r_s)+f(mu-r_s)]/2
+f_o = [f(mu+r_s)-f(mu-r_s)]/(2 r_s)
+f_o -> f'(mu) as r_s -> 0
+```
+
+This is the natural coalescence-safe divided-difference/Cayley-Hamilton representation. It removes any need to introduce a material state switch when two principal values approach each other.
+
+Primary references:
+- N. J. Higham, “Functions of Matrices,” Handbook of Linear Algebra, 2014.
+- N. J. Higham and A. H. Al-Mohy, “Computing Matrix Functions,” Acta Numerica 19 (2010), 159–208.
+
+## 4. Appell F1 exact master integral already matches an NZ-SCCM kernel class
+For
+
+```text
+D(X,Y)=a+b sin^2 X+c sin^2 Y+d sin^2 X sin^2 Y
+```
+
+the whole-domain integral is
+
+```text
+M(a,b,c,d)
+= pi^2 / sqrt[a(a+b)]
+  F1(1/2;1/2,1/2;1; -c/a, -(c+d)/(a+b)).
+```
+
+R03 evaluated a representative case by the named Appell F1 expression and compared it with an audit-only high-order quadrature:
+
+```text
+relative difference = 1.88e-15
+formal spatial quadrature count = 0
+```
+
+NIST DLMF §16.15 gives the Euler integral representation of Appell F1.
+
+## 5. Carlson symmetric elliptic integrals
+After one trigonometric integration, many kernels with products of two quadratic factors under a square root are complete elliptic integrals. NIST DLMF Chapter 19 gives their reduction to Carlson symmetric integrals `RF`, `RD`, `RJ` and describes the duplication algorithm. In the duplication method, variable differences are repeatedly reduced by factors of four, followed by evaluation of a fixed polynomial expansion.
+
+This makes Carlson functions attractive as a stable numerical backend for a named exact kernel, provided the NZ-SCCM reduced denominator actually falls into the elliptic class.
+
+Primary source:
+- NIST DLMF §§19.15, 19.23, 19.29, 19.36.
+
+## 6. Low-rank bivariate representation
+Townsend and Trefethen, “An Extension of Chebfun to Two Dimensions,” SIAM J. Sci. Comput. 35 (2013), C495–C518, DOI `10.1137/130908002`, demonstrate efficient low-rank separated representation of smooth bivariate functions.
+
+NZ-SCCM does **not** import Chebfun2 adaptive sampling/collocation as a production operator. Its relevance is conceptual: separated low-rank structure is a standard route for compressing smooth bivariate functions. In the current source-shaped map we have a stronger result: separated rank <=4 is exact by algebra.
+
+## 7. Zolotarev / rational approximation
+Zolotarev rational functions are designed for approximation on separated sets. This is relevant after R03 proves separated principal spectra in a certified D-q envelope.
+
+However, NZ-SCCM has already learned that a good rational material approximation can create difficult resolvent denominators and Picard-Fuchs complexity after structural composition. Therefore Zolotarev/AAA-type rational approximation is not promoted as production by itself. It may be reconsidered only if its poles reduce to direct Appell/Carlson or comparably small named kernels.
+
+Primary references:
+- L. N. Trefethen and H. D. Wilber, “Computation of Zolotarev rational functions,” SIAM J. Sci. Comput. 47 (2025), A2205–A2220.
+- D. Huybrechs and L. N. Trefethen, “Sigmoid Functions, Multiscale Resolution of Singularities, and hp-Mesh Refinement,” SIAM Review 66 (2024), 683–693, DOI `10.1137/23M1556629`.
+
+The latter paper is directly relevant to the R01/R02 observation that very narrow smooth sigmoid-like transitions can create multiscale approximation pressure.
+
+## 8. R03 mathematical priority
+The order of attack is now:
+
+1. exploit exact rank-4 principal-coordinate separability;
+2. certify reachable `lambda+` / `lambda-` intervals from the structural D-q envelope;
+3. compile only the required one-dimensional primitives on those intervals;
+4. use the coalescence-safe 2x2 matrix-function form when needed;
+5. identify whether the resulting structural moments fall into Beta/Appell/Carlson named-kernel families;
+6. only if these fail, consider another representation.
+
+Do not infer an integration method solely from the visual saddle shape.
+
+====================================================================================================
+FILE: evidence/mathematics/PF1_GRIFFITHS_HYPERELLIPTIC_DERHAM_SOURCE_MAP_20260810.md
+SIZE: 1780
+SHA256: 6ac6d8de5d5aa88d45ab77fa46c93f3d2aa8ea1fa6546e65a3d40da897770971
+ENCODING: utf-8
+LINES: 39
+====================================================================================================
+# PF1 primary mathematics source map — Griffiths / hyperelliptic de-Rham
+
+**Date:** 2026-08-10  
+**Role:** EXTERNAL MATHEMATICAL TOOL SOURCES ONLY  
+**Authority boundary:** these sources do not define NZ-SCCM material physics, kinematics, structural targets, or formal integration identity.
+
+## 1. Griffiths 1969
+
+Philip A. Griffiths, *On the periods of certain rational integrals. I*, Annals of Mathematics, Vol. 90 (1969), pp. 460–495. DOI: `10.2307/1970746`.
+
+Philip A. Griffiths, *On the periods of certain rational integrals. II*, Annals of Mathematics, Vol. 90 (1969), pp. 496–541. DOI: `10.2307/1970747`.
+
+Primary locations checked:
+
+- Annals of Mathematics publication pages;
+- Institute for Advanced Study publication record with the original papers.
+
+NZ-SCCM role: source for the general period/rational-integral reduction philosophy behind Griffiths-type reduction and Picard–Fuchs/Gauss–Manin closure.
+
+## 2. Köck & Tait 2018
+
+Bernhard Köck and Joseph Tait, *On the de-Rham cohomology of hyperelliptic curves*, Research in Number Theory 4, Article 19 (2018). DOI: `10.1007/s40993-018-0111-4`; arXiv: `1709.03422`.
+
+The paper gives an explicit basis framework for first de-Rham cohomology of hyperelliptic curves.
+
+NZ-SCCM role: supporting mathematical context for using a finite de-Rham basis on the genus-2 hyperelliptic curve identified in R02.
+
+## 3. Current project use
+
+The project does not import any structural or material model from these papers. The only retained lesson is mathematical:
+
+```text
+algebraic period family
+-> finite de-Rham/cohomology basis
+-> exact reduction of parameter derivatives
+-> finite Gauss-Manin / Picard-Fuchs system
+```
+
+All NZ-SCCM path invariants remain governed by `governance/PF1_PATH_INVARIANTS_LOCK_20260810.md`.
+
+====================================================================================================
+FILE: evidence/stability/Attard_source_map.md
+SIZE: 567
+SHA256: c1dc478992825653b4a8dc1c20a6a74a551051ec395f54526de9f3ec8c2d2389
+ENCODING: utf-8
+LINES: 7
+====================================================================================================
+# Attard source map — RC wall buckling/stability
+
+- Source PDF: `BUCKLING OF REINFORCED CONCRETE WALLS Attard UNICIV.pdf`
+- PDF SHA-256: `a32fdbd8d397c34f13bd347d12da27438c84b8988fc22e795e3f5a4ba6f9fba6`
+- Role: external stability/buckling reference for reinforced-concrete walls.
+
+Use this source for comparison of wall buckling/stability assumptions and classical formulation context. It is not the governing material law, does not override Nguyen source provenance, and does not authorize a different formal spatial discretization in the current NZ-SCCM branch.
+
+====================================================================================================
+FILE: evidence/stability/STEEL_NONDISCRETIZATION_SEMIANALYTIC_REFERENCE_MAP_20260810.md
+SIZE: 10004
+SHA256: 533066880a7556842c55fb33e80751cc9529b165f45c4e42d748a1519872212e
+ENCODING: utf-8
+LINES: 219
+====================================================================================================
+# Steel non-discretization / semi-analytical stability reference map
+
+**Date:** 2026-08-10  
+**Role:** EXTERNAL STRUCTURAL-METHOD REFERENCE ONLY  
+**Current project authority:** does not override NC/UHPC material provenance, Case21 kinematics, or the zero-spatial-quadrature formal boundary.
+
+## 0. Why this reference lane is retained
+
+NZ-SCCM is pursuing a continuous-field / finite-generalized-coordinate route in which structural target functionals are obtained from analytic whole-domain contraction instead of a topological finite-element mesh and material-point grid.
+
+There is a real steel-plate stability literature using Rayleigh–Ritz, Galerkin, Airy-stress and other semi-analytical/non-discretization formulations for buckling, postbuckling and ultimate-strength analysis. These works are useful precedents for the **structural reduction philosophy**, the variational construction of finite amplitude equations, equilibrium-path/stability interpretation and independent verification against nonlinear FEM.
+
+They are **not** authority for ordinary-concrete or UHPC constitutive physics.
+
+Formal project identity:
+
+```text
+REFERENCE_LANE_STEEL_NONDISCRETIZATION = RETAIN
+ROLE = STRUCTURAL_METHOD_REFERENCE_ONLY
+CURRENT_NC_MATERIAL_AUTHORITY = NONE
+CURRENT_UHPC_MATERIAL_AUTHORITY = NONE
+CURRENT_FORMAL_INTEGRATION_OVERRIDE = NONE
+```
+
+---
+
+## 1. Smith, Bradford & Oehlers (2003)
+
+**Title:** *Inelastic buckling of rectangular steel plates using a Rayleigh–Ritz method*  
+**Journal:** International Journal of Structural Stability and Dynamics, 3(4), 503–521  
+**DOI:** `10.1142/S0219455403001026`  
+**Institutional record:** University of Adelaide digital repository.
+
+### Methodological relevance
+
+The institutional abstract explicitly describes the formulation as a **Rayleigh–Ritz based non-discretization method** for inelastic local buckling of rectangular steel plates under axial, bending and shear actions with various boundary conditions. Displacements are represented by a domain polynomial multiplied by a boundary polynomial.
+
+This is direct precedent for the proposition that plate stability need not be formulated through topological FEM discretization.
+
+### Important difference from NZ-SCCM
+
+The paper's von-Mises/flow-law inelastic treatment is incremental and iterative. Therefore it supports the non-discretized structural-field philosophy, but **does not itself establish NZ-SCCM's stronger requirement of zero formal spatial quadrature plus a strong multiaxial concrete material operator contracted analytically to P/Rq/L**.
+
+---
+
+## 2. Brubak & Hellesland (2007)
+
+**Title:** *Semi-analytical postbuckling and strength analysis of arbitrarily stiffened plates in local and global bending*  
+**Journal:** Thin-Walled Structures 45(6), 620–633  
+**DOI:** `10.1016/j.tws.2007.04.011`
+
+### Methodological relevance
+
+The paper combines large-deflection plate theory with an **incremental Rayleigh–Ritz approach**. It traces local and global equilibrium paths of imperfect stiffened plates and predicts ultimate strength using a membrane-stress von Mises criterion. Results are checked against nonlinear FEM.
+
+Useful NZ-SCCM reference roles:
+
+- finite generalized displacement amplitudes instead of a dense FE displacement field;
+- equilibrium-path tracing through postbuckling;
+- local/global modal interaction;
+- variational/Ritz derivation as an independent check on residual/tangent equations;
+- using nonlinear FEM as verification rather than as the definition of the theory.
+
+### Limit
+
+Its incremental solution and steel collapse criterion are not transferable as NC/UHPC material law.
+
+---
+
+## 3. Brubak, Andersen & Hellesland (2013)
+
+**Title:** *Ultimate strength prediction by semi-analytical analysis of stiffened plates with various boundary conditions*  
+**Journal:** Thin-Walled Structures 62, 28–36  
+**DOI:** `10.1016/j.tws.2012.08.005`
+
+### Methodological relevance
+
+This work explicitly treats semi-analytical elastic plate methods as a computationally efficient route to ultimate-strength limits when combined with strength criteria. Large-deflection theory and incremental Rayleigh–Ritz are used to trace the equilibrium path and account for postbuckling reserve strength, with nonlinear FEA comparisons.
+
+For NZ-SCCM it is especially useful as precedent for separating:
+
+```text
+continuous/semi-analytical structural response
++
+explicit strength/limit-state condition
+```
+
+rather than requiring a conventional nonlinear FE collapse simulation as the only route to ultimate capacity.
+
+### Limit
+
+The strength criterion and incremental steel treatment are structural-method references only.
+
+---
+
+## 4. Ferreira & Virtuoso (2014)
+
+**Title:** *Semi-analytical models for the post-buckling analysis and ultimate strength prediction of isotropic and orthotropic plates under uniaxial compression with the unloaded edges free from stresses*  
+**Journal:** Thin-Walled Structures 82, 82–94  
+**DOI:** `10.1016/j.tws.2014.04.003`
+
+### Methodological relevance
+
+The paper provides a particularly clear two-stage semi-analytical architecture:
+
+1. an analytical Airy-stress-function solution satisfying the compatibility/Marguerre equation;
+2. trigonometric series satisfying plate boundary conditions for out-of-plane displacement and imperfection;
+3. unknown amplitudes obtained through a variational solution of equilibrium;
+4. the resulting continuous response used for postbuckling analysis and ultimate-strength prediction.
+
+This is conceptually close to NZ-SCCM's desired separation:
+
+```text
+finite admissible analytic field
+-> generalized amplitudes
+-> continuous-domain equilibrium functionals
+-> stability / ultimate condition
+```
+
+It is useful both for the current plate backbone and for the later steel-shell/Y module.
+
+### Limit
+
+Its steel/isotropic-or-orthotropic plate constitutive and yield assumptions do not supply NC/UHPC material physics.
+
+---
+
+## 5. Koiter nonlinear stability theory
+
+**Source:** *W. T. Koiter's Elastic Stability of Solids and Structures*, Cambridge University Press, 2008/2009 online edition.
+
+### Methodological relevance
+
+Koiter's framework is a general reference for nonlinear postbuckling, imperfection sensitivity and stability of continuous beams, plates and shells. For NZ-SCCM the relevant conceptual tools are:
+
+- distinction between bifurcation and nonlinear postbuckling;
+- finite generalized-coordinate/asymptotic reduction of a continuous stability problem;
+- imperfection sensitivity;
+- modal interaction;
+- energy/tangent interpretation of stability conditions.
+
+This is particularly useful for auditing whether `Rq=0` and the `P-Rq-L` limit/stability construction have the correct continuous-system interpretation when the material layer is changed.
+
+### Limit
+
+Koiter is a structural stability framework, not a concrete material source.
+
+---
+
+## 6. What NZ-SCCM may borrow later
+
+The steel reference lane can legitimately inform:
+
+1. boundary-condition-satisfying Ritz/Navier/Galerkin basis construction;
+2. exact/variational construction of generalized residuals from a continuous plate field;
+3. finite generalized amplitudes and basis-enrichment convergence studies;
+4. equilibrium-path, bifurcation and limit-point classification;
+5. imperfection-sensitivity and modal-interaction diagnostics;
+6. independent energy/virtual-work checks of `P`, `Rq` and analytic tangent;
+7. later steel-shell/Y-module local/global postbuckling architecture;
+8. comparison against FEM as external verification rather than replacement of the analytic theory.
+
+The relevant convergence concept for the current formal branch is **analytic basis enrichment**, not mesh refinement or growth in spatial integration points.
+
+---
+
+## 7. What must NOT be imported automatically
+
+These references do not authorize:
+
+```text
+topological finite elements
+spatial numerical quadrature
+material-point incremental integration
+mesh-convergence as formal integration theory
+von-Mises cutoff as NC/UHPC material replacement
+effective-width empirical rules as the current material operator
+changing P/Rq/L only to imitate a steel formulation
+```
+
+If a specific steel method relies on numerical spatial integration internally, only its structural/variational idea may be retained unless its integrals can be rebuilt under the NZ-SCCM exact-analytic boundary.
+
+---
+
+## 8. Innovation implication
+
+The existence of this literature means that the generic statement
+
+```text
+"we do not use FEM; we use a continuous assumed field and integrals"
+```
+
+is **not by itself a sufficient novelty claim**. Rayleigh–Ritz/Galerkin/semi-analytical/non-discretization approaches already provide clear antecedents in steel plate stability and strength.
+
+The more defensible NZ-SCCM novelty target is the coupled architecture:
+
+```text
+strong multiaxial NC/UHPC material physics
++ source-shaped finite analytic material compiler
++ invariant/tensor reduction
++ exact whole-halfwave material/structural contraction
++ zero formal spatial quadrature/material points
++ analytic tangent
++ direct P-Rq-L ultimate-state system
++ later compatible steel-shell/Y coupling
+```
+
+Whether that full combination is publication-level novel must ultimately be established by a dedicated literature review; this note only records the presently identified methodological antecedents and the resulting claim boundary.
+
+---
+
+## 9. Source links / provenance
+
+- University of Adelaide record, Smith/Bradford/Oehlers: `https://digital.library.adelaide.edu.au/items/339e6ab6-4bb6-46ca-90ab-36ba45d3c270`
+- Smith/Bradford/Oehlers DOI: `https://doi.org/10.1142/S0219455403001026`
+- Brubak & Hellesland 2007 DOI: `https://doi.org/10.1016/j.tws.2007.04.011`
+- Brubak/Andersen/Hellesland 2013 DOI: `https://doi.org/10.1016/j.tws.2012.08.005`
+- Ferreira & Virtuoso 2014 DOI: `https://doi.org/10.1016/j.tws.2014.04.003`
+- Cambridge Koiter book record: `https://www.cambridge.org/core/books/w-t-koiters-elastic-stability-of-solids-and-structures/87DB64B6D82A4A3D6EC70E32DA2EF5E9`
+
+====================================================================================================
+FILE: evidence/steel_shell/Sun_Lipeng/01_flat_plate_elastic_inelastic_buckling.txt
+SIZE: 13256
+SHA256: 95347009fb873c2f355c1bec9fc359ad74506e8b80ace55dc46256bfcd0af883
+ENCODING: utf-8
+LINES: 231
+====================================================================================================
+3.2 单侧约束平板的弹性临界屈曲系数
+
+  首先建立受混凝土单侧约束平板的局部屈曲力学模型。取 PBL 加劲型钢管混凝土
+桥塔钢壁板相邻纵向加劲肋之间的一块子板件为研究对象，设板的长度为 a，宽度为 b，
+厚度为 t，如图 3.1 所示。假定混凝土对钢板仅存在单侧约束作用，不考虑混凝土的弹性
+变形以及钢板与混凝土之间的粘结和切向摩擦。纵向均匀压应力 σx 仅施加在钢板上，板
+在轴压作用下发生面外失稳时，仅能向混凝土的另一侧发生屈曲变形。对于长宽比较大
+
+                      55
+                           长安大学博士学位论文
+
+
+的板件，一般横向出现一个屈曲波，纵向则出现多个波，如图 3.1（a）所示。对于非加
+载边，板件屈曲时边缘无法自由转动，可认为是固支边界；对于加载边，在屈曲波之间
+的节线处板件未发生转动，也可认为是固支边界，如图 3.1（b）所示。另外，模型中不
+考虑几何初始缺陷和残余应力的影响。
+  由于板件屈曲时的挠度远小于其厚度，在板件中面产生的薄膜拉力很微小，故弹性
+临界屈曲应力的求解是建立在弹性小挠度理论基础上的[50]。板件临界屈曲应力的经典表
+达式为：
+
+                                      π2 D
+                            cr  k               （3.1）
+                                      b 2t
+
+式中：D 为单位宽度板的抗弯刚度，D = Est3/[12(1-νs2)]；Es 为钢材的弹性模量；νs 为钢
+材的泊松比，取 0.3。k 为板的弹性临界屈曲系数，与板件的长宽比、边界条件、荷载形
+式有关。铁摩辛柯采用能量法[50]，以双重余弦级数作为屈曲形函数，解得四边固支单侧
+约束平板在均匀压应力作用下的最小弹性屈曲系数为 10.67，Uy 等[51]采用有限条法得到
+的值为 10.3。本文后续计算中，四边固支单侧约束平板的弹性临界屈曲系数取为 10.67。
+
+
+
+
+                       (a) 局部屈曲模态
+
+
+
+
+                           (b) 力学模型
+                   图 3.1   侧约束板的局部屈曲
+
+3.3 单侧约束平板的非弹性屈曲及界限宽厚比
+
+  按线弹性概念推导出的临界屈曲应力公式只适用于板相当薄的情况。对于较厚的板
+件，发生局部屈曲时，应力在板的全截面或一部分已经超过了材料的比例极限而进入了
+                                      56
+                       第三章 单侧约束钢壁板的局部屈曲性能
+
+
+弹塑性范围，即板件发生了弹塑性屈曲。研究板件的弹塑性屈曲目前有两种途径：一是
+以塑性力学为基础，采用弹塑性变形理论或流动理论。二是把进入弹塑性阶段的板当作
+正交异性的，在不同方向取不同的弯曲刚度，如 Bleich 提出的近似计算方法[120]。Bleich
+法[120]主要与切线模量有关，远比塑性理论计算简单，便于工程应用。因此，本节采用
+Bleich 法[120]推导单侧约束板的弹塑性屈曲应力。
+
+   弹塑性屈曲平衡微分方程
+
+  如果板的应变进入塑性区域，则每个方向的材料刚度将不同。主方向刚度与剪切刚
+度之间也存在较为复杂的关系。Bleich 法[120]实际上是将弹塑性屈曲状态的板件看作正
+交异性板，将弹性屈曲平衡微分方程中板各个方向的刚度进行修正以使其符合实际的弹
+塑性状态。根据小挠度理论，弹性状态下薄板的平衡微分方程为[50]：
+
+                    4         4          4        2
+               D         2 D            D       N x      =0   （3.2）
+                   x 4       x 2 y 2     y 4       x 2
+
+式中：ω 为板的屈曲形函数；Nx 为单位宽度板在 x 轴方向所受的中面力，Nx = −σxt。
+  图 3.2 是钢材单轴拉伸试验的应力-应变曲线，其中 P 点的应力 σp 是钢材的比例极
+限，A 点的应力 σx 是板件发生弹塑性屈曲时 x 轴方向的临界应力。设 A 点处曲线的切
+线 AT 的倾角为 θ，则钢材的切线模量 Et = tanθ。定义修正系数 η = Et/Es。
+
+
+
+
+                       图 3.2    钢材的应力-应变关系
+
+  Bleich 建议，当 σx>σp 时，沿 x 轴方向的弹性模量 Es 应改成切线模量 Et，即式（3.2）
+中第一项应乘以修正系数 η。y 轴方向由于 σy=0，杨氏模量 Es 仍然适用，即式（3.2）中
+第三项乘以修正系数 1。式（3.2）中的第二项与 x 和 y 两个方向有同等程度的关系，这
+
+一项乘以修正系数 𝜂（即 η 和 1 的几何比例中值）。当板件应力超过比例极限时，泊松
+
+比的值也有变化，但对临界屈曲应力的影响不大，所以忽略其变化。综上，由式（3.2）
+修正板件刚度得到的弹塑性屈曲平衡微分方程为：
+
+
+                                        57
+                                     长安大学博士学位论文
+
+
+
+                           4         4      4          2
+                    D(         2                )  N x      0        （3.3）
+                          x 4       x 2y 2 y 4          x 2
+
+  能量法求解弹塑性屈曲系数
+
+  式（3.2）是四阶偏微分方程，直接求解困难，可根据式（3.2）中板各个方向的刚度
+修正，采用能量法求解单侧约束板的弹塑性屈曲应力。
+  单侧约束板的四边固支边界条件可表述为：
+  当 x = 0，a 时，ω = 0，∂ω/∂x = 0;
+  当 y = 0，b 时，ω = 0，∂ω/∂y = 0。
+  为满足板件的边界条件，可选取双重余弦级数作为屈曲形函数[121]。板件局部屈曲面
+外变形主要受一阶屈曲模态影响，故级数取一项可满足精度要求，设
+
+                                          2πmx         2πy 
+                            f 1  cos        1  cos                 （3.4）
+                                            a           b 
+
+式中：f 为常数，m 为板在 x 轴方向上的屈曲波数量。
+  根据弹性理论，在薄板发生微小的挠曲变形 ω 后，板内积蓄的应变能为：
+
+      D a b    2                                            2  
+                       2                       2                       2
+                             2  2   2 
+ U p      2   2 s  2               2 1  s          dxdy （3.5）
+      2 0 0   x         x y 2  y 2                     xy  
+                                                                        
+  施加在薄板中面的外力 Nx 所做的功为：
+                                                     2
+                                 1 a b        
+                             Vp     x t      d xd y                  （3.6）
+                                 2 0 0
+                                             x 
+
+  系统处于稳定的平衡状态时，薄板的应变能应等于外力所做的功[27]。令式（3.5）等
+于式（3.6），可解得弹塑性屈曲临界应力，其表达式同式（3.1），其中，屈曲系数为：
+
+                                    4a 2 4b2 m2   8
+                              k     2 2
+                                            2
+                                                                        （3.7）
+                                    bm     a      3
+
+  屈曲系数最小值可由∂k/∂m = 0 得到，此时
+                                        32
+                               kmin         10.67                      （3.8）
+                                         3
+  可见，当临界屈曲应力超过钢材比例极限时，按非弹性板计算的屈曲应力约是按弹
+
+性板计算的 𝜂倍。确定修正系数 η 需要精确的钢材本构模型。
+
+  Ramberg-Osgood 本构模型[122,123] 能够准确描述塑性应变 0.2%以下的应力-应变关
+
+                                              58
+                  第三章 单侧约束钢壁板的局部屈曲性能
+
+
+系，但当塑性应变大于 0.2%时则不够准确，预测的应力通常偏高[124]。板件的弹塑性屈
+曲重点关注钢材的塑性应变小于 0.2%时的情况，因此，采用 Ramberg-Osgood 模型进行
+单侧约束钢板的局部屈曲分析能够满足精度要求。在 Ramberg-Osgood 模型中，材料的
+总应变 ε 为弹性应变 εe 和塑性应变 εp 之和，即：
+                                                       n
+                                       
+                                      
+                      e  p =  p                          （3.9）
+                                 Es    f 
+                                       y
+式中：p 为钢材屈服强度 fy 对应的塑性应变，对于没有屈服平台的高强度钢材，取 0.2%，
+对于普通钢材，根据文献[125,126]的材性试验结果，可取 0.06%；n 为应变硬化指数，对于
+高强度钢材，根据施刚和朱希[127]的研究可取 16；对于普通强度钢材取 25[128]。
+
+   界限正则化宽厚比
+
+  将式（3.9）两边对应力 σ 求微并取倒数，可得切线模量 Et 与应力 σ 的关系：
+                   d                       1
+                       Et                                      （3.10）
+                   d        1        np   
+                                                      n 1
+
+                                       
+                                   Es f y  f y 
+
+  令式（3.10）中的 σ = σcr，与式（3.8）一起代入式（3.1），可得弹塑性屈曲应力的
+隐式表达式：
+
+                                    4  4  s  π Es
+                                                  2     4    2
+                npE n 1
+                   n
+                      cr   cr2                    4
+                                                                 （3.11）
+                 fy                             2b
+                                    811  s2   
+                                                 t
+  令式（3.11）中弹塑性屈曲应力 σcr 等于钢材屈服强度 fy，可得塑性屈曲与弹塑性屈
+曲板件之间的界限宽厚比（或称“宽厚比限值”）lp：
+                        π     8Es                1
+                 lp =                                            （3.12）
+                        3   1  s  4 f y  f y  npEs 
+                                  2
+
+
+
+  定义板件的正则化宽厚比为：
+
+                            b 12 1  s  f y
+                                        2
+                             fy
+                                                              （3.13）
+                       cr t      kπ 2 Es
+
+  当钢材屈服强度在 275 ~ 960 MPa 之间变化时，由式（3.12）、（3.13）得到的塑性
+屈曲与弹塑性屈曲板件的界限正则化宽厚比（或称“正则化宽厚比限值”）在 0.527 ~
+0.597 之间。按式（3.12）计算所得的塑性屈曲与弹塑性屈曲板件界限宽厚比未考虑几何
+初始缺陷和混凝土泊松效应的不利影响，为了方便工程设计应用，并保证结构设计的安
+
+                                       59
+                              长安大学博士学位论文
+
+
+全性，单侧约束板的正则化宽厚比限值（λpl）可偏保守地取 0.500。
+  由于焊接残余压应力（σrc）的影响，钢板截面应力会提前达到比例极限（fp）。截面
+在弹性与弹塑性的临界状态时的屈曲应力可近似表示为 fp−σrc。可见，弹性屈曲与弹塑
+性屈曲板件的界限宽厚比是随焊接残余压应力的变化而变化的。为了划分弹性屈曲与弹
+塑性屈曲的界限，参考 AASHTO[73]中计算钢箱梁受压板件的局部屈曲荷载时的规定，
+焊接残余压应力 σrc 取为 0.30fy，无焊接残余应力的结构钢的比例极限 fp 可近似取 0.85
+fy，由此得到弹塑性屈曲与弹性屈曲板件的界限正则化宽厚比：
+
+                        fy                fy
+               el =                                    1.348   （3.14）
+                        cr       0.85 f y  0.30 f y
+
+  基于本节中提出的塑性界限正则化宽厚比 λpl 和弹性界限正则化宽厚比 λel，单侧约
+束板可划分为塑性屈曲板件（λ≤λpl）、弹塑性屈曲板件（λpl<λ≤λel）和弹性屈曲板件（λ>λel）。
+
+3.4 单侧约束平板的局部屈曲性能试验研究
+
+   试件设计
+
+  以板件的宽厚比和钢材的屈服强度为变量，共设计了 16 方形截面高强钢管混凝土
+
+====================================================================================================
+FILE: evidence/steel_shell/Sun_Lipeng/02_PBL_stiffened_elastic_buckling_boundary.txt
+SIZE: 12039
+SHA256: 352bb4edd59b5ae38f58f141d4a53d350cbd851077a9d064652026f5108adf31
+ENCODING: utf-8
+LINES: 220
+====================================================================================================
+3.6 单侧约束 PBL 加劲板的弹性临界屈曲系数
+
+   力学模型
+
+  取 PBL 加劲型薄壁钢管混凝土桥塔的一块 PBL 加劲钢壁板作为研究对象，如图 3.30
+所示。PBL 加劲板的长度、宽度和厚度分别为 a、b 和 t。数量为 n 的纵向 PBL 加劲肋
+沿 x 轴方向等间距布置于钢壁板上。PBL 加劲肋的高度和厚度分别为 hr 和 tr。加劲板沿
+x 轴方向受到均匀分布的压应力（σx）。假设在钢-混凝土界面无粘结和摩擦，混凝土为
+刚性介质，仅为加劲板提供单侧约束作用。此外，模型中未考虑几何初始缺陷和焊接残
+余应力的影响。
+
+
+
+
+            (a) 加劲肋随母板整体屈曲              (b) 肋间子板件屈曲
+                  图 3.30   单侧约束 PBL 加劲板的力学模型
+
+  由于非加载边（平行于 y 轴方向）受到角部填充的混凝土的约束，在加劲板发生局
+部屈曲时无法自由旋转，因此可以近似地认为是固支边。对于加载边（平行于 x 轴方向），
+由于受混凝土的单侧约束作用，在屈曲波之间的节线处也发生转动，也可视为固支边。
+设单侧约束加劲板的屈曲形函数为 ω，则加劲板的四边固支边界条件可表述为：
+  当 x = 0 或 a 时，ω = 0，∂ω/∂x = 0；
+                                   84
+                          第三章 单侧约束钢壁板的局部屈曲性能
+
+
+  当 y = 0 或 b 时，ω = 0，∂ω/∂y = 0。
+  需要说明的是，在单侧约束 PBL 加劲板的力学模型中并未考虑横向 PBL 加劲肋。
+这是由于横向加劲肋垂直于荷载方向，加劲效率远不如平行于荷载方向的纵向加劲肋显
+著，对加劲板的局部屈曲性能影响较小。本文第四章及第五章中关于横向 PBL 加劲肋间
+距的试验及有限元研究也证实了上述观点。然而，横向加劲肋基本不发生面外变形，可
+作为 PBL 加劲板的边界条件。
+
+  屈曲形函数
+
+  单侧约束 PBL 加劲板的屈曲模态主要有两种：① 纵向 PBL 加劲肋随母板（即钢壁
+板）共同发生面外变形的整体屈曲模态（图 3.30a）；② 相邻纵向 PBL 加劲肋之间的子
+板件局部屈曲模态（图 3.30b）。当 PBL 加劲肋（或连接件）的弹性抗拔刚度相对于钢
+壁板的抗弯刚度较小时，将发生加劲板整体屈曲。此时，采用双重余弦级数，即式（3.4）
+作为母板的屈曲形函数可以满足第 3.6.1 节的边界条件。PBL 加劲肋随母板共同变形时
+的形函数可表示为：
+
+                                       2πmx         2πi 
+                      i  f 1  cos        1  cos                   （3.29）
+                                         a          n 1 
+
+式中：ωi 为第 i 根 PBL 加劲肋随母板共同变形时的形函数。
+  当 PBL 加劲肋的弹性抗拔刚度相对于钢壁板的抗弯刚度较大时，将发生子板件局
+部屈曲。此时，可认为 PBL 加劲肋的变形为零，加劲板的屈曲形函数可表示为：
+
+                                    2πmx          2π  n  1 y 
+                      f 1  cos         1  cos                     （3.30）
+                                      a                 b       
+
+式中：n 为纵向 PBL 加劲肋的数量。
+
+  能量法求解弹性临界屈曲系数
+
+  根据弹性理论，在薄板发生微小的挠曲变形 ω 后，板内积蓄的应变能（Up）为：
+
+           D a b   2    2                              2  
+                          2         2                                 2
+                                       2  2
+      U p     2    2   2 s 2          2 1  s         dxdy （3.31）
+           2 0 0  x   y        x y 2                  xy  
+                                                                       
+  板的外力势能（Vp）为：
+                                                      2
+                                1 a b        
+                          Vp      x t      dxdy                    （3.32）
+                                2 0 0       x 
+
+
+                                             85
+                               长安大学博士学位论文
+
+
+  将 PBL 加劲肋等效为钢壁板面外的均匀、连续的弹性支承，其线性刚度（c）可表
+示为：
+
+                                  c  kPBL sc                             （3.33）
+
+式中：kPBL 为单孔 PBL 连接件的弹性抗拔刚度，按式（2.11）、式（2.17）和式（2.28）
+计算；sc 为 PBL 加劲肋的相邻圆孔中心间距。
+  当发生 PBL 加劲肋随钢壁板共同变形的整体屈曲时，PBL 加劲肋等效弹簧的弹性
+势能（UPBL）可表示为：
+                                    n  a 1 
+                          U PBL    ci2  dx                          （3.34）
+                                  i 1  
+                                       0 2
+                                            
+
+  PBL 加劲板发生整体屈曲时的总势能为：
+
+                               U p  Vp  U PBL                         （3.35）
+
+  将式（3.31）、（3.32）和（3.34）代入式（3.35），并应用势能驻值原理，即∂Π/∂f
+= 0，可得到单侧约束 PBL 加劲板发生整体屈曲时的弹性临界屈曲系数（ko）：
+                  4 2 4m 2 8 2 PBL  2
+                  2  2                                      (n  1)
+                 m         3       m2
+            ko   2                                                      （3.36）
+                  4  4m  8  3  n  1  PBL 
+                           2                        2
+
+                                                                (n  1)
+                  m2   2 3           4m 2
+式中：β 为板的长宽比，β = a/b；m 为板在平行于荷载方向上的屈曲波数量；γPBL 为 PBL
+加劲肋的相对刚度，按下式计算：
+
+                               PBL  cb3 ( π 4 D )                       （3.37）
+
+  PBL 加劲板发生子板件局部屈曲时，由于 PBL 加劲肋未变形，故 PBL 加劲肋等效
+弹簧的弹性势能（UPBL）等于零。此时，PBL 加劲板的总势能为：
+
+                                   U p  Vp                             （3.38）
+
+  将式（3.31）和（3.32）代入式（3.38），并取∂Π/∂f = 0，可得单侧约束 PBL 加劲板
+发生子板件局部屈曲时的弹性临界屈曲系数（ks）：
+
+                          4 2              4m 2 8
+                                                 n  1
+                                        4                   2
+                   ks           n  1                                   （3.39）
+                          m 2
+                                              2
+                                                  3
+
+
+
+
+                                         86
+                      第三章 单侧约束钢壁板的局部屈曲性能
+
+
+   弹性临界屈曲系数最小值
+
+   弹性临界屈曲系数随加劲板的长宽比和 PBL 加劲肋相对刚度的变化见图 3.31。当
+加劲板的长宽比小于 0.5 时，在 x 轴方向的单波屈曲（m = 1）的情况下，弹性临界屈曲
+系数 ko 和 ks 随着长宽比的增大而急剧减小。随着加劲板的长宽比继续增大，屈曲波的
+数量增加，屈曲系数波动变化。然而，屈曲系数的波动幅度变得更加平滑并收敛于某一
+最小值。应注意到，具有相同 PBL 加劲肋相对刚度的板，不同屈曲波数量均对应于相同
+的最小屈曲系数。
+
+
+
+
+                    图 3.31    屈曲系数随长宽比的变化
+
+   由式（3.36）取∂k/∂β = 0，可得单侧约束 PBL 加劲板发生整体屈曲时的最小弹性屈
+曲系数（ko,min）：
+
+                        8
+                         3  4 4  2 PBL                 n  1
+               ko,min                                               （3.40）
+                          8  2 16  3(n  1)             n  1
+                          3                   PBL
+
+
+
+   此时，
+
+                                     2
+                        m
+                              4
+                                                       n  1
+                                 2   PBL
+                                                                   （3.41）
+                                 2m
+                        4 16  3  n  1  PBL
+                                                       n  1
+                       
+
+
+                                        87
+                                    长安大学博士学位论文
+
+
+     由式（3.39）取∂k/∂β = 0，可得单侧约束 PBL 加劲板发生子板件局部屈曲时的最小
+弹性临界屈曲系数（ks,min）：
+                                              32
+                                                  n  1
+                                                          2
+                                   ks,min                                 （3.42）
+                                               3
+     工程应用中单侧约束 PBL 加劲板的长宽比通常大于 0.5。因此，最小屈曲系数用于
+评估 PBL 加劲板的屈曲性能是偏安全的，且不会过于保守。
+
+     PBL 加劲肋的界限相对刚度
+
+     如图 3.31 所示，当 PBL 相对刚度较小时，单侧约束 PBL 加劲板发生整体屈曲，最
+小屈曲系数由式（3.40）确定，且最小界屈曲系数随着 PBL 加劲肋相对刚度的增加而增
+加。当相对刚度超过某个界限值时，屈曲模态就会从加劲板整体屈曲转变为子板件局部
+屈曲。此时，单侧约束 PBL 加劲板的屈曲系数应由式（3.42）确定。因此，令式（3.40）
+和（3.42）相等，可解得该 PBL 相对刚度的界限值，见式（3.43），将其定义为 PBL 加
+劲肋的界限相对刚度（𝛾 ∗ ）。
+
+                           48                                   n  1
+                           
+                  *
+                          128n  n  2  3  2n  n  2               （3.43）
+                                                                 n  1
+                   PBL
+                           
+                                     27  n  1
+
+     PBL 加劲肋的界限相对刚度可以用来判断单侧约束 PBL 加劲板的局部屈曲模态。
+当𝛾     𝛾 ∗ 时，PBL 加劲肋可被视为柔性加劲肋，加劲板将发生整体屈曲，将此类加
+劲板称作柔性加劲板；当𝛾                   𝛾 ∗ 时，PBL 可被视为刚性加劲肋，加劲板将发生子板
+件局部屈曲，将此类加劲板称作刚性加劲板。
+
+3.7 单侧约束 PBL 加劲板的屈曲后强度
+
+     基于单侧约束平板有效宽度的概念，本节提出“有效面积法”来计算单侧约束 PBL
+加劲板的屈曲后强度。该方法可用于 PBL 加劲型薄壁钢管混凝土塔柱的轴心受压和压
+弯承载力计算。
+     单侧约束 PBL 加劲板的有效面积（Ae）由不同的屈曲模态确定，如图 3.32 所示。
+有效面积 Ae 包括母板的有效面积和 PBL 加劲肋的有效面积两部分，计算表达式如下：
+
+                                     Ae =bet   Ase                       （3.44）
+
+====================================================================================================
+FILE: evidence/steel_shell/Sun_Lipeng/03_PBL_postbuckling_strength_conclusion.txt
+SIZE: 4125
+SHA256: b6258189946ac571ca82064b6f1a7e459e363b7bd078182a8d24d0c73d89fe22
+ENCODING: utf-8
+LINES: 66
+====================================================================================================
+3.7 单侧约束 PBL 加劲板的屈曲后强度
+
+     基于单侧约束平板有效宽度的概念，本节提出“有效面积法”来计算单侧约束 PBL
+加劲板的屈曲后强度。该方法可用于 PBL 加劲型薄壁钢管混凝土塔柱的轴心受压和压
+弯承载力计算。
+     单侧约束 PBL 加劲板的有效面积（Ae）由不同的屈曲模态确定，如图 3.32 所示。
+有效面积 Ae 包括母板的有效面积和 PBL 加劲肋的有效面积两部分，计算表达式如下：
+
+                                     Ae =bet   Ase                       （3.44）
+
+
+
+                                                88
+                       第三章 单侧约束钢壁板的局部屈曲性能
+
+
+                                n 1
+                            be = i bi                 （3.45）
+                                i 1
+
+
+式中：be 为加劲板的有效宽度；bi 为第 i 块子板件的宽度，对于柔性加劲板 bi = b，对于
+刚性加劲板，bi 取刚性肋间或刚性肋与壁板间的距离；ρi 为有效宽度系数，按式（3.25）
+计算；∑ 𝐴 为 PBL 加劲肋的有效面积之和，对于柔性加劲板，取母板有效宽度范围内
+的 PBL 加劲肋的截面面积之和；对于刚性加劲板，取所有加劲肋的截面面积之和。
+
+
+
+
+           (a) 柔性加劲板                        (b) 刚性加劲板
+              图 3.32   单侧约束 PBL 加劲板的有效面积计算图示
+
+3.8 本章小结
+
+  为揭示单侧约束钢壁板的局部屈曲破坏机理及屈曲后强度承载机理，提出 PBL 加
+劲钢壁板的设计方法，本章采用理论推导、模型试验和数值模拟等方法，针对单侧约束
+平板和单侧约束 PBL 加劲板的局部屈曲性能展开系统研究，主要工作及结论如下：
+  （1）基于薄板的弹塑性屈曲理论，采用能量法推导了四边固支、受混凝土单侧约束
+平板的塑性界限正则化宽厚比（即正则化宽厚比限值）；并考虑残余应力的影响，给出
+了板件的弹性则化界限宽厚比，将板件划分为塑性屈曲板件、弹塑性屈曲板件和弹性屈
+曲板件。
+  （2）开展了 16 个受混凝土单侧约束高强度钢壁板的局部屈曲性能试验，揭示了受
+混凝土单侧约束平板的局部屈曲破坏机理及屈曲后承载机理。结果表明：大宽厚比单侧
+约束板发生局部屈曲后还具有储备强度可以继续承载，屈曲后储备强度随着板的正则化
+宽厚比的增大而提高，且与钢材强度等级无关；对于正则化宽厚比小于 0.558 的板件，
+发生局部屈曲时基本已达到或超过钢材的屈服强度，因此无屈曲后储备强度。
+  （3）基于大量的数值试验结果，以所提出的界限正则化宽厚比为约束条件，提出了
+单侧约束平板的正则化宽厚比限值和有效宽度公式，它们同时适用于普通强度钢材和高
+
+
+                                       89
+                       长安大学博士学位论文
+
+
+强度钢材。与试验结果的对比分析表明，本文提出的宽厚比限值和有效宽度公式与试验
+结果吻合程度较高、离散性较小，对局部屈曲性能的预测更为准确，且偏于安全。
+  （4）基于薄板的小挠度理论，将钢管混凝土桥塔加劲钢壁板的 PBL 连接件等效为
+钢壁板面外均匀、连续的弹性支承，采用能量法推导了单侧约束 PBL 加劲板分别发生加
+劲板整体屈曲和子板件局部屈曲时的弹性临界屈曲系数。并给出了判断单侧约束 PBL 加
+劲板屈曲模态的 PBL 加劲肋界限相对刚度。
+  （5）基于平板有效宽度的概念，提出了计算单侧约束 PBL 加劲板的屈曲后强度的
+有效面积法，可用于 PBL 加劲型薄壁钢管混凝土塔柱的轴心受压及压弯承载力的计算。
+  （6）基于本章的研究成果，提出了 PBL 加劲型薄壁钢管混凝土桥塔钢壁板的加劲
+构造设计方法，具体见第 7.4.1 节。
+
+               Equation Section (Next)
+
+====================================================================================================
+FILE: evidence/steel_shell/Sun_Lipeng/README.md
+SIZE: 2868
+SHA256: 85eb85b58c00a43157a0f1b77cf7d7be5fb5a3c42af32df9178d5232e732fa17
+ENCODING: utf-8
+LINES: 44
+====================================================================================================
+# 孙立鹏 — PBL加劲型薄壁钢管混凝土桥塔：有效理论证据包
+
+Authoritative source: `PBL加劲型薄壁钢管混凝土...塔的计算理论与设计方法研究_孙立鹏.pdf`
+
+- PDF SHA-256: `e441312bd0585536bbb7244e6cc2aaa37235fbe7a75f2c1e934f1a4e78981a6e`
+- frozen `pdftotext -layout` extraction SHA-256: `2c7eda7fb72c7702eed78d18fca5d5cbdd51f2956a1a88c6124cee099a160e92`
+
+Following `EFFECTIVE_SOURCE_EXCERPT_POLICY.md`, the 187-page thesis is not mirrored in full. The following Chapter-3 regions are archived because they directly constrain the Y/steel-shell theory discussion.
+
+## Archived excerpts
+
+1. `01_flat_plate_elastic_inelastic_buckling.txt`
+   - frozen extraction lines `2825–3055`
+   - local excerpt SHA-256: `95347009fb873c2f355c1bec9fc359ad74506e8b80ace55dc46256bfcd0af883`
+   - includes: unilateral-constrained plate model; four-edge fixed approximation; elastic `k=10.67`; Bleich tangent-modulus inelastic plate equation; single-term double-cosine mode; Ramberg–Osgood relation; normalized slenderness limits.
+
+2. `02_PBL_stiffened_elastic_buckling_boundary.txt`
+   - lines `4515–4735`
+   - SHA-256: `8f9018c55a3e02245ebe9fb185c3a086a21bf1442b22414b8567f8d440a64f5f`
+   - includes: PBL-stiffened unilateral plate model; global-stiffener mode vs local subpanel mode; equivalent continuous elastic support; energy expressions; `ko`, `ks`, minimum buckling coefficients; limiting relative PBL stiffness.
+
+3. `03_PBL_postbuckling_strength_conclusion.txt`
+   - lines `4726–4795`
+   - SHA-256: `5d38155d99219406ff0a5f3ac8a812a15127c7d22c3bd8dfdd61d92b543fa2dc`
+   - includes: effective-area postbuckling method and Chapter-3 conclusions.
+
+## Current-project interpretation boundary
+
+Retained as source evidence:
+
+- concrete unilateral restraint motivates outward-only wall buckling;
+- four-edge strong/fixed boundary is a defensible idealization for selected local shell subpanels;
+- Bleich tangent-modulus/Ramberg–Osgood route is useful historical elastoplastic buckling theory;
+- the distinction between stiffener-global mode and inter-stiffener local mode is mechanically meaningful;
+- limiting relative PBL stiffness is useful evidence for when a PBL line can behave as a strong local boundary.
+
+Not automatically adopted into the current formal NZ-SCCM/Y operator:
+
+- the explicit continuous PBL spring energy term;
+- the thesis effective-width/effective-area design closure;
+- preclassification of the current formal solution into historical mode classes before solving;
+- any empirical design equation as a replacement for a future shell material/stability operator.
+
+This distinction preserves the original mechanics without undoing later project decisions that PBL is presently treated as a strong local boundary rather than an explicit independent spring/load-bearing term in the formal UCFT/NZ-SCCM mother theory.
+
+====================================================================================================
+FILE: evidence/steel_shell/Yun_Lu_source_map.md
+SIZE: 1159
+SHA256: 2660dd07239e5d35ab509bff1c9c7643aa645d028c06ebda4ae3cd6b2e9b34b0
+ENCODING: utf-8
+LINES: 18
+====================================================================================================
+# 云露 source map — steel-shell / Y branch
+
+- Source PDF: `考虑薄膜效应的钢箱混凝土壁板局部屈曲行为研究_云露.pdf`
+- PDF SHA-256: `1fce0f9ce9058f00b2a6ddd0f6dd11faa41366816e2145348812c1a93884e897`
+- Role: primary source for unilateral wall-panel restraint, large-deflection/membrane post-buckling mechanics and steel-wall stress redistribution.
+
+## Effective source content
+
+- free-plate buckling background;
+- von Kármán large-deflection formulation;
+- concrete restraining inward buckling and outward unilateral wall deformation;
+- assumed deflection field, stress-function construction and Galerkin solution;
+- imperfection, width-thickness and aspect-ratio influence;
+- post-buckling stress redistribution / effective-width derivation.
+
+## Current-use boundary
+
+The project may reuse the mechanics and derivation logic, but Yun's later empirical effective-width correction (including the fitted `k=0.74`) is historical empirical design closure and is not automatically part of the current NZ-SCCM production operator. FE results remain validation evidence, not permission to introduce formal spatial cells/integration points.
+
+====================================================================================================
+FILE: evidence/steel_shell/Zhang_Ning_source_map.md
+SIZE: 979
+SHA256: 363b98891b505b2b07501b76a50dfb4a24a493ee296507df18cf84a5102ae273
+ENCODING: utf-8
+LINES: 15
+====================================================================================================
+# 张宁 source map — PBL local buckling
+
+- Source PDF: `PBL加劲型矩形钢管混凝土轴压柱局部屈曲性能分析_张宁.pdf`
+- PDF SHA-256: `7ae43da9f08d777e8b6a47acfff450ff22929dc7fcdad15fe95d29a5370572c5`
+- Role: primary historical source for PBL-stiffened wall local-buckling mechanics and boundary-restraint interpretation.
+
+## Effective source content
+
+- local buckling of PBL-stiffened concrete-filled rectangular steel wall panels;
+- influence of PBL restraint/stiffening on plate buckling mode and critical behavior;
+- historical continuous-elastic-support interpretation used during early theory development.
+
+## Current-use boundary
+
+The existence of an elastic-support/spring representation in the source does **not** automatically authorize an explicit PBL spring-energy term in the current NZ-SCCM/UCFT mother theory. Current long-term PBL role remains strong local boundary / subpanel divider unless the user explicitly reopens that modeling decision.
+
+====================================================================================================
+FILE: governance/CASE21_FRESH_R10_N48_D15_CLOSURE_DECISION_20260811.md
+SIZE: 2153
+SHA256: dafb28cfc204cd065cc7e7a769414daf85e780d780c2a8351616eb59087e41b0
+ENCODING: utf-8
+LINES: 91
+====================================================================================================
+# GOVERNANCE DECISION — CASE21 FRESH R10 → N48 → D15 CLOSURE
+

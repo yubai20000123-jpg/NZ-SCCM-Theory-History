@@ -1,0 +1,1800 @@
+- 不新建 Steel Shell operator；
+- 不改 D15；
+- 不修改 NC-R1；
+- 不读取试验值来判断 root-selection 是否合理。
+
+你的任务是“补课 + 审计认知”，不是“继续发明理论”。
+
+仓库：
+`yubai20000123-jpg/NZ-SCCM-Theory-History`
+
+如果 File Library / 项目上传文件可访问，也必须使用。凡是不能实际读取的资料，明确写 `NOT_READ`，不得根据旧摘要伪装成已读。
+
+======================================================================
+一、先读取本轮最新新增文件
+======================================================================
+
+必须全文读取：
+
+1. `current/governance/NZ_SCCM_NC_R1_LIMIT_ROOT_PRODUCTION_CONTRACT_V1_20260812.md`
+2. `current/CURRENT_STATE.md`
+3. 当前最新的 Case21 V2 独立审计/状态文件
+4. `current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md`
+5. `current/theory/NZ_SCCM_R10_N48C1MM_D15_EQUATION_BY_EQUATION_DERIVATION_20260812.md`
+
+首先用自己的话回答：
+
+\[
+R_q=0
+\]
+
+为什么只定义平衡支，以及
+
+\[
+L=P_D R_{q,q}-P_qR_{q,D}
+\]
+
+为什么是 \(P\) 在平衡支上的切向驻值条件。
+
+必须从 level-set 几何重新推导：
+
+\[
+\mathbf t=(R_{q,q},-R_{q,D}),
+\]
+
+\[
+\nabla P\cdot \mathbf t=L.
+\]
+
+不能只背结论。
+
+随后完整解释 NC-R1 新增的五项：
+
+```text
+ADMISSIBLE_DQ_DOMAIN
+PRIMARY_EQUILIBRIUM_BRANCH
+UNIQUE_ROOT_SELECTION
+Rq_ACCEPTANCE_TOLERANCE
+L_norm
+```
+
+尤其必须说明最终 \(P_u\) 为什么定义为：
+
+\[
+\boxed{
+\text{从 }(0,0)\text{ 出发的可接受主平衡支上的第一个 }+\to-\text{ 局部最大值}
+}
+\]
+
+而不是“所有根中最大荷载”。
+
+======================================================================
+二、补读上一轮明确遗漏的原始来源
+======================================================================
+
+上一轮认知报告中明确存在以下 `NOT_READ / READ_PARTIAL`。这次必须专门补齐。
+
+----------------------------------------------------------------------
+2.1 周思铭原始博士论文 — 必须直接读原文
+----------------------------------------------------------------------
+
+File Library 中查找：
+
+`复杂边界条件下钢管混凝土束组合墙的稳定性能研究_周思铭.pdf`
+
+先读目录，然后完整读取所有直接定义或推导以下对象的章节/小节：
+
+\[
+D_x,\quad D_y,\quad D_\mu,\quad D_{xy},\quad H
+\]
+
+以及：
+
+- 四边简支轴压稳定；
+- Navier 双正弦模态；
+- 正交各向异性板稳定方程；
+- 不同方向弯曲刚度共同控制稳定；
+- \(H\) 的组成；
+- 临界条件；
+- 弹性/弹塑性刚度退化的解释。
+
+不要只通过项目二次摘要理解周思铭。
+
+补读后必须回答：
+
+1. 周思铭原文里的 \(D_x,D_y,H\) 分别是什么；
+2. 当前项目为什么只继承其“稳定骨架/刚度分解语言”；
+3. 为什么不能把周思铭的组合墙截面常数直接搬进 Swartz RC 板；
+4. 为什么它不是 \(P_u\) 的第二套求解器；
+5. P1 为什么能借 \(D_x-D_y-H\) 识别 direct N48 tangent distortion。
+
+----------------------------------------------------------------------
+2.2 Nguyen 原论文/博士论文 — 补齐此前只读部分
+----------------------------------------------------------------------
+
+File Library 中查找：
+
+`Nguyen-011325526.pdf`
+
+至少补齐并形成认知卡：
+
+- 第2章：equilibrium path、bifurcation、limit point 的基本稳定概念；
+- 第3章：普通混凝土/钢筋材料来源；
+- 第4章：Nguyen FE 稳定分析的真实身份；
+- 第6章：initial imperfection + second-order kinematics / virtual work；
+- 与当前 Case21 / reinforced concrete wall 直接相关的章节。
+
+必须明确区分：
+
+```text
+SOURCE PHYSICS / KINEMATICS
+vs
+HISTORICAL FE DISCRETIZATION
+```
+
+并回答：
+
+- 为什么当前保留 Nguyen 二阶运动学；
+- 为什么不保留其 Gauss/material-point FE production route；
+- Nguyen 对 limit point 的定义与 NC-R1 的“first maximum on primary equilibrium path”是否一致；
+- 哪些内容属于来源理论，哪些只是历史数值实现。
+
+----------------------------------------------------------------------
+2.3 D15 原始/恢复链 — 不能只读当前一句 D15 公式
+----------------------------------------------------------------------
+
+File Library / GitHub 中至少全文读取：
+
+- `NZ_SCCM_DAEM_v0.5_D15_精确矩生成与UHPC解析矩公式报告.md`
+- `D15R_HISTORY_EQUIVALENCE_REPORT.md`
+- `D15R_V054_HAND_CALC.md`
+- `NZ_SCCM_G15_原生压缩D15编译器_恢复完成报告.md`
+
+如存在更原始 D15 报告或映射文件，继续定位并阅读。
+
+必须建立“D15 可继承部分 / 不可继承部分”表：
+
+可继承至少包括：
+
+```text
+continuous complete halfwave
+exact trigonometric moments
+exact thickness moments
+finite coefficient convolution
+zero formal spatial quadrature
+```
+
+不可继承至少包括：
+
+```text
+UHPC Layer-0 material identity
+beta=0 style oversimplification
+unvalidated old material coefficients
+```
+
+必须解释：
+
+\[
+\boxed{
+\text{为什么“D15 数学引擎成立”不等于“旧 D15 UHPC 材料成立”。}
+}
+\]
+
+----------------------------------------------------------------------
+2.4 N-Y / Nguyen–Zhou 历史耦合体系 — 专门搜索并补读
+----------------------------------------------------------------------
+
+在 GitHub `history/`、`recovery/`、File Library 中搜索：
+
+```text
+N-Y
+Nguyen-Zhou
+阮-周
+N模块
+Y模块
+Branch C
+完整分支C
+```
+
+找到后必须真正阅读相关锁定合同、执行报告和用户修正。
+
+重点回答：
+
+- N-Y 最初想解决什么；
+- N 模块与 Y 模块各承担什么；
+- 为什么后来不能把 Y/周思铭变成材料或 Pu 替代器；
+- Branch C / Nguyen FE 路线哪些属于来源忠实性审计，哪些后来退出正式生产；
+- 当前 R10→N48-C1/MM→D15 与 N-Y 历史路线的继承/否定关系。
+
+找不到专门文件时，必须明确列出搜索过的关键词和 `NOT_FOUND`，不能自行编造。
+
+----------------------------------------------------------------------
+2.5 148回合原始对话与 D4–D20 — 补齐“READ_PARTIAL”
+----------------------------------------------------------------------
+
+上一轮只通过恢复文件和关键区段建立了历史认识。
+
+本轮要对原始 TURN 0001—0148 做“缺口式补读”：
+
+先读取：
+- `NZ_SCCM_148回合思想演化与当前正式主线恢复_R05.md`
+- `CHAT_TURN_0001_0148_LOCATOR.md`
+- D4–D20 执行宪章/锁定合同
+
+然后按 locator 回到原始对话，至少把以下转折的前后用户—助手完整区段补读：
+
+1. \(Q_A=0\) 被否定为稳定条件；
+2. 周思铭切线稳定重新进入核心；
+3. 分岔与极限承载力分流；
+4. 一个完整代表半波；
+5. HM45→HM27S；
+6. ACQI 为什么数值有效但理论上仍被淘汰；
+7. 用户明确要求零正式空间积分；
+8. D14 panel surrogate 被否决；
+9. D15 精确矩被保留、UHPC Layer-0 被否决；
+10. current material operator 成为最终材料接口；
+11. “简单、简单、简单”和禁止自动升阶的形成过程。
+
+每个转折必须引用原始用户意见，而不是只引用恢复摘要。
+
+======================================================================
+三、补读当前 compiler 的三次关键修正
+======================================================================
+
+全文读取：
+
+1. P1 tangent audit；
+2. N48-C1 repair audit；
+3. T constrained-minimax boundary-layer audit。
+
+然后建立一张因果表：
+
+```text
+direct N48
+-> value good / tangent wrong
+-> C1 anchor repair
+-> Zhou Dx-Dy-H restored
+-> T near-zero value conflict
+-> T-only constrained minimax
+-> current N48-C1/MM
+```
+
+必须能够解释：
+
+- 为什么不是 R10 错；
+- 为什么不是 N48 阶数自动不够；
+- 为什么不能用 N96/N112 掩盖；
+- 为什么只修 T；
+- 为什么最终系数仍是 O(1)；
+- 为什么 Cayley–Hamilton/D15 不需要重建。
+
+======================================================================
+四、必须重新理解 NC-R1，不允许把它变成“root cloud筛选器”
+======================================================================
+
+NC-R1 的核心数学定义必须复述为：
+
+\[
+\mathcal A
+=
+\text{physics/source admissible domain}
+\]
+
+\[
+\Gamma_0
+=
+\operatorname{Conn}_{(0,0)}
+\{R_q=0\}\cap\mathcal A
+\]
+
+\[
+g(s)=\frac{dP}{ds}
+\]
+
+以及
+
+\[
+P_u
+=
+\text{沿 }\Gamma_0
+\text{ 从无载状态遇到的第一个 }
+g:+\rightarrow-
+\text{ 极大值}.
+\]
+
+必须说明：
+
+- disconnected root 为什么无论 \(P\) 多大都不能控制；
+- 负 \(q\) 根为什么不属于当前正初始缺陷主支；
+- later maximum 为什么不是当前 load-controlled ultimate；
+- minimum / tangential stationary point 为什么不是 \(P_u\)；
+- 如果主支在极限以前出现 \(\nabla R=0\) 分叉奇点，为什么必须 BLOCKED 而不是随便选支。
+
+同时重新推导并解释：
+
+\[
+R_{\rm norm}
+=
+\frac{|R_q|}
+{\max(f_c\varepsilon_0J_\Omega,\ |R_{q,c}|+|R_{q,s}|)}
+\]
+
+以及
+
+\[
+L_{\rm norm}
+=
+\frac{
+P_D R_{q,q}-P_qR_{q,D}
+}{
+|P_D R_{q,q}|+|P_qR_{q,D}|
+}.
+\]
+
+必须验证后一个定义对 \(D,q\) 的独立线性重标度不变。
+
+======================================================================
+五、历史根规则必须和 NC-R1 做一次冲突审计
+======================================================================
+
+搜索并阅读历史：
+
+- root cloud；
+- modal filter；
+- ultimate validation contract；
+- “全部根记录”；
+- “可达性”；
+- “不取最大根”；
+- “断开高幅值根”。
+
+建立三栏表：
+
+| 历史规则 | NC-R1 是否继承 | 是否已被新理论覆盖 |
+
+特别审计：
+
+1. “全部根保留记录”继续有效；
+2. “最大根控制”继续禁止；
+3. “最接近试验根”继续禁止；
+4. “物理可达性”现在被升级为 connected component \(\Gamma_0\)；
+5. 旧的状态主动集/Gauss 可达性定义不得复活；
+6. 旧 m=1,2,3 modal root competition 不得覆盖当前 `ACTIVE_MODE=m=1`。
+
+======================================================================
+六、四体系路线也要补课，但本轮不建新模型
+======================================================================
+
+重新确认最终 2×2：
+
+\[
+\{\mathrm{NC},\mathrm{UHPC}\}
+\times
+\{\mathrm{Rebar},\mathrm{Steel\ Shell}\}.
+\]
+
+必须说明 NC-R1 的哪些内容未来四体系共享：
+
+```text
+admissible-domain concept
+primary connected equilibrium branch
+first +->- maximum
+R_norm concept
+L_norm
+root classification
+blind discipline
+```
+
+但不得假装具体 admissible material gate 完全相同：
+
+- NC 与 UHPC 的 material/source domain 会不同；
+- Rebar 与 Steel Shell 的 steel/source gate 会不同；
+- root-production topology 可以共享。
+
+本轮不允许据此直接创造 UHPC 或 steel-shell operator。
+
+======================================================================
+七、最终补课输出
+======================================================================
+
+完成阅读后，一次性输出：
+
+### PART A — 真正新读到的文件
+每个文件标记：
+`READ_FULL / READ_TARGET_SECTIONS / NOT_FOUND / NOT_READ`
+
+不要把上一轮已读文件重复包装成“本轮新读”。
+
+### PART B — 对上一轮 NOT_READ/READ_PARTIAL 的补齐结果
+逐项说明：
+- 周思铭；
+- Nguyen；
+- D15；
+- N-Y；
+- TURN 0001—0148；
+- D4–D20。
+
+### PART C — NC-R1 从数学到物理的完整解释
+必须从 level-set tangent 推导到 unique \(P_u\)。
+
+### PART D — 新旧 root-selection 规则冲突表
+
+### PART E — 当前唯一最新状态
+必须写成：
+
+```text
+R10 / N48-C1/MM / CH / Nguyen / D15 / Rebar = governing
+NC-R1 LIMIT-ROOT PRODUCTION CONTRACT = governing
+CASE21 NC-R2 reproduction = NOT YET EXECUTED
+SWARTZ24 = NOT AUTHORIZED
+```
+
+### PART F — 20问闭卷自检
+
+1. \(\Gamma_0\) 为什么是 connected component 而不是“最近的根”？
+2. 为什么初始点是 \((D,q)=(0,0)\)，虽然结构有 \(q_0\) 初始缺陷？
+3. 为什么当前缺陷板生产主支规定 \(q\ge0\)？
+4. \(L\) 为什么等于 \(\nabla P\) 沿 \(R=0\) 切线的导数？
+5. 为什么 \(R_{q,q}=0\) 不自动使 \(L\) 失效？
+6. 什么情况下必须 `BLOCKED_AT_PRIMARY_BRANCH_SINGULARITY`？
+7. 为什么第一个 \(+\to-\) maximum 而不是全局最大 root 是 \(P_u\)？
+8. 为什么 later maximum 不控制当前 load-controlled ultimate？
+9. \(R_{\rm norm}\) 为什么需要材料自然功尺度？
+10. \(L_{\rm norm}\) 为什么采用两项相消尺度？
+11. \(L_{\rm norm}\) 是否对 \(D,q\) 的线性重标度不变？
+12. 为什么 continuation 不等于 FE 荷载历史？
+13. 为什么 disconnected high-amplitude roots 必须记录但拒绝？
+14. 周思铭原文究竟给了当前体系什么？
+15. Nguyen 原文中的 limit point 概念与 NC-R1 是否一致？
+16. D15 的数学引擎和旧 UHPC Layer-0 为什么必须分开？
+17. N-Y 历史路线哪些被继承，哪些被淘汰？
+18. direct N48 tangent 问题为什么不能靠 N96 解决？
+19. NC-R1 哪些部分未来 NC/UHPC × Rebar/Shell 四体系共享？
+20. 现在为什么还不能直接重算24板？
+
+只有全部答对，才输出：
+
+```text
+MISSING_SOURCE_CATCHUP = PASS
+NC_R1_COGNITION = PASS
+READY_FOR_NC_R2 = YES
+```
+
+然后停止，不自行执行 Case21。
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_NC_R1_THEORY_RIGOR_INDEPENDENT_AUDIT_PROMPT_20260812.txt
+SIZE: 13922
+SHA256: a1eedc661b7f7664cfc61dc87be14b547c853633efac4a6100ddb7d139ad4135
+ENCODING: utf-8
+LINES: 304
+====================================================================================================
+你现在是“NZ-SCCM NC+Rebar 更新理论——独立数学/力学/来源严谨性审稿与阻断审计助手”。
+
+我会把一份当前候选正式理论正文粘贴在本对话中。你的任务不是沿用其结论，而是像严格期刊审稿人+独立理论复核者一样，检验这套理论从材料参数到极限承载力定义是否数学正确、力学合理、来源一致、参数完备、维度一致、符号一致、可复现，并明确指出任何会阻断后续 Case21 独立计算的缺口。
+
+======================================================================
+一、唯一项目仓库与强制读取
+======================================================================
+
+GitHub 仓库：
+
+yubai20000123-jpg/NZ-SCCM-Theory-History
+
+不要让我重新上传仓库中已有文件。你必须自己通过 GitHub 读取。若你当前可访问 GitHub，则必须实际读取；不得只凭文件名、我粘贴的正文或历史记忆判断。
+
+首先按以下顺序读取：
+
+A. 当前状态与正式理论
+1. current/CURRENT_STATE.md
+2. current/theory/NZ_SCCM_NC_R1_ZHOU_STYLE_FORMAL_EQUATION_DERIVATION_20260812.md
+3. current/theory/NZ_SCCM_R10_N48C1MM_D15_EQUATION_BY_EQUATION_DERIVATION_20260812.md
+4. current/theory/NZ_SCCM_R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_20260812.md
+5. current/theory/NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md
+
+B. 当前治理合同
+6. current/governance/NZ_SCCM_NC_R1_LIMIT_ROOT_PRODUCTION_CONTRACT_V1_20260812.md
+7. current/governance/NZ_SCCM_NC_R1_ZHOU_STYLE_FORMAL_DERIVATION_DECISION_20260812.md
+8. governance/R10_N48C1MM_D15_PAPER_STYLE_DERIVATION_DECISION_20260812.md
+9. governance/SOURCE_OF_TRUTH_POLICY.md
+
+C. N48-C1/MM 依据与审计
+10. current/audits/NZ_SCCM_N48_C1_VALUE_TANGENT_REPAIR_AUDIT_20260811.md
+11. current/audits/NZ_SCCM_N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_AUDIT_20260812.md
+12. governance/N48_C1_VALUE_TANGENT_REPAIR_DECISION_20260811.md
+13. governance/N48_C1_TENSILE_MINIMAX_BOUNDARY_LAYER_DECISION_20260812.md
+14. current/results/NZ_SCCM_SWARTZ24_P1_CURRENT_TANGENT_AUDIT_20260811.md
+
+D. D15 数学来源与历史独立核验
+15. current/theory/NZ_SCCM_CASE21_INVARIANT_EXACT_MOMENTS_DERIVATION_V1_20260810.md
+16. history/NZ_SCCM/D_series/D15/NZ_SCCM_DAEM_v0.5_D15_精确矩生成与UHPC解析矩公式报告.md
+17. history/NZ_SCCM/D_series/D15R/D15R_V054_HAND_CALC.md
+18. history/NZ_SCCM/D_series/D15R/D15R_HISTORY_EQUIVALENCE_REPORT.md
+
+E. Nguyen / 钢筋 / Zhou 来源证据
+19. evidence/materials/NC/Nguyen_source_map.md
+20. evidence/materials/NC/Nguyen_AppendixB/README.md
+21. evidence/materials/NC/Nguyen_AppendixB/01_stab_conc_interface.txt
+22. evidence/materials/NC/Nguyen_AppendixB/02_concrete_state_moduli.txt
+23. evidence/materials/NC/Nguyen_AppendixB/03_stab_bar2_rebar.txt
+24. evidence/materials/NC/Nguyen_AppendixB/04_stability_matrix_assembly.txt
+25. evidence/literature/NZ_SCCM_ZHOU_ATTARD_TANGENT_STABILITY_INTERPRETATION_20260811.md
+
+如果为了某一条“原始论文忠实性”结论必须查看原始 Zhou 或 Nguyen PDF，而该 PDF 不在 GitHub 仓库中，不得猜测，也不要把项目二次摘要冒充原文。请标记：
+
+PRIMARY_SOURCE_NOT_IN_REPO
+
+然后说明：哪些结论可由当前 GitHub 证据裁决，哪些只能保持 SOURCE_FIDELITY_UNRESOLVED。
+
+======================================================================
+二、审计纪律
+======================================================================
+
+1. 本轮只审理论，不执行新的 Case21 数值求解，不重算 Swartz24。
+2. 不使用 Case21/Swartz 试验值来证明理论正确。
+3. 不因为某历史预测值接近试验就给 PASS。
+4. 不修改 R10、不提高 N48 阶次、不提出新材料模型、不创建替代求解器。
+5. 先判断当前公式是否自洽；只有发现明确错误后，才给“最小修正”，不得借机扩张理论。
+6. 区分：
+   - DEFINITION：人为但明确的定义；
+   - MATHEMATICAL_IDENTITY：可严格推导的数学恒等式；
+   - SOURCE_MODEL_ASSUMPTION：来源模型假定；
+   - CURRENT_MODEL_ASSUMPTION：本项目当前建模假定；
+   - APPROXIMATION/COMPILER：有限解析近似；
+   - GOVERNANCE_RULE：生产根选择/容差规则。
+   不得把定义或治理规则写成“数学定理已证明”。
+7. 如果某式只在附加条件下成立，必须列出条件。
+8. 如果某参数未给具体数值、来源或生成规则，但计算实际需要它，标记 UNRESOLVED_PARAMETER。
+9. 如果某式存在符号、转义或排版错误，要区分 EDITORIAL 与 THEORY_ERROR。
+10. 一旦发现真正会使端到端理论不能唯一计算的第一处实质缺口，必须明确标记 FIRST_SUBSTANTIVE_BLOCKER；但仍可继续完成静态理论审计，不得用后续结果掩盖该缺口。
+
+======================================================================
+三、必须逐层独立复核
+======================================================================
+
+A. R10 材料层
+
+逐式检查：
+- κ=E0 ε0/fc 的量纲和初始切线意义；
+- ρ、x_cr、η 的定义及来源身份；
+- Πη(z) 是否满足预期的平滑正部性质、零点值/导数性质；
+- c(λ)、t(λ) 的拉压符号约定；
+- C(λ) 的零点、初始导数、压缩符号及极限行为；
+- Foster 源拉伸函数、H(r,r0)、T_src、W_src 的数学关系；
+- u1、u2、h 的端点值、一阶/二阶连续性和材料功闭合是否真的成立；
+- T、T^7、U 的零点 C1 锚点是否由公式本身推出；
+- 主应力式 s+、s- 与张量式 S 是否严格等价；
+- a_cc 是否已在仓库中给出唯一来源和值；若没有，标记阻断级别。
+
+不得只复述文件中的 PASS，要自行求导/代入验证。
+
+B. 等效应变与张量层
+
+独立从式 E_u 推导 X11、X22、X12；检查工程剪应变和张量剪应变的 2 倍关系是否一致。
+检查 λ± 的主值公式。
+检查 current map 是否客观、主值交换对称、在重复特征值 λ+=λ- 时是否连续且方向无关。
+
+C. N48-C1/MM 编译层
+
+独立检查：
+- 49 个 Chebyshev roots 与 degree 48 的关系；
+- direct coefficient 公式的归一化系数 2-δn0 是否正确；
+- H=V^T V 的对角形式是否正确；
+- G 的第二行是否确实是对真实 λ 的导数而非 ξ 导数；
+- C1 minimum-disturbance 公式是否是带等式约束二次最小化的正确闭式解；
+- 约束矩阵是否满秩、何时可能失秩；
+- T constrained-minimax 定义是否存在/是否唯一/是否足以形成可复现的生产系数；
+- 该层是材料坐标近似，不是空间离散；
+- 但仍需检查材料值误差和一阶切线误差是否有明确接受门，不能因为“零空间积分”而忽略材料近似误差。
+
+D. Cayley–Hamilton 二维提升
+
+独立从二维 Cayley–Hamilton 恒等式与 Chebyshev recurrence 推导 A_n、B_n 递推。
+检查：
+- T_n(Y)=A_n I+B_n Y 是否对所有 2×2 对称 Y 成立；
+- 与主值逐点应用标量 F(λ±) 是否等价；
+- 不同 primitive 形成的矩阵是否都是 Y 的函数，从而相互可交换；
+- CC、TC、TT 张量式是否与主应力式严格一致。
+
+E. Nguyen 二阶运动学
+
+从
+w0=A0 sinX sinY,
+w1=A sinX sinY
+和 von Kármán 二阶应变定义重新推导，不得照抄：
+- χq=q0 q+q²/2；
+- Cmx、Cmy、Cmxy；
+- Cbx、Cby、Cbxy；
+- ex、ey、gxy；
+- b≠ℓ 时所有 b/ℓ 比例；
+- 弯曲项和工程剪切项的正负号；
+- q0 是 stress-free reference imperfection、q 是 added displacement，因此初始点为 (D,q)=(0,0) 是否自洽。
+
+F. “N48 coefficient → D15”闭合性
+
+这是重点阻断审计。
+
+不要默认以下陈述成立：
+“所有实际 integrand 都可写成 C_i(sinX) C_j(sinY) C_k(ζ) 的有限和。”
+
+必须实际检查 Nguyen 场中含有 cosX、cosY、sinX cosX、cosX cosY 的项后，以下对象是否落在声明的 D15 基函数闭包内：
+- S_yy；
+- Q_q=S:∂e/∂q；
+- current tangent/stability 所需 integrand；
+- 钢筋 contribution。
+
+如果单独 S_xy 或某中间 primitive 不能仅由 sinX/sinY 的函数表示，但最终实际 integrand 因奇偶性/乘积而闭合，要明确证明“中间不闭合、最终 integrand 闭合”。
+如果需要更一般的 sin^p X cos^r X sin^q Y cos^s Y ζ^h 精确矩，必须指出当前式(85)–(94)是否写窄了，并与历史 D15/D15R 原始基核对。
+
+逐一独立验证：
+M_n=∫_0^π C_n(sinX)dX；
+Z_k=∫_-1^1 C_k(ζ)dζ；
+JΩ=bℓtp/(2π²)。
+
+G. P_c 与 R_q 的力学来源
+
+检查：
+- Pc=-(1/ℓ)∫σyy dV 的力学意义：为什么是沿 y 的体积平均而不是某一截面的直接应力合力？该定义在近似位移场下是否与轴向平衡一致？
+- Pc=-fc b tp/(2π²) D[Syy] 的 Jacobian 与 ℓ 消去是否正确；
+- Q_q=S:∂e/∂q 是否与虚功原理一致；
+- Rq,c=fc ε0 JΩ D[Qq] 的量纲是否为与无量纲 q 共轭的力×长度；
+- 钢筋 Ps、Rq,s 是否在当前正式理论中已经给出足够显式的闭式公式，而不是只有符号占位。
+
+如果钢筋部分无法仅凭正式理论逐式算出，标记 INCOMPLETE_REBAR_CLOSURE。
+
+H. L 与 NC-R1 根拓扑
+
+独立从 level-set differential geometry 证明：
+t0=(Rq,q,-Rq,D) 是 Rq=0 的切向量；
+L=P_D Rq,q-P_q Rq,D=∇P·t0。
+
+重点检查：
+- Rq,q=0 是否只是 q(D) 图表示失败而不是 L 失效；
+- 真正正则性失败是否是 ∇Rq=0；
+- g=dP/ds 与 L=0 的等价条件；
+- first +→- maximum 作为 load-controlled ultimate 的力学解释是否成立；
+- disconnected root、negative-q root 的排除是否是明确建模/初始缺陷方向假定，而非数学必然；
+- R_norm 和 L_norm 是否无量纲、尺度合理；
+- L_norm 的 D'=aD,q'=bq 重标度不变性是否严格成立；
+- d_ij 的三个分量是否真的无量纲且尺度定义完整。
+
+I. Zhou current-tangent 稳定骨架
+
+重点审查，而不是默认接受：
+- Ct=∂σ/∂E 来自同一 current operator 是否满足一致切线要求；
+- Dx=tp³ Cxx,t/12、Dy=tp³ Cyy,t/12 等公式在 current tangent 随 X,Y,ζ 变化时，究竟代表局部值、厚度/面内平均值还是某个投影值；当前正式理论是否定义清楚；
+- Dμ,eff、D66、H_eff 的映射是否与 Zhou/Navier 方程的张量 convention 一致；
+- Ny,cr^Z 的量纲与 α、β 次数是否正确；
+- 最重要：当前理论是否给出了“Zhou stability acceptance gate”究竟如何作用于生产状态/Pu 的明确判据。如果只有 Ny,cr^Z 公式但没有与当前膜力/状态比较的 gate equation，标记 INCOMPLETE_ZHOU_GATE。
+
+======================================================================
+四、参数完备性审计
+======================================================================
+
+建立完整参数表。对正文所有符号逐一列：
+
+符号 | 含义 | 量纲 | 来源文件/公式 | 类型（INPUT/DERIVED/FROZEN/MATH/GOVERNANCE） | 是否有唯一数值/生成规则 | 是否为计算必需 | 状态
+
+至少覆盖：
+fc,E0,ε0,ν,κ,ρ,x_cr,η,m_t,η_r,u_r,W_src,h,a_t,a_cc,
+λa,λb,λc,λh,N=48,θj,λj,a_n,H,G,dF,
+b,ℓ,tp,A0,A,q0,q,D,JΩ,
+ρs,zs,Es,εy,fy,
+R_norm,L_norm,10^-5,10^-4,
+Dx,Dy,Dμ,eff,D66,H_eff,α,β。
+
+任何计算必需但没有唯一来源/数值/生成规则的参数都必须单独进入 `UNRESOLVED_PARAMETER_LEDGER`。
+
+======================================================================
+五、输出格式
+======================================================================
+
+严格按以下顺序输出：
+
+1. EXECUTIVE VERDICT
+只允许：
+- PASS
+- PASS_WITH_NONBLOCKING_CORRECTIONS
+- BLOCKED
+- FAIL
+
+2. FIRST_SUBSTANTIVE_BLOCKER
+如果没有，写 NONE。
+
+3. EQUATION-BY-EQUATION AUDIT
+至少覆盖正式正文式(2)–式(151)。允许把纯定义型连续公式成组，但不得跳过任何公式。每条/每组给：
+- equation number
+- identity type
+- derivation check
+- dimensional check
+- source/provenance check
+- verdict
+- issue if any
+
+4. PARAMETER/PROVENANCE LEDGER
+列出每一个参数和符号。
+
+5. R10 MATERIAL VERDICT
+
+6. N48-C1/MM COMPILER VERDICT
+
+7. CAYLEY-HAMILTON VERDICT
+
+8. NGUYEN KINEMATICS VERDICT
+
+9. D15 / COEFFICIENT-TO-MOMENT VERDICT
+
+10. REBAR CLOSURE VERDICT
+
+11. NC-R1 ROOT-TOPOLOGY VERDICT
+
+12. ZHOU TANGENT-STABILITY VERDICT
+
+13. ZERO-FORMAL-SPATIAL-DISCRETIZATION VERDICT
+明确区分材料坐标系数生成与结构空间离散。
+
+14. UNRESOLVED_PARAMETER_LEDGER
+
+15. MINIMUM_CORRECTIONS REQUIRED
+只列最小修正，不建立新理论。
+每项分为：
+- FATAL
+- MAJOR
+- MINOR
+- EDITORIAL
+
+16. FINAL GATES
+用以下固定格式：
+
+THEORY_INTERNAL_MATH = PASS / FAIL / BLOCKED
+MATERIAL_SOURCE_CLOSURE = PASS / FAIL / BLOCKED
+N48_C1_MM_RIGOR = PASS / FAIL / BLOCKED
+CH_TENSOR_LIFT = PASS / FAIL / BLOCKED
+NGUYEN_KINEMATICS = PASS / FAIL / BLOCKED
+D15_EXACT_MOMENT_CLOSURE = PASS / FAIL / BLOCKED
+REBAR_CLOSURE = PASS / FAIL / BLOCKED
+NC_R1_LIMIT_ROOT_LOGIC = PASS / FAIL / BLOCKED
+ZHOU_TANGENT_STABILITY_GATE = PASS / FAIL / BLOCKED
+ZERO_FORMAL_SPATIAL_DISCRETIZATION = PASS / FAIL / BLOCKED
+PARAMETER_COMPLETENESS = PASS / FAIL / BLOCKED
+OVERALL_THEORY_RIGOR = PASS / PASS_WITH_NONBLOCKING_CORRECTIONS / BLOCKED / FAIL
+READY_FOR_CASE21_INDEPENDENT_VALIDATION = YES / NO
+
+======================================================================
+六、最后约束
+======================================================================
+
+本轮不要计算 Case21 Pu。
+不要用历史约 365 kN 候选值作为任何检查目标。
+不要用试验荷载选根或反标。
+不要因为仓库文件自称 PASS 就照抄 PASS。
+不要为了修正一个错误自动引入 N96/N112、空间 Gauss、材料点网格、adaptive cells、新 current operator 或新求解器。
+
+如果当前理论本身存在错误，优先精确定位“哪一个公式、哪一个前提、哪一个参数来源”出了问题。
+
+我随后会在本消息之后粘贴待审计的正式理论正文。
+
+====================================================================================================
+FILE: evidence/CASE21_FRESH_R10_N48_D15_IMPLEMENTATION_AUDIT_20260811.md
+SIZE: 1812
+SHA256: 79b7270bee051e412b4e96010b0bedcc9bcc327f7db4198247b7a1350ea4c8d7
+ENCODING: utf-8
+LINES: 87
+====================================================================================================
+# Case21 fresh R10-N48-D15 implementation audit
+
+**Date:** 2026-08-11
+
+This note records implementation details of the fresh calculation only. It does not introduce another theory stage.
+
+## Finite analytic coefficient representation
+
+Material coordinate order:
+
+\[
+N_M=48.
+\]
+
+For the structural coefficient algebra used in this Case21 execution, the retained tensor-Chebyshev coefficient indices were
+
+\[
+0\le i,j,k\le28.
+\]
+
+This is a finite analytic coefficient representation, not a spatial integration grid. No value of the physical integrand was evaluated at a spatial Chebyshev node, Gauss point, Simpson point, or material point.
+
+Coefficient multiplication used only the algebraic product identity
+
+\[
+\mathcal C_m\mathcal C_n
+=\frac12(\mathcal C_{m+n}+\mathcal C_{|m-n|}),
+\]
+
+with coefficient-index convolution. Dense products were accelerated as Laurent/coefficient-index convolution; this does not create physical-space samples.
+
+Formal spatial identity therefore remains
+
+```text
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+## Fresh D15 contractions at the final state
+
+At
+
+\[
+D\approx0.8359179832,\qquad
+q\approx0.00178978948,
+\]
+
+the exact-moment contraction of the normalized axial stress coefficient field is
+
+\[
+\sum p_{ijk}M_iM_jZ_k\approx-13.33113967.
+\]
+
+The axial-force prefactor is
+
+\[
+\frac{f_cb t_p}{2\pi^2}\frac1{1000}
+\approx25.32429668\ \mathrm{kN},
+\]
+
+hence
+
+\[
+P_c\approx337.601736\ \mathrm{kN}.
+\]
+
+For the amplitude-work coefficient field,
+
+\[
+\sum r_{ijk}M_iM_jZ_k\approx4.82108472,
+\]
+
+and
+
+\[
+\frac{f_c\varepsilon_0J_\Omega}{1000}
+\approx64.57189168\ \mathrm{kN\,mm},
+\]
+
+so
+
+\[
+R_{q,c}\approx311.306561\ \mathrm{kN\,mm}.
+\]
+
+These numbers are outputs of coefficient contraction, not numerical spatial quadrature sums.
+
+====================================================================================================
+FILE: evidence/NZ_SCCM_NC_ENERGY_POTENTIAL_D15_GATE_metrics_20260810.csv
+SIZE: 562
+SHA256: 4b52b6be3574cbf247e13b6c7da9824a4e5d218dd02aaaaa4783eceadbbdf17e
+ENCODING: utf-8
+LINES: 4
+====================================================================================================
+potential_max_abs,potential_p95_abs,stress_max_abs_fc,stress_p95_abs_fc,tangent_max_abs_normalized,tangent_p95_abs_normalized,max_spurious_tension_in_compression_fc,max_spurious_compression_in_tension_fc,compression_overshoot_beyond_fc,potential_degree_N,max_invariant_monomials_before_D15
+135.055197,126.124869,105.476529,93.058239,86.766694,71.986324,105.185120,0.682103,53.236538,8,25
+4.144058,3.491604,5.723855,4.761838,9.910178,8.354566,5.533162,0.748071,4.331491,10,36
+0.231823,0.166272,0.879333,0.405728,9.918593,5.441321,0.328363,0.810240,0.083387,12,49
+
+====================================================================================================
+FILE: evidence/NZ_SCCM_R10B_ARTIFACT_HASHES_20260811.md
+SIZE: 1579
+SHA256: ed5e96ce2e44e559d8de66742e70eba1fd68756dff7417ab2163adad87bc1ff6
+ENCODING: utf-8
+LINES: 35
+====================================================================================================
+# NZ-SCCM R10B ARTIFACT HASHES
+
+Date: 2026-08-11
+
+Local execution package:
+
+```text
+NZ_SCCM_R10B_ZERO_SPATIAL_D15_CASE21_20260811.zip
+SHA-256 = a953b97abe338ee841e5d2c075f6547ef390e307ac725656b76439d196a79651
+```
+
+Contained artifact hashes:
+
+```text
+00_R10B_report.md                         56795da24ef5286061c44fefddee1609c2c4a0ecf4943e933d0e091c9a60f321
+01_frozen_inputs_and_contract.json        6ef848958dd937c7ef38a6d85c492a4d2ed0c19030f4db6d67372073e5c6ae2f
+02_spectral_domain_certificate.json       f0a135525fa787f1ef5de48f331bec7ad1879b49ef8470140dea231fa08f1b90
+03_material_compiler_N48_metrics.csv      992b9840db31dd5b4ed416b4396af9a99377db57e2fbdeff3155e690db5ddfc2
+04_zero_spatial_order_convergence.csv     077faaea4b5f3ca3caea646efa3271da16e3de965895828d4ac686c208bbf9f6
+05_R10B_formal_N48_root.json              a0a8a5d7d893ef3b1fae14aa78d7b830c91022e2809e14038de2d82a800f2e7f
+06_N96_engineering_convergence_check.json 2876028f4ca6c2a5b3ef63378fd0c3039023790cf4fb2e27422288d1153ef147
+07_R10B_zero_spatial_compiler_core.py     4651698f7d4b2d375baa9fda8b79875f75f013603f99238e21a8bcf387305b84
+08_R10B_capacity_comparison.png           7f14eedd5fc9a9fac19181a2b9629926030d876e464202601dcd72ee2f1a4ddb
+09_R10B_decision.json                     71e2b794b7309d00181c184aef5acdb1d3b2da489750ffc420b1a654b53ae27d
+```
+
+Identity:
+
+```text
+N_formal_spatial_sampling   = 0
+N_formal_spatial_quadrature = 0
+R10B_ZERO_SPATIAL_CASE21    = PASS_ENGINEERING
+```
+
+The PNG and ZIP are local execution artifacts; canonical theory/results/governance are stored as repository text files.
+
+====================================================================================================
+FILE: evidence/NZ_SCCM_R10B_CHEB_ROOT_DCT_ORDER_AUDIT_20260811.csv
+SIZE: 2051
+SHA256: ad30bd0f66a1d8ca24d4efcd78dbffba2444cc52691f02aa5f8c5481eee5667b
+ENCODING: utf-8
+LINES: 37
+====================================================================================================
+material_degree,scalar_function,max_abs_error,p95_abs_error,pass_vs_archived_N48
+48,U,0.001079571759078809,0.0007443712857811344,False
+48,C,0.005457213048215284,0.0016082532928837275,False
+48,T,0.027177925370633377,0.01263798414917088,False
+48,T7,0.069655973690260109,0.040934398219465151,False
+56,U,0.00033929920893268663,0.00022615233535618547,False
+56,C,0.003200363002378883,0.0014135174818819894,False
+56,T,0.040292807115189115,0.010279214746017111,False
+56,T7,0.064195451989627839,0.029071646547223561,False
+64,U,0.00045433058657963509,0.00020261412174608337,False
+64,C,0.0051986090919720514,0.00072621330593787114,False
+64,T,0.040139552363046067,0.008147225741705167,False
+64,T7,0.048319386936523268,0.023480517026255462,False
+72,U,0.00036867376571796638,0.0002202681669076114,False
+72,C,0.003033180062833477,0.001187018397396907,False
+72,T,0.028454640207778447,0.010409782450054902,False
+72,T7,0.02575488780869184,0.01373735365157437,True
+80,U,0.00025631467631814309,0.00010882394470409148,False
+80,C,0.0033739764081899626,0.00057625815720041616,False
+80,T,0.038411587548000496,0.0038212080363965494,False
+80,T7,0.0097536148734562733,0.0073666545101709465,True
+88,U,0.00018337190392994987,7.546502256885882e-05,True
+88,C,0.0028023435580152869,0.00050387087699858347,True
+88,T,0.020564897763302503,0.0084218210950410596,False
+88,T7,0.010101531845912781,0.004348916864891408,True
+96,U,9.0517717424506983e-05,5.0045165993107009e-05,True
+96,C,0.0018908015272139055,0.00069793063839078829,True
+96,T,0.029296208856863633,0.0030949598828172056,False
+96,T7,0.0066493370926675732,0.0026299770801475057,True
+104,U,0.00011926389856772553,3.7862311636035341e-05,True
+104,C,0.0031433730681965826,0.00028429860786387788,False
+104,T,0.016901328973418037,0.0039232040062540368,True
+104,T7,0.0046154052119974365,0.0013070280107698343,True
+112,U,7.3352195900280859e-05,4.1632950382558523e-05,True
+112,C,0.002045701520023778,0.00060108850302880335,True
+112,T,0.01638518583603011,0.0037906918519010607,True
+112,T7,0.0028889305301476043,0.00052677094827905649,True
+
+====================================================================================================
+FILE: evidence/NZ_SCCM_R10_ARTIFACT_HASHES_20260810.md
+SIZE: 916
+SHA256: 1807a8825f2c0b03746042bc64cb61bd09511618ee19fc52404f21604387e14c
+ENCODING: utf-8
+LINES: 37
+====================================================================================================
+# R10 artifact evidence
+
+**Date:** 2026-08-10
+
+Local execution package:
+
+```text
+NZ_SCCM_R10_1D_ENERGY_SMOOTHING_REINSERTION_CASE21_20260810.zip
+SHA256 = 1b92f1c8dc5360704d773a232d8227743280fd7b5e759c4986dfbfe6c1afa8f9
+```
+
+Canonical execution files in the package include:
+
+- `00_R10_report.md`
+- `01_1D_energy_smoothing_curve.csv`
+- `02_case21_same_execution_results.csv`
+- `03_material_energy_contract.json`
+- `04_1D_source_vs_energy_smooth.png`
+- `05_energy_smoothed_surface_with_projections.png`
+- `06_case21_capacity_comparison.png`
+- `08_gate_decision.json`
+- `MANIFEST_SHA256.json`
+
+Final same-execution audit checkpoint:
+
+```text
+SOURCE_FOSTER Pu      = 342.3340294633849 kN
+ENERGY_SMOOTHED Pu    = 368.7234641272992 kN
+Energy-smoothed error = +0.11151232948064638 %
+```
+
+Formal identity boundary:
+
+```text
+R10 structural Gauss evaluator = AUDIT ONLY
+R10 zero-spatial D15 production = HOLD pending R10B
+```
+
+====================================================================================================
+FILE: evidence/R09A_EXPLICIT_TARGET_ARTIFACT_MANIFEST_20260810.md
+SIZE: 953
+SHA256: 0082d92a6ccf13b4e82b6663c32dbb6720555dc1d9c8425944e2e1b766156266
+ENCODING: utf-8
+LINES: 19
+====================================================================================================
+# R09A EXPLICIT TARGET ARTIFACT MANIFEST — 2026-08-10
+
+The R09A local explicit `Pc(D,q)` / `Rc(D,q)` surfaces are degree-(16,16) Chebyshev targets for R08, SAT03, SAT05 and SAT07.
+
+The full coefficient artifact was generated during the visible R09A execution.
+
+Exact local artifact hashes:
+
+```text
+02_R09A_explicit_coefficients.json
+SHA-256 = 375282055174b700e0308ced9cd5efca4120a1eb9ca3990b0e5fcb8db773a343
+
+NZ_SCCM_R09A_TENSION_SATURATION_SENSITIVITY_20260810.zip
+SHA-256 = 6b522b38e6e74d4ba3418cca6c53bd936fe7fd5469bbc292d23ef8f0c8b1f905
+```
+
+The canonical GitHub theory/result files record the formulas, domains, stationary roots, validation errors and sensitivity decision. The full numerical coefficient matrices are retained in the packaged execution artifact referenced by these hashes.
+
+This R09A coefficient generation remains OFFLINE identification evidence; it is not relabeled as the pure-D15 zero-spatial-quadrature production identity.
+
+====================================================================================================
+FILE: evidence/README.md
+SIZE: 814
+SHA256: 1d4a1243b65c9cb0cded8a81356690024454c0bc653c618fada32b0d4747404d
+ENCODING: utf-8
+LINES: 16
+====================================================================================================
+# EVIDENCE
+
+这里保存**来源与证据**，不保存“当前路线身份”。当前身份看 `current/CURRENT_STATE.md`。
+
+## 目录
+
+- `catalog/`：上传文件总账、File Library ID、SHA、来源 URL、inventory chain。
+- `materials/NC/`：Nguyen 等普通混凝土/钢筋有效来源片段。
+- `materials/UHPC/`：UHPC 一级来源证据、历史状态闭合台账、来源数据。
+- `steel_shell/`：云露/张宁/孙立鹏/PBL/钢壳有效来源与边界。
+
+## 证据等级
+
+原始 PDF/正式出版物最高。GitHub 中的 excerpt、TXT 或 CSV 是定位和恢复辅助；涉及公式、图表、页码歧义时回到原始 PDF。
+
+不要把多个来源“拼起来”就宣称形成完整 production operator；是否闭合由 `current/CURRENT_STATE.md` 和相应 closure/audit 文件决定。
+
+====================================================================================================
+FILE: evidence/catalog/INVENTORY_CHAIN.md
+SIZE: 1582
+SHA256: 2f455fbb71f36fe97bf5f2a470374e83bd00503478c67c8eb93cfe7f4b73b9eb
+ENCODING: utf-8
+LINES: 22
+====================================================================================================
+# Inventory Chain
+
+为避免在 GitHub connector 无法安全读取/替换超长 CSV 全文时破坏既有总账，本仓库采用**append-only inventory chain**。
+
+读取顺序：
+
+1. `MASTER_SOURCE_INVENTORY.csv` — 2026-08-10 第一轮 89 条基线；
+2. `inventory_append/20260810_P1_D16_D18_R16_R20.csv` — D16–D18 与 R16–R20 新恢复条目；
+3. `inventory_append/20260810_EFFECTIVE_EXCERPTS_NGUYEN_SUN_UHPC.csv` — 停止全文搬运后建立的 Nguyen Appendix-B、孙立鹏及 UHPC 核心来源有效证据包；
+4. 后续 `inventory_append/YYYYMMDD_*.csv` — 发现即追加，不删除前序记录。
+
+## 规则
+
+- 原始行永不因后续 supersession 被删除；
+- 同一文件若出现新副本/新 SHA/新 File Library ID，新增一行并标明 duplicate/version/superseded identity；
+- `github_copy_status` 描述的是迁移状态，不代表理论身份；
+- 理论身份必须结合 `history/...RECOVERY_BOUNDARY.md`、decision ledger 和 current governance 判断；
+- `FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB` 不等于 `BYTE_EXACT_ORIGINAL`；
+- PDF/ZIP byte-exact 原件尚未通过当前 connector 上传时，继续保留 locator + SHA + public source URL；
+- 2026-08-10 起，新增文献默认执行 `EFFECTIVE_SOURCE_EXCERPT_POLICY.md`：优先保存有效公式/数据/上下文和恢复 locator，不再以整篇全文镜像率作为迁移目标。
+
+以后若获得本地 git clone / proper binary push 通道，可生成一个新的 consolidated inventory，但不得删除这条 append-only chain，以保留迁移本身的审计历史。
+
+====================================================================================================
+FILE: evidence/catalog/MASTER_SOURCE_INVENTORY.csv
+SIZE: 20105
+SHA256: f0264f5620743fe40e18206e13d9d75b9c7d18d14b033ba89935bbd84738477b
+ENCODING: utf-8
+LINES: 90
+====================================================================================================
+filename,file_id,type,date,historical_stage,module_or_material,original_or_derived,authority_level,local_binary_available,github_copy_status,sha256,external_url
+Nguyen-011325526.pdf,file_0000000078b47206a6456f01f5421152,PDF,2026-07-12,SOURCE,NC/RC,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,de4369d427540716e965bd9188ef0aaac77146eab3f054a433703f772e20111e,
+Nguyen-011325526.pdf,file_000000006238820799a9f9d178436b46,PDF,2026-08-02,SOURCE,NC/RC,ORIGINAL_SOURCE_DUPLICATE,L1_PRIMARY_SOURCE,YES,REGISTERED_DUPLICATE_POINTER,,
+Nguyen-011325526.pdf,file_00000000675482099abb7ca6a4cd4ad0,PDF,2026-08-02,SOURCE,NC/RC,ORIGINAL_SOURCE_DUPLICATE,L1_PRIMARY_SOURCE,YES,REGISTERED_DUPLICATE_POINTER,,
+BUCKLING OF REINFORCED CONCRETE WALLS Attard UNICIV.pdf,file_00000000ab54720792ec90e2d24ecf0e,PDF,2026-07-12,SOURCE,RC stability,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,a32fdbd8d397c34f13bd347d12da27438c84b8988fc22e795e3f5a4ba6f9fba6,
+考虑薄膜效应的钢箱混凝土壁板局部屈曲行为研究_云露.pdf,file_0000000036e47209aec975db0984eef4,PDF,,SOURCE,steel shell / Yunlu,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,1fce0f9ce9058f00b2a6ddd0f6dd11faa41366816e2145348812c1a93884e897,
+PBL加劲型矩形钢管混凝土轴压柱局部屈曲性能分析_张宁.pdf,file_000000006d707209aacb22ca449a54e0,PDF,,SOURCE,PBL/local buckling,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,7ae43da9f08d777e8b6a47acfff450ff22929dc7fcdad15fe95d29a5370572c5,
+PBL加劲型薄壁钢管混凝土...塔的计算理论与设计方法研究_孙立鹏.pdf,file_00000000d82c720b90c11590462db761,PDF,,SOURCE,PBL/steel shell,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,e441312bd0585536bbb7244e6cc2aaa37235fbe7a75f2c1e934f1a4e78981a6e,
+钢-预制UHPC开孔板组合桥面板界面抗剪性能研究_胡文旭.pdf,file_000000003824720ba4ffbb7e840dec6b,PDF,2026-07-01,SOURCE,UHPC/interface,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,a554649f440bdb5d6523dc174aab68e1128aa6e4f9d19ebb9b67a9e19b544909,
+UHPC三轴受压力学性能研究_周俊.pdf,file_0000000077f072099c923b2baf660959,PDF,2026-06-28,SOURCE,UHPC/triaxial,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,37531c8f73765fea9192bef094a88edd7d7eacc5756b51640a7353b65ed72e59,
+超高性能混凝土三轴受压力学性能及破坏准则_王淑楠.pdf,file_00000000fdc47209875e34ba88957bcd,PDF,2026-06-28,SOURCE,UHPC/triaxial,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,YES,REGISTERED_LOCAL_BINARY,e6e24cf47b21b1faa09f13ceb97a599321283c154578da92ef844b5d8e5c27dd,https://doi.org/10.14006/j.jzjgxb.2022.0765
+Hiew_2024_UHPC_unified_tension_2pct.pdf,file_0000000087e882079606fbbb13dd1e2d,PDF,2026-08-07,SOURCE,UHPC/tension,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://research.monash.edu/files/599317955/589510091_oa.pdf | https://research.monash.edu/en/publications/a-unified-tensile-constitutive-model-for-monohybrid-fibre-reinfor/
+Liu_2024_UHPC_biaxial_full.pdf,file_0000000012988211ab7b3fbcacf060ab,PDF,2026-08-07,SOURCE,UHPC/biaxial,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4926706 | https://www.sciencedirect.com/science/article/pii/S0950061824044076
+Leutbecher_2020_UHPFRC_TC.pdf,file_00000000df84820bb12fe27517028963,PDF,2026-08-07,SOURCE,UHPC/TC,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://onlinelibrary.wiley.com/doi/full/10.1002/suco.201900451 | https://d-nb.info/126182234X/34
+Leutbecher_2020_DataS1_31_biaxial_tests.pdf,file_00000000e4a4820baf5e0f5aad438601,PDF,2026-08-07,SOURCE,UHPC/TC data,ORIGINAL_SOURCE_SUPPLEMENT,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://onlinelibrary.wiley.com/doi/full/10.1002/suco.201900451
+Diab_Ferche_2026_UHPC_compression_softening.pdf,file_00000000438882118a44003e65279d5b,PDF,2026-08-07,SOURCE,UHPC/TC synthesis,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://sites.utexas.edu/ferche/wp-content/uploads/sites/5679/2025/10/Modeling-the-response-of-UHPC-shear%E2%80%90critical-beams-Integrating-nonlinear-finite.pdf | https://onlinelibrary.wiley.com/doi/full/10.1002/suco.70191
+Lee_2017_UHPFRC_biaxial_TC_30_panels.pdf,file_00000000ae4c8211812e4a9f0c2e3373,PDF,2026-08-07,SOURCE,UHPC/TC validation,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://link.springer.com/article/10.1617/s11527-016-0918-1 | https://snu.elsevierpure.com/en/publications/biaxial-tensioncompression-strength-behaviour-of-uhpfrc-in-plane-/
+Shen_2020_UHPFRC_equi_biaxial_tension.pdf,file_000000008170820baafcc59cc6a730fd,PDF,2026-08-07,SOURCE,UHPC/TT validation,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://link.springer.com/content/pdf/10.1617/s11527-020-01553-1.pdf | https://link.springer.com/article/10.1617/s11527-020-01553-1
+FHWA_HRT_23_077_UHPC_design.pdf,file_000000002fac820ba9e9f5aed3ca142e,PDF,2026-08-07,SOURCE,UHPC/design,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,https://highways.dot.gov/sites/fhwa.dot.gov/files/FHWA-HRT-23-077.pdf
+chat_export_2026-08-05T20-29-31-447Z_part_01_turn_1-148.txt,file_00000000b7788209a161cd5ec2db852a,TXT,2026-08-05,RAW_HISTORY,NZ-SCCM history,ORIGINAL_DIALOGUE_EXPORT,L1_PROJECT_HISTORY,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+chat_export_2026-08-05T20-29-31-447Z_manifest.txt,file_00000000d7b08209a6a93987565bd8c2,TXT,2026-08-05,RAW_HISTORY,NZ-SCCM history,ORIGINAL_DIALOGUE_MANIFEST,L1_PROJECT_HISTORY,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+"{titleNZ-SCCM思想演化恢复,create_time1786.txt",file_000000001c58820b8d0057693a2cb762,TXT,2026-08-09,RAW_HISTORY,NZ-SCCM recovery,RAW_CONVERSATION_DUMP,L1_PROJECT_HISTORY,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+"{titleNZ-SCCM思想演化恢复,create_time1786.txt",file_000000001348820b8e59f2b5d24ad8bd,TXT,2026-08-09,RAW_HISTORY,NZ-SCCM recovery,RAW_CONVERSATION_DUMP_DUPLICATE,L1_PROJECT_HISTORY,YES,REGISTERED_DUPLICATE_POINTER,,
+"{title任务执行与核验,create_time1785996157.txt",file_00000000db8c81f780f4a4ea9a48b2fa,TXT,2026-08-07,RAW_HISTORY,NZ-SCCM execution,RAW_CONVERSATION_DUMP,L1_PROJECT_HISTORY,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+"{title任务执行与核验,create_time1785996157.txt",file_00000000566c820690274d576ccbd77c,TXT,2026-08-07,RAW_HISTORY,NZ-SCCM execution,RAW_CONVERSATION_DUMP_DUPLICATE,L1_PROJECT_HISTORY,NO,REGISTERED_DUPLICATE_POINTER,,
+"{title解析原始Conversation JSON,create_.txt",file_00000000ac3082079ba491c3f53d7b45,TXT,2026-08-08,RAW_HISTORY,NZ-SCCM recovery,RAW_CONVERSATION_DUMP,L1_PROJECT_HISTORY,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+"{title解析原始Conversation JSON,create_.txt",file_00000000a6408206ac0550dacafae325,TXT,2026-08-08,RAW_HISTORY,NZ-SCCM recovery,RAW_CONVERSATION_DUMP_DUPLICATE,L1_PROJECT_HISTORY,NO,REGISTERED_DUPLICATE_POINTER,,
+01_RAW_ACTIVE_BRANCH_MACHINE_AUDIT.json,file_00000000df348211abafbcd65759a6c3,JSON,2026-08-07,RAW_HISTORY_AUDIT,NZ-SCCM recovery,DERIVED_MACHINE_AUDIT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+02_USER_VISIBLE_MAIN_DIALOGUE.md,file_00000000c6b082119e64a3dc10d079e2,MD,2026-08-07,RAW_HISTORY_AUDIT,NZ-SCCM recovery,DERIVED_VISIBLE_DIALOGUE_EXPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+03_DIALOGUE_GROUP_INDEX.csv,file_00000000779882088781868dcb54586d,CSV,2026-08-07,RAW_HISTORY_AUDIT,NZ-SCCM recovery,DERIVED_INDEX,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+06_HISTORICAL_DECISION_LEDGER.csv,file_0000000067c48211882209ee351303e1,CSV,2026-08-07,RAW_HISTORY_AUDIT,NZ-SCCM recovery,DERIVED_DECISION_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+09_G15_INTERRUPTION_FORENSIC_REPORT.md,file_00000000fe48821184e5fb51ab267296,MD,2026-08-07,G15,NZ-SCCM recovery,DERIVED_FORENSIC_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+00_完整性复核与末24小时裁决_R04.md,file_000000000f58820983c8062ab883d90d,MD,2026-08-05,RECOVERY_R04,NZ-SCCM recovery,DERIVED_AUDIT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_148回合思想演化与当前正式主线恢复_R05.md,file_000000005fc08209bef6426deeb216bb,MD,2026-08-05,RECOVERY_R05,NZ-SCCM recovery,DERIVED_RECOVERY_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_U_v0.2_账户空间原始恢复索引_R01.md,file_0000000024b082069377839a38104c8c,MD,2026-08-05,RECOVERY_R01,NZ-SCCM recovery,DERIVED_RECOVERY_INDEX,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+HISTORICAL_COMPONENT_LEDGER.csv,file_00000000f280820ba52a0bf12d58b775,CSV,2026-08-05,HISTORICAL_COMPOSITE,NZ-SCCM,DERIVED_COMPONENT_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+HISTORICAL_COMPONENT_LEDGER.md,file_000000001c1c81fa8230d1dfc0a1a07f,MD,2026-08-05,HISTORICAL_COMPOSITE,NZ-SCCM,DERIVED_COMPONENT_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+BASELINE_GATE_STATUS.json,file_00000000a31482068c6aed8ca3151ad5,JSON,2026-08-05,HISTORICAL_COMPOSITE,NZ-SCCM,DERIVED_STATUS,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D12_CANDIDATE_GATE_SUMMARY.csv,file_00000000c4488230873fba3a87e3614c,CSV,2026-08-05,D12,material gate,DERIVED_GATE_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_DAEM_v0.5_D15_精确矩生成与UHPC解析矩公式报告.md,file_00000000e17081f898276bf421de6f6a,MD,2026-08-05,D15,D15/UHPC,DERIVED_THEORY_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D15_UHPC_SOURCE_CONSTRAINT_REGISTRY.csv,file_00000000931081fd899f00b705cd5254,CSV,2026-08-05,D15,UHPC source registry,DERIVED_SOURCE_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D15R_V054_HAND_CALC.md,file_00000000ad8082308d0648cdb7a85566,MD,2026-08-05,D15R,D15 hand calc,DERIVED_HAND_CALC,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D19_TEST_LOG.txt,file_00000000686481fa9fda3f98031e3dbd,TXT,2026-08-05,D19,state-front tests,DERIVED_TEST_LOG,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D19R_V052_EXECUTION_REPORT.md,file_00000000bb9881faae3683fa8e2c8e57,MD,2026-08-05,D19R,state-front/material audit,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_ANALYTICAL_MATRIX_v0.5_D19R_REPORT.md,file_00000000aae881fd96c0c560d356e113,MD,,D19R,analytic matrix,DERIVED_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_ANALYTICAL_MATRIX_v0.5.1_D19R_M1_ROLLBACK_REPORT.md,file_00000000f54c81f89b56d4590f72ab7a,MD,2026-08-05,D19R-M1,rollback,DERIVED_ROLLBACK_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D19R_ZERO_QUADRATURE_FEASIBILITY_DECISION.md,file_000000004044823082de472b3c7c2f4c,MD,,D19R,zero quadrature audit,DERIVED_DECISION,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D19R_FROZEN_MATERIAL_INTEGRABILITY_AUDIT.csv,file_0000000002e0820b93151a522c53e816,CSV,,D19R,material integrability,DERIVED_AUDIT_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+equation_to_code_registry_R19.csv,file_00000000a24881f6936a22f6631b5a65,CSV,,R19,equation-code provenance,DERIVED_REGISTRY,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+D19_LIU_TC_CLOSURE_MATRIX.csv,file_000000004ba482079c419a867f98540d,CSV,2026-08-05,D19,UHPC/TC,DERIVED_SOURCE_CLOSURE_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+UHPC_STATE_EQUATION_LEDGER.csv,file_000000003ac081fab7f7d4ff33981d05,CSV,2026-08-05,MATERIAL_RECOVERY,UHPC,DERIVED_STATE_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+MATERIAL_COMPONENT_RECOVERY_LEDGER.csv,file_000000007e1081fa83f589d796e58ba3,CSV,2026-08-05,MATERIAL_RECOVERY,NC/UHPC,DERIVED_RECOVERY_LEDGER,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+MATERIAL_RECOVERY_EXECUTION_REPORT.md,file_00000000ae5481fd9dfc34777a617352,MD,2026-08-05,MATERIAL_RECOVERY,NC/UHPC,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_G16_项目UHPC生产材料面冻结门禁.md,file_0000000064ec822f9cd735ebf182b5cf,MD,2026-08-07,G16,UHPC,DERIVED_GATE_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+G16_gate_decision.json,file_000000001ccc81fd82b25a23f203a766,JSON,2026-08-07,G16,UHPC,DERIVED_GATE_STATUS,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_G16R_signed_excess坐标_材料参数重审_U候选_D可识别性门禁.md,file_00000000d08481fb94ae56066ec12649,MD,2026-08-07,G16R,UHPC,DERIVED_GATE_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+03_COMMON_NSC_UHPC_CONSTITUTIVE_CONTRACT.json,file_00000000d5dc8207bf34b2910dd93f6a,JSON,2026-08-07,ONE_SHOT_CLOSURE,NC/UHPC,DERIVED_CONTRACT,L3_HISTORICAL_DERIVED,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+00_G31_Case21_Pu全过程与UHPC_C0同步模型.md,file_0000000095688206bc564face5eb85fc,MD,2026-08-08,G31,Case21/UHPC,DERIVED_EXECUTED_ARTIFACT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+10_UHPC_C0_material_contract.json,file_00000000363c82308a0144275d632d61,JSON,2026-08-08,G31,UHPC,DERIVED_EXECUTED_ARTIFACT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+NZ_SCCM_moment_first_D15_Pu_锁定流程与发展路线_20260809.md,file_000000003c448206ad48242285e563f1,MD,2026-08-08,MOMENT_FIRST,Case21,DERIVED_LOCK_REPORT,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_直接解析积分主线_Case21到Swartz24_阶段锁定稿_20260809.md,file_00000000e0688230b6dcf613472b6798,MD,2026-08-09,DIRECT_ANALYTIC,Case21/Swartz24,DERIVED_STAGE_LOCK,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_NESTED_D15_CASE21_REGRESSION_完整审计报告_20260809.md,file_00000000a2dc8211b82832afebbed753,MD,2026-08-09,NESTED_D15,Case21,DERIVED_AUDIT_REPORT,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_CASE21_MULTI_BACKEND_DIRECT_ANALYTIC_RESULT.md,file_000000000b3c82068c3aaba3c48eb727,MD,2026-08-09,DIRECT_ANALYTIC,Case21,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_CASE21_SAGE_FRICAS_ZERO_SPATIAL_ANALYTIC_RESULT.md,file_00000000d04c8206a41eb68860f4dd24,MD,2026-08-09,CAS_ATTEMPT,Case21,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_CASE21_EXPLICIT_ALGEBRAIC_ZERO_SPATIAL_SERIES_RESULT.md,file_00000000dc9881fb828dbeb0c8ec1dc3,MD,2026-08-09,PIECEWISE_ANALYTIC_SERIES,Case21,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md,file_00000000c438822f9a8b33ff035cd0f7,MD,2026-08-09,GLOBAL_ONE_DOMAIN,Case21,DERIVED_HANDOFF,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md,file_00000000cb90820993a46378e6d3caf4,MD,2026-08-09,GLOBAL_ONE_DOMAIN,Case21,DERIVED_HANDOFF_DUPLICATE,L2_MACHINE_EVIDENCE,YES,REGISTERED_DUPLICATE_POINTER,,
+NEXTSTEP_EXECUTION_REPORT.md,file_000000002250820996afe0f2809d9046,MD,2026-08-09,GLOBAL_ONE_DOMAIN,Case21,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+results_nextstep.json,file_00000000d3d082099d8cd12c07e741b1,JSON,2026-08-09,GLOBAL_ONE_DOMAIN,Case21,DERIVED_NUMERIC_LEDGER,L2_MACHINE_EVIDENCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_PRIORITY_RESET_MATERIAL_OPERATOR_ARCHITECTURE_REVIEW_20260810.md,file_00000000873c8209814a615326f902ac,MD,2026-08-10,PRIORITY_RESET,NZ-SCCM architecture,DERIVED_CURRENT_GOVERNANCE,L2_CURRENT_GOVERNANCE,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,,
+NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md,file_000000005e4882078c02edf8319ae318,MD,2026-08-09,CURRENT_OPERATOR,NC/rebar benchmark,DERIVED_THEORY_CONTRACT,L2_CURRENT_BENCHMARK,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,98483fa75e828f57916b06fc708fc35fc7960fabbdebf4edb3e04aba10061bc6,
+nz_sccm_current_operator_explicit_v1.py,file_00000000683c820692cd5df715753c92,PY,2026-08-09,CURRENT_OPERATOR,NC/rebar benchmark,DERIVED_MACHINE_HELPER,L2_CURRENT_BENCHMARK,YES,REGISTERED_FILE_LIBRARY_AND_LOCAL_COPY,740e8862b1f428e66c779ea17c2ffefdec1f53ae7da5b98f9d85669ea24811c2,
+路径A与极限承载力.txt,file_000000001e14722f9d44f7a21a52ff64,TXT,2026-07-13,UCFT_PATH_A,UCFT,ORIGINAL_STAGE_FILE,L1_PROJECT_HISTORY,YES,REGISTERED_LOCAL_BINARY,c1862e55076732361094c4ea99bae1a341b0ddd8580882a2a1b7a58093ef5edb,
+UCFT板轴压承载力理论体系_v4-locked-B1_原则边界.md.txt,file_0000000086247206b0046d62f398e7c9,TXT,2026-06-29,UCFT_V4,UCFT,ORIGINAL_STAGE_LOCK,L1_PROJECT_HISTORY,YES,REGISTERED_LOCAL_BINARY,ef81de2949c3a2a1eb4c1d5c608734c2deef56968a98e728ce5dfb16caad9a1a,
+UCFT板轴压承载力理论体系_v5_局部钢壳屈曲判别与有效纵向应力闭合模块.md,file_00000000db2872069ee416c3cbb9c68a,MD,2026-07-01,UCFT_V5,steel shell,DERIVED_THEORY_MODULE,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+UCFT板轴压承载力理论体系_v5_材料模块与上下钢壳非对称模块.md,file_00000000b8f8720684fe5da6ac6b6875,MD,2026-07-01,UCFT_V5,UHPC/steel shell,DERIVED_THEORY_MODULE,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+UCFT板轴压承载力理论体系_v5_四边简支整板稳定矩阵元素积分与后屈曲路径闭合模块.md,file_000000001d5072068196284a9fda1703,MD,2026-07-01,UCFT_V5,global stability,DERIVED_THEORY_MODULE,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+UCFT板轴压承载力理论体系_v5-all-buckling_总集成与一致性校核模块.md,file_00000000f22c72099a3b0caa4222a431,MD,2026-07-03,UCFT_V5,integration,DERIVED_THEORY_MODULE,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+UCFT板轴压承载力层0完整矩阵理论体系_不降阶局部整体耦合路径模型_当前锁定稿.docx,file_000000007d74820993327e4e01af48e4,DOCX,2026-07-21,UCFT_L0,UCFT complete matrix,DERIVED_LOCKED_DOCUMENT,L2_PROJECT_ARTIFACT,YES,REGISTERED_FILE_LIBRARY_POINTER,,
+UCFT板轴压承载力层0完整矩阵理论体系_不降阶局部整体耦合路径模型_修订锁定稿.docx,file_000000000a60820994f4b98bb0d1c3bd,DOCX,2026-07-21,UCFT_L0,UCFT complete matrix,DERIVED_REVISED_LOCK,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+理论体系+case-1算例.md,file_0000000092607206ae563df37c1b9ea8,MD,2026-07-11,UCFT_CASE1,UCFT,DERIVED_THEORY_CASE_REPORT,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+UCFT V3工程进展.txt,,TXT,,UCFT_V3,UCFT V3 engineering,ORIGINAL_STAGE_FILE,L1_PROJECT_HISTORY,YES,COPIED_TO_GITHUB:history/raw/UCFT_V3工程进展.txt,b72083561889782ceacf0b2b415f61799516c61e10e9161280c7588a91186bd9,
+UCFT V3工程进展分析.txt,,TXT,,UCFT_V3,UCFT V3 engineering,ORIGINAL_STAGE_FILE,L1_PROJECT_HISTORY,YES,REGISTERED_LOCAL_BINARY,931bb423875e84c8b573e74dce0ae89c804f49f04528b02e8592d3c156a51b38,
+AIJ_CFT_stage3_document_learning_report.md,file_000000000404820b92940d1c303b7433,MD,2026-07-22,AIJ_CFT_ACQUISITION,AIJ/CFT,DERIVED_LEARNING_REPORT,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+AIJ_CFT_stage5_missing_evidence_actions.md,file_00000000060481f5a90fd3d437799b71,MD,2026-07-22,AIJ_CFT_ACQUISITION,AIJ/CFT,DERIVED_GAP_REPORT,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+acquisition_master_inventory.xlsx,file_000000009d0081fd9e4f6ac8171eed8e,XLSX,2026-07-22,AIJ_CFT_ACQUISITION,AIJ/CFT,DERIVED_SOURCE_INVENTORY,L2_PROJECT_ARTIFACT,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+AIJ_CFT_complete_acquisition_package.zip,file_00000000da40820bba25f3cb123c8725,ZIP,,AIJ_CFT_ACQUISITION,AIJ/CFT,DERIVED_ARCHIVE,L2_PROJECT_ARTIFACT,YES,REGISTERED_LOCAL_BINARY,,
+REPORT.md,file_000000004db48211b690cb804e4e0166,MD,2026-08-09,COMMON_POLICY_R2,Case21/Swartz24,DERIVED_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+REPORT.md,file_000000009e0481fd82851543432c3b38,MD,2026-08-09,MATERIAL_COMPILER_R5,Case21/material compiler,DERIVED_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+REPORT.md,file_0000000018f881fd86911e82b976f88e,MD,2026-08-09,MATERIAL_COMPILER_R4,Case21/material compiler,DERIVED_REPORT,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,,
+
+====================================================================================================
+FILE: evidence/catalog/README.md
+SIZE: 904
+SHA256: eaf84f42480ff631cc75a4d86d981d803b581c50dfd6aaf4780a02d28f640ca8
+ENCODING: utf-8
+LINES: 23
+====================================================================================================
+# SOURCE CATALOG
+
+这里的 catalog 用于回答：**某个原始文件是否存在、叫什么、File Library ID / SHA / DOI / URL 是什么、历史上处于什么阶段。**
+
+## 文件
+
+- `MASTER_SOURCE_INVENTORY.csv`：2026-08-10 第一轮来源总账基线；
+- `INVENTORY_CHAIN.md` + `inventory_append/`：后续追加发现；
+- `SOURCE_REGISTRY.md`：核心文献/原件 locator。
+
+## 重要边界
+
+这些总账是在仓库重构之前逐步形成的，其中个别 `github_copy_status`、旧目录 path 或 migration 状态记录的是**当时的迁移历史**，不代表当前工作目录。
+
+当前文件位置与当前理论身份必须按：
+
+1. `START_HERE.md`
+2. `current/CURRENT_STATE.md`
+3. 当前 Git tree
+
+判断。
+
+不要为了修正目录移动而改写历史 inventory 行；否则会破坏“当时发生了什么”的审计价值。新来源继续 append-only 登记即可。
+
+====================================================================================================
+FILE: evidence/catalog/SOURCE_REGISTRY.md
+SIZE: 5484
+SHA256: e36bbe85a3b2e8bfaaa5e621946b96e2f74d847d23e122e98241fbbc2ffe35ab
+ENCODING: utf-8
+LINES: 56
+====================================================================================================
+# SOURCE REGISTRY — 原始资料登记表
+
+本文件只登记“原件在哪里、是什么、扮演什么角色”。不把项目解释冒充原文。
+
+## A. 当前运行环境中已有本地原件（可校验 SHA-256）
+
+| source_id | 原始文件名 | 类别 | bytes | SHA-256 | 当前角色 | GitHub PDF binary |
+|---|---|---:|---:|---|---|---|
+| NC_NGUYEN_THESIS | `Nguyen-011325526.pdf` | NC/RC | 34860966 | `de4369d427540716e965bd9188ef0aaac77146eab3f054a433703f772e20111e` | 普通混凝土二维材料、钢筋、第4/6章稳定与路径来源 | PENDING |
+| UHPC_ZHOU_TRIAXIAL | `UHPC三轴受压力学性能研究_周俊.pdf` | UHPC | 2076983 | `37531c8f73765fea9192bef094a88edd7d7eacc5756b51640a7353b65ed72e59` | 三轴受压、八面体/DP 强度约束 | PENDING |
+| UHPC_WANG_TRIAXIAL | `超高性能混凝土三轴受压力学性能及破坏准则_王淑楠.pdf` | UHPC | 5145596 | `e6e24cf47b21b1faa09f13ceb97a599321283c154578da92ef844b5d8e5c27dd` | 三轴全过程、W-W 五参数破坏面 | PENDING |
+| UHPC_HU_INTERFACE | `钢-预制UHPC开孔板组合桥面板界面抗剪性能研究_胡文旭.pdf` | UHPC/interface | 12741610 | `a554649f440bdb5d6523dc174aab68e1128aa6e4f9d19ebb9b67a9e19b544909` | UHPC 单轴压/拉本构早期来源、界面研究 | PENDING |
+| SHELL_YUN | `考虑薄膜效应的钢箱混凝土壁板局部屈曲行为研究_云露.pdf` | shell/Y | 6109981 | `1fce0f9ce9058f00b2a6ddd0f6dd11faa41366816e2145348812c1a93884e897` | 大挠度、薄膜效应、局部屈后 | PENDING |
+| PBL_ZHANG | `PBL加劲型矩形钢管混凝土轴压柱局部屈曲性能分析_张宁.pdf` | PBL/shell | 535182 | `7ae43da9f08d777e8b6a47acfff450ff22929dc7fcdad15fe95d29a5370572c5` | PBL 加劲局部稳定/能量法参考 | PENDING |
+| PBL_SUN | `PBL加劲型薄壁钢管混凝土...塔的计算理论与设计方法研究_孙立鹏.pdf` | PBL/shell | 19805746 | `e441312bd0585536bbb7244e6cc2aaa37235fbe7a75f2c1e934f1a4e78981a6e` | R-O/Bleich、PBL加劲薄壁钢管理论历史来源 | PENDING |
+
+> `PENDING` 只表示当前 GitHub 连接器尚未把 PDF 二进制原件复制进仓库；不表示原件缺失。文本检索镜像会放在 `sources_text/`。
+
+## B. File Library 中已重新确认存在的 UHPC 原始 PDF
+
+这些文件是用户先前实际上传过的原件，不得从历史中省略。
+
+| source_id | 文件名 | ChatGPT File Library ID | 已核验内容/身份 | GitHub binary |
+|---|---|---|---|---|
+| UHPC_HIEW_2024_TENSION | `Hiew_2024_UHPC_unified_tension_2pct.pdf` | `file_0000000087e882079606fbbb13dd1e2d` | Cement and Concrete Composites 150 (2024) 105553；统一直接拉伸本构，elastic→hardening→peak→localization→fiber-pullout softening | PENDING / FILE_LIBRARY_ONLY |
+| UHPC_LIU_2024_BIAXIAL | `Liu_2024_UHPC_biaxial_full.pdf` | `file_0000000012988211ab7b3fbcacf060ab` | UHPC 双轴强度/TC 等；文内引用 Liu 2023 softened TC law、Lee 2017 UHPFRC 等 | PENDING / FILE_LIBRARY_ONLY |
+| UHPC_HU_INTERFACE_FL | `钢-预制UHPC开孔板组合桥面板界面抗剪性能研究_胡文旭.pdf` | `file_000000003824720ba4ffbb7e840dec6b` | 与本地原件同名；UHPC 本构/界面试验 | LOCAL_COPY_AVAILABLE |
+| UHPC_ZHOU_FL | `UHPC三轴受压力学性能研究_周俊.pdf` | 项目已上传原件 | 三轴 DP/八面体关系 | LOCAL_COPY_AVAILABLE |
+| UHPC_WANG_FL | `超高性能混凝土三轴受压力学性能及破坏准则_王淑楠.pdf` | 项目已上传原件 | 三轴全过程/W-W | LOCAL_COPY_AVAILABLE |
+
+## C. UHPC 关键“原始研究工件/响应文件”也属于证据源
+
+| artifact_id | 文件名 | File Library ID | 作用 |
+|---|---|---|---|
+| UHPC_G16R | `NZ_SCCM_G16R_signed_excess坐标_材料参数重审_U候选_D可识别性门禁.md` | `file_00000000d08481fb94ae56066ec12649` | 记录用户只强制 `fc=141.1 MPa`；Ec/eps0/ft/nu 重审；Hiew 2% 参数替换旧 ft=7.3；D 可识别性失败 |
+| UHPC_STATE_LEDGER | `UHPC_STATE_EQUATION_LEDGER.csv` | `file_000000003ac081fab7f7d4ff33981d05` | 记录 U/TC/TT/CC/TCX/C3 各状态来源、缺口与当前保留用途 |
+| UHPC_D19_LIU_TC | `D19_LIU_TC_CLOSURE_MATRIX.csv` | `file_000000004ba482079c419a867f98540d` | Liu 2023 TC 软化压缩支路的闭合/未闭合矩阵；明确 tensile/shear/history 尚缺 |
+| D15_UHPC_REPORT | `NZ_SCCM_DAEM_v0.5_D15_精确矩生成与UHPC解析矩公式报告.md` | `file_00000000e17081f898276bf421de6f6a` | D15 精确矩与 UHPC L0/L1 历史阶段；生产未授权 |
+| LOW_PARAM_LEDGER | `04_low_parameter_physical_target_ledger.csv` | `file_00000000c28c82099d640f2785e9fa41` | NC/UHPC 低参数物理目标；UHPC TC 明确要求独立识别 |
+
+## D. 公开来源/二次获取的处理规则
+
+如果某篇论文最初通过公开网络获取、而 File Library 中仍有原始 PDF：
+
+1. 优先保存用户实际上传的 PDF SHA；
+2. 同时在 evidence note 中登记 DOI/出版社/公开下载 URL（重新核验后填写）；
+3. 不因找到新的网页副本而覆盖用户原始 PDF；
+4. 若 PDF 二进制无法直接由当前 GitHub connector 复制，至少保留 File Library ID + 公开 URL + bibliographic metadata。
+
+## E. 强制恢复关键词
+
+新对话涉及 UHPC 时，至少搜索：
+
+`Hiew 2024`, `Liu 2023`, `Liu 2024`, `Lee 2017`, `周俊`, `王淑楠`, `胡文旭`, `G16R`, `D19_LIU_TC`, `UHPC_STATE_EQUATION_LEDGER`, `Zhang 2023`, `Fehling`。
+
+任何声称“完整恢复 UHPC 材性研究”的对话，若没有检查上述原件/工件，应判恢复不完整。
+
+====================================================================================================
+FILE: evidence/catalog/inventory_append/20260810_EFFECTIVE_EXCERPTS_NGUYEN_SUN_UHPC.csv
+SIZE: 2581
+SHA256: 248c7eacf5dc63de8f22d1957c60c6cdc45b75a32a8fb9c28d1be860e9fc2bab
+ENCODING: utf-8
+LINES: 11
+====================================================================================================
+filename,file_id,type,date,historical_stage,module_or_material,original_or_derived,authority_level,local_binary_available,github_copy_status,sha256,external_url
+Nguyen Appendix-B effective evidence package,,MD/TXT,2026-08-10,EFFECTIVE_EXCERPT_MIGRATION,NC/RC source program,DERIVED_SOURCE_EXCERPTS,L2_SOURCE_RECOVERY,YES,EFFECTIVE_PACKAGE_CREATED,,
+Sun Lipeng PBL shell effective evidence package,,MD/TXT,2026-08-10,EFFECTIVE_EXCERPT_MIGRATION,steel shell/PBL,DERIVED_SOURCE_EXCERPTS,L2_SOURCE_RECOVERY,YES,EFFECTIVE_PACKAGE_CREATED,,
+Hiew_2024_UHPC_unified_tension_2pct.pdf,file_0000000087e882079606fbbb13dd1e2d,PDF,2026-08-07,SOURCE,UHPC/direct tension,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,EFFECTIVE_EVIDENCE_NOTE_CREATED,,https://research.monash.edu/files/599317955/589510091_oa.pdf
+Liu_2024_UHPC_biaxial_full.pdf,file_0000000012988211ab7b3fbcacf060ab,PDF,2026-08-07,SOURCE,UHPC/biaxial CC-TT-TC,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,EFFECTIVE_EVIDENCE_NOTE_CREATED,,https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4926706
+Lee_2017_UHPFRC_biaxial_TC_30_panels.pdf,file_00000000ae4c8211812e4a9f0c2e3373,PDF,2026-08-07,SOURCE,UHPC/TC validation,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,EFFECTIVE_EVIDENCE_NOTE_CREATED,,https://link.springer.com/article/10.1617/s11527-016-0918-1
+Leutbecher_2020_UHPFRC_TC.pdf,file_00000000df84820bb12fe27517028963,PDF,2026-08-07,SOURCE,UHPC/TC strength-stiffness,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,EFFECTIVE_EVIDENCE_NOTE_CREATED,,https://onlinelibrary.wiley.com/doi/full/10.1002/suco.201900451
+Leutbecher_2020_DataS1_31_biaxial_tests.pdf,file_00000000e4a4820baf5e0f5aad438601,PDF,2026-08-07,SOURCE,UHPC/TC numeric supplementary data,ORIGINAL_SOURCE_SUPPLEMENT,L1_PRIMARY_SOURCE,NO,EFFECTIVE_NUMERIC_LOCATOR_CREATED,,https://onlinelibrary.wiley.com/doi/full/10.1002/suco.201900451
+Shen_2020_UHPFRC_equi_biaxial_tension.pdf,file_000000008170820baafcc59cc6a730fd,PDF,2026-08-07,SOURCE,UHPC/TT,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,EFFECTIVE_EVIDENCE_NOTE_CREATED,,https://link.springer.com/article/10.1617/s11527-020-01553-1
+Diab_Ferche_2026_UHPC_compression_softening.pdf,file_00000000438882118a44003e65279d5b,PDF,2026-08-07,SOURCE,UHPC/TC synthesis,ORIGINAL_SOURCE,L1_PRIMARY_SOURCE,NO,EFFECTIVE_EVIDENCE_NOTE_CREATED,,https://onlinelibrary.wiley.com/doi/full/10.1002/suco.70191
+FHWA_HRT_23_077_UHPC_design.pdf,file_000000002fac820ba9e9f5aed3ca142e,PDF,2026-08-07,SOURCE,UHPC/design qualification,ORIGINAL_OFFICIAL_REPORT,L1_PRIMARY_SOURCE,NO,EFFECTIVE_DESIGN_LOCATOR_CREATED,,https://highways.dot.gov/sites/fhwa.dot.gov/files/FHWA-HRT-23-077.pdf
+
+====================================================================================================
+FILE: evidence/catalog/inventory_append/20260810_P1_D16_D18_R16_R20.csv
+SIZE: 2918
+SHA256: bd7d5e7e15aa28149c48d74526f3f6a3222420d31e1baf8d90a338e25acd48e7
+ENCODING: utf-8
+LINES: 14
+====================================================================================================
+filename,file_id,type,date,historical_stage,module_or_material,original_or_derived,authority_level,local_binary_available,github_copy_status,sha256,external_url
+NZ_SCCM_UHPC_FSAM_v0.1_D16_完整状态来源与方程门禁报告.md,file_000000003c588230b6557f5355bac9a9,MD,2026-08-05,D16,UHPC/material source recovery,DERIVED_GATE_REPORT,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+NZ_SCCM_ANALYTICAL_MATRIX_v0.2_D17_REPORT.md,file_000000007d1081fd84f4ce14c9de8db8,MD,2026-08-05,D17,exact thickness state front,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+NZ_SCCM_ANALYTICAL_MATRIX_v0.2_D17_DELIVERABLE.zip.sha256,file_00000000da9881f8ae446cc5d6f9c53d,TXT,2026-08-05,D17,deliverable hash,DERIVED_HASH_RECORD,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,0e0226f8b7cadc0117dc8ea13b023d001c60bcaf533981f0a568fe38abbc2e71,
+inplane_algebraic_state_front.py,file_000000005b588208afa008801f236b78,PY,2026-08-05,D18,in-plane algebraic state front,DERIVED_SOURCE_CODE,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+branch_event_system.py,file_0000000073a4820b8a21860085f6cad1,PY,2026-08-05,D18/D19,state-front event topology,DERIVED_SOURCE_CODE,L2_MACHINE_EVIDENCE,NO,LOCATOR_ONLY_VIEWER_TRUNCATED,,
+NZ_SCCM_ANALYTICAL_MATRIX_v0.3_D18_DELIVERABLE.zip.sha256,file_00000000931481fb93c28dd40397e473,TXT,2026-08-05,D18,deliverable hash,DERIVED_HASH_RECORD,L2_MACHINE_EVIDENCE,NO,REGISTERED_FILE_LIBRARY_POINTER,cc0c33a42aaa32da1fe0960903219433e91a605dc2704a3475e8c103a1beb391,
+equation_to_code_registry_R16.csv,file_0000000011ac820785535128707f0999,CSV,2026-08-02,R16,Nguyen N-module,DERIVED_PROVENANCE_REGISTRY,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+equation_to_code_registry_R17.csv,file_000000000c0482078ad6aeaf19c1ce69,CSV,2026-08-02,R17,Nguyen N-module,DERIVED_PROVENANCE_REGISTRY,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+equation_to_code_registry_R18.csv,file_0000000082588207bbd23ab51d82ff5e,CSV,2026-08-02,R18,Nguyen N-module,DERIVED_PROVENANCE_REGISTRY,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+status_R18.json,file_00000000e1548207aabe00a4f15989dc,JSON,2026-08-02,R18,Nguyen N-module,DERIVED_GATE_STATUS,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+N模块分支C_来源Newton全局化与首个自然路径审计_R18.md,file_000000009a508207acadd05eca0beffa,MD,2026-08-02,R18,Nguyen N-module,DERIVED_EXECUTION_REPORT,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+equation_to_code_registry_R20.csv,file_00000000bdac8207b1fb265f1745385a,CSV,2026-08-02,R20,Nguyen N-module,DERIVED_PROVENANCE_REGISTRY,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+pytest_R20_summary.txt,file_00000000736482099682d5a25de24c65,TXT,2026-08-02,R20,Nguyen N-module regression,DERIVED_TEST_SUMMARY,L2_MACHINE_EVIDENCE,NO,FULL_TEXT_MIRROR_MIGRATED_TO_GITHUB,,
+
+====================================================================================================
+FILE: evidence/catalog/inventory_append/20260810_P1_UHPC_G12_SOURCE_TEXT_BATCH.csv
+SIZE: 3130
+SHA256: c3a91897a5c69a97c0f22611544a00aa3566cd92d056cc8db357ac18da54a887
+ENCODING: utf-8
+LINES: 12
+====================================================================================================
+filename_or_artifact,type,historical_stage,module_or_material,original_or_derived,authority_level,github_status,source_identity_or_sha,notes
+PRIMARY_SOURCE_LOCATOR_20260810.md,MD,P1_SOURCE_RECOVERY,UHPC,DERIVED_LOCATOR,L2_RECOVERY_INDEX,COPIED_TO_GITHUB,,Exact File Library IDs + DOI/public locators for Hiew/Liu/Leutbecher/DataS1/Lee/Shen/Diab/FHWA; PDFs remain authoritative
+G12_SOURCE_ROLE_LEDGER_RECOVERED.csv,CSV,G12,UHPC,DERIVED_RECOVERED_LEDGER,L2_HISTORICAL_MACHINE_EVIDENCE,COPIED_TO_GITHUB,,Historical source-role identities retained with later governance boundary
+G12_source_Hiew_2pct_summary.csv,CSV,G12,UHPC tension,DERIVED_SOURCE_EXTRACTION,L2_HISTORICAL_MACHINE_EVIDENCE,COPIED_TO_GITHUB,,2pct SL/HL/hybrid tensile anchors; not permanent parameter freeze
+G12_source_Leutbecher_key_MRC2_biaxial.csv,CSV,G12,UHPC TC,DERIVED_SOURCE_EXTRACTION,L2_HISTORICAL_MACHINE_EVIDENCE,COPIED_TO_GITHUB,,Eight MRC2 strength/stiffness rows from historical G12 extraction
+G12_source_Liu2024_sequential_TC.csv,CSV,G12,UHPC TC,DERIVED_SOURCE_EXTRACTION,L2_HISTORICAL_MACHINE_EVIDENCE,COPIED_TO_GITHUB,,Sequential TC path-dependent evidence; not exact identity constraints for memoryless current map
+G12_source_Diab_beta_table.csv,CSV,G12,UHPC TC,DERIVED_SYNTHESIS_TABLE,L2_HISTORICAL_MACHINE_EVIDENCE,COPIED_TO_GITHUB,,Historical smooth beta oracle table
+BUCKLING OF REINFORCED CONCRETE WALLS Attard UNICIV.pdf,PDF_TEXT_MIRROR,P1_SOURCE_TEXT,RC stability,MECHANICAL_EXTRACTION_MIRROR,L1_PDF_REMAINS_AUTHORITATIVE,FULL_TEXT_MIRROR_MIGRATED_3_PARTS_SHA_MATCH,TXT_SHA256=7a2b7030d5c0aa26038a8ae20ced6de4b90e643d235fbb93c0a546a524e22542,PDF SHA=a32fdbd8d397c34f13bd347d12da27438c84b8988fc22e795e3f5a4ba6f9fba6
+PBL加劲型矩形钢管混凝土轴压柱局部屈曲性能分析_张宁.pdf,PDF_TEXT_MIRROR,P1_SOURCE_TEXT,PBL/steel shell local buckling,MECHANICAL_EXTRACTION_MIRROR,L1_PDF_REMAINS_AUTHORITATIVE,FULL_TEXT_MIRROR_MIGRATED_10_SEGMENTS_SHA_MATCH,TXT_SHA256=3e12d8b2c60f6d9f205887cf7505b16ba76697768b75eabb7b654181cb61ca19,PDF SHA=7ae43da9f08d777e8b6a47acfff450ff22929dc7fcdad15fe95d29a5370572c5
+考虑薄膜效应的钢箱混凝土壁板局部屈曲行为研究_云露.pdf,PDF_TEXT_MIRROR,P1_SOURCE_TEXT,Y/steel shell membrane postbuckling,MECHANICAL_EXTRACTION_MIRROR,L1_PDF_REMAINS_AUTHORITATIVE,PARTIAL_TEXT_MIRROR_MIGRATION_6_OF_21_FIRST6_BLOBS_SHA_MATCH,TXT_SHA256=5dc2c4cdab6329ebed748da8195fc45490e6129c6ebedea3c438a7d39cba3ea0,PDF SHA=1fce0f9ce9058f00b2a6ddd0f6dd11faa41366816e2145348812c1a93884e897; missing search hits are non-evidence until 21/21 complete
+Nguyen-011325526.pdf,PDF_TEXT_MIRROR_PREPARED,P1_SOURCE_TEXT,NC/RC,MECHANICAL_EXTRACTION_MIRROR,L1_PDF_REMAINS_AUTHORITATIVE,READY_FOR_TEXT_MIRROR,TXT_SHA256=cb1bd34ca0c0ccb6eb0abfeb7e0151da56baad0b3a228b9dddb8ca60512938f4,455954-byte local extraction prepared
+PBL加劲型薄壁钢管混凝土...孙立鹏.pdf,PDF_TEXT_MIRROR_PREPARED,P1_SOURCE_TEXT,PBL/steel shell,MECHANICAL_EXTRACTION_MIRROR,L1_PDF_REMAINS_AUTHORITATIVE,READY_FOR_TEXT_MIRROR,TXT_SHA256=2c7eda7fb72c7702eed78d18fca5d5cbdd51f2956a1a88c6124cee099a160e92,546279-byte local extraction prepared
+
+====================================================================================================
+FILE: evidence/literature/NZ_SCCM_21ST_CENTURY_RC_WALL_RESEARCH_LANDSCAPE_20260813_1139.md
+SIZE: 6636
+SHA256: ed4b33c378650cc1f6c2b80185e0421a8d9bceeea6911a3a547f680d13b48931
+ENCODING: utf-8
+LINES: 97
+====================================================================================================
+# NZ-SCCM — 21st-century RC wall/panel axial-compression research landscape
+
+**Timestamp:** 2026-08-13 11:39 +08:00  
+**Identity:** LITERATURE LANDSCAPE / SCOPE DIAGNOSIS / NO THEORY CHANGE
+
+## 0. Question
+
+Why are the most directly compatible four-edge-supported, solid, normal-strength RC panels under concentric uniform axial compression mostly older tests? Has the problem been solved or lost research value?
+
+## 1. Finding
+
+The broader research field has not disappeared. What has become relatively rare is the very narrow benchmark configuration:
+
+```text
+solid normal-strength RC rectangular panel
++ all four edges simply supported
++ uniform uniaxial in-plane compression
++ e = 0
++ no opening
++ conventional orthogonal reinforcement
+```
+
+The 21st-century literature instead migrates toward practical imperfections, different boundaries, new materials, openings, precast systems, and numerical/design-model development.
+
+## 2. Modern examples found
+
+### 2002 — Doh PhD
+
+`Experimental and Theoretical Studies of Normal and High Strength Concrete Wall Panels` develops new tests and analytical/numerical methods, with major focus on normal/high-strength panels, one-/two-way action and eccentric axial loading. It also preserves detailed secondary records of older concentric Waddick/Swifte and Roongsang tests.
+
+### 2005–2006 onward — Doh & Fragomeni design work
+
+Modern work increasingly evaluates and modifies design equations for one-/two-way walls and walls with openings rather than repeating the historical ideal concentric benchmark.
+
+### 2011 — Shahin et al.
+
+A 12-wall experimental program still includes four-side-supported two-way panels and both centric and eccentric loading. Four centric two-way specimens (TW8, TW10, TW12, TA10) are strong candidates for the current NZ-SCCM structural scope.
+
+### 2012 — Fragomeni, Doh & Lee
+
+47 reinforced-concrete wall panels with opening configurations were tested in one- and two-way action. Loading was uniformly distributed but eccentric at `t_w/6`. This is a large modern physical campaign, but intentionally studies the more practical opening/eccentricity problem rather than the ideal solid/e=0 benchmark.
+
+### 2013 — Robinson, Palmeri & Austin
+
+Engineering Structures studied experimentally validated design methodologies for one-way spanning precast RC panels under eccentric axial load, including geometrical/material nonlinearities. Again the modern emphasis is practical precast/eccentric behavior.
+
+### 2018 — three-side restrained RC walls
+
+Experimental and numerical work studied axially loaded RC walls restrained on three sides. This is adjacent to the current theory but changes the boundary topology.
+
+### 2018–2020 — RPC / geopolymer / thin wall panels
+
+Physical programs study thin RPC and geopolymer wall panels, generally with eccentric distributed compression and stronger edge restraints. These demonstrate continued interest in axial wall-panel behavior but with new material systems.
+
+### 2020 — review literature
+
+A review on one-way concrete walls under axial loading states that considerable research exists and that much of the literature has shifted toward design equations. This supports the interpretation that the basic wall problem became a mature design-model domain rather than a dead topic.
+
+### 2021 — Shahin et al. design/model paper
+
+A later paper by the same author group used the authors' 12-wall experimental program plus nonlinear analysis of 66 panels to propose a design equation. This is not an independent new 12-specimen experimental campaign; it reuses the earlier physical program and adds numerical parametric expansion.
+
+## 3. Why exact e=0 / four-edge benchmark tests are now sparse
+
+The evidence supports a combination of factors rather than 'the problem is completely solved':
+
+1. **Practical loading is not perfectly concentric.** Modern experimental programs deliberately introduce `e=t/6`, other eccentricities, openings, or construction imperfections because accidental eccentricity is a realistic design concern.
+2. **The classical benchmark became mature enough for code/design studies.** Once substantial historical datasets and simplified wall design equations existed, repeating the same ideal boundary/load case offered less publication novelty than extending the problem.
+3. **Research novelty moved to material and construction technology.** High-strength concrete, RPC, geopolymer concrete, precast panels, sandwich/textile systems, AAC and connection details became active topics.
+4. **Boundary realism increased.** Three-side restraint, fixed edges, precast connections and openings are more representative of actual structural systems than a mathematically clean four-side simply-supported panel.
+5. **Nonlinear FE became the default parametric tool.** Recent studies commonly combine a smaller physical program with dozens of nonlinear numerical panels rather than running very large matrices of nearly identical physical specimens.
+6. **Full panel tests are costly and the information gain of exact repeats is limited.** Researchers therefore tend to use old benchmark datasets for validation and spend new testing resources on parameters that were not already well represented.
+
+## 4. Why the benchmark still has research value for NZ-SCCM
+
+The old benchmark is unusually valuable for a new analytic theory because it removes many confounders: no opening, near-uniform axial compression, simple geometry and documented two-way stability. A clean benchmark is exactly what is needed to distinguish material-current-map error, nonlinear kinematics, stability control and boundary/model-form error.
+
+The benchmark is also demonstrably not 'numerically trivial': the current NZ-SCCM Swartz24 comparison retains sizeable specimen-to-specimen scatter and a systematic low prediction for the thicker Case9–16 group. Therefore the historical tests still contain unresolved model-discrimination information even if the engineering community no longer treats the exact configuration as a fashionable standalone experimental topic.
+
+## 5. Project implication
+
+```text
+STRICT CURRENT VALIDATION:
+  keep seeking clean e=0 four-edge solid RC benchmarks
+
+NEAR-TERM EXTENSION AFTER STRICT VALIDATION:
+  eccentric loading
+  openings
+  three-side restraint
+
+MATERIAL/PRODUCT EXTENSIONS:
+  HSC/UHPC/RPC
+  steel shell / composite panels
+  precast / sandwich / AAC systems
+```
+
+The scarcity of recent strict-match experiments should therefore be treated as a data-acquisition challenge and an opportunity for theory validation, not as evidence that axial wall-panel stability has no research value.
+
+====================================================================================================
+FILE: evidence/literature/NZ_SCCM_RC_PANEL_CANDIDATE_RAW_DATA_20260813_1139.csv
+SIZE: 3227
+SHA256: 323e7f5fb3e9d7597cbdbc33da1de5d7b0c2b2819930ac5a572a9e4814771f3a
+ENCODING: utf-8
+LINES: 10
+====================================================================================================
+source_family,specimen,year,strict_current_structure_match,load_eccentricity,support,geometry,concrete_data,reinforcement_data,failure_load,source_quality,current_status,missing_for_current_contract
+Shahin_et_al,TW8,2011,YES,e=0,all_four_sides_simply_supported,H=160cm;L=120cm;t=8cm,Fcu_test=244.5kg/cm2,vertical=6phi6/m/side;horizontal=5phi6/m/side;double_mesh;plain_steel_grade_24/35,112.11ton,PRIMARY_PAPER_FULLTEXT,STRONG_CANDIDATE,E0;epsilon0;nu;stress_free_initial_imperfection;q0;steel_coupon_Es_fy_identity;Fcu_to_current_fc_identity
+Shahin_et_al,TW10,2011,YES,e=0,all_four_sides_simply_supported,H=160cm;L=120cm;t=10cm,Fcu_test=322.2kg/cm2,vertical=7phi6/m/side;horizontal=6phi6/m/side;double_mesh;plain_steel_grade_24/35,191.91ton,PRIMARY_PAPER_FULLTEXT,STRONG_CANDIDATE,E0;epsilon0;nu;stress_free_initial_imperfection;q0;steel_coupon_Es_fy_identity;Fcu_to_current_fc_identity
+Shahin_et_al,TW12,2011,YES,e=0,all_four_sides_simply_supported,H=160cm;L=120cm;t=12cm,Fcu_test=282.2kg/cm2,vertical=5phi8/m/side;horizontal=7phi6/m/side;double_mesh;plain_steel_grade_24/35,215.74ton,PRIMARY_PAPER_FULLTEXT,STRONG_CANDIDATE,E0;epsilon0;nu;stress_free_initial_imperfection;q0;steel_coupon_Es_fy_identity;Fcu_to_current_fc_identity
+Shahin_et_al,TA10,2011,YES,e=0,all_four_sides_simply_supported,H=160cm;L=100cm;t=10cm,Fcu_test=256kg/cm2,vertical=7phi6/m/side;horizontal=6phi6/m/side;double_mesh;plain_steel_grade_24/35,168.07ton,PRIMARY_PAPER_FULLTEXT,STRONG_CANDIDATE,E0;epsilon0;nu;stress_free_initial_imperfection;q0;steel_coupon_Es_fy_identity;Fcu_to_current_fc_identity
+Waddick_Swifte,WS_1_to_3,1991,YES,concentric,all_four_sides_simply_supported,H=2m;L=1m;t=25mm;H/t=80;L/t=40,normal_strength=37.9_to_42.6MPa,central_2.5mm_wire_mesh_at_25mm_spacing;rho_v=0.00245;rho_h=0.00315,357_to_450kN,SECONDARY_THRU_DOH_2002;PRIMARY_REPORT_NOT_YET_ACQUIRED,ARCHIVAL_STRONG_CANDIDATE,specimen_by_specimen_fc;E0;epsilon0;nu;q0;individual_failure_load_mapping;steel_coupon;original_report
+Roongsang,R_two_way_concentric,1994,YES,e=0,all_four_sides_simply_supported,H=2m;L=1m;t=50mm;H/t=40;L/t=20,average_fc_about_45MPa,central_6.1mm_micro_deformed_bars_at_100mm;rho_v=rho_h=0.0058,1854kN,SECONDARY_THRU_DOH_2002;PRIMARY_REPORT_NOT_YET_ACQUIRED,ARCHIVAL_STRONG_CANDIDATE,specimen_fc;E0;epsilon0;nu;q0;steel_coupon;original_report
+Ernst,Ernst_series_about_10,1952,LIKELY_YES,uniform_concentric,all_four_edges_simply_supported,small_scale_rectangular;H/t_about_13_to_80;H/L_about_0.5_to_1.0;t_about_12_to_38mm,ordinary_RC_but_specimen_data_pending,single_symmetric_layer;25mm_square_mesh_reported_in_secondary_source,panel_level_failure_loads_pending,PRIMARY_ACI_ARTICLE_METADATA_PLUS_SECONDARY_DOH_REVIEW,ARCHIVAL_CANDIDATE,full_specimen_table;fc;E0;epsilon0;nu;q0;steel_data;individual_Pf;full_primary_article_or_1953_bulletin
+Saheb_Desayi,24_two_way,1990,NO,eccentric,all_four_sides,24_RC_panels,available_in_primary_paper,varied,available,PRIMARY_ASCE,OUT_OF_CURRENT_CENTRIC_SCOPE,eccentricity_not_zero
+Fragomeni_Doh_Lee,47_opening_panels,2012,NO,e=t/6,one_and_two_way;two_way_side_restraints,slenderness=30_35_40;various_openings,normal_and_other_concrete,varied,available,PRIMARY_SAGE,OUT_OF_CURRENT_SCOPE,openings_and_eccentricity
+
+====================================================================================================
+FILE: evidence/literature/NZ_SCCM_RC_PANEL_VALIDATION_EXPANSION_SOURCE_AUDIT_20260813_1139.md
+SIZE: 7044
+SHA256: dde49b40538bc756467c7399aaee0508de5f3a5517754e82be64bc3c78f17c9e
+ENCODING: utf-8
+LINES: 175
+====================================================================================================
+# NZ-SCCM ordinary-RC panel validation expansion — source audit
+
+**Timestamp:** 2026-08-13 11:39 +08:00  
+**Identity:** LITERATURE/RAW-DATA ACQUISITION AUDIT / NO CALIBRATION
+
+## 0. Screening contract
+
+Strict current structural compatibility is screened against the present NC+Rebar production model:
+
+```text
+ordinary reinforced concrete solid rectangular wall/panel
+one continuous representative halfwave compatible
+uniform in-plane uniaxial compression
+central/concentric loading preferred: e = 0
+all four edges simply supported or a documented close experimental realization
+no opening
+orthogonal reinforcement compatible with current x/y rebar mapping
+physical failure/ultimate load available
+raw geometry/material/rebar/imperfection data sufficient for blind solve
+```
+
+Failure load must never be used to infer a missing material, reinforcement or imperfection parameter.
+
+## 1. Shahin, Mahmoud, El-Gohary & Taha — 2011
+
+Primary paper identified:
+
+`Evaluation of Experimental Results of Normal Strength Reinforced Concrete Walls in One and Two-way Action under Centric and Eccentric In-Plane Forces`, Journal of Al-Azhar University Engineering Sector, 33(2), April 2011.
+
+The paper reports 12 normal-strength RC wall specimens: five one-way panels and seven four-side-supported two-way panels. Both centric and eccentric in-plane compression were tested to failure.
+
+The four strict current-structure candidates are the centric two-way specimens:
+
+|specimen|H×L×t (cm)|H/t|H/L|test Fcu (kg/cm²)|vertical steel|horizontal steel|eccentricity|failure load|
+|---|---:|---:|---:|---:|---|---|---:|---:|
+|TW8|160×120×8|20|1.33|244.5|6φ6/m/side|5φ6/m/side|0|112.11 ton|
+|TW10|160×120×10|16|1.33|322.2|7φ6/m/side|6φ6/m/side|0|191.91 ton|
+|TW12|160×120×12|13.3|1.33|282.2|5φ8/m/side|7φ6/m/side|0|215.74 ton|
+|TA10|160×100×10|16|1.60|256.0|7φ6/m/side|6φ6/m/side|0|168.07 ton|
+
+The paper states that the walls used double meshes of 6 mm and 8 mm plain steel bars, grade 24/35. Test-time cube strengths were reported. The setup was intended to provide hinged top/bottom edges and simply supported side edges for two-way action.
+
+### Current admission status
+
+```text
+STRUCTURAL_MATCH = STRONG
+PRIMARY_FULLTEXT = AVAILABLE
+EXPERIMENTAL_Pf = AVAILABLE
+CURRENT_BLIND_CALCULABILITY = NOT YET COMPLETE
+```
+
+Missing or unresolved for the current R10 contract: specimen-specific `E0`, `epsilon0`, `nu`, stress-free initial imperfection `q0/A0`, steel coupon `Es/fy` identity, and the admissible mapping from reported cube strength `Fcu` to the current R10 `fc` input. None may be inferred from the reported failure load.
+
+## 2. Waddick & Swifte — 1991
+
+Original source identified through later literature:
+
+`M. Waddick and B. Swifte, Buckling of Thin-Walled Concrete Structure, Fourth Year Project Report, Department of Civil Engineering, Monash University, 1991.`
+
+Doh's 2002 thesis records three panels:
+
+```text
+H = 2.0 m
+L = 1.0 m
+t = 25 mm
+H/t = 80
+L/t = 40
+all four sides simply supported
+concentric axial loading
+normal concrete strengths = 37.9–42.6 MPa
+central 2.5 mm wire mesh @ 25 mm
+rho_v = 0.00245
+rho_h = 0.00315
+failure loads = 357–450 kN
+failure = brittle double-curvature pattern
+```
+
+### Current admission status
+
+```text
+STRUCTURAL_MATCH = STRONG
+SECONDARY_DATA = SUBSTANTIAL
+PRIMARY_REPORT = NOT YET ACQUIRED
+CURRENT_BLIND_CALCULABILITY = INPUT_INCOMPLETE
+```
+
+Need the original report or another specimen-level primary table for individual strength/failure mapping, elastic modulus/reference strain, imperfection, and steel coupons.
+
+## 3. Roongsang — 1994
+
+Original source identified through later literature:
+
+`D. Roongsang, Buckling of Reinforced Concrete Walls with Simply Supported Side Edges, Structural Engineering Report, Monash University, 1994.`
+
+Doh's 2002 thesis records three 2 m × 1 m × 50 mm panels. Two were four-side-supported; one of these was concentrically loaded and one used e=t/6. For the strict-match centric two-way specimen:
+
+```text
+H = 2.0 m
+L = 1.0 m
+t = 50 mm
+H/t = 40
+L/t = 20
+four-side-supported two-way action
+concentric load e = 0
+average concrete strength ≈ 45 MPa
+central 6.1 mm micro-deformed bars @ 100 mm
+rho_v = rho_h = 0.0058
+failure load = 1854 kN
+failure = brittle double-curvature pattern
+```
+
+### Current admission status
+
+```text
+STRUCTURAL_MATCH = STRONG
+SECONDARY_DATA = SUBSTANTIAL
+PRIMARY_REPORT = NOT YET ACQUIRED
+CURRENT_BLIND_CALCULABILITY = INPUT_INCOMPLETE
+```
+
+## 4. Ernst — 1952 / Ernst-Hromadik-Riveland — 1953
+
+Primary ACI record:
+
+`George C. Ernst, Stability of Thin-Shelled Structures, ACI Journal Proceedings, Vol.49, pp.277–291, 1952, DOI 10.14359/11818.`
+
+ACI's abstract states that the work presents a series of new tests illustrating thin-shell stability and examining empirical/tangent-modulus concepts.
+
+The later Doh thesis describes about 10 small-scale rectangular reinforced concrete panels, simply supported on all four edges under uniformly distributed compression, with approximately:
+
+```text
+H/t = 13–80
+H/L = 0.5–1.0
+L/t = 26.67–80
+t = 12–38 mm
+single symmetric reinforcement layer
+```
+
+A broader 1953 source is independently catalogued:
+
+`G.C. Ernst, J.J. Hromadik, A.R. Riveland, Inelastic Buckling of Plain and Reinforced Concrete Columns, Plates, and Shells, Engineering Experiment Station Bulletin 3, University of Nebraska, 1953.`
+
+The located library catalogue has no electronic copy.
+
+### Current admission status
+
+```text
+STRUCTURAL_MATCH = LIKELY_STRONG
+PRIMARY_METADATA = CONFIRMED
+SPECIMEN_LEVEL_INPUT = INCOMPLETE
+ARCHIVAL_ACQUISITION_PRIORITY = HIGH
+```
+
+## 5. Explicit exclusions from strict current validation
+
+- Saheb & Desayi (1990): 24 four-side-supported two-way RC panels, but the primary ASCE record explicitly states eccentric vertical loading to represent accidental eccentricity. `OUT_OF_CURRENT_CENTRIC_SCOPE`.
+- Fragomeni, Doh & Lee (2012): 47 RC wall panels with openings, one/two-way, uniformly distributed load at `e=t/6`. `OUT_OF_CURRENT_SCOPE = OPENING + ECCENTRICITY`.
+- Three-side-restrained RC walls (2018 and related): modern and important but boundary topology differs. `FUTURE_BOUNDARY_EXTENSION`, not strict current validation.
+- RPC/geopolymer/precast/AAC/sandwich wall panels: demonstrate modern activity but use different material/section systems. `FUTURE_MATERIAL/STRUCTURAL_EXTENSION`.
+
+## 6. Immediate acquisition ranking
+
+```text
+P0 = Shahin 2011: primary full text already available; close remaining material/imperfection inputs
+P1 = Waddick & Swifte 1991: acquire original Monash report
+P1 = Roongsang 1994: acquire original Monash report
+P1 = Ernst 1952 full article + 1953 Nebraska Bulletin: recover specimen-level tables
+P2 = modern adjacent datasets: retain for future eccentric/opening/3-side/material-extension branches
+```
+
+Current candidate ledger is stored in:
+
+`evidence/literature/NZ_SCCM_RC_PANEL_CANDIDATE_RAW_DATA_20260813_1139.csv`
+
+No candidate is promoted to production blind calculation until its current-contract inputs are explicitly closed.
+
+====================================================================================================
+FILE: evidence/literature/NZ_SCCM_SWARTZ_ATTARD_OTHER3_SOURCE_REVIEW_20260811.md
+SIZE: 10792
+SHA256: e96656626dabf47aa2b9e4e5d7493256af716188a34701ac452860d60dc41288
+ENCODING: utf-8
+LINES: 257
+====================================================================================================
+# NZ-SCCM：其余三份上传资料的理论/试验补充审阅
+
+**日期：2026-08-11**  
+**身份：SOURCE REVIEW / DIAGNOSTIC EVIDENCE**  
+**边界：本文件只补充来源证据，不修改当前 R10、N48、Nguyen 连续半波、D15 或任何板件参数。**
+
+---
+
+## 1. Swartz, Rosebraugh & Rogacki (1974) — *A Method for Determining the Buckling Strength of Concrete Panels*
+
+### 1.1 来源身份
+
+这是 24 块板试验计划的**试验装置与屈曲判定方法原始论文**，重点不是预测公式，而是：
+
+- 四边简支如何在试验中近似实现；
+- 荷载如何分配；
+- 位移与应变如何布置；
+- 初始屈曲荷载如何从试验数据识别。
+
+### 1.2 对当前项目最有用的试验补充
+
+#### A. 四边“简支”是有限刚度试验装置的近似，不是数学上无限刚度的理想边界
+
+侧边用离散夹具和圆杆支承；上下边夹具通过滚轮在槽形承压板上运动；离散夹具的目的之一是允许板在屈曲时翘曲。加载头运动使侧向立柱不能与上边支承形成完全刚性的闭合框架。
+
+**意义**：当前理论的四边简支是理想边界。试验中支架存在有限刚度，且作者明确认为“侧支承刚度相对于板弯曲刚度”会影响实际鼓曲形态。因此支承系统是三种厚度组之间不可忽视的实验系统变量。
+
+#### B. 厚度改变时，实际鼓曲区数并不固定
+
+作者原先依据理想弹性 a/b=2 板预期两个近似方形鼓曲区，但实际：
+
+- 3/4 in 板出现两个鼓曲区；
+- 1 in 板既有两个鼓曲区，也有一个近似方形主鼓曲区；
+- 1-1/4 in 板也出现单主鼓曲区。
+
+作者认为这种差异与**侧支承相对板弯曲刚度**有关。
+
+**项目解释**：不能再把 Case17–24=固定双半波、Case1–16=固定单半波当成原始试验事实。`ONE_CONTINUOUS_COMPLETE_HALFWAVE` 仍可作为代表半波计算原则，但完整试件中重复半波数量和鼓曲区位置应作为试验诊断量，而不是模型内固定分类输入。
+
+#### C. 试验在高荷载时出现膜应变重新分配
+
+对 1-1/4 in 板，作者指出初期跨板宽膜应变分布较均匀，高荷载时一些位置明显偏离，并将其部分归因于**板超过屈曲荷载后的应变重新分配**。
+
+**项目意义**：这直接支持当前 Case9–16 系统低估应优先检查“屈曲后的膜内重分布/后屈曲承载储备”，而不是立即回调 R10 抗压强度。
+
+#### D. 不可避免的加载偏心存在，但总体较小
+
+两表面应变曲线显示加载偏心总体不大；边角应变也显示夹边诱导弯矩较小。但“较小”不等于数学上严格为零。
+
+**项目意义**：Swartz 24 板仍适合作为近同心轴压主验证组；但若以后追求极小百分比误差，实际偏心与支架柔度会成为实验误差下限，不能用材料参数吸收。
+
+#### E. Southwell 法对非线性混凝土不可靠
+
+作者明确指出 Southwell 法严格适用于线弹性材料；混凝土在较高应力下越来越非线性，因此厚板适用性更差，Southwell 结果常明显高于实际 collapse load。作者最终推荐使用**屈曲区中心附近两表面应变的分叉/反向变化**判断初始屈曲。
+
+这与后续 24板原始 Table 2 一致：
+
+- Case1、4 的 Pcr 来自 Southwell；
+- Case5、6 来自 deflection profiles；
+- 其余主要来自表面应变判据。
+
+因此所有 `Pf/Pcr`、`fcr/fc` 机制统计必须保留 `Pcr_method` 字段。
+
+### 1.3 可用于理论的内容
+
+本论文不提供应直接替代现有 current-map 的新材料本构；其价值主要在**边界条件、模态和试验识别误差**。
+
+推荐未来只做以下诊断，而不改正式理论：
+
+1. 理想四边简支 vs 有限侧支承刚度的敏感性边界研究；
+2. 单主鼓曲区与两个重复鼓曲区对完整试件观察量的映射；
+3. Pcr 测定方法不确定性与理论误差的分离。
+
+---
+
+## 2. Mario M. Attard (1994) — *Buckling of Reinforced Concrete Walls*
+
+### 2.1 来源身份
+
+这是四边简支钢筋混凝土墙在均匀轴压下的**正交异性切线模量解析稳定理论**，并非 Swartz 试验报告。
+
+### 2.2 核心理论补充
+
+#### A. 正交异性切线板平衡方程
+
+Attard 写出
+
+\[
+D_{xt}w_{,xxxx}+2D_{xyt}w_{,xxyy}+D_{yt}w_{,yyyy}
+=-N_xw_{,xx}.
+\]
+
+其中弯曲切线刚度由加载方向与非加载方向切线模量控制。
+
+**对 NZ-SCCM 的意义**：这提供了一个非常干净的、独立于当前实现的“切线稳定骨架”基准，可以用于检查当前 current-map 在某一均匀应力状态下导出的方向切线是否给出合理的屈曲趋势。
+
+#### B. Attard 的方向切线假设
+
+Attard 取
+
+\[
+E_{xt}=E_t,
+\qquad
+E_{yt}\approx0.4E_c.
+\]
+
+其中加载方向使用混凝土当前切线模量；非加载方向 0.4Ec 是基于横向弯曲可能开裂、且横向弯矩小于屈服弯矩的近似。
+
+**治理边界**：`Eyt=0.4Ec` 是 Attard 的特定近似，不是当前 R10/Nguyen 多轴 current-map 的来源，不能直接移植为正式材料参数。但它非常适合作为**方向切线下界/敏感性诊断**。
+
+#### C. 切线模量接近峰值迅速降为零
+
+Attard 给出一套 20–120 MPa 普通/高强混凝土单轴曲线及其导数，强调：
+
+- 割线模量在比例极限前接近弹性模量；
+- 到峰值附近仍约为 0.6Ec；
+- **切线模量下降远快于割线模量，并在峰值应力处降到零**。
+
+**对当前24板误差的意义**：本次原始数据统计显示 `fcr/fcyl` 与当前 Pu 有符号误差的相关最强。Attard 的理论从另一条独立来源说明：越靠近峰值，稳定问题对“当前切线”极端敏感，而不是只对峰值强度敏感。
+
+#### D. 正弦模态与半波数 m
+
+Attard 采用
+
+\[
+w=C_1\sin\frac{m\pi x}{a}\sin\frac{\pi y}{b},
+\]
+
+并由正交异性刚度得到 Ncr、buckling coefficient k 及其最小值。
+
+**项目意义**：Attard 可以作为 `m/半波数` 的独立解析检查工具，但不能用其最优 m 直接取代当前项目已经锁定的“一个连续完整代表半波”计算域。合理做法是：完整物理板允许重复代表半波；每个代表半波仍采用同一连续基本单元。
+
+#### E. 初始缺陷与弯矩放大
+
+Attard 后半部分用与临界模态相似的初始缺陷形状，通过 magnification factor 估算两个方向放大弯矩。
+
+这说明：**初始缺陷、稳定荷载和屈后弯矩放大应当是同一条稳定链上的量，而不是相互独立的经验修正。** 这一思想与当前 Nguyen 二阶运动学保留 q0 的方向一致。

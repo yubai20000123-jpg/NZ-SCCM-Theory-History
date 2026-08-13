@@ -1,0 +1,1800 @@
+
+# 10. Rebar analytic contribution
+
+\[
+\sigma_s(\varepsilon_s)=
+\begin{cases}
+E_s\varepsilon_s,&|\varepsilon_s|\le\varepsilon_y,\\
+f_y\operatorname{sgn}(\varepsilon_s),&\varepsilon_y<|\varepsilon_s|\le\varepsilon_f.
+\end{cases}
+\]
+
+对当前正交 x/y 钢筋，\(n_x=(1,0)^T\)，\(n_y=(0,1)^T\)，且
+
+\[
+\zeta_r=\frac{2z_s^{(r)}}{t_p},
+\]
+
+\[
+\boxed{\varepsilon_{s,\alpha}^{(r)}=n_\alpha^TE(X,Y,\zeta_r)n_\alpha},\qquad \alpha\in\{x,y\}.
+\]
+
+\[
+t_{s,\alpha}^{(r)}=\rho_{s,\alpha}^{(r)}t_p.
+\]
+
+\[
+\boxed{P_s=-\sum_{r}\frac{t_{s,y}^{(r)}}{\ell}\int_A\sigma_{s,y}^{(r)}\,dA},
+\]
+
+\[
+\boxed{R_{q,s}=\sum_{r,\alpha\in\{x,y\}}t_{s,\alpha}^{(r)}\int_A\sigma_{s,\alpha}^{(r)}\frac{\partial\varepsilon_{s,\alpha}^{(r)}}{\partial q}\,dA}.
+\]
+
+在一个新板件上，钢筋只需按 frozen source law 与实际层位/方向代入；不引入板级经验参数。
+
+若实际连续钢筋场在求得的相关主支状态内保持同一个已支持材料支，则直接闭式计算。若真的跨入尚无 analytic closure 的支路，则报告事实；不得用试验值或空间材料点修补。
+
+---
+
+# 11. Total P, Rq and same-expression derivatives
+
+\[
+\boxed{P(D,q)=P_c(D,q)+P_s(D,q)},
+\]
+
+\[
+\boxed{R_q(D,q)=R_{q,c}(D,q)+R_{q,s}(D,q)}.
+\]
+
+同一个有限解析表达直接求：
+
+\[
+\boxed{P_D,\ P_q,\ R_{q,D},\ R_{q,q}}.
+\]
+
+允许 analytic differentiation / forward AD；不允许用空间 finite differences 替代。
+
+定义 limit function：
+
+\[
+\boxed{L(D,q)=P_DR_{q,q}-P_qR_{q,D}}.
+\]
+
+---
+
+# 12. Primary equilibrium branch and production limit root
+
+Equilibrium set：
+
+\[
+\mathcal E=\{(D,q):R_q(D,q)=0\}.
+\]
+
+No-load origin：
+
+\[
+\boxed{(D,q)=(0,0)}.
+\]
+
+Primary branch：
+
+\[
+\boxed{\Gamma_0=\operatorname{Conn}_{(0,0)}(\mathcal E\cap\mathcal A)}.
+\]
+
+在 regular point：
+
+\[
+\nabla R_q=(R_{q,D},R_{q,q})\ne0,
+\]
+
+\[
+t_0=(R_{q,q},-R_{q,D}),
+\]
+
+\[
+\nabla P\cdot t_0=L.
+\]
+
+沿从 origin 指向加载方向的有向主支：
+
+\[
+g(s)=\frac{dP}{ds}.
+\]
+
+Production limit candidate 必须是从 origin 遇到的第一个
+
+\[
+\boxed{R_q=0,\qquad L=0,\qquad g:+\rightarrow-}.
+\]
+
+不得：
+
+```text
+select maximum mathematical root
+select disconnected high-amplitude branch
+select negative-q branch
+select closest experimental root
+select closest historical root
+skip first +->- maximum
+```
+
+数值残量沿用现有合同：
+
+\[
+R_{mat}=f_c\varepsilon_0J_\Omega,
+\]
+
+\[
+R_{scale}=\max(R_{mat},|R_{q,c}|+|R_{q,s}|),
+\]
+
+\[
+\boxed{R_{norm}=\frac{|R_q|}{R_{scale}}\le10^{-5}},
+\]
+
+\[
+\boxed{L_{norm}=\frac{P_DR_{q,q}-P_qR_{q,D}}{|P_DR_{q,q}|+|P_qR_{q,D}|}},
+\qquad
+\boxed{|L_{norm}|\le10^{-5}}.
+\]
+
+本合同不新增其他 root gate。
+
+---
+
+# 13. Continuous compiler-domain certificate
+
+对求得的相关主支状态，证明完整连续半波上
+
+\[
+\boxed{\lambda_a\le\lambda_-(X,Y,\zeta)\le\lambda_+(X,Y,\zeta)\le\lambda_b}.
+\]
+
+允许 analytic/Bernstein/interval coefficient enclosure；不允许有限空间点扫描冒充全域证书。
+
+这只是验证已声明 compiler interval 覆盖 current structural spectrum；不是新的材料理论。
+
+---
+
+# 14. Zhou/Navier full-field current-tangent closure
+
+\[
+\boxed{\mathbb C_t(X,Y,\zeta;D,q)=\frac{\partial\sigma}{\partial E}}.
+\]
+
+由于
+
+\[
+X=E_u/\varepsilon_0,
+\]
+
+必须保留
+
+\[
+\boxed{\delta X=\delta E_u/\varepsilon_0}.
+\]
+
+Navier mode：
+
+\[
+\varphi=\sin X\sin Y,
+\qquad
+\alpha=\pi/b,
+\qquad
+\beta=\pi/\ell.
+\]
+
+\[
+\varphi_{,x}=\alpha\cos X\sin Y,
+\qquad
+\varphi_{,y}=\beta\sin X\cos Y,
+\]
+
+\[
+\varphi_{,xx}=-\alpha^2\varphi,
+\qquad
+\varphi_{,yy}=-\beta^2\varphi,
+\qquad
+\varphi_{,xy}=\alpha\beta\cos X\cos Y.
+\]
+
+\[
+b_\varphi=-z\begin{bmatrix}
+\varphi_{,xx}\\
+\varphi_{,yy}\\
+2\varphi_{,xy}
+\end{bmatrix}.
+\]
+
+Concrete：
+
+\[
+\boxed{K_{Z,c}^{mat}=\int_{\Omega_h}b_\varphi^TC_t^{eng}b_\varphi\,dV},
+\]
+
+\[
+\boxed{K_{Z,c}^{geo}=\int_{\Omega_h}(\sigma_x\varphi_{,x}^2+2\tau_{xy}\varphi_{,x}\varphi_{,y}+\sigma_y\varphi_{,y}^2)\,dV}.
+\]
+
+Steel：
+
+\[
+E_{s,t}^{(r,\alpha)}=d\sigma_s/d\varepsilon_s,
+\]
+
+\[
+\kappa_\varphi=-\begin{bmatrix}
+\varphi_{,xx}&\varphi_{,xy}\\
+\varphi_{,xy}&\varphi_{,yy}
+\end{bmatrix},
+\]
+
+\[
+\boxed{K_{Z,s}^{mat}=\sum_{r,\alpha}t_{s,\alpha}^{(r)}\int_AE_{s,t}^{(r,\alpha)}[z_s^{(r)}n_\alpha^T\kappa_\varphi n_\alpha]^2dA},
+\]
+
+\[
+\boxed{K_{Z,s}^{geo}=\sum_{r,\alpha}t_{s,\alpha}^{(r)}\int_A\sigma_{s,\alpha}^{(r)}(n_\alpha\cdot\nabla\varphi)^2dA}.
+\]
+
+Total：
+
+\[
+\boxed{K_Z=K_{Z,c}^{mat}+K_{Z,c}^{geo}+K_{Z,s}^{mat}+K_{Z,s}^{geo}}.
+\]
+
+Interpretation：
+
+```text
+K_Z > 0 : positive modal tangent
+K_Z = 0 : modal critical
+K_Z < 0 : negative modal tangent
+```
+
+Zhou/Navier tangent 是同一 equilibrium branch 上的 current-tangent stability acceptance / control interpretation；**不是第二套 Pu solver**。
+
+如果 first `+->-` limit candidate 以前未出现 `K_Z=0`，则 limit candidate 保持当前生产极限候选身份；若确实更早出现 tangent loss，则只报告真实的 control ordering，不凭空创造经验折减。
+
+---
+
+# 15. 对一个额外试验板的直接可计算性检查
+
+对一个未参与任何现有 Swartz24 历史计算的新试件，只要：
+
+1. 它属于当前 one-complete-halfwave / Nguyen second-order / m=1 的结构类；
+2. 它采用当前已闭合的正交 x/y 钢筋布置形式，或无钢筋；
+3. §3 的材料、几何、缺陷与钢筋原始输入齐全；
+4. 在求解前按现有 production policy 声明 compiler interval；
+
+则从公式层面可直接执行：
+
+```text
+raw specimen data
+-> R10
+-> fresh N48-C1/MM coefficients for this specimen interval
+-> material fidelity report
+-> Nguyen continuous strain field
+-> CH current stress
+-> general-D15 exact moments
+-> Pc,Rq,c
+-> Ps,Rq,s
+-> P,Rq,L
+-> Gamma0
+-> first +->- limit candidate
+-> current K_Z
+-> theory freeze
+-> only then read experimental failure/ultimate load
+```
+
+所有公式只依赖原始 specimen/material inputs 和 frozen project constants；没有 Case number、Swartz experimental load 或 historical predicted Pu 进入任何结构方程。
+
+因此：
+
+```text
+EXTRA_CONFORMING_SPECIMEN_CALCULABILITY = YES
+CASE_ID_DEPENDENCE = NO
+EXPERIMENTAL_LOAD_DEPENDENCE = NO
+HISTORICAL_ROOT_DEPENDENCE = NO
+```
+
+若某篇文献缺少 §3 的必要原始输入，应记为 `INPUT_INCOMPLETE`，而不是由试验 ultimate load 反推材料参数。
+
+---
+
+# 16. Fresh blind validation contract
+
+对 Swartz24 或其他学者试验板，求解阶段禁止读取：
+
+```text
+historical D,q,Pu
+historical FE/Gauss results
+historical root path
+experimental buckling/ultimate/failure load
+```
+
+先冻结全部理论结果，再读取原论文的对应实验量。
+
+极限承载力理论必须与 experimental failure/ultimate load 对比；experimental buckling load 只有在明确做 Pcr validation 时才可作为比较对象。
+
+---
+
+# 17. 每块板的标准输出
+
+每一个 production specimen 至少输出：
+
+1. raw input table；
+2. R10 derived parameters；
+3. declared compiler interval；
+4. fresh 49×4 coefficient table；
+5. C1 origin anchors；
+6. `E_F^(0), E_F^(1)` for U/C/T/T7；
+7. near-zero T / coefficient simplicity / CH-D15 compatibility report；
+8. continuous compiler-domain certificate；
+9. steel strain/branch report；
+10. `D_u,q_u,A_u`；
+11. `Pc,Ps,Pu`；
+12. `Rq,c,Rq,s,R_norm`；
+13. `P_D,P_q,Rq,D,Rq,q,L_norm`；
+14. proof of first `+->-` maximum；
+15. `K_Z,c^mat,K_Z,c^geo,K_Z,s^mat,K_Z,s^geo,K_Z`；
+16. control ordering；
+17. theory freeze marker；
+18. experimental failure/ultimate load read afterwards；
+19. theory/experiment ratio and error；
+20. source-based physical discussion, with no calibration.
+
+---
+
+# 18. Explicit non-constraints
+
+以下对象不得因为恢复历史或看到旧治理文件而擅自升级成新 blocker：
+
+```text
+new Lambda_M/Lambda_R runtime equations
+new universal compiler interval
+new Dmax/qmax
+new strict remainder certificate
+new N96/N112 escalation
+new material point state machine
+new spatial cells
+new Gauss/Simpson/adaptive integration
+new panel correction factor
+new root-selection heuristic
+new experiment-driven material parameter
+new second Pu solver
+```
+
+只有当前正式方程本身出现确定代数冲突，或某个新 specimen 实际触发 frozen source-law incompatibility 时，才报告对应真实问题；不得预先制造问题。
+
+---
+
+# 19. Final production chain
+
+\[
+\boxed{
+\begin{aligned}
+&\text{raw specimen/material inputs}
+\\&\to R10
+\\&\to \text{declared compiler interval}
+\\&\to N48\text{-}C1/MM + full-hull fidelity report
+\\&\to Nguyen\ \text{continuous complete halfwave}
+\\&\to Cayley\!\!\text{-}Hamilton\ \text{current map}
+\\&\to general\text{-}D15\ \text{exact moments}
+\\&\to P_c,R_{q,c},P_s,R_{q,s}
+\\&\to P,R_q,P_D,P_q,R_{q,D},R_{q,q},L
+\\&\to \Gamma_0
+\\&\to \text{first }+\to-\text{ limit candidate}
+\\&\to \text{continuous domain/steel/residual checks}
+\\&\to K_Z\ \text{on the same branch}
+\\&\to \text{theory result freeze}
+\\&\to \text{experimental failure/ultimate comparison}.
+\end{aligned}}
+\]
+
+```text
+THEORY_CONTRACT_FORMULA_CONSISTENCY = PASS
+EXTRA_CONFORMING_SPECIMEN_CALCULABILITY = PASS
+NEW_CONSTRAINT_ADDED = NO
+SWARTZ24_OPERATIONAL_BASELINE = RETAINED
+20260812_FORMAL_CLOSURE_UPDATES = INCORPORATED
+```
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_20260810.md
+SIZE: 8879
+SHA256: dbb26d3ded2f441de50186ae8a3400c46db2c082e7e953ed7d67bdaeb1223c26
+ENCODING: utf-8
+LINES: 475
+====================================================================================================
+# NZ-SCCM PF1-R06：endpoint-compatible master reduction 与 tau connection
+
+**日期：2026-08-10**  
+**身份：CURRENT PF1 ANALYTIC PROGRESS — FINITE MASTER REDUCTION PASS ON ACTUAL DRIVER / GENERIC PRODUCTION EVALUATOR STILL HOLD**
+
+## 0. 目标相关性与边界
+
+本轮严格继承：
+
+- `governance/PF1_PATH_INVARIANTS_LOCK_20260810.md`
+- `governance/PF1_R05_GOAL_RELEVANCE_CHECKPOINT_20260810.md`
+
+不建立新的结构理论，不计算 Case21 Pu，不进入 Swartz24，不重新拟合材料，不引入空间积分点、空间子域、材料点或数值 quadrature。
+
+唯一处理对象仍是 R05 已得到的 actual common rational driver：
+
+\[
+\boxed{
+\mathscr D_r(\tau)=E_r(\tau)^2-\tau xy\ell_r^2,
+\qquad \tau=B(q)^2
+}
+\]
+
+目的仅是判断它能否形成服务 `P(D,q), R_q(D,q), L(D,q)` 的 finite analytic differential system。
+
+正式身份继续保持：
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+MATERIAL_POINT_GRID = 0
+```
+
+---
+
+## 1. R05 的 19 个 standard monomials 不是最终 period basis
+
+R05 在 exact rational witness
+
+```text
+D=1, M=1, nu=1/5, r=2, tau=symbolic
+```
+
+上得到 endpoint-compatible twisted critical quotient 的 19 个 standard monomials。
+
+R06 不把“19”直接冒充 connection dimension，而是实际建立物理积分的 integration-by-parts reduction。
+
+定义：
+
+\[
+h_x=x(1-x),\qquad h_y=y(1-y),
+\]
+
+以及 rational period：
+
+\[
+\boxed{
+I[N]
+=
+\int_0^1\!\!\int_0^1
+\frac{N(x,y)}
+{\sqrt{h_xh_y}\,\mathscr D_r}
+\,dx\,dy.
+}
+\]
+
+对参数 \(\theta\)：
+
+\[
+\partial_\theta I[N]
+=
+\int\!\!\int
+\frac{N_{,\theta}\mathscr D_r-N\mathscr D_{r,\theta}}
+{\sqrt{h_xh_y}\,\mathscr D_r^2}
+\,dx\,dy.
+\]
+
+因此真正需要的是把 `D_r^{-2}` numerator 精确降回 `D_r^{-1}` master periods。
+
+---
+
+## 2. endpoint-compatible exact IBP identity
+
+取 polynomial certificates \(A(x,y)\)、\(B(x,y)\)。由于
+
+\[
+\sqrt{h_x}\to0\quad(x\to0,1),
+\qquad
+\sqrt{h_y}\to0\quad(y\to0,1),
+\]
+
+下式的边界项在同一 analytic branch 上严格消失：
+
+\[
+\int\!\!\int
+\partial_x
+\left[
+\frac{\sqrt{h_x/h_y}\,A}{\mathscr D_r}
+\right]dxdy=0,
+\]
+
+\[
+\int\!\!\int
+\partial_y
+\left[
+\frac{\sqrt{h_y/h_x}\,B}{\mathscr D_r}
+\right]dxdy=0.
+\]
+
+因此若 numerator \(Q\) 满足 polynomial identity：
+
+\[
+\boxed{
+\begin{aligned}
+Q={}&\mathscr D_r R\\
+&+\mathscr D_r
+\left(
+ h_xA_{,x}+\frac{h_x'}2A
++h_yB_{,y}+\frac{h_y'}2B
+\right)\\
+&-h_xA\mathscr D_{r,x}
+-h_yB\mathscr D_{r,y},
+\end{aligned}
+}
+\]
+
+则严格有：
+
+\[
+\boxed{
+\int\!\!\int
+\frac{Q}{\sqrt{h_xh_y}\,\mathscr D_r^2}
+dxdy
+=
+I[R].
+}
+\]
+
+这一步不需要 endpoint cell，也不需要 x/y quadrature。
+
+正式状态：
+
+```text
+PF1_R06_ENDPOINT_COMPATIBLE_IBP_IDENTITY = PASS_EXACT
+```
+
+---
+
+## 3. 19 → 15：实际 period relations 被显式找出
+
+在 R05 的 19 monomial space 上，使用 total-degree <=5 的 endpoint-compatible certificates，exact coefficient matching 得：
+
+```text
+polynomial coefficient equations = 62
+unknowns = 57
+```
+
+进一步求 homogeneous relation：
+
+\[
+\mathscr D_r R+\text{IBP certificate}=0
+\]
+
+得到 **4 个独立 period relations**。
+
+该关系秩在三个不同 rational parameter witnesses 上保持为 4；R05 的 19 项 therefore 是 overcomplete quotient screen，而不是最终 master period basis。
+
+R06 选择保留以下 15 个 master monomials：
+
+```text
+1
+y
+y^2
+y^3
+y^4
+y^5
+x
+xy
+xy^2
+xy^3
+xy^4
+x^2
+x^2 y
+x^2 y^2
+x^3 y
+```
+
+并消去：
+
+```text
+x^2 y^3
+x^3
+x^4
+x^5
+```
+
+所以 witness master dimension 为：
+
+\[
+\boxed{15}.
+\]
+
+正式状态：
+
+```text
+PF1_R06_R05_19_MONOMIAL_QUOTIENT = OVERCOMPLETE_FOR_PERIOD_BASIS
+PF1_R06_PERIOD_RELATION_RANK_WITNESS = 4
+PF1_R06_MASTER_PERIOD_DIMENSION_WITNESS = 15
+```
+
+这里仍谨慎使用 `WITNESS` 身份；没有偷换成 generic theorem。
+
+---
+
+## 4. explicit symbolic tau connection 已实际生成
+
+对 15 个 master periods：
+
+\[
+\mathbf I
+=
+[I_1,\ldots,I_{15}]^{\mathsf T},
+\]
+
+逐列取：
+
+\[
+Q_j=-m_j\,\mathscr D_{r,\tau},
+\]
+
+并用第 2 节的固定 endpoint-compatible polynomial identity exact reduction。
+
+在 witness：
+
+```text
+D=1
+M=1
+nu=1/5
+r=2
+tau=symbolic
+```
+
+下，每一列均得到唯一的 15 个 master coefficients；certificate 本身允许一个 gauge 自由度，但 **master coefficients 不含该自由参数**。
+
+因此实际得到：
+
+\[
+\boxed{
+\frac{d\mathbf I}{d\tau}
+=
+\Omega_\tau(\tau)\mathbf I,
+\qquad
+\Omega_\tau\in\mathbb Q(\tau)^{15\times15}.
+}
+\]
+
+矩阵已完整存入：
+
+`NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_results.json`
+
+其规模：
+
+```text
+shape = 15 x 15
+nonzero entries = 211 / 225
+total symbolic entry characters ≈ 2.68e5
+max single entry characters = 1699
+```
+
+并用：
+
+```text
+tau=1/7
+```
+
+对 symbolic matrix 与独立 exact rational coefficient matching 做逐元素复核：
+
+```text
+225/225 entries identical exactly
+```
+
+正式状态：
+
+```text
+PF1_R06_TAU_CONNECTION_MATRIX_WITNESS = PASS_EXACT_SYMBOLIC_15X15
+```
+
+---
+
+## 5. connection singular-locus audit
+
+该 witness connection 全部 entry denominator 的 LCM 为一个有限 polynomial product。候选非负 real singular values 包括：
+
+```text
+tau = 0
+9/5
+261/95
+3
+16/5
+81/25
+~3.5729339662
+69/19
+19/5
+45/11
+27/5
+1137/200
+144/25
+8
+~8.0081012411
+9
+~10.2100963368
+...
+```
+
+其中必须严格区分：
+
+1. physical period / driver 的真实 singularity；
+2. 当前 15-master gauge/basis 的 apparent singularity；
+3. `tau=0` 的 regular-singular initial point。
+
+本轮只完成 **connection candidate singular locus**，没有把这些候选全部宣判为物理奇点。
+
+物理路径始终是：
+
+\[
+\boxed{
+\tau(q)=B(q)^2
+=
+\left[
+\frac{\pi^2}{2\varepsilon_0}\frac tb\,q
+\right]^2
+\ge0.
+}
+\]
+
+因此生产 evaluator 后续必须沿真实 `q` path 做 branch/basis patch audit，而不能把 witness matrix denominator 的零点直接当作结构事件。
+
+---
+
+## 6. D、M、B、q derivatives 使用同一 finite system
+
+R06 进一步把 numerator source 改为：
+
+\[
+Q_j^{(D)}=-m_j\mathscr D_{r,D},
+\qquad
+Q_j^{(M)}=-m_j\mathscr D_{r,M},
+\]
+
+在同一 15-master / degree-5 certificate system 上进行 exact reduction。
+
+在：
+
+```text
+D=1, M=1, nu=1/5, r=2, tau=1/7
+```
+
+处，15 列全部获得唯一 master coefficients：
+
+```text
+Omega_D : 15 x 15, PASS_EXACT witness point
+Omega_M : 15 x 15, PASS_EXACT witness point
+```
+
+由于 `B` 只通过：
+
+\[
+\tau=B^2
+\]
+
+进入 common driver：
+
+\[
+\boxed{
+\Omega_B=2B\,\Omega_\tau.
+}
+\]
+
+Case21 又有：
+
+\[
+M_q=\alpha(q_0+q),
+\qquad
+B_q=\beta,
+\qquad
+\tau_q=2BB_q,
+\]
+
+所以：
+
+\[
+\boxed{
+\Omega_q
+=
+M_q\Omega_M
++
+2BB_q\Omega_\tau.
+}
+\]
+
+这说明 `D/M/B/q` analytic derivatives 不需要新空间积分器，也不需要 material-point differentiation。
+
+正式状态：
+
+```text
+PF1_R06_D_CONNECTION_WITNESS_POINT = PASS_EXACT_15X15
+PF1_R06_M_CONNECTION_WITNESS_POINT = PASS_EXACT_15X15
+PF1_R06_B_Q_CHAIN_RULE = PASS_ANALYTIC
+```
+
+---
+
+## 7. 对工程目标的裁决：有明显进展，但 Gate A 仍不能提前 PASS
+
+本轮已经把 R05 的“19 monomial scale screen”推进为真正的 finite period system witness：
+
+```text
+19 critical quotient monomials
+-> 4 exact IBP period relations
+-> 15 master periods
+-> explicit symbolic 15x15 tau connection
+-> same-system D/M derivative reduction
+```
+
+这条线仍直接服务 actual common driver，因此**没有偏离 NZ-SCCM 目标**。
+
+但仍缺三件 production-level 闭合：
+
+1. generic/current `(D,M,nu,r)` connection generator 的完整 singular-locus audit；
+2. `tau=0` 或其他 safe base point 的 branch-consistent analytic initial values；
+3. 能沿 physical `tau=B(q)^2` 稳定推进、并对 current 27 pole / pair-block family复用的 no-x/y-quadrature evaluator。
+
+因此：
+
+```text
+PF1_R06_GENERIC_DMRT_CONNECTION = HOLD
+PF1_R06_BRANCH_INITIAL_VALUE_EVALUATOR = HOLD
+FORMAL_WHOLE_HALFWAVE_GATE_A = HOLD
+```
+
+这不是 route failure；但按照 `PF1_R05_GOAL_RELEVANCE_CHECKPOINT`，下一步不得扩展 generic hypergeometric/GKZ 理论。只允许继续做**实际 production evaluator closure**。
+
+---
+
+## 8. 下一任务锁定：PF1-R07
+
+唯一允许的下一任务：
+
+```text
+R07 = actual production evaluator closure
+```
+
+只做：
+
+1. 把 R06 coefficient-matching connection generator 参数化到 actual `(D,M,nu,r)`；
+2. 选择并证明 safe analytic initial-value prescription；
+3. 对 physical `tau=B(q)^2` 给出 branch/basis patch rule；
+4. 用同一 finite master system返回 actual rational-driver periods及 `D,q` derivatives；
+5. 验证 27 single-pole / 106 pair-block 组装不需要 x/y numerical quadrature；
+6. 只有以上全部通过，才讨论 `FORMAL_WHOLE_HALFWAVE_GATE_A = PASS_CLASS_B`。
+
+禁止转去：
+
+```text
+generic GKZ expansion
+new material fit
+Case21 Pu solve
+Swartz24
+UHPC production fit
+shell/Y
+spatial quadrature
+auxiliary quadrature
+```
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_PF1_ENDPOINT_IBP_MASTER_CONNECTION_R06_results.json
+SIZE: 3756
+SHA256: 2a1b34b8f12875ea2088ae8ce49f4663919340cacb13fcfe910e4b7d78957c46
+ENCODING: utf-8
+LINES: 67
+====================================================================================================
+{
+  "status": {
+    "PF1_R06_ENDPOINT_COMPATIBLE_IBP_IDENTITY": "PASS_EXACT",
+    "PF1_R06_R05_19_MONOMIAL_QUOTIENT": "OVERCOMPLETE_FOR_PERIOD_BASIS",
+    "PF1_R06_PERIOD_RELATION_RANK_WITNESS": 4,
+    "PF1_R06_MASTER_PERIOD_DIMENSION_WITNESS": 15,
+    "PF1_R06_TAU_CONNECTION_MATRIX_WITNESS": "PASS_EXACT_SYMBOLIC_15X15",
+    "PF1_R06_D_CONNECTION_WITNESS_POINT": "PASS_EXACT_15X15",
+    "PF1_R06_M_CONNECTION_WITNESS_POINT": "PASS_EXACT_15X15",
+    "PF1_R06_B_Q_CHAIN_RULE": "PASS_ANALYTIC",
+    "PF1_R06_GENERIC_DMRT_CONNECTION": "HOLD",
+    "PF1_R06_BRANCH_INITIAL_VALUE_EVALUATOR": "HOLD",
+    "FORMAL_WHOLE_HALFWAVE_GATE_A": "HOLD"
+  },
+  "locked_route": {
+    "domain": "ONE_CONTINUOUS_COMPLETE_HALFWAVE",
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "material_point_grid": 0,
+    "common_driver": "D_r(tau)=E_tau^2-tau*x*y*ell^2",
+    "physical_tau": "tau=B(q)^2"
+  },
+  "endpoint_compatible_reduction": {
+    "hx": "x*(1-x)",
+    "hy": "y*(1-y)",
+    "period": "I[N]=int int N/(sqrt(hx*hy)*D_r) dx dy",
+    "certificate_identity": "Q=D_r*R + D_r*(hx*A_x+hx'/2*A+hy*B_y+hy'/2*B)-hx*A*D_r,x-hy*B*D_r,y",
+    "certificate_degree_total": 5,
+    "coefficient_equations": 62,
+    "unknowns": 57,
+    "certificate_gauge_dimension_at_witness": 1,
+    "master_coefficients_unique": true
+  },
+  "critical_quotient": {
+    "rational_parameter_witnesses_checked": 3,
+    "standard_monomial_count": 19,
+    "period_relation_rank": 4,
+    "master_count": 15,
+    "master_monomials": [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[1,0],[1,1],[1,2],[1,3],[1,4],[2,0],[2,1],[2,2],[3,1]],
+    "eliminated_overcomplete_monomials": [[2,3],[3,0],[4,0],[5,0]]
+  },
+  "tau_connection_witness": {
+    "parameters": {"D":"1","M":"1","nu":"1/5","r":"2"},
+    "shape": [15,15],
+    "nonzero_entries": 211,
+    "entry_character_count": 267695,
+    "max_entry_character_count": 1699,
+    "common_denominator_lcm": "6000*tau*(tau - 9)*(tau - 8)*(tau - 3)*(5*tau - 27)*(5*tau - 19)*(5*tau - 16)*(5*tau - 9)*(5*tau + 81)*(11*tau - 45)*(19*tau - 69)*(19*tau + 45)*(25*tau - 144)*(25*tau - 81)*(95*tau - 261)*(95*tau + 81)*(200*tau - 1137)*(825*tau**2 - 11371*tau + 30096)*(25*tau**3 - 384*tau**2 + 1836*tau - 2916)",
+    "candidate_real_singular_tau_nonnegative": ["0","9/5","261/95","3","16/5","81/25","3.572933966194699","69/19","19/5","45/11","27/5","1137/200","144/25","8","8.008101241066655","9","10.21009633683560"],
+    "tau_1_over_7_exact_crosscheck": true,
+    "matrix_storage_note": "The full 15x15 symbolic matrix is generated reproducibly by nz_sccm_pf1_endpoint_ibp_master_connection_r06.py. It is intentionally not duplicated verbatim here to keep the canonical result artifact compact; the exact common denominator, dimensions, density, and independent tau=1/7 cross-check are frozen here."
+  },
+  "same_system_derivative_witness_at_tau_1_over_7": {
+    "D_connection_shape": [15,15],
+    "D_nonzero_entries": 210,
+    "M_connection_shape": [15,15],
+    "M_nonzero_entries": 211,
+    "B_chain": "Omega_B=2*B*Omega_tau",
+    "q_chain": "Omega_q=M_q*Omega_M+2*B*B_q*Omega_tau"
+  },
+  "interpretation": {
+    "positive": "R05 common rational driver admits a finite endpoint-compatible exact master reduction and an explicit symbolic tau connection on the exact rational witness.",
+    "limit": "The 19 critical monomials are not the master period basis; four exact IBP period relations reduce the witness basis to 15. Generic D,M,nu,r symbolic connection, branch-safe initial values, and a stable no-x/y-quadrature evaluator are not yet closed.",
+    "governance": "Do not branch into generic mathematics. Next work may continue only on the actual driver and only toward the missing production evaluator."
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_PF1_GENUS2_GAUSS_MANIN_ABSOLUTE_X_CLOSURE_R03_20260810.md
+SIZE: 9520
+SHA256: 406e01716901f4ca16b89be67a3be7b934ef501bf141814e6d1380fbc0420639
+ENCODING: utf-8
+LINES: 456
+====================================================================================================
+# NZ-SCCM PF1 genus-2 Gauss–Manin absolute-x closure R03
+
+**日期：2026-08-10**  
+**身份：CURRENT PF1 ANALYTIC PROGRESS — ABSOLUTE x-COHOMOLOGY PASS / RELATIVE PHYSICAL PERIOD HOLD**
+
+## 0. 前置治理门禁
+
+本轮在以下文件已经先行提交后执行：
+
+`governance/PF1_PATH_INVARIANTS_LOCK_20260810.md`
+
+因此本轮没有权力改变：
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+FORMAL_INTEGRATION = ANALYTIC_EXACT
+NO element integration
+NO material-point grid
+NO spatial cells
+Nguyen second-order current Case21 finite kinematics
+P(D,q), Rq(D,q), L(D,q)
+M1R source-shaped rational -> resolvent -> s=I1 route
+```
+
+任何有限矩阵仅作用于解析系数/period basis，不代表空间离散。
+
+---
+
+## 1. R02 输入：generic genus-2 single-resolvent algebraic kernel
+
+R02 已得到固定 generic interior `y` 时：
+
+\[
+w^2=P_5(x;\theta),
+\qquad
+P_5=x(1-x)\Gamma_r(x,y;D,M,\nu,r),
+\]
+
+其中 `Gamma_r` generically cubic in x，所以 `P5` generically degree 5；存在 exact square-free genus-2 witness。
+
+本轮先处理 PF1 的第一子任务：**single-resolvent algebraic kernel 的 finite Gauss–Manin closure**。
+
+这里参数集合可取
+
+\[
+\theta\in\{D,M,y,\nu,r\},
+\]
+
+而结构的 q 导数之后通过 `M=M(q)` 以及 relative endpoint 中的 `B=B(q)` 链式进入。R03 不改变任何结构变量定义。
+
+---
+
+## 2. genus-2 absolute de-Rham basis
+
+对 square-free degree-5 hyperelliptic curve
+
+\[
+w^2=P_5(x),
+\]
+
+采用 4 维 odd de-Rham basis：
+
+\[
+\boxed{
+\omega_k=\frac{x^k\,dx}{w},\qquad k=0,1,2,3.
+}
+\]
+
+记
+
+\[
+\boldsymbol\omega=(\omega_0,\omega_1,\omega_2,\omega_3)^T.
+\]
+
+对 genus 2，absolute `H^1_dR` 的维数为 4；这一 basis 作为当前 algebraic-kernel connection 的固定有限 basis。它不是 Ritz 模态、不是空间节点、不是材料点。
+
+数学来源参考：Griffiths 1969 的 rational-period reduction；Köck–Tait 2018 对 hyperelliptic de-Rham cohomology 给出 explicit basis。它们只提供数学工具，不改变 NZ-SCCM 物理。
+
+---
+
+## 3. 参数导数只产生 `w^-3`
+
+因为
+
+\[
+\omega_k=x^kP^{-1/2}dx,
+\]
+
+所以对任意参数 `theta`：
+
+\[
+\boxed{
+\partial_\theta\omega_k
+=-\frac12\frac{x^kP_{,\theta}}{w^3}dx.
+}
+\]
+
+定义
+
+\[
+N_{k\theta}(x)=-\frac12x^kP_{,\theta}(x).
+\]
+
+由于 `deg P=5`、`deg P_theta<=5` 且 `k<=3`：
+
+\[
+\deg N_{k\theta}\le 8.
+\]
+
+这正好允许一个固定大小的 polynomial Bezout reduction。
+
+---
+
+## 4. 固定 9×9 Griffiths/Hermite reduction
+
+寻找：
+
+\[
+A(x)=\sum_{i=0}^3a_ix^i,
+\qquad
+B(x)=\sum_{j=0}^4b_jx^j,
+\]
+
+使
+
+\[
+\boxed{
+N=A P+B P'.
+}
+\]
+
+未知数总数：
+
+```text
+4 coefficients of A
++ 5 coefficients of B
+= 9
+```
+
+等式最高次数 8，也提供 9 个 coefficient equations。
+
+因此构造固定 9×9 coefficient matrix：
+
+\[
+\boxed{
+\mathsf S(P)\,
+(a_0,a_1,a_2,a_3,b_0,b_1,b_2,b_3,b_4)^T
+=\operatorname{coeff}_{0:8}(N).
+}
+\]
+
+`S(P)` 本质上就是 `P,P'` 的 Sylvester map，所以：
+
+\[
+\boxed{
+\det\mathsf S(P)=\operatorname{Res}(P,P').
+}
+\]
+
+对 square-free `P`：
+
+\[
+\operatorname{Res}(P,P')\ne0,
+\]
+
+因此 reduction 唯一存在。
+
+这给出一个重要结论：**PF1 的 x-direction Gauss–Manin reduction 不需要任何空间采样，只需固定 9×9 的解析系数线性代数。**
+
+---
+
+## 5. reduction identity
+
+利用
+
+\[
+d\left(\frac{B}{w}\right)
+=\frac{B'}{w}dx-\frac{BP'}{2w^3}dx,
+\]
+
+得到：
+
+\[
+\frac{BP'}{w^3}dx
+=
+\frac{2B'}{w}dx
+-2d\left(\frac{B}{w}\right).
+\]
+
+所以：
+
+\[
+\boxed{
+\frac{N}{w^3}dx
+=
+\frac{A+2B'}{w}dx
+-2d\left(\frac{B}{w}\right).
+}
+\]
+
+由于：
+
+```text
+deg A <= 3
+deg B' <= 3
+```
+
+故
+
+\[
+Q=A+2B'
+\]
+
+自动满足
+
+\[
+\deg Q\le3.
+\]
+
+也就是说，每个参数导数一次 reduction 后**直接回到同一个 4 维 basis**，不需要第二轮 degree reduction。
+
+---
+
+## 6. finite Gauss–Manin connection
+
+若只考虑 closed absolute periods：
+
+\[
+\Pi_k=\oint_\gamma\omega_k,
+\]
+
+exact differential 的积分为零，于是：
+
+\[
+\boxed{
+\partial_\theta\boldsymbol\Pi
+=\mathsf C_\theta\boldsymbol\Pi,
+}
+\]
+
+其中 `C_theta` 是 4×4 matrix；每一列由上述固定 9×9 reduction 产生。
+
+由于：
+
+\[
+\mathsf S^{-1}=\frac{\operatorname{adj}\mathsf S}{\det\mathsf S},
+\]
+
+所以 `C_theta` 的元素是 `P` coefficients 及其 parameter derivatives 的有限 rational functions；唯一 generic singular locus 是 discriminant/resultant locus，即 hyperelliptic curve 退化位置。
+
+当前正式身份：
+
+```text
+PF1_R03_GENUS2_ABSOLUTE_DERHAM_BASIS = PASS_EXACT
+PF1_R03_FIXED_9X9_GRIFFITHS_HERMITE_REDUCTION = PASS_EXACT
+PF1_R03_ABSOLUTE_X_GAUSS_MANIN = PASS_EXACT
+```
+
+---
+
+## 7. exact R02 witness 验证
+
+继续使用 R02 完全有理 witness：
+
+```text
+D=1
+M=1
+nu=1/5
+r=2
+y=1/3
+```
+
+\[
+P_5(x)
+=-\frac{x(x-1)(225x^3+1950x^2-10031x+7920)}{675}.
+\]
+
+R03 程序 exact audit 得到：
+
+```text
+rank S = 9
+```
+
+并且：
+
+\[
+\boxed{
+\det S
+=\operatorname{Res}(P,P')
+=-\frac{7162455748218191872}{10509453369140625}
+\ne0.
+}
+\]
+
+对：
+
+```text
+theta = D
+       M
+       y
+```
+
+分别对四个 basis forms `k=0..3` 逐一求解：
+
+\[
+N_{k\theta}=A_{k\theta}P+B_{k\theta}P'
+\]
+
+全部 exact identity check 为 TRUE，并生成对应 4×4 rational connection matrices。
+
+因此这一 PASS 不是只靠维数论，而有 actual M1R/R02 curve 的 exact executable witness。
+
+配套：
+
+- `nz_sccm_pf1_genus2_gauss_manin_r03.py`
+- `NZ_SCCM_PF1_GENUS2_GAUSS_MANIN_R03_results.json`
+
+---
+
+## 8. 为什么现在还不能把 physical x integral 标成 PASS
+
+NZ-SCCM 的真实 outer integral 不是任意 closed cycle，而是由：
+
+```text
+x in [0,1]
+Beta endpoint branch points x=0,1
+s-endpoint algebra
+log/atanh relative terms
+```
+
+共同形成的 **relative period**。
+
+R03 reduction 中保留了：
+
+\[
+-2d(B/w).
+\]
+
+对于 closed cycle 它消失；但对 physical relative chain 不能直接删除。尤其 `x=0,1` 是 branch endpoints，`B/w` 单项可出现 local-coordinate singular representation；必须在：
+
+\[
+t_0=\sqrt{x},
+\qquad
+t_1=\sqrt{1-x}
+\]
+
+局部坐标下建立 regularized relative/tangential endpoint functional，或等价地扩展 relative de-Rham basis，使 exact-term boundary contribution 与 algebraic/log terms 一致闭合。
+
+因此当前必须保持：
+
+```text
+PF1_R03_PHYSICAL_RELATIVE_X_ENDPOINT = HOLD
+PF1_R03_LOG_RELATIVE_EXTENSION = NOT_YET_CLOSED
+```
+
+绝不允许因为 absolute cohomology 已闭合，就把 physical endpoint term 丢掉。
+
+---
+
+## 9. 与 q 导数的关系
+
+R02 的 `Gamma_r`/genus-2 algebraic radical family显式依赖 `D,M,nu,r,y`；其中 `M=C_m(q)`。
+
+因此 algebraic absolute connection 的结构导数满足：
+
+\[
+\partial_q\boldsymbol\Pi
+=M_q\,\mathsf C_M\boldsymbol\Pi
+\]
+
+对这一 algebraic radical部分成立。
+
+但完整 M1R endpoint expressions 还显式依赖：
+
+\[
+B=C_b(q),
+\]
+
+以及 `E_r,O_r`、log arguments，所以完整 q derivative 必须等 relative/log extension 完成后再统一构造；R03 不提前删掉 B-dependence。
+
+---
+
+## 10. 基础限制 audit
+
+本轮 formal counts：
+
+```text
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+N_material_point_grid = 0
+absolute de-Rham basis dimension = 4
+coefficient reduction matrix dimension = 9
+```
+
+4 和 9 都是有限解析 function-space/coefficient-space 维数，不是空间离散数量。
+
+没有执行：
+
+```text
+NO Case21 Pu
+NO Swartz24
+NO UHPC production fit
+NO shell/Y production solve
+NO structural calibration
+NO coarea route switch
+```
+
+---
+
+## 11. 当前正式判定
+
+```text
+PF1_PATH_INVARIANTS = LOCKED
+PF1_R03_GENUS2_ABSOLUTE_DERHAM_BASIS = PASS_EXACT
+PF1_R03_FIXED_9X9_GRIFFITHS_HERMITE_REDUCTION = PASS_EXACT
+PF1_R03_ABSOLUTE_X_GAUSS_MANIN = PASS_EXACT
+PF1_R03_PHYSICAL_RELATIVE_X_ENDPOINT = HOLD
+PF1_R03_LOG_RELATIVE_EXTENSION = NOT_YET_CLOSED
+PF1_R03_PAIR_BLOCK_EXTENSION = NOT_YET_CLOSED
+PF1_R03_Y_WHOLE_HALFWAVE_CLOSURE = NOT_YET_CLOSED
+FORMAL_WHOLE_HALFWAVE_GATE_A = HOLD
+```
+
+这一步把 PF1 从“需要 genus-2 Picard–Fuchs”推进成：
+
+> **single-resolvent algebraic kernel 的 absolute x-direction 已有一个固定 4-dimensional de-Rham basis 和固定 9×9 exact coefficient reduction；真正剩下的第一硬问题是 physical branch-endpoint / algebraic-log relative extension。**
+
+---
+
+## 12. 下一唯一执行任务：PF1-R04
+
+```text
+physical x-relative chain
+-> local branch coordinates at x=0,1
+-> retain exact differential boundary functional
+-> add algebraic-log / third-kind relative generators
+-> derive finite extended connection
+-> verify no hidden quadrature
+```
+
+R04 PASS 后才进入 pair-resolvent relative extension；随后才闭合 y 方向。
+
+如果 R04 发现 relative extension 无法形成 finite analytic system，则按治理文件停止并报告 PF1 FAIL/HOLD；不得通过 numerical x-integration、endpoint cells 或 route substitution 绕过。
+
+---
+
+## 13. 数学工具来源
+
+- P. A. Griffiths, *On the periods of certain rational integrals, I, II*, Annals of Mathematics 90 (1969), 460–495, 496–541. DOI: `10.2307/1970746`, `10.2307/1970747`. Role: period/rational-integral reduction methodology.
+- B. Köck, J. Tait, *On the de-Rham cohomology of hyperelliptic curves*, Research in Number Theory 4, 19 (2018). DOI: `10.1007/s40993-018-0111-4`. Role: explicit hyperelliptic de-Rham cohomology basis context.
+
+这些来源只提供数学闭合工具，不改变本项目材料、运动学、结构目标或 formal integration identity。
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_PF1_GENUS2_GAUSS_MANIN_R03_results.json
+SIZE: 2635
+SHA256: ae0cd46af2cd66d1742d9cd70b97ee252d7274a2d1601ae9802a4cd0c0a7e7d8
+ENCODING: utf-8
+LINES: 57
+====================================================================================================
+{
+  "status": {
+    "PF1_PATH_INVARIANTS": "LOCKED",
+    "PF1_R03_GENUS2_ABSOLUTE_DERHAM_BASIS": "PASS_EXACT",
+    "PF1_R03_FIXED_9X9_GRIFFITHS_HERMITE_REDUCTION": "PASS_EXACT",
+    "PF1_R03_ABSOLUTE_X_GAUSS_MANIN": "PASS_EXACT",
+    "PF1_R03_PHYSICAL_RELATIVE_X_ENDPOINT": "HOLD",
+    "PF1_R03_LOG_RELATIVE_EXTENSION": "NOT_YET_CLOSED",
+    "PF1_R03_PAIR_BLOCK_EXTENSION": "NOT_YET_CLOSED",
+    "PF1_R03_Y_WHOLE_HALFWAVE_CLOSURE": "NOT_YET_CLOSED",
+    "FORMAL_WHOLE_HALFWAVE_GATE_A": "HOLD"
+  },
+  "basis": ["dx/w", "x dx/w", "x^2 dx/w", "x^3 dx/w"],
+  "reduction": {
+    "unknown_A_degree_max": 3,
+    "unknown_B_degree_max": 4,
+    "fixed_linear_system_dimension": 9,
+    "identity": "N=A*P+B*Pprime; N/w^3=(A+2Bprime)/w-2*d(B/w)",
+    "matrix_determinant_equals_resultant": true
+  },
+  "exact_witness": {
+    "parameters": {"D":"1","M":"1","nu":"1/5","r":"2","y":"1/3"},
+    "P5": "-x*(x - 1)*(225*x**3 + 1950*x**2 - 10031*x + 7920)/675",
+    "rank_S": 9,
+    "det_S": "-7162455748218191872/10509453369140625",
+    "resultant_P_Pprime": "-7162455748218191872/10509453369140625",
+    "connection_identity": {"D":true,"M":true,"y":true},
+    "connection_matrices": {
+      "D": [
+        ["-10951569/3644864","-10391385/3644864","-9692385/3644864","-6410665/3644864"],
+        ["4198052777/962244096","1317202363/320748032","3369223289/962244096","-13537277/2886732288"],
+        ["-845134775/641496064","-70466925/58317824","-49576853/58317824","327482633/174953472"],
+        ["-155870775/641496064","-145385775/641496064","-96159975/641496064","-161583199/641496064"]
+      ],
+      "M": [
+        ["4676905/3644864","3488625/3644864","774585/3644864","-1230015/3644864"],
+        ["-461338475/320748032","-229845635/320748032","612006437/320748032","2085471271/962244096"],
+        ["271334175/641496064","4839525/58317824","-102166451/58317824","77415797/58317824"],
+        ["52329375/641496064","11618775/641496064","-18450225/641496064","-1805597305/641496064"]
+      ],
+      "y": [
+        ["-38132487/7289728","-46726335/7289728","-51427575/7289728","-15269103/7289728"],
+        ["6258486309/641496064","7173049869/641496064","8179278645/641496064","-37429324783/3207480320"],
+        ["-3839490225/1282992128","-365375115/116635648","-515763747/116635648","13065912729/583178240"],
+        ["-700895025/1282992128","-771413625/1282992128","-229036545/1282992128","-9659333577/1282992128"]
+      ]
+    }
+  },
+  "formal_counts": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "spatial_subdomains": 1,
+    "material_point_grid": 0,
+    "derham_basis_dimension": 4,
+    "reduction_matrix_dimension": 9
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_PF1_HYPERGEOMETRIC_DRIVER_R05_results.json
+SIZE: 2438
+SHA256: 5a716627bb424ec850fcfff3fd493522887664ceaeb5e482c06f3cf7feb93c8e
+ENCODING: utf-8
+LINES: 61
+====================================================================================================
+{
+  "status": {
+    "PF1_PATH_INVARIANTS": "LOCKED",
+    "PF1_R05_PHI_FIRST_ORDER_IDENTITY": "PASS_EXACT",
+    "PF1_R05_COMMON_TAU_DRIVER_IDENTITY": "PASS_EXACT",
+    "PF1_R05_LOG_KERNEL_TAU_ODE": "PASS_EXACT",
+    "PF1_R05_RECIPROCAL_KERNEL_TAU_ODE": "PASS_EXACT",
+    "PF1_R05_X_ARCSINE_RESOLVENT_ELIMINATION": "PASS_CLASS_A",
+    "PF1_R05_Y_ALGEBRAIC_TRACE_RESULTANT": "PASS_FINITE_ALGEBRAIC",
+    "PF1_R05_TWISTED_CRITICAL_QUOTIENT": "PASS_WITNESS_DIMENSION_19",
+    "PF1_R05_FULL_GENERIC_CONNECTION_MATRIX": "HOLD",
+    "FORMAL_WHOLE_HALFWAVE_GATE_A": "HOLD"
+  },
+  "exact_identities": {
+    "phi_first_order": "2*z*Phi'(z)+Phi(z)=1/(1-z)",
+    "phi_identity_remainder": "0",
+    "common_driver": "D_r(tau)=E_tau^2-tau*x*y*ell^2=K_tau^2-tau*Gamma",
+    "common_driver_remainder": "0",
+    "log_kernel_ode": "(2*tau*d/dtau+1) F_L = ell*K_tau/(2*D_r)",
+    "log_chain_coeff": "-1/(2*tau)",
+    "log_driver_remainder": "0",
+    "reciprocal_kernel_ode": "(2*tau*d/dtau+1) F_J = E_tau/D_r",
+    "reciprocal_chain_coeff": "-1/(2*tau)",
+    "reciprocal_driver_remainder": "0"
+  },
+  "driver_geometry": {
+    "degree_x": 3,
+    "degree_y": 3,
+    "total_degree": 4,
+    "term_count": 11,
+    "support": [[3,1],[2,2],[2,1],[2,0],[1,3],[1,2],[1,1],[1,0],[0,2],[0,1],[0,0]]
+  },
+  "x_resolvent": {
+    "basic_identity": "integral_0^1 dx/[sqrt(x(1-x))*(x-rho)] = -pi/sqrt(rho*(rho-1)) on the analytically continued branch",
+    "hypergeometric_reduction": "2F1(1/2,1;1;1/rho)=1/sqrt(1-1/rho)",
+    "cubic_trace": "for simple roots rho_j of D(x,y;tau), integral N/D = -pi*sum_j N(rho_j)/(D_x(rho_j)*sqrt(rho_j(rho_j-1)))"
+  },
+  "exact_witness": {
+    "parameters": {"D":"1","M":"1","nu":"1/5","r":"2","tau":"symbolic"},
+    "x_root_trace_resultant": {
+      "degree_Z": 3,
+      "degree_y": 6,
+      "total_degree_Z_y": 7,
+      "term_count": 19,
+      "discriminant_degree_y": 20,
+      "discriminant_degree_tau": 15,
+      "discriminant_factor_degrees": [[0,1,1],[1,0,1],[2,1,2],[5,4,1],[5,4,2]]
+    },
+    "twisted_critical_ideal": {
+      "groebner_leading_monomials": [[6,0],[2,4],[1,5],[0,6],[4,1],[3,2]],
+      "standard_monomial_count": 19,
+      "standard_monomials": [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[1,0],[1,1],[1,2],[1,3],[1,4],[2,0],[2,1],[2,2],[2,3],[3,0],[3,1],[4,0],[5,0]]
+    }
+  },
+  "formal_counts": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "spatial_subdomains": 1,
+    "material_point_grid": 0
+  }
+}
+
+====================================================================================================
+FILE: current/theory/NZ_SCCM_PF1_HYPERGEOMETRIC_DRIVER_REDUCTION_R05_20260810.md
+SIZE: 12279
+SHA256: dd19189339d69ae2bc0ce5bbea50db322b763f10f525691f35579c67d215075e
+ENCODING: utf-8
+LINES: 649
+====================================================================================================
+# NZ-SCCM PF1-R05：physical hypergeometric pullback → common rational driver
+
+**日期：2026-08-10**  
+**身份：CURRENT PF1 ANALYTIC PROGRESS — HYPERGEOMETRIC DRIVER PASS / x EXACT ELIMINATION PASS / WHOLE CONNECTION HOLD**
+
+## 0. 本轮先执行“目标相关性门禁”
+
+本轮首先同步：
+
+`governance/PF1_R05_GOAL_RELEVANCE_CHECKPOINT_20260810.md`
+
+因此 R05 只允许处理 R04 已经得到的 **actual physical symmetric endpoint kernel**，不得为了数学完备性脱离当前 `P/Rq/L` 目标去建立无关的 generic period theory。
+
+冻结不变：
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+KINEMATICS = NGUYEN_SECOND_ORDER
+STRUCTURAL_TARGETS = P(D,q), Rq(D,q), L(D,q)
+MATERIAL_ROUTE = M1R source-shaped rational primitives
+INNER_ROUTE = resolvent -> s=I1 exact elimination
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+NO spatial cells
+NO material-point grid
+NO structure-based material refit
+NO route switch
+```
+
+R05 的问题只剩：R04 的
+
+\[
+\mathrm{Beta}(x)\mathrm{Beta}(y)\times R(x,y)\Phi(\chi(x,y))
+\]
+
+怎样继续消去真实 whole-halfwave `x,y` 积分。
+
+---
+
+## 1. R04 的 canonical special function 比二阶 ODE 还可以再降一层
+
+R04 定义：
+
+\[
+\boxed{
+\Phi(z)=\frac{\operatorname{atanh}\sqrt z}{\sqrt z}
+={}_2F_1\!\left(\frac12,1;\frac32;z\right),
+\qquad \Phi(0)=1.
+}
+\]
+
+除了 R04 已记录的二阶 Gauss ODE，`Phi` 还严格满足更直接的一阶非齐次恒等式：
+
+\[
+\boxed{
+2z\Phi'(z)+\Phi(z)=\frac1{1-z}.
+}
+\]
+
+证明只需令 `t=sqrt(z)`：
+
+\[
+t\Phi=\operatorname{atanh}t,
+\]
+
+对 `t` 求导即得。
+
+配套 SymPy exact audit：
+
+```text
+2*z*dPhi/dz + Phi - 1/(1-z) = 0 exactly
+```
+
+正式状态：
+
+```text
+PF1_R05_PHI_FIRST_ORDER_IDENTITY = PASS_EXACT
+```
+
+这一步的意义不是换一个特殊函数，而是把 **Phi pullback 的参数导数直接降成“Phi 本身 + rational driver”**，避免继续扩大 log/hyperelliptic basis。
+
+---
+
+## 2. 只引入一个解析系数参数 tau，不改变物理问题
+
+R04 actual single-resolvent quantities中，令：
+
+\[
+h=x+y-1,
+\]
+
+把物理 `B^2` 暂时记成一个**解析系数参数**：
+
+\[
+\boxed{\tau}.
+\]
+
+注意：`tau` **不是新的结构自由度、加载变量或材料内部变量**。它只用于构造同一个 finite special-function evaluator；物理值最后严格取：
+
+\[
+\boxed{\tau=B(q)^2.}
+\]
+
+`D,M,q,r,nu` 的物理定义全部不变。
+
+定义去掉 `B^2` 项后的：
+
+\[
+E_{0r}
+=-\nu D^2+DMK-r a+r^2,
+\]
+
+其中仍采用当前：
+
+\[
+a=(\nu-1)D+M(x+y-2xy).
+\]
+
+再定义：
+
+\[
+\boxed{E_r(\tau)=E_{0r}+\tau h,}
+\]
+
+\[
+\boxed{K_r(\tau)=E_{0r}-\tau h,}
+\]
+
+以及：
+
+\[
+\boxed{\ell_r=D(\nu-1)+M(2-x-y)-2r.}
+\]
+
+R02 的 `Gamma_r` 与 `B` 无关，因此保持原式。
+
+---
+
+## 3. 新 exact identity：两个 R04 Phi kernel 实际共享同一个 rational driver denominator
+
+R04 的两个核心 argument 分别对应：
+
+### 3.1 log divided-difference kernel
+
+\[
+\boxed{
+\mathcal F_{L,r}(\tau)
+=\frac{\ell_r}{2E_r(\tau)}
+\Phi\left(
+\frac{\tau xy\ell_r^2}{E_r(\tau)^2}
+\right).
+}
+\]
+
+### 3.2 reciprocal quadratic kernel
+
+\[
+\boxed{
+\mathcal F_{J,r}(\tau)
+=\frac1{K_r(\tau)}
+\Phi\left(
+\frac{\tau\Gamma_r}{K_r(\tau)^2}
+\right).
+}
+\]
+
+本轮发现并 exact check：
+
+\[
+\boxed{
+\mathscr D_r(\tau)
+=E_r(\tau)^2-\tau xy\ell_r^2
+=K_r(\tau)^2-\tau\Gamma_r.
+}
+\]
+
+也就是说，R04 看起来不同的 `log` 和 `reciprocal` 两个 Phi pullback，在真正进入 outer contraction 时，共享**同一个 rational period denominator**。
+
+配套 symbolic remainder：
+
+```text
+K_tau^2 - tau*Gamma
+-
+(E_tau^2 - tau*x*y*ell^2)
+= 0 exactly
+```
+
+正式状态：
+
+```text
+PF1_R05_COMMON_TAU_DRIVER_IDENTITY = PASS_EXACT
+```
+
+这是当前 R05 最关键的物理相关简化：后续不需要分别建立两套 outer special-function engines。
+
+---
+
+## 4. 两个 Phi kernel 都满足同一个一阶 tau operator
+
+利用：
+
+\[
+2z\Phi'(z)+\Phi(z)=\frac1{1-z},
+\]
+
+对 `tau` 做 chain rule。
+
+### 4.1 log kernel
+
+对：
+
+\[
+z_L=\frac{\tau xy\ell_r^2}{E_r^2},
+\qquad
+R_L=\frac{\ell_r}{2E_r},
+\]
+
+exact simplification 得：
+
+\[
+\frac{R_{L,\tau}}{R_L}
+-\frac{z_{L,\tau}}{2z_L}
+=-\frac1{2\tau}.
+\]
+
+最后：
+
+\[
+\boxed{
+\left(2\tau\frac{\partial}{\partial\tau}+1\right)
+\mathcal F_{L,r}
+=
+\frac{\ell_r K_r(\tau)}{2\mathscr D_r(\tau)}.

@@ -1,0 +1,1800 @@
+\]
+
+其中
+
+\[
+\boxed{
+H^{-1}
+=
+\frac1{49}
+\operatorname{diag}(1,2,\ldots,2).
+}
+\]
+
+所以每个 \(F\) 只需要解一个 **\(2\times2\)** 小矩阵。
+
+这不是新的材料拟合路线；它是：
+
+\[
+\boxed{
+\text{在原49个材料值受到最小二乘扰动的条件下，强制恢复R10的C1锚点。}
+}
+\]
+
+没有新增材料参数，没有试验荷载，没有结构 \(P_u\) 进入系数求解。
+
+---
+
+## 4. 为什么本轮不采用其他“看起来更直接”的修复
+
+已经逐项检查：
+
+1. **只改最后两个系数**：可以强制锚点，但会造成明显高阶振荡；
+2. **在原 N48 后加线性/低阶修正**：一阶锚点能恢复，但全域函数值被明显拖偏；
+3. **\(\lambda^2\) 因子化残差**：锚点天然正确，但在当前宽材料域上值误差明显恶化；
+4. **两段可达谱带单独最小二乘**：可达区函数值较好，但谱隙内出现巨大多项式振荡，系数可达到 \(10^5\) 量级，不符合“简单、稳健、可手算审计”的要求；
+5. **提高到 N96/N112**：本轮明确不采用，因为当前首先应解决表示规则，而不是用阶次覆盖错误。
+
+因此，本轮选取的 N48-C1 是目前**最小结构改动**方案。
+
+---
+
+## 5. 锚点门：PASS
+
+24块板重新生成 N48-C1 后，四个材料函数的
+
+\[
+F_{48}^{C1}(0)-F_{R10}(0)
+\]
+
+以及
+
+\[
+\left(F_{48}^{C1}\right)'(0)-F_{R10}'(0)
+\]
+
+最大绝对残差约为
+
+\[
+\boxed{3.0\times10^{-14}}.
+\]
+
+因此
+
+```text
+R10_VALUE_ANCHOR_GATE     = PASS
+R10_FIRST_TANGENT_GATE    = PASS
+```
+
+---
+
+## 6. 系数简单性门：PASS
+
+旧直接 N48 在24板中的最大系数绝对值上界约为
+
+\[
+0.62990,
+\]
+
+N48-C1 为
+
+\[
+\boxed{0.62976}.
+\]
+
+全部四函数系数绝对值总和的24板平均：
+
+\[
+\text{direct N48}\approx 6.272,
+\]
+
+\[
+\boxed{
+\text{N48-C1}\approx 6.360.
+}
+\]
+
+所以不存在“两谱带无约束拟合”中 \(10^5\sim10^6\) 级系数爆炸。
+
+```text
+COEFFICIENT_ORDER = 48
+COEFFICIENT_MAGNITUDE_GATE = PASS
+```
+
+---
+
+## 7. 周思铭 \(D_x-D_y-H\) 稳定验收门
+
+材料切线仍由同一 current-map 求导，穿厚度后按周思铭/Navier 的正交刚度语言审计：
+
+\[
+D_x=D_{11},
+\qquad
+D_y=D_{22},
+\]
+
+\[
+D_{\mu,\mathrm{eff}}
+=
+\frac{D_{12}+D_{21}}2,
+\]
+
+\[
+\boxed{
+H_{\mathrm{eff}}
+=
+D_{\mu,\mathrm{eff}}+2D_{66}.
+}
+\]
+
+单代表半波的稳定刚度组合为
+
+\[
+\boxed{
+N_y^{cr}
+=
+\frac{
+D_x\alpha^4
++
+2H_{\mathrm{eff}}\alpha^2\beta^2
++
+D_y\beta^4
+}{\beta^2}.
+}
+\]
+
+本轮不是另建周思铭求解器，而是把它作为“修复后的 current tangent 有没有恢复正确稳定刚度构成”的验收门。
+
+### 24板结果
+
+相对于闭式 R10 target：
+
+\[
+\max
+\left|
+\frac{E_{\parallel,t}^{C1}
+-
+E_{\parallel,t}^{R10}}
+{E_0}
+\right|
+=
+\boxed{0.00689}.
+\]
+
+即最坏约为
+
+\[
+\boxed{0.69\%E_0}.
+\]
+
+对 \(H\)：
+
+\[
+\boxed{
+\max
+\left|
+\frac{H^{C1}}{H^{R10}}-1
+\right|
+=
+0.1386\%.
+}
+\]
+
+24板平均绝对偏差：
+
+\[
+\boxed{0.0459\%}.
+\]
+
+对周思铭式单半波稳定 margin：
+
+\[
+\boxed{
+\max
+\left|
+\frac{M_Z^{C1}}{M_Z^{R10}}-1
+\right|
+=
+0.3872\%.
+}
+\]
+
+平均绝对偏差：
+
+\[
+\boxed{0.1394\%}.
+\]
+
+而旧直接 N48 在 P1 中曾把 \(H\) 放大到 R10 的约 \(4.7\sim6.8\) 倍。
+
+因此：
+
+```text
+ZHOU_Dx_Dy_H_TANGENT_GATE = PASS
+ZHOU_SINGLE_HALFWAVE_MARGIN_GATE = PASS
+```
+
+三个板组的加载方向切线比进一步说明了这一点：
+
+| 板组 | R10 target \(E_{\parallel,t}/E_0\) | 旧 direct N48 | N48-C1 |
+|---|---:|---:|---:|
+| Case1–8 | -0.0195 | 0.9928 | -0.0188 |
+| Case9–16 | -0.0360 | 0.9362 | -0.0337 |
+| Case17–24 | +0.0599 | 0.9659 | +0.0591 |
+
+即 N48-C1 恢复了 R10 本来具有的“峰值附近切线退化”，没有再把它重新拉回近弹性模量。
+
+---
+
+## 8. 但是：全域值函数门暂时不能宣告完全通过
+
+N48-C1 是“最小扰动 + C1硬约束”，所以必然牺牲一部分旧 direct N48 的逐点插值精度。
+
+在各板自己的完整 compiler hull 上，24板平均最大绝对误差为：
+
+| primitive | direct N48 | N48-C1 |
+|---|---:|---:|
+| \(U\) | 0.00110 | 0.00124 |
+| \(C\) | 0.00499 | 0.01252 |
+| \(T\) | 0.04979 | 0.12215 |
+| \(T^7\) | 0.11599 | 0.11706 |
+
+最坏板的 N48-C1：
+
+\[
+|U-U_{R10}|_{\max}\approx0.00189,
+\]
+
+\[
+|C-C_{R10}|_{\max}\approx0.01343,
+\]
+
+\[
+|T-T_{R10}|_{\max}\approx0.13006,
+\]
+
+\[
+|T^7-(T^7)_{R10}|_{\max}\approx0.14151.
+\]
+
+这里最明显的是 \(T\) 在 \(\lambda=0\) 附近的极窄 R10 拉伸边界层。
+
+原因已经明确：
+
+- R10 精确要求 \(T'(0)=0\)；
+- 但 \(\eta\sim2.5\times10^{-3}\) 使 \(T\) 在很短的 \(\lambda\) 距离内迅速上升；
+- 旧 direct N48 实际通过制造 \(T'_{48}(0)\approx9\sim11\) 的假斜率来换取较好的函数值；
+- N48-C1 把假斜率取消以后，一个“单一全域48阶多项式”必须付出一定的局部值误差。
+
+所以本轮不能把问题伪装成“已经全部解决”。
+
+---
+
+## 9. 当前正式裁决
+
+\[
+\boxed{
+\text{N48-C1 是目前最简单、最透明的切线修复候选。}
+}
+\]
+
+它已经做到：
+
+- R10 不变；
+- \(N_M=48\) 不变；
+- 同一49个材料坐标不变；
+- 最终仍是一组普通48阶 Chebyshev 系数；
+- 函数值锚点严格满足；
+- 一阶切线锚点严格满足；
+- 系数仍为 \(O(1)\)；
+- 周思铭 \(D_x-D_y-H\) 稳定刚度恢复到 R10 target 的千分量级。
+
+但是：
+
+\[
+\boxed{
+\text{GLOBAL VALUE FIDELITY = HOLD}
+}
+\]
+
+原因不是稳定切线，而是 R10 拉伸零点附近存在非常窄的材料边界层，单一全域 N48 在“精确零斜率 + 原有值精度”之间存在明显竞争。
+
+因此当前治理身份应为：
+
+```text
+R10_MATERIAL_TARGET                = FROZEN
+N48_ORDER                          = 48
+N48_DIRECT_INTERPOLATION           = TANGENT_FAIL
+N48_C1_CONSTRAINED_PROJECTION      = PASS_TANGENT_DIAGNOSTIC
+R10_VALUE_ANCHOR_GATE              = PASS
+R10_FIRST_TANGENT_GATE             = PASS
+COEFFICIENT_MAGNITUDE_GATE         = PASS
+ZHOU_Dx_Dy_H_GATE                  = PASS
+GLOBAL_PRIMITIVE_VALUE_GATE        = HOLD
+PRODUCTION_REPLACEMENT             = NOT_YET
+SWARTZ24_Pu_RECALCULATION          = NOT_AUTHORIZED_IN_THIS_STEP
+```
+
+---
+
+## 10. 下一步边界
+
+下一步不应提高 N，也不应改 R10。
+
+唯一值得继续检查的是：
+
+\[
+\boxed{
+\text{能否在仍保持单一 N48 / O(1) 系数 / D15 可编译的条件下，专门改善 }\lambda\approx0\text{ 的 R10 拉伸边界层值误差。}
+}
+\]
+
+如果这一点不能在 N48 内完成，就应明确承认“单一全域 N48 的表示能力边界”，而不是继续靠阶次堆叠掩盖。
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_N48_C1_VALUE_TANGENT_REPAIR_AUDIT_TABLE_20260811.csv
+SIZE: 15288
+SHA256: e122c1436264022e9ffa741e30bcdfa86622df0348803ac58a91fe00c49a7c7e
+ENCODING: utf-8
+LINES: 25
+====================================================================================================
+case,group,compiler_lambda_a,compiler_lambda_b,U_value_anchor_resid,U_slope_anchor_resid,C_value_anchor_resid,C_slope_anchor_resid,T_value_anchor_resid,T_slope_anchor_resid,T7_value_anchor_resid,T7_slope_anchor_resid,eta_parallel_R10,eta_parallel_directN48,eta_parallel_C1,H_R10,H_directN48,H_C1,H_C1_relerr_pct,margin_R10,margin_directN48,margin_C1,margin_C1_relerr_pct,max_coeff_direct,max_coeff_C1,L1_coeff_direct,L1_coeff_C1,maxerr_U_direct,maxerr_U_C1,maxerr_C_direct,maxerr_C_C1,maxerr_T_direct,maxerr_T_C1,maxerr_T7_direct,maxerr_T7_C1
+1,1-8,-1.12,0.105,-1.1102230246251565e-16,0.0,0.0,-2.900174431673878e-15,2.220446049250313e-16,-5.800348863347756e-15,2.220446049250313e-16,5.800348863347756e-15,0.003098399159720722,1.0552906913016142,0.004458776918056764,15413777.516399086,101515988.43864945,15417664.096222688,0.0252149728998452,0.831057231087645,3.5860922037318645,0.8317068480699354,0.07816753864715587,0.6126927356360248,0.6126300477723227,6.220049129111015,6.310936881493772,0.0010860820077626954,0.0011855292418049418,0.0036103847937930854,0.012406225006785097,0.05478189143569846,0.1253817809114609,0.11968839892269956,0.12608096386855228
+2,1-8,-1.12,0.105,-1.1102230246251565e-16,0.0,2.220446049250313e-16,0.0,0.0,1.7401046590043267e-14,3.3306690738754696e-16,-1.1600697726695512e-14,0.002852691690650889,1.0547219735474165,0.0041245508200421855,16451284.23066355,108336212.0552304,16455197.12179788,0.023784715402563883,0.905119437577425,3.905437931841949,0.9057819550427306,0.07319668960805714,0.6126604550871723,0.6125978157082917,6.219810824529041,6.310830179823197,0.0010827275411692816,0.001181768486128859,0.0036078987220152232,0.01240013906327796,0.05475174651917067,0.12530724934178233,0.11977625564552541,0.12611051036257281
+3,1-8,-1.12,0.105,0.0,8.881784197001252e-16,0.0,0.0,2.220446049250313e-16,0.0,2.220446049250313e-16,2.900174431673878e-15,-0.016921909465622983,1.0366836089058271,-0.014869842229159633,13489064.885960072,91619079.05226448,13494130.523772603,0.03755366183910702,0.8952089047560895,3.8265658376059504,0.896243502468049,0.11557053403543627,0.6126826481187287,0.6126199754087609,6.219974722367052,6.310903600168755,0.00108503459822,0.0011843546795584914,0.0036096078016496624,0.012404322875123226,0.05477246381265283,0.12535847896192492,0.11971614806946418,0.12609048316378602
+4,1-8,-1.12,0.105,0.0,8.881784197001252e-16,0.0,-7.250436079184695e-16,4.440892098500626e-16,1.1600697726695512e-14,3.3306690738754696e-16,-5.800348863347756e-15,-0.012230851389530647,1.0402127221661466,-0.011476077585523187,16407547.221171474,110569552.86872593,16409412.394339876,0.011367775714798967,1.0078543964672328,4.311710414940635,1.0082721168282036,0.04144649886281826,0.6126630473018838,0.6126004040303872,6.219829982435421,6.310838769717369,0.0010829972042777636,0.0011820707102848105,0.003608098323611986,0.012400627676594753,0.0547541646660807,0.12531323058120947,0.11976930169103428,0.12610823605744548
+5,1-8,-1.16,0.105,-1.1102230246251565e-16,0.0,1.1102230246251565e-16,7.02117327826186e-16,-2.220446049250313e-16,0.0,-1.1102230246251565e-16,2.808469311304744e-15,-0.026350339267936743,0.9454208814125968,-0.027382181160027066,14402079.885745736,92799436.50166808,14398682.092572534,-0.023592378324222008,0.930319984278908,3.7357416345590178,0.9297601577868723,-0.06017569239573639,0.6195706765515375,0.6194556713978204,6.25799232428771,6.383582993129698,0.0009307638441016924,0.0011495480198496985,0.006334037466021969,0.012702581161497781,0.06451078433599652,0.12985183586618215,0.1398582318060828,0.14143545916620415
+6,1-8,-1.16,0.105,1.1102230246251565e-16,6.661338147750939e-16,1.1102230246251565e-16,1.404234655652372e-15,0.0,5.616938622609488e-15,-2.220446049250313e-16,0.0,-0.0334626808308041,0.9414533627939248,-0.02974097306532763,13410043.459862113,87428140.40671454,13419691.075474918,0.07194320914529762,0.7783108142385919,3.1216131451146887,0.7799459347303621,0.2100857988681204,0.6195450714506172,0.6194301175380935,6.2579731709035755,6.383688963539704,0.0009271064272711321,0.001148266485053756,0.00633143188023205,0.012697574007239889,0.06448657847465346,0.12979262824267002,0.13971648515783008,0.14126693132691148
+7,1-8,-1.16,0.105,-1.1102230246251565e-16,4.440892098500626e-16,1.1102230246251565e-16,1.404234655652372e-15,-2.220446049250313e-16,5.616938622609488e-15,-3.3306690738754696e-16,-2.808469311304744e-15,-0.035314510413813754,0.9376255639713936,-0.034175212477512755,14614223.023339167,95588022.899846,14618003.392115012,0.02586773699708722,0.857600613718161,3.4425404000944884,0.8581678689365625,0.06614445107986366,0.6195526893147746,0.6194377201592985,6.2579789305540405,6.383657496067643,0.0009281949259300343,0.0011486477496189876,0.006332206993092035,0.012699063505655951,0.06449377451648743,0.12981023468926284,0.13975884172081376,0.14131725215298774
+8,1-8,-1.16,0.105,-1.1102230246251565e-16,4.440892098500626e-16,1.1102230246251565e-16,7.02117327826186e-16,0.0,1.6850815867828463e-14,-2.220446049250313e-16,1.1233877245218977e-14,-0.03802600391391077,0.9311752102623064,-0.04164403497723786,12445214.257576635,81810608.0658746,12437154.728698209,-0.06476006528790546,0.8613149712715042,3.452543725752072,0.8595777732630724,-0.20169137497602074,0.6195823123740264,0.6194672839282659,6.258000834465841,6.383534646339431,0.0009324247341700315,0.001150130422116119,0.006335221798461461,0.012704857206996028,0.06452180179328125,0.12987876909221518,0.13992206081942393,0.141511469533378
+9,9-16,-1.1,0.105,-3.3306690738754696e-16,2.220446049250313e-16,1.1102230246251565e-16,-7.370775267220956e-16,-2.220446049250313e-16,5.8966202137767646e-15,0.0,7.370775267220955e-15,-0.007038351652549029,1.061027640995872,-0.006557857065960425,21072781.728822533,142802481.84097567,21074410.993552405,0.0077316072972122285,1.2932083657554343,5.71762807908823,1.2935617432650737,0.027325643646980424,0.6089226114952088,0.6088951241291098,6.22899262840346,6.3061202374296315,0.0010755201616411691,0.0011865887722812274,0.003916439439719328,0.01230731293910154,0.04364310983398762,0.12110036549150421,0.10766873176077382,0.10969403136272499
+10,9-16,-1.1,0.105,-1.1102230246251565e-16,6.661338147750939e-16,0.0,7.370775267220956e-16,2.220446049250313e-16,1.7689860641330295e-14,-2.220446049250313e-16,8.844930320665148e-15,-0.005753375215136262,1.0623004916346406,-0.005592781433642425,24088895.59613085,162937106.28719464,24089365.48218382,0.0019506334405949843,1.4299331195214144,6.313842298002039,1.4300590092137484,0.008803886742336786,0.6089310876027213,0.6089035913366643,6.229147159480937,6.306236377799602,0.0010762067033400213,0.0011873885707384263,0.003916810444310765,0.012308885098003219,0.04364962513836368,0.12111892256928158,0.10773992681777589,0.1097732635592007
+11,9-16,-1.14,0.105,-1.1102230246251565e-16,0.0,1.1102230246251565e-16,7.133963210442774e-16,-2.220446049250313e-16,-1.7121511705062657e-14,0.0,8.560755852531328e-15,-0.027532734587598775,0.9894108736423766,-0.02650281238904463,21637290.64922344,145075034.56699258,21642128.40794298,0.022358431089952724,1.4539089311681241,6.041862101316806,1.4547737620259853,0.05948315188946118,0.6161946540511416,0.6161025301656843,6.236397317668143,6.343541434898795,0.0010335586636729538,0.0011116180783983381,0.005163943885480712,0.012529242886593447,0.061576638377499035,0.12830435262831524,0.13331994917597478,0.1371541404982416
+12,9-16,-1.15,0.105,-1.1102230246251565e-16,-4.440892098500626e-16,0.0,-2.1231356646218134e-15,0.0,5.661695105658169e-15,-2.220446049250313e-16,2.8308475528290847e-15,-0.03432780080484778,0.9575192824770234,-0.03761783810809646,15967890.04512111,106372082.3119082,15958546.034397643,-0.05851750417282808,1.0257531891431673,4.175524380719338,1.0238775164554483,-0.1828580897989429,0.6179362230014132,0.6178317590435513,6.246960887450481,6.362576656628131,0.000993013924994235,0.0010651970368990363,0.005803621147833774,0.012618536183566769,0.06355193902097041,0.12934411610511098,0.13760670632477834,0.14028011703037602
+13,9-16,-1.17,0.105,1.1102230246251565e-16,0.0,-1.1102230246251565e-16,-1.3932210505100005e-15,0.0,5.572884202040002e-15,-2.220446049250313e-16,-8.359326303060002e-15,-0.05022412389193409,0.9015589606547512,-0.04409802699840426,18531680.593920756,122070594.55497909,18553713.66262459,0.11889406679641557,1.2110201839790795,4.771605075745398,1.2151943344418195,0.3446805030965505,0.6211626290449559,0.6210387769606648,6.276620161254324,6.405235579539632,0.0008822981117050793,0.0012462644715533627,0.006776629019661492,0.012796680671510414,0.06457738975260555,0.13000713418904697,0.14011073931685614,0.14084157147384002
+14,9-16,-1.17,0.105,-1.1102230246251565e-16,0.0,0.0,0.0,0.0,1.1145768404080004e-14,0.0,0.0,-0.039506542429694314,0.9103257295914025,-0.03930209741720836,24050338.552581355,155422958.2102201,24052522.870011073,0.009082273103722116,1.3592479779473483,5.354563158706055,1.3594362293303888,0.013849671737209412,0.6211846968218635,0.6210607989537876,6.276520303392655,6.405162117234067,0.0008829817799602263,0.0012474780412261022,0.006779010075084016,0.012801034483220331,0.06459703582147083,0.13005724512725475,0.140279385918067,0.14102971789977004
+15,9-16,-1.23,0.105,-1.1102230246251565e-16,0.0,0.0,6.653021870412924e-16,2.220446049250313e-16,-1.5967252488991017e-14,1.1102230246251565e-16,-7.983626244495508e-15,-0.05658963579459127,0.8073708423575173,-0.049700678816314854,23089705.539834857,142543241.67796415,23121387.61836844,0.13721300377314005,1.2925724246476884,4.769774818793106,1.2975766909862525,0.387155585492871,0.6299012667700451,0.629760227718074,6.409483183386266,6.5118394030229485,0.0016996388573417062,0.0018944260279817882,0.007383994203653607,0.013433484012455144,0.04998187947494289,0.12675824264144325,0.10395025938434976,0.1075628793870711
+16,9-16,-1.22,0.105,0.0,6.661338147750939e-16,1.1102230246251565e-16,0.0,0.0,-1.0725173369963777e-14,2.220446049250313e-16,-2.6812933424909443e-15,-0.06690730770583672,0.8004548637877095,-0.0602700047253061,17430470.68604003,110354546.32915144,17454627.19819058,0.13858783612710202,1.1371057005424103,4.204061279974594,1.1413681262077817,0.37484867619062,0.628543336917028,0.6284008888972247,6.391729104238055,6.498453570345157,0.001613158877075299,0.0017953269740198091,0.007514601365428726,0.013328499360804748,0.05388370660561909,0.1275139625348543,0.11373643780663345,0.11587327781458479
+17,17-24,-1.04,0.105,-1.1102230246251565e-16,0.0,1.1102230246251565e-16,1.5514033531879917e-15,0.0,0.0,2.220446049250313e-16,0.0,0.05406348787957325,0.9394684651989356,0.05031618093000174,6753650.9819211215,36381643.55037539,6749756.4243774265,-0.05766595807393804,0.6385508414628006,2.3389551888782982,0.6372817376159077,-0.19874750207605762,0.5966968955272683,0.5966366565092565,6.306288308325939,6.342276331104846,0.0011640000863354545,0.0012106426398909576,0.003379817300841227,0.012256620896811211,0.037318996621609826,0.11067964704058608,0.0990897710691249,0.09477444875305877
+18,17-24,-1.04,0.105,1.1102230246251565e-16,0.0,1.1102230246251565e-16,1.5514033531879917e-15,2.220446049250313e-16,0.0,1.1102230246251565e-16,0.0,0.037084567962142226,0.9237861441450548,0.041645705877754347,7672609.458196047,42235648.26878874,7678363.401693699,0.0749933061105601,0.6790239508652213,2.527590719846195,0.6807104234079175,0.24836716592211427,0.5966858692075863,0.5966256387106205,6.306033308243228,6.342028748683339,0.0011631296028727749,0.0012096949326084738,0.0033793355471937923,0.012254664359632076,0.03731023031864021,0.11066157605144866,0.0990954062988735,0.09477429582961258
+19,17-24,-1.04,0.105,0.0,-6.661338147750939e-16,2.220446049250313e-16,-7.757016765939959e-16,0.0,6.205613412751967e-15,2.220446049250313e-16,-6.981315089345962e-15,0.05725695357837476,0.94164017822724,0.05531869437573153,7188557.811050542,38547844.02566651,7186661.678758736,-0.026377089002349585,0.6347348176890434,2.316929852218192,0.6340954986731235,-0.10072222258855623,0.5966607043316174,0.5966004932781472,6.305450801459928,6.341463171245673,0.0011611457972076425,0.0012075350949343616,0.0033782364117290816,0.012250200150183955,0.03729024750089708,0.11062034343452698,0.09910758301234801,0.09477332645056227
+20,17-24,-1.04,0.105,-1.1102230246251565e-16,0.0,0.0,0.0,4.440892098500626e-16,-1.86168402382559e-14,2.220446049250313e-16,1.5514033531879917e-15,0.09320272849332224,0.97171276854808,0.09072510131020772,7054067.202390694,36252539.12333956,7051692.510483681,-0.03366415202576967,0.6322814846733693,2.232883160656228,0.631494019341785,-0.12454347480871375,0.5967123544709352,0.5966521035047162,6.306645579908876,6.342623203277,0.0011652217932066403,0.0012119727107393063,0.003380492878450222,0.012259364467824576,0.03733129786085707,0.11070498713669069,0.0990815623442029,0.0947743838035554
+21,17-24,-1.01,0.105,-1.1102230246251565e-16,4.440892098500626e-16,0.0,-7.965725737220854e-16,-2.220446049250313e-16,1.911774176933005e-14,-2.220446049250313e-16,-1.2745161179553367e-14,0.10782743599096996,0.911661603580483,0.10359736871655789,7322289.147475942,34527082.555103,7317734.770210463,-0.06219881752483891,0.6270574899629763,2.054105702734547,0.6257258601620388,-0.21236167691994767,0.5898864585731913,0.5897810179627369,6.293487230117694,6.364551178377356,0.0010795451080089181,0.001296275556945864,0.005457212588567888,0.012153807893858115,0.027144911567894763,0.11048194738287453,0.0696539661171659,0.06633960074110667
+22,17-24,-1.01,0.105,0.0,4.440892098500626e-16,-2.220446049250313e-16,-2.3897177211662564e-15,2.220446049250313e-16,0.0,-1.1102230246251565e-16,7.965725737220854e-16,0.08011898774537116,0.8906765725416527,0.08186357094191256,7345588.2204064885,35743737.89279241,7347952.8838193845,0.03219161409466764,0.6281675973099597,2.1097911556243125,0.628752147837973,0.0930564598550454,0.589847233894273,0.5897418433546404,6.2926052568539825,6.363725738254616,0.0010768594002737962,0.0012928771510956616,0.00545494107682073,0.01214708626418409,0.027135589140967517,0.11042488872403944,0.0698523142435899,0.06651411056176218
+23,17-24,-1.08,0.105,-4.440892098500626e-16,-6.661338147750939e-16,2.220446049250313e-16,-1.4990353075107597e-15,4.440892098500626e-16,-2.99807061502152e-14,-1.1102230246251565e-16,-4.497105922532279e-15,0.02182264446979847,1.0706629968743302,0.022624933947281926,7742999.28490567,49780515.55004962,7743891.723189419,0.011525744106544167,0.6578031953346318,2.798619732345785,0.6580894940235823,0.04352345670879387,0.6050161561005188,0.6050193313560313,6.258840067170114,6.312005360475291,0.001110756849171099,0.001119490789826677,0.004208286911531408,0.012258621802763412,0.03446544683227592,0.11660700824132736,0.11255560718430371,0.11267305708485828
+24,17-24,-1.08,0.105,-2.220446049250313e-16,4.440892098500626e-16,1.1102230246251565e-16,-7.495176537553799e-16,2.220446049250313e-16,-5.996141230043039e-15,2.220446049250313e-16,-1.1992282460086078e-14,0.027998726514246595,1.0772793286145204,0.026581047381940864,8665999.961982122,55242277.671070285,8663843.191621628,-0.02488772640152348,0.6251230726052672,2.643249258297603,0.6246311191298448,-0.07869705934419047,0.605024067606748,0.6050272405939369,6.259028108836715,6.312135837282295,0.0011114159282682688,0.0011200467081760451,0.004208789084667503,0.01226007150510227,0.03447158583581936,0.1166229095546169,0.11260196019606322,0.11272628123769264
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_NC_R1_INDEPENDENT_AUDIT_CLOSURE_MATRIX_20260812.md
+SIZE: 4705
+SHA256: 8fee24c2efd6a8f56e4333cf017d5bfb6a7f200b60fe83aba336182627e5de7c
+ENCODING: utf-8
+LINES: 67
+====================================================================================================
+# NZ-SCCM NC-R1 独立理论审计问题闭合矩阵
+
+**日期：2026-08-12**  
+**输入审计：用户上传的独立理论审计结果 `粘贴的 markdown (1)。md`**  
+**闭合理论：`current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_20260812.md`**
+
+## 1. 审计目的裁决
+
+独立审计已经达到本轮目的：它没有推翻
+
+```text
+continuous complete halfwave
+-> R10 material target
+-> finite N48 compiler
+-> Cayley-Hamilton
+-> Nguyen second-order kinematics
+-> D15 exact moments
+-> low-dimensional P/Rq/L
+-> NC-R1 root topology
+```
+
+这一核心理论思想；它暴露的是正式写法、接口闭合和来源身份上的局部问题。
+
+特别是，正式结构极限承载力可以在空间积分全部解析消去以后由低维联合方程直接定义，不需要 FE-style material-point/load-step iteration。
+
+## 2. 闭合矩阵
+
+| 独立审计问题 | 审计原判断 | 当前裁决 | 闭合方式 | 状态 |
+|---|---|---|---|---|
+| T constrained-minimax 可能不唯一 | BLOCKED | 真实 formal gap | 保留主 minimax；对所有主最优解增加 H-范数严格凸二级 tie-break | CLOSED |
+| N48 全域值/切线 fidelity | BLOCKED/缺 gate | 需正式报告，不追加未经审计的新 theorem-level threshold | 定义 `E_F^(0)`、`E_F^(1)`；沿用已冻结 C1 / near-zero T / O(1) / tangent audit evidence | CLOSED AS ENGINEERING AUDIT CONTRACT |
+| D15 式(85) restricted basis 对全部中间张量过强 | FAIL | 真实公式错误 | 恢复历史 `J_pr=∫sin^p cos^r` 广义三角精确矩；最终 scalar integrand 用一般有限三角基 | CLOSED |
+| D15 路线本身 | BLOCKED | 不失败 | 广义三角 exact moments 保持零空间 quadrature | PASS / RETAINED |
+| Rebar 只有 `Ps(D,q), Rq,s(D,q)` 符号 | BLOCKED | 真实 formal gap | 写入 source steel law、方向应变、均匀弥散层 `t_s=rho_s t_p`、Ps/Rqs 面积分和 D15 闭合 | CLOSED UNDER SUPPORTED SINGLE-BRANCH CONTRACT |
+| Pc 与端反力身份不清 | MAJOR | 需澄清，不推翻 Pc | 明确定义为 representative-halfwave average axial load observable；不宣称任意截面局部平衡恒等 | CLOSED |
+| `Pi_eta` 被描述为严格 positive part | MINOR | 真实措辞问题 | 改为 project-defined smooth nonnegative one-sided coordinate | CLOSED |
+| `a_cc` 数值有、来源身份不足 | SOURCE_FIDELITY_UNRESOLVED | 真实 provenance gap | 明确为项目冻结低参数双压物理目标：equal-biaxial target 接触保守 CC 包络，单轴轴线保持不变；非 source-verbatim / 非 Pu calibration | CLOSED AT PROJECT-PROVENANCE LEVEL |
+| Eq.(141) 坐标重标度 | FAIL | 审计严重度过高；实际是 convention ambiguity | 明确 scalar level-set re-expression 与 energy-conjugate residual redefinition 两种 convention；一致使用时 Lnorm 均不变 | CLOSED |
+| root distance 在 q0=0 失效 | MINOR | 正确 | 显式加入当前 production `q0>0` 前提 | CLOSED |
+| Zhou `t^3 C_t/12` 对非均匀 tangent 不明确 | BLOCKED | 真实 formal gap | 定义 full-field modal second variation `K_Z` + D15 exact projection；局部公式仅保留为 uniform-tangent degeneration | CLOSED |
+| Zhou 缺 production gate | BLOCKED | 不应升级为第二 Pu production equation | 恢复 repo 既有 `DIAGNOSTIC/AUDIT ONLY` 身份；给出 `K_Z>0,=0,<0` 模态切线解释，不参与 NC-R1 Pu root selection | CLOSED BY IDENTITY CORRECTION |
+| Zhou 原论文来源 | auditor: PRIMARY_SOURCE_NOT_IN_REPO | 审计运行环境当时未读取；项目 File Library 实际可读 | 已核对周思铭原博士论文：§4.2.3 定义 Dx、H=Dxy+Dmu；第5章四边简支稳定；当前项目只继承方向刚度/Navier语言 | SOURCE READ / CURRENT INTERPRETATION BOUNDED |
+| Nguyen 原来源 | SOURCE_FIDELITY_UNRESOLVED | 运动学内部数学已通过；source/project transformation 必须区分 | 保留 Nguyen 二阶运动学/钢筋 source physics；不把项目 R10/CH/D15 transformation 伪装成 Nguyen 原式 | CLOSED AS SOURCE-BOUNDARY STATEMENT |
+
+## 3. 核心理论最终身份
+
+```text
+CORE_THEORY_ROUTE = PASS / RETAINED
+LOAD_STEP_MATERIAL_HISTORY_REQUIRED = NO
+SPATIAL_GAUSS_REQUIRED = NO
+SPATIAL_SAMPLING_REQUIRED = NO
+MATERIAL_POINT_GRID_REQUIRED = NO
+LOW_DIMENSIONAL_ROOT_SYSTEM = YES
+```
+
+更精确地说：理论不要求通过“逐加载步迭代”推进到峰值。材料 coefficient 一经生成，结构端直接得到有限的 `P(D,q)`, `Rq(D,q)`, `L(D,q)`；数学根提取后再按 NC-R1 connected-primary-branch / first +->- maximum 规则分类。
+
+## 4. 未在本轮执行
+
+```text
+CASE21_NEW_Pu = NOT CALCULATED
+SWARTZ24_NEW_Pu = NOT CALCULATED
+R10_REOPEN = NO
+N48_ORDER_CHANGE = NO
+NEW_MATERIAL_MODEL = NO
+NEW_SOLVER = NO
+```
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_RECOVERY_OVERCONSTRAINT_CORRECTION_20260812_2231.md
+SIZE: 4924
+SHA256: eeb47ad9612c69a77988b98b97328511a98d68d261148e45c1510310c824c13b
+ENCODING: utf-8
+LINES: 100
+====================================================================================================
+# NZ-SCCM 恢复审计过约束纠正 — 2026-08-12 22:31 +08:00
+
+**Status: CURRENT CORRECTION / SUPERSEDES THE BLOCKING INTERPRETATION IN `NZ_SCCM_FULL_THEORY_AND_EXECUTION_CONTRACT_RECOVERY_20260812_2145.md`**
+
+## 1. Correction
+
+The previous recovery audit incorrectly promoted the historical `MATERIAL_NATIVE_SPECTRAL_DOMAIN_RULE_20260810` (`Lambda_M` / `Lambda_R`) into a mandatory missing production layer that had to be reinserted before any further Case21/Swartz calculation.
+
+That promotion is **not supported by the later production evidence** and is revoked.
+
+The historical rule remains useful as a material-model governance principle, especially for transfer to a future UHPC material model, but it is **not a new runtime equation, root equation, or blocking gate of the current frozen R10 -> N48-C1/MM -> CH -> Nguyen -> general-D15 -> P,Rq,L -> tangent-gate calculation chain** unless a later current governing document explicitly makes it one.
+
+## 2. Why the previous interpretation was wrong
+
+Three later/higher-priority facts control:
+
+1. `current/results/NZ_SCCM_SWARTZ24_FRESH_R10_N48_D15_REPORT_20260811.md` actually completed 24/24 fresh blind calculations. Its operative contract was:
+
+```text
+raw input -> closed R10 -> continuous spectral certificate -> per-panel N48 recompilation
+-> Nguyen -> CH current map -> D15 exact moments -> rebar -> Rq=0 -> L=0
+-> branch/domain/residual checks
+```
+
+All 24 panels passed their compiler-domain certificates. This proves that no additional unsatisfied global `Lambda_M` equation/gate was required by that production workflow.
+
+2. `current/governance/NZ_SCCM_NC_R1_FORMAL_CLOSURE_DECISION_20260812.md` later froze the corrected formal architecture. It states that **for every new compiler interval** full-hull material value/tangent fidelity must be reported; it does not introduce an unresolved global `Lambda_M` as a prerequisite to solving.
+
+3. The 2026-08-10 material-native-domain rule itself was written while the final compact NC production current operator was still open. It explicitly says the final numerical NC material-native bounds were not yet frozen. Therefore its conceptual hierarchy must not be retroactively turned into a new blocker after R10/N48 production closure unless a later explicit governance decision does so.
+
+## 3. Correct current interpretation
+
+The current ordinary-concrete production chain remains:
+
+```text
+raw material/geometric inputs
+-> frozen R10 current target
+-> predeclared N48-C1/MM compiler interval and compiler-fidelity checks
+-> continuous structural spectral certificate contained in that interval
+-> Cayley-Hamilton current map
+-> Nguyen second-order one-complete-halfwave kinematics
+-> general-D15 exact moments
+-> Pc,Rq,c + Ps,Rq,s
+-> P,Rq and same-expression derivatives
+-> Gamma0
+-> first +->- limit candidate
+-> full-field Zhou/Navier tangent gate on the same branch
+-> theory freeze
+-> experiment-only comparison
+```
+
+`Lambda_M/Lambda_R` may be retained as explanatory material-governance metadata, but:
+
+```text
+Lambda_M/Lambda_R = NOT AN ADDITIONAL CURRENT SOLVE UNKNOWN
+Lambda_M/Lambda_R = NOT AN ADDITIONAL ROOT EQUATION
+Lambda_M/Lambda_R = NOT A NEW CASE21/SWARTZ BLOCKER
+NO NEED TO REBUILD THE THEORY JUST TO INSERT THESE SYMBOLS
+```
+
+The operative requirement is simply that the compiler interval is declared before the solve and the continuous structural spectrum remains inside it, together with the already frozen material-fidelity gates.
+
+## 4. Consequence
+
+The central theory is **not overturned** by the historical domain-governance file.
+
+The correct diagnostic priority after the recent Case21 audit remains the concrete algebraic inconsistency actually demonstrated in the current chain (for example the general-D15 `Q_q` contraction mismatch), not speculative missing historical layers.
+
+No new constraint may be created merely because an older governance document contains a concept not repeated in the later production contract.
+
+## 5. Governance lesson
+
+For recovery:
+
+```text
+historical concept present != current production blocker
+older ACTIVE label != automatic override of later production closure
+missing symbol from latest theory != missing mechanics
+successful later 24/24 production execution is strong evidence about what was operationally required
+```
+
+Future recovery must distinguish:
+
+- mechanics/equations required to calculate;
+- compiler/material verification metadata;
+- historical architecture principles;
+- future-transfer governance.
+
+Only the first two may block a current calculation, and only when the current governing contract or demonstrated algebra requires them.
+
+## 6. Final correction status
+
+```text
+PREVIOUS_LAMBDA_M_REINSERTION_BLOCKER = REVOKED
+CURRENT_R10_N48_CH_NGUYEN_D15_CORE = RETAINED
+SWARTZ24_CALCULABILITY_EVIDENCE = VALID
+NEW_CONSTRAINT_CREATED = NO
+THEORY_REOPENED = NO
+NEXT_DIAGNOSTIC_FOCUS = ONLY DEMONSTRATED CURRENT-CHAIN ERRORS
+```
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_SWARTZ24_CHECKPOINT_RECOVERY_FAIL_AT_CASE21_REGRESSION_20260813_1221.md
+SIZE: 3775
+SHA256: 00421b42169fb3239e79c781436b7f1c66df0908313b02a0552f7e94f36d9abb
+ENCODING: utf-8
+LINES: 66
+====================================================================================================
+# NZ-SCCM Swartz24 current checkpoint recovery — Case21 regression fail-fast record
+
+**Timestamp:** 2026-08-13 12:21 +08:00  
+**Identity:** CURRENT EXECUTION FAILURE RECORD / NO ALTERNATIVE BRANCH
+
+## 0. Authorized task
+
+Recover the missing current resumable checkpoints for Swartz Cases 1–18 while simultaneously repairing the execution-backup gap. The governing production chain remains:
+
+`R10 -> N48-C1/MM -> Cayley-Hamilton -> Nguyen second-order complete halfwave -> general-D15 exact moments -> P(D,q), Rq(D,q), L(D,q)`.
+
+User execution rule for this run: if the requested calculation fails, stop immediately and do not open an alternative theoretical/computational branch.
+
+## 1. What was successfully recovered before the structural regression
+
+The current R10 material formulas and N48-C1 constraints were reimplemented directly from the governing contracts.
+
+For Case21, the following material quantities were reproduced:
+
+- kappa = 2.0005129533678754
+- xcr = 0.04998717945397425
+- eta = 0.0024993589726987125
+- Wsrc = 0.031741235181249175
+- h = 0.09799750427197018
+
+The Case21 U/C/T7 N48-C1 coefficient arrays reproduced the saved current coefficient file to numerical precision. The T constrained-minimax solve on the final Case21 compiler interval [-1.15, 0.12] also converged to the saved current T-MM coefficient set within small LP/tie-breaking numerical differences.
+
+Thus the recovery reached the structural current-map / exact-moment backend with the current material compiler identified consistently.
+
+## 2. Required first regression and failure
+
+Before running Cases1–18, the recovered structural backend was required to reproduce the frozen current Case21 state at
+
+- D = 0.7822850963110681
+- q = 0.0017707520964949533
+- expected Pc = 336.968777333 kN
+- expected Ps = 28.611650232 kN
+- expected Pu = 365.580427565 kN
+- expected Rq approximately zero within the frozen engineering residual gate.
+
+The attempted coefficient-space implementation used the same finite Cayley-Hamilton recurrence and analytic invariant-ring moments, with no physical-space Gauss/Simpson/collocation/material-point grid. However, the floating dense polynomial-convolution realization suffered catastrophic coefficient cancellation/conditioning in the high-order structural composition. At the frozen Case21 point it returned an absurd concrete force of order -1.86e16 kN and generalized residual of order 8.97e17 kN mm instead of the frozen Case21 values.
+
+Therefore the recovered implementation does **not** pass the mandatory Case21 production regression and is not a valid current executable.
+
+## 3. Fail-fast disposition
+
+```text
+CASE21_MATERIAL_COMPILER_RECOVERY = PASS
+CASE21_STRUCTURAL_PRODUCTION_REGRESSION = FAIL
+FAILURE_LAYER = CURRENT_MAP / HIGH_ORDER_COEFFICIENT_CONVOLUTION NUMERICAL CONDITIONING
+CASES1_18_CURRENT_ROOT_REGENERATION = NOT RUN
+CASES1_18_CHECKPOINTS = NOT FABRICATED
+SWARTZ24_CURRENT_RESUMABLE_CHECKPOINT = STILL INCOMPLETE
+ALTERNATIVE_BRANCH_STARTED = NO
+THEORY_CHANGED = NO
+R10_CHANGED = NO
+N48_ORDER_CHANGED = NO
+SPATIAL_QUADRATURE_INTRODUCED = NO
+STRUCTURAL_CALIBRATION = NO
+```
+
+This run stops here in accordance with the user fail-fast instruction. No old direct-N48 roots are substituted, no experimental Pu/Pf is used to reconstruct roots, and no alternative solver/backend is attempted in this execution.
+
+## 4. Backup consequence
+
+The existing checkpoint-governance file remains valid: a future successful recovery must first pass the frozen Case21 regression and then persist the production executable/version/hash together with each panel's `(D_u,q_u,A_u)`, `Pc/Ps/Pu`, equilibrium residuals, `P_D,P_q,Rq_D,Rq_q,L,L_norm`, material-domain/steel certificates and execution identity before any panel is marked calculation-complete.
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_SWARTZ24_DIRECT_N48_TO_CURRENT_PU_DELTA_20260813_1207.csv
+SIZE: 1706
+SHA256: 0c69005f0a643851a36b0458f0d38ed07b60137c0f80f3196df141101fd58c22
+ENCODING: utf-8
+LINES: 25
+====================================================================================================
+case,Pu_old_direct_N48_kN,Pu_current_kN,delta_current_minus_old_kN,delta_pct_of_old
+1,599.515895352265,608.925000000000,9.409104647735,1.569450405015
+2,587.459096847371,596.865000000000,9.405903152629,1.601116265474
+3,511.412509562778,519.198000000000,7.785490437222,1.522350410215
+4,546.766668478800,555.423000000000,8.656331521200,1.583185665886
+5,535.168042748270,546.874000000000,11.705957251730,2.187342351688
+6,605.302586492993,617.784000000000,12.481413507007,2.062012253957
+7,600.128602273298,612.628000000000,12.499397726702,2.082786535978
+8,512.578818526162,523.127000000000,10.548181473838,2.057865267271
+9,528.758818828412,532.126000000000,3.367181171588,0.636808513009
+10,546.373621071286,549.896000000000,3.522378928714,0.644683197151
+11,515.559655502078,525.373000000000,9.813344497923,1.903435304371
+12,549.589813485875,560.678000000000,11.088186514125,2.017538579144
+13,557.557275969344,569.612000000000,12.054724030656,2.162060213401
+14,630.061443861257,644.025000000000,13.963556138743,2.216221334410
+15,663.082587341401,671.979000000000,8.896412658599,1.341674902710
+16,583.988255071167,593.075000000000,9.086744928833,1.555980766724
+17,336.692205555671,333.398000000000,-3.294205555671,-0.978402677969
+18,361.212132134104,357.715000000000,-3.497132134104,-0.968165746107
+19,360.210116551745,356.402209194441,-3.807907357304,-1.057135039337
+20,352.536268012043,347.898636647347,-4.637631364696,-1.315504753836
+21,368.189337466360,365.580427565000,-2.608909901360,-0.708578341598
+22,370.250224870520,367.553168150596,-2.697056719924,-0.728441615631
+23,377.954007556262,375.917916447572,-2.036091108690,-0.538713988470
+24,444.300622061169,441.642463040887,-2.658159020282,-0.598279382989
+
+====================================================================================================
+FILE: current/audits/NZ_SCCM_SWARTZ24_L_KZ_BULK_GATE_EXECUTION_AUDIT_20260813_1035.md
+SIZE: 6834
+SHA256: d1f6bbe6a715e56c70082dcd6cd1ce3623b46e8cf7e61242846c573ce9e1d1c0
+ENCODING: utf-8
+LINES: 160
+====================================================================================================
+# NZ-SCCM Swartz24 full same-expression L/KZ bulk-gate execution audit
+
+**Timestamp:** 2026-08-13 10:35 +08:00  
+**Identity:** CURRENT EXECUTION AUDIT / NO FALSE PASS / NO THEORY CHANGE
+
+## 0. Purpose
+
+The user authorized completion of the 24-panel `L/K_Z` bulk gate. This audit records what can be reproduced from the current governing repository state and what still prevents a legitimate `24/24 PASS` signature.
+
+No R10 change, N48-order change, panel calibration, spatial quadrature, spatial sampling, material-point grid or spatial subdivision is introduced.
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+KINEMATICS = NGUYEN_SECOND_ORDER
+R10_MATERIAL_TARGET = FROZEN
+N48_ORDER = 48
+CAYLEY_HAMILTON = GOVERNING
+EXACT_MOMENT_ENGINE = D15_GENERAL_TRIG_MOMENTS
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+STRUCTURAL_CALIBRATION = NO
+```
+
+## 1. Governing gate
+
+For each panel, the current production gate requires the same finite analytic expressions for
+
+\[
+P(D,q),\qquad R_q(D,q),
+\]
+
+and their same-expression derivatives
+
+\[
+P_D,\ P_q,\ R_{q,D},\ R_{q,q},
+\]
+
+with
+
+\[
+L=P_D R_{q,q}-P_qR_{q,D}.
+\]
+
+The accepted limit state must belong to the primary connected equilibrium branch from `(0,0)` and be the first `+ -> -` local maximum of P. The Zhou/Navier current-tangent quantity
+
+\[
+K_Z=K_{Z,c}^{mat}+K_{Z,c}^{geo}+K_{Z,s}^{mat}+K_{Z,s}^{geo}
+\]
+
+must be checked on the same branch to establish whether tangent loss precedes the limit point.
+
+## 2. Current repository state before this audit
+
+The repository already freezes:
+
+```text
+SWARTZ24_CURRENT_Pu = 24/24 AVAILABLE
+SWARTZ24_CURRENT_Pu_VS_FAILURE_COMPARISON = COMPLETE
+CASE21_FULL_L_KZ_GATE = PASS
+SWARTZ24_FULL_L_KZ_PRODUCTION_GATE = PENDING_24_PANEL_BULK_COMPLETION
+```
+
+The current 2026-08-13 Swartz continuation retains current corrected `(D_u,q_u)` coordinates only for Cases 19, 20, 21, 22, 23 and 24. Cases 1–18 have current `Pu` values in the frozen comparison table, but their corrected C1/MM + general-D15 `(D_u,q_u)` coordinates are not retained in the current result package.
+
+This distinction is critical: an old `(D,q)` from the 2026-08-11 direct-N48 production run cannot be silently attached to a later current Pu.
+
+## 3. Independent exact-moment implementation regression performed in this audit
+
+A separate zero-spatial invariant-ring implementation was constructed for the governing current operator. Structural-space integration is performed by analytic trigonometric/thickness moments; no structural-space point grid, Gauss rule, Simpson rule, collocation or cells are used.
+
+At the current formal Case21 root
+
+\[
+D=0.7822850963110681,\qquad q=0.0017707520964949533,
+\]
+
+the independent base P/R engine reproduced
+
+```text
+P  = 365580.426864572 N
+Pc = 336968.776632496 N
+Ps =  28611.650232076 N
+Rq =       1.191279183 N mm
+```
+
+against the frozen current values
+
+```text
+P  = 365580.427565 N
+Pc = 336968.777333 N
+Ps =  28611.650232 N
+```
+
+The load difference is about `0.000700 kN`; the small Rq residue is consistent with coefficient/minimax numerical tolerance. Thus the independent exact-moment base P/R implementation passes the Case21 regression at engineering precision.
+
+## 4. Provenance test: old 2026-08-11 roots are not valid substitutes for missing current roots
+
+Several old direct-N48 roots were deliberately inserted into the current C1/MM + general-D15 P/R engine only as a provenance rejection test.
+
+|Case|old 2026-08-11 D|old q|current-expression P at old root / kN|current-expression Rq at old root / N mm|current frozen Pu / kN|verdict|
+|---:|---:|---:|---:|---:|---:|---|
+|1|0.994049|~0.0007740|~631.817|~+541065|608.925|REJECT OLD ROOT|
+|2|0.994522|~0.0006924|~619.089|~+486794|596.865|REJECT OLD ROOT|
+|4|1.024547|~0.0006073|~575.225|~+460743|555.423|REJECT OLD ROOT|
+
+These are large equilibrium violations, not rounding differences. Therefore the old root table cannot be used to sign the current 24-panel L/KZ gate.
+
+## 5. Current corrected roots retained for Cases 19–24
+
+|Case|D_u|q_u|Pc / kN|Ps / kN|Pu / kN|current identity|
+|---:|---:|---:|---:|---:|---:|---|
+|19|0.895498262463|0.001490667301|336.793838|19.608371|356.402209|current-fresh root retained|
+|20|0.841997608509|0.001686144683|328.767761|19.130876|347.898637|current-fresh root retained|
+|21|0.782285096311|0.001770752096|336.968777|28.611650|365.580428|FULL L/KZ PASS|
+|22|0.829956917853|0.001656490263|338.847839|28.705329|367.553168|current-fresh root retained|
+|23|0.925495201721|0.001295223916|339.612749|36.305167|375.917916|current-fresh root retained|
+|24|0.922369098591|0.001430121260|400.126085|41.516378|441.642463|current-fresh root retained|
+
+Cases 19, 20, 22, 23 and 24 also have fresh exact-D15 `Syy/Qq` contractions and steel-branch checks in the current Swartz result, but the current result explicitly does not claim their full same-expression L/KZ production gate.
+
+## 6. Why this audit does not sign 24/24 PASS
+
+Two independent blockers remain at the execution-artifact level:
+
+1. **Missing current corrected root coordinates for Cases 1–18.** Their current Pu values are frozen, but the current repository does not retain the corresponding C1/MM + general-D15 `(D_u,q_u)` states needed for a reproducible L/KZ gate.
+2. **Full current-tangent exact-moment bulk evaluation is not yet frozen for Cases other than Case21.** The independent exact coefficient-space tangent implementation is substantially more expensive than the base P/R contraction; a full 24-panel derivative/tangent run has not been completed and must not be replaced by old N48 tangent proxies.
+
+This is a reproducibility/execution-package gap, not evidence that the governing theory has failed.
+
+## 7. Required continuation to obtain a legitimate final bulk signature
+
+```text
+STEP A: regenerate current C1/MM + general-D15 primary branch roots for Cases 1–18 from raw inputs
+STEP B: freeze current (D_u,q_u,Pc,Ps,Pu,Rnorm,Lnorm) for all 24
+STEP C: verify first +->- maximum on Gamma0 for all 24
+STEP D: evaluate full same-expression KZ on the same branch for all 24
+STEP E: locate any pre-limit KZ=0 event
+STEP F: issue 24-row PASS/CONTROL table
+```
+
+No experimental failure load is required for Steps A–E.
+
+## 8. Current audit status
+
+```text
+CASE21_FULL_L_KZ_GATE = PASS
+SWARTZ24_CURRENT_Pu = 24/24 AVAILABLE
+SWARTZ24_CURRENT_ROOT_COORDINATES_RETAINED = 6/24
+SWARTZ24_FULL_SAME_EXPRESSION_L_KZ_GATE = IN_PROGRESS / NOT YET SIGNABLE
+OLD_DIRECT_N48_ROOTS_AS_CURRENT_ROOTS = PROHIBITED / DEMONSTRATED_INVALID
+BASE_CURRENT_P_R_INDEPENDENT_REGRESSION = PASS_ON_CASE21
+FALSE_24_OF_24_PASS = PROHIBITED
+R10_MODIFIED = NO
+N48_ORDER_CHANGED = NO
+FORMAL_SPATIAL_DISCRETIZATION_ADDED = NO
+```
+
+The next calculation must continue from this execution audit rather than report a synthetic bulk PASS.
+
+====================================================================================================
+FILE: current/case21/NEXTSTEP_EXECUTION_REPORT.md
+SIZE: 5240
+SHA256: e18a9fcae1b8e9584038aff1fdbd73aed8d1a6ea01b44dec22d69dab8dbb3adc
+ENCODING: utf-8
+LINES: 84
+====================================================================================================
+# NZ-SCCM Case21：单完整半波全域解析表示——严格尾项下一步执行报告
+
+日期：2026-08-09
+
+## 1. 本轮执行边界
+
+正式身份继续锁定为：`ONE_CONTINUOUS_COMPLETE_HALFWAVE`。正式空间 sampling=0，quadrature=0，subdomains=1。上一阶段所有 analytic cell / seed partition / NeedSplit / adaptive analytic subdivision 均继续保持撤销状态。本轮没有恢复任何空间分片。
+
+冻结材料仍是 algebraic Foster ordinary-concrete current operator；没有改动材料物理，也没有使用上一轮 338.3175 kN / 342.3332 kN 来构造级数、选阶数或选根。
+
+## 2. 本轮首先实际执行：严格系数尾项是否能直接用单一 l1 范数关闭？
+
+建立了一个三维 Chebyshev coefficient + tail diagnostic。有限系数执行完整 Chebyshev convolution，截掉的全部高阶系数绝对值进入 tail；已存在的输入 tail 再按 Banach algebra 乘法界传播。因此它明确覆盖“高阶×高阶重新回流低阶”的可能性。
+
+在独立状态 D=0.75, q=0.002、Nsp=20 的已有单域字段上，得到：
+
+- Savg finite l1 norm = 2.2363，tail <= 0.005493；
+- Dcal finite l1 norm = 5.1468，tail <= 0.013409；
+- sigma_y tail <= 0.23138；
+- fR tail <= 45.05。
+
+收缩到结构积分后，保守区间约为：
+
+- Pc = 335.141710 ± 5.448 kN；
+- Rq = 39678.3 ± 2.7047e6。
+
+这个证书虽然数学方向正确，但极端过松，因此**拒绝作为正式 certificate**。这一负结果非常重要：问题不是“是否可以写一个 Banach 尾项”，而是“不能把所有方向、所有模态和所有非线性依赖压缩成一个标量 l1 半径”。必须保留更多结构信息。
+
+## 3. Scalar material series 本身是否真的不收敛？
+
+不是。对 frozen scalar material functions C,T,U，在覆盖当前测试状态 principal-strain 范围的同一个全局标量区间上，提高 degree 得到最后20项系数绝对和：
+
+| degree | C | T | U |
+|---:|---:|---:|---:|
+| 1024 | 4.359e-4 | 1.965e-4 | 4.556e-4 |
+| 1536 | 9.25e-6 | 5.33e-6 | 9.78e-6 |
+| 2048 | 1.85e-7 | 1.38e-7 | 1.99e-7 |
+
+所以 scalar Foster material map 的全域解析逼近并不是根本障碍。真正困难发生在把它复合到三维连续运动学以后，再经过 C/T/U 的乘积、determinant、T^7/T^8 interaction 以及 Rq 中的抵消组合时，如何严格追踪被截断的高阶信息。
+
+## 4. 单完整域 anisotropic p-refinement
+
+为了判断 Rq 的误差是否主要来自厚度方向解析阶数不足，建立了单域各向异性 degree (Na,Nb,Nz)。整个域始终没有切分，也没有空间采样。结果：
+
+| (Na,Nb,Nz) | Pc / kN | Rq |
+|---|---:|---:|
+| (16,16,24) | 335.162825 | 38597.504 |
+| (18,18,28) | 335.144074 | 38951.033 |
+| (20,20,28) | 335.143957 | 38971.238 |
+| (22,22,30) | 335.144506 | 38628.621 |
+| (18,18,32) | 335.131144 | 39505.127 |
+
+独立 numerical audit 仅用于事后判断：Pc≈335.13308 kN，Rq≈38988.58。
+
+结论：各向异性提高阶数确实能使某些 Rq 很接近 audit，但序列非单调，所以**不能按“哪个最接近 audit”选择 degree**。这不能成为正式收敛判据。
+
+## 5. 两条看似自然但本轮已排除的办法
+
+### 5.1 只给 nonlinear interaction 增加 padding
+
+把同一 N=20 的 C/T/U 有限字段嵌入更大的工作 degree，再保留更多 nonlinear products。结果工作 degree 增大后反而出现爆炸。这说明缺失的是真实输入高阶模式；仅给乘法留更多空间，不会自动恢复它们，反而会放大伪高阶反馈。因此该办法废止。
+
+### 5.2 在 truncated spatial algebra 中直接做 radical Newton/Zolotarev-like iteration
+
+尝试直接对正 radicand 求 square root / reciprocal。低阶全域截断会令原本严格正的 radicand 近似场局部失去 positivity，迭代因此发散或产生 NaN。该结果说明：必须先有 validated tail / positivity，或者使用具有独立统一误差定理的 rational functional calculus，不能先在未认证的 truncated field 上强行迭代。
+
+## 6. 新发现：principal spectrum 实际全域分离
+
+在 D=0.75,q=0.002，解析无采样界可得：
+
+- lambda+ roughly in [-0.1051, 0.13584]；
+- lambda- roughly in [-0.86569, -0.62473]。
+
+更重要的是，在相当宽的参数盒 D∈[0.5,0.9], q∈[0,0.003] 内，解析下界仍有 delta_min≈0.22599>0。这意味着当前 Case21 root 邻域的两个 principal spectra 并不是挤在一起，而是两个分离的实区间。
+
+这是下一步的重要突破口：此前 scalar material Chebyshev series 被迫覆盖两个谱区间中间一大段实际永远不会访问的空白区，从而浪费了大量 degree。后续应优先研究**对两个分离谱区间有统一严格误差定理的 rational / polynomial functional calculus**，而不是增加空间 cell。
+
+## 7. 当前正式结论
+
+本轮没有发布新的 concrete-only 或 RC root。原因已经明确缩小为：
+
+> 需要一个保留谱分支/方向/阶次结构的全域 coefficient-tail certificate；单一 l1 tail 太松，单纯提高 degree 又缺少可接受的正式选择准则。
+
+当前仍满足：one complete halfwave；formal sampling=0；formal quadrature=0；formal subdomains=1。
+
+====================================================================================================
+FILE: current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812.md
+SIZE: 1273
+SHA256: 1a0176f27a3847cc99e7982488ce94bfc656909318001cd47e7699b606803b37
+ENCODING: utf-8
+LINES: 36
+====================================================================================================
+# Case21 experimental comparison source — experiment only
+
+**Date:** 2026-08-12  
+**Identity:** EXPERIMENT-ONLY EVIDENCE / READ ONLY AFTER FRESH THEORY RESULT WAS FROZEN
+
+## Isolation rule
+
+This file was created only after the fresh NC-R1 theory calculation had already frozen its theoretical root and theoretical load. It contains no historical NZ-SCCM calculation, no FE prediction, no prior Case21 root, and no analytical prediction from Swartz/Attard/Nguyen.
+
+```text
+THEORY_RESULT_FROZEN_BEFORE_EXPERIMENT_READ = YES
+HISTORICAL_CASE21_THEORY_RESULT_IMPORTED = NO
+HISTORICAL_FE_GAUSS_RESULT_IMPORTED = NO
+EXPERIMENT_USED_FOR_ROOT_SELECTION = NO
+EXPERIMENT_USED_FOR_PARAMETER_TUNING = NO
+```
+
+## Primary source location
+
+Source read directly from the uploaded Nguyen thesis PDF (`Nguyen-011325526.pdf`), Chapter 5, Section 5.2, printed page 143, table titled **“Experimental and FE Buckling Loads”**.
+
+Only the experimental entry required for the final blind comparison is transcribed here.
+
+For **Case 21**:
+
+\[
+\boxed{P_{u,\mathrm{exp}}=336\ \mathrm{kN}}
+\]
+
+The same row identifies the panel slenderness ratio approximately as
+
+\[
+b/t=63.2.
+\]
+
+No FE value and no historical analytical prediction from that table is imported into the current calculation record.
+
+====================================================================================================
+FILE: current/case21/NZ_SCCM_CASE21_EXPERIMENT_ONLY_SOURCE_20260812_1802.md
+SIZE: 1407
+SHA256: 335b85bd286e2e8b86130bfa31ffdaf80f7776eb501b70bd6091e8a7f6181dda
+ENCODING: utf-8
+LINES: 40
+====================================================================================================
+# NZ-SCCM Case21 试验值独立来源摘录
+
+**时间：2026-08-12 18:02 +08:00**  
+**身份：EXPERIMENT-ONLY SOURCE / OPENED AFTER THEORY RESULT FREEZE**
+
+本文件建立于 `current/results/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_THEORY_FREEZE_20260812_1802.md` 已写入并冻结理论结果之后。
+
+来源：用户已上传的 Nguyen 博士论文 `Nguyen-011325526.pdf`，第 5 章，Table 5.1 `Data for Concrete Elements` 与随后 `Experimental and FE Buckling Loads` 表。
+
+只摘录与 Case21 原始输入核对和最终实验比较直接相关的**实验/试件数据**，不摘录、不使用 FE 计算列，也不读取任何其他历史理论结果。
+
+Case21 的试件数据在 `Data for Concrete Elements` 中为：
+
+```text
+thickness t = 19.30 mm
+f'c = 24.98 MPa
+0.85 f'c = 21.23 MPa
+hr = 0.00 mm
+nominal total steel ratio p = 0.75 %
+epsilon_0 = 2.09e-3
+initial modulus Ec = 20321 MPa
+number of steel layers = 1
+```
+
+这说明当前原始输入冻结表采用的混凝土强度 `fc = 21.23 MPa` 对应原表中的 `0.85 f'c`，并非误读 `f'c=24.98 MPa`。
+
+在 `Experimental and FE Buckling Loads` 表中，Case21 的实验列为：
+
+\[
+\boxed{P_{exp}=336\ \mathrm{kN}}.
+\]
+
+本文件故意不记录该表的 FE 列数值。
+
+```text
+THEORY_RESULT_ALREADY_FROZEN_BEFORE_THIS_FILE = YES
+EXPERIMENT_USED_DURING_THEORY_SOLVE = NO
+FE_COLUMN_USED = NO
+HISTORICAL_ANALYTIC_RESULT_USED = NO
+```
+
+====================================================================================================
+FILE: current/case21/NZ_SCCM_CASE21_FRESH_MATERIAL_COEFFICIENTS_20260812_1802.csv
+SIZE: 4962
+SHA256: d84958cacdb5dfc58aad9eb113e6a0e27ced812ed82c2671ec40e8136fc0a4ee
+ENCODING: utf-8
+LINES: 50
+====================================================================================================
+n,U_C1,C_C1,T_MM,T7_C1
+0,-5.94171823986004544e-01,6.11670878997575773e-01,1.75898643477104988e-01,1.34789344894942126e-01
+1,5.86405144358117192e-01,-5.53227047179994380e-01,3.32753009593392990e-01,2.57254570814431538e-01
+2,1.92941567248794715e-01,-1.64946233999258146e-01,2.79538323050278759e-01,2.22201375849069543e-01
+3,-1.95747304590125279e-02,3.99831951868039048e-02,2.02366690913507258e-01,1.69836479334161322e-01
+4,-3.48885968422385367e-02,4.66773498929588873e-02,1.15571744871195647e-01,1.08115656188406614e-01
+5,-1.96127025417229990e-02,2.32350299630045311e-02,3.43474932283152970e-02,4.61258586651529107e-02
+6,-1.16456752003322051e-02,8.84001270890481979e-03,-2.85747373688849393e-02,-7.51265221601063286e-03
+7,-7.50416270900370035e-03,8.33055208993321752e-04,-6.54979508158323731e-02,-4.61367664805196406e-02
+8,-3.96993339938197989e-03,-3.78552389128614022e-03,-7.49863066692420532e-02,-6.61385167461783219e-02
+9,-8.50706328289950356e-04,-5.59315914240751579e-03,-6.15270754102322376e-02,-6.74555926398134192e-02
+10,1.47237532481316416e-03,-5.05509937479439557e-03,-3.38190768361813568e-02,-5.33578141251864965e-02
+11,2.81608066164514914e-03,-3.05339523904876124e-03,-2.22167576896936799e-03,-2.95787842445967564e-02
+12,3.20230291569734626e-03,-6.16821711069033768e-04,2.39242937079380477e-02,-2.98423566840856462e-03
+13,2.79577116243903603e-03,1.38171313102534088e-03,3.84128861703389932e-02,1.99267420230733669e-02
+14,1.85900979890534879e-03,2.41379875768357385e-03,3.92431266951378949e-02,3.43527424858174751e-02
+15,7.00240306313835168e-04,2.36284793427166172e-03,2.84772401417321408e-02,3.80595076964144671e-02
+16,-3.86374314599190595e-04,1.47519425355302058e-03,1.10610100374321542e-02,3.16078560518066043e-02
+17,-1.17456668181214531e-03,2.19810311908086623e-04,-6.96047294203041775e-03,1.79195544155778819e-02
+18,-1.54121561921801852e-03,-8.95525200278465892e-04,-2.02790730788860417e-02,1.32424178804978546e-03
+19,-1.47627731463165690e-03,-1.49390886116808320e-03,-2.57066333425670611e-02,-1.36456888887039208e-02
+20,-1.06753932394452870e-03,-1.43531376570431020e-03,-2.27799294265627027e-02,-2.33949727649318852e-02
+21,-4.66360461864486571e-04,-8.32507614547153092e-04,-1.35173669046293778e-02,-2.60586600172151225e-02
+22,1.55631296575576449e-04,1.92641929475689572e-05,-1.50243306525367081e-03,-2.17768837636554448e-02
+23,6.48035219818933169e-04,7.67502643128347003e-04,9.36062926756111961e-03,-1.24294776755000721e-02
+24,9.12413449197587052e-04,1.13540093727864896e-03,1.60221180714108756e-02,-9.54420103679303085e-04
+25,9.17061871543812753e-04,1.01596465567222599e-03,1.70634613762070744e-02,9.52596933535067650e-03
+26,6.94961669014888643e-04,4.97131360845860619e-04,1.29008768222890358e-02,1.65186041359551110e-02
+27,3.27833432724969711e-04,-1.86302333042483571e-04,5.42867475858888927e-03,1.87058243309271531e-02
+28,-7.83409951119277135e-05,-7.51879677000761226e-04,-2.72375681029087989e-03,1.61160436477248981e-02
+29,-4.20086914634343919e-04,-9.80455655013852704e-04,-9.05624987191528709e-03,9.92832865892917700e-03
+30,-6.19736964356909286e-04,-7.97157409732160470e-04,-1.19159094137514538e-02,2.01926008745608246e-03
+31,-6.40914240668797523e-04,-2.93416832453899661e-04,-1.08773131416311421e-02,-5.58693405858211659e-03
+32,-4.93739488741525749e-04,3.15775744618319604e-04,-6.71636918169786143e-03,-1.12069551127239111e-02
+33,-2.29346133538202126e-04,7.80720605616709389e-04,-1.03615963677496418e-03,-1.38163427390775567e-02
+34,7.47245801675844909e-05,9.16422612475255912e-04,4.30227823824876152e-03,-1.31580252539229246e-02
+35,3.34914300093469238e-04,6.73977262539720949e-04,7.75486537284359422e-03,-9.66823411160297290e-03
+36,4.83190101992314808e-04,1.56982911698893581e-04,8.50744408825754306e-03,-4.28597589401294183e-03
+37,4.84587225278074163e-04,-4.22263293033670170e-04,6.62851997961389199e-03,1.78146757198204345e-03
+38,3.46181576529044650e-04,-8.28666398242325656e-04,2.94959998660242976e-03,7.28441249848562310e-03
+39,1.14738835719758721e-04,-8.98142625496575753e-04,-1.25860397635844793e-03,1.11250397719694343e-02
+40,-1.36875301745251811e-04,-6.02467251077792865e-04,-4.69864555384412724e-03,1.25190183642157823e-02
+41,-3.31217282972171760e-04,-5.99276204648684866e-05,-6.42051988282866734e-03,1.11273526997662676e-02
+42,-4.09753774071503298e-04,5.12087902348526782e-04,-6.05906660041858995e-03,7.14825706260312395e-03
+43,-3.51221290353503587e-04,8.83667163626135083e-04,-3.88381660894998072e-03,1.34024077098443897e-03
+44,-1.78788997037887347e-04,9.03903731506486524e-04,-6.68954209411751644e-04,-5.06082456214515270e-03
+45,4.69035237515350565e-05,5.61256172635234444e-04,2.56857560164184401e-03,-1.05541744244725347e-02
+46,2.47315473557343363e-04,-1.11418397177466652e-05,5.46469930671622441e-03,-1.37025012780312028e-02
+47,3.52306914575011790e-04,-5.87473109694641748e-04,9.23537524286881517e-02,-1.35132553742878733e-02
+48,3.24578695297222204e-04,-9.38218906661027934e-04,-6.52654235998186612e-04,-9.76899018864814568e-03
+
+====================================================================================================
+FILE: current/case21/NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md
+SIZE: 8206
+SHA256: c5e8a690fd0edf45b040ac8c1231194370d8687e508bc826b46670219e7fec69
+ENCODING: utf-8
+LINES: 174
+====================================================================================================
+# NZ-SCCM Case21 单完整半波零空间离散解析求解：总体审核交接包
+
+**日期：2026-08-09**  
+**用途：供新的独立对话只读审核当前 NZ-SCCM Case21 数学求解链。**  
+**要求审核者：不要默认相信本文件结论；应逐项核对冻结理论、源码、数学变换、被废止路径与当前未闭合项。**
+
+---
+
+## A. 唯一理论合同
+
+唯一正式材料/结构合同：`NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`。
+
+普通混凝土必须原样使用：equivalent-uniaxial tensor → λ± → Pi_eta → Saenz C → Foster algebraic H/T → U → CC/TC/TT interaction → spectral return。正式 tension law 为 algebraic Foster H(r,r0;0.05)，严禁 tanh variant。
+
+Case21 结构目标是完整连续半波上的 Pc(D,q) 与 Rq,c(D,q)。钢筋采用冻结 Nguyen bilinear law；Case21 两向每层钢筋率各 0.00375，z_s=0。
+
+---
+
+## B. 当前正式空间合同
+
+自 2026-08-09 最新修正起，正式空间身份永久按当前分支锁定：
+
+- `ONE_CONTINUOUS_COMPLETE_HALFWAVE`；
+- `N_formal_spatial_sampling = 0`；
+- `N_formal_spatial_quadrature = 0`；
+- `N_formal_spatial_subdomains = 1`。
+
+这里的 subdomain=1 指完整连续代表半波本身。任何 fixed/adaptive analytic cells、seed partition、NeedSplit、convergence/branch-driven spatial subdivision 都不具有正式身份。
+
+---
+
+## C. 历史数值只允许做 verification
+
+历史不同实现曾得到大致：
+
+- concrete-only ~338.318 kN；
+- RC ~342.334 kN；
+- 更早 moment-first D15 concrete ~339.1 kN。
+
+这些数值不得用于当前全域表示的系数生成、阶数选择、根选择、材料校准或反标，只能在最终正式结果完成后核对。
+
+---
+
+## D. 已保留且通过的代数成果
+
+1. tangent-half-angle exact transformation；
+2. quadrant-sine exact transformation；
+3. 11 textual radicals 压缩为依赖明确的 algebraic generator tower；
+4. `t-c` exact identity；
+5. simplified U identity；
+6. simplified Foster T identity；
+7. spectral radical rationalization；
+8. Foster degree-10 branch polynomials；
+9. generic high-genus Abelian-integral diagnosis；
+10. exact elastic reinforcement Ps(D,q), Rq,s(D,q)。
+
+上述均是同一个 frozen operator 的恒等整理，不是材料 surrogate。
+
+---
+
+## E. 谱表观奇异性已正式消除
+
+原 spectral return 中 `(s+ - s-)/(2R)` 在 R→0 看似 0/0。现已改写为 symmetric divided difference：
+
+- even part A_F(mu,R²)；
+- divided-difference part D_F(mu,R²)。
+
+D_F 在 R²=0 有正常解析极限 F'(mu)。
+
+更进一步，完整 frozen interaction 可写成无 1/R 的等价矩阵函数：
+
+`S = U - acc det(C) C + tr(T) C - C T - rho_m a_t det(T)[tr(T^7) I - T^7]`。
+
+因此 R≈0 不能再成为任何 spatial split 的理由。
+
+---
+
+## F. 当前单域全局解析表示
+
+当前 prototype 在整个 `[0,1]×[0,1]×[-1,1]` 只使用一个 multivariate Chebyshev series：
+
+`F = Σ c_ijk T_i(2a-1) T_j(2b-1) T_k(zeta)`。
+
+**关键区别：系数不是空间节点采样/DCT得到。** 系数由 frozen algebraic formulas 在 coefficient space 中通过加法、Chebyshev convolution、reciprocal/sqrt/power recurrences、pair algebra 构造。
+
+积分使用 exact analytic moments，因此正式空间 sampling/quadrature 均为 0。
+
+---
+
+## G. 已完成的独立实现诊断
+
+独立状态 D=0.75,q=0.002，不靠 Case21 历史 peak 构造。
+
+### G1. Scalar frozen material convergence
+
+统一 scalar spectral interval 上 C/T/U tail 随 degree 1024→1536→2048 从约 1e-4 降至约 1e-7。这证明 scalar Foster material map 本身可做高精度全域解析系数表示。
+
+### G2. 单域 Pc
+
+旧 isotropic global degree 20：Pc≈335.141710 kN；独立 numerical audit only≈335.13308 kN，显示 Pc 已接近。
+
+### G3. 单域 Rq
+
+同一 degree 20：Rq≈39678，而 audit only≈38989，约 1.8% 差异。因此尚不能正式求 Rq=0。
+
+### G4. 各向异性 p-refinement
+
+若只增加全域 degree、不切空间，部分 degree 组合可使 Rq 接近 audit，但变化非单调；因此不允许按“最接近 audit”选择 degree。
+
+---
+
+## H. 本轮严格尾项尝试与否定结果
+
+### H1. 单一 Chebyshev l1 Banach tail
+
+建立 finite coefficients + scalar l1 tail，严格覆盖 high-high→low feedback。数学上安全，但对 Rq 的界极端过宽（数量级百万），不能作为有效 certificate。
+
+**结论：不是 Banach algebra 思想错误，而是把所有空间方向/谱分支/模态结构压成一个标量 tail 太粗。**
+
+### H2. Padded nonlinear multiplication
+
+仅扩大 nonlinear product 工作 degree 而不补真实输入高阶 modes，会产生严重伪反馈甚至爆炸，已废止。
+
+### H3. Direct radical Newton/Zolotarev-like iteration on truncated fields
+
+低阶 truncated global fields 不能保证正 radicand 的 positivity，迭代可发散。未经过 validated tail 前不得作为正式路径。
+
+---
+
+## I. 关键新结构：两个 principal spectral intervals 分离
+
+对 D=0.75,q=0.002 可用纯解析界获得 λ+ 与 λ- 的两个分离区间。甚至在较宽参数盒 D∈[0.5,0.9], q∈[0,0.003]，delta 的解析下界仍约 0.22599>0。
+
+这意味着：当前 scalar material series 若覆盖从 λ- 最小值到 λ+ 最大值的整段连续区间，会无谓逼近一个实际不访问的大空白谱区间。
+
+**建议下一数学主线：** 在不做空间 sampling、不分空间域的前提下，对两个分离谱区间建立具有显式统一误差的 rational / polynomial functional calculus；优先研究 Zolotarev/Akhiezer 类 minimax rational representation 或等价的 disconnected-set approximation。它不是空间分片；被逼近对象仍是同一个 frozen material function，空间域仍为一个完整半波。
+
+必须防止它退化为“拟合材料 surrogate”：系数必须来自解析公式/定理，误差必须有全域显式界，不得来自空间采样或 Case21 peak calibration。
+
+---
+
+## J. 当前未实现目标
+
+目前**尚未**得到同时满足以下全部条件的 production evaluator：
+
+1. one complete halfwave；
+2. zero spatial sampling/quadrature；
+3. one spatial subdomain；
+4. Pc 与 Rq,c 均达到正式收敛；
+5. nonlinear coefficient truncation 有足够紧的严格 global bound；
+6. 可据此正式求 concrete root 和 RC root。
+
+因此当前没有发布新的正式 Case21 Pu。
+
+---
+
+## K. 下一步建议与审核重点
+
+审核者应重点判断：
+
+1. spectral regularization 是否严格等价于 frozen M_NC；
+2. 当前 coefficient generation 是否真的没有空间 sampling；
+3. analytic moment contraction 是否保持 subdomains=1；
+4. 单一 l1 tail 为何过松；
+5. 两个 principal spectral intervals 的解析分离是否在所需 `(D,q)` root enclosure 内成立；
+6. 是否可以利用 disconnected spectral set 的 theorem-based rational approximation，在不制造材料 surrogate 的前提下显著降低全域 degree；
+7. 后续 certificate 应优先使用 a-posteriori residual/radii-polynomial 型验证，还是更细的 multi-index/anisotropic weighted Banach tail；
+8. 在 certificate 关闭以前不得借用历史 338/342 数字选根。
+
+---
+
+## L. 推荐给新审核对话的首条指示词
+
+> 你现在是“NZ-SCCM Case21 单完整半波零空间离散解析理论独立审计助手”。请把上传的 `NZ_SCCM_CASE21_GLOBAL_AUDIT_HANDOFF_20260809.md` 作为阶段事实索引，但不要默认其结论正确。首先读取冻结 `NZ_SCCM_CURRENT_OPERATOR_EXPLICIT_NC_REBAR_V1_20260809.md`，然后逐项审计 spectral regularization、single-domain coefficient construction、exact moment contraction、tail propagation 失败诊断和 principal spectral interval separation。严格检查当前路径是否真正满足 `N_formal_spatial_sampling=0`, `N_formal_spatial_quadrature=0`, `N_formal_spatial_subdomains=1`。尤其判断下一步使用 theorem-based Zolotarev/Akhiezer rational functional calculus 与 a-posteriori/radii-polynomial validation 是否仍保持 frozen material identity，而不是形成 material surrogate。不要使用历史 338.3175/342.3332 kN 来选方法或选根；它们仅可在最终独立结果形成后核验。
+
+====================================================================================================
+FILE: current/case21/NZ_SCCM_CASE21_NC_R1_FRESH_N48_COEFFICIENTS_20260812.csv
+SIZE: 4523
+SHA256: 54d0945ada2325b3a21325d64b4009eab3d072e0ebfaeb78e46e02d65eea1006
+ENCODING: utf-8
+LINES: 50
+====================================================================================================
+n,U_C1,C_C1,T_MM,T7_C1
+0,-0.59417182398600465,0.61167087899757577,0.175898642321831,0.13478934489494213
+1,0.58640514435811719,-0.55322704717999438,0.33275302557778508,0.25725457081443154
+2,0.19294156724879466,-0.16494623399925828,0.27953832630205921,0.22220137584906954
+3,-0.019574730459012538,0.039983195186803884,0.20236670866621653,0.16983647933416132
+4,-0.034888596842238564,0.046677349892958887,0.11557174557934707,0.10811565618840663
+5,-0.019612702541722989,0.023235029963004535,0.034347511687440754,0.046125858665152911
+6,-0.011645675200332216,0.0088400127089048458,-0.028574731286504017,-0.0075126522160106242
+7,-0.0075041627090036674,0.00083305520899335493,-0.065497933137256603,-0.046136766480519634
+8,-0.0039699333993819599,-0.0037855238912861506,-0.074986307000345295,-0.066138516746178308
+9,-0.00085070632828994981,-0.0055931591424074828,-0.061527058223358834,-0.067455592639813433
+10,0.0014723753248131663,-0.0050550993747943826,-0.033819068854991557,-0.053357814125186497
+11,0.00281608066164515,-0.0030533952390487157,-0.0022216573017707427,-0.029578784244596739
+12,0.0032023029156973762,-0.00061682171106904906,0.02392428797380106,-0.0029842356684085677
+13,0.0027957711624389979,0.0013817131310253422,0.038412891849396169,0.019926742023073381
+14,0.00185900979890538,0.0024137987576835869,0.039243128041202203,0.034352742485817475
+15,0.000700240306313824,0.0023628479342716622,0.028477257333697541,0.038059507696414467
+16,-0.0003863743145991964,0.0014751942535530247,0.011061007505672139,0.031607856051806597
+17,-0.0011745666818121436,0.00021981031190809736,-0.0069604743529529962,0.017919554415577878
+18,-0.0015412156192180263,-0.00089552520027848985,-0.020279079101328951,0.0013242417880497868
+19,-0.0014762773146316382,-0.001493908861168096,-0.025706621652672658,-0.013645688888703916
+20,-0.0010675393239445267,-0.001435313765704315,-0.022779923431305634,-0.023394972764931896
+21,-0.00046636046186448977,-0.00083250761454716621,-0.013517363063523779,-0.026058660017215123
+22,0.00015563129657556127,1.9264192947562669e-05,-0.0015024372167375629,-0.021776883763655462
+23,0.0006480352198189593,0.0007675026431283392,0.0093606337461357488,-0.012429477675500077
+24,0.00091241344919755951,0.0011354009372786934,0.016022122884450127,-0.00095442010367929788
+25,0.00091706187154380614,0.0010159646556722128,0.01706346380406357,0.0095259693353506782
+26,0.00069496166901488268,0.00049713136084585108,0.012900875148569498,0.016518604135955111
+27,0.00032783343272498473,-0.00018630233304247723,0.0054286727854050768,0.018705824330927157
+28,-7.8340995111913253e-05,-0.00075187967700075776,-0.0027237563188352619,0.016116043647724891
+29,-0.00042008691463434392,-0.00098045565501384728,-0.0090562571818915555,0.0099283286589291735
+30,-0.00061973696435690267,-0.00079715740973217879,-0.011915915427657518,0.0020192600874560846
+31,-0.00064091424066878245,-0.00029341683245390833,-0.01087732380806891,-0.0055869340585821261
+32,-0.00049373948874152239,0.00031577574461830876,-0.0067163705146371967,-0.011206955112723911
+33,-0.00022934613353818239,0.00078072060561670592,-0.00103617206729208,-0.013816342739077555
+34,7.4724580167584599e-05,0.00091642261247526404,0.0043022740956868291,-0.013158025253922928
+35,0.00033491430009345818,0.00067397726253972127,0.007754851998370481,-0.0096682341116029694
+36,0.00048319010199231318,0.00015698291169890675,0.0085074465815999506,-0.0042859758940129462
+37,0.00048458722527805248,-0.00042226329303367727,0.0066285060716898105,0.0017814675719820471
+38,0.00034618157652903381,-0.00082866639824235818,0.0029495991629468364,0.0072844124984856231
+39,0.00011473883571977206,-0.00089814262549658388,-0.0012586180104426107,0.011125039771969429
+40,-0.00013687530174522495,-0.00060246725107779764,-0.0046986390930008814,0.012519018364215786
+41,-0.00033121728297216103,-5.9927620464863635e-05,-0.0064205361673936086,0.011127352699766271
+42,-0.00040975377407150178,0.00051208790234851551,-0.0060590717805693939,0.0071482570626031292
+43,-0.00035122129035350613,0.00088366716362614723,-0.0038838409955488928,0.001340240770984439
+44,-0.00017878899703788691,0.00090390373150649682,-0.00066894965004722184,-0.005060824562145157
+45,4.6903523751524093e-05,0.00056125617263523238,0.0025685591617242145,-0.010554174424472533
+46,0.0002473154735573393,-1.1141839717756044e-05,0.0054647087647717706,-0.013702501278031205
+47,0.00035230691457501016,-0.00058747310969463058,0.092353736962752758,-0.01351325537428787
+48,0.00032457869529722979,-0.00093821890666100332,-0.00065266878380968135,-0.0097689901886481474
+
+====================================================================================================
+FILE: current/case21/NZ_SCCM_CASE21_RAW_INPUT_FREEZE_20260812_1734.md
+SIZE: 2469
+SHA256: 5156b93036053bcd23aee9c1cdd1821f4403de226d408d25928937e0355a78ca
+ENCODING: utf-8
+LINES: 82
+====================================================================================================
+# NZ-SCCM Case21 原始输入冻结表
+
+**时间基线：2026-08-12 17:34 +08:00**  
+**身份：CURRENT CASE21 RAW INPUT FREEZE / NO THEORY RESULT / NO EXPERIMENT LOAD**
+
+本文件只冻结 Case21 正式重算所需原始材料、几何、配筋与 compiler 区间。它不包含任何历史 Case21 理论根、理论荷载、FE/Gauss/Simpson 结果或试验极限荷载。
+
+## 1. 几何
+
+\[
+\boxed{b=\ell=1220\ \mathrm{mm},\qquad t_p=19.30\ \mathrm{mm}}
+\]
+
+式中，\(b\) 为完整代表半波宽度；\(\ell\) 为轴向完整半波长度；\(t_p\) 为板厚。
+
+## 2. 普通混凝土
+
+\[
+\boxed{f_c=21.23\ \mathrm{MPa},\qquad E_0=20321\ \mathrm{MPa},\qquad \varepsilon_0=0.00209,\qquad \nu=0.18}
+\]
+
+式中，\(f_c\) 为单轴抗压强度；\(E_0\) 为初始弹性模量；\(\varepsilon_0\) 为 R10 参考压缩应变；\(\nu\) 为泊松比。
+
+## 3. 初始缺陷
+
+\[
+\boxed{q_0=\frac{A_0}{b}=\frac1{400}=0.0025}
+\]
+
+式中，\(A_0\) 为 stress-free initial imperfection 物理幅值；\(q_0\) 为初始缺陷比。
+
+## 4. 配筋
+
+总双向配筋率 0.75%，两个方向均分：
+
+\[
+\boxed{\rho_{s,x}=\rho_{s,y}=0.00375}
+\]
+
+Case21 为中面单层钢筋：
+
+\[
+\boxed{z_s=0,\qquad \zeta_s=0}
+\]
+
+式中，\(\rho_{s,x},\rho_{s,y}\) 为两个正交方向配筋率；\(z_s\) 为钢筋层相对中面的物理位置；\(\zeta_s=2z_s/t_p\) 为归一化厚度位置。
+
+钢筋材料参数：
+
+\[
+\boxed{E_s=200000\ \mathrm{MPa},\qquad \varepsilon_y=0.00265,\qquad f_y=530\ \mathrm{MPa}}
+\]
+
+式中，\(E_s\) 为钢筋弹性模量；\(\varepsilon_y\) 为屈服应变；\(f_y\) 为屈服应力。
+
+## 5. R10 冻结常数
+
+\[
+\boxed{\rho=0.1,\qquad m_t=-\frac7{90},\qquad \eta_r=0.05,\qquad u_r=0.03}
+\]
+
+\[
+\boxed{a_{cc}=0.1072329249362415,\qquad a_t=1-2^{-1/8}}
+\]
+
+式中，\(\rho\) 为 R10 拉伸强度尺度；\(m_t\) 为 Foster-informed 拉伸下降参数；\(\eta_r\) 为源平滑铰宽度；\(u_r\) 为残余拉应力尺度；\(a_{cc}\) 为项目冻结双压物理目标系数；\(a_t\) 为项目冻结双拉物理目标系数。
+
+## 6. compiler 区间
+
+\[
+\boxed{\lambda\in[\lambda_a,\lambda_b]=[-1.15,0.12]}
+\]
+
+式中，\(\lambda_a=-1.15\) 为材料主等效应变 compiler 下界；\(\lambda_b=0.12\) 为上界。该区间在求根前冻结，禁止根据历史理论结果或试验荷载调整。
+
+## 7. 隔离声明
+
+```text
+HISTORICAL_CASE21_D_Q_P_Pu_ROOT_PATH_INCLUDED = NO
+HISTORICAL_FE_GAUSS_SIMPSON_INCLUDED = NO
+EXPERIMENTAL_LIMIT_LOAD_INCLUDED = NO
+```
+
+====================================================================================================
+FILE: current/case21/results_nextstep.json
+SIZE: 2331
+SHA256: 591b7cf7e4312667d981d7297f772db6d13b87771d2724acc609ccea6e04d62a
+ENCODING: utf-8
+LINES: 53
+====================================================================================================
+{
+  "formal_contract": {
+    "one_continuous_complete_halfwave": true,
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "analytic_cells_revoked": true
+  },
+  "independent_diagnostic_state": {"D": 0.75, "q": 0.002},
+  "scalar_material_chebyshev_tail_last20": {
+    "1024": {"C": 0.0004359, "T": 0.0001965, "U": 0.0004556},
+    "1536": {"C": 0.00000925, "T": 0.00000533, "U": 0.00000978},
+    "2048": {"C": 1.85e-7, "T": 1.38e-7, "U": 1.99e-7}
+  },
+  "naive_l1_tail_diagnostic_Nsp20": {
+    "Savg_finite_l1_norm": 2.2363,
+    "Savg_tail_bound": 0.005493,
+    "Dcal_finite_l1_norm": 5.1468,
+    "Dcal_tail_bound": 0.013409,
+    "sigy_tail_bound": 0.23138,
+    "fR_tail_bound": 45.05,
+    "Pc_kN": 335.141710,
+    "Pc_bound_kN": 5.448,
+    "Rq": 39678.3,
+    "Rq_bound": 2704700.0,
+    "status": "REJECTED_AS_TOO_PESSIMISTIC"
+  },
+  "anisotropic_global_one_domain": [
+    {"degree": [16,16,24], "Pc_kN": 335.162825, "Rq": 38597.504},
+    {"degree": [18,18,28], "Pc_kN": 335.144074, "Rq": 38951.033},
+    {"degree": [20,20,28], "Pc_kN": 335.143957, "Rq": 38971.238},
+    {"degree": [22,22,30], "Pc_kN": 335.144506, "Rq": 38628.621},
+    {"degree": [18,18,32], "Pc_kN": 335.131144, "Rq": 39505.127}
+  ],
+  "audit_only_reference_at_D075_q002": {"Pc_kN": 335.13308, "Rq": 38988.58},
+  "spectral_bounds_at_D075_q002": {
+    "lambda_plus_audit_only_approx": [-0.0911, 0.0911],
+    "lambda_minus_audit_only_approx": [-0.8411, -0.6589],
+    "lambda_plus_analytic_bound": [-0.1051, 0.13584],
+    "lambda_minus_analytic_bound": [-0.86569, -0.62473]
+  },
+  "broad_parameter_box": {"D": [0.5,0.9], "q": [0.0,0.003], "delta_min_analytic_lower_bound": 0.22599},
+  "direct_pair_radical_iteration": {
+    "status": "REJECTED_NOT_CERTIFIED",
+    "reason": "low-order truncated global fields lost positivity of positive radicands, causing Newton/Zolotarev-like radical iteration to diverge"
+  },
+  "padded_nonlinear_interaction": {
+    "status": "REJECTED",
+    "reason": "padding nonlinear products without supplying the missing true high input modes amplified spurious high-high feedback"
+  },
+  "current_blocker": "structured global coefficient-tail validation for nonlinear functional calculus, especially Rq; no spatial subdivision is permitted",
+  "new_case21_roots_published": false
+}
+
+====================================================================================================
+FILE: current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_OBSERVATIONS_AND_GROUP_ERROR_MECHANISM_20260811.md
+SIZE: 8724
+SHA256: 68ae8f18660f4490f6e09209fe22fe1363bd80c53f12bac78413ca3efe4bd8f3
+ENCODING: utf-8
+LINES: 142
+====================================================================================================
+# NZ-SCCM Swartz24：原文试验/屈曲观察与三组误差机制诊断
+
+**Date:** 2026-08-11  
+**Status:** SOURCE-GROUNDED DIAGNOSTIC, NON-CALIBRATING
+
+## 0. Boundary
+
+本诊断只用于解释已冻结的 24 板盲算误差结构，不允许据此回调 R10、N48、q0、钢筋参数或单板材料参数。
+
+当前 NZ-SCCM 比较对象是 **failure / ultimate load**；Nguyen 第5章对 Swartz et al. (1974) 的详细原文讨论主要针对 **buckling / critical load and buckled shape**。二者不是同一个物理量。下面使用临界状态信息解释为什么三个宽厚比组进入不同主控机制，但绝不把临界荷载当作当前 Pu。
+
+## 1. Nguyen 对 Swartz 24 板的三组原文信息
+
+Nguyen Table 5.3/5.4 将 24 块板按宽厚比/细长程度汇总为三组：
+
+|组|大致 Case|b/t|平均试验屈曲荷载/kN|Nguyen FE/kN|平均临界应力/MPa|临界应力/混凝土强度|
+|---|---|---:|---:|---:|---:|---:|
+|1|1–8|48.0|521|505|16.28|0.795|
+|2|9–16|38.3|560|561|14.43|0.930|
+|3|17–24|63.1|335|305|12.93|0.618|
+
+Nguyen 明确指出：随着细长程度增加，临界应力与混凝土强度之比降低；这些细长板的屈曲发生在混凝土已经进入非线性范围以后，因此材料切线会直接影响屈曲。
+
+### 1.1 Case 17–24：最细长组
+
+Nguyen 说明 panels 17–24 的计算屈曲形态为 **两个正弦半波**，屈曲应力仅略高于板强度的一半；其形态接近相同 a/b=2 的弹性板，并且 panel 21 的形态与 Swartz 试验记录相似。使用加载方向混凝土切线模量、非加载方向弹性模量构成的正交异性板也能得到类似形态。
+
+### 1.2 Case 1–16：较厚两组
+
+对于 b/t 约 48 与 38 的板，Nguyen 得到的屈曲形态约为 **一个正弦半波**。这两组屈曲前平均应力已分别达到约 0.795fc 与 0.93fc，因此处于非常明显的材料非线性区域。其屈曲形态与同长宽比的各向同性弹性板不同，而更接近采用加载方向切线模量的正交异性板。
+
+### 1.3 钢筋影响
+
+Nguyen 的 Table 5.5 检查了 0.2%、0.5%、0.75%、1.0% 配筋率以及一层/两层钢筋。结论是：**钢筋对屈曲荷载的影响不显著**，并指出这与 Swartz et al. 和 Swartz & Rosebraugh 的结论一致。
+
+注意：这是对 **buckling load** 的结论，不等价于说钢筋对最终 failure load 完全无影响。
+
+### 1.4 Nguyen 对不同理论结果差异的原文解释
+
+Nguyen 的 FE 临界荷载总体比 Attard 和 Swartz–Rosebraugh 解析结果高、但通常低于试验。Nguyen 给出的原因之一是：
+
+- Attard 在非加载方向取约 0.4Ec，并假定该方向混凝土开裂；
+- Swartz–Rosebraugh 的正交异性板公式则基于屈曲开始时混凝土未开裂的假设。
+
+这说明 **非加载方向的开裂/有效模量处理，以及加载方向的切线模量状态**，能够系统改变 RC 板的稳定结果。
+
+## 2. 当前 NZ-SCCM 盲算的三组表现
+
+当前 24 板 blind-to-experiment 结果为：
+
+|组|当前理论 Pu 平均/kN|试验 failure 平均/kN|平均误差|MAPE|RMSE/kN|
+|---|---:|---:|---:|---:|---:|
+|Case 1–8|562.29|548.24|+4.43%|12.66%|73.60|
+|Case 9–16|571.87|664.34|-13.23%|15.45%|108.29|
+|Case 17–24|371.42|380.93|-2.07%|8.06%|41.25|
+
+这些 failure 平均值只用于盲算后的误差诊断。
+
+## 3. 为什么三组会表现非常不同
+
+### 3.1 核心原因不是“板厚本身”，而是板厚改变了极限前的主控机制
+
+三组宽厚比使结构分别处在不同的“几何稳定—材料非线性”竞争区间：
+
+- b/t≈38.3：屈曲时已到约 0.93fc，属于 **材料峰值/强非线性主导的厚板区**；
+- b/t≈48：约 0.795fc，属于 **材料非线性与几何稳定共同控制的过渡区**；
+- b/t≈63.1：约 0.618fc 且出现两个半波，属于 **几何稳定更早介入的细长板区**。
+
+所以一个统一的低维 D–q、单代表半波、R10 current-map 模型不应预期对三组产生同样的误差方向。
+
+### 3.2 Case 9–16 为何系统低估最明显
+
+这一组最厚、最不细长，原文显示其屈曲前应力已达到约 0.93fc，几乎触及混凝土峰值。换言之，试件在临界稳定附近已经进入最敏感的材料非线性区。
+
+此时最终 failure capacity 对以下机制特别敏感：
+
+1. 加载方向真实切线在峰值附近的变化；
+2. 非加载方向是否开裂、其有效刚度如何；
+3. 两向应力/应变重分布；
+4. 屈曲后仍可获得的膜内再分配和承载储备；
+5. 初始缺陷和轻微偏心引起的二阶路径。
+
+当前 NZ-SCCM 虽然保留二维 current-map 与二阶运动学，但仍压缩到 D、q 两个全局变量和一个连续代表半波。对 b/t≈38 这种“接近材料峰值后才屈曲”的板，这个低维空间更容易 **过早结束或低估屈曲后的应力重分布储备**。
+
+一个很直观的后验指标是：这一组原始平均试验屈曲荷载约 560 kN，而当前理论 failure 平均约 572 kN，二者非常接近；但真实 failure 平均约 664 kN。也就是说，当前模型在这一组捕捉到的承载水平更像“临界附近 + 少量后续储备”，而试验仍有更大的屈后/材料重分布储备。该比较是诊断，不是校准。
+
+因此 Case 9–16 的系统性 -13.23% 很可能首先指向：
+
+**厚板高应力区的后屈曲/膜内重分布自由度不足，或峰值附近多轴材料切线的真实演化尚未被当前低维表示完全捕捉。**
+
+这比“把 R10 调高 13%”合理得多。
+
+### 3.3 Case 17–24 为何整体最好
+
+这一组最细长，原文显示在约 0.618fc 就发生屈曲，并呈两个正弦半波，形态接近弹性/切线正交异性板。此时几何稳定在材料峰值之前很早就介入，问题更接近：
+
+```text
+连续正弦半波几何
++ 二阶运动学
++ 当前切线材料
++ 稳定路径
+```
+
+这恰好是当前 one-continuous-complete-halfwave + Nguyen second-order + tangent/current-map + D15 路线最擅长表达的部分。
+
+完整物理板 a/b≈2 时原文出现两个半波；当前理论只算一个 **代表完整半波**，并不要求把两个重复半波各自空间离散，因此与该组的实际模态结构是兼容的。
+
+当前理论平均 371.42 kN，对比真实 failure 平均 380.93 kN，平均只低约 9.52 kN。这与其 MAPE=8.06% 为三组最低一致。
+
+Case17 仍低估 21.56%，说明这一解释不是说第三组“已经完全解决”，而只是说明该组总体机制与当前理论架构更匹配。
+
+### 3.4 Case 1–8 为何正负误差混合
+
+b/t≈48 的临界应力约 0.795fc，正处于过渡区：材料已经明显非线性，但尚不像 b/t≈38 那样几乎压到峰值；几何失稳也不像 b/t≈63 那样很早主导。
+
+因此这一组对材料曲线、当前应力面、初始缺陷、钢筋层位以及二阶几何之间的相对权重最敏感。当前结果从 Case1–3 高估、Case4接近，到 Case5–7低估、Case8再次高估，说明不存在一个单一的“组常数偏差”。
+
+这一组当前理论平均 562.29 kN、试验 failure 平均 548.24 kN，组均值只高 14.05 kN，但 MAPE 仍为 12.66%。这意味着 **组均值发生了正负误差抵消**，不能把 +4.43% 解读为“这一组已经很好”。
+
+## 4. 哪些原因目前有源证据，哪些只是合理推断
+
+### 有明确文献证据
+
+- 三组 b/t 与临界应力比明显不同；
+- 17–24 为两个半波、1–16 约一个半波；
+- 细长组更接近弹性/切线正交异性板行为；
+- 较厚两组在屈曲前已非常接近混凝土峰值；
+- 非加载方向有效模量/开裂假设会改变稳定结果；
+- 钢筋率对 Swartz 板的 **屈曲荷载** 影响不显著。
+
+### 当前可以提出、但尚不能称为已证实的机制
+
+- 固定统一的初始缺陷幅值 q0=b/400 可能无法代表 24 个真实试件的个体缺陷；
+- 两个全局变量 D、q 对厚板峰值附近的膜内再分布可能不足；
+- 真实试验的轻微偏心、加载端差异、材料离散性可能解释同一组内部正负误差；
+- current R10 对高压缩、接近峰值的二维状态是否与全部板组同等准确，仍需材料状态域审计。
+
+这些都只能通过下一轮独立复算和状态域诊断来验证，不能直接拿试验误差反标。
+
+## 5. 当前建议
+
+下一步不修改 R10、不提高 N48、不按组拟合修正系数。应先对 Case1、Case14、Case21 三个代表板进行完全独立复算，确认现有解析链无量纲/共轭/积分错误；随后比较三板在极限点的完整连续应变域、主等效应变域、各材料作用项以及 D–q 切线构成，定位厚板组缺失的物理自由度或材料状态。
+
+====================================================================================================
+FILE: current/governance/NZ_SCCM_EXECUTION_CHECKPOINT_BACKUP_AUDIT_AND_RULE_20260813_1207.md
+SIZE: 7089
+SHA256: 2c092076866bd2c4ab79ed71be7309ebaaa4f845815b15c072241595bad41f08
+ENCODING: utf-8
+LINES: 168
+====================================================================================================
+# NZ-SCCM 执行断点备份审计与可恢复计算规则
+
+**时间：2026-08-13 12:07 +08:00**  
+**身份：CURRENT GOVERNANCE / BACKUP AUDIT**
+
+## 0. 审计结论
+
+当前 GitHub 并未丢失理论和既有结果，但此前备份标准偏向“结果归档”，没有达到“任意新会话可从中断点无损续算”的 execution-checkpoint 标准。
+
+因此当前应区分：
+
+```text
+THEORY_BACKUP = SUBSTANTIAL / CURRENT GOVERNING FILES PRESENT
+CASE21_RESUMABLE_CHECKPOINT = COMPLETE
+SWARTZ24_FINAL_Pu_TABLE = 24/24 PRESENT
+SWARTZ24_CURRENT_RESUMABLE_CHECKPOINT = INCOMPLETE
+SWARTZ24_CURRENT_ROOT_COORDINATES = 6/24 RETAINED IN CURRENT FRESH PACKAGE
+SWARTZ24_CURRENT_FULL_DERIVATIVE_CHECKPOINT = NOT 24/24 RETAINED
+SWARTZ24_CURRENT_KZ_CHECKPOINT = CASE21 COMPLETE / OTHERS NOT BULK-COMPLETE
+```
+
+## 1. 已确认存在的当前备份
+
+### 1.1 Governing theory and state
+
+- `current/CURRENT_STATE.md`
+- `current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md`
+- `current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md`
+
+当前不变量：
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+KINEMATICS = NGUYEN_SECOND_ORDER
+R10_MATERIAL_TARGET = FROZEN
+N48_ORDER = 48
+CAYLEY_HAMILTON = GOVERNING
+EXACT_MOMENT_ENGINE = D15_GENERAL_TRIG_MOMENTS
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+STRUCTURAL_CALIBRATION = NO
+```
+
+### 1.2 Case21
+
+Case21 当前具有可恢复的：原始输入、材料系数、理论冻结、最终 `(D_u,q_u,A_u)`、`Pc/Ps/Pu`、`R`、`L`、KZ 分解、同支第一 KZ 零点以及实验后开封比较。因此 Case21 达到 resumable-checkpoint 水平。
+
+### 1.3 Swartz24 已完成的最终量
+
+`current/results/NZ_SCCM_SWARTZ24_CURRENT_FRESH_PU_FAILURE_COMPARISON_20260813_0047.csv` 已保存 24/24 当前 `Pu` 与实验 `Pf` 比较。
+
+Cases19–24 的 current fresh 结果另保留了当前 `(D_u,q_u)` 及 `Pc/Ps/Pu`。Case21 进一步保留完整 tangent/KZ 数据。
+
+## 2. 发现的备份缺口
+
+### 2.1 最大缺口：Cases1–18 current root checkpoint 未被持久化
+
+当前 24/24 `Pu` 已存在，但 inspected current fresh package 中 Cases1–18 没有与这些 current `Pu` 一一对应的 `(D_u,q_u,A_u)` checkpoint。
+
+历史文件 `NZ_SCCM_SWARTZ24_FRESH_BLIND_THEORY_RESULTS_20260811.csv` 确实保存了 24/24 的旧 direct-N48 `(D_u,q_u)`、`P_D,P_q,R_D,R_q,L` 等，但这些属于被 tangent-representation 审计后淘汰的旧表示，不能作为 current C1/MM + general-D15 根继续使用。
+
+### 2.2 current 24-panel derivative checkpoint 不完整
+
+对于 current 生产结果，应在极限状态同步保留：
+
+- `P_D`
+- `P_q`
+- `R_q,D`
+- `R_q,q`
+- `L=P_D R_q,q-P_q R_q,D`
+- `L_normalized`
+- equilibrium residual
+- branch direction / `dP/ds` sign before and after root
+
+这些量在旧 direct-N48 24-panel CSV 中曾完整保存，说明原计算流程本身会产生它们；问题是 current 修订后的 24-panel 结果没有按同样粒度重新持久化。
+
+### 2.3 current KZ checkpoint 未形成 24-panel machine-readable table
+
+Case21 已保存：
+
+- `KZ_c_mat`
+- `KZ_c_geo`
+- `KZ_s_mat`
+- `KZ_s_geo`
+- `KZ_total`
+- first same-branch `KZ=0` coordinate
+
+但尚无对应的 current Swartz24 24行生产表。
+
+### 2.4 current material compiler checkpoint 不完整
+
+Case21 当前材料系数有 timestamped CSV；24板 current run 未找到统一的每板 current C1/MM coefficient checkpoint。若需要从任意中断点继续，不应只依赖“以后可重新生成”。至少应保存 compiler interval、compiler variant、coefficient checksum/hash；大系数表可按文件分离保存。
+
+### 2.5 current 24-panel canonical raw-input freeze 缺一个统一机器表
+
+原始 Swartz 24板输入可从 Nguyen Table 5.1 和已有历史结果恢复，但 current production 应额外存在一张独立 raw-input freeze，明确每板：geometry、`fc,E0,eps0,nu`、reinforcement split/layers/location、steel properties、`q0` 来源、代表半波规则、compiler interval source。
+
+“可从文献恢复”不等于“当前执行断点已备份”。
+
+### 2.6 workflow 文档存在版本陈旧问题
+
+`current/workflows/NZ_SCCM_CASE21_CALCULATION_PROCESS_TEMPLATE_V1_20260811.md` 仍写旧 direct-N48 根点插值公式。当前真正 governing workflow 已是 timestamped 20260812 zero-spatial analytic execution contract，并包含 C1/MM/general-D15/tangent control。
+
+因此旧 V1 必须标记为 HISTORY/OBSOLETE FOR CURRENT PRODUCTION，不能再作为当前续算入口。
+
+## 3. 对 “L/KZ bulk gate” 名称的纠正
+
+此前把 `L` 与 `KZ` 合称一个后置 bulk gate 容易造成错误印象。
+
+### 3.1 L 不是 Pu 算完后的额外门禁
+
+当前 Pu 定义本身就是同一 equilibrium branch 上的第一极限点：
+
+`Rq(D,q)=0` 与 `L(D,q)=0`，并要求沿主支 `dP/ds : + -> -`。
+
+因此：
+
+```text
+CURRENT_Pu_EXISTS
+=> current solve must have evaluated Rq and L at the root
+```
+
+对 Cases1–18 真正的问题是 **current L/root intermediate values 没有保存到 GitHub checkpoint**，而不是“Pu 已经算出来但当时根本没有算 L”。
+
+### 3.2 KZ 才是独立的额外一致性/稳定性审计
+
+KZ 用同一 current tangent 检查在 Pu 之前是否已有 tangent-zero。它不作为第二套 Pu 求解器。
+
+所以以后状态名称改为：
+
+```text
+PU_LIMIT_POINT_SOLVE = Rq + L + branch maximum
+KZ_PRELIMIT_STABILITY_AUDIT = independent same-branch audit
+```
+
+不得再用“L/KZ 后置门禁”掩盖 L 已经属于 Pu 求解本体这一事实。
+
+## 4. 新的最低可恢复 checkpoint 标准
+
+从本规则生效后，每块板只有在下列 RESUME_MINIMUM 已提交 GitHub 后，才能标记 `CALCULATION_COMPLETE`：
+
+| 类别 | 必须保存 |
+|---|---|
+| identity | case id, theory-baseline commit SHA, timestamp |
+| raw input | geometry, material, rebar, steel, q0, halfwave identity and provenance |
+| compiler | interval, variant, order, coefficient checksum/hash, domain certificate |
+| root | `D_u,q_u,A_u` |
+| load | `Pc,Ps,Pu` |
+| equilibrium | `Rq_c,Rq_s,Rq_total,R_norm` |
+| limit | `P_D,P_q,Rq_D,Rq_q,L,L_norm`, pre/post root load-slope sign |
+| material branch | lambda bounds, steel max strain / elastic-yield state |
+| tangent audit | `KZ` four contributions at root; if KZ audit requested, first same-branch KZ-zero coordinate |
+| execution | solver/script/version or reproducible calculation artifact hash; no-spatial-quadrature flags |
+| experiment isolation | explicit flag that Pf/Pcr were not used in solve/root selection |
+
+A 24-panel production run must additionally commit one machine-readable summary table containing the same minimum columns for all panels.
+
+## 5. Current stop point
+
+本文件只完善备份治理并审计缺口；不重算 Cases1–18，不尝试替代根，不另开求解分支。
+
+```text
+NEXT_REQUIRED_REPAIR = regenerate/persist missing current Cases1–18 checkpoints only when explicitly authorized
+FAIL_FAST = YES
+NO_ALTERNATIVE_BRANCH = YES
+```
+
+====================================================================================================
+FILE: current/governance/NZ_SCCM_NC_R1_FORMAL_CLOSURE_DECISION_20260812.md
+SIZE: 6557
+SHA256: 6cc2c3d9fca2fcb0afad002cb1f7d935de2702979f3e40232a342908f149daf6
+ENCODING: utf-8
+LINES: 178
+====================================================================================================
+# GOVERNANCE DECISION — NZ-SCCM NC-R1 FORMAL CLOSURE
+
+**Date:** 2026-08-12  
+**Identity:** FORMAL-CLOSURE DECISION; NO NEW THEORY NUMBER
+
+## 1. Audit purpose and central conclusion
+
+The independent theory audit achieved its intended purpose. It did **not** overturn the central analytic architecture:
+
+\[

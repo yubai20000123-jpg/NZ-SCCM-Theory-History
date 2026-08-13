@@ -1,0 +1,1800 @@
+# NZ-SCCM Case21 N48-C1/MM + D15 独立盲算输入
+
+**本文件故意不提供本轮理论答案，也不提供试验破坏荷载。**
+
+## 严格隔离
+```text
+不得读取项目其他 Case21 历史 Pu/D/q/root/path
+不得读取旧 direct-N48 Case21 数值
+不得读取历史 Gaussian FE / quadrature 结果
+不得读取试验荷载参与求解
+正式空间 Gauss/Simpson/adaptive quadrature = 0
+正式空间 material-point grid/cells = 0
+```
+
+## 原始输入
+\[
+b=\ell=1220\ {\rm mm},\quad t_p=19.30\ {\rm mm},
+\]
+\[
+f_c=21.23\ {\rm MPa},\quad E_0=20321\ {\rm MPa},
+\quad \varepsilon_0=0.00209,\quad \nu=0.18.
+\]
+\[
+q_0=1/400.
+\]
+总双向配筋率 \(0.75\%\)，每方向 \(0.375\%\)，中面单层。
+\[
+E_s=200000\ {\rm MPa},\quad \varepsilon_y=0.00265,\quad f_y=530\ {\rm MPa}.
+\]
+\[
+\rho=0.1,\quad m_t=-7/90,\quad \eta_r=0.05,\quad u_r=0.03,
+\]
+\[
+a_{cc}=0.107232924936241,\qquad a_t=1-2^{-1/8}.
+\]
+
+fresh compiler 在求解前固定为
+\[
+\boxed{\lambda\in[-1.15,0.12]}.
+\]
+
+## 必须执行
+1. 由 Foster 源材料功从零计算 \(W_{src}\) 与 \(h\)。
+2. 重新生成闭式 R10 的 \(U,C,T,T^7\)。
+3. 对 \(U,C,T^7\) 使用 N48-C1 公式；对 \(T\) 重新做 full-hull strict-C1 constrained-minimax。
+4. 自己重新生成49×4系数，不得读取现成答案系数表。
+5. Cayley–Hamilton 二维提升。
+6. Nguyen 一个连续完整方形半波二阶运动学。
+7. 所有空间待积量转为有限解析系数，只允许 D15 精确矩；禁止物理空间数值求积。
+8. 钢筋在求根之前进入 \(P,R_q,L\)。
+9. 联立
+\[
+R_q(D,q)=0,
+\qquad
+L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}=0.
+\]
+10. 导数采用同一有限解析表达的解析/自动微分，不使用有限差分生产导数。
+11. 给出连续谱域证书，证明最终 \(\lambda\) 全域位于 \([-1.15,0.12]\)。
+12. 给出连续钢筋应变证书。
+13. 输出 \(D,q,A,C_m,C_b,\mathscr D[S_{yy}],\mathscr D[Q_q],P_c,P_s,P,R_{q,c},R_{q,s},R_q\) 和四个导数、\(L\)。
+14. 理论 \(D,q,P_u\) 全部冻结以后停止，不自行寻找试验值。
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_PROMPT_20260812.txt
+SIZE: 1710
+SHA256: d77257b263541e449e5d9b3a8b1c72e0bc83d4ec170de377a1e528fd01a2b68a
+ENCODING: utf-8
+LINES: 25
+====================================================================================================
+你现在是“NZ-SCCM Case21 更新版 R10→N48-C1/MM→Cayley–Hamilton→D15 独立盲算与错误审计助手”。
+
+我会上传《NZ_SCCM_CASE21_N48C1MM_D15_BLIND_AUDIT_INPUT_20260812.md》。
+
+要求：
+1. 只使用该文件中的理论和原始输入。
+2. 不读取、不搜索、不调用任何项目历史 Case21 D、q、Pu、根、路径或旧 direct-N48 结果。
+3. 不使用实验荷载参与求解、初值选择、选根或参数调整。
+4. 正式空间 Gauss、Simpson、自适应积分、空间 Chebyshev collocation、材料点网格和空间 cells 全部禁止。
+5. 一维49个 N48 材料坐标只用于材料解析系数生成。
+6. 从 Foster 源关系重新计算 Wsrc、h 和 R10 的 U/C/T/T7。
+7. U/C/T7 用 strict-C1 N48；T 重新求 full-hull strict-C1 constrained-minimax。
+8. 检查全部零点函数值和一阶切线锚点。
+9. 用 Cayley–Hamilton 二维提升。
+10. 用 Nguyen 一个连续完整方形半波。
+11. 空间积分只能通过有限解析系数与 D15 的 M_i M_j Z_k 精确矩收缩完成。
+12. 钢筋必须在求根前进入 P、Rq 和 L。
+13. 联立 Rq=0 与 L=P_D Rq_q-P_q Rq_D=0。
+14. P_D、P_q、Rq_D、Rq_q 必须来自同一解析表达的解析/自动微分；禁止有限差分生产导数。
+15. 必须给连续谱域证书和连续钢筋应变支路证书。
+16. 如果任一步不能闭合，在首次缺口处给 BLOCKED，不得改材料、升 N96/N112、调参或补空间数值积分。
+17. 三个理论量 D、q、Pu 全部冻结后立即停止，不自行搜索试验值。
+
+最终给出 PASS / FAIL / BLOCKED，并指出首次实质分歧层级：
+R10 / N48-C1 / T-minimax / Cayley-Hamilton / KINEMATICS / D15 / STEEL / Rq / L。
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md
+SIZE: 13397
+SHA256: 195961467f1f2b159250ef5e3384dcb61e13ba0c6b44b5586e43b7833b8f9b92
+ENCODING: utf-8
+LINES: 663
+====================================================================================================
+# NZ-SCCM Case21 N48-C1/MM + D15 自包含独立盲算合同 V2
+
+**日期：2026-08-12**  
+**用途：第二次空白聊天独立复算。**  
+**本文件不提供 Case21 理论答案，不提供实验破坏荷载，不提供历史 Case21 根、荷载或路径。**
+
+## 0. 隔离纪律
+
+```text
+只允许使用本文件
+历史 Case21 D/q/Pu/root/path = 禁止
+旧 direct-N48 Case21 结果 = 禁止
+历史 FE/Gauss/Simpson 结果 = 禁止
+实验荷载参与求解 = 禁止
+正式空间 Gauss/Simpson/adaptive quadrature = 0
+正式空间 Chebyshev collocation = 0
+正式空间 material-point grid/cells = 0
+```
+
+一维 N48 材料坐标只用于生成/验证材料解析系数，不属于结构空间离散。如任何必要定义仍缺失，必须在首次缺口处 `BLOCKED`，不得从外部知识补齐。
+
+---
+
+## 1. Case21 原始输入
+
+\[
+b=\ell=1220\ {\rm mm},\qquad t_p=19.30\ {\rm mm}.
+\]
+
+\[
+f_c=21.23\ {\rm MPa},\qquad E_0=20321\ {\rm MPa},\qquad \varepsilon_0=0.00209,\qquad \nu=0.18.
+\]
+
+\[
+q_0=1/400=0.0025.
+\]
+
+总双向配筋率为 0.75%，两个方向均分：
+
+\[
+\rho_{s,x}=\rho_{s,y}=\rho_s=0.00375.
+\]
+
+Case21 为中面单层钢筋：
+
+\[
+z_s=0,\qquad \zeta_s=0.
+\]
+
+\[
+E_s=200000\ {\rm MPa},\qquad \varepsilon_y=0.00265,\qquad f_y=530\ {\rm MPa}.
+\]
+
+R10 固定常数：
+
+\[
+\rho=0.1,\qquad m_t=-7/90,\qquad \eta_r=0.05,\qquad u_r=0.03,
+\]
+
+\[
+a_{cc}=0.1072329249362415,\qquad a_t=1-2^{-1/8}.
+\]
+
+本次 compiler 区间在求解前固定：
+
+\[
+\boxed{\lambda\in[\lambda_a,\lambda_b]=[-1.15,0.12]}.
+\]
+
+该区间是盲算合同的先验输入，不允许根据理论答案或实验值调整。
+
+---
+
+## 2. R10 基本参数
+
+\[
+\boxed{\kappa=\frac{E_0\varepsilon_0}{f_c}},\qquad
+\boxed{x_{cr}=\frac{\rho}{\kappa}},\qquad
+\boxed{\eta=\frac{x_{cr}}{20}}.
+\]
+
+---
+
+## 3. 平滑正部函数与压缩 primitive
+
+对任意实数 \(z\)，
+
+\[
+\boxed{\Pi_\eta(z)=\frac{z^2\left(\sqrt{z^2+\eta^2}+z\right)}{2(z^2+\eta^2)}}.
+\]
+
+对任意主等效应变 \(\lambda\)，定义
+
+\[
+\boxed{c(\lambda)=\Pi_\eta(-\lambda)},\qquad
+\boxed{t(\lambda)=\Pi_\eta(\lambda)}.
+\]
+
+压缩 primitive：
+
+\[
+\boxed{C(\lambda)=\frac{\kappa c(\lambda)}{1+(\kappa-2)c(\lambda)+c(\lambda)^2}}.
+\]
+
+---
+
+## 4. Foster 源拉伸函数：完整定义
+
+令
+
+\[
+r=t/x_{cr}.
+\]
+
+平滑铰函数：
+
+\[
+\boxed{H(r,r_0)=\frac12\left[(r-r_0)+\sqrt{(r-r_0)^2+\eta_r^2}\right]-\frac12\left[-r_0+\sqrt{r_0^2+\eta_r^2}\right]}.
+\]
+
+Foster 源拉伸利用函数：
+
+\[
+\boxed{T_{src}(r)=r+(m_t-1)H(r,1)-m_tH(r,10)}.
+\]
+
+源归一化拉应力：
+
+\[
+\boxed{u_{t,src}(t)=\rho\,T_{src}(t/x_{cr})}.
+\]
+
+源材料功：
+
+\[
+\boxed{W_{src}=\rho x_{cr}\int_0^{10}T_{src}(r)\,dr}.
+\]
+
+该积分是一维材料积分。必须由上述完整定义重新生成；允许符号积分、高精度一维材料积分或闭式原函数，不属于结构空间积分。
+
+---
+
+## 5. R10 拉伸 rise/fall/residual：完整定义
+
+上升支局部坐标：
+
+\[
+\boxed{\tau(t)=t/x_{cr}}.
+\]
+
+当 \(0\le t\le x_{cr}\) 时，
+
+\[
+\boxed{u_1(t)=\rho\tau+(10h-6\rho)\tau^3+(8\rho-15h)\tau^4+(6h-3\rho)\tau^5},\qquad \tau=\tau(t).
+\]
+
+下降支局部坐标：
+
+\[
+\boxed{s(t)=\frac{t-x_{cr}}{9x_{cr}}}.
+\]
+
+当 \(x_{cr}<t\le10x_{cr}\) 时，
+
+\[
+\boxed{u_2(t)=h+(u_r-h)(10s^3-15s^4+6s^5)},\qquad s=s(t).
+\]
+
+R10 拉伸峰值由材料功闭合：
+
+\[
+\boxed{h=\frac15\left(\frac{W_{src}}{x_{cr}}-\frac{\rho}{10}-\frac92u_r\right)}.
+\]
+
+完整拉伸归一化应力：
+
+\[
+\boxed{u_{sm}(t)=\begin{cases}u_1(t),&0\le t\le x_{cr},\\u_2(t),&x_{cr}<t\le10x_{cr},\\u_r,&t>10x_{cr}.\end{cases}}
+\]
+
+因为 \(t(\lambda)=\Pi_\eta(\lambda)\ge0\)，不需要负 \(t\) 分支。
+
+最终拉伸 primitive：
+
+\[
+\boxed{T(\lambda)=\frac{u_{sm}[t(\lambda)]}{\rho}}.
+\]
+
+独立七次 primitive：
+
+\[
+\boxed{T^{(7)}(\lambda)=[T(\lambda)]^7}.
+\]
+
+current master：
+
+\[
+\boxed{U(\lambda)=\kappa\lambda-C(\lambda)+\kappa c(\lambda)+\rho T(\lambda)-\kappa t(\lambda)}.
+\]
+
+---
+
+## 6. R10 严格 C1 锚点
+
+必须独立检查：
+
+\[
+\boxed{U(0)=0,\qquad U'(0)=\kappa},
+\]
+
+\[
+\boxed{C(0)=T(0)=T^{(7)}(0)=0},
+\]
+
+\[
+\boxed{C'(0)=T'(0)=(T^{(7)})'(0)=0}.
+\]
+
+撇号均表示对真实材料坐标 \(\lambda\) 求导。
+
+---
+
+## 7. direct N48
+
+\[
+\lambda_c=(\lambda_a+\lambda_b)/2,\qquad \lambda_h=(\lambda_b-\lambda_a)/2,
+\]
+
+\[
+\boxed{\xi(\lambda)=(\lambda-\lambda_c)/\lambda_h}.
+\]
+
+第一类 Chebyshev 多项式：
+
+\[
+\boxed{\mathcal C_n(\xi)=\cos[n\arccos(\xi)]}.
+\]
+
+49 个材料根点：
+
+\[
+\boxed{\theta_j=(j+1/2)\pi/49},\qquad
+\boxed{\lambda_j=\lambda_c+\lambda_h\cos\theta_j},\qquad j=0,\ldots,48.
+\]
+
+对 \(F\in\{U,C,T,T^{(7)}\}\)：
+
+\[
+\boxed{a_n^{(F,0)}=\frac{2-\delta_{n0}}{49}\sum_{j=0}^{48}F(\lambda_j)\cos(n\theta_j)},\qquad n=0,\ldots,48.
+\]
+
+---
+
+## 8. N48-C1：H、G、dF 完整定义
+
+定义 \(V_{jn}=\cos(n\theta_j)\)。则
+
+\[
+\boxed{\mathbf H=\mathbf V^T\mathbf V=\operatorname{diag}(49,49/2,\ldots,49/2)},
+\]
+
+\[
+\boxed{\mathbf H^{-1}=\frac1{49}\operatorname{diag}(1,2,\ldots,2)}.
+\]
+
+零点标准坐标：
+
+\[
+\boxed{\xi_0=-\lambda_c/\lambda_h}.
+\]
+
+约束矩阵：
+
+\[
+\boxed{\mathbf G=\begin{bmatrix}\mathcal C_0(\xi_0)&\cdots&\mathcal C_{48}(\xi_0)\\\lambda_h^{-1}\mathcal C_0'(\xi_0)&\cdots&\lambda_h^{-1}\mathcal C_{48}'(\xi_0)\end{bmatrix}}.
+\]
+
+目标向量：
+
+\[
+\boxed{\mathbf d_U=[0,\kappa]^T},
+\]
+
+\[
+\boxed{\mathbf d_C=\mathbf d_T=\mathbf d_{T^{(7)}}=[0,0]^T}.
+\]
+
+对 \(F\in\{U,C,T^{(7)}\}\)：
+
+\[
+\boxed{\mathbf a^{(F,C1)}=\mathbf a^{(F,0)}+\mathbf H^{-1}\mathbf G^T(\mathbf G\mathbf H^{-1}\mathbf G^T)^{-1}(\mathbf d_F-\mathbf G\mathbf a^{(F,0)})}.
+\]
+
+---
+
+## 9. T strict-C1 constrained-minimax：确定性生产合同
+
+理论目标：
+
+\[
+\boxed{\min_{\mathbf a\in\mathbb R^{49}}\left\|\sum_{n=0}^{48}a_n\mathcal C_n[\xi(\lambda)]-T_{R10}(\lambda)\right\|_{L^\infty([\lambda_a,\lambda_b])}}
+\]
+
+严格约束：
+
+\[
+\boxed{\mathbf G\mathbf a=\mathbf d_T}.
+\]
+
+以下材料坐标仅用于一维材料系数生成，不属于结构空间离散。
+
+### 9.1 初始 exchange set
+
+取 \(N_0=4096\)：
+
+\[
+\lambda_k^{(0)}=\lambda_c+\lambda_h\cos(k\pi/N_0),\qquad k=0,\ldots,N_0.
+\]
+
+另外强制加入 \(\lambda_a,\lambda_b,0\)，以及位于区间内的 \(\Pi_\eta(\lambda)=x_{cr}\) 和 \(\Pi_\eta(\lambda)=10x_{cr}\) 的正根。
+
+### 9.2 每轮 LP
+
+未知量为 \((a_0,\ldots,a_{48},E)\)。求
+
+\[
+\boxed{\min E}
+\]
+
+并对 exchange set 中每个 \(\lambda_k\) 施加
+
+\[
+-E\le\sum_{n=0}^{48}a_n\mathcal C_n[\xi(\lambda_k)]-T_{R10}(\lambda_k)\le E,
+\]
+
+以及 \(\mathbf G\mathbf a=\mathbf d_T\)。
+
+若用 SciPy，指定 `scipy.optimize.linprog(method="highs")`。
+
+### 9.3 verification set 与 exchange
+
+取 \(N_v=131072\)：
+
+\[
+\lambda_m^{(v)}=\lambda_c+\lambda_h\cos(m\pi/N_v),\qquad m=0,\ldots,N_v.
+\]
+
+加入 9.1 的全部特殊材料点。令
+
+\[
+r(\lambda)=T_{48}(\lambda)-T_{R10}(\lambda).
+\]
+
+在 verification set 上找全部离散局部极值候选；对每个候选的相邻材料区间，用 bounded scalar minimization 对 \(-|r(\lambda)|\) 做局部精化。
+
+若最大违反点满足
+
+\[
+|r(\lambda_*)|>E+10^{-10},
+\]
+
+把该点加入 exchange set 后重解 LP。
+
+### 9.4 停止条件
+
+以下两项连续两轮同时满足即停止：
+
+\[
+\max|r|-E\le10^{-10},
+\]
+
+\[
+\max_n|a_n^{(k)}-a_n^{(k-1)}|\le10^{-12}.
+\]
+
+最多 50 轮；否则 `BLOCKED_AT_T_MINIMAX`。最终还必须满足
+
+\[
+|T_{48}(0)|\le10^{-12},\qquad |T'_{48}(0)|\le10^{-12}.
+\]
+
+并报告最终材料验证误差 \(E_\infty=\max|r|\)。这是工程可重复系数合同，不宣称 theorem-level 连续余项证书。
+
+---
+
+## 10. 最终四个 N48 primitive
+
+\[
+\mathbf a^{(F,*)}=\begin{cases}\mathbf a^{(F,C1)},&F\in\{U,C,T^{(7)}\},\\\mathbf a^{(T,MM)},&F=T.\end{cases}
+\]
+
+\[
+\boxed{F_{48}(\lambda)=\sum_{n=0}^{48}a_n^{(F,*)}\mathcal C_n[\xi(\lambda)]}.
+\]
+
+独立复算必须输出完整 49×4 系数表，不得从历史文件读取。
+
+---
+
+## 11. 二维等效应变 current-map
+
+物理面内应变张量：
+
+\[
+\mathbf E=\begin{bmatrix}\varepsilon_x&\gamma_{xy}/2\\\gamma_{xy}/2&\varepsilon_y\end{bmatrix}.
+\]
+
+\[
+\boxed{\mathbf E_u=\frac{(1-\nu)\mathbf E+\nu\,\operatorname{tr}(\mathbf E)\mathbf I}{1-\nu^2}},\qquad
+\boxed{\mathbf X=\mathbf E_u/\varepsilon_0}.
+\]
+
+\[
+X_{11}=\frac{\varepsilon_x+\nu\varepsilon_y}{(1-\nu^2)\varepsilon_0},\qquad
+X_{22}=\frac{\nu\varepsilon_x+\varepsilon_y}{(1-\nu^2)\varepsilon_0},
+\]
+
+\[
+X_{12}=\frac{\gamma_{xy}}{2(1+\nu)\varepsilon_0}.
+\]
+
+---
+
+## 12. Cayley–Hamilton 二维提升
+
+\[
+\boxed{\mathbf Y=(\mathbf X-\lambda_c\mathbf I)/\lambda_h},\qquad K_1=\operatorname{tr}\mathbf Y,\qquad K_2=\det\mathbf Y.
+\]
+
+\[
+\mathbf Y^2-K_1\mathbf Y+K_2\mathbf I=0.
+\]
+
+\[
+\boxed{\mathcal C_n(\mathbf Y)=A_n\mathbf I+B_n\mathbf Y}.
+\]
+
+初值：\(A_0=1,B_0=0,A_1=0,B_1=1\)。递推：
+
+\[
+\boxed{A_{n+1}=-2K_2B_n-A_{n-1}},
+\]
+
+\[
+\boxed{B_{n+1}=2A_n+2K_1B_n-B_{n-1}}.
+\]
+
+从而
+
+\[
+\mathbf F_{48}=\sum_{n=0}^{48}a_n^{(F,*)}(A_n\mathbf I+B_n\mathbf Y),
+\]
+
+分别得到 \(\mathbf U,\mathbf C,\mathbf T,\mathbf T^{(7)}\)。
+
+---
+
+## 13. 二维应力张量
+
+\[
+\boxed{\mathbf{CC}=\det(\mathbf C)\mathbf C},
+\]
+
+\[
+\boxed{\mathbf{TC}=\mathbf C[\operatorname{tr}(\mathbf T)\mathbf I-\mathbf T]},
+\]
+
+\[
+\boxed{\mathbf{TT}=\det(\mathbf T)[\operatorname{tr}(\mathbf T^{(7)})\mathbf I-\mathbf T^{(7)}]}.
+\]
+
+\[
+\boxed{\mathbf S=\mathbf U-a_{cc}\mathbf{CC}+\mathbf{TC}-\rho a_t\mathbf{TT}},\qquad
+\boxed{\boldsymbol\sigma=f_c\mathbf S}.
+\]
+
+---
+
+## 14. Nguyen 一个连续完整方形半波
+
+\[
+X=\pi x/b,\qquad Y=\pi y/\ell,\qquad \zeta=2z/t_p.
+\]
+
+\[
+w_0=A_0\sin X\sin Y,\qquad w_1=A\sin X\sin Y,
+\]
+
+\[
+q_0=A_0/b,\qquad q=A/b.
+\]
+
+\[
+\boxed{C_m=\frac{\pi^2}{\varepsilon_0}(q_0q+q^2/2)},\qquad
+\boxed{C_b=\frac{\pi^2}{2\varepsilon_0}\frac{t_p}{b}q}.
+\]
+
+归一化物理应变：
+
+\[
+\boxed{e_x=\nu D+C_m\cos^2X\sin^2Y+C_b\sin X\sin Y\,\zeta},
+\]
+
+\[
+\boxed{e_y=-D+C_m\sin^2X\cos^2Y+C_b\sin X\sin Y\,\zeta},
+\]
+
+\[
+\boxed{g_{xy}=2C_m\sin X\cos X\sin Y\cos Y-2C_b\cos X\cos Y\,\zeta}.
+\]
+
+\[
+\varepsilon_x=\varepsilon_0e_x,\qquad \varepsilon_y=\varepsilon_0e_y,\qquad \gamma_{xy}=\varepsilon_0g_{xy}.
+\]
+
+未知量只有 \(D,q\)。
+
+---
+
+## 15. D15 精确矩合同
+
+任何待积量必须先化为
+
+\[
+\boxed{Q(X,Y,\zeta)=\sum_{i,j,k}c_{ijk}\mathcal C_i(\sin X)\mathcal C_j(\sin Y)\mathcal C_k(\zeta)}.
+\]
+
+\[
+\boxed{M_n=\begin{cases}\pi,&n=0,\\2\sin(n\pi/2)/n,&n\ge1,\end{cases}}
+\]
+
+\[
+\boxed{Z_k=\begin{cases}0,&k\text{ odd},\\2/(1-k^2),&k\text{ even}.\end{cases}}
+\]
+
+\[
+\boxed{\mathscr D[Q]=\sum_{i,j,k}c_{ijk}M_iM_jZ_k}.
+\]
+
+允许有限解析幂基/三角基/FFT **系数卷积**加速代数，但禁止在物理空间取样；任何后端最终必须等价于上述有限矩收缩。
+
+---
+
+## 16. 混凝土轴力与幅值残量
+
+\[
+\boxed{P_c=-\frac{f_cbt_p}{2\pi^2}\mathscr D[S_{yy}]}.
+\]
+
+定义 \(\mathbf e=\mathbf E/\varepsilon_0\)，等价地
+
+\[
+\boxed{\mathbf e=(1+\nu)\mathbf X-\nu\operatorname{tr}(\mathbf X)\mathbf I}.
+\]
+
+\[
+\boxed{Q_q=\mathbf S:\frac{\partial\mathbf e}{\partial q}},\qquad
+\boxed{J_\Omega=\frac{b\ell t_p}{2\pi^2}},
+\]
+
+\[
+\boxed{R_{q,c}=f_c\varepsilon_0J_\Omega\mathscr D[Q_q]}.
+\]
+
+---
+
+## 17. Case21 中面单层钢筋解析式
+
+弹性支下：
+
+\[
+\boxed{P_s=\rho_sbt_pE_s\varepsilon_0\left(D-\frac{C_m}{4}\right)}.
+\]
+
+\[
+\boxed{R_{q,s}=\rho_st_pE_s\pi^2(q_0+q)b\ell\left[\frac{\varepsilon_0D(\nu-1)}4+\frac{9\pi^2}{32}\left(q_0q+\frac12q^2\right)\right]}.
+\]
+
+最终必须独立证明全域钢筋应变满足
+
+\[
+\max|\varepsilon_s|<\varepsilon_y.
+\]
+
+若不满足，本合同没有塑性钢筋支的生产定义，必须 `BLOCKED_AT_STEEL_BRANCH`，不得自行创造塑性公式。
+
+---
+
+## 18. 总平衡与极限条件
+
+\[
+\boxed{P(D,q)=P_c(D,q)+P_s(D,q)},
+\]
+
+\[
+\boxed{R_q(D,q)=R_{q,c}(D,q)+R_{q,s}(D,q)}.
+\]
+
+平衡：
+
+\[
+\boxed{R_q(D,q)=0}.
+\]
+
+同源导数：
+
+\[
+P_{,D}=\partial P/\partial D,\qquad P_{,q}=\partial P/\partial q,
+\]
+
+\[
+R_{q,D}=\partial R_q/\partial D,\qquad R_{q,q}=\partial R_q/\partial q.
+\]
+
+生产导数只能由同一有限解析表达解析求导或 forward AD。若使用 forward AD，每个标量携带 \((x,x_{,D},x_{,q})\)，按乘积、商和链式法则传播；禁止有限差分生产导数。
+
+极限函数：
+
+\[
+\boxed{L(D,q)=P_{,D}R_{q,q}-P_{,q}R_{q,D}}.
+\]
+
+最终联立
+
+\[
+\boxed{R_q(D,q)=0,\qquad L(D,q)=0}
+\]
+
+得到 fresh 理论 \(D_u,q_u,P_u\)。
+
+---
+
+## 19. 连续 compiler-domain 证书
+
+最终状态必须证明整个连续完整半波满足
+
+\[
+\boxed{-1.15\le\lambda_-(X,Y,\zeta)\le\lambda_+(X,Y,\zeta)\le0.12}.
+\]
+
+不得用有限物理空间点扫描作为正式证书。允许：continuous algebraic invariant bound、single-domain Bernstein coefficient envelope 或其他全局有效解析界。若无法在单一完整半波上给出全域证书，必须 `BLOCKED_AT_CONTINUOUS_SPECTRAL_CERTIFICATE`，不得用 spatial cells/subdomains/collocation 补救。
+
+---
+
+## 20. 独立复算必须输出
+
+1. \(\kappa,x_{cr},\eta\)；
+2. \(H,T_{src},W_{src},h\) 的重新生成；
+3. \(U,C,T,T^7\)；
+4. 完整 49×4 N48-C1/MM 系数；
+5. 全部严格 C1 锚点残量；
+6. T-minimax exchange 轮数和最终 \(E_\infty\)；
+7. \(D,q,A,C_m,C_b\)；
+8. 连续 compiler-domain 证书；
+9. \(\mathscr D[S_{yy}]\)、\(\mathscr D[Q_q]\)；
+10. \(P_c,P_s,P\)；
+11. \(R_{q,c},R_{q,s},R_q\)；
+12. \(P_{,D},P_{,q},R_{q,D},R_{q,q}\)；
+13. \(L\) 与归一化 \(L\)；
+14. 连续钢筋应变证书；
+15. `PASS / FAIL / BLOCKED` 及首次分歧层级。
+
+理论 \(D_u,q_u,P_u\) 冻结后立即停止。**不得自行寻找实验值。**
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_PROMPT_V2_20260812.txt
+SIZE: 1701
+SHA256: 14bb02e99cea4ffc6678220173f5bdcdd1c2715d0790c114af51ec3d4c497ff0
+ENCODING: utf-8
+LINES: 29
+====================================================================================================
+你现在是“NZ-SCCM Case21 N48-C1/MM + D15 自包含合同 V2 独立复算审计助手”。
+
+我只会上传：
+`NZ_SCCM_CASE21_N48C1MM_D15_SELF_CONTAINED_BLIND_CONTRACT_V2_20260812.md`
+
+严格执行：
+
+1. 只使用该文件，不搜索、不读取任何其他项目文件、GitHub结果、历史 Case21 D/q/Pu/root/path。
+2. 不使用试验荷载参与求解、选根、调参或终止判据。
+3. 从 H(r,r0) 开始重新生成 Foster 源材料功 Wsrc 和 R10 拉伸峰值 h。
+4. 从 Pi_eta、u_sm 重新生成 U/C/T/T7，不得调用已有系数表。
+5. U/C/T7 严格按 N48-C1；T 严格按合同第10节确定性 exchange/LP 规则重新求 constrained-minimax。
+6. 逐项检查全部 C1 锚点。
+7. 使用 Cayley–Hamilton 二维提升。
+8. 使用 Nguyen 一个连续完整方形半波。
+9. 空间 Gauss/Simpson/adaptive quadrature/Chebyshev collocation/material-point grid/cells 全部禁止。
+10. 结构积分必须转为有限解析系数并由 D15 的 M_i M_j Z_k 完成。
+11. 钢筋必须在求根前进入 P、Rq 和所有导数。
+12. 导数必须使用同一解析表达的解析或 forward AD；禁止有限差分生产导数。
+13. 联立 Rq=0 和 L=P_D Rq_q-P_q Rq_D=0。
+14. 必须给出连续 compiler-domain 证书；不能用物理空间离散点证明。
+15. 必须给出连续钢筋应变证书。
+16. 若任何定义或生产合同仍不够唯一，在首次缺口处 `BLOCKED`；不要自行补理论。
+17. 最终理论 D、q、Pu 冻结后停止，不自行查询实验值。
+
+最终输出：
+`PASS / FAIL / BLOCKED`
+以及首次实质分歧层级：
+`R10 / N48-C1 / T-minimax / Cayley-Hamilton / KINEMATICS / D15 / STEEL / Rq / L / SPECTRAL-CERTIFICATE`。
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_NC_R1_FORMAL_CLOSURE_PRODUCTION_CONTRACT_WITH_TANGENT_GATE_20260812.md
+SIZE: 8653
+SHA256: dd5f435a085d349198a133c5dfd10c084261e62e126172d282cfe5fa18f54d7d
+ENCODING: utf-8
+LINES: 408
+====================================================================================================
+# NZ-SCCM Case21 NC-R1 Formal-Closure Production Contract with Tangent Gate
+
+**Date:** 2026-08-12  
+**Identity:** CURRENT GOVERNING CASE21 EXECUTION CONTRACT  
+**Theory basis:** `current/theory/NZ_SCCM_NC_R1_FORMAL_CLOSURE_ZHOU_STYLE_CANONICAL_20260812.md`
+
+This contract supersedes the pre-closure Case21 blind-execution workflow wherever that workflow conflicts with the canonical formal-closure theory, especially the D15 basis and the missing full-field current-tangent gate.
+
+---
+
+# 0. Isolation discipline
+
+Only current raw Case21 input, the canonical formal theory, and coefficients freshly generated from the current R10 target may enter the calculation.
+
+```text
+HISTORICAL_CASE21_D_Q_P_Pu_ROOT_PATH = FORBIDDEN
+HISTORICAL_FE_GAUSS_SIMPSON_RESULT = FORBIDDEN
+EXPERIMENT_DURING_SOLVE = FORBIDDEN
+EXPERIMENT_FOR_ROOT_SELECTION = FORBIDDEN
+EXPERIMENT_FOR_PARAMETER_TUNING = FORBIDDEN
+EXPERIMENT = FINAL COMPARISON ONLY AFTER THEORY RESULT FREEZE
+```
+
+Formal structural invariants:
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+KINEMATICS = NGUYEN_SECOND_ORDER
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+The 49 N48 Chebyshev coordinates are one-dimensional **material coordinates**, not structural-space points.
+
+---
+
+# 1. Mandatory theory chain
+
+The only accepted Case21 production chain is
+
+\[
+\boxed{
+\text{raw material/geometric input}
+\to R10
+\to N48\text{-}C1/MM
+\to \text{Cayley--Hamilton}
+\to \text{Nguyen complete halfwave}
+\to \text{general D15 exact moments}
+\to P,R_q,L
+\to \Gamma_0
+\to \text{first }+\to-\text{ limit candidate}
+\to K_Z\text{ tangent gate}
+\to \text{final Case21 verdict}
+}
+\]
+
+No prior Case21 theoretical value may be used to initialize, bracket, rank or select roots.
+
+---
+
+# 2. General D15 is mandatory for every production scalar integrand
+
+Every final structural scalar integrand must be reduced to
+
+\[
+\boxed{
+Q(X,Y,\zeta)
+=\sum_{p,r,u,s,h}c_{prush}
+\sin^pX\cos^rX\sin^uY\cos^sY\zeta^h
+}
+\]
+
+and contracted using
+
+\[
+\boxed{J_{pr}=\int_0^\pi\sin^pX\cos^rX\,dX},
+\qquad
+\boxed{Z_h=\int_{-1}^{1}\zeta^h\,d\zeta},
+\]
+
+\[
+\boxed{
+\mathscr D[Q]
+=\sum c_{prush}J_{pr}J_{us}Z_h
+}.
+\]
+
+This applies without exception to
+
+```text
+Syy
+Qq = S : e_,q
+all same-expression derivatives used in L
+all current-tangent material integrands
+all current-stress geometric-stiffness integrands
+all reinforcement tangent/geometric terms
+```
+
+A restricted basis containing only functions of `sin X`, `sin Y`, `zeta` may be used only when strict algebra proves equivalence for the specific final scalar integrand. It may not be silently substituted for the governing general-D15 contraction.
+
+---
+
+# 3. Equilibrium and limit-point gates
+
+The current halfwave load observable is
+
+\[
+P=P_c+P_s,
+\]
+
+and the generalized amplitude residual is
+
+\[
+R_q=R_{q,c}+R_{q,s}.
+\]
+
+Production equilibrium requires
+
+\[
+R_q(D,q)=0
+\]
+
+with
+
+\[
+R_{norm}
+=\frac{|R_q|}{\max(f_c\varepsilon_0J_\Omega,|R_{q,c}|+|R_{q,s}|)}
+\le10^{-5}.
+\]
+
+The limit function is
+
+\[
+\boxed{L=P_DR_{q,q}-P_qR_{q,D}},
+\]
+
+with
+
+\[
+|L_{norm}|\le10^{-5}.
+\]
+
+The primary branch remains
+
+\[
+\boxed{
+\Gamma_0
+=\operatorname{Conn}_{(0,0)}
+(\{R_q=0\}\cap\mathcal A)
+}.
+\]
+
+The NC-R1 limit candidate is the first `+ -> -` load maximum encountered from `(0,0)` along `Gamma0`.
+
+**Important:** no tangent-stability acceptance is allowed until `Gamma0` itself has been generated from the same governing general-D15 `R_q` expression.
+
+---
+
+# 4. Mandatory current-tangent construction
+
+The same current material operator must generate
+
+\[
+\boxed{
+\mathbb C_t(X,Y,\zeta;D,q)
+=\frac{\partial\boldsymbol\sigma}{\partial\mathbf E}
+}.
+\]
+
+For the basic Navier perturbation
+
+\[
+\varphi=\sin X\sin Y,
+\]
+
+define
+
+\[
+\mathbf b_\varphi
+=-z\begin{bmatrix}\varphi_{,xx}\\\varphi_{,yy}\\2\varphi_{,xy}\end{bmatrix}.
+\]
+
+The concrete material-tangent contribution is
+
+\[
+\boxed{
+K_{Z,c}^{mat}
+=\int_{\Omega_h}
+\mathbf b_\varphi^T\mathbf C_t^{eng}\mathbf b_\varphi\,dV
+}.
+\]
+
+The concrete geometric contribution is
+
+\[
+\boxed{
+K_{Z,c}^{geo}
+=\int_{\Omega_h}
+(\sigma_x\varphi_{,x}^2
++2\tau_{xy}\varphi_{,x}\varphi_{,y}
++\sigma_y\varphi_{,y}^2)\,dV
+}.
+\]
+
+For reinforcement,
+
+\[
+\boxed{
+K_{Z,s}^{mat}
+=\sum_{r,\alpha}t_{s,\alpha}^{(r)}
+\int_A E_{s,t}^{(r,\alpha)}
+[z_s^{(r)}\mathbf n_\alpha^T\boldsymbol\kappa_\varphi\mathbf n_\alpha]^2dA
+},
+\]
+
+\[
+\boxed{
+K_{Z,s}^{geo}
+=\sum_{r,\alpha}t_{s,\alpha}^{(r)}
+\int_A\sigma_{s,\alpha}^{(r)}
+(\mathbf n_\alpha\cdot\nabla\varphi)^2dA
+}.
+\]
+
+Total modal current tangent:
+
+\[
+\boxed{
+K_Z
+=K_{Z,c}^{mat}+K_{Z,c}^{geo}+K_{Z,s}^{mat}+K_{Z,s}^{geo}
+}.
+\]
+
+Every integral above is a general-D15 exact-moment contraction. Spatial Gauss/collocation/cells are prohibited.
+
+---
+
+# 5. Mandatory `1/epsilon_0` tangent scaling
+
+Because
+
+\[
+\mathbf X=\mathbf E_u/\varepsilon_0,
+\]
+
+directional differentiation must include
+
+\[
+\boxed{
+\delta\mathbf X=\delta\mathbf E_u/\varepsilon_0
+}.
+\]
+
+Omitting `1/epsilon_0` invalidates the material tangent by a constant scale factor.
+
+For Case21 the mandatory unloaded-state regression is
+
+\[
+\boxed{
+K_Z(0,0)
+=\frac{E_0t_p^3\pi^4}{12(1-\nu^2)b^2}
+=823.416805665\ \mathrm{N/mm}
+}.
+\]
+
+Production requirement:
+
+```text
+ZERO_STATE_TANGENT_REGRESSION = PASS
+```
+
+before any finite-amplitude tangent state is accepted.
+
+---
+
+# 6. Tangent gate along the corrected primary branch
+
+After the general-D15 primary branch `Gamma0` has been rebuilt, evaluate `K_Z` on that same branch using analytic coefficient contraction.
+
+The governing classifications are:
+
+### 6.1 Limit-point admissible
+
+If
+
+\[
+K_Z>0
+\]
+
+from the unloaded state up to the first `+ -> -` NC-R1 maximum and no earlier admissible zero of `K_Z` exists, then
+
+```text
+PRELIMIT_TANGENT_STABILITY = PASS
+LIMIT_POINT_CONTROL_CANDIDATE = ACCEPTABLE
+```
+
+subject to all other Case21 gates.
+
+### 6.2 Pre-limit tangent loss
+
+If an admissible state on the same connected primary branch satisfies
+
+\[
+K_Z=0
+\]
+
+before the first `+ -> -` load maximum, then the later NC-R1 limit root **must not** be frozen as final Case21 `Pu`.
+
+The execution status is
+
+```text
+BLOCKED_AT_PRELIMIT_TANGENT_LOSS
+```
+
+unless and until a separate governing decision explicitly defines how a pre-limit tangent-stability root is to be promoted to the final capacity identity. This contract does **not** silently create a second Pu solver.
+
+### 6.3 Coincident control
+
+If the first admissible `K_Z=0` and first `+ -> -` load maximum coincide within the frozen root-repeatability tolerances, report
+
+```text
+COUPLED_LIMIT_TANGENT_CONTROL
+```
+
+and preserve both residual records.
+
+---
+
+# 7. Case21-specific reinforcement tangent gate
+
+For the current mid-surface single reinforcement layer,
+
+\[
+z_s=0,
+\]
+
+so
+
+\[
+K_{Z,s}^{mat}=0
+\]
+
+for the basic bending perturbation. The geometric reinforcement term remains active.
+
+Before this simplification is used, the complete reinforcement field must remain on one supported material branch. If it does not,
+
+```text
+BLOCKED_AT_STEEL_BRANCH
+```
+
+and no spatial steel material-point partition is allowed.
+
+---
+
+# 8. Required output sequence for a complete Case21 calculation
+
+A Case21 calculation may receive
+
+```text
+CALCULATION_CLOSURE = PASS
+```
+
+only after all of the following have been explicitly reported:
+
+```text
+1. raw Case21 inputs
+2. R10 derived parameters
+3. freshly generated 49x4 N48 coefficient table
+4. C1/MM material fidelity records
+5. continuous compiler-domain certificate
+6. general-D15 Syy contraction
+7. general-D15 Qq contraction
+8. rebar branch certificate
+9. corrected Rq=0 primary branch Gamma0
+10. first +->- limit candidate and R_norm/L_norm
+11. zero-state K_Z regression
+12. KZ,c^mat
+13. KZ,c^geo
+14. KZ,s^mat
+15. KZ,s^geo
+16. total K_Z along the corrected branch
+17. proof whether a K_Z=0 state occurs before the first limit maximum
+18. final theory result freeze
+19. only then experimental comparison
+```
+
+Missing item 11–17 means the calculation is not tangent-closed.
+
+---
+
+# 9. Current Case21 status under this contract
+
+The audit
+
+`current/audits/NZ_SCCM_CASE21_TANGENT_GATE_AND_GENERAL_D15_RECHECK_20260812.md`
+
+found that the previously reported fresh Case21 branch does not reproduce the canonical general-D15 `Q_q` contraction. Therefore the current status is
+
+```text
+PREVIOUS_FRESH_CASE21_LIMIT_RESULT = AUDIT RECORD ONLY
+GENERAL_D15_Rq_BRANCH = MUST BE REBUILT
+PRODUCTION_TANGENT_GATE = NOT YET REACHED
+CASE21_COMPLETE_CLOSURE = BLOCKED
+```
+
+The next calculation must restart only from the current raw Case21 input + canonical theory + freshly generated material coefficients. No historical Gauss or previous root/path values are allowed as targets.
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_CASE21_ZERO_SPATIAL_ANALYTIC_EXECUTION_CONTRACT_20260812_1734.md
+SIZE: 13577
+SHA256: bbda4f7026845216c92af57c6de6b531d43e3f7f61ad9ee8a4dfc6172ac3345f
+ENCODING: utf-8
+LINES: 550
+====================================================================================================
+# NZ-SCCM Case21 零空间解析极限—切线稳定统一计算合同
+
+**时间基线：2026-08-12 17:34 +08:00**  
+**文件身份：CURRENT GOVERNING CASE21 EXECUTION CONTRACT**  
+**理论基线：`current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md`**
+
+---
+
+# 0. 命名与版本纪律
+
+本合同及其后续替代文件不再使用 V1/V2/R1/R2 等序号作为主命名。后续正式文件采用：
+
+```text
+<内容描述>_YYYYMMDD_HHMM.<ext>
+```
+
+若后续同一日再次修订，以新的小时分钟时间戳建立新的治理基线；旧文件保留为历史证据，不删除、不覆盖其历史身份。
+
+---
+
+# 1. 隔离纪律
+
+Case21 正式计算只允许读取：
+
+1. 当前时间戳理论基线；
+2. Case21 原始材料、几何与配筋输入；
+3. 从当前 R10 重新生成的材料 coefficient；
+4. 当前计算过程中由同一解析表达新生成的中间量。
+
+禁止：
+
+```text
+HISTORICAL_CASE21_D_Q_P_Pu_ROOT_PATH = FORBIDDEN
+HISTORICAL_CASE21_ANALYTIC_RESULT = FORBIDDEN
+HISTORICAL_FE_GAUSS_SIMPSON_RESULT = FORBIDDEN
+HISTORICAL_MATERIAL_POINT_HISTORY = FORBIDDEN
+EXPERIMENT_DURING_SOLVE = FORBIDDEN
+EXPERIMENT_FOR_ROOT_SELECTION = FORBIDDEN
+EXPERIMENT_FOR_PARAMETER_TUNING = FORBIDDEN
+EXPERIMENT = FINAL COMPARISON ONLY AFTER THEORY RESULT FREEZE
+```
+
+正式空间身份固定为
+
+```text
+DOMAIN = ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ACTIVE_MODE = m=1
+KINEMATICS = NGUYEN_SECOND_ORDER
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+```
+
+49 个 N48 Chebyshev 根只是一维材料坐标，不是结构空间采样点。
+
+---
+
+# 2. 唯一正式计算链
+
+Case21 只允许按下列顺序执行：
+
+\[
+\boxed{
+\text{原始输入}
+\rightarrow R10
+\rightarrow N48\text{-}C1/MM
+\rightarrow \mathrm{Cayley\!\!-Hamilton}
+\rightarrow \mathrm{Nguyen\ 完整连续半波}
+\rightarrow \mathrm{general\ D15}
+\rightarrow P(D,q),R_q(D,q),L(D,q)
+\rightarrow \Gamma_0
+\rightarrow \text{first }+\to-\text{ limit candidate}
+\rightarrow K_Z\text{ on same }\Gamma_0
+\rightarrow \text{final control verdict}
+\rightarrow \text{experiment-only comparison}
+}
+\tag{C1}
+\]
+
+式中，\(P\) 为总轴向荷载 observable；\(R_q\) 为 q-广义平衡残量；\(L\) 为荷载沿平衡支的切向驻值函数；\(\Gamma_0\) 为包含无载点 \((0,0)\) 的可接受主连通平衡支；\(K_Z\) 为同一个 current material operator 产生的 Zhou/Navier full-field current tangent。
+
+任何历史 Case21 理论值不得用于初始化、括根、排序、选根或判断路径方向。
+
+---
+
+# 3. Case21 原始输入区
+
+Case21 计算启动时必须显式列出并冻结：
+
+\[
+\boxed{b,\ \ell,\ t_p}
+\tag{C2}
+\]
+
+式中，\(b\) 为完整代表半波宽度，mm；\(\ell\) 为轴向完整半波长度，mm；\(t_p\) 为板厚，mm。
+
+\[
+\boxed{f_c,\ E_0,\ \varepsilon_0,\ \nu}
+\tag{C3}
+\]
+
+式中，\(f_c\) 为混凝土抗压强度，MPa；\(E_0\) 为初始弹性模量，MPa；\(\varepsilon_0\) 为 R10 参考压缩应变；\(\nu\) 为泊松比。
+
+\[
+\boxed{q_0=A_0/b}
+\tag{C4}
+\]
+
+式中，\(A_0\) 为 stress-free initial imperfection 物理幅值，mm；\(q_0\) 为初始缺陷比。
+
+\[
+\boxed{E_s,\ f_y,\ \varepsilon_y,\ \rho_{s,\alpha}^{(r)},\ z_s^{(r)}}
+\tag{C5}
+\]
+
+式中，\(E_s\) 为钢筋弹性模量；\(f_y\) 为屈服应力；\(\varepsilon_y\) 为屈服应变；\(\rho_{s,\alpha}^{(r)}\) 为第 \(r\) 层、方向 \(\alpha\) 的配筋率；\(z_s^{(r)}\) 为该层钢筋相对中面的物理位置。
+
+材料 compiler 区间
+
+\[
+\boxed{\lambda\in[\lambda_a,\lambda_b]}
+\tag{C6}
+\]
+
+式中，\(\lambda_a,\lambda_b\) 为求根前冻结的一维材料主等效应变范围；不得根据试验荷载或历史理论结果调整。
+
+---
+
+# 4. R10 与 N48-C1/MM 生成门
+
+必须从原始材料参数重新计算
+
+\[
+\boxed{\kappa=E_0\varepsilon_0/f_c,\qquad x_{cr}=\rho/\kappa,\qquad \eta=x_{cr}/20}
+\tag{C7}
+\]
+
+式中，\(\kappa\) 为 R10 无量纲初始斜率；\(x_{cr}\) 为拉伸特征材料坐标；\(\eta\) 为零主应变附近平滑尺度；\(\rho=0.1\) 为当前冻结拉伸强度尺度。
+
+必须重新生成并输出完整
+
+```text
+49 × 4 coefficient table:
+U_C1
+C_C1
+T_MM
+T7_C1
+```
+
+禁止从历史 Case21 coefficient 文件读取 production coefficient。
+
+必须报告：
+
+\[
+\boxed{F_{48}(0),\qquad F_{48}'(0)}
+\tag{C8}
+\]
+
+式中，\(F\in\{U,C,T,T^{(7)}\}\)；这些量用于检查零点 C1 锚点。
+
+必须报告全 compiler 区间的材料值与一阶切线误差：
+
+\[
+\boxed{E_F^{(0)}=\|F_{48}-F_{R10}\|_\infty}
+\tag{C9}
+\]
+
+\[
+\boxed{E_F^{(1)}=\lambda_h\|F_{48}'-F_{R10}'\|_\infty}
+\tag{C10}
+\]
+
+式中，\(E_F^{(0)}\) 为材料值误差；\(E_F^{(1)}\) 为尺度化一阶切线误差；\(\lambda_h=(\lambda_b-\lambda_a)/2\)。
+
+---
+
+# 5. general-D15 强制合同
+
+每一个最终结构标量 integrand 必须化为
+
+\[
+\boxed{Q(X,Y,\zeta)=\sum_{p,r,u,s,h}c_{prush}\sin^pX\cos^rX\sin^uY\cos^sY\zeta^h}
+\tag{C11}
+\]
+
+式中，\(c_{prush}\) 为有限解析系数；\(p,r,u,s,h\) 为非负整数幂次。
+
+精确面内矩为
+
+\[
+\boxed{J_{pr}=\int_0^\pi\sin^pX\cos^rX\,dX}
+\tag{C12}
+\]
+
+式中，\(J_{pr}\) 为完整半波上的一般三角精确矩。
+
+厚度矩为
+
+\[
+\boxed{Z_h=\int_{-1}^{1}\zeta^h d\zeta}
+\tag{C13}
+\]
+
+式中，\(Z_h\) 为归一化厚度精确矩。
+
+所有正式积分统一收缩为
+
+\[
+\boxed{\mathscr D[Q]=\sum c_{prush}J_{pr}J_{us}Z_h}
+\tag{C14}
+\]
+
+式中，\(\mathscr D[Q]\) 为完整连续代表半波上的解析精确积分。
+
+式（C11）—（C14）无例外应用于：
+
+```text
+Syy
+Qq = S : e_,q
+P_D, P_q, Rq,D, Rq,q 所依赖的同源 scalar integrands
+current-tangent material integrands
+current-stress geometric-stiffness integrands
+reinforcement tangent/geometric terms
+```
+
+只含 `sin X, sin Y, zeta` 的 restricted basis 仅在对特定最终 scalar integrand 完成严格代数等价证明后才允许作为等价退化实现；不得静默替换 general-D15。
+
+---
+
+# 6. 连续 compiler-domain certificate
+
+给定任一候选 \((D,q)\)，必须证明整个完整半波上两主值满足
+
+\[
+\boxed{\lambda_a\le\lambda_-(X,Y,\zeta)\le\lambda_+(X,Y,\zeta)\le\lambda_b}
+\tag{C15}
+\]
+
+式中，\(\lambda_\pm\) 为 current \(\mathbf X\) 的两个主值；\(\lambda_a,\lambda_b\) 见式（C6）。
+
+允许使用有限 polynomial/Bernstein coefficient enclosure 或等价解析证书；禁止用空间点扫描代替全域证书。
+
+---
+
+# 7. 混凝土荷载与平衡残量
+
+混凝土轴向荷载为
+
+\[
+\boxed{P_c=-\frac{f_cbt_p}{2\pi^2}\mathscr D[S_{yy}]}
+\tag{C16}
+\]
+
+式中，\(S_{yy}\) 为无量纲 current stress tensor 的轴向分量；\(\mathscr D\) 必须使用 general-D15。
+
+定义
+
+\[
+\boxed{Q_q=\mathbf S:\frac{\partial\mathbf e}{\partial q}}
+\tag{C17}
+\]
+
+式中，\(Q_q\) 为无量纲 q-广义功密度；\(\mathbf S\) 为无量纲 current stress tensor；\(\mathbf e=\mathbf E/\varepsilon_0\)；\(\partial\mathbf e/\partial q\) 由 Nguyen 连续运动学解析得到。
+
+混凝土 q-广义残量为
+
+\[
+\boxed{R_{q,c}=f_c\varepsilon_0J_\Omega\mathscr D[Q_q]}
+\tag{C18}
+\]
+
+式中，\(J_\Omega=b\ell t_p/(2\pi^2)\) 为坐标变换 Jacobian；\(\mathscr D[Q_q]\) 必须按式（C11）—（C14）重新生成。
+
+---
+
+# 8. 钢筋 branch 与解析贡献门
+
+必须先证明完整连续钢筋场落在一个受支持材料支内。若当前案例全部弹性，则应满足
+
+\[
+\boxed{\max_{X,Y,r,\alpha}|\varepsilon_{s,\alpha}^{(r)}|<\varepsilon_y}
+\tag{C19}
+\]
+
+式中，\(\varepsilon_{s,\alpha}^{(r)}\) 为第 \(r\) 层、方向 \(\alpha\) 钢筋连续应变；\(\varepsilon_y\) 为屈服应变。
+
+若式（C19）不满足且尚无全域单支解析合同，则
+
+```text
+BLOCKED_AT_STEEL_BRANCH
+```
+
+不得通过钢筋空间材料点分区继续。
+
+总荷载与总平衡残量为
+
+\[
+\boxed{P=P_c+P_s}
+\tag{C20}
+\]
+
+\[
+\boxed{R_q=R_{q,c}+R_{q,s}}
+\tag{C21}
+\]
+
+式中，\(P_s\) 为钢筋轴向荷载；\(R_{q,s}\) 为钢筋 q-广义残量；两者均由连续钢筋解析关系和 exact moments 得到。
+
+---
+
+# 9. 正确主平衡支与 limit-point candidate
+
+正式平衡条件为
+
+\[
+\boxed{R_q(D,q)=0}
+\tag{C22}
+\]
+
+式中，\(D,q\) 是当前仅有的两个结构广义未知量。
+
+同源偏导为
+
+\[
+\boxed{P_D,\ P_q,\ R_{q,D},\ R_{q,q}}
+\tag{C23}
+\]
+
+式中，所有导数必须由同一个有限解析表达解析求导或 forward AD；禁止用空间有限差分替代。
+
+极限函数为
+
+\[
+\boxed{L=P_DR_{q,q}-P_qR_{q,D}}
+\tag{C24}
+\]
+
+式中，\(L\) 为荷载沿平衡 level set 的切向驻值条件。
+
+主平衡支为
+
+\[
+\boxed{\Gamma_0=\operatorname{Conn}_{(0,0)}(\{R_q=0\}\cap\mathcal A)}
+\tag{C25}
+\]
+
+式中，\(\mathcal A\) 为满足所有 compiler/material/rebar/source gates 的可接受域；\(\Gamma_0\) 为包含无载点的连通分量。
+
+首个 limit-point candidate 必须满足
+
+\[
+\boxed{R_q=0,\qquad L=0}
+\tag{C26}
+\]
+
+并且沿有向 \(\Gamma_0\) 的荷载导数发生
+
+\[
+\boxed{+\rightarrow-}
+\tag{C27}
+\]
+
+式中，式（C27）表示该驻值点确为局部最大值而非最小值。
+
+生产残量门为
+
+\[
+\boxed{R_{norm}\le10^{-5},\qquad |L_{norm}|\le10^{-5}}
+\tag{C28}
+\]
+
+式中，\(R_{norm}\) 和 \(L_{norm}\) 按当前时间戳理论基线中的定义计算。
+
+**重要：只有用同一个 governing general-D15 \(R_q\) 建立的 \(\Gamma_0\) 才具有生产身份。**
+
+---
+
+# 10. current-tangent 强制门
+
+同一个 current material operator 必须产生
+
+\[
+\boxed{\mathbb C_t=\frac{\partial\boldsymbol\sigma}{\partial\mathbf E}}
+\tag{C29}
+\]
+
+式中，\(\mathbb C_t\) 为完整连续 current tangent field。
+
+由于
+
+\[
+\boxed{\mathbf X=\mathbf E_u/\varepsilon_0}
+\tag{C30}
+\]
+
+式中，\(\mathbf X\) 为无量纲等效应变张量；\(\mathbf E_u\) 为等效单轴应变张量，因此方向导数必须满足
+
+\[
+\boxed{\delta\mathbf X=\delta\mathbf E_u/\varepsilon_0}
+\tag{C31}
+\]
+
+式中，\(1/\varepsilon_0\) 为 mandatory tangent scaling；遗漏则 current tangent 尺度错误。
+
+基本 Navier 模态为
+
+\[
+\boxed{\varphi=\sin X\sin Y}
+\tag{C32}
+\]
+
+式中，\(\varphi\) 为与完整代表半波一致的基本稳定微扰形函数。
+
+总模态 current tangent 为
+
+\[
+\boxed{K_Z=K_{Z,c}^{mat}+K_{Z,c}^{geo}+K_{Z,s}^{mat}+K_{Z,s}^{geo}}
+\tag{C33}
+\]
+
+式中，\(K_{Z,c}^{mat}\) 为混凝土 material-tangent 模态刚度；\(K_{Z,c}^{geo}\) 为混凝土 current-stress 几何模态刚度；\(K_{Z,s}^{mat}\) 为钢筋 material-tangent 模态刚度；\(K_{Z,s}^{geo}\) 为钢筋几何模态刚度。四项全部使用 general-D15 exact moments。
+
+Case21 在无载状态的 mandatory regression 为
+
+\[
+\boxed{K_Z(0,0)=\frac{E_0t_p^3\pi^4}{12(1-\nu^2)b^2}}
+\tag{C34}
+\]
+
+式中，\(E_0,t_p,\nu,b\) 均为 Case21 原始输入；该式为方形完整半波、初始线弹性 isotropic degeneration 的解析回归值。
+
+必须先有
+
+```text
+ZERO_STATE_TANGENT_REGRESSION = PASS
+```
+
+才能接受任何有限幅值 state 的 \(K_Z\)。
+
+---
+
+# 11. 极限点与 tangent-loss 的先后控制
+
+在已经由 correct general-D15 建立的同一个 \(\Gamma_0\) 上，计算
+
+\[
+\boxed{K_Z[\Gamma_0(s)]}
+\tag{C35}
+\]
+
+式中，\(s\) 为从无载点开始的有向主支参数。
+
+若直到首个 \(+\to-\) limit-point candidate 之前始终有
+
+\[
+\boxed{K_Z>0}
+\tag{C36}
+\]
+
+式中，正值表示基本 Navier 模态仍保持正 current tangent；则 limit-point candidate 通过 pre-limit tangent gate。
+
+若先出现
+
+\[
+\boxed{K_Z=0}
+\tag{C37}
+\]
+
+且此时尚未到达首个 \(+\to-\) limit point，则
+
+```text
+BLOCKED_AT_PRELIMIT_TANGENT_LOSS
+```
+
+后续极大值不得直接冻结为最终容量。本合同不静默把 Zhou tangent root 升级为第二套 Pu solver；若需赋予其最终承载力身份，必须另有明确治理决定。
+
+若 first \(K_Z=0\) 与 first \(+\to-\) limit point 在冻结 root-repeatability tolerance 内重合，则
+
+```text
+COUPLED_LIMIT_TANGENT_CONTROL
+```
+
+并同时保存 \(R_q,L,K_Z\) 三类残量。
+
+---
+
+# 12. Case21 完整输出清单
+
+只有以下 19 项全部显式输出后，Case21 才允许标记
+
+```text
+CALCULATION_CLOSURE = PASS
+```
+
+清单：
+
+```text
+01 raw Case21 inputs
+02 R10 derived parameters
+03 fresh 49×4 N48 coefficient table
+04 C1/MM material fidelity records
+05 continuous compiler-domain certificate
+06 general-D15 Syy contraction
+07 general-D15 Qq contraction
+08 rebar supported-branch certificate
+09 corrected Rq=0 primary branch Gamma0
+10 first +->- limit candidate + R_norm/L_norm
+11 zero-state K_Z regression
+12 KZ,c^mat
+13 KZ,c^geo
+14 KZ,s^mat
+15 KZ,s^geo
+16 total K_Z along corrected Gamma0
+17 proof whether a K_Z=0 state occurs before the first limit maximum
+18 final theory result freeze
+19 only then experimental comparison
+```
+
+第 06—17 项中的任何一项缺失，都不能把候选荷载称为当前理论最终承载力。
+
+---
+
+# 13. 当前 Case21 执行状态
+
+截至本合同时间：
+
+```text
+ZERO_STATE_TANGENT_REGRESSION = PASS
+GENERAL_D15_Syy_RECHECK = PASS
+GENERAL_D15_Qq_RECHECK = FAIL_AGAINST PREVIOUS CASE21 EXECUTION
+PREVIOUS_CASE21_GAMMA0 = NOT CURRENTLY ACCEPTED
+PREVIOUS_CASE21_LIMIT_LOAD = AUDIT RECORD ONLY
+PRODUCTION_TANGENT_GATE = NOT YET REACHED ON A CORRECTED BRANCH
+CASE21_COMPLETE_CLOSURE = BLOCKED
+```
+
+下一步唯一允许的执行顺序：
+
+```text
+fresh general-D15 Qq
+-> fresh Rq(D,q)
+-> corrected Gamma0 from (0,0)
+-> first +->- limit candidate
+-> K_Z along the same corrected Gamma0
+-> control classification
+-> theory result freeze
+-> experiment-only comparison
+```
+
+不得使用历史 Gauss/Simpson/FE/material-point 结果，也不得用此前 Case21 的任何理论根、荷载或路径作为目标。
+
+====================================================================================================
+FILE: current/workflows/NZ_SCCM_NC_R1_MISSING_SOURCE_CATCHUP_PROMPT_20260812.txt
+SIZE: 14168
+SHA256: c3a969d58c64982ddff159d69a8531d9fcb256a0a2f0e848b6de56a357a0bad0
+ENCODING: utf-8
+LINES: 478
+====================================================================================================
+你现在是“NZ-SCCM NC-R1 后历史补课、遗漏来源补读、最新理论认知与 Case21 独立复算前审计助手”。
+
+本轮不是立即算 Case21。你的第一任务是把上一轮虽然通过了总体认知门、但仍标记为 READ_PARTIAL / NOT_READ 的关键来源真正补读完，同时学习刚刚新增的 NC-R1 极限根生产合同。完成补课并通过自检以后停下，等待我授权 NC-R2。
+
+======================================================================
+零、最高纪律
+======================================================================
+
+在完成本轮补课门之前：
+
+- 不重新算 Case21；
+- 不算 Swartz24；
+- 不改 R10；
+- 不提高 N48；
+- 不改 T-minimax；
+- 不新建 UHPC operator；
