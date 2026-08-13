@@ -1,6 +1,6 @@
 # Case21 history semantic branch
 
-Contains canonical locators for superseded/reproduction/correction Case21 artifacts that remain physically mixed across legacy `current/` and `history/` paths.
+This branch contains canonical locators for superseded/reproduction/correction Case21 artifacts that remain physically mixed across legacy `current/` and `history/` paths.
 
 Key chronological families:
 
@@ -12,5 +12,7 @@ Aug-09 direct/tail/CAS/nested-D15 routes
 -> general-D15 Qq correction
 -> 18:02 final current Case21 root/KZ closure
 ```
+
+High-risk locators in this branch include the old tail/Chebyshev next-step report, the direct-N48 Case21 result, the N48-C1/MM backend-process report, and the general-D15/Qq correction audit.
 
 Historical numerical records are retained; only the current semantic locator/status determines whether they may be used for continuation.
