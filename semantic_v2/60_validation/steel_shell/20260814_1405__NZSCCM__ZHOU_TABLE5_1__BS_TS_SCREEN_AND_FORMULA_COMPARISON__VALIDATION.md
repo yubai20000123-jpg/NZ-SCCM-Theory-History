@@ -67,7 +67,54 @@ CLEAN_YUN_POSTBUCKLING_RESERVE_FROM_TABLE5_1 = NOT_IDENTIFIABLE
 SYNTHETIC_ts_3mm_OR_bs_GT_200 = PROHIBITED
 ```
 
-The previously executed real Table-5.1 reference point (`a=b=6000 mm, h=130 mm, ts=4 mm, fy=355 MPa, fcu=40 MPa`) remains useful as a negative mechanism benchmark: the reduced double-shell nonlinear branch reached a first-load-maximum neighbourhood before the local-shell buckling event.
+The previously executed real Table-5.1 reference point (`a=b=6000 mm, h=130 mm, ts=4 mm, fy=355 MPa, fcu=40 MPa`) remains useful as a negative mechanism benchmark.
+
+### 3.1 Correction: `b_s/t_s >= 56` was only a preliminary SSSS screen
+
+The earlier `~56` threshold came from a preliminary simply-supported local-plate `k=4` check. It is **not** the actual Yun-Lu clamped-like local-mode gate.
+
+For the compiled Yun-Lu Chapter-2 mode at the minimum local aspect ratio `r=1`,
+
+\[
+k_{crx}=\frac{32}{3}.
+\]
+
+Thus for the Table-5.1 steel values `E_s=206000 MPa`, `nu_s=0.30`, `fy=355 MPa`, the actual Yun elastic local-buckling condition is
+
+\[
+\sigma_{cr,Yun}
+=\frac{32}{3}\frac{\pi^2E_s}{12(1-\nu_s^2)}\left(\frac{t_s}{b_s}\right)^2.
+\]
+
+At `b_s/t_s=50`,
+
+\[
+\boxed{\sigma_{cr,Yun}=794.3887\;\mathrm{MPa}},
+\]
+
+so
+
+\[
+\boxed{\sigma_{cr,Yun}/f_y=2.2377>1}.
+\]
+
+The true elastic-buckling-before-yield condition at `r=1` would require approximately
+
+\[
+\boxed{b_s/t_s>74.795}
+\]
+
+for `fy=355 MPa`, not merely `~56`.
+
+Therefore the Table-5.1 source family is not only below the requested heuristic screen; for the actual compiled Yun local mode it is decisively **yield-first**. The clean sequence
+
+\[
+B_s\to S1_{Yun}\to Y_s
+\]
+
+cannot occur in the Table-5.1 `fy=355 MPa` reference without changing source geometry/material data.
+
+This correction does not reopen the locked Yun derivation; it applies its already-proved `k_crx=32/3` value to the real Table-5.1 steel geometry.
 
 ## 4. Missing comparison repaired: Zhou formula replay
 
@@ -171,6 +218,11 @@ Zhou reports for the Table-5.1 four-edge axial-compression elastic-buckling vali
 ```text
 TABLE5_1_SOURCE_SCREEN = PASS
 TABLE5_1_GE56_MATCH = NONE
+TABLE5_1_BS_TS = 50
+YUN_ACTUAL_LOCAL_SIGMA_CR_AT_R1 = 794.3887 MPa
+YUN_ACTUAL_LOCAL_SIGMA_CR_OVER_FY = 2.2377
+YUN_ACTUAL_BS_TS_FOR_SIGMA_CR_LT_FY_AT_FY355 = >74.795
+TABLE5_1_YUN_ORDERING = YIELD_FIRST
 NO_SYNTHETIC_SOURCE_POINT_CREATED = PASS
 ZHOU_EQ3_2_EQ3_3_REDUCED_REPLAY = PASS
 Pyth_reduced = 39.2928 MN
@@ -179,9 +231,11 @@ NZ_over_Zhou_reduced_strength = 0.6644602
 relative_difference = -33.5540 percent
 ZHOU_EQ5_79_SYMBOLIC_COMPARATOR = REGISTERED
 ZHOU_ORIGINAL_EQ5_79_NUMERIC_REPLAY_ON_REDUCED_OBJECT = REJECTED_AS_OBJECT_MIXING
-CLEAN_YUN_POSTBUCKLING_BENCHMARK_FROM_TABLE5_1 = BLOCKED_BY_SOURCE_PARAMETER_SPACE
+CLEAN_YUN_POSTBUCKLING_BENCHMARK_FROM_TABLE5_1 = BLOCKED_BY_SOURCE_PARAMETER_SPACE_AND_YIELD_FIRST_ORDERING
 ```
 
 ## 8. Next source-compliant action
 
-The clean Yun-Lu postbuckling benchmark must now be selected from a different real-source parameter set containing a concrete-constrained steel subpanel with sufficiently large `b_s/t_s` (or otherwise directly satisfying `sigma_cr,el < fy`). The screen must be source-first; no geometry may be reverse-designed merely to force the desired mechanism.
+The clean Yun-Lu postbuckling benchmark must now be selected from a different real-source parameter set containing a concrete-constrained steel subpanel that directly satisfies `sigma_cr,el < fy`. The `b_s/t_s >= ~56` rule is retained only as the historical preliminary SSSS screen and is not used as the final Yun gate.
+
+The screen must be source-first; no geometry may be reverse-designed merely to force the desired mechanism.
