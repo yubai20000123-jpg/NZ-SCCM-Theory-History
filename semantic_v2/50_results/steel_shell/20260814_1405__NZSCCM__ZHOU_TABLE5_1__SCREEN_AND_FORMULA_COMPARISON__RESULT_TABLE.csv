@@ -1,7 +1,7 @@
 record_type,source_group,ns,ls_mm,h_mm,ts_mm,fy_MPa,fcu_MPa,a_mm,b_mm,bs_over_ts,passes_ge56,yun_sigma_cr_r1_MPa,yun_sigma_cr_over_fy,yun_ordering,status,Pyth_reduced_MN,P_NZ_diag_MN,NZ_over_Pyth_reduced,relative_diff_pct,notes
-SOURCE_SCREEN,1,30,200,100-130,4,235-460,40,6000,6000,50,NO,,,PARAMETER_DEPENDENT,SCREENED_OUT,,,,,,Table 5.1 group 1; all points fail requested >=56 heuristic screen
-SOURCE_SCREEN,2,30,200,100-130,4,355,40-60,6000,6000,50,NO,794.3886717,2.237714568,YIELD_FIRST,SCREENED_OUT,,,,,,Table 5.1 group 2; actual Yun r=1 gate shown for fy=355 MPa
+SOURCE_SCREEN,1,30,200,100-130,4,235-460,40,6000,6000,50,NO,794.3886717,1.726931895-3.380377326,YIELD_FIRST,SCREENED_OUT,,,,,,Even at maximum source fy=460 MPa Yun sigma_cr remains above yield; all group-1 points are yield-first
+SOURCE_SCREEN,2,30,200,100-130,4,355,40-60,6000,6000,50,NO,794.3886717,2.237714568,YIELD_FIRST,SCREENED_OUT,,,,,,Table 5.1 group 2
 SOURCE_SCREEN,3,40,200,100-200,4,355,40,6000,8000,50,NO,794.3886717,2.237714568,YIELD_FIRST,SCREENED_OUT,,,,,,Table 5.1 group 3
 SOURCE_SCREEN,4,10-60,200,100-130,4,355,40,3000-9000,2000-12000,50,NO,794.3886717,2.237714568,YIELD_FIRST,SCREENED_OUT,,,,,,Table 5.1 group 4
 REDUCED_REFERENCE,1_or_2,30,200,130,4,355,40,6000,6000,50,NO,794.3886717,2.237714568,YIELD_FIRST,NEGATIVE_MECHANISM_BENCHMARK,39.2928,26.1085,0.6644601556,-33.55398444,Zhou Eq3-2/3-3 replayed on same reduced two-shell section; NZ value is previous diagnostic branch-peak neighbourhood not frozen production Pu
-GATE_SUMMARY,ALL,,,,,,,,,50,NO,,,YIELD_FIRST_FOR_FY355,EMPTY_SOURCE_SET,,,,,,No Table 5.1 point satisfies bs/ts >=56; actual Yun gate for fy355 would require bs/ts >74.795 at r=1; no synthetic source point created
+GATE_SUMMARY,ALL,,,,,,,,,50,NO,794.3886717,>1.7269,YIELD_FIRST_ALL_TABLE5_1,EMPTY_SOURCE_SET,,,,,,No Table 5.1 point satisfies bs/ts >=56; with Yun kcrx=32/3 even fy=460 MPa is below sigma_cr; no clean B_s -> S1_Yun -> Y_s source case exists in Table 5.1
