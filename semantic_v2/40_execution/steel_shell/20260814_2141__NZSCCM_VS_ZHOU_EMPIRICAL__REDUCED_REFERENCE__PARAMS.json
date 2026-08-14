@@ -1,0 +1,83 @@
+{
+  "timestamp": "2026-08-14T21:41:00+08:00",
+  "scope": "same reduced four-edge simply-supported concrete + two faceplate steel-shell reference object",
+  "governance": {
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "structural_calibration": false,
+    "experimental_load_used_for_tuning": false
+  },
+  "geometry_mm": {
+    "a": 6000.0,
+    "b": 6000.0,
+    "h_total": 130.0,
+    "t_steel_each_face": 4.0,
+    "concrete_core_thickness": 122.0,
+    "Ac_mm2": 732000.0,
+    "As_total_mm2": 48000.0,
+    "internal_web_steel_bearing_term": 0.0
+  },
+  "materials": {
+    "steel": {
+      "fy_MPa": 355.0,
+      "Es_MPa": 206000.0,
+      "ideal_EP_reduced_reference_rule": "elastic Et=Es; first yield and continuing ideal-plastic loading Et=0 while steel stress remains strength-capped"
+    },
+    "ordinary_concrete": {
+      "fcu_MPa": 40.0,
+      "fc_prime_factor": 0.76,
+      "fc_prime_MPa": 30.4,
+      "Ec_MPa": 32500.0,
+      "NZ_SCCM_material_identity": "frozen R10 normalized ordinary-concrete current operator; no structural calibration"
+    }
+  },
+  "section_strength_reference": {
+    "Psteel0_MN": 17.04,
+    "Pconcrete0_MN": 22.2528,
+    "Pyth_reduced_MN": 39.2928
+  },
+  "reduced_elastic_stability_diagnostic": {
+    "Ic_per_unit_width_mm3": 151320.666666667,
+    "Is_per_unit_width_mm3": 31762.666666667,
+    "Dc_Nmm": 4917921666.667,
+    "Ds_Nmm": 6543109333.333,
+    "D_EI_Nmm": 11461031000.0,
+    "Pcr0_MN": 75.4105613324,
+    "status": "diagnostic isotropic square degeneration; source-exact reduced-object H not claimed closed"
+  },
+  "NZ_SCCM": {
+    "parent_chain": "R10 -> N48-C1/MM -> Cayley-Hamilton -> Nguyen second-order complete halfwave -> general D15 -> P(D,q), Rq(D,q), L(D,q)",
+    "steel_shell_extension": "continuous finite-thickness two-faceplate shell replacing rebar contribution",
+    "P_NZ_MN": 26.1085,
+    "P_NZ_over_Pyth": 0.6644601555501263,
+    "result_identity": "historical same-object diagnostic branch-peak neighbourhood retained in 20260814_1606 checkpoint",
+    "production_Rq0_L0_root_certified": false,
+    "persisted_D_q_state_available": false,
+    "warning": "Do not relabel 26.1085 MN as a newly certified production Rq=0+L=0 root. It is the currently persisted numerical NZ-SCCM comparator for this reduced object."
+  },
+  "ZHOU_EMPIRICAL_EQ_5_87_5_88": {
+    "source": "Zhou Siming dissertation, Chapter 5, four-edge simply-supported axial-compression stability curve, Eqs. (5-87)-(5-88)",
+    "lambda_n_definition": "sqrt(Pyth/Pcr)",
+    "lambda_n": 0.7218390986567956,
+    "Phi_N_branch": "0.454 + 0.192*lambda_n + 0.416*lambda_n^2 because lambda_n <= 1.0",
+    "Phi_N": 0.8093506076315613,
+    "phi_N_branch": "1/(Phi_N + sqrt(Phi_N^2-lambda_n^2)) because lambda_n > 0.55",
+    "phi_N": 0.8507696921499676,
+    "Pu_Zhou_empirical_MN": 33.429123359710246,
+    "Pcr_input_status": "uses the same reduced isotropic diagnostic Pcr0=75.4105613324 MN"
+  },
+  "comparison": {
+    "NZ_minus_Zhou_MN": -7.320623359710247,
+    "NZ_over_Zhou": 0.7810106091943387,
+    "relative_error_NZ_vs_Zhou_percent": -21.898939080566127,
+    "absolute_relative_difference_percent": 21.898939080566127,
+    "interpretation": "NZ-SCCM diagnostic result is 21.90% below the Zhou empirical comparator under the same reduced-object diagnostic Pcr convention. This does not presently validate high accuracy; it identifies a material discrepancy that must be resolved by the authorized full connected D-q yield-crossing calculation."
+  },
+  "source_files": {
+    "NZ_current_theory": "current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_ANALYTIC_LIMIT_TANGENT_UNIFIED_THEORY_20260812_1734.md",
+    "steel_shell_extension": "semantic_v2/20_theory/nc_steel_shell_panel/20260813_1834__NZSCCM__NC_STEEL_SHELL_PANEL__REBAR_REPLACEMENT_GENERAL_D15__THEORY_EXTENSION_CONTRACT.md",
+    "NZ_diagnostic_checkpoint": "semantic_v2/40_execution/steel_shell/20260814_1606__NZSCCM__ZHOU_REDUCED__RIGIDITY_AND_STEEL_TANGENT_LOSS_DIAGNOSTIC__EXECUTION_CHECKPOINT.md",
+    "earlier_reduced_comparison": "semantic_v2/40_execution/steel_shell/20260814_1405__NZSCCM__ZHOU_TABLE5_1__SCREEN_AND_COMPARISON__EXECUTION_CHECKPOINT.md"
+  }
+}
