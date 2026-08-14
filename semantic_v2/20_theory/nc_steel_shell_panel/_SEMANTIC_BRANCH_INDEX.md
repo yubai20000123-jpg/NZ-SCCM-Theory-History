@@ -193,7 +193,7 @@ SUN_A5_FULL_Du_qu_Pu = NOT RELEASED
 
 The full root is withheld because A5 still lacks a source-frozen R10 `eps0` input and a source-consistent yield-first local-buckling closure under ideal EP; no experimental load is used to fill either gap.
 
-## Zhou Table 5.1 source screen — COMPLETE / EMPTY >=56 SET
+## Zhou Table 5.1 source screen — COMPLETE / NO CLEAN YUN CASE
 
 Validation:
 
@@ -210,16 +210,28 @@ Result table:
 Zhou Table 5.1 fixes `l_s=200 mm` and `t_s=4 mm` in all four parameter groups. Therefore every Table-5.1 point has
 
 \[
-b_s/t_s=l_s/t_s=50,
+b_s/t_s=l_s/t_s=50.
 \]
 
-and the requested `b_s/t_s >= ~56` source screen is empty.
+The requested historical `b_s/t_s >= ~56` screen is empty. More importantly, `~56` came from a preliminary SSSS `k=4` check and is not the actual Yun-Lu mechanism gate.
+
+For the compiled Yun minimum local mode `r=1`, `k_crx=32/3`. At the Table-5.1 `fy=355 MPa`, `E_s=206000 MPa`, `nu_s=0.30` reference:
+
+```text
+sigma_cr_Yun = 794.3886717 MPa
+sigma_cr_Yun / fy = 2.237714568
+actual b_s/t_s required for sigma_cr_Yun < fy at r=1 = >74.795
+ordering = YIELD_FIRST
+```
+
+Therefore Table 5.1 cannot supply a clean `B_s -> S1_Yun -> Y_s` source case.
 
 ```text
 ZHOU_TABLE5_1_BS_TS_GE56_SCREEN = EMPTY
 ZHOU_TABLE5_1_MAX_BS_TS = 50
-NO_SOURCE_POINT_IN_TABLE5_1_CAN_SATISFY_REQUESTED_SCREEN = YES
-NEW_YUN_RUN_WITH_TABLE5_1_BS_TS_GE56 = NOT_PERFORMED_NO_SOURCE_CASE
+ZHOU_TABLE5_1_YUN_ACTUAL_ORDERING_FY355 = YIELD_FIRST
+NO_SOURCE_POINT_IN_TABLE5_1_CAN_SATISFY_CLEAN_YUN_GATE = YES
+NEW_CLEAN_YUN_RUN_FROM_TABLE5_1 = NOT_PERFORMED_NO_SOURCE_CASE
 SYNTHETIC_SOURCE_GEOMETRY = NO
 ```
 
@@ -240,7 +252,7 @@ Zhou Eq.(5-79) remains registered as the elastic four-edge `Dx-Dy-H` comparator.
 
 Two distinct next calculations remain:
 
-1. **Clean Yun postbuckling benchmark:** Table 5.1 cannot supply it. Search another real-source panel whose source geometry directly satisfies `sigma_cr_el < fy` (the `b_s/t_s >= ~56` rule is only a screen), then execute `B_s -> S1 -> Y_s -> global L/KZ` using the unchanged analytic branch.
+1. **Clean Yun postbuckling benchmark:** Table 5.1 cannot supply it. Search another real-source panel whose source geometry directly satisfies `sigma_cr_el < fy`; then execute `B_s -> S1 -> Y_s -> global L/KZ` using the unchanged analytic branch.
 2. **Sun A5 production benchmark:** close the yield-first local branch plus the missing A5 R10 material input, then solve A5 without forcing an elastic Yun branch.
 
 No reopening of the locked ordinary-concrete mother theory is authorized.
