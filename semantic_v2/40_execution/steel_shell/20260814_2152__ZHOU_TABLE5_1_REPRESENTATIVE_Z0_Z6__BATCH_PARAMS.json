@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-08-14T21:52:00+08:00",
+  "scope": "Seven representative parameter combinations selected within Zhou Table 5.1 ranges; these are representative calculation cases, not claimed literal FE-row specimen IDs.",
+  "same_object_rule": "For NZ-SCCM/Zhou comparison use reduced concrete core + two outer steel faceplates; internal web steel bearing term deleted on both sides.",
+  "governance": {
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "structural_calibration": false,
+    "experimental_load_used_for_tuning": false,
+    "no_cross_case_scaling_of_NZ_load": true
+  },
+  "common": {
+    "ls_mm": 200.0,
+    "ts_each_face_mm": 4.0,
+    "Es_MPa": 206000.0,
+    "fc_prime_factor": 0.76,
+    "R10_kappa_frozen": 2.000512953368,
+    "R10_rho": 0.1,
+    "R10_xcr": 0.049987179454,
+    "R10_eta": 0.002499358973,
+    "Zhou_empirical_formula": "Eqs. 5-87 to 5-88",
+    "Zhou_lambda": "sqrt(Pyth/Pcr)",
+    "reduced_isotropic_diagnostic_Pcr": "min over integer whole-wall halfwave number m of b*D_EI*(alpha^2+beta^2)^2/beta^2, alpha=pi/b, beta=m*pi/a; representative NZ halfwave ell=a/m"
+  },
+  "cases": [
+    {
+      "case": "Z0", "role": "baseline", "ns": 30, "a_mm": 6000, "b_mm": 6000, "h_mm": 130, "fy_MPa": 355, "fcu_MPa": 40,
+      "Ec_MPa": 32500.0, "fc_prime_MPa": 30.4, "tc_mm": 122, "Ac_mm2": 732000, "As_mm2": 48000,
+      "Pc0_MN": 22.2528, "Ps0_MN": 17.04, "Pyth_MN": 39.2928,
+      "R10_eps0": 0.0018712490394580678, "steel_eps_y": 0.0017233009708737864, "eps_y_over_R10_eps0": 0.9209361953088143,
+      "D_EI_Nmm": 11461031000.0, "m_star": 1, "ell_mm": 6000.0, "Pcr_MN": 75.410561332414,
+      "lambda_n": 0.721839098657, "Phi_N": 0.809350607632, "phi_N": 0.850769692150, "Pu_Zhou_empirical_MN": 33.429123359711,
+      "NZ_SCCM_Pu_MN": 26.1085, "NZ_result_identity": "persisted historical diagnostic branch-peak neighbourhood, not newly certified production Rq=0+L=0 root"
+    },
+    {
+      "case": "Z1", "role": "low-fy + thin wall extreme", "ns": 30, "a_mm": 6000, "b_mm": 6000, "h_mm": 100, "fy_MPa": 235, "fcu_MPa": 40,
+      "Ec_MPa": 32500.0, "fc_prime_MPa": 30.4, "tc_mm": 92, "Ac_mm2": 552000, "As_mm2": 48000,
+      "Pc0_MN": 16.7808, "Ps0_MN": 11.28, "Pyth_MN": 28.0608,
+      "R10_eps0": 0.0018712490394580678, "steel_eps_y": 0.0011407766990291263, "eps_y_over_R10_eps0": 0.6096338194297786,
+      "D_EI_Nmm": 5908136000.0, "m_star": 1, "ell_mm": 6000.0, "Pcr_MN": 38.873976711890,
+      "lambda_n": 0.849611806957, "Phi_N": 0.917410999505, "phi_N": 0.791429581206, "Pu_Zhou_empirical_MN": 22.208147192292,
+      "NZ_SCCM_Pu_MN": null, "NZ_result_identity": "NOT_YET_CALCULATED; no legal persisted value found; no scaling/fabrication used"
+    },
+    {
+      "case": "Z2", "role": "high-fy extreme", "ns": 30, "a_mm": 6000, "b_mm": 6000, "h_mm": 130, "fy_MPa": 460, "fcu_MPa": 40,
+      "Ec_MPa": 32500.0, "fc_prime_MPa": 30.4, "tc_mm": 122, "Ac_mm2": 732000, "As_mm2": 48000,
+      "Pc0_MN": 22.2528, "Ps0_MN": 22.08, "Pyth_MN": 44.3328,
+      "R10_eps0": 0.0018712490394580678, "steel_eps_y": 0.002233009708737864, "eps_y_over_R10_eps0": 1.1933257742029708,
+      "D_EI_Nmm": 11461031000.0, "m_star": 1, "ell_mm": 6000.0, "Pcr_MN": 75.410561332414,
+      "lambda_n": 0.766737128467, "Phi_N": 0.845774031520, "phi_N": 0.831412441902, "Pu_Zhou_empirical_MN": 36.858841504351,
+      "NZ_SCCM_Pu_MN": null, "NZ_result_identity": "NOT_YET_CALCULATED; no legal persisted value found; no scaling/fabrication used"
+    },
+    {
+      "case": "Z3", "role": "high-concrete-strength extreme", "ns": 30, "a_mm": 6000, "b_mm": 6000, "h_mm": 130, "fy_MPa": 355, "fcu_MPa": 60,
+      "Ec_MPa": 35992.801439712057, "fc_prime_MPa": 45.6, "tc_mm": 122, "Ac_mm2": 732000, "As_mm2": 48000,
+      "Pc0_MN": 33.3792, "Ps0_MN": 17.04, "Pyth_MN": 50.4192,
+      "R10_eps0": 0.0025344898708809867, "steel_eps_y": 0.0017233009708737864, "eps_y_over_R10_eps0": 0.6799399716183393,
+      "D_EI_Nmm": 11989564042.39, "m_star": 1, "ell_mm": 6000.0, "Pcr_MN": 78.888169359953,
+      "lambda_n": 0.799451342497, "Phi_N": 0.873369596551, "phi_N": 0.816318890993, "Pu_Zhou_empirical_MN": 41.158145428775,
+      "NZ_SCCM_Pu_MN": null, "NZ_result_identity": "NOT_YET_CALCULATED; no legal persisted value found; no scaling/fabrication used"
+    },
+    {
+      "case": "Z4", "role": "large-thickness + wide wall", "ns": 40, "a_mm": 6000, "b_mm": 8000, "h_mm": 200, "fy_MPa": 355, "fcu_MPa": 40,
+      "Ec_MPa": 32500.0, "fc_prime_MPa": 30.4, "tc_mm": 192, "Ac_mm2": 1536000, "As_mm2": 64000,
+      "Pc0_MN": 46.6944, "Ps0_MN": 22.72, "Pyth_MN": 69.4144,
+      "R10_eps0": 0.0018712490394580678, "steel_eps_y": 0.0017233009708737864, "eps_y_over_R10_eps0": 0.9209361953088143,
+      "D_EI_Nmm": 34998869333.33, "m_star": 1, "ell_mm": 6000.0, "Pcr_MN": 187.405053605370,
+      "lambda_n": 0.608603069007, "Phi_N": 0.724937230621, "phi_N": 0.893806270760, "Pu_Zhou_empirical_MN": 62.043026001061,
+      "NZ_SCCM_Pu_MN": null, "NZ_result_identity": "NOT_YET_CALCULATED; no legal persisted value found; no scaling/fabrication used"
+    },
+    {
+      "case": "Z5", "role": "compact geometry extreme", "ns": 10, "a_mm": 3000, "b_mm": 2000, "h_mm": 130, "fy_MPa": 355, "fcu_MPa": 40,
+      "Ec_MPa": 32500.0, "fc_prime_MPa": 30.4, "tc_mm": 122, "Ac_mm2": 244000, "As_mm2": 16000,
+      "Pc0_MN": 7.4176, "Ps0_MN": 5.68, "Pyth_MN": 13.0976,
+      "R10_eps0": 0.0018712490394580678, "steel_eps_y": 0.0017233009708737864, "eps_y_over_R10_eps0": 0.9209361953088143,
+      "D_EI_Nmm": 11461031000.0, "m_star": 2, "ell_mm": 1500.0, "Pcr_MN": 245.477087670620,
+      "lambda_n": 0.230988511570, "Phi_N": 0.520545762292, "phi_N": 1.0, "Pu_Zhou_empirical_MN": 13.0976,
+      "NZ_SCCM_Pu_MN": null, "NZ_result_identity": "NOT_YET_CALCULATED; no legal persisted value found; no scaling/fabrication used"
+    },
+    {
+      "case": "Z6", "role": "wide/slender geometry extreme", "ns": 60, "a_mm": 9000, "b_mm": 12000, "h_mm": 130, "fy_MPa": 355, "fcu_MPa": 40,
+      "Ec_MPa": 32500.0, "fc_prime_MPa": 30.4, "tc_mm": 122, "Ac_mm2": 1464000, "As_mm2": 96000,
+      "Pc0_MN": 44.5056, "Ps0_MN": 34.08, "Pyth_MN": 78.5856,
+      "R10_eps0": 0.0018712490394580678, "steel_eps_y": 0.0017233009708737864, "eps_y_over_R10_eps0": 0.9209361953088143,
+      "D_EI_Nmm": 11461031000.0, "m_star": 1, "ell_mm": 9000.0, "Pcr_MN": 40.912847945103,
+      "lambda_n": 1.385931069421, "Phi_N": 1.425016676458, "phi_N": 0.569320623311, "Pu_Zhou_empirical_MN": 44.740402775241,
+      "NZ_SCCM_Pu_MN": null, "NZ_result_identity": "NOT_YET_CALCULATED; no legal persisted value found; no scaling/fabrication used"
+    }
+  ]
+}
