@@ -193,11 +193,54 @@ SUN_A5_FULL_Du_qu_Pu = NOT RELEASED
 
 The full root is withheld because A5 still lacks a source-frozen R10 `eps0` input and a source-consistent yield-first local-buckling closure under ideal EP; no experimental load is used to fill either gap.
 
+## Zhou Table 5.1 source screen — COMPLETE / EMPTY >=56 SET
+
+Validation:
+
+- `semantic_v2/60_validation/steel_shell/20260814_1405__NZSCCM__ZHOU_TABLE5_1__BS_TS_SCREEN_AND_FORMULA_COMPARISON__VALIDATION.md`
+
+Execution checkpoint:
+
+- `semantic_v2/40_execution/steel_shell/20260814_1405__NZSCCM__ZHOU_TABLE5_1__SCREEN_AND_COMPARISON__EXECUTION_CHECKPOINT.md`
+
+Result table:
+
+- `semantic_v2/50_results/steel_shell/20260814_1405__NZSCCM__ZHOU_TABLE5_1__SCREEN_AND_FORMULA_COMPARISON__RESULT_TABLE.csv`
+
+Zhou Table 5.1 fixes `l_s=200 mm` and `t_s=4 mm` in all four parameter groups. Therefore every Table-5.1 point has
+
+\[
+b_s/t_s=l_s/t_s=50,
+\]
+
+and the requested `b_s/t_s >= ~56` source screen is empty.
+
+```text
+ZHOU_TABLE5_1_BS_TS_GE56_SCREEN = EMPTY
+ZHOU_TABLE5_1_MAX_BS_TS = 50
+NO_SOURCE_POINT_IN_TABLE5_1_CAN_SATISFY_REQUESTED_SCREEN = YES
+NEW_YUN_RUN_WITH_TABLE5_1_BS_TS_GE56 = NOT_PERFORMED_NO_SOURCE_CASE
+SYNTHETIC_SOURCE_GEOMETRY = NO
+```
+
+The missing Zhou formula comparison for the preceding reduced `a=b=6000 mm, h=130 mm, ts=4 mm, fy=355 MPa, fcu=40 MPa` reference was repaired using Zhou Eq.(3-2)/(3-3) on the **same reduced two-shell object**:
+
+```text
+Pyth_reduced_Zhou_Eq3_2 = 39.2928 MN
+previous_NZ_branch_peak_diagnostic = 26.1085 MN
+NZ_over_Zhou_reduced_strength = 0.6644601556
+relative_difference = -33.55398444 percent
+```
+
+Identity boundary: `Pyth_reduced` is not the original full multi-cell Zhou section value because internal web steel remains removed by the current project reduction. The prior `26.1085 MN` value is still a diagnostic first-load-maximum neighbourhood, not a frozen production `Rq=0 + L=0` root.
+
+Zhou Eq.(5-79) remains registered as the elastic four-edge `Dx-Dy-H` comparator. Original MCFSTW `Dy/Dxy/Dmu/H` terms must not be mixed into the reduced double-shell object.
+
 ## Current next gate
 
-Two distinct next calculations are now separated:
+Two distinct next calculations remain:
 
-1. **Clean Yun postbuckling benchmark:** choose a source/design panel with `sigma_cr_el < fy`, then execute `B_s -> S1 -> Y_s -> global L/KZ` and solve the full concrete+shell branch.
+1. **Clean Yun postbuckling benchmark:** Table 5.1 cannot supply it. Search another real-source panel whose source geometry directly satisfies `sigma_cr_el < fy` (the `b_s/t_s >= ~56` rule is only a screen), then execute `B_s -> S1 -> Y_s -> global L/KZ` using the unchanged analytic branch.
 2. **Sun A5 production benchmark:** close the yield-first local branch plus the missing A5 R10 material input, then solve A5 without forcing an elastic Yun branch.
 
 No reopening of the locked ordinary-concrete mother theory is authorized.
