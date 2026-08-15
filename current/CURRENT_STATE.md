@@ -1,23 +1,24 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 22:20 +08:00  
+**Updated:** 2026-08-15 22:35 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260815_2220__NZSCCM__PROJECT__CURRENT_STATE_UPDATED_FVK_THEORY_AND_EXPANSION_AUDIT__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260815_2235__NZSCCM__PROJECT__CURRENT_STATE_D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__SEMANTIC_INDEX.md`
 
-## 22:20 updated augmented FvK theory + expansion audit
+## 22:35 D=.50 directional moment-first certificate
 
-No new Pu and no D>0.50 continuation were executed.
+This stage executed **no Pu and no D>.50 continuation**.
 
-Frozen parent identity remains:
+Frozen identity remains:
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
 Nguyen second-order kinematics
 R10 / N48-C1-MM / Cayley-Hamilton / General D15 unchanged
 A0=a/500
+membrane m=[c,p20,p02]^T
 N_formal_spatial_sampling=0
 N_formal_spatial_quadrature=0
 N_formal_spatial_subdomains=1
@@ -25,127 +26,107 @@ no Zhou/Winter calibration
 no out-of-plane multimode production expansion
 ```
 
-Current generalized coordinates:
+### Directional moment-first implementation
+
+The current evaluator retains the same Cayley-Hamilton material pair `S=A I+B Y`, but contracts A/B directly with the low-order q,c,p20,p02 virtual-strain weights using exact Chebyshev product moments. It no longer materializes full `Sxx,Syy` and full stress-direction product fields for every residual.
+
+The formal structural integral remains General D15. No spatial quadrature was introduced.
+
+### Parent reproduction at inherited tolerance
+
+At `D=.50`, `q=.007244278905`, `c=-.0154563484942`, `p20=p02=0`, concrete pruning `7e-7`:
 
 ```text
-loading: D
-out-of-plane: q
-membrane: m=[c,p20,p02]^T
+P=37.3451401318 MN
+Rq=+0.0013815858 MN mm
+Rc=+0.0000996113 MN mm
+R20=-19.4868584406 MN mm
+R02=-23.4734835682 MN mm
 ```
 
-Current fixed-D equations:
+Thus the old q+c state remains non-stationary in the FvK membrane directions.
 
-```text
-Rq=0
-Rc=0
-R20=0
-R02=0
-```
+### Parent-tolerance augmented certificate
 
-with the intended flat membrane condensation
-
-```text
-Jmm=d[Rc,R20,R02]/d[c,p20,p02]   # 3x3
-Lcond=Rq,q - Rq,m Jmm^{-1} Jm,q.
-```
-
-### Current D=.50 engineering near-equilibrium
+At the same inherited `7e-7` concrete pruning tolerance:
 
 ```text
 D=.50
-q=.008002
-c=-.077622
-p20=-.060657
-p02=.165133
-P=37.69591555 MN
-Pc=21.88328801 MN
-Ps=15.81262754 MN
-Rq=-3.06330915 MN mm
-Rc=+.01005384 MN mm
-R20=-.05300744 MN mm
-R02=-.02373140 MN mm
+q=0.008003063422252722
+c=-0.07766034129851779
+p20=-0.06065823792663306
+p02=0.16525678113314005
+P=37.6899290259 MN
+Pc=21.8783795851 MN
+Ps=15.8115494408 MN
+Rq=-0.3465589605 MN mm
+Rc=-0.0055395219 MN mm
+R20=+0.0076892296 MN mm
+R02=+0.0024794016 MN mm
 ```
 
-This is not a strict same-expression certificate and not Pu.
-
-## Expansion audit result
-
-The physical/theoretical system has **not** undergone uncontrolled expansion.
+Residual/internal-cancellation ratios:
 
 ```text
-PHYSICAL_THEORY_DOF_INFLATION = CONTROLLED_MINIMUM
-KINEMATIC_POLYNOMIAL_DEGREE_INFLATION = NO
-LOW_ORDER_INVARIANT_SUPPORT_EXPLOSION = NO
-FORMAL_D15_INTEGRATION_CHANGE = NO
-DENSE_HIGH_ORDER_BOUNDING_BOX_FILL_IN = YES
+Rq  =0.00581744%
+Rc  =0.02082154%
+R20 =0.09636847%
+R02 =0.00986352%
 ```
 
-Exact low-order support comparison:
+Locked status:
 
 ```text
-                D+q+c   augmented
-ex terms           4       4
-ey terms           6       7
-gamma^2 terms     12      12
-Exx/Eyy terms      7       7
-I1 terms           7       7
-I2 terms          25      25
-K1 sparse          7       7
-K2 sparse         25      25
+D050_PARENT_TOLERANCE_DIRECTIONAL_EQUILIBRIUM_CERTIFICATE = PASS
+engineering gate = max normalized residual < 0.1%
+THEOREM_LEVEL_EXACT_ZERO_RESIDUAL = NOT CLAIMED
 ```
 
-Degree boxes are unchanged:
+Current-runtime certificate evaluation at `7e-7` completed in about `36.7 s`; the previous augmented full-stress implementation had exceeded the 90 s execution window near this tolerance. The D=.50 representation/runtime gate is therefore cleared for the current engineering gate, although dense `buildS(K1,K2)` fill-in still remains internally.
+
+### Why the load has not jumped dramatically
+
+The valid comparison is at the **same D=.50**:
 
 ```text
-ex,ey,I1   : (2,2,1)
-gamma^2,I2 : (4,4,2)
-K1 Cheb    : 3x3x2, nnz 7
-K2 Cheb    : 5x5x3, nnz 27
+parent D+q+c            P=37.3451401318 MN
+augmented certificate   P=37.6899290259 MN
+Delta P=+0.3447888941 MN = +0.92325%
 ```
 
-The new diagnosis is that the inherited dense N48 implementation suffers **numerical tail / dense rectangular bounding-box fill-in**. `trim(A,tol)` performs axis-tail trimming, not element-wise sparse pruning. Larger high-order tails therefore keep longer dense boxes alive and make the Laurent/FFT convolution backend expensive even though the exact low-order polynomial family did not expand.
-
-The 21:53 wording “dense coefficient support grows” is retained as historical provenance but is now refined to this more precise representation diagnosis.
-
-### Jacobian scaling audit
-
-Stored raw 4x4 finite-difference condition number:
+Internally the redistribution is larger:
 
 ```text
-cond(J)=1.7401e4
+Pc: +0.80833 MN
+Ps: -0.46354 MN
 ```
 
-but simple rescaling gives approximately
+so concrete and steel changes partially cancel in the global axial resultant. The historical old reduced-branch `Pu≈37.50943 MN` is a peak on another state/path and is not the same quantity as the present fixed-D checkpoint. Its numerical closeness to `37.69 MN` is not evidence that the FvK correction has no effect.
 
-```text
-row normalized                    406.82
-column normalized                 358.80
-row+column normalized              83.33
-coordinate-scale + row normalized 66.58
-```
-
-so a physically nearly singular equilibrium system is not established by the raw condition number.
+Corrected Pu remains **NOT SOLVED**.
 
 ## Current next execution
 
 ```text
-DIRECTIONAL_MOMENT_FIRST_AUGMENTED_MEMBRANE_EVALUATOR_AT_D050
+D055_AUGMENTED_DIRECTIONAL_MOMENT_FIRST_CONNECTED_CHECKPOINT
 ```
 
-Only evaluation ordering/representation may change. The physical q,c,p20,p02 system, current material operator and General D15 formal integration remain frozen. D continuation and Pu remain blocked until D=.50 is reproduced/certified with the directional moment-first evaluator.
+Use the certified D=.50 q,c,p20,p02 state as the connected initial state. Only after a connected D-path is rebuilt may a new Pu be identified.
 
-## 22:20 artifacts
+## 22:35 artifacts
 
-- `semantic_v2/10_governance/20260815_2220__NZSCCM__AUGMENTED_FVK_THEORY_AND_EXPANSION_AUDIT__LOCK.md`
-- `semantic_v2/20_theory/nc_steel_shell_panel/20260815_2220__NZSCCM__UPDATED_SINGLE_HALFWAVE_AUGMENTED_FVK_POSTBUCKLING_THEORY__THEORY.md`
-- `semantic_v2/40_execution/steel_shell/20260815_2220__NZSCCM__UPDATED_FVK_THEORY_EXPANSION_AUDIT__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260815_2220__NZSCCM__AUGMENTED_FVK_EXPANSION_AUDIT__REPRO.py`
-- `semantic_v2/50_results/steel_shell/20260815_2220__NZSCCM__AUGMENTED_FVK_EXPANSION_AUDIT__RESULT.csv`
-- `semantic_v2/60_validation/steel_shell/20260815_2220__NZSCCM__UPDATED_FVK_THEORY_AND_EXPANSION__AUDIT.md`
+- `semantic_v2/10_governance/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__LOCK.md`
+- `semantic_v2/20_theory/nc_steel_shell_panel/20260815_2235__NZSCCM__DIRECTIONAL_MOMENT_FIRST_AUGMENTED_FVK_RESIDUAL_CONTRACTION__THEORY.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__TOLERANCE_CONVERGENCE.csv`
+- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__REPRO.py`
+- `semantic_v2/50_results/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__RESULT.csv`
 
 ## Parent stages retained
 
-- 21:53 fixed-D=.50 augmented membrane near-equilibrium/runtime gate
+- 22:20 updated FvK theory and expansion audit
+- 21:53 fixed-D augmented near-equilibrium/runtime gate
 - 21:44 R20/R02 projection gate
 - 21:34 minimum FvK membrane completion
-- 21:18 Nguyen/FvK postbuckling membrane compatibility audit
+- 21:18 Nguyen/FvK membrane compatibility audit
