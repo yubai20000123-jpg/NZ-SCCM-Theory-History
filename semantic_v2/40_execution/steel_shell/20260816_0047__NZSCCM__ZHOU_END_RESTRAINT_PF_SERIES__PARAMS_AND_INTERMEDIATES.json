@@ -1,0 +1,122 @@
+{
+  "timestamp": "2026-08-16T00:47:00+08:00",
+  "task": "ZHOU_MIXED_END_RESTRAINT_HOMOGENEOUS_BIHARMONIC_SERIES_ZERO_QUADRATURE",
+  "formal_spatial_identity": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "prohibited": ["Gauss", "Simpson", "adaptive quadrature", "spatial collocation", "spatial cells", "material-point grid"]
+  },
+  "source_boundary": {
+    "loaded_top": {"ux": 0, "uy": "unset", "uz": 0},
+    "loaded_bottom": {"ux": 0, "uy": 0, "uz": 0},
+    "lateral_left_right": {"ux": "unset", "uy": "unset", "uz": 0},
+    "current_gate_scope": "transverse loaded-end ux=0 correction with lateral in-plane freedom"
+  },
+  "centered_coordinate": {
+    "c": "b/2",
+    "t": "(x-b/2)/c",
+    "domain": [-1, 1]
+  },
+  "pf_even_family": {
+    "F": "sin(lambda)*cos(lambda*t)-t*cos(lambda)*sin(lambda*t)",
+    "eigen_equation": "sin(2*lambda)+2*lambda=0",
+    "side_conditions": ["F(+/-1)=0", "F'(+/-1)=0"],
+    "finite_length_factor": "Y(y)=cosh(lambda*(y-a/2)/c)/cosh(lambda*a/(2*c))",
+    "end_operator": "B=lambda^2*F-nu*F''=(1+nu)*lambda^2*F+2*nu*lambda*cos(lambda)*cos(lambda*t)",
+    "formal_closure": "H(t)+Re(sum_{n>=1} a_n B_n(t))=0"
+  },
+  "roots_first_quadrant": [
+    {"n": 1, "re": 2.1061961152453303, "im": 1.1253643058009303},
+    {"n": 2, "re": 5.3562686986396302, "im": 1.5515743729126248},
+    {"n": 3, "re": 8.5366824265759143, "im": 1.7755436735110402},
+    {"n": 4, "re": 11.6991776128256544, "im": 1.9294044965527872},
+    {"n": 5, "re": 14.8540599126380201, "im": 2.0468524623826670},
+    {"n": 6, "re": 18.0049330081858026, "im": 2.1418907938875118}
+  ],
+  "exact_moment_formulas": {
+    "I_lambda_k": "sin(lambda-k*pi)/(lambda-k*pi)+sin(lambda+k*pi)/(lambda+k*pi)",
+    "t_sin_moment": "-dI/dlambda",
+    "F_moment": "sin(lambda)*I+cos(lambda)*dI/dlambda",
+    "B_moment": "(1+nu)*lambda^2*F_moment+2*nu*lambda*cos(lambda)*I",
+    "cosh_moment": "2*z*sinh(z)*(-1)^k/(z^2+(k*pi)^2)",
+    "z_t_sinh_moment": "z*d(cosh_moment)/dz"
+  },
+  "N6_coefficients": {
+    "original_Z6_chi_4over3_nu_018": [
+      [0.3359900698826701, 0.5458060831647953],
+      [0.0347159307480382, -0.1802274291040825],
+      [-0.0038691178711516, 0.0349974148690534],
+      [-0.0005645414861773, -0.0039503113136623],
+      [0.0001273910737562, 0.0001842442964712],
+      [-0.0000044198611210, -0.0000004467718970]
+    ],
+    "original_Z6_chi_4over3_nu_030": [
+      [0.3146752824554246, 0.5111739746743422],
+      [0.0385865568592896, -0.1709248252557105],
+      [-0.0042878264155132, 0.0334135072125935],
+      [-0.0005004216224507, -0.0037980991585437],
+      [0.0001214796203746, 0.0001784904542361],
+      [-0.0000042767108539, -0.0000004562013832]
+    ],
+    "AR2_chi_1_nu_018": [
+      [0.1012460049681006, 0.1248485499126851],
+      [0.0107465106236113, -0.0564647646264573],
+      [-0.0011159140763032, 0.0106553116540254],
+      [-0.0001740146205798, -0.0011840741391344],
+      [0.0000380761332098, 0.0000547548581102],
+      [-0.0000013108429291, -0.0000001300597141]
+    ],
+    "AR2_chi_1_nu_030": [
+      [0.0945892950689045, 0.1139662396978857],
+      [0.0119379945466502, -0.0535414047587422],
+      [-0.0012410971438838, 0.0101581179525057],
+      [-0.0001544526135237, -0.0011361198814448],
+      [0.0000362330737906, 0.0000529223514601],
+      [-0.0000012653722321, -0.0000001325509569]
+    ]
+  },
+  "exact_moment_convergence_nu_018": {
+    "original_Z6_chi_4over3": [
+      {"N": 2, "max_omitted_k_to_24": 0.0120532532614, "omitted_over_max_H_moment": 0.00646218917801},
+      {"N": 3, "max_omitted_k_to_24": 0.00318188073421, "omitted_over_max_H_moment": 0.00170592244271},
+      {"N": 4, "max_omitted_k_to_24": 0.000497826937963, "omitted_over_max_H_moment": 0.000266903198768},
+      {"N": 5, "max_omitted_k_to_24": 0.0000528926545954, "omitted_over_max_H_moment": 0.0000283576834162},
+      {"N": 6, "max_omitted_k_to_24": 0.00000459790404023, "omitted_over_max_H_moment": 0.00000246510424082}
+    ],
+    "AR2_chi_1": [
+      {"N": 2, "max_omitted_k_to_24": 0.00443388717805, "omitted_over_max_H_moment": 0.00582951926698},
+      {"N": 3, "max_omitted_k_to_24": 0.00100981894261, "omitted_over_max_H_moment": 0.00132767450901},
+      {"N": 4, "max_omitted_k_to_24": 0.000151798876186, "omitted_over_max_H_moment": 0.000199579835458},
+      {"N": 5, "max_omitted_k_to_24": 0.0000157606435686, "omitted_over_max_H_moment": 0.0000207215410888},
+      {"N": 6, "max_omitted_k_to_24": 0.00000134959944364, "omitted_over_max_H_moment": 0.00000177440598813}
+    ]
+  },
+  "physical_center_factors_abs": {
+    "original_Z6_a_over_b_075": [0.41378118062863, 0.036014564139808, 0.0033147860391579, 0.00030928851664654, 0.000029023701934426, 0.0000027317924870142],
+    "AR2_a_over_b_2": [0.029623149556843, 0.000044528095110449, 0.000000076941713244392, 1.378013383556e-10, 2.5058639472713e-13, 4.5935017977294e-16]
+  },
+  "AR2_mapping": {
+    "a_mm": 24000,
+    "b_mm": 12000,
+    "m": 2,
+    "ell_mm": 12000,
+    "physical_half_panel": "0<=y<=a/2",
+    "y0": "physical loaded end; ux=0 transverse restraint applies",
+    "yell": "physical midheight symmetry plane; Y_n'=0; ux=0 NOT imposed",
+    "decision": "PASS_SPECIFIC_TO_m2"
+  },
+  "gate_verdict": {
+    "PAPKOVICH_FADLE_EVEN_EIGENFAMILY": "DERIVED",
+    "SIDE_TRACTION_FREE_PER_MODE": "PASS",
+    "FORMAL_TRANSVERSE_END_RESTRAINT_SERIES": "CLOSED",
+    "N6_EXACT_MOMENT_TRUNCATION": "PASS_AS_COEFFICIENT_SPACE_REPRO",
+    "POINTWISE_EXACTNESS_OF_N6": "NOT_CLAIMED",
+    "ZERO_SPATIAL_NUMERICAL_INTEGRATION": "PASS",
+    "AR2_M2_ONE_HALFWAVE_MAPPING": "PASS_BY_PHYSICAL_END_TO_MIDHEIGHT_SYMMETRY",
+    "FICTITIOUS_INTERNAL_UX_ZERO": "PROHIBITED",
+    "FULL_ZHOU_ALL_INPLANE_END_DOF_EQUIVALENCE": "NOT_YET_PROVEN",
+    "NEW_Z6_Pu": "NOT_CALCULATED"
+  },
+  "next_gate": "AR2_PF_BOUNDARY_MEMBRANE_TO_R10_N48_D15_ZERO_QUADRATURE_MAPPING_GATE"
+}
