@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-08-15T11:48:00+08:00",
+  "identity": "A500_LOCAL_PROGRESSIVE_CAP_D32_ENGINEERING_DIAGNOSTIC",
+  "governance": {
+    "formal_domain": "ONE_CONTINUOUS_COMPLETE_HALFWAVE",
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "structural_calibration": false,
+    "experimental_or_comparator_load_used_for_root_selection": false,
+    "R10": "FROZEN",
+    "N48_C1_MM": "FROZEN",
+    "Cayley_Hamilton": true,
+    "general_D15": true,
+    "imperfection_identity": "SOURCE_METHOD_ALIGNED_SENSITIVITY_A0=a/500; Chapter-5 Table-5.1 explicit restatement remains not directly recovered",
+    "steel_postyield": "LOCAL_PROGRESSIVE_RADIAL_CAP_CURRENT_MAP_DIAGNOSTIC",
+    "production_promotion": false
+  },
+  "local_cap_material_compiler": {
+    "r_definition": "r=(sigma_VM_elastic_trial/fy)^2",
+    "alpha_definition": "alpha=1 for r<=1; alpha=r^(-1/2) for r>1",
+    "r_domain": [0.0, 6.25],
+    "degree_primary": 32,
+    "degree_sensitivity": [24, 32, 40],
+    "preyield_weight": 100.0,
+    "material_coordinate_nodes": 3001,
+    "structural_grid_used": false
+  },
+  "cases": {
+    "Z0": {
+      "input": {"a_mm":6000,"b_mm":6000,"h_mm":130,"tc_mm":122,"ts_each_face_mm":4,"fy_MPa":355,"fcu_MPa":40,"fc_prime_MPa":30.4,"Ec_MPa":32500,"ell_mm":6000,"q0_old":0.0025,"A0_old_mm":15,"q0_a500":0.002,"A0_a500_mm":12},
+      "first_yield": {"D":0.8960509022515547,"q":0.0008386035001062314,"Pc_MN":18.48831697973628,"Ps_MN":17.164731309197666,"P_MN":35.653048288933945,"vm_over_fy":1.0},
+      "D32_peak": {"D":0.9821872,"q":0.0009526833444492927,"Pc_MN":18.05935680194815,"Ps_MN":18.559969624302425,"P_MN":36.61932642625057,"Rq_MNmm":3.8656855821609495e-06,"elastic_trial_vm_over_fy":1.098042039040479},
+      "degree_sensitivity_at_D32_peak_D": {"24":{"q":0.0009357400,"P_MN":36.7601691},"32":{"q":0.0009526833,"P_MN":36.6193264},"40":{"q":0.0009703594,"P_MN":36.4724847}}
+    },
+    "Z1": {
+      "input": {"a_mm":6000,"b_mm":6000,"h_mm":100,"tc_mm":92,"ts_each_face_mm":4,"fy_MPa":235,"fcu_MPa":40,"fc_prime_MPa":30.4,"Ec_MPa":32500,"ell_mm":6000,"q0_old":0.0025,"A0_old_mm":15,"q0_a500":0.002,"A0_a500_mm":12},
+      "first_yield": {"D":0.570487584421311,"q":0.0012554240525722812,"Pc_MN":11.334846771390591,"Ps_MN":10.858289123674549,"P_MN":22.19313589506514,"vm_over_fy":1.0},
+      "D32_peak": {"D":0.633014,"q":0.001482312308045143,"Pc_MN":11.268474155442817,"Ps_MN":11.92199348336146,"P_MN":23.19046763880428,"Rq_MNmm":-6.267428398132324e-10,"elastic_trial_vm_over_fy":1.1158521119324116},
+      "degree_sensitivity_at_D32_peak_D": {"24":{"P_MN":23.2877001},"32":{"q":0.0014823123,"P_MN":23.1904676},"40":{"P_MN":23.0894783}}
+    },
+    "Z2": {
+      "input": {"a_mm":6000,"b_mm":6000,"h_mm":130,"tc_mm":122,"ts_each_face_mm":4,"fy_MPa":460,"fcu_MPa":40,"fc_prime_MPa":30.4,"Ec_MPa":32500,"ell_mm":6000,"q0_old":0.0025,"A0_old_mm":15,"q0_a500":0.002,"A0_a500_mm":12,"concrete_compiler_interval":[-1.35,0.15]},
+      "first_yield": {"D":1.1606145446276057,"q":0.0010953010253734773,"Pc_MN":17.36450958101111,"Ps_MN":22.227039886365944,"P_MN":39.59154946737705,"vm_over_fy":1.0},
+      "branch_note": "At D approximately 1.28 multiple Rq roots exist; continuation from the first connected branch was retained and lower-q root switching was rejected.",
+      "peak_bracket_D32": [{"D":1.235,"q":0.0012251228,"P_MN":40.2000257},{"D":1.2475,"q":0.0012606845,"P_MN":40.2059546},{"D":1.26,"q":0.0013032508,"P_MN":40.1656356}],
+      "D32_peak": {"D":1.2428525,"q":0.0012468869388415965,"Pc_MN":16.549365616579635,"Ps_MN":23.658701455222257,"P_MN":40.20806707180189,"Rq_MNmm":1.7726421356201172e-10,"elastic_trial_vm_over_fy":1.074125890696365},
+      "degree_sensitivity_at_D32_peak_D": {"24":{"P_MN":40.2900359},"32":{"q":0.0012468869,"P_MN":40.2082219},"40":{"P_MN":40.1193526}}
+    },
+    "Z3": {
+      "input": {"a_mm":6000,"b_mm":6000,"h_mm":130,"tc_mm":122,"ts_each_face_mm":4,"fy_MPa":355,"fcu_MPa":60,"fc_prime_MPa":45.6,"Ec_MPa":35992.801439712057,"ell_mm":6000,"q0_old":0.0025,"A0_old_mm":15,"q0_a500":0.002,"A0_a500_mm":12},
+      "first_yield": {"D":0.6548802789743069,"q":0.0010058923884998926,"Pc_MN":26.16593194225877,"Ps_MN":16.973491984939983,"P_MN":43.139423927198756,"vm_over_fy":1.0},
+      "branch_note": "The first connected +->- load maximum near D=0.738 was retained; later re-rising roots were not substituted for the first maximum.",
+      "D32_peak": {"D":0.738299,"q":0.001172559536350097,"Pc_MN":26.361426453378858,"Ps_MN":18.66135572916932,"P_MN":45.02278218254818,"Rq_MNmm":-8.188344240188599e-07,"elastic_trial_vm_over_fy":1.1296144646885047},
+      "degree_sensitivity_at_D32_peak_D": {"24":{"P_MN":45.3083324},"32":{"q":0.0011725595,"P_MN":45.0227822},"40":{"P_MN":44.7495836}}
+    },
+    "Z4": {
+      "input": {"a_mm":6000,"b_mm":8000,"h_mm":200,"tc_mm":192,"ts_each_face_mm":4,"fy_MPa":355,"fcu_MPa":40,"fc_prime_MPa":30.4,"Ec_MPa":32500,"ell_mm":6000,"q0_old":0.0025,"A0_old_mm":20,"q0_a500":0.0015,"A0_a500_mm":12},
+      "first_yield": {"D":0.8926922280295206,"q":0.00042747863191849866,"Pc_MN":42.28103198528625,"Ps_MN":22.840040428445707,"P_MN":65.12107241373197,"vm_over_fy":1.0},
+      "D32_peak": {"D":0.9952684,"q":0.0004703292992181233,"Pc_MN":41.94543370827705,"Ps_MN":24.941412275955965,"P_MN":66.88684598423302,"Rq_MNmm":-2.208095610141754e-06,"elastic_trial_vm_over_fy":1.1141661156604696},
+      "degree_sensitivity_at_D32_peak_D": {"24":{"P_MN":67.1454053},"32":{"q":0.0004703293,"P_MN":66.8868460},"40":{"P_MN":66.6326811}}
+    },
+    "Z5": {
+      "input": {"a_mm":3000,"b_mm":2000,"h_mm":130,"tc_mm":122,"ts_each_face_mm":4,"fy_MPa":355,"fcu_MPa":40,"fc_prime_MPa":30.4,"Ec_MPa":32500,"ell_mm":1500,"q0_old":0.0025,"A0_old_mm":5,"q0_a500":0.003,"A0_a500_mm":6},
+      "first_yield": {"D":0.9030546822934356,"q":0.0001284061136632002,"Pc_MN":6.96820449023583,"Ps_MN":5.782747490334125,"P_MN":12.750951980569955,"vm_over_fy":1.0},
+      "D32_peak": {"D":1.0049145,"q":0.0001462737517089835,"Pc_MN":6.907044737297938,"Ps_MN":6.270527209228975,"P_MN":13.177571946526912,"Rq_MNmm":-2.53637245669961e-06,"elastic_trial_vm_over_fy":1.1138276936618965},
+      "degree_sensitivity_at_D32_peak_D": {"24":{"P_MN":13.2468737},"32":{"q":0.0001462738,"P_MN":13.1775719},"40":{"P_MN":13.1095803}}
+    }
+  }
+}
