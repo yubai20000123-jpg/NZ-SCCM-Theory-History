@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-08-15T12:33:00+08:00",
+  "identity": "ZHOU_ORIGINAL_FULL_MCFSTW_FORMULA_REPLAY_VS_NZSCCM_REDUCED_DIAGNOSTIC",
+  "governance": {
+    "NZ_object": "reduced; internal steel webs equivalent/absorbed into continuous concrete",
+    "Zhou_object": "original full MCFSTW; internal steel web topology retained",
+    "same_object_requirement": false,
+    "calibration": false,
+    "old_comparator": "PROJECT_TRANSFERRED_REDUCED_EMPIRICAL_COMPARATOR; superseded for current comparison",
+    "m_selection": "evaluate integer m=1..50 from Zhou Eq.5-79 and retain the minimum; no test/NZ load used"
+  },
+  "constants": {
+    "Es_MPa": 206000.0,
+    "nu_s": 0.3,
+    "nu_c": 0.2,
+    "Ec_rule": "C40=32500 MPa; otherwise 1e5/(34.7/fcu+2.2)",
+    "fc_prime_rule": "0.76*fcu",
+    "concrete_area_rule": "Ac=ns*(ls-ts)*(h-2*ts)",
+    "steel_area_rule": "As=b*h-Ac",
+    "Dx_rule": "Es*(h^3-(h-2ts)^3)/12 + Ec*(h-2ts)^3/12",
+    "Dy_s_rule": "Es/b*(b*h^3/12 - ns*(ls-ts)*(h-2ts)^3/12)",
+    "Dy_c_rule": "Ec/b*ns*(ls-ts)*(h-2ts)^3/12",
+    "Dmu_rule": "nu_s*Dy_s + nu_c*Dy_c",
+    "H_rule": "Dxy+Dmu",
+    "Pcr_rule": "Pcr_m=b*pi^2*[Dx*a^2/(m^2*b^4)+2H/b^2+Dy*m^2/a^2]",
+    "lambda_rule": "sqrt(Pyth/Pcr)",
+    "Pu_rule": "phi_N(lambda)*Pyth using Zhou Eqs.5-87/5-88"
+  },
+  "cases": [
+    {
+      "case":"Z0","ns":30,"ls_mm":200,"h_mm":130,"ts_mm":4,"fy_MPa":355,"fcu_MPa":40,"a_mm":6000,"b_mm":6000,"Ec_MPa":32500.0,"Gs_MPa":79230.7692307692,"Gc_MPa":13541.6666666667,"fc_prime_MPa":30.4,"tc_mm":122,"gross_area_mm2":780000,"Ac_mm2":717360,"As_mm2":62640,"Psteel0_MN":22.2372,"Pconc0_MN":21.807744,"Pyth_MN":44.044944,"Dx_Nmm":11461031000.0,"Dy_s_Nmm":7166550480.0,"Dy_c_Nmm":4819563233.333334,"Dy_Nmm":11986113713.333336,"A0_centerline_mm2":755496,"centerline_perimeter_mm":12244,"integral_ds_over_t":3061.0,"beta_shape":0.329057632459403,"steel_torsion_numerator":59095562756915.04,"concrete_torsion_numerator":48483658621213.83,"Dt_Nmm":17929870229.688145,"Dxy_Nmm":8964935114.844072,"Dmu_Nmm":3113877790.666667,"H_Nmm":12078812905.510738,"Pcr_m1_MN":78.306708780004,"Pcr_m2_MN":123.316328858712,"Pcr_m3_MN":219.279740471119,"m_star":1,"Pcr_MN":78.306708780004,"lambda_n":0.749978037416,"Phi_N":0.831982078732,"phi_N":0.838814570783,"Pu_Zhou_original_MN":36.945540796510,"Pu_old_transferred_MN":33.429123359711,"original_vs_old_shift_pct":10.519023783426,"NZ_A500_localcap_D32_MN":36.619330,"NZ_minus_Zhou_original_pct":-0.882950389890},
+    {
+      "case":"Z1","ns":30,"ls_mm":200,"h_mm":100,"ts_mm":4,"fy_MPa":235,"fcu_MPa":40,"a_mm":6000,"b_mm":6000,"Ec_MPa":32500.0,"Gs_MPa":79230.7692307692,"Gc_MPa":13541.6666666667,"fc_prime_MPa":30.4,"tc_mm":92,"gross_area_mm2":600000,"Ac_mm2":540960,"As_mm2":59040,"Psteel0_MN":13.8744,"Pconc0_MN":16.445184,"Pyth_MN":30.319584,"Dx_Nmm":5908136000.0,"Dy_s_Nmm":4066538880.0,"Dy_c_Nmm":2066767733.333333,"Dy_Nmm":6133306613.333334,"A0_centerline_mm2":575616,"centerline_perimeter_mm":12184,"integral_ds_over_t":3046.0,"beta_shape":0.330109034282703,"Dt_Nmm":9221910753.441520,"Dxy_Nmm":4610955376.720760,"Dmu_Nmm":1633315210.666667,"H_Nmm":6244270587.387427,"Pcr_m1_MN":40.350205992294,"Pcr_m2_MN":63.327990330907,"Pcr_m3_MN":112.422624426343,"m_star":1,"Pcr_MN":40.350205992294,"lambda_n":0.866839595966,"Phi_N":0.933020130641,"phi_N":0.782379851534,"Pu_Zhou_original_MN":23.721431628501,"Pu_old_transferred_MN":22.208147192292,"original_vs_old_shift_pct":6.814095850077,"NZ_A500_localcap_D32_MN":23.190470,"NZ_minus_Zhou_original_pct":-2.238320337560},
+    {
+      "case":"Z2","ns":30,"ls_mm":200,"h_mm":130,"ts_mm":4,"fy_MPa":460,"fcu_MPa":40,"a_mm":6000,"b_mm":6000,"Ec_MPa":32500.0,"Gs_MPa":79230.7692307692,"Gc_MPa":13541.6666666667,"fc_prime_MPa":30.4,"tc_mm":122,"gross_area_mm2":780000,"Ac_mm2":717360,"As_mm2":62640,"Psteel0_MN":28.8144,"Pconc0_MN":21.807744,"Pyth_MN":50.622144,"Dx_Nmm":11461031000.0,"Dy_s_Nmm":7166550480.0,"Dy_c_Nmm":4819563233.333334,"Dy_Nmm":11986113713.333336,"A0_centerline_mm2":755496,"centerline_perimeter_mm":12244,"integral_ds_over_t":3061.0,"beta_shape":0.329057632459403,"Dt_Nmm":17929870229.688145,"Dxy_Nmm":8964935114.844072,"Dmu_Nmm":3113877790.666667,"H_Nmm":12078812905.510738,"Pcr_m1_MN":78.306708780004,"Pcr_m2_MN":123.316328858712,"Pcr_m3_MN":219.279740471119,"m_star":1,"Pcr_MN":78.306708780004,"lambda_n":0.804027275697,"Phi_N":0.877300538720,"phi_N":0.814137364692,"Pu_Zhou_original_MN":41.213378911239,"Pu_old_transferred_MN":36.858841504351,"original_vs_old_shift_pct":11.814091895358,"NZ_A500_localcap_D32_MN":40.208070,"NZ_minus_Zhou_original_pct":-2.439278064059},
+    {
+      "case":"Z3","ns":30,"ls_mm":200,"h_mm":130,"ts_mm":4,"fy_MPa":355,"fcu_MPa":60,"a_mm":6000,"b_mm":6000,"Ec_MPa":35992.8014397121,"Gs_MPa":79230.7692307692,"Gc_MPa":14997.0005998800,"fc_prime_MPa":45.6,"tc_mm":122,"gross_area_mm2":780000,"Ac_mm2":717360,"As_mm2":62640,"Psteel0_MN":22.2372,"Pconc0_MN":32.711616,"Pyth_MN":54.948816,"Dx_Nmm":11989564042.391521,"Dy_s_Nmm":7166550480.0,"Dy_c_Nmm":5337525614.877025,"Dy_Nmm":12504076094.877026,"A0_centerline_mm2":755496,"centerline_perimeter_mm":12244,"integral_ds_over_t":3061.0,"beta_shape":0.329057632459403,"Dt_Nmm":18798299935.507034,"Dxy_Nmm":9399149967.753517,"Dmu_Nmm":3217470266.975405,"H_Nmm":12616620234.728922,"Pcr_m1_MN":81.797439948099,"Pcr_m2_MN":128.711050421885,"Pcr_m3_MN":228.813781589293,"m_star":1,"Pcr_MN":81.797439948099,"lambda_n":0.819613897399,"Phi_N":0.890820915677,"phi_N":0.806573726493,"Pu_Zhou_original_MN":44.320271287491,"Pu_old_transferred_MN":41.158145428775,"original_vs_old_shift_pct":7.682867694289,"NZ_A500_localcap_D32_MN":45.022780,"NZ_minus_Zhou_original_pct":1.585073132681},
+    {
+      "case":"Z4","ns":40,"ls_mm":200,"h_mm":200,"ts_mm":4,"fy_MPa":355,"fcu_MPa":40,"a_mm":6000,"b_mm":8000,"Ec_MPa":32500.0,"Gs_MPa":79230.7692307692,"Gc_MPa":13541.6666666667,"fc_prime_MPa":30.4,"tc_mm":192,"gross_area_mm2":1600000,"Ac_mm2":1505280,"As_mm2":94720,"Psteel0_MN":33.6256,"Pconc0_MN":45.760512,"Pyth_MN":79.386112,"Dx_Nmm":34998869333.333336,"Dy_s_Nmm":18259664213.333324,"Dy_c_Nmm":18785894400.0,"Dy_Nmm":37045558613.33333,"A0_centerline_mm2":1567216,"centerline_perimeter_mm":16384,"integral_ds_over_t":4096.0,"beta_shape":0.328288288426999,"Dt_Nmm":55189146782.83455,"Dxy_Nmm":27594573391.417274,"Dmu_Nmm":9235078144.0,"H_Nmm":36829651535.41727,"Pcr_m1_MN":196.411219519718,"Pcr_m2_MN":421.945502365366,"Pcr_m3_MN":835.397426055567,"m_star":1,"Pcr_MN":196.411219519718,"lambda_n":0.635754027591,"Phi_N":0.744204977675,"phi_N":0.884125326928,"Pu_Zhou_original_MN":70.187272225510,"Pu_old_transferred_MN":62.043026001061,"original_vs_old_shift_pct":13.126771451009,"NZ_A500_localcap_D32_MN":66.886850,"NZ_minus_Zhou_original_pct":-4.702308724730},
+    {
+      "case":"Z5","ns":10,"ls_mm":200,"h_mm":130,"ts_mm":4,"fy_MPa":355,"fcu_MPa":40,"a_mm":3000,"b_mm":2000,"Ec_MPa":32500.0,"Gs_MPa":79230.7692307692,"Gc_MPa":13541.6666666667,"fc_prime_MPa":30.4,"tc_mm":122,"gross_area_mm2":260000,"Ac_mm2":239120,"As_mm2":20880,"Psteel0_MN":7.4124,"Pconc0_MN":7.269248,"Pyth_MN":14.681648,"Dx_Nmm":11461031000.0,"Dy_s_Nmm":7166550480.0,"Dy_c_Nmm":4819563233.333334,"Dy_Nmm":11986113713.333334,"A0_centerline_mm2":251496,"centerline_perimeter_mm":4244,"integral_ds_over_t":1061.0,"beta_shape":0.320210344277247,"Dt_Nmm":17295251346.11202,"Dxy_Nmm":8647625673.056011,"Dmu_Nmm":3113877790.666667,"H_Nmm":11761503463.72268,"Pcr_m1_MN":269.625216404236,"Pcr_m2_MN":253.049173050717,"Pcr_m3_MN":366.817300878232,"m_star":2,"Pcr_MN":253.049173050717,"lambda_n":0.240871236747,"Phi_N":0.524383161775,"phi_N":1.0,"Pu_Zhou_original_MN":14.681648,"Pu_old_transferred_MN":13.097600,"original_vs_old_shift_pct":12.094185194234,"NZ_A500_localcap_D32_MN":13.177570,"NZ_minus_Zhou_original_pct":-10.244612866349},
+    {
+      "case":"Z6","ns":60,"ls_mm":200,"h_mm":130,"ts_mm":4,"fy_MPa":355,"fcu_MPa":40,"a_mm":9000,"b_mm":12000,"Ec_MPa":32500.0,"Gs_MPa":79230.7692307692,"Gc_MPa":13541.6666666667,"fc_prime_MPa":30.4,"tc_mm":122,"gross_area_mm2":1560000,"Ac_mm2":1434720,"As_mm2":125280,"Psteel0_MN":44.4744,"Pconc0_MN":43.615488,"Pyth_MN":88.089888,"Dx_Nmm":11461031000.0,"Dy_s_Nmm":7166550480.0,"Dy_c_Nmm":4819563233.333334,"Dy_Nmm":11986113713.333336,"A0_centerline_mm2":1514496,"centerline_perimeter_mm":24244,"integral_ds_over_t":6061.0,"beta_shape":0.331196978595147,"Dt_Nmm":18093597551.943783,"Dxy_Nmm":9046798775.971891,"Dmu_Nmm":3113877790.666667,"H_Nmm":12160676566.638557,"Pcr_m1_MN":42.831475610675,"Pcr_m2_MN":91.431672587652,"Pcr_m3_MN":185.698085470983,"m_star":1,"Pcr_MN":42.831475610675,"lambda_n":1.434106851012,"Phi_N":1.466566984771,"phi_N":0.563883517901,"Pu_Zhou_original_MN":49.672435936948,"Pu_old_transferred_MN":44.740402775200,"original_vs_old_shift_pct":11.023667324876,"NZ_A500_localcap_D32_MN":37.50942609,"NZ_minus_Zhou_original_pct":-24.486437231278}
+  ],
+  "candidate_retention_note": "All m=1..50 values are generated deterministically by the companion REPRO.py. This JSON persists the selected state and first three candidate values for direct audit; the reproduction script prints the complete m=1..50 candidate list for every case."
+}
