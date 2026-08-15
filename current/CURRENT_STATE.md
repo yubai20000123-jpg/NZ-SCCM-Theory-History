@@ -1,118 +1,112 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 21:18 +08:00  
+**Updated:** 2026-08-15 21:34 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260815_2118__NZSCCM__PROJECT__CURRENT_STATE_POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260815_2134__NZSCCM__PROJECT__CURRENT_STATE_MINIMAL_FVK_MEMBRANE_COMPLETION__SEMANTIC_INDEX.md`
 
-## 21:18 Nguyen/FvK postbuckling membrane-compatibility audit
+## 21:34 single-halfwave FvK membrane-completion gate
 
-This stage is **NO-Pu / NO-NEW-ROOT / NO-CONTINUATION**.
+This stage executed **no new Pu, no new nonlinear root and no D>0.60 continuation**.
 
 Locked findings:
 
 ```text
 NGUYEN_EQ6_3_SECOND_ORDER_GEOMETRIC_SOURCE = PRESENT
-NGUYEN_EQ6_3_ALONE_GUARANTEES_FULL_POSTBUCKLING_EQUILIBRIUM = NO
-ONE_OUT_OF_PLANE_HALFWAVE_GENERATES_MULTIPLE_IN_PLANE_HARMONICS = YES
-OLD_DQ_FREE_POISSON_LOADED_EDGE_ADMISSIBILITY = FAIL
-BOUNDARY_WARP_DQC = NECESSARY_PARTIAL_CORRECTION
-DQC_FULL_POSTBUCKLING_MEMBRANE_EQUILIBRIUM_COMPLETENESS = NOT_CERTIFIED
-Q31_AS_PRIMARY_CAUSE = NOT_ESTABLISHED; prior causal retraction retained
-NEW_Pu_THIS_STAGE = NONE
+ONE_CONTINUOUS_COMPLETE_HALFWAVE = RETAIN
+CURRENT_DQC_EXACT_FVK_MEMBRANE_SOURCE_COMPLETENESS = FAIL
+FAILURE = IN-PLANE FUNCTION-SPACE RANK DEFICIENCY
+BOUNDARY_WARP_c = RETAIN AS NECESSARY BOUNDARY-ADMISSIBLE DIRECTION
+MINIMUM_NEW_IN_PLANE_DIRECTIONS = p20 + p02
+MEMBRANE_UNKNOWN_VECTOR = [c,p20,p02]^T
+MEMBRANE_JACOBIAN = FLAT 3x3
+GENERAL_D15 = UNCHANGED
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+NEW_Pu = NONE
 ```
 
-For
+The exact reason is that the independent in-plane virtual space retained by `D+c` contains X-harmonics 0 and 1, while the single `(1,1)` Nguyen/FvK out-of-plane halfwave forces independent membrane redistribution content associated with `cos(2X)` and `cos(2Y)`. No exact linear combination of the existing `D` and `c` directions can span both source directions.
+
+Minimum admissible analytic completion:
 
 ```text
-X=pi*x/b, Y=pi*y/a
-w0=A0*sinX*sinY
-wm=A*sinX*sinY
-S=A^2+2*A0*A
+p20:
+ U20=b/(2pi) sin(2X) sin^2(Y)
+ V20=b^2/(4pi a) cos(2X) sin(2Y)
+ e20x=cos(2X) sin^2(Y)
+ e20y=(k^2/2) cos(2X) cos(2Y)
+ gamma20=0
+
+p02:
+ U02=0
+ V02=a/(2pi) sin(2Y)
+ e02x=0
+ e02y=cos(2Y)
+ gamma02=0
 ```
 
-Nguyen Eq.(6.3) produces exact second-order mid-plane strain harmonics:
+Both warping fields vanish on the loaded edges and are finite polynomial fields in `sin X, sin Y`, hence they enter the same General D15 exact-moment engine with zero new structural points.
+
+At fixed `(D,q)` the minimum membrane subsystem is now defined as
 
 ```text
-eps_x_NL = S*pi^2/(8*b^2) [1+cos2X-cos2Y-cos2X*cos2Y]
-eps_y_NL = S*pi^2/(8*a^2) [1-cos2X+cos2Y-cos2X*cos2Y]
-gamma_xy_NL = S*pi^2/(4*a*b) sin2X*sin2Y  # engineering shear
+m=[c,p20,p02]^T
+Rm=[Rc,R20,R02]^T=0
+Jmm=dRm/dm   # flat 3x3
 ```
 
-Thus a single `(1,1)` out-of-plane halfwave generates `(0,0),(2,0),(0,2),(2,2)` in-plane strain content. Under the FvK compatibility operator, the incremental geometric source contains independent `(2,0)` and `(0,2)` directions plus the homogeneous membrane field required by mean load and in-plane edge conditions.
-
-The present `c` coordinate was constructed to repair Zhou loaded-edge in-plane admissibility and is mechanically valid, but `Rq=0 + Rc=0` only proves equilibrium in the retained `q,c` virtual directions. It has not been proven equivalent to the complete single-halfwave FvK membrane-redistribution solution space.
-
-Current next **theory gate**, not yet executed:
+with directional/static condensation
 
 ```text
-SINGLE_HALFWAVE_FVK_MEMBRANE_RESIDUAL_PROJECTION_COMPLETENESS
+dm/dq=-Jmm^{-1}Jmq
+Lcond=Rq,q-Rq,m Jmm^{-1}Jm,q.
 ```
 
-If later authorized, this gate must first remain no-Pu: construct minimal analytic admissible in-plane test/basis directions associated with the `(2,0)` and `(0,2)` FvK source and Zhou in-plane boundary conditions, then evaluate generalized in-plane residual projections at already accepted states.
+This is a minimum FvK-source-complete Ritz membrane system; it is not yet claimed to be a proof of globally exact nonlinear in-plane PDE completeness for every state.
 
-21:18 artifacts:
-
-- `semantic_v2/60_validation/steel_shell/20260815_2118__NZSCCM__NGUYEN_FVK_POSTBUCKLING_MEMBRANE_COMPATIBILITY__AUDIT.md`
-- `semantic_v2/40_execution/steel_shell/20260815_2118__NZSCCM__SINGLE_HALFWAVE_FVK_MEMBRANE_HARMONIC_REGISTRY.csv`
-- `semantic_v2/40_execution/steel_shell/20260815_2118__NZSCCM__NGUYEN_FVK_MEMBRANE_AUDIT_EQUATION_LEDGER.json`
-- `semantic_v2/40_execution/steel_shell/20260815_2118__NZSCCM__POSTBUCKLING_MEMBRANE_AUDIT_NO_PU_EXECUTION_LOG.md`
-- `semantic_v2/60_validation/steel_shell/20260815_2118__NZSCCM__NGUYEN_FVK_SOURCE_CHAIN__REFERENCE_NOTE.md`
-- `semantic_v2/60_validation/steel_shell/20260815_2118__NZSCCM__POSTBUCKLING_MEMBRANE_AUDIT_DECISION_SUMMARY.md`
-- `semantic_v2/10_governance/20260815_2118__NZSCCM__POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT_BOUNDARY__LOCK.md`
-
-## Previous Z6 aspect-ratio comparator correction retained
-
-For the fixed Z6 section/material parameters
+## Existing Z6 states retained unchanged for the next projection gate
 
 ```text
-b=12000 mm, h=130 mm, ns=60, ls=200 mm, ts=4 mm
-fy=355 MPa, fcu=40 MPa, f'c=30.4 MPa
-Ac=1,434,720 mm2, As=125,280 mm2
-Pyth=88.089888 MN
+D=.50: q=.007244278905, c=-.0154563484942, P=37.345137133 MN, certified Rq/Rc checkpoint
+D=.55: q=.008198205,    c=-.02004071,      P=38.41062 MN, connected near-equilibrium
+D=.60: q=.009177472,    c=-.02655088,      P=39.12698 MN, connected near-equilibrium
 ```
 
-established Zhou elastic energy check:
+Corrected original-Z6 Pu remains **NOT SOLVED**.
+
+## Current next execution
 
 ```text
-a/b=0.75, m=1: Pcr=42.83147561 MN, lambda=1.43410685
-a/b=1.00, m=1: Pcr=39.28801472 MN, lambda=1.49738331
-a/b=1.25, m=1: Pcr=41.04137379 MN, lambda=1.46504878
+EXISTING_STATE_R20_R02_D15_PROJECTION_GATE
 ```
 
-Zhou elastic Pcr is energy-consistent. Zhou Eq.5-87/5-88 is an FE-fitted lower-envelope and must not be used alone as an energy diagnostic.
-
-For the earlier a/b=1 versus a/b=2 audit, the correct integer halfwave count gives
+At the already stored D=.50/.55/.60 states, evaluate
 
 ```text
-a/b=1: a=12000, m=1, ell=12000 mm
-a/b=2: a=24000, m=2, ell=12000 mm
-Pcr = 39.288014715 MN
-lambda_n = 1.49738330617
+R20 = integral sigma : epsilon_,p20 dV
+R02 = integral sigma : epsilon_,p02 dV
 ```
 
-The retained three-way audit values were:
+using the frozen R10/N48/Cayley-Hamilton + local steel current operator and the same General D15 exact moments. No new Pu is allowed before this residual-projection gate is inspected.
 
-```text
-                    a/b=1             a/b=2
-NZ-SCCM R10 continuum audit  44.58066266 MN    44.55291911 MN
-Zhou Eq.5-87/5-88            49.48676675 MN    49.48676675 MN
-Winter Eq.5-86               50.18585413 MN    50.18585413 MN
-```
+## 21:34 artifacts
 
-The NZ values have identity `R10_DIRECT_CONTINUUM_AUDIT_ONLY`, not formal zero-quadrature production Pu.
+- `semantic_v2/10_governance/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION_NO_PU__LOCK.md`
+- `semantic_v2/20_theory/nc_steel_shell_panel/20260815_2134__NZSCCM__SINGLE_HALFWAVE_MINIMAL_FVK_MEMBRANE_COMPLETION__THEORY.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__SYMBOLIC_REPRO.py`
+- `semantic_v2/40_execution/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__EXECUTION_REPORT.md`
+- `semantic_v2/50_results/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__SYMBOLIC_GATE_RESULT.csv`
 
-## Boundary-compatible in-plane current path retained unchanged
+## Parent 21:18 audit retained
 
-```text
-D=.50: q=.007244279, c=-.01545635, P=37.34514 MN, certified coupled checkpoint
-D=.55: q=.008198205, c=-.02004071, P=38.41062 MN, connected near-equilibrium
-D=.60: q=.009177472, c=-.02655088, P=39.12698 MN, connected near-equilibrium
-```
+`semantic_v2/00_index/20260815_2118__NZSCCM__PROJECT__CURRENT_STATE_POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT__SEMANTIC_INDEX.md`
 
-Corrected original-Z6 Pu remains **NOT SOLVED**. The previous directional-moment continuation proposal is preserved as a numerical implementation path, but the new causal-theory priority is to resolve/clear the no-Pu membrane residual-projection completeness gate before interpreting a corrected Pu as a validated postbuckling solution.
+The 21:18 source audit established that Nguyen second-order kinematics already contains the postbuckling geometric source, while full in-plane membrane equilibrium completeness was open. The 21:34 stage closes that specific question for the current `D+c` space: exact completeness fails, and the minimum analytic completion has now been established.
 
 ## Frozen parent identity
 
