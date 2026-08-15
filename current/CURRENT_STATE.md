@@ -1,59 +1,64 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 17:31 +08:00  
+**Updated:** 2026-08-15 after Z6 squat-panel boundary audit  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-Current Z6 causal correction:
+Current Z6 correction:
 
 ```text
 Nguyen second-order kinematics as primary Z6 cause = NOT SUPPORTED
-wrong linear m=1 halfwave as primary cause = NOT SUPPORTED
-q31 as the cause of the low Z6 Pu = NOT ESTABLISHED
-single-q finite-amplitude restriction as an explanation for conservative Pu = RETRACTED
-original one-complete-halfwave production baseline = RESTORED
+wrong m=1 halfwave as primary cause = NOT SUPPORTED
+q31 as the cause of low Z6 Pu = NOT ESTABLISHED
+single-q finite-amplitude restriction as explanation for conservative Pu = RETRACTED
+original one-complete-halfwave production baseline = RETAINED
 ```
 
-New aspect-ratio finding:
+Geometry/source identity:
 
 ```text
-Z6: a=9000 mm, b=12000 mm, h=130 mm
-Z6: a/b=0.75 < 1; compression acts along the shorter in-plane dimension
-classical plate theory remains valid at a/b=0.75
-classical integer optimum remains m=1 for a/b<sqrt(2)
-Zhou orthotropic theory also selects m from a lower envelope and does not require a/b>=1
-aspect-ratio<1 as sole Z6 cause = REJECTED
-squat-panel x high-slenderness interaction = PRIMARY NEW AUDIT TARGET
+Z6: a=9000 mm, b=12000 mm, h=130 mm, a/b=0.75
+compression acts along the shorter in-plane dimension
+classical m=1 at a/b=0.75 = CONSISTENT
+Zhou Group-4 exact input combination (9000,12000,130,60) = STRONGLY SOURCE-SUPPORTED
+unique raw FE model ID / raw FE Pu = NOT RECOVERED
+49.6724359 MN = Zhou fitted lower-envelope value, not raw FE Pu
 ```
 
-Direct Zhou-source re-read now gives stronger source identity:
+New confirmed kinematic mismatch:
 
 ```text
-Table 5.1 Group 4: ns=10-60, ls=200, h=100-130, a=3000-9000, b=2000-12000
-source paragraph: width b is changed and, with b held fixed, height a is changed over 3000-9000; h takes 100 and 130
-Z6 exact Group-4 input combination (a,b,h,ns)=(9000,12000,130,60) = STRONGLY SOURCE-SUPPORTED
-unique raw FE model ID / individually tabulated raw FE Pu = NOT RECOVERED
-49.6724359 MN = Zhou Eq.5-87/5-88 fitted lower-envelope value, NOT raw FE Pu
+CURRENT NZ base membrane field at q=0:
+ex = nu D
+ey = -D
+=> sigma_x = 0 in elastic plane stress
+=> globally free transverse Poisson state
+
+ZHOU four-edge FE loaded edges:
+u_x = 0 on y=0 and y=a
+non-loaded side edges: u_x free
+
+Therefore current affine/free-Poisson in-plane field is NOT admissible under Zhou's actual loaded-edge in-plane boundary condition.
+BOUNDARY_KINEMATICS_MISMATCH = CONFIRMED
 ```
 
-Critical controlled countercheck:
+Why Z6 exposes it:
 
 ```text
-Z4: a=6000, b=8000, h=200, a/b=0.75, NZ error about -4.7%
-Z6: a=9000, b=12000, h=130, a/b=0.75, NZ error about -24.5%
+a/b=0.75 => squat finite panel; loaded-edge restraint zones can occupy a large part of the panel
+Z4 also has a/b=0.75 but is much stockier / less stability-controlled
+therefore a/b<1 alone is not the cause
+primary diagnostic interaction = squat geometry x high global slenderness x wrong in-plane admissibility
 ```
 
-Therefore `a/b=0.75` alone cannot explain the discrepancy. But Z4 is much less stability-controlled, so an error tied to squat-panel representative-halfwave semantics or nonlinear normalization could be weak in Z4 and strongly amplified in Z6. The diagnostic target is the interaction `a/b<1 + very large a/h,b/h + high normalized slenderness`.
-
-Current causal priorities for Z6:
+Current next causal test — before changing material theory, steel law, D15, or adding out-of-plane modes:
 
 ```text
-1. audit ONE_CONTINUOUS_COMPLETE_HALFWAVE semantics and every ell/b normalization in the squat finite-panel regime; do not assume a/b>=1 or ell≈b
-2. use Z4 vs Z6 as the same-a/b controlled pair to isolate the role of high slenderness
-3. run unchanged-method aspect-ratio neighborhood cases from Zhou Group 4, crossing/approaching a/b=1 where source inputs permit
-4. discrete internal-web topology vs homogenized/reduced NZ representation at high b/h
-5. full incremental ideal-elastoplastic redistribution vs path-independent radial-cap current map
-6. concrete current-tangent / geometric-stiffness balance on a valid Z6 branch
-7. only if still needed: fully variationally consistent multimode Ritz extension including associated in-plane fields
+1. construct the lowest-order continuous in-plane field satisfying u(x,0)=u(x,a)=0 and the Zhou side-edge conditions
+2. analytically/variationally condense its amplitude(s); formal structural sampling/quadrature remain zero
+3. keep the same m=1 complete out-of-plane halfwave, R10/N48-C1-MM/Cayley-Hamilton/General-D15, steel current map and imperfection contract
+4. recompute Z6
+5. recompute Z4 as same-a/b control
+6. accept the mechanism only if Z6 changes substantially in the required direction while Z4 remains comparatively stable
 ```
 
 Frozen parent identity remains:
@@ -62,15 +67,14 @@ Frozen parent identity remains:
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
 Nguyen second-order
 R10 / N48-C1-MM / Cayley-Hamilton / General D15 unchanged
-A0 = a/500
 formal structural spatial sampling = 0
 formal structural quadrature = 0
 no Zhou/Winter calibration
 ```
 
-Current correction/audit artifacts:
+Current audit artifacts:
 
 - `semantic_v2/10_governance/20260815_1725__Z6_Q31_CAUSAL_RETRACTION_AND_VARIATIONAL_CONSISTENCY__LOCK.md`
 - `semantic_v2/60_validation/steel_shell/20260815_1731__NZSCCM__Z6__ASPECT_RATIO_AND_HALFWAVE_IDENTITY__AUDIT.md`
 
-The earlier q31 artifacts remain historical diagnostics only. The current next task is a no-theory-change audit of the squat-panel halfwave/normalization chain followed by an unchanged-method Group-4 aspect-ratio sweep.
+The boundary mismatch is a proven formulation inconsistency. Its quantitative responsibility for the approximately -24.5% Z6 Pu gap is still open until the boundary-admissible same-theory rerun is completed.
