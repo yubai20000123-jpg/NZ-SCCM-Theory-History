@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-08-15T16:47:00+08:00",
+  "identity": "ZERO_SPATIAL_HIGHER_HARMONIC_FIRST_VARIATION_DIAGNOSTIC",
+  "frozen": {
+    "R10": "unchanged",
+    "N48_C1_MM": "unchanged",
+    "CH": "unchanged",
+    "D15": "unchanged",
+    "Nguyen_second_order": "unchanged",
+    "A0": "a/500",
+    "outer_shell_current_map": "unchanged local progressive radial cap",
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0
+  },
+  "mode_definition": {
+    "q31": "m=3 longitudinal, n=1 transverse; w31=b*q31*sin(X)*sin(3Y)",
+    "q13": "m=1 longitudinal, n=3 transverse; w13=b*q13*sin(3X)*sin(Y)"
+  },
+  "cross_case": [
+    {"case":"S0_Z6","lambda":1.434106851,"P_MN":37.50942609,"q31":{"Rc_Nmm":10062048413.691584,"Rs_Nmm":1313588676.9854152,"R_Nmm":11375637090.676998,"eta":0.02527284089289612},"q13":{"Rc_Nmm":-1274070821.4911516,"Rs_Nmm":-221450624.6688539,"R_Nmm":-1495521446.1600056,"eta":0.0033225458283731497}},
+    {"case":"S4","lambda":1.362514936,"P_MN":38.167408,"q31":{"Rc_Nmm":8097065839.407341,"Rs_Nmm":596618635.6915227,"R_Nmm":8693684475.098864,"eta":0.019980500151450205},"q13":{"Rc_Nmm":-383178267.7436702,"Rs_Nmm":-110885229.51200634,"R_Nmm":-494063497.25567657,"eta":0.0011354950608131892}},
+    {"case":"S3","lambda":1.215388248,"P_MN":39.6080074,"q31":{"Rc_Nmm":3873539949.08527,"Rs_Nmm":144020948.3411838,"R_Nmm":4017560897.4264536,"eta":0.01014330475364043},"q13":{"Rc_Nmm":542223570.7550308,"Rs_Nmm":-12459756.79512412,"R_Nmm":529763813.95990664,"eta":0.0013375169536044538}}
+  ],
+  "z6_branch": [
+    {"D":0.68,"q11":0.00557366,"P_MN":37.44887,"R31_Nmm":10860163117.679142,"eta31":0.024166646233649468,"R13_Nmm":-1332098115.0246394,"eta13":0.0029642597026840406},
+    {"D":0.7,"q11":0.00583137,"P_MN":37.50667,"R31_Nmm":11280322914.582813,"eta31":0.025062926395453603,"R13_Nmm":-1465926706.74973,"eta13":0.0032570355858254235},
+    {"D":0.705,"q11":0.0058975999,"P_MN":37.50942609,"R31_Nmm":11375637090.676998,"eta31":0.02527284089289612,"R13_Nmm":-1495521446.1600056,"eta13":0.0033225458283731497}
+  ],
+  "z6_local_q31_tangent_predictor": {
+    "q31_minus": -1e-05,
+    "R31_minus_Nmm": 11030990392.18103,
+    "P_minus_MN": 37.518612976674305,
+    "q31_plus": 1e-05,
+    "R31_plus_Nmm": 11719842530.181442,
+    "P_plus_MN": 37.502766786952925,
+    "R31_zero_Nmm": 11375637090.86872,
+    "K33_centered_Nmm_per_q": 34442606900020.598,
+    "linear_Newton_q31": -0.00033027805136497714,
+    "linear_Newton_q31_over_q11": -0.056002112209235684,
+    "dP_dq31_MN_per_q": -792.3094860689871,
+    "direct_linear_deltaP_MN_at_predictor": 0.2616824331368516,
+    "status": "LOCAL_TANGENT_PREDICTOR_ONLY; not a two-mode equilibrium or Pu result"
+  },
+  "finite_q31_attempt_gate": {
+    "q31_minus_2e4": {"P_MN_approx":40.40365,"R11_Nmm_approx":-2095000000.0,"R31_Nmm_approx":19437000000.0,"status":"not equilibrium"},
+    "q31_minus_3e4": {"P_MN_approx":107.4564,"R11_Nmm_approx":-52752000000.0,"R31_Nmm_approx":391890000000.0,"status":"physically impossible coefficient-space breakdown; rejected"},
+    "decision": "full finite-q31 coefficient composition not trusted beyond first-variation/tangent neighborhood; no fake multimode Pu released"
+  }
+}
