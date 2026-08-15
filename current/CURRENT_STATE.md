@@ -1,112 +1,117 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 21:34 +08:00  
+**Updated:** 2026-08-15 21:44 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260815_2134__NZSCCM__PROJECT__CURRENT_STATE_MINIMAL_FVK_MEMBRANE_COMPLETION__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260815_2144__NZSCCM__PROJECT__CURRENT_STATE_R20_R02_PROJECTION_AND_MEMBRANE_ACTIVATION__SEMANTIC_INDEX.md`
 
-## 21:34 single-halfwave FvK membrane-completion gate
+## 21:44 R20/R02 existing-state D15 projection gate
 
 This stage executed **no new Pu, no new nonlinear root and no D>0.60 continuation**.
 
-Locked findings:
+At the certified Z6 boundary-warp parent state
 
 ```text
-NGUYEN_EQ6_3_SECOND_ORDER_GEOMETRIC_SOURCE = PRESENT
-ONE_CONTINUOUS_COMPLETE_HALFWAVE = RETAIN
-CURRENT_DQC_EXACT_FVK_MEMBRANE_SOURCE_COMPLETENESS = FAIL
-FAILURE = IN-PLANE FUNCTION-SPACE RANK DEFICIENCY
-BOUNDARY_WARP_c = RETAIN AS NECESSARY BOUNDARY-ADMISSIBLE DIRECTION
-MINIMUM_NEW_IN_PLANE_DIRECTIONS = p20 + p02
-MEMBRANE_UNKNOWN_VECTOR = [c,p20,p02]^T
-MEMBRANE_JACOBIAN = FLAT 3x3
-GENERAL_D15 = UNCHANGED
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-NEW_Pu = NONE
+D=.50
+q=.007244278905
+c=-.0154563484942
 ```
 
-The exact reason is that the independent in-plane virtual space retained by `D+c` contains X-harmonics 0 and 1, while the single `(1,1)` Nguyen/FvK out-of-plane halfwave forces independent membrane redistribution content associated with `cos(2X)` and `cos(2Y)`. No exact linear combination of the existing `D` and `c` directions can span both source directions.
-
-Minimum admissible analytic completion:
+the unchanged R10/N48/Cayley-Hamilton + local steel + General D15 evaluator reproduces
 
 ```text
-p20:
- U20=b/(2pi) sin(2X) sin^2(Y)
- V20=b^2/(4pi a) cos(2X) sin(2Y)
- e20x=cos(2X) sin^2(Y)
- e20y=(k^2/2) cos(2X) cos(2Y)
- gamma20=0
-
-p02:
- U02=0
- V02=a/(2pi) sin(2Y)
- e02x=0
- e02y=cos(2Y)
- gamma02=0
+P  = 37.34514010 MN
+Rq = +0.00137125 MN mm
+Rc = +0.00009898 MN mm
 ```
 
-Both warping fields vanish on the loaded edges and are finite polynomial fields in `sin X, sin Y`, hence they enter the same General D15 exact-moment engine with zero new structural points.
+while the two newly admissible single-halfwave FvK membrane projections are
 
-At fixed `(D,q)` the minimum membrane subsystem is now defined as
+```text
+R20 = -19.48685822 MN mm
+R02 = -23.47348406 MN mm
+```
+
+with
+
+```text
+R20c=-18.98676026, R20s=-0.50009796 MN mm
+R02c=-33.62196168, R02s=+10.14847762 MN mm
+```
+
+Concrete coefficient-pruning and steel-cap degree checks confirm these nonzero projections are robust.
+
+Therefore the 21:34 function-space conclusion is now confirmed on the actual nonlinear current state:
+
+```text
+DQC_STATIONARY_IN_p20 = FAIL
+DQC_STATIONARY_IN_p02 = FAIL
+CURRENT_DQC_POSTBUCKLING_MEMBRANE_COMPLETENESS = FAIL_CONFIRMED
+MINIMAL_FVK_MEMBRANE_SYSTEM = ACTIVATE
+```
+
+The active membrane vector is
 
 ```text
 m=[c,p20,p02]^T
 Rm=[Rc,R20,R02]^T=0
-Jmm=dRm/dm   # flat 3x3
 ```
 
-with directional/static condensation
+with a flat `3x3` membrane Jacobian and directional/static condensation into the scalar `Rq=0` equation.
+
+All added virtual strains remain finite polynomials in `sin X,sin Y`; the formal structural integral engine remains General D15 with
 
 ```text
-dm/dq=-Jmm^{-1}Jmq
-Lcond=Rq,q-Rq,m Jmm^{-1}Jm,q.
+N_formal_spatial_sampling=0
+N_formal_spatial_quadrature=0
+N_formal_spatial_subdomains=1
 ```
 
-This is a minimum FvK-source-complete Ritz membrane system; it is not yet claimed to be a proof of globally exact nonlinear in-plane PDE completeness for every state.
+The retained one-complete-out-of-plane-halfwave and Nguyen second-order kinematics are unchanged. No out-of-plane multimode expansion is activated.
 
-## Existing Z6 states retained unchanged for the next projection gate
+## Existing connected-state projection trend
 
 ```text
-D=.50: q=.007244278905, c=-.0154563484942, P=37.345137133 MN, certified Rq/Rc checkpoint
-D=.55: q=.008198205,    c=-.02004071,      P=38.41062 MN, connected near-equilibrium
-D=.60: q=.009177472,    c=-.02655088,      P=39.12698 MN, connected near-equilibrium
+D=.50: R20=-19.48686, R02=-23.47348 MN mm  # formal gate state
+D=.55: R20=-22.12116, R02=-28.14891 MN mm  # diagnostic only
+D=.60: R20=-24.68521, R02=-33.43076 MN mm  # diagnostic only
 ```
+
+D=.55/.60 remain previously stored near-equilibrium parent states; they are not used as strict certificates.
 
 Corrected original-Z6 Pu remains **NOT SOLVED**.
 
 ## Current next execution
 
 ```text
-EXISTING_STATE_R20_R02_D15_PROJECTION_GATE
+FIXED_D050_COUPLED_q_c_p20_p02_EQUILIBRIUM
 ```
 
-At the already stored D=.50/.55/.60 states, evaluate
+At fixed `D=.50`, solve
 
 ```text
-R20 = integral sigma : epsilon_,p20 dV
-R02 = integral sigma : epsilon_,p02 dV
+Rq=0
+Rc=0
+R20=0
+R02=0
 ```
 
-using the frozen R10/N48/Cayley-Hamilton + local steel current operator and the same General D15 exact moments. No new Pu is allowed before this residual-projection gate is inspected.
+using the flat `3x3` membrane condensation for `[c,p20,p02]` plus scalar q equilibrium. Only after this fixed-D checkpoint is reproducible may D continuation resume. No Pu should be inferred before that checkpoint.
 
-## 21:34 artifacts
+## 21:44 artifacts
 
-- `semantic_v2/10_governance/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION_NO_PU__LOCK.md`
-- `semantic_v2/20_theory/nc_steel_shell_panel/20260815_2134__NZSCCM__SINGLE_HALFWAVE_MINIMAL_FVK_MEMBRANE_COMPLETION__THEORY.md`
-- `semantic_v2/40_execution/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__SYMBOLIC_REPRO.py`
-- `semantic_v2/40_execution/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__EXECUTION_REPORT.md`
-- `semantic_v2/50_results/steel_shell/20260815_2134__NZSCCM__MINIMAL_FVK_MEMBRANE_COMPLETION__SYMBOLIC_GATE_RESULT.csv`
+- `semantic_v2/10_governance/20260815_2144__NZSCCM__R20_R02_PROJECTION_GATE_AND_MEMBRANE_SYSTEM_ACTIVATION__LOCK.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2144__NZSCCM__EXISTING_STATE_R20_R02_D15_PROJECTION__REPRO.py`
+- `semantic_v2/40_execution/steel_shell/20260815_2144__NZSCCM__R20_R02_D050_PROJECTION_CONVERGENCE.csv`
+- `semantic_v2/40_execution/steel_shell/20260815_2144__NZSCCM__EXISTING_STATE_R20_R02_D15_PROJECTION__EXECUTION_REPORT.md`
+- `semantic_v2/50_results/steel_shell/20260815_2144__NZSCCM__EXISTING_STATE_R20_R02_D15_PROJECTION__RESULT.csv`
 
-## Parent 21:18 audit retained
+## Parent stages retained
 
-`semantic_v2/00_index/20260815_2118__NZSCCM__PROJECT__CURRENT_STATE_POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT__SEMANTIC_INDEX.md`
-
-The 21:18 source audit established that Nguyen second-order kinematics already contains the postbuckling geometric source, while full in-plane membrane equilibrium completeness was open. The 21:34 stage closes that specific question for the current `D+c` space: exact completeness fails, and the minimum analytic completion has now been established.
+- 21:34 minimum analytic membrane completion: `20260815_2134__NZSCCM__PROJECT__CURRENT_STATE_MINIMAL_FVK_MEMBRANE_COMPLETION__SEMANTIC_INDEX.md`
+- 21:18 Nguyen/FvK source and compatibility audit: `20260815_2118__NZSCCM__PROJECT__CURRENT_STATE_POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT__SEMANTIC_INDEX.md`
 
 ## Frozen parent identity
 
