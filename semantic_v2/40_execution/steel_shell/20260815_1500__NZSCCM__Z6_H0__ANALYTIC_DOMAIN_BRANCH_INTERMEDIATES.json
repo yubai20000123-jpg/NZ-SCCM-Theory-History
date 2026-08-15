@@ -1,0 +1,138 @@
+{
+  "timestamp": "2026-08-15T15:00:00+08:00",
+  "identity": "Z6_H0_ANALYTIC_DOMAIN_BRANCH_PREFLIGHT_ZERO_SPATIAL_DISCRETIZATION",
+  "governance": {
+    "formal_domain": "ONE_CONTINUOUS_COMPLETE_HALFWAVE",
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "structural_calibration": false,
+    "R10": "FROZEN",
+    "N48_degree": 48,
+    "N48_order_changed": false,
+    "general_D15": true,
+    "A0": "a/500",
+    "outer_shell": "local progressive radial-cap current-map diagnostic",
+    "H0_web_phase": "continuous homogenized longitudinal ideal-EP radial-cap phase"
+  },
+  "Z6": {
+    "a_mm": 9000.0,
+    "ell_mm": 9000.0,
+    "b_mm": 12000.0,
+    "h_mm": 130.0,
+    "tc_mm": 122.0,
+    "ts_mm": 4.0,
+    "ls_mm": 200.0,
+    "rho_w": 0.02,
+    "q0": 0.0015,
+    "eps0": 0.0018712490394580678,
+    "nu_c": 0.18,
+    "k_b_over_ell": 1.3333333333333333,
+    "Pyth_H0_MN": 88.089888,
+    "Zhou_lower_MN": 49.672435936948
+  },
+  "analytic_material_coordinate": {
+    "M": "pi^2/eps0*(q0*q+0.5*q^2)",
+    "B": "pi^2*tc/(2*eps0*b)*q",
+    "C1": "1+nu_c*k^2",
+    "lambda_min": "-D-(nu_c+k^2)*B/(1-nu_c^2)",
+    "x_star": "C1*B/(2*M)",
+    "lambda_max_if_xstar_le_1": "(M+C1^2*B^2/(4*M))/(1-nu_c^2)",
+    "lambda_max_if_xstar_gt_1": "C1*B/(1-nu_c^2)",
+    "checkpoints": {
+      "D0p705_q0p006": {"lambda_min": -1.030488410338, "lambda_max": 0.228983740384, "x_star": 0.7455556},
+      "D0p705_q0p008": {"lambda_min": -1.138984547117, "lambda_max": 0.329087007199, "x_star": 0.61},
+      "D0p80_q0p009": {"lambda_min": -1.288232615507, "lambda_max": 0.386385430412}
+    }
+  },
+  "compiler_intervals": {
+    "old": {
+      "interval": [-1.15, 0.23],
+      "T_minimax": 0.1481534768,
+      "decision": "INSUFFICIENT_FOR_NEW_H0_BRANCH"
+    },
+    "minimal_same_D": {
+      "interval": [-1.15, 0.30],
+      "U_max_error": 0.00943824007,
+      "C_max_error": 0.02250351910,
+      "T_max_error": 0.18210159338,
+      "T7_max_error": 0.26651831111,
+      "T_minimax": 0.180518510476,
+      "decision": "PASS_FOR_D0p705_BRANCH_LOCATION"
+    },
+    "intermediate": {
+      "interval": [-1.15, 0.32],
+      "U_max_error": 0.01555410796,
+      "C_max_error": 0.02270344745,
+      "T_max_error": 0.19623879733,
+      "T7_max_error": 0.31445071389,
+      "T_minimax": 0.194559689469
+    },
+    "unified_exploratory": {
+      "interval": [-1.30, 0.40],
+      "U_max_error": 0.01949437224,
+      "C_max_error": 0.02783876100,
+      "T_max_error": 0.25441812192,
+      "T7_max_error": 0.25447111106,
+      "T_minimax": 0.251526811424,
+      "coverage": "approximately D<=0.80,q<=0.009 for Z6 analytic envelope",
+      "decision": "PASS_FOR_ENGINEERING_BRANCH_DIAGNOSTIC_NOT_STRICT_CERTIFICATE"
+    }
+  },
+  "old_H0_state_reproduction": {
+    "D": 0.705,
+    "q": 0.0058975999,
+    "Pc_full_MN": 13.32145961756634,
+    "Pc_eff_98pct_MN": 13.055030425215014,
+    "Pw_MN": 7.26267910503132,
+    "Psh_MN": 24.188474667314114,
+    "Ptotal_MN": 44.506184197560444,
+    "Rq_Nmm": -1658145009.891
+  },
+  "same_D_recovered_equilibrium": {
+    "minimal_interval": {
+      "D": 0.705,
+      "q_root_approx": 0.0073478,
+      "P_MN_approx": 40.2288,
+      "lambda_min": -1.103603956914,
+      "lambda_max": 0.294363429907,
+      "x_star": 0.648447,
+      "note": "connected Rq=0 locator, not final Pu"
+    },
+    "unified_interval": {
+      "D": 0.705,
+      "q_root_approx": 0.00735612,
+      "P_MN_approx": 40.38155,
+      "note": "connected Rq=0 locator, not final Pu"
+    },
+    "domain_choice_sensitivity_MN_approx": 0.153
+  },
+  "connected_branch_unified_interval": [
+    {"D": 0.65, "q_root_approx": 0.00645, "P_MN_approx": 39.56},
+    {"D": 0.705, "q_root_approx": 0.00735612, "P_MN_approx": 40.38155},
+    {"D": 0.72, "q_root_approx": 0.0076155, "P_MN_approx": 40.45},
+    {"D": 0.73, "q_root_approx": 0.00779, "P_MN_approx": 40.53},
+    {"D": 0.74, "q_root_approx": 0.007904, "P_MN_approx": 40.84},
+    {"D": 0.76, "q_root_approx": 0.007995, "P_MN_approx": 41.72},
+    {"D": 0.78, "q_root_approx": 0.008153, "P_MN_approx": 42.26}
+  ],
+  "outer_shell_coefficient_gate": {
+    "radial_material_interval": [0.0, 4.0],
+    "radial_material_domain_exhausted": false,
+    "trial_VM_over_fy_near_failure": "approximately 1.30-1.34",
+    "failure_location": "approximately D=0.80, q>=0.0081",
+    "degree24_plus": "non-smooth/sign-changing/catastrophic coefficient-space Rq and force resultants",
+    "lower_degree_status": "locator/sensitivity only; not promoted to production",
+    "decision": "FAIL_FAST"
+  },
+  "gate_decision": {
+    "concrete_analytic_domain_preflight": "PASS",
+    "same_R10_wider_domain_compilation": "PASS_FOR_DIAGNOSTIC_CONTINUATION",
+    "connected_H0_Rq_branch_recovery": "PARTIAL_THROUGH_D_APPROX_0p78",
+    "outer_shell_radial_cap_coefficient_composition": "FAIL_AT_DEEP_Q",
+    "full_directional_KZ": "NOT_RELEASED",
+    "L_event": "NOT_RELEASED",
+    "final_Pu": "NOT_RELEASED",
+    "current_next_task": "Z6_H0_SHELL_RADIAL_CAP_ANALYTIC_COMPILER_STABILIZATION_THEN_FULL_KZ"
+  }
+}
