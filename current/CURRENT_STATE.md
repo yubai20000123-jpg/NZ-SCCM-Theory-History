@@ -1,15 +1,15 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 22:35 +08:00  
+**Updated:** 2026-08-15 23:06 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260815_2235__NZSCCM__PROJECT__CURRENT_STATE_D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260815_2306__NZSCCM__PROJECT__CURRENT_STATE_D055_DIRECTIONAL_CONTINUATION_REPRESENTATION_GATE__SEMANTIC_INDEX.md`
 
-## 22:35 D=.50 directional moment-first certificate
+## 23:06 D=.55 connected continuation attempt
 
-This stage executed **no Pu and no D>.50 continuation**.
+The 22:35 D=.50 directional moment-first certificate remains valid. This stage executed the next connected-continuation task but **did not solve Pu**.
 
 Frozen identity remains:
 
@@ -26,105 +26,85 @@ no Zhou/Winter calibration
 no out-of-plane multimode production expansion
 ```
 
-### Directional moment-first implementation
-
-The current evaluator retains the same Cayley-Hamilton material pair `S=A I+B Y`, but contracts A/B directly with the low-order q,c,p20,p02 virtual-strain weights using exact Chebyshev product moments. It no longer materializes full `Sxx,Syy` and full stress-direction product fields for every residual.
-
-The formal structural integral remains General D15. No spatial quadrature was introduced.
-
-### Parent reproduction at inherited tolerance
-
-At `D=.50`, `q=.007244278905`, `c=-.0154563484942`, `p20=p02=0`, concrete pruning `7e-7`:
+### Certified start at D=.50
 
 ```text
-P=37.3451401318 MN
-Rq=+0.0013815858 MN mm
-Rc=+0.0000996113 MN mm
-R20=-19.4868584406 MN mm
-R02=-23.4734835682 MN mm
-```
-
-Thus the old q+c state remains non-stationary in the FvK membrane directions.
-
-### Parent-tolerance augmented certificate
-
-At the same inherited `7e-7` concrete pruning tolerance:
-
-```text
-D=.50
-q=0.008003063422252722
-c=-0.07766034129851779
-p20=-0.06065823792663306
-p02=0.16525678113314005
+q=.008003063422252722
+c=-.07766034129851779
+p20=-.06065823792663306
+p02=.16525678113314005
 P=37.6899290259 MN
-Pc=21.8783795851 MN
-Ps=15.8115494408 MN
-Rq=-0.3465589605 MN mm
-Rc=-0.0055395219 MN mm
-R20=+0.0076892296 MN mm
-R02=+0.0024794016 MN mm
 ```
 
-Residual/internal-cancellation ratios:
+### D=.55 using the D=.50 coordinates
+
+At concrete pruning tol=5e-4 the same directional evaluator completes in about 32.11 s:
 
 ```text
-Rq  =0.00581744%
-Rc  =0.02082154%
-R20 =0.09636847%
-R02 =0.00986352%
+P=42.98592845 MN
+Pc=25.14107040 MN
+Ps=17.84485801 MN
+Rq=-2299.87338768 MN mm
+Rc=-35.63554892 MN mm
+R20=+2.83556533 MN mm
+R02=-6.46484800 MN mm
 ```
 
-Locked status:
+Thus a connected q,c,p20,p02 update is mandatory; the D=.50 coordinates are not a D=.55 equilibrium.
+
+### Predictor and representation gate
+
+Using the already stored D=.50 4x4 Jacobian only as a continuation predictor gives approximately
 
 ```text
-D050_PARENT_TOLERANCE_DIRECTIONAL_EQUILIBRIUM_CERTIFICATE = PASS
-engineering gate = max normalized residual < 0.1%
-THEOREM_LEVEL_EXACT_ZERO_RESIDUAL = NOT CLAIMED
+q=.009376796639
+c=-.112485462244
+p20=-.094779641612
+p02=.245527468599
 ```
 
-Current-runtime certificate evaluation at `7e-7` completed in about `36.7 s`; the previous augmented full-stress implementation had exceeded the 90 s execution window near this tolerance. The D=.50 representation/runtime gate is therefore cleared for the current engineering gate, although dense `buildS(K1,K2)` fill-in still remains internally.
-
-### Why the load has not jumped dramatically
-
-The valid comparison is at the **same D=.50**:
+A non-integral material-domain audit gives principal normalized lambda about
 
 ```text
-parent D+q+c            P=37.3451401318 MN
-augmented certificate   P=37.6899290259 MN
-Delta P=+0.3447888941 MN = +0.92325%
+[-.90064,+.22428]
 ```
 
-Internally the redistribution is larger:
+which remains inside inherited N48 `[-1.75,+.45]`.
+
+However the same-expression evaluation of this predictor through the inherited dense `buildS(K1,K2)` did not finish within 180 s. An internal smaller bridge at D=.51 gives the same qualitative failure after only a small predictor correction, while its material-domain range remains legal.
+
+Therefore:
 
 ```text
-Pc: +0.80833 MN
-Ps: -0.46354 MN
+D055_CONNECTED_CHECKPOINT = NOT_REACHED
+Pu = NOT_SOLVED
+D_CONTINUATION = BLOCKED
+MATERIAL_DOMAIN_ILLEGALITY = NO EVIDENCE
+FORMAL_D15_FAILURE = NO
+FAILURE = DENSE_CAYLEY_HAMILTON_PAIR_REPRESENTATION_RUNTIME_GATE
 ```
 
-so concrete and steel changes partially cancel in the global axial resultant. The historical old reduced-branch `Pu≈37.50943 MN` is a peak on another state/path and is not the same quantity as the present fixed-D checkpoint. Its numerical closeness to `37.69 MN` is not evidence that the FvK correction has no effect.
-
-Corrected Pu remains **NOT SOLVED**.
+The 22:35 directional residual contraction cleared the full-stress-product bottleneck at D=.50, but the high-order Cayley-Hamilton pair itself is still generated as dense A/B coefficient boxes. Connected coordinate movement makes this remaining `buildS` representation bottleneck dominant.
 
 ## Current next execution
 
 ```text
-D055_AUGMENTED_DIRECTIONAL_MOMENT_FIRST_CONNECTED_CHECKPOINT
+CAYLEY_HAMILTON_MOMENT_RECURSIVE_PAIR_WITHOUT_DENSE_BUILDS_AT_D055
 ```
 
-Use the certified D=.50 q,c,p20,p02 state as the connected initial state. Only after a connected D-path is rebuilt may a new Pu be identified.
+Only representation/evaluation ordering may change. The physical q,c,p20,p02 system, R10/N48/Cayley-Hamilton material identity and General D15 formal integration remain frozen. The new evaluator must first reproduce D=.50 and then rebuild D=.51→.55 connected checkpoints before any Pu search resumes.
 
-## 22:35 artifacts
+## 23:06 artifacts
 
-- `semantic_v2/10_governance/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__LOCK.md`
-- `semantic_v2/20_theory/nc_steel_shell_panel/20260815_2235__NZSCCM__DIRECTIONAL_MOMENT_FIRST_AUGMENTED_FVK_RESIDUAL_CONTRACTION__THEORY.md`
-- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__TOLERANCE_CONVERGENCE.csv`
-- `semantic_v2/40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__REPRO.py`
-- `semantic_v2/50_results/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__RESULT.csv`
+- `semantic_v2/10_governance/20260815_2306__NZSCCM__D055_DIRECTIONAL_CONTINUATION_REPRESENTATION_GATE__LOCK.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2306__NZSCCM__D055_DIRECTIONAL_CONTINUATION__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2306__NZSCCM__D055_DIRECTIONAL_CONTINUATION__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260815_2306__NZSCCM__D055_DIRECTIONAL_CONTINUATION__REPRO.py`
+- `semantic_v2/50_results/steel_shell/20260815_2306__NZSCCM__D055_DIRECTIONAL_CONTINUATION__RESULT.csv`
 
 ## Parent stages retained
 
+- 22:35 D=.50 directional moment-first certificate
 - 22:20 updated FvK theory and expansion audit
 - 21:53 fixed-D augmented near-equilibrium/runtime gate
 - 21:44 R20/R02 projection gate
