@@ -1,0 +1,103 @@
+{
+  "timestamp": "2026-08-15T21:34:00+08:00",
+  "identity": "NO_PU_MINIMAL_SINGLE_HALFWAVE_FVK_MEMBRANE_COMPLETION",
+  "frozen_parent": {
+    "domain": "ONE_CONTINUOUS_COMPLETE_HALFWAVE",
+    "kinematics": "NGUYEN_SECOND_ORDER",
+    "material": "R10_N48_CAYLEY_HAMILTON_UNCHANGED",
+    "moment_engine": "GENERAL_D15_UNCHANGED",
+    "A0": "a/500",
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0,
+    "formal_spatial_subdomains": 1,
+    "new_Pu": false,
+    "new_root": false
+  },
+  "z6_reference_geometry": {
+    "a_mm": 9000.0,
+    "b_mm": 12000.0,
+    "k_b_over_a": 1.3333333333333333,
+    "k2": 1.7777777777777777,
+    "h_mm": 130.0,
+    "tc_mm": 122.0,
+    "ts_mm": 4.0,
+    "q0": 0.0015,
+    "A0_mm": 18.0,
+    "eps0": 0.0018712490394580678
+  },
+  "existing_accepted_or_connected_states_only": [
+    {"D":0.50,"q":0.007244278905,"c":-0.0154563484942,"P_MN":37.345137133,"status":"certified_Rq_Rc_checkpoint"},
+    {"D":0.55,"q":0.008198205,"c":-0.02004071,"P_MN":38.41062,"status":"connected_near_equilibrium"},
+    {"D":0.60,"q":0.009177472,"c":-0.02655088,"P_MN":39.12698,"status":"connected_near_equilibrium"}
+  ],
+  "existing_in_plane_basis": {
+    "D": {
+      "ex_normalized": "0",
+      "ey_normalized": "-1",
+      "gamma_normalized": "0"
+    },
+    "c": {
+      "ex_normalized": "(4/pi)*xs*ys^2",
+      "ey_normalized": "(8*k^2/pi)*xs*(1-2*ys^2)",
+      "gamma_normalized": "0",
+      "z6_polynomial_coefficients": {
+        "ex_x1y2": 1.2732395447351628,
+        "ey_x1y0": 4.527073936836134,
+        "ey_x1y2": -9.054147873672267
+      }
+    }
+  },
+  "missing_FvK_source_directions": ["cos(2X)", "cos(2Y)"],
+  "span_audit": {
+    "D_plus_c_can_exactly_span_cos2X_direction": false,
+    "D_plus_c_can_exactly_span_pure_cos2Y_direction": false,
+    "reason": "X-harmonic/function-space rank deficiency"
+  },
+  "new_minimal_basis": {
+    "p20": {
+      "U_length": "b/(2*pi)*sin(2X)*sin(Y)^2",
+      "V_length": "b^2/(4*pi*a)*cos(2X)*sin(2Y)",
+      "ex_normalized": "cos(2X)*sin(Y)^2 = ys^2-2*xs^2*ys^2",
+      "ey_normalized": "(k^2/2)*cos(2X)*cos(2Y)",
+      "gamma_normalized": "0",
+      "z6_polynomial_coefficients": {
+        "ex_y2": 1.0,
+        "ex_x2y2": -2.0,
+        "ey_const": 0.8888888888888888,
+        "ey_x2": -1.7777777777777777,
+        "ey_y2": -1.7777777777777777,
+        "ey_x2y2": 3.5555555555555554
+      }
+    },
+    "p02": {
+      "U_length": "0",
+      "V_length": "a/(2*pi)*sin(2Y)",
+      "ex_normalized": "0",
+      "ey_normalized": "cos(2Y)=1-2*ys^2",
+      "gamma_normalized": "0",
+      "polynomial_coefficients": {"ey_const":1.0,"ey_y2":-2.0}
+    }
+  },
+  "symbolic_checks": {
+    "p20_u_loaded_edges_zero": true,
+    "p20_v_loaded_edges_zero": true,
+    "p02_v_loaded_edges_zero": true,
+    "p20_linear_shear_zero": true,
+    "p02_linear_shear_zero": true,
+    "rank_D_c_p20_p02_generic_k_nonzero": 4,
+    "D15_polynomial_compatibility": true
+  },
+  "minimal_membrane_system": {
+    "m": ["c","p20","p02"],
+    "residuals": ["Rc","R20","R02"],
+    "Jmm_shape": [3,3],
+    "condensation": "dm/dq=-Jmm^{-1}*Jmq; Lcond=Rq,q-Rq,m*Jmm^{-1}*Jm,q"
+  },
+  "not_executed_in_this_stage": [
+    "R20_R02_current_operator_projection_at_existing_states",
+    "solve_Rc_R20_R02",
+    "new_q_or_c_or_p20_or_p02_root",
+    "new_Pu",
+    "D_continuation_after_0.60"
+  ]
+}
