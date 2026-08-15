@@ -8,45 +8,45 @@ A legacy path or filename is a locator only. It does not confer current/supersed
 
 Use first:
 
-`20260815_2220__NZSCCM__PROJECT__CURRENT_STATE_UPDATED_FVK_THEORY_AND_EXPANSION_AUDIT__SEMANTIC_INDEX.md`
+`20260815_2235__NZSCCM__PROJECT__CURRENT_STATE_D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__SEMANTIC_INDEX.md`
 
-This is the current operational entry after consolidating the updated single-halfwave augmented FvK postbuckling theory and auditing the observed implementation “inflation”.
-
-Current locked interpretation:
+Current locked status:
 
 ```text
-membrane_coordinates = [c,p20,p02]
-flat_membrane_Jacobian = 3x3
-General_D15 = UNCHANGED
-formal_spatial_sampling = 0
-formal_spatial_quadrature = 0
-formal_spatial_subdomains = 1
-
-PHYSICAL_THEORY_DOF_INFLATION = CONTROLLED_MINIMUM
-KINEMATIC_POLYNOMIAL_DEGREE_INFLATION = NO
-LOW_ORDER_INVARIANT_SUPPORT_EXPLOSION = NO
-DENSE_HIGH_ORDER_BOUNDING_BOX_FILL_IN = YES
-STRICT_D050_CERTIFICATE = NOT_REACHED
-Pu = NOT_SOLVED
-D_CONTINUATION = BLOCKED
+D050_PARENT_TOLERANCE_DIRECTIONAL_EQUILIBRIUM_CERTIFICATE = PASS
+DIRECTIONAL_MOMENT_FIRST_V1 = ACTIVE
+GENERAL_D15 = UNCHANGED
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+Pu = NOT SOLVED
 ```
 
-The 22:20 audit refines the 21:53 runtime diagnosis: the p20/p02 completion does not enlarge the low-order polynomial degree family. The expensive behavior comes from high-order numerical tails retaining larger **dense rectangular coefficient boxes** in the inherited N48 implementation; `trim(A,tol)` is an axis-tail box trimmer, not element-wise sparse coefficient pruning.
+The 22:35 stage restores the inherited augmented concrete pruning level `7e-7` at D=.50 and clears the current representation/runtime gate using exact directional Chebyshev-moment contraction. It does not claim theorem-level exact-zero residual and it does not continue D.
 
-The active next execution remains:
+Certificate state:
 
-`DIRECTIONAL_MOMENT_FIRST_AUGMENTED_MEMBRANE_EVALUATOR_AT_D050`
+```text
+D=.50
+q=.008003063422252722
+c=-.07766034129851779
+p20=-.06065823792663306
+p02=.16525678113314005
+P=37.6899290259 MN
+```
 
-Its purpose is to reproduce/certify D=.50 by computing only the required moment contractions for `P,Rq,Rc,R20,R02` and the flat Jacobian, without changing the physical theory or formal zero-spatial-quadrature identity.
+Current next execution:
+
+`D055_AUGMENTED_DIRECTIONAL_MOMENT_FIRST_CONNECTED_CHECKPOINT`
 
 ## Repository semantic read order
 
-1. `20260815_2220__NZSCCM__PROJECT__CURRENT_STATE_UPDATED_FVK_THEORY_AND_EXPANSION_AUDIT__SEMANTIC_INDEX.md`
-2. `../10_governance/20260815_2220__NZSCCM__AUGMENTED_FVK_THEORY_AND_EXPANSION_AUDIT__LOCK.md`
-3. `../20_theory/nc_steel_shell_panel/20260815_2220__NZSCCM__UPDATED_SINGLE_HALFWAVE_AUGMENTED_FVK_POSTBUCKLING_THEORY__THEORY.md`
-4. `../60_validation/steel_shell/20260815_2220__NZSCCM__UPDATED_FVK_THEORY_AND_EXPANSION__AUDIT.md`
-5. `../40_execution/steel_shell/20260815_2220__NZSCCM__UPDATED_FVK_THEORY_EXPANSION_AUDIT__PARAMS_AND_INTERMEDIATES.json`
-6. `../50_results/steel_shell/20260815_2220__NZSCCM__AUGMENTED_FVK_EXPANSION_AUDIT__RESULT.csv`
+1. `20260815_2235__NZSCCM__PROJECT__CURRENT_STATE_D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__SEMANTIC_INDEX.md`
+2. `../10_governance/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST_CERTIFICATE__LOCK.md`
+3. `../20_theory/nc_steel_shell_panel/20260815_2235__NZSCCM__DIRECTIONAL_MOMENT_FIRST_AUGMENTED_FVK_RESIDUAL_CONTRACTION__THEORY.md`
+4. `../40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__EXECUTION_REPORT.md`
+5. `../40_execution/steel_shell/20260815_2235__NZSCCM__D050_DIRECTIONAL_MOMENT_FIRST__PARAMS_AND_INTERMEDIATES.json`
+6. `20260815_2220__NZSCCM__PROJECT__CURRENT_STATE_UPDATED_FVK_THEORY_AND_EXPANSION_AUDIT__SEMANTIC_INDEX.md`
 7. `20260815_2153__NZSCCM__PROJECT__CURRENT_STATE_D050_AUGMENTED_FVK_MEMBRANE_EQUILIBRIUM_RUNTIME_GATE__SEMANTIC_INDEX.md`
 8. `20260815_2144__NZSCCM__PROJECT__CURRENT_STATE_R20_R02_PROJECTION_AND_MEMBRANE_ACTIVATION__SEMANTIC_INDEX.md`
 9. `20260815_2134__NZSCCM__PROJECT__CURRENT_STATE_MINIMAL_FVK_MEMBRANE_COMPLETION__SEMANTIC_INDEX.md`
