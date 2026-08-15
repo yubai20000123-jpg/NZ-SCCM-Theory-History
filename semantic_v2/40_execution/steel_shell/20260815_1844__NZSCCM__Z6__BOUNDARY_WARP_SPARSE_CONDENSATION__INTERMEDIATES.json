@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-08-15T18:44:00+08:00",
+  "identity": "BOUNDARY_WARP_CURRENT_OPERATOR_COUPLED_EQUILIBRIUM_CHECKPOINT_NOT_PU",
+  "frozen": {
+    "one_complete_halfwave": true,
+    "Nguyen_second_order": true,
+    "R10_N48_CH_D15": "unchanged",
+    "A0": "a/500",
+    "formal_spatial_sampling": 0,
+    "formal_spatial_quadrature": 0
+  },
+  "Z6": {
+    "a_mm": 9000,
+    "b_mm": 12000,
+    "h_mm": 130,
+    "tc_mm": 122,
+    "q0": 0.0015,
+    "D": 0.5
+  },
+  "compiler": {
+    "degree": 48,
+    "lambda_lo": -1.75,
+    "lambda_hi": 0.45
+  },
+  "old_free_poisson_equilibrium": {
+    "model": "OLD_FREE_POISSON",
+    "D": 0.5,
+    "q": 0.0037062999527758245,
+    "c": null,
+    "steel_radial_cap_degree": 24,
+    "compiler_lo": -1.75,
+    "compiler_hi": 0.45,
+    "P_MN": 35.92887176090103,
+    "Rq_MNmm": 0.0012762452816963196,
+    "Rc_MNmm": null,
+    "Pc_MN": 18.07880867889946,
+    "Ps_MN": 17.850063082001572,
+    "status": "1DOF_Rq_EQUILIBRIUM"
+  },
+  "boundary_admissible_N1_equilibrium": {
+    "model": "BOUNDARY_ADMISSIBLE_N1",
+    "D": 0.5,
+    "q": 0.007244278905,
+    "c": -0.0154563484942,
+    "steel_radial_cap_degree": 24,
+    "compiler_lo": -1.75,
+    "compiler_hi": 0.45,
+    "P_MN": 37.345137133000435,
+    "Rq_MNmm": 0.0007223090324401856,
+    "Rc_MNmm": 0.00017287688848748804,
+    "Pc_MN": 21.07004645544355,
+    "Ps_MN": 16.275090677556886,
+    "status": "2DOF_Rq_Rc_EQUILIBRIUM_CHECKPOINT"
+  },
+  "load_change_percent": 3.941858741138171,
+  "residual_decomposition_MNmm": {
+    "Rqc": -2648.3219743392774,
+    "Rqs": 2648.32269664831,
+    "Rcc": -28.692083925998016,
+    "Rcs": 28.692256802886504
+  },
+  "status": {
+    "full_coupled_checkpoint": "PASS",
+    "Pu": "NOT_SOLVED",
+    "Z4_coupled_control": "NOT_YET_RUN",
+    "boundary_gap_explanation": "NOT_ESTABLISHED"
+  }
+}
