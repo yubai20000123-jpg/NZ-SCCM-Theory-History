@@ -1,9 +1,69 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 19:55 +08:00  
+**Updated:** 2026-08-15 21:18 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-## Z6 aspect-ratio comparator correction
+## Current operational entry
+
+`semantic_v2/00_index/20260815_2118__NZSCCM__PROJECT__CURRENT_STATE_POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT__SEMANTIC_INDEX.md`
+
+## 21:18 Nguyen/FvK postbuckling membrane-compatibility audit
+
+This stage is **NO-Pu / NO-NEW-ROOT / NO-CONTINUATION**.
+
+Locked findings:
+
+```text
+NGUYEN_EQ6_3_SECOND_ORDER_GEOMETRIC_SOURCE = PRESENT
+NGUYEN_EQ6_3_ALONE_GUARANTEES_FULL_POSTBUCKLING_EQUILIBRIUM = NO
+ONE_OUT_OF_PLANE_HALFWAVE_GENERATES_MULTIPLE_IN_PLANE_HARMONICS = YES
+OLD_DQ_FREE_POISSON_LOADED_EDGE_ADMISSIBILITY = FAIL
+BOUNDARY_WARP_DQC = NECESSARY_PARTIAL_CORRECTION
+DQC_FULL_POSTBUCKLING_MEMBRANE_EQUILIBRIUM_COMPLETENESS = NOT_CERTIFIED
+Q31_AS_PRIMARY_CAUSE = NOT_ESTABLISHED; prior causal retraction retained
+NEW_Pu_THIS_STAGE = NONE
+```
+
+For
+
+```text
+X=pi*x/b, Y=pi*y/a
+w0=A0*sinX*sinY
+wm=A*sinX*sinY
+S=A^2+2*A0*A
+```
+
+Nguyen Eq.(6.3) produces exact second-order mid-plane strain harmonics:
+
+```text
+eps_x_NL = S*pi^2/(8*b^2) [1+cos2X-cos2Y-cos2X*cos2Y]
+eps_y_NL = S*pi^2/(8*a^2) [1-cos2X+cos2Y-cos2X*cos2Y]
+gamma_xy_NL = S*pi^2/(4*a*b) sin2X*sin2Y  # engineering shear
+```
+
+Thus a single `(1,1)` out-of-plane halfwave generates `(0,0),(2,0),(0,2),(2,2)` in-plane strain content. Under the FvK compatibility operator, the incremental geometric source contains independent `(2,0)` and `(0,2)` directions plus the homogeneous membrane field required by mean load and in-plane edge conditions.
+
+The present `c` coordinate was constructed to repair Zhou loaded-edge in-plane admissibility and is mechanically valid, but `Rq=0 + Rc=0` only proves equilibrium in the retained `q,c` virtual directions. It has not been proven equivalent to the complete single-halfwave FvK membrane-redistribution solution space.
+
+Current next **theory gate**, not yet executed:
+
+```text
+SINGLE_HALFWAVE_FVK_MEMBRANE_RESIDUAL_PROJECTION_COMPLETENESS
+```
+
+If later authorized, this gate must first remain no-Pu: construct minimal analytic admissible in-plane test/basis directions associated with the `(2,0)` and `(0,2)` FvK source and Zhou in-plane boundary conditions, then evaluate generalized in-plane residual projections at already accepted states.
+
+21:18 artifacts:
+
+- `semantic_v2/60_validation/steel_shell/20260815_2118__NZSCCM__NGUYEN_FVK_POSTBUCKLING_MEMBRANE_COMPATIBILITY__AUDIT.md`
+- `semantic_v2/40_execution/steel_shell/20260815_2118__NZSCCM__SINGLE_HALFWAVE_FVK_MEMBRANE_HARMONIC_REGISTRY.csv`
+- `semantic_v2/40_execution/steel_shell/20260815_2118__NZSCCM__NGUYEN_FVK_MEMBRANE_AUDIT_EQUATION_LEDGER.json`
+- `semantic_v2/40_execution/steel_shell/20260815_2118__NZSCCM__POSTBUCKLING_MEMBRANE_AUDIT_NO_PU_EXECUTION_LOG.md`
+- `semantic_v2/60_validation/steel_shell/20260815_2118__NZSCCM__NGUYEN_FVK_SOURCE_CHAIN__REFERENCE_NOTE.md`
+- `semantic_v2/60_validation/steel_shell/20260815_2118__NZSCCM__POSTBUCKLING_MEMBRANE_AUDIT_DECISION_SUMMARY.md`
+- `semantic_v2/10_governance/20260815_2118__NZSCCM__POSTBUCKLING_MEMBRANE_COMPATIBILITY_AUDIT_BOUNDARY__LOCK.md`
+
+## Previous Z6 aspect-ratio comparator correction retained
 
 For the fixed Z6 section/material parameters
 
@@ -14,7 +74,7 @@ Ac=1,434,720 mm2, As=125,280 mm2
 Pyth=88.089888 MN
 ```
 
-changing only a gives the established energy check:
+established Zhou elastic energy check:
 
 ```text
 a/b=0.75, m=1: Pcr=42.83147561 MN, lambda=1.43410685
@@ -22,25 +82,18 @@ a/b=1.00, m=1: Pcr=39.28801472 MN, lambda=1.49738331
 a/b=1.25, m=1: Pcr=41.04137379 MN, lambda=1.46504878
 ```
 
-The Zhou elastic Pcr response is energy-consistent. Zhou Eq.5-87/5-88 is an FE-fitted lower-envelope and must not be used alone as an energy diagnostic; Winter preserves clearer Pcr sensitivity.
+Zhou elastic Pcr is energy-consistent. Zhou Eq.5-87/5-88 is an FE-fitted lower-envelope and must not be used alone as an energy diagnostic.
 
-## New a/b=1 versus a/b=2 gate
-
-For a/b=2 the controlling integer halfwave count is m=2. Hence:
+For the earlier a/b=1 versus a/b=2 audit, the correct integer halfwave count gives
 
 ```text
-a/b=1: a=12000, m=1, ell=a/m=12000 mm
-a/b=2: a=24000, m=2, ell=a/m=12000 mm
-```
-
-The two cases therefore have the same complete representative halfwave geometry and identical Zhou elastic stability input:
-
-```text
+a/b=1: a=12000, m=1, ell=12000 mm
+a/b=2: a=24000, m=2, ell=12000 mm
 Pcr = 39.288014715 MN
 lambda_n = 1.49738330617
 ```
 
-Three-way comparison:
+The retained three-way audit values were:
 
 ```text
                     a/b=1             a/b=2
@@ -49,25 +102,9 @@ Zhou Eq.5-87/5-88            49.48676675 MN    49.48676675 MN
 Winter Eq.5-86               50.18585413 MN    50.18585413 MN
 ```
 
-The NZ-SCCM audit difference is only about 0.062%, supporting the user's expectation that a/b=1 and a/b=2 should be energetically equivalent/nearly equivalent when the correct integer mode m=2 is used for a/b=2.
+The NZ values have identity `R10_DIRECT_CONTINUUM_AUDIT_ONLY`, not formal zero-quadrature production Pu.
 
-Important identity of the NZ-SCCM numbers:
-
-```text
-R10_DIRECT_CONTINUUM_AUDIT_ONLY
-```
-
-The formal single-interval N48 compiler exits its frozen valid material range on these high-amplitude modified branches. Broadening one N48 interval produces unacceptable scalar T approximation error, so those broad-N48 values were rejected. The reported 44.58/44.55 MN values come from direct evaluation of the frozen R10 current map with high-order continuum quadrature solely as an audit backend; they are not a release of a formal spatial-quadrature production operator. Formal project identity remains N_formal_spatial_quadrature=0.
-
-Latest aspect artifacts:
-
-- `semantic_v2/50_results/steel_shell/20260815_1955__Z6_AR1_AR2__NZSCCM_ZHOU_WINTER_COMPARISON__RESULT.csv`
-- `semantic_v2/40_execution/steel_shell/20260815_1955__Z6_AR1_AR2__R10_CONTINUUM_AUDIT_CONVERGENCE.csv`
-- `semantic_v2/60_validation/steel_shell/20260815_1955__NZSCCM__Z6__AR1_AR2_THREE_WAY_CAPACITY_AUDIT.md`
-
-## Boundary-compatible in-plane current path
-
-Previous N=1 admissible warp remains valid. Full current checkpoints currently retained:
+## Boundary-compatible in-plane current path retained unchanged
 
 ```text
 D=.50: q=.007244279, c=-.01545635, P=37.34514 MN, certified coupled checkpoint
@@ -75,9 +112,9 @@ D=.55: q=.008198205, c=-.02004071, P=38.41062 MN, connected near-equilibrium
 D=.60: q=.009177472, c=-.02655088, P=39.12698 MN, connected near-equilibrium
 ```
 
-Corrected original-Z6 Pu is still NOT SOLVED. Current next formal implementation remains directional moment-first contraction of `P,Rq,Rc` and the local `(q,c)` Jacobian from the D=.60 connected state.
+Corrected original-Z6 Pu remains **NOT SOLVED**. The previous directional-moment continuation proposal is preserved as a numerical implementation path, but the new causal-theory priority is to resolve/clear the no-Pu membrane residual-projection completeness gate before interpreting a corrected Pu as a validated postbuckling solution.
 
-Frozen parent identity:
+## Frozen parent identity
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
@@ -88,5 +125,5 @@ N_formal_spatial_sampling=0
 N_formal_spatial_quadrature=0
 N_formal_spatial_subdomains=1
 no Zhou/Winter calibration
-no out-of-plane multimode expansion
+no out-of-plane multimode production expansion
 ```
