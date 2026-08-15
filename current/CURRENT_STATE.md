@@ -1,32 +1,30 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 01:26 +08:00  
+**Updated:** 2026-08-15 10:58 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-The former 2026-08-13 body at this path is superseded as the operational project entry.
+The operational project entry is now:
 
-Use:
+`semantic_v2/00_index/20260815_1058__NZSCCM__PROJECT__CURRENT_STATE_AND_OPEN_GAPS__SEMANTIC_INDEX.md`
 
-`semantic_v2/00_index/20260815_0126__NZSCCM__PROJECT__CURRENT_STATE_AND_OPEN_GAPS__SEMANTIC_INDEX.md`
+Latest Z6 execution:
 
-Latest Z6 audits:
+- `semantic_v2/40_execution/steel_shell/20260815_1058__NZSCCM__Z6__LOCAL_PROGRESSIVE_RADIAL_CAP_D15__EXECUTION_REPORT.md`
+- `semantic_v2/50_results/steel_shell/20260815_1058__NZSCCM__Z6__LOCAL_PROGRESSIVE_RADIAL_CAP__RESULT.csv`
 
-- `semantic_v2/60_validation/steel_shell/20260815_0126__NZSCCM__Z6__IMPERFECTION_COMPILER_AND_REDUCED_STEEL_ROOT_CAUSE__AUDIT.md`
-- `semantic_v2/60_validation/steel_shell/20260815_0126__NZSCCM__Z6__LOCAL_IDEAL_EP_PROGRESSIVE_YIELD__PREFLIGHT_AUDIT.md`
-
-Current priority after the Z6 isolation/preflight passes:
+Current decisions:
 
 ```text
-Z6-A comparator/imperfection identity = significant partial cause
-Z6-B compiler-fidelity sensitivity = insufficient as main cause
-Z6-C steel hardening mismatch = REJECTED; Zhou steel is ideal EP
-Z6-C homogeneous whole-shell cap = primary reduced-model deficiency candidate
-Z6-C local progressive ideal-EP coefficient-space diagnostic = NEXT EXECUTABLE TASK
-Z6-D design-side halfwave / full KZ ordering = after local progressive-yield branch exists
+Z6-A imperfection/comparator identity = SIGNIFICANT PARTIAL CAUSE
+Z6-B N48 compiler-width effect = MINOR / NOT DOMINANT
+Z6-C whole-shell cap = CONFIRMED artificial first-yield cusp source
+Z6-C local progressive recovery = SMALL; not primary 23.4% cause
+Z6-C formal q0 local-cap terminal load ~= 34.59 MN
+Z6-C a/500 sensitivity + local cap ~= 37.49–37.51 MN
+Z1/Z3/Z4/Z5 same-expression Rq-L = PASS / DO NOT RERUN WITHOUT NEW CAUSE
+CURRENT_NEXT_TASK = Z6_D1_SAME_OBJECT_COMPARATOR_AUDIT
 ```
 
-Do not use the superseded 2026-08-13 `CURRENT_NEXT_TASK = BULK_24_PANEL_L_KZ_GATE_OR_USER_DIRECTED` line as the active priority. Swartz24 full 24-panel L/KZ remains open but deferred by the current user-directed Z6 priority.
+Swartz24 full 24-panel L/KZ remains open but deferred by the current user-directed Z6 priority.
 
-Do not rerun Z1/Z3/Z4/Z5 without a new cause; their same-expression Rq-L certificates remain PASS.
-
-No accepted theory/result is changed by this pointer update.
+No accepted parent theory or passed Z1/Z3/Z4/Z5 result is changed by this pointer update.
