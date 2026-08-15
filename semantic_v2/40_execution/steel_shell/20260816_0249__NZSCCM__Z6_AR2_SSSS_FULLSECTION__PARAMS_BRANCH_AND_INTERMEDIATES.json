@@ -1,0 +1,200 @@
+{
+  "timestamp": "2026-08-16T02:49:00+08:00",
+  "task": "Z6_AR2_THEORETICAL_FOUR_EDGE_SIMPLY_SUPPORTED_ULTIMATE_CAPACITY",
+  "boundary": {
+    "production": "THEORETICAL_FOUR_EDGE_SIMPLY_SUPPORTED_NAVIER",
+    "zhou_FE_translational_ux_uy_details": "OUT_OF_SCOPE_FOR_THIS_PRODUCTION_CALCULATION",
+    "historical_0016_to_0121_boundary_detour": "SUPERSEDED_FOR_Z6_PRODUCTION"
+  },
+  "formal_spatial_sampling": 0,
+  "formal_spatial_quadrature": 0,
+  "formal_spatial_subdomains": 1,
+  "geometry": {
+    "a_mm": 24000.0,
+    "b_mm": 12000.0,
+    "a_over_b": 2.0,
+    "m_star": 2,
+    "ell_mm": 12000.0,
+    "ell_over_b": 1.0,
+    "A0_mm": 48.0,
+    "q0": 0.004,
+    "tc_mm": 122.0,
+    "ts_mm": 4.0,
+    "h_mm": 130.0,
+    "ns": 60,
+    "ls_mm": 200.0,
+    "rho_w": 0.02
+  },
+  "materials": {
+    "concrete": {
+      "fc_MPa": 30.4,
+      "eps0": 0.0018712490394580678,
+      "nu": 0.18,
+      "operator": "R10 -> N48-C1/MM -> Cayley-Hamilton -> General D15"
+    },
+    "steel": {
+      "Es_MPa": 206000.0,
+      "fy_MPa": 355.0,
+      "nu": 0.30,
+      "law": "ideal elastic-perfectly-plastic analytic coefficient cap"
+    }
+  },
+  "kinematics": {
+    "w0": "A0*sin(X)*sin(Y)",
+    "w": "A*sin(X)*sin(Y)",
+    "X": "pi*x/b",
+    "Y": "pi*y/ell",
+    "prebuckling_membrane": "ex=nu*D, ey=-D",
+    "second_order": "Nguyen/FvK q0*q + q^2/2 terms retained",
+    "free_p20_p02": false,
+    "PF_end_layer": false,
+    "FE_boundary_warp_c": false
+  },
+  "compiler": {
+    "declared_lambda_interval": [-2.35, 1.90],
+    "lambda_c": -0.225,
+    "lambda_h": 2.125,
+    "order": 48,
+    "identity": {
+      "U": "N48-C1",
+      "C": "N48-C1",
+      "T": "N48-C1-CONSTRAINED-MINIMAX",
+      "T7": "N48-C1"
+    },
+    "T_LP_minimax_error": 0.7039985,
+    "fidelity_diagnostics": {
+      "U_E0": 0.0262464328922,
+      "U_E1_scaled": 4.18727,
+      "U_max_abs_coef": 0.5376664,
+      "C_E0": 0.0824700798347,
+      "C_E1_scaled": 8.88450,
+      "C_max_abs_coef": 0.5177516,
+      "T_E0": 0.704573,
+      "T_E1_scaled_numerical_gradient_diagnostic": 1588.95,
+      "T_max_abs_coef": 0.6139181,
+      "T7_E0": 0.796058,
+      "T7_E1_scaled_numerical_gradient_diagnostic": 114.624,
+      "T7_max_abs_coef": 0.0248480
+    },
+    "interpretation": "Wide-hull representation fidelity is recorded as uncertainty information. The frozen production contract has no universal reject threshold for these full-hull errors."
+  },
+  "reference_capacities": {
+    "Pcr_AR2_MN": 39.2880147150,
+    "Pyth_reduced_MN": 78.5856,
+    "Pyth_full_with_web_MN": 88.089888,
+    "Zhou_Eq5_87_88_MN": 49.4867667519,
+    "Winter_MN": 50.1858541295,
+    "historical_old_reduced_qonly_audit_MN": 44.5529191054,
+    "historical_Gauss_free_membrane_MN": 40.97334,
+    "historical_Gauss_free_membrane_status": "RETRACTED_INVALID"
+  },
+  "connected_Rq0_branch_degree40_locator": [
+    {
+      "D": 1.48,
+      "q": 0.020394590400561147,
+      "P_MN": 51.054357933761075,
+      "Rq_MNmm": 0.0657945,
+      "lambda_min": -2.1468342,
+      "lambda_max": 1.6487462,
+      "Pc_eff_MN": 19.99333882,
+      "Ps_MN": 22.06744214,
+      "Pw_MN": 8.99357697
+    },
+    {
+      "D": 1.52,
+      "q": 0.020901449970095614,
+      "P_MN": 51.224449705401184,
+      "Rq_MNmm": 0.0466193,
+      "lambda_min": -2.2034068,
+      "lambda_max": 1.71732995,
+      "Pc_eff_MN": 20.38805620,
+      "Ps_MN": 21.85698632,
+      "Pw_MN": 8.97940719
+    },
+    {
+      "D": 1.56,
+      "q": 0.021380002582402795,
+      "P_MN": 51.232731347103325,
+      "Rq_MNmm": 0.0585518,
+      "lambda_min": -2.25905387,
+      "lambda_max": 1.78335335,
+      "Pc_eff_MN": 20.56704514,
+      "Ps_MN": 21.68721025,
+      "Pw_MN": 8.97847595
+    },
+    {
+      "D": 1.58,
+      "q": 0.02160717788487119,
+      "P_MN": 51.31276662649302,
+      "Rq_MNmm": 0.0115031,
+      "lambda_min": -2.28648174,
+      "lambda_max": 1.81512749,
+      "Pc_eff_MN": 20.70837824,
+      "Ps_MN": 21.62251519,
+      "Pw_MN": 8.98187320
+    },
+    {
+      "D": 1.60,
+      "q": 0.021830325590533776,
+      "P_MN": 51.288357459590785,
+      "Rq_MNmm": 0.0047382,
+      "lambda_min": -2.31377791,
+      "lambda_max": 1.84660915,
+      "Pc_eff_MN": 20.74676603,
+      "Ps_MN": 21.55721793,
+      "Pw_MN": 8.98437350
+    }
+  ],
+  "degree40_local_peak_locator": {
+    "D": 1.5853259042928987,
+    "q": 0.021667051512603692,
+    "P_MN": 51.31550818293366,
+    "interpretation": "local first +->- branch maximum locator before steel-cap degree refinement"
+  },
+  "degree48_peak_state": {
+    "D": 1.5853259042928987,
+    "q": 0.02166488056894769,
+    "A_increment_mm": 259.9785668273723,
+    "A_total_including_initial_mm": 307.9785668273723,
+    "P_MN": 51.29529332523745,
+    "Rq_Nmm": -311.1609630584717,
+    "Pc_full_MN": 21.150621462865666,
+    "Pc_eff_MN": 20.72760903360835,
+    "Ps_MN": 21.595472362976026,
+    "Pw_MN": 8.972211928653078,
+    "Rc_eff_MNmm": -6874.837724939299,
+    "Rs_MNmm": 11434.159206074,
+    "Rw_MNmm": -4559.321792295664,
+    "lambda_min": -2.293694323117699,
+    "lambda_max": 1.823242449729608,
+    "compiler_lower_margin": 0.056305676882300926,
+    "compiler_upper_margin": 0.07675755027039188,
+    "Rnorm_component_scale": 1.3606639247218252e-08,
+    "steel_coefficient_degree": 48,
+    "local_concrete_q_interpolation_span": 3e-6
+  },
+  "frozen_engineering_result": {
+    "Pu_MN": 51.30,
+    "Du_approx": 1.585,
+    "qu_approx": 0.021665,
+    "Au_increment_mm_approx": 260.0,
+    "Pu_over_Pcr": 1.305621923055662,
+    "Pu_over_Pyth_full": 0.5823062611367772,
+    "error_vs_Zhou_percent": 3.6545660426845705,
+    "error_vs_Winter_percent": 2.210661181285567,
+    "delta_vs_Zhou_MN": 1.8085265733374507,
+    "delta_vs_Winter_MN": 1.1094391957374514,
+    "component_share_percent": {
+      "concrete_eff": 40.40840336399889,
+      "face_steel": 42.100299974990065,
+      "web_phase": 17.49129666101104
+    }
+  },
+  "status": {
+    "four_edge_SSSS_capacity_computed": true,
+    "zero_spatial_integration": true,
+    "first_local_plus_to_minus_peak": "LOCATED_AROUND_D_1.585; degree40 branch gives clear increase through 1.58 and decrease by 1.60; degree48 cap correction changes Pu by about -0.020 MN and does not change rounded 51.30 MN result",
+    "new_Pu": "51.30 MN",
+    "main_remaining_uncertainty": "wide compiler-hull N48-C1/MM representation fidelity, not boundary condition or spatial integration"
+  }
+}
