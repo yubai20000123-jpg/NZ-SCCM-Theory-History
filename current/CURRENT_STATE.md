@@ -1,76 +1,122 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 23:58 +08:00  
+**Updated:** 2026-08-16 00:07 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260815_2358__NZSCCM__PROJECT__CURRENT_STATE_CLASSICAL_POSTBUCKLING_REDERIVATION_GATE__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_0007__NZSCCM__PROJECT__CURRENT_STATE_CLASSICAL_ELASTIC_POSTBUCKLING_LIMIT_GATE_PASS__SEMANTIC_INDEX.md`
 
-## 23:58 correction: strict zero spatial integration + classical postbuckling rederivation gate
+## 00:07 classical elastic thin-plate postbuckling limit gate
 
-The 23:43 AR2 direct-continuum calculation used high-order spatial Gauss-Legendre integration. Under the latest explicit project boundary, **even audit-only spatial quadrature is prohibited**. Therefore:
+The project now enforces strict zero spatial numerical integration for all current evidence, including audits.
 
 ```text
-AR2_2343_GAUSS_PATH = RETRACTED_FROM_CURRENT_EVIDENCE
-Pu_40.97334_MN = INVALID_FOR_CURRENT_PROJECT
-ANY_SPATIAL_GAUSS/SIMPSON/ADAPTIVE/COLLOCATION = PROHIBITED
-AUDIT_ONLY_SPATIAL_QUADRATURE = PROHIBITED
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
+Gauss/Simpson/adaptive/collocation/cells/material-point-grid = PROHIBITED
 ```
 
-The 23:43 files remain preserved as historical error evidence and must not be used as current theory validation or capacity data.
+The 23:43 AR2 Gauss path and `Pu=40.97334 MN` remain retracted historical error evidence.
 
-## Membrane-theory status
+## Exact classical FvK result
 
-Still retained:
+For the canonical one-complete-halfwave elastic benchmark
 
 ```text
-single complete out-of-plane halfwave
-Nguyen second-order geometric source
+w0=A0 sin(alpha x) sin(beta y)
+wa=A  sin(alpha x) sin(beta y)
+alpha=pi/b
+beta=pi/ell
+S=A^2+2A0A
+```
+
+the exact incremental curvature-determinant source is
+
+```text
+-S alpha^2 beta^2/2 [cos(2 alpha x)+cos(2 beta y)]
+```
+
+and the Airy compatibility equation fixes the membrane-harmonic amplitudes:
+
+```text
+C20=E t S beta^2/(32 alpha^2)
+C02=E t S alpha^2/(32 beta^2)
+```
+
+They are **not independent free membrane coordinates**.
+
+The exact analytical Galerkin moments are
+
+```text
+I0  = b ell/4
+I20 = -b ell/8
+I02 = -b ell/8
+```
+
+and give
+
+```text
+N=Ncr*A/(A+A0)+E t S/16*(beta^2+alpha^4/beta^2)
+Ncr=Dp*(alpha^2+beta^2)^2/beta^2
+```
+
+For a perfect square representative halfwave:
+
+```text
+sigma/sigma_cr = 1 + 3(1-nu^2)/8*(A/t)^2
+```
+
+Therefore:
+
+```text
+CLASSICAL_ELASTIC_THIN_PLATE_POSTBUCKLING_LIMIT_GATE = PASS
+POSITIVE_MEMBRANE_POSTBUCKLING_BRANCH = RECOVERED
+EDGEWARD_AXIAL_STRESS_REDISTRIBUTION = RECOVERED
+ZERO_SPATIAL_NUMERICAL_INTEGRATION = PASS
+```
+
+Compression-positive axial membrane resultant is
+
+```text
+n_y(x)=N+E t S beta^2/8*cos(2 alpha x)
+```
+
+so the longitudinal edges gain compression while the plate center unloads, with unchanged width-average axial resultant.
+
+## Correction to previous augmented membrane closure
+
+Retained:
+
+```text
 D+q+c in-plane space is incomplete
-FvK source contains independent (2,0)/(0,2) membrane directions
-old D+q+c projections R20,R02 are nonzero
+FvK source contains (2,0)/(0,2) harmonics
 ```
 
-Reopened:
+Retired:
 
 ```text
-p20,p02 AS FINAL CLASSICAL MEMBRANE CLOSURE = UNPROVEN
+p20,p02 AS TWO INDEPENDENT FREE MEMBRANE COORDINATES
 ```
 
-The previous p20/p02 construction established a kinematic source-span completion, but did not yet prove the classical Kármán/FvK chain
+The harmonic labels remain useful, but their amplitudes must be derived from compatibility + in-plane equilibrium + boundary conditions, or from a displacement basis proven exactly equivalent after constitutive elimination.
+
+Yun Lu Eq. (2-32) independently has the same structural form: an imperfection-modified linear buckling term plus a **positive** membrane term proportional to `2A0A+A^2`; its coefficients differ because Yun uses a unilateral/clamped wall-panel shape.
+
+## Current next execution
 
 ```text
-compatibility + in-plane equilibrium + boundary conditions
--> Airy stress function / membrane-resultant harmonics
--> admissible displacement representation
+ZHOU_Z6_BOUNDARY_ADMISSIBLE_CLASSICAL_FVK_AIRY_CLOSURE_ZERO_QUADRATURE
 ```
 
-Therefore no statement that “membrane redistribution reduces Pu” is currently accepted.
+The next gate must impose the actual Z6 in-plane boundary class (`u_x=0` at loaded ends with lateral sides free) on the classical Airy/membrane closure while keeping exact analytical moments. Only after that boundary-specific classical limit is closed may the membrane representation be mapped back into R10/N48/Cayley-Hamilton nonlinear material response and a new Z6 Pu calculation.
 
-## Mandatory next gate
+## 00:07 artifacts
 
-```text
-CLASSICAL_ELASTIC_THIN_PLATE_POSTBUCKLING_LIMIT_GATE
-```
-
-Before any new nonlinear-material Z6 Pu calculation:
-
-1. derive the single-complete-halfwave elastic Kármán/FvK postbuckling solution with exact analytical moments only;
-2. recover the classical membrane stress redistribution / stable postbuckling carrying branch for a slender plate;
-3. derive the Airy/membrane harmonic coefficients from equilibrium and compatibility, not by ad-hoc coordinate insertion;
-4. only then map the proven membrane closure into R10/N48/Cayley-Hamilton and steel current operators;
-5. retain zero spatial numerical integration throughout.
-
-## Current valid computational frontier
-
-The last computation that respected zero spatial quadrature is the 23:06 / 22:35 coefficient-space line, but its augmented membrane closure is now under classical-limit rederivation and must not be continued to Pu until the new gate passes.
-
-## 23:58 artifacts
-
-- `semantic_v2/10_governance/20260815_2358__NZSCCM__STRICT_ZERO_SPATIAL_INTEGRATION_AND_AR2_RETRACTION__LOCK.md`
-- `semantic_v2/60_validation/steel_shell/20260815_2358__NZSCCM__AR2_MEMBRANE_THEORY_CLASSICAL_LIMIT_REOPEN__AUDIT.md`
-- `semantic_v2/00_index/20260815_2358__NZSCCM__PROJECT__CURRENT_STATE_CLASSICAL_POSTBUCKLING_REDERIVATION_GATE__SEMANTIC_INDEX.md`
+- `semantic_v2/10_governance/20260816_0007__NZSCCM__CLASSICAL_ELASTIC_POSTBUCKLING_LIMIT_GATE__LOCK.md`
+- `semantic_v2/20_theory/nc_steel_shell_panel/20260816_0007__NZSCCM__CLASSICAL_FVK_AIRY_POSTBUCKLING_LIMIT__THEORY.md`
+- `semantic_v2/40_execution/steel_shell/20260816_0007__NZSCCM__CLASSICAL_FVK_POSTBUCKLING_LIMIT__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260816_0007__NZSCCM__CLASSICAL_FVK_POSTBUCKLING_LIMIT__REPRO.py`
+- `semantic_v2/60_validation/steel_shell/20260816_0007__NZSCCM__CLASSICAL_ELASTIC_POSTBUCKLING_LIMIT__AUDIT.md`
+- `semantic_v2/00_index/20260816_0007__NZSCCM__PROJECT__CURRENT_STATE_CLASSICAL_ELASTIC_POSTBUCKLING_LIMIT_GATE_PASS__SEMANTIC_INDEX.md`
