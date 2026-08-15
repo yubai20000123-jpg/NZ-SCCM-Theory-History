@@ -1,41 +1,51 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 16:47 +08:00  
+**Updated:** 2026-08-15 17:25 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-The operational project entry is now:
-
-`semantic_v2/00_index/20260815_1647__NZSCCM__PROJECT__CURRENT_STATE_AND_Q31_STATIONARITY__SEMANTIC_INDEX.md`
-
-Current Z6 decisions:
+Current Z6 causal correction:
 
 ```text
 Nguyen second-order kinematics as primary Z6 cause = NOT SUPPORTED
 wrong linear m=1 halfwave as primary cause = NOT SUPPORTED
 high-slenderness unchanged-method bias = SUPPORTED
-single-q11 state stationary in q31 direction = FAIL
-missing finite-amplitude longitudinal q31 direction = CONFIRMED MODEL-SPACE DEFICIENCY
-q13 third-transverse direction = SECONDARY in current first-variation gate
-full q11+q31 Pu recovery = NOT YET QUANTIFIED
+q31 nonzero generalized work at the old single-q state = DIAGNOSTIC FACT ONLY
+q31 as the cause of the low Z6 Pu = NOT ESTABLISHED
+single-q finite-amplitude restriction as an explanation for conservative Pu = RETRACTED
+original one-complete-halfwave production baseline = RESTORED
 ```
 
-Key zero-spatial first-variation results:
+Reason for retraction:
+
+1. A finite-element model may start from a first-mode imperfection and later change shape; that fact is true but does not determine the sign of the capacity correction.
+2. In a conservative Rayleigh-Ritz setting, restricting the admissible displacement space usually makes the system kinematically stiffer and tends to upper-bound elastic buckling, so missing modal freedom cannot be assumed to explain an underprediction.
+3. The 16:47 q31 test varied the out-of-plane direction while retaining the old reduced in-plane/generalized field structure. It was therefore not a fully variationally consistent multimode extension.
+4. The current nonlinear `sigma=M(epsilon)` operator has not been formally proven to derive from a single scalar potential over the full range, so energy-stationarity language cannot be used to promote q31 causally.
+
+Current causal priorities for Z6:
 
 ```text
-S3 lambda=1.2154: eta31=0.01014
-S4 lambda=1.3625: eta31=0.01998
-Z6 lambda=1.4341: eta31=0.02527
-Z6 eta13=0.00332
+1. exact Zhou-source identity/applicability of the constructed extreme-corner Z6 combination
+2. discrete internal-web topology vs homogenized/reduced NZ representation at high b/h
+3. full incremental ideal-elastoplastic redistribution vs path-independent radial-cap current map
+4. concrete current-tangent / geometric-stiffness balance on a valid Z6 branch
+5. only if still needed: fully variationally consistent multimode Ritz extension including associated in-plane fields
 ```
 
-At Z6, the q11 equilibrium self-check gives `|Rq11|/(Pb) ~= 3.4e-7`, while `|Rq31|/(Pb) ~= 2.53e-2`. Thus the current state is an equilibrium in the one-q subspace but not in the enlarged Nguyen modal space.
-
-`q31=+-1e-5` gives a local tangent predictor `q31~=-3.30e-4` (~-5.6% of q11), but naive finite-q31 polynomial composition becomes ill-conditioned before a trustworthy coupled root is obtained. No two-mode Pu is released.
-
-Current next task:
+Frozen parent identity remains:
 
 ```text
-Z6_Q11_Q31_SPARSE_HARMONIC_EXACT_MOMENT_COUPLED_EQUILIBRIUM
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+Nguyen second-order
+R10 / N48-C1-MM / Cayley-Hamilton / General D15 unchanged
+A0 = a/500
+formal structural spatial sampling = 0
+formal structural quadrature = 0
+no Zhou/Winter calibration
 ```
 
-Parent material laws remain unchanged; formal structural spatial sampling/quadrature remain zero.
+Correction artifact:
+
+- `semantic_v2/10_governance/20260815_1725__Z6_Q31_CAUSAL_RETRACTION_AND_VARIATIONAL_CONSISTENCY__LOCK.md`
+
+The 16:47 q31 artifacts remain as historical diagnostics and must not be cited as proof that multimode release raises Pu or explains the Z6 gap.
