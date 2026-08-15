@@ -1,65 +1,41 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 16:15 +08:00  
+**Updated:** 2026-08-15 16:47 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 The operational project entry is now:
 
-`semantic_v2/00_index/20260815_1615__NZSCCM__PROJECT__CURRENT_STATE_AND_Z6_NGUYEN_MODE_DIAGNOSTIC__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260815_1647__NZSCCM__PROJECT__CURRENT_STATE_AND_Q31_STATIONARITY__SEMANTIC_INDEX.md`
 
-Current comparison identity:
-
-```text
-ZHOU LOWER = Eqs.5-87/5-88 FE-informed Perry-Robertson lower-envelope design curve
-UPPER ENGINEERING ENVELOPE = Winter curve
-Z6 = representative extreme-corner parameter combination, not a recovered literal source specimen ID
-```
-
-Current causal decisions after the unchanged-method S0-S4 sweep:
+Current Z6 decisions:
 
 ```text
-Z6 is inside Zhou Table-5.1 nominal Group-4 range and at its extreme high-slenderness corner
-Nguyen second-order kinematics as the primary ~24% Z6 error cause = NOT SUPPORTED
-current Z6 maximum slope near accepted reduced peak ~= 0.031 rad = 1.78 deg
+Nguyen second-order kinematics as primary Z6 cause = NOT SUPPORTED
 wrong linear m=1 halfwave as primary cause = NOT SUPPORTED
-Z6 isolated numerical singularity = NOT SUPPORTED
-unchanged NZ error improves smoothly as a/h and especially b/h are reduced
-HIGH_SLENDERNESS_SYSTEMATIC_CONSERVATIVE_BIAS = SUPPORTED
-SINGLE-q FINITE-AMPLITUDE MODE SPACE / POSTBUCKLING REDISTRIBUTION = PRIMARY OPEN SUSPECT
-discrete internal-web topology = OPEN SECONDARY SUSPECT
-full incremental J2 plastic redistribution = OPEN SECONDARY SUSPECT
+high-slenderness unchanged-method bias = SUPPORTED
+single-q11 state stationary in q31 direction = FAIL
+missing finite-amplitude longitudinal q31 direction = CONFIRMED MODEL-SPACE DEFICIENCY
+q13 third-transverse direction = SECONDARY in current first-variation gate
+full q11+q31 Pu recovery = NOT YET QUANTIFIED
 ```
 
-Unchanged-method neighborhood trend:
+Key zero-spatial first-variation results:
 
 ```text
-S0 Z6                 NZ 37.5094 vs Zhou lower 49.6724 = -24.49%
-S1 a=8000             NZ 40.7732 vs Zhou lower 50.2501 = -18.86%
-S2 b=10000            NZ 37.0002 vs Zhou lower 44.1305 = -16.16%
-S3 a=8000,b=10000     NZ 39.6080 vs Zhou lower 44.6847 = -11.36%
-S4 a,b reduced by 5%  NZ 38.1674 vs Zhou lower 47.9466 = -20.40%
+S3 lambda=1.2154: eta31=0.01014
+S4 lambda=1.3625: eta31=0.01998
+Z6 lambda=1.4341: eta31=0.02527
+Z6 eta13=0.00332
 ```
 
-The S1-S4 values are engineering connected-branch peak localizations under the unchanged current reduced local-cap method; degree-32 checkpoints confirm the peak neighborhoods. They are diagnostic, not new theorem-level certificates.
+At Z6, the q11 equilibrium self-check gives `|Rq11|/(Pb) ~= 3.4e-7`, while `|Rq31|/(Pb) ~= 2.53e-2`. Thus the current state is an equilibrium in the one-q subspace but not in the enlarged Nguyen modal space.
+
+`q31=+-1e-5` gives a local tangent predictor `q31~=-3.30e-4` (~-5.6% of q11), but naive finite-q31 polynomial composition becomes ill-conditioned before a trustworthy coupled root is obtained. No two-mode Pu is released.
 
 Current next task:
 
 ```text
-CURRENT_NEXT_TASK = Z6_ZERO_SPATIAL_HIGHER_HARMONIC_RELEASE_DIAGNOSTIC
+Z6_Q11_Q31_SPARSE_HARMONIC_EXACT_MOMENT_COUPLED_EQUILIBRIUM
 ```
 
-Next diagnostic retains Nguyen/R10/N48/CH/D15 and releases only one symmetric higher out-of-plane harmonic (`w31` first), with exact `q31=0` degeneration to the current model and zero structural spatial sampling/quadrature. This does not yet promote a multimode production theory.
-
-Latest artifacts:
-
-- `semantic_v2/10_governance/20260815_1615__Z6_NGUYEN_SECOND_ORDER_VS_LOW_DIMENSIONAL_MODE_SPACE__LOCK.md`
-- `semantic_v2/60_validation/steel_shell/20260815_1615__NZSCCM__Z6__NGUYEN_VS_MODE_TRUNCATION_AND_NEIGHBOR_SWEEP__AUDIT.md`
-- `semantic_v2/40_execution/steel_shell/20260815_1615__NZSCCM__Z6__KINEMATICS_MODE_NEIGHBOR_AUDIT_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260815_1615__NZSCCM__Z6__NGUYEN_MODE_AND_NEIGHBOR_SWEEP__REPRO.py`
-- `semantic_v2/50_results/steel_shell/20260815_1615__NZSCCM__Z6_S0_S4__UNCHANGED_METHOD_PEAK_TREND__RESULT.csv`
-- `semantic_v2/50_results/steel_shell/20260815_1615__NZSCCM__Z6_S1_S4__UNCHANGED_LOCALCAP_BRANCH_LOCATORS__RESULT.csv`
-- `semantic_v2/50_results/steel_shell/20260815_1615__Z6_S0_S4__LINEAR_MODE_SEPARATION__RESULT.csv`
-- `semantic_v2/50_results/steel_shell/20260815_1615__Z6__NGUYEN_SMALL_SLOPE_INDICATORS__RESULT.csv`
-- `semantic_v2/50_results/steel_shell/20260815_1615__NZSCCM__Z6_S1_S4__LOCALCAP_DEG20_DEG32_CHECKPOINTS__RESULT.csv`
-
-Historical H0 domain/shell-compiler diagnostics remain in the evidence chain but no longer control task ordering. No empirical Z6 factor, no Zhou/Winter calibration and no structural spatial discretization are authorized.
+Parent material laws remain unchanged; formal structural spatial sampling/quadrature remain zero.
