@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-08-16T00:07:00+08:00",
+  "identity": "CLASSICAL_ELASTIC_THIN_PLATE_POSTBUCKLING_LIMIT_GATE_ZERO_SPATIAL_INTEGRATION",
+  "formal_spatial_sampling": 0,
+  "formal_spatial_quadrature": 0,
+  "formal_spatial_subdomains": 1,
+  "benchmark": {
+    "phi": "sin(alpha*x)*sin(beta*y)",
+    "alpha": "pi/b",
+    "beta": "pi/ell",
+    "w0": "A0*phi",
+    "wa": "A*phi",
+    "S": "A^2+2*A0*A"
+  },
+  "compatibility": {
+    "incremental_curvature_determinant": "-S*alpha^2*beta^2/2*(cos(2*alpha*x)+cos(2*beta*y))",
+    "airy_particular": "C20*cos(2*alpha*x)+C02*cos(2*beta*y)",
+    "C20": "E*t*S*beta^2/(32*alpha^2)",
+    "C02": "E*t*S*alpha^2/(32*beta^2)",
+    "C02_over_C20": "alpha^4/beta^4"
+  },
+  "membrane_resultants_tension_positive": {
+    "Ny": "-N-E*t*S*beta^2/8*cos(2*alpha*x)",
+    "Nx": "-E*t*S*alpha^2/8*cos(2*beta*y)",
+    "Nxy": "0"
+  },
+  "exact_galerkin_moments": {
+    "I0": "b*ell/4",
+    "I20": "-b*ell/8",
+    "I02": "-b*ell/8",
+    "I20_over_I0": -0.5,
+    "I02_over_I0": -0.5
+  },
+  "postbuckling_load": {
+    "Ncr": "Dp*(alpha^2+beta^2)^2/beta^2",
+    "N": "Ncr*A/(A+A0)+E*t*(A^2+2*A0*A)/16*(beta^2+alpha^4/beta^2)",
+    "chi": "beta/alpha=b/ell",
+    "kcr": "(1+chi^2)^2/chi^2",
+    "kp": "3/4*(chi^2+chi^-2)"
+  },
+  "square_halfwave": {
+    "chi": 1.0,
+    "kcr": 4.0,
+    "kp": 1.5,
+    "perfect_branch": "sigma/sigma_cr=1+3*(1-nu^2)/8*(A/t)^2"
+  },
+  "steel_numeric_sanity_example": {
+    "E_MPa": 206000.0,
+    "nu": 0.3,
+    "b_over_t": 100.0,
+    "sigma_cr_MPa": 74.47393797159003,
+    "perfect_branch": [
+      {"A_over_t": 0.0, "sigma_over_sigma_cr": 1.0, "sigma_MPa": 74.47393797159003},
+      {"A_over_t": 0.5, "sigma_over_sigma_cr": 1.0853125, "sigma_MPa": 80.8274958047913},
+      {"A_over_t": 1.0, "sigma_over_sigma_cr": 1.34125, "sigma_MPa": 99.88816930439513},
+      {"A_over_t": 1.5, "sigma_over_sigma_cr": 1.7678125, "sigma_MPa": 131.65595847040152},
+      {"A_over_t": 2.0, "sigma_over_sigma_cr": 2.365, "sigma_MPa": 176.13086330281044}
+    ]
+  },
+  "decision": {
+    "CLASSICAL_ELASTIC_POSTBUCKLING_LIMIT_GATE": "PASS",
+    "POSITIVE_MEMBRANE_POSTBUCKLING_BRANCH": true,
+    "EDGEWARD_AXIAL_STRESS_REDISTRIBUTION": true,
+    "P20_P02_AS_INDEPENDENT_FREE_COORDINATES": "RETIRED",
+    "P20_P02_HARMONIC_LABELS": "RETAINED_AS_BOOKKEEPING_ONLY",
+    "NONLINEAR_Z6_PU": "STILL_BLOCKED_PENDING_BOUNDARY_SPECIFIC_CLASSICAL_CLOSURE"
+  }
+}
