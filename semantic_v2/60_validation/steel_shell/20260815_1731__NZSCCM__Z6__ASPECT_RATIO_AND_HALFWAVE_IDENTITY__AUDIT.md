@@ -1,14 +1,13 @@
-# Z6 aspect-ratio / halfwave identity audit
+# Z6 aspect-ratio / halfwave / in-plane-boundary audit
 
 **Timestamp:** 2026-08-15 17:31 +08:00  
-**Revised:** 2026-08-15 after direct Zhou Group-4 source re-read  
-**Identity:** causal audit; no theory modification and no calibration.
+**Revised:** after direct Zhou boundary-condition and current D-q kinematics comparison  
+**Identity:** causal audit; no calibration and no production-theory change yet.
 
-## Trigger
-
-User noticed that Z6 has width larger than its loaded height:
+## 1. Trigger geometry
 
 ```text
+Z6:
 a = 9000 mm   # loading direction / wall height
 b = 12000 mm  # transverse wall width
 h = 130 mm
@@ -19,96 +18,135 @@ a/h = 69.23077
 b/h = 92.30769
 ```
 
-Earlier discussion emphasized `a/h` and `b/h`, obscuring that Z6 is a squat finite plate with compression along the shorter in-plane dimension.
+Z6 is therefore a squat finite plate: compression acts along the shorter in-plane dimension.
 
-## Direct source facts
+## 2. Source identity
 
-1. Zhou's coordinate/layout treats `a` as wall height/loading direction and `b` as wall width; four-edge axial loading is applied at the top/bottom edges.
-2. Zhou Table 5.1 Group 4 gives `ns=10–60`, `ls=200 mm`, `h=100–130 mm`, `ts=4 mm`, `fy=355 MPa`, `fcu=40 MPa`, `a=3000–9000 mm`, `b=2000–12000 mm`.
-3. More importantly, Zhou's paragraph immediately describing Group 4 states that the wall width `b` is changed and, **with wall width b held fixed, wall height a is changed**, with `a=3000–9000 mm` in 1000-mm increments, `b=2000–12000 mm`, and `h=100,130 mm`. This is strong direct evidence that Group 4 is a crossed width-height parametric sweep, not merely a table of independent marginal ranges.
-4. Consequently, `(a,b,h)=(9000,12000,130)` and, because `ls=200`, the corresponding `ns=60`, are strongly supported as an actual Group-4 FE input combination. A unique source model ID and its individually tabulated raw FE ultimate load have still not been recovered.
-5. Therefore Zhou `49.6724359 MN` must still be labelled **Eq.5-87/5-88 fitted lower-envelope design-curve value**, not a recovered raw FE load for that individual model.
-6. Nguyen explicitly studied simply-supported wall aspect ratios `a/b = 0.5, 0.75, 1.0, ...`; therefore `a/b<1` is not outside the mathematical wall/plate formulation by itself.
+Zhou Table 5.1 Group 4 gives `ns=10–60`, `ls=200 mm`, `h=100–130 mm`, `ts=4 mm`, `fy=355 MPa`, `fcu=40 MPa`, `a=3000–9000 mm`, `b=2000–12000 mm`.
 
-## Classical plate check
+The accompanying source paragraph states that wall width `b` is changed and, **with b held fixed, wall height a is changed** over `3000–9000 mm`, with `h=100,130 mm`. Thus `(a,b,h,ns)=(9000,12000,130,60)` is strongly supported as a real Group-4 FE input combination, although a unique source model ID and individually tabulated raw FE ultimate load are not recovered.
 
-For a simply supported isotropic plate under uniform compression in the `a` direction with
+`49.6724359 MN` remains the Zhou Eq.5-87/5-88 fitted lower-envelope value, not a recovered raw FE Pu.
 
-`w = A sin(pi x/b) sin(m pi y/a)`, `m=1,2,...`,
+## 3. Classical plate / Zhou m check
 
-the dimensionless buckling coefficient is
+For a simply supported isotropic plate compressed along `a`,
 
-`k_m = (a/(m b) + m b/a)^2`.
+`w=A sin(pi x/b) sin(m pi y/a)`
 
-For `a/b=0.75`:
+and
 
-```text
-m=1: k = (0.75 + 1/0.75)^2 = 4.34027778
-m>=2: larger
-```
+`k_m=(a/(m b)+m b/a)^2`.
 
-The integer optimum remains `m=1` because `a/b < sqrt(2)`.
+At `a/b=0.75`, `m=1` gives `k=4.34027778` and is the integer minimum. Zhou's orthotropic version uses
 
-Zhou's orthotropic theory generalizes the geometric ratio through
+`beta=(Dx/Dy)^(1/4)*(a/b)`
 
-`beta=(Dx/Dy)^(1/4) * a/b`
-
-and selects the physical integer `m` from the lower envelope of the corresponding buckling-coefficient curves. Hence `a/b<1` does not invalidate Zhou's theory and does not, by itself, make `m=1` wrong.
-
-Therefore:
+and selects integer `m` from the lower envelope. Therefore:
 
 ```text
-A/B < 1 => INVALID PLATE THEORY          = FALSE
-A/B < 1 => M=1 WRONG                     = FALSE
-A/B < 1 => IMPORTANT SQUAT-PANEL REGIME  = TRUE
+a/b<1 => classical theory invalid = FALSE
+a/b<1 => m=1 wrong              = FALSE
+a/b<1 => squat-panel regime      = TRUE
 ```
 
-## Controlled-project countercheck
+## 4. Newly identified exact kinematic mismatch
 
-The current Z0–Z6 diagnostic dataset contains:
+The current reduced NZ D-q field uses, before the finite-amplitude terms,
 
 ```text
-Z4: a=6000, b=8000, h=200, a/b=0.75, a/h=30, b/h=40
-Z6: a=9000, b=12000, h=130, a/b=0.75, a/h=69.23, b/h=92.31
+ex = +nu*D + ...
+ey = -D    + ...
+gxy = ...
 ```
 
-Both have exactly the same geometric aspect ratio `a/b=0.75`. Yet the current NZ diagnostic is close for Z4 (about -4.7% vs Zhou lower envelope) and very low for Z6 (about -24.5%).
-
-Hence `a/b<1` alone cannot explain the Z6 discrepancy. However, Z4 is much less stability-controlled while Z6 is deeply stability-controlled, so a squat-panel/half-wave normalization defect could be weak in Z4 and amplified in Z6. The correct diagnostic variable is the interaction
-
-`a/b<1 + very large a/h,b/h + high normalized slenderness`, not `a/b<1` in isolation.
-
-## What the observation exposes
-
-### Gate A — squat finite-panel identity
-
-For Z6, `m=1`, so the complete longitudinal halfwave length is
-
-`ell=a=9000 mm < b=12000 mm`.
-
-This halfwave is the **entire squat finite plate**. It is not a repeat cell extracted from a long plate. Therefore any derivation or normalization that silently relied on `ell≈b`, `a/b>=1`, or a long-wall representative-cell picture must be audited line-by-line.
-
-### Gate B — existing code is not trivially square
-
-The current reduced kernel retains `b` and `ell` separately and uses `k=b/ell`. Thus a simple `a=b` coding mistake is not presently established. The audit must target the nonlinear normalization and residual construction, not assume the failure in advance.
-
-### Gate C — same-a/b controlled pair
-
-Z4 and Z6 must be used as a controlled pair. A correct explanation must account for why the same `a/b=0.75` produces only a small discrepancy at Z4 but a large discrepancy at Z6.
-
-## Current verdict
+At `q=0`, this gives
 
 ```text
-Z6 a/b = 0.75 = CONFIRMED
-Z6 COMPRESSION ALONG SHORTER IN-PLANE DIMENSION = CONFIRMED
-CLASSICAL m=1 FOR a/b=0.75 = CONSISTENT
-ZHOU ORTHOTROPIC m-SELECTION AT a/b<1 = VALID
-ASPECT-RATIO<1 AS SOLE CAUSE = REJECTED
-SQUAT-PANEL x HIGH-SLENDERNESS INTERACTION = PRIMARY NEW AUDIT TARGET
-Z6 GROUP-4 INPUT COMBINATION = STRONGLY SOURCE-SUPPORTED
-Z6 UNIQUE RAW FE MODEL ID / RAW FE Pu = NOT RECOVERED
-49.6724 MN = ZHOU FITTED LOWER-ENVELOPE VALUE, NOT RAW FE
-Z4 SAME-a/b CONTROL = CRITICAL
+ex = nu D
+ey = -D
+gxy = 0
 ```
 
-No change is authorized yet to R10, N48-C1/MM, Cayley–Hamilton, General D15, Nguyen second-order kinematics, current local steel map, `A0=a/500`, or zero formal structural spatial sampling/quadrature.
+For an isotropic plane-stress elastic material,
+
+`sigma_x = E/(1-nu^2)*(ex + nu ey) = 0`.
+
+Hence the current base field encodes a **free transverse Poisson state** throughout the panel.
+
+Zhou's actual four-edge simply-supported FE in-plane boundary conditions are different. On both loaded edges (top and bottom), the transverse displacement is fixed:
+
+```text
+u_x = 0 on y=0 and y=a
+```
+
+while the two non-loaded side edges leave `u_x` free.
+
+A uniform field with `ex=nu D` corresponds to `u~nu D x` and cannot satisfy `u_x=0` along the entire top and bottom loaded edges. Therefore:
+
+```text
+CURRENT NZ PREBUCKLING IN-PLANE FIELD
+!=
+ZHOU FE IN-PLANE BOUNDARY-ADMISSIBLE FIELD
+```
+
+This mismatch is now **confirmed algebraically**, independently of any Pu comparison.
+
+## 5. Why a/b<1 makes this important
+
+For a long wall, the end-restraint disturbance at `y=0,a` can occupy a relatively small fraction of the wall, allowing a large interior region to approach the free-Poisson state `sigma_x≈0`.
+
+For Z6, `a/b=0.75`: the loaded edges are closer together than the transverse width. There is no long-wall interior in the same sense. The two end-restraint fields can influence a much larger fraction of the plate. Thus the approximation `ex=nu D` everywhere is least defensible in precisely this squat-panel regime.
+
+The physical consequences all act in quantities that matter to the current model:
+
+- nonzero transverse membrane stress `sigma_x`;
+- biaxial concrete current state and tangent;
+- biaxial steel von-Mises utilization / redistribution;
+- membrane energy;
+- `Dx`, `H`, and geometric-stiffness balance;
+- finite-amplitude `Rq(D,q)` and final Pu.
+
+For a fully restrained isotropic plane-stress reference state `ex=0`, the elastic axial tangent changes from `E` to `E/(1-nu^2)`, and `sigma_x=nu sigma_y`; this is only an illustrative upper-bound reference, not the actual Zhou field, because Zhou restrains `u_x` only on the loaded edges and the interior field must be solved continuously.
+
+## 6. Z4 control does not eliminate this mechanism
+
+```text
+Z4: a=6000, b=8000, h=200, a/b=0.75, NZ error about -4.7%
+Z6: a=9000, b=12000, h=130, a/b=0.75, NZ error about -24.5%
+```
+
+Therefore aspect ratio alone is not enough. But Z4 is much stockier / less stability-controlled, whereas Z6 is deeply stability-controlled. A boundary-admissibility error can be weakly visible in a strength-dominated case and become decisive when the ultimate path is governed by membrane/tangent/geometric-stiffness interaction.
+
+Correct diagnostic object:
+
+```text
+SQUAT GEOMETRY
+x HIGH GLOBAL SLENDERNESS
+x WRONG PREBUCKLING IN-PLANE ADMISSIBILITY
+```
+
+not simply `a/b<1`.
+
+## 7. Required next test — no theory retuning
+
+Before changing materials, steel map, D15, or adding transverse modes:
+
+1. Replace only the affine/free-Poisson transverse membrane assumption by a boundary-admissible continuous in-plane field satisfying `u(x,0)=u(x,a)=0` and free side-edge traction/displacement conditions consistent with Zhou.
+2. Condense the added in-plane amplitude(s) analytically / variationally so formal structural spatial quadrature remains zero.
+3. Retain the same out-of-plane `m=1` complete halfwave, same R10/N48-C1-MM/Cayley-Hamilton/General-D15, same steel current law and same imperfection contract.
+4. Recompute Z6 first, then Z4 as the controlled same-`a/b` case.
+5. If Z6 rises substantially while Z4 changes little, the causal mechanism is confirmed. If not, reject it and continue to the next mechanism.
+
+## 8. Current verdict
+
+```text
+Z6 a/b=0.75 = CONFIRMED
+m=1 at Z6 = CONSISTENT
+EXACT ZHOU GROUP-4 INPUT COMBINATION = STRONGLY SOURCE-SUPPORTED
+CURRENT FREE-POISSON BASE FIELD = CONFIRMED
+ZHOU LOADED-EDGE ux=0 CONDITION = CONFIRMED
+BOUNDARY-KINEMATICS MISMATCH = CONFIRMED
+MISMATCH AS FULL EXPLANATION OF -24.5% Pu = NOT YET CONFIRMED
+NEXT CAUSAL TEST = BOUNDARY-ADMISSIBLE IN-PLANE FIELD, UNCHANGED MATERIAL/OUT-OF-PLANE THEORY
+```
