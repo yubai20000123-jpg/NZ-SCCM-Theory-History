@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-08-15T16:15:00+08:00",
+  "task": "Separate Nguyen second-order kinematic truncation from low-dimensional single-mode truncation for Z6 and run unchanged-method S0-S4 neighborhood discriminator.",
+  "frozen_identity": {
+    "R10": "unchanged",
+    "N48_C1_MM": "unchanged",
+    "Cayley_Hamilton": "unchanged",
+    "General_D15": "unchanged",
+    "Nguyen_second_order": "unchanged",
+    "A0": "a/500",
+    "outer_shell_current_map": "local progressive radial-cap diagnostic",
+    "formal_structural_spatial_sampling": 0,
+    "formal_structural_spatial_quadrature": 0,
+    "formal_structural_subdomains": 1,
+    "structural_calibration": false
+  },
+  "common_material": {
+    "ls_mm": 200.0,
+    "ts_mm": 4.0,
+    "Es_MPa": 206000.0,
+    "fy_MPa": 355.0,
+    "fcu_MPa": 40.0,
+    "fc_prime_MPa": 30.4,
+    "Ec_MPa": 32500.0,
+    "nu_s": 0.30,
+    "nu_c_Zhou": 0.20,
+    "nu_c_NZ": 0.18,
+    "eps0_R10": 0.0018712490394580678
+  },
+  "cases": [
+    {"case":"S0_Z6","a_mm":9000,"b_mm":12000,"h_mm":130,"ns":60,"q0":0.0015,"a_over_h":69.23076923,"b_over_h":92.30769231,"lambda_Zhou":1.4341068510},
+    {"case":"S1_a8000","a_mm":8000,"b_mm":12000,"h_mm":130,"ns":60,"q0":0.0013333333333,"a_over_h":61.53846154,"b_over_h":92.30769231,"lambda_Zhou":1.3782443508},
+    {"case":"S2_b10000","a_mm":9000,"b_mm":10000,"h_mm":130,"ns":50,"q0":0.0018,"a_over_h":69.23076923,"b_over_h":76.92307692,"lambda_Zhou":1.2400424062},
+    {"case":"S3_a8000_b10000","a_mm":8000,"b_mm":10000,"h_mm":130,"ns":50,"q0":0.0016,"a_over_h":61.53846154,"b_over_h":76.92307692,"lambda_Zhou":1.2153882482},
+    {"case":"S4_minus5pct","a_mm":8550,"b_mm":11400,"h_mm":130,"ns":57,"q0":0.0015,"a_over_h":65.76923077,"b_over_h":87.69230769,"lambda_Zhou":1.3625149365}
+  ],
+  "z6_kinematic_indicators": {
+    "current_reduced_peak": {"D":0.705,"q":0.0058975999,"q_total":0.0073975999,"max_slope_rad":0.0309869940,"max_slope_deg":1.775423976,"sin_small_angle_leading_relative_error":0.0001600323},
+    "H0_D0705_branch_locator": {"D":0.705,"q":0.0073561,"q_total":0.0088561,"max_slope_rad":0.0370963449,"max_slope_deg":2.125464,"sin_small_angle_leading_relative_error":0.0002293565},
+    "trial_q_0p020": {"q_total":0.0215,"max_slope_rad":0.0900589894,"max_slope_deg":5.16,"sin_small_angle_leading_relative_error":0.0013517703}
+  },
+  "linear_mode_separation": {
+    "S0_Z6": {"Pcr11_MN":42.83147561,"Pcr21_over_11":2.13468538,"Pcr31_over_11":4.16337723,"Pcr12_over_11":4.25800379},
+    "S1_a8000": {"Pcr11_MN":46.37389941,"Pcr21_over_11":2.36716196},
+    "S2_b10000": {"Pcr11_MN":47.73882632,"Pcr21_over_11":1.77384309},
+    "S3_a8000_b10000": {"Pcr11_MN":49.69523473,"Pcr21_over_11":2.00658990},
+    "S4_minus5pct": {"Pcr11_MN":45.07825742,"Pcr21_over_11":2.13487433}
+  },
+  "engineering_peak_trend": [
+    {"case":"S0_Z6","P_NZ_MN":37.50942609,"P_Zhou_lower_MN":49.6724359,"error_pct":-24.486437,"identity":"accepted current D32 diagnostic"},
+    {"case":"S1_a8000","D_peak":0.66686042,"P_NZ_MN":40.77320836,"P_Zhou_lower_MN":50.250137,"error_pct":-18.859508,"identity":"degree20 branch quadratic peak; degree32 checkpoint confirms max neighborhood"},
+    {"case":"S2_b10000","D_peak":0.69959529,"P_NZ_MN":37.00019201,"P_Zhou_lower_MN":44.130467,"error_pct":-16.157262,"identity":"degree20 branch quadratic peak; degree32 checkpoint confirms max neighborhood"},
+    {"case":"S3_a8000_b10000","D_peak":0.64704280,"P_NZ_MN":39.60800742,"P_Zhou_lower_MN":44.684656,"error_pct":-11.361056,"identity":"degree20 branch quadratic peak; degree32 checkpoint confirms max neighborhood"},
+    {"case":"S4_minus5pct","D_peak":0.65049990,"P_NZ_MN":38.16740798,"P_Zhou_lower_MN":47.946569,"error_pct":-20.395956,"identity":"degree20 branch quadratic peak; degree32 checkpoint confirms max neighborhood"}
+  ],
+  "decisions": {
+    "Nguyen_second_order_as_primary_Z6_error_cause": "NOT_SUPPORTED",
+    "wrong_linear_halfwave_count_as_primary_cause": "NOT_SUPPORTED",
+    "Z6_isolated_numerical_bug": "NOT_SUPPORTED",
+    "high_slenderness_systematic_bias": "SUPPORTED_BY_NEIGHBORHOOD_TREND",
+    "single_q_finite_amplitude_mode_space": "PRIMARY_OPEN_SUSPECT",
+    "discrete_web_topology": "OPEN_SECONDARY_SUSPECT",
+    "full_incremental_J2_redistribution": "OPEN_SECONDARY_SUSPECT"
+  }
+}
