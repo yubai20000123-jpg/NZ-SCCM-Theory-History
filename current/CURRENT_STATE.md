@@ -1,80 +1,111 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-15 after Z6 squat-panel boundary audit  
+**Updated:** 2026-08-15 18:13 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-Current Z6 correction:
+The operational project entry is now:
+
+`semantic_v2/00_index/20260815_1813__NZSCCM__PROJECT__CURRENT_STATE_AND_Z6_BOUNDARY_WARP_PREFLIGHT__SEMANTIC_INDEX.md`
+
+Current Z6 causal status:
 
 ```text
 Nguyen second-order kinematics as primary Z6 cause = NOT SUPPORTED
 wrong m=1 halfwave as primary cause = NOT SUPPORTED
-q31 as the cause of low Z6 Pu = NOT ESTABLISHED
-single-q finite-amplitude restriction as explanation for conservative Pu = RETRACTED
-original one-complete-halfwave production baseline = RETAINED
+q31 as cause of low Z6 Pu = NOT ESTABLISHED / PRIOR CAUSAL CLAIM RETRACTED
+ONE_CONTINUOUS_COMPLETE_HALFWAVE = RETAINED
+BOUNDARY_KINEMATICS_MISMATCH_WITH_ZHOU_LOADED_EDGE_UX=0 = CONFIRMED
 ```
 
-Geometry/source identity:
+Boundary-compatible in-plane field preflight:
 
 ```text
-Z6: a=9000 mm, b=12000 mm, h=130 mm, a/b=0.75
-compression acts along the shorter in-plane dimension
-classical m=1 at a/b=0.75 = CONSISTENT
-Zhou Group-4 exact input combination (9000,12000,130,60) = STRONGLY SOURCE-SUPPORTED
-unique raw FE model ID / raw FE Pu = NOT RECOVERED
-49.6724359 MN = Zhou fitted lower-envelope value, not raw FE Pu
+BOUNDARY_ADMISSIBLE_CONTINUOUS_WARP_FIELD = CONSTRUCTED
+u(x,0)=u(x,a)=0 = EXACT
+left/right in-plane displacement remains free = YES
+added linear gamma_xy from warp = 0 EXACTLY
+finite odd-harmonic N=1,3,5 field = D15 exact-moment compatible
+formal structural spatial sampling/quadrature = 0
 ```
 
-New confirmed kinematic mismatch:
+Elastic static-condensation gate at Z4/Z6 aspect ratio a/b=0.75, nu=0.18:
 
 ```text
-CURRENT NZ base membrane field at q=0:
-ex = nu D
-ey = -D
-=> sigma_x = 0 in elastic plane stress
-=> globally free transverse Poisson state
-
-ZHOU four-edge FE loaded edges:
-u_x = 0 on y=0 and y=a
-non-loaded side edges: u_x free
-
-Therefore current affine/free-Poisson in-plane field is NOT admissible under Zhou's actual loaded-edge in-plane boundary condition.
-BOUNDARY_KINEMATICS_MISMATCH = CONFIRMED
+N=1: c/D=0.01411546, Keff/Kfree=1.03242069
+N=3: c/D=0.01557057, Keff/Kfree=1.03218055
+N=5: c/D=0.01609379, Keff/Kfree=1.03208818
+N=5 mid-height side transverse displacement ~= 0.0834 of fully free-Poisson value
 ```
 
-Why Z6 exposes it:
+Therefore loaded-edge ux=0 strongly suppresses transverse Poisson expansion in the squat panel, but the linear-elastic axial membrane stiffness rises only about 3.2%. The boundary mismatch is real, but **LINEAR_BOUNDARY_STIFFNESS_ALONE_EXPLAINS_Z6_24P5_PERCENT_GAP = NO**. Any larger Pu effect must come from nonlinear coupling through the 2D current stress, concrete tangent, steel yield surface and geometric stiffness.
+
+Full current-operator status:
 
 ```text
-a/b=0.75 => squat finite panel; loaded-edge restraint zones can occupy a large part of the panel
-Z4 also has a/b=0.75 but is much stockier / less stability-controlled
-therefore a/b<1 alone is not the cause
-primary diagnostic interaction = squat geometry x high global slenderness x wrong in-plane admissibility
+R10/N48/CH/D15 material target = UNCHANGED
+full coupled Rq(D,q,c)=0, Rc(D,q,c)=0 = NOT YET SOLVED
+naive generalized c-dependent CH/N48 expand-then-compose = REPRESENTATION/RUNTIME FAIL
+this is NOT a theory-impossibility result
+required implementation = sparse / moment-first directional contraction
 ```
 
-Current next causal test — before changing material theory, steel law, D15, or adding out-of-plane modes:
+Aspect-ratio fallback diagnostics, keeping b,h,ns,ls,ts,fy,fcu fixed and changing only a:
 
 ```text
-1. construct the lowest-order continuous in-plane field satisfying u(x,0)=u(x,a)=0 and the Zhou side-edge conditions
-2. analytically/variationally condense its amplitude(s); formal structural sampling/quadrature remain zero
-3. keep the same m=1 complete out-of-plane halfwave, R10/N48-C1-MM/Cayley-Hamilton/General-D15, steel current map and imperfection contract
-4. recompute Z6
-5. recompute Z4 as same-a/b control
-6. accept the mechanism only if Z6 changes substantially in the required direction while Z4 remains comparatively stable
+Z4 base a/b=0.75: Zhou lower = 70.1873 MN
+Z4 square a/b=1.00: Zhou lower = 69.3399 MN
+Z4 a/b=1.25: Zhou lower = 69.7569 MN
+
+Z6 base a/b=0.75: Zhou lower = 49.6724 MN
+Z6 square a/b=1.00: Zhou lower = 49.4868 MN
+Z6 a/b=1.25: Zhou lower = 49.5084 MN
 ```
 
-Frozen parent identity remains:
+Thus the Zhou fitted Z6 comparator is nearly unchanged when a/b is moved above 1, making square/taller Z6 a useful independent discriminator for NZ. An unchanged single-q/current-local-cap square-Z6 branch probe was executed, but sampled Rq values remained same-sign; no connected root and no Pu are released.
+
+```text
+Z6_SQUARE_FULL_NZ_Pu = NOT SOLVED
+Z6_SQUARE_CONNECTED_ROOT = NOT YET FOUND
+```
+
+Current next task:
+
+```text
+CURRENT_NEXT_TASK = Z6_BOUNDARY_WARP_SPARSE_STATIC_CONDENSATION
+```
+
+Execution order:
+
+1. use only one new in-plane amplitude c first (N=1);
+2. retain the same m=1 complete out-of-plane halfwave and Nguyen second-order kinematics;
+3. form Rc from current-stress virtual work, without requiring a global scalar material potential;
+4. contract/integrate Rc and Rq moment-first, avoiding full high-degree generalized stress expansion;
+5. verify q=0 degeneration against the closed-form elastic c/D above;
+6. recompute Z6 and Z4 as the same-a/b controlled pair;
+7. if the sparse current condensation still fails, continue the square/taller unchanged-method branch search without using Zhou/Winter to select roots.
+
+Frozen parent identity:
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
 Nguyen second-order
 R10 / N48-C1-MM / Cayley-Hamilton / General D15 unchanged
-formal structural spatial sampling = 0
-formal structural quadrature = 0
+A0 = a/500
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
 no Zhou/Winter calibration
+no out-of-plane multimode expansion
 ```
 
-Current audit artifacts:
+Latest artifacts:
 
-- `semantic_v2/10_governance/20260815_1725__Z6_Q31_CAUSAL_RETRACTION_AND_VARIATIONAL_CONSISTENCY__LOCK.md`
-- `semantic_v2/60_validation/steel_shell/20260815_1731__NZSCCM__Z6__ASPECT_RATIO_AND_HALFWAVE_IDENTITY__AUDIT.md`
+- `semantic_v2/10_governance/20260815_1813__Z6_BOUNDARY_WARP_PREFLIGHT_AND_ASPECT_RATIO_FALLBACK__LOCK.md`
+- `semantic_v2/60_validation/steel_shell/20260815_1813__NZSCCM__Z6__BOUNDARY_ADMISSIBLE_WARP_AND_ASPECT_RATIO_PREFLIGHT__AUDIT.md`
+- `semantic_v2/40_execution/steel_shell/20260815_1813__NZSCCM__Z6__BOUNDARY_WARP_AND_ASPECT_RATIO_PREFLIGHT_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260815_1813__NZSCCM__Z6__BOUNDARY_WARP_PREFLIGHT__REPRO.py`
+- `semantic_v2/50_results/steel_shell/20260815_1813__Z6__BOUNDARY_COMPATIBLE_WARP_ELASTIC_CONDENSATION__RESULT.csv`
+- `semantic_v2/50_results/steel_shell/20260815_1813__Z4_Z6__SQUARE_TALLER_ASPECT_RATIO_ZHOU_COMPARATOR__RESULT.csv`
+- `semantic_v2/50_results/steel_shell/20260815_1813__Z6_SQUARE__UNCHANGED_LOCALCAP_PARTIAL_BRANCH_PROBE__RESULT.csv`
 
-The boundary mismatch is a proven formulation inconsistency. Its quantitative responsibility for the approximately -24.5% Z6 Pu gap is still open until the boundary-admissible same-theory rerun is completed.
+The 16:47 q31 artifacts remain historical diagnostics only and must not be cited as proof that multimode release raises Pu or explains the Z6 gap.
