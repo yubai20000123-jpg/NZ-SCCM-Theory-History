@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 01:02 +08:00  
+**Updated:** 2026-08-16 01:21 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_0102__NZSCCM__PROJECT__CURRENT_STATE_AR2_PF_TO_D15_CURRENT_MATERIAL_MAPPING_GATE__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_0121__NZSCCM__PROJECT__CURRENT_STATE_ZHOU_AXIAL_END_ASYMMETRY_GATE__SEMANTIC_INDEX.md`
 
 ## Hard computational boundary
 
@@ -14,128 +14,123 @@ ONE_CONTINUOUS_COMPLETE_HALFWAVE
 Nguyen second-order kinematics
 R10/N48-C1-MM/Cayley-Hamilton unchanged
 General D15 unchanged
+A0=a/500
 N_formal_spatial_sampling=0
 N_formal_spatial_quadrature=0
 N_formal_spatial_subdomains=1
 Gauss/Simpson/adaptive/collocation/cells/material-point-grid=PROHIBITED
+out-of-plane multimode production expansion=PROHIBITED
+Zhou/Winter calibration=PROHIBITED
 ```
 
 Historical Gauss-based AR2 `Pu=40.97334 MN` remains retracted and invalid.
 
-## 01:02 PF -> nonlinear current-material mapping result
+## Retained 00:47 / 01:02 results
 
-The exact 00:47 PF/Airy end-restraint field is an elastic solution and is **not** transplanted as nonlinear stress.
+The transverse loaded-end `ux=0` mismatch is a real boundary effect. Its elastic PF/Airy closure and the 01:02 principle of mapping that boundary physics into compatible displacement/strain coordinates before the R10 current-material map are retained.
 
-Direct finite PF functions contain complex non-integer eigenvalues and hyperbolic factors and therefore are not finite members of the current integer-trigonometric D15 coefficient algebra:
+Direct PF elastic stress is still prohibited as nonlinear stress. General D15 remains unchanged.
 
-```text
-DIRECT_PF_HYPERBOLIC_TO_FINITE_D15 = FAIL_FUNCTION_SPACE
-```
+## 01:21 axial-end asymmetry gate
 
-A conforming integer-trigonometric displacement/strain lift has instead been constructed on the AR2 one-halfwave domain `ell=b`:
+Zhou Table 1.3 source boundary remains
 
 ```text
-u_rs=(b/pi) U_rs cos(rX)[1-cos(sY)], r odd
-v_rs=(b/pi) V_rs cos(rX)sin(sY),      r even
+loaded top:    ux=0, uy=unset, uz=0
+loaded bottom: ux=0, uy=0,     uz=0
+lateral sides: ux=unset, uy=unset, uz=0
 ```
 
-with membrane strains
+The open question whether bottom `uy=0` is merely an axial rigid-body datum is now resolved:
 
 ```text
-u-mode: ex=-rU sin(rX)[1-cos(sY)], ey=0, gxy=sU cos(rX)sin(sY)
-v-mode: ex=0, ey=sV cos(rX)cos(sY), gxy=-rV sin(rX)sin(sY)
+ZHOU_BOTTOM_UY0_IS_PURE_RIGID_DATUM = FAIL
 ```
 
-Every finite truncation is exactly a finite integer trig polynomial and therefore remains inside unchanged General D15.
+For AR2 `a=2b,m=2`, with full-panel coordinates
 
-## Nonlinear mapping rule
+`X=pi*x/b`, `Z=pi*y/a`,
 
-The current strain chain becomes
+the conforming axial variation
 
-`epsilon=epsilon_D(D)+epsilon_g(q,q0)+sum_j r_j B_j+existing Nguyen curvature`.
+`v_A=(b/pi)eta*cos(2X)*(1-cos Z)`
 
-For each material phase:
+satisfies the complete bottom condition `v_A(X,0)=0` but has admissible zero-mean x-dependent top trace
 
-`sigma_p=M_p(epsilon_p)`.
+`v_A(X,pi)=2(b/pi)eta*cos(2X)`.
 
-The membrane coordinates satisfy
+It is neither a rigid translation nor a change of scalar mean-shortening D.
 
-`R_j=sum_p int sigma_p:B_j dV=0`.
-
-Thus the elastic PF stress field is never reused as nonlinear stress.
-
-In the homogeneous elastic limit:
-
-`r=c_D D+c_G Gamma/eps0=c_D D+2 c_G M`,
-
-where `Gamma=pi^2(A^2+2A0A)/b^2` and `M=pi^2/eps0*(q0q+q^2/2)`.
-
-The complete conforming Ritz space and PF/Airy solve the same strictly convex elastic membrane minimization problem, so their complete-basis elastic limits coincide by uniqueness.
-
-## Exact coefficient-space validation
-
-All finite-Ritz matrices were assembled from finite Fourier coefficients and exact antiderivatives only; no spatial points were used.
-
-For `nu=.18`:
+Its exact strain mode is
 
 ```text
-R=S  nmem   Q_GG             Q_DD             Q_DG
-1      2    .710327899673    9.716401029828   -1.359305267256
-2      8    .380985323731    9.661181203174   -1.280790283542
-3     18    .338757150201    9.639425364487   -1.257398206363
-4     32    .318834041670    9.628042047630   -1.246067137428
-6     72    .299568422262    9.616453853076   -1.235062292357
-8    128    .290150329916    9.610639322927   -1.229696366445
-10   200    .284558250341    9.607163461818   -1.226522139050
-12   288    .280851744614    9.604857758524   -1.224424967309
+ex  = 0
+ey  = 0.5*cos(2X)*sin Z
+gxy = -2*sin(2X)*(1-cos Z)
 ```
 
-All `Q_GG>0`, preserving the classical positive membrane effect.
+and the exact m=2 FvK source projection is
 
-The pre-buckling D-driven end-restraint field is also part of the same coordinates. At R=S=12:
+`<B_A,G>=pi/120 = 0.02617993877991494 != 0`.
+
+Self stiffness:
+
+`<B_A,B_A>=pi^2*(25-24nu)/16 > 0`.
+
+At `nu=.18`, isolated unit-driver diagnostic coefficient:
+
+`etaG=-0.002052288112081178`.
+
+Therefore the axial-end asymmetric trace family is mechanically real and directly excited by the m=2 geometric source.
+
+## Consequence for the 01:02 one-halfwave axial Ritz family
+
+The 01:02 family
+
+`v_rs=(b/pi)V_rs*cos(rX)sin(sY)`, `Y=pi*y/ell=2Z`, integer `s`,
+
+vanishes at both ends of the representative halfwave.
+
+The exact lower-half restriction of the admissible full-panel trace mode contains
+
+`1-cos(Y/2)`.
+
+Thus:
 
 ```text
-free-Poisson Q_DD=9.549829218494
-mixed-end Ritz Q_DD=9.604857758524
-fully-restrained Q_DD=9.869604401089
+CURRENT_0102_SYMMETRIC_V_RITZ_FULL_ZHOU_EQUIVALENCE = FAIL
 ```
 
-so the mixed boundary lies physically between free and fully restrained transverse response.
+This does not invalidate the transverse PF subproblem and does not revoke `ONE_CONTINUOUS_COMPLETE_HALFWAVE`. It means the global bottom-fixed/top-free axial trace response must be analytically condensed onto the single representative halfwave before nonlinear production.
 
 ## Current verdict
 
 ```text
-AR2_PF_TO_NONLINEAR_KINEMATIC_MAPPING = PASS_ARCHITECTURE
-BOUNDARY_ADMISSIBLE_INTEGER_TRIG_D15_LIFT = PASS
-GENERAL_D15_THEORY_CHANGE = NO
-ELASTIC_PF_LIMIT = PASS_FORMAL_COMPLETE_BASIS
-PREBUCKLING_D_END_RESTRAINT = INCLUDED
-POSTBUCKLING_FVK_MEMBRANE_DRIVER = INCLUDED
+TRANSVERSE_PF_END_RESTRAINT_SUBPROBLEM = RETAINED
+PF_TO_CURRENT_MATERIAL_KINEMATIC_MAPPING_ARCHITECTURE = RETAINED_AS_SUBPROBLEM
+ZHOU_BOTTOM_UY0_IS_PURE_RIGID_DATUM = FAIL
+M2_FVK_SOURCE_PROJECTION_ON_ASYMMETRIC_AXIAL_TRACE = NONZERO_EXACT
+CURRENT_0102_SYMMETRIC_V_RITZ_FULL_ZHOU_EQUIVALENCE = FAIL
+ONE_CONTINUOUS_COMPLETE_HALFWAVE = RETAINED
+GENERAL_D15 = UNCHANGED
 ZERO_SPATIAL_NUMERICAL_INTEGRATION = PASS
-MULTICOORDINATE_R10_N48_IMPLEMENTATION = OPEN
+MULTICOORDINATE_R10_N48_IMPLEMENTATION = BLOCKED
 PRODUCTION_MEMBRANE_RANK = NOT_FROZEN
-FULL_ZHOU_ALL_INPLANE_END_DOF_EQUIVALENCE = OPEN
 NEW_AR2_Z6_Pu = NOT_CALCULATED
 ```
 
-## Why Pu remains blocked
-
-1. the existing reduced R10/N48 code is specialized to historical low-rank D-q(/c) fields and does not yet accept a generic membrane-coordinate vector;
-2. a production membrane rank has not been selected by coefficient-space convergence;
-3. Zhou's actual `bottom uy=0` versus `top uy=unset` axial end asymmetry has not yet been proven compatible with the one-halfwave condensation.
-
-Because item 3 can alter the admissible membrane basis, it precedes nonlinear compiler implementation.
-
 ## Current next execution
 
-`ZHOU_BOTTOM_UY0_TOP_UYFREE_ONE_HALFWAVE_COMPATIBILITY_ZERO_QUADRATURE_GATE`
+`ZHOU_AXIAL_TOP_TRACE_TO_ONE_HALFWAVE_SCHUR_CONDENSATION_ZERO_QUADRATURE_GATE`
 
-## 01:02 artifacts
+The next gate must condense the missing global axial-end asymmetric trace onto the single formal production halfwave using analytic coefficient-space operations and a finite integer-trigonometric hierarchy with convergence auditing. No second formal spatial subdomain is permitted.
 
-- `semantic_v2/10_governance/20260816_0102__NZSCCM__AR2_PF_TO_R10_N48_D15_ZERO_QUADRATURE_MAPPING__LOCK.md`
-- `semantic_v2/20_theory/nc_steel_shell_panel/20260816_0102__NZSCCM__AR2_BOUNDARY_ADMISSIBLE_D15_RITZ_LIFT_TO_CURRENT_MATERIAL__THEORY.md`
-- `semantic_v2/40_execution/steel_shell/20260816_0102__NZSCCM__AR2_PF_TO_R10_N48_D15_MAPPING__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260816_0102__NZSCCM__AR2_D15_RITZ_LIFT__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260816_0102__NZSCCM__AR2_D15_RITZ_LIFT__REPRO.py`
-- `semantic_v2/60_validation/steel_shell/20260816_0102__NZSCCM__AR2_PF_TO_D15_CURRENT_MATERIAL_MAPPING__AUDIT.md`
-- `semantic_v2/00_index/20260816_0102__NZSCCM__PROJECT__CURRENT_STATE_AR2_PF_TO_D15_CURRENT_MATERIAL_MAPPING_GATE__SEMANTIC_INDEX.md`
+## 01:21 artifacts
+
+- `semantic_v2/10_governance/20260816_0121__NZSCCM__ZHOU_BOTTOM_UY0_TOP_UYFREE_ONE_HALFWAVE_COMPATIBILITY__LOCK.md`
+- `semantic_v2/20_theory/nc_steel_shell_panel/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY_ONE_HALFWAVE_COMPATIBILITY__THEORY.md`
+- `semantic_v2/40_execution/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY__REPRO.py`
+- `semantic_v2/60_validation/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY_ONE_HALFWAVE_COMPATIBILITY__AUDIT.md`
+- `semantic_v2/00_index/20260816_0121__NZSCCM__PROJECT__CURRENT_STATE_ZHOU_AXIAL_END_ASYMMETRY_GATE__SEMANTIC_INDEX.md`
