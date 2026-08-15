@@ -1,11 +1,24 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 01:21 +08:00  
+**Updated:** 2026-08-16 02:49 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_0121__NZSCCM__PROJECT__CURRENT_STATE_ZHOU_AXIAL_END_ASYMMETRY_GATE__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md`
+
+## Governing Z6 production scope
+
+Per the latest user instruction, Zhou's wall is treated analytically as a **theoretical four-edge simply-supported plate**. Detailed FE translational `ux/uy` implementation is not part of the Z6 analytical capacity task.
+
+```text
+Z6_PRODUCTION_BOUNDARY = THEORETICAL_FOUR_EDGE_SIMPLY_SUPPORTED
+NAVIER_COMPLETE_HALFWAVE = GOVERNING
+ZHOU_FE_UX_UY_IMPLEMENTATION = OUT_OF_SCOPE_FOR_Z6_PRODUCTION
+20260816_0016_TO_0121_FE_BOUNDARY_DETOUR = SUPERSEDED_FOR_Z6_PRODUCTION
+```
+
+The historical FE-boundary files remain preserved but no longer block or define Z6 production.
 
 ## Hard computational boundary
 
@@ -23,114 +36,111 @@ out-of-plane multimode production expansion=PROHIBITED
 Zhou/Winter calibration=PROHIBITED
 ```
 
-Historical Gauss-based AR2 `Pu=40.97334 MN` remains retracted and invalid.
+`p20,p02` as independent free membrane DOFs remain retired. PF/end-warp/axial-trace FE-boundary corrections are not used in the current SSSS production field.
 
-## Retained 00:47 / 01:02 results
-
-The transverse loaded-end `ux=0` mismatch is a real boundary effect. Its elastic PF/Airy closure and the 01:02 principle of mapping that boundary physics into compatible displacement/strain coordinates before the R10 current-material map are retained.
-
-Direct PF elastic stress is still prohibited as nonlinear stress. General D15 remains unchanged.
-
-## 01:21 axial-end asymmetry gate
-
-Zhou Table 1.3 source boundary remains
+## Z6 AR2 production object
 
 ```text
-loaded top:    ux=0, uy=unset, uz=0
-loaded bottom: ux=0, uy=0,     uz=0
-lateral sides: ux=unset, uy=unset, uz=0
+a=24000 mm
+b=12000 mm
+a/b=2
+m*=2
+ell=a/m*=12000 mm=b
+A0=48 mm
+q0=.004
+
+tc=122 mm
+ts=4 mm
+rho_w=.02
+fc=30.4 MPa
+eps0=.0018712490394580678
+nu_c=.18
+Es=206000 MPa
+fy=355 MPa
+nu_s=.30
 ```
 
-The open question whether bottom `uy=0` is merely an axial rigid-body datum is now resolved:
+The full section contains effective concrete core, both face steel plates, and the equivalent longitudinal web/PBL steel phase.
+
+## Current Z6 capacity
+
+Final degree-48 local peak state:
 
 ```text
-ZHOU_BOTTOM_UY0_IS_PURE_RIGID_DATUM = FAIL
+D       = 1.5853259043
+q       = 0.02166488056895
+A=q*b   = 259.9785668 mm
+
+Pc_eff  = 20.72760903 MN
+Ps      = 21.59547236 MN
+Pw      =  8.97221193 MN
+P       = 51.29529333 MN
+Rq      = -311.161 N mm
+Rnorm   ~= 1.36e-8
 ```
 
-For AR2 `a=2b,m=2`, with full-panel coordinates
-
-`X=pi*x/b`, `Z=pi*y/a`,
-
-the conforming axial variation
-
-`v_A=(b/pi)eta*cos(2X)*(1-cos Z)`
-
-satisfies the complete bottom condition `v_A(X,0)=0` but has admissible zero-mean x-dependent top trace
-
-`v_A(X,pi)=2(b/pi)eta*cos(2X)`.
-
-It is neither a rigid translation nor a change of scalar mean-shortening D.
-
-Its exact strain mode is
+Engineering-frozen result:
 
 ```text
-ex  = 0
-ey  = 0.5*cos(2X)*sin Z
-gxy = -2*sin(2X)*(1-cos Z)
+CURRENT_Z6_Pu = 51.30 MN
+Du ~= 1.585
+qu ~= .021665
+Au ~= 260 mm
 ```
 
-and the exact m=2 FvK source projection is
-
-`<B_A,G>=pi/120 = 0.02617993877991494 != 0`.
-
-Self stiffness:
-
-`<B_A,B_A>=pi^2*(25-24nu)/16 > 0`.
-
-At `nu=.18`, isolated unit-driver diagnostic coefficient:
-
-`etaG=-0.002052288112081178`.
-
-Therefore the axial-end asymmetric trace family is mechanically real and directly excited by the m=2 geometric source.
-
-## Consequence for the 01:02 one-halfwave axial Ritz family
-
-The 01:02 family
-
-`v_rs=(b/pi)V_rs*cos(rX)sin(sY)`, `Y=pi*y/ell=2Z`, integer `s`,
-
-vanishes at both ends of the representative halfwave.
-
-The exact lower-half restriction of the admissible full-panel trace mode contains
-
-`1-cos(Y/2)`.
-
-Thus:
+Connected branch locator around the first local maximum:
 
 ```text
-CURRENT_0102_SYMMETRIC_V_RITZ_FULL_ZHOU_EQUIVALENCE = FAIL
+D=1.56  P=51.23273135 MN
+D=1.58  P=51.31276663 MN
+D=1.60  P=51.28835746 MN
 ```
 
-This does not invalidate the transverse PF subproblem and does not revoke `ONE_CONTINUOUS_COMPLETE_HALFWAVE`. It means the global bottom-fixed/top-free axial trace response must be analytically condensed onto the single representative halfwave before nonlinear production.
+so the load changes from increasing to decreasing around `D~1.585`.
 
-## Current verdict
+## Compiler / spatial audit
+
+Declared material interval:
+
+`lambda in [-2.35,+1.90]`.
+
+Final envelope:
 
 ```text
-TRANSVERSE_PF_END_RESTRAINT_SUBPROBLEM = RETAINED
-PF_TO_CURRENT_MATERIAL_KINEMATIC_MAPPING_ARCHITECTURE = RETAINED_AS_SUBPROBLEM
-ZHOU_BOTTOM_UY0_IS_PURE_RIGID_DATUM = FAIL
-M2_FVK_SOURCE_PROJECTION_ON_ASYMMETRIC_AXIAL_TRACE = NONZERO_EXACT
-CURRENT_0102_SYMMETRIC_V_RITZ_FULL_ZHOU_EQUIVALENCE = FAIL
-ONE_CONTINUOUS_COMPLETE_HALFWAVE = RETAINED
-GENERAL_D15 = UNCHANGED
-ZERO_SPATIAL_NUMERICAL_INTEGRATION = PASS
-MULTICOORDINATE_R10_N48_IMPLEMENTATION = BLOCKED
-PRODUCTION_MEMBRANE_RANK = NOT_FROZEN
-NEW_AR2_Z6_Pu = NOT_CALCULATED
+lambda_min=-2.2936943231
+lambda_max=+1.8232424497
 ```
 
-## Current next execution
+Coverage passes. Wide-hull N48-C1/MM fidelity error is retained as representation uncertainty; it is not a spatial-integration or boundary-condition error and the frozen production contract has no universal full-hull rejection threshold.
 
-`ZHOU_AXIAL_TOP_TRACE_TO_ONE_HALFWAVE_SCHUR_CONDENSATION_ZERO_QUADRATURE_GATE`
+## Post-solve comparisons
 
-The next gate must condense the missing global axial-end asymmetric trace onto the single formal production halfwave using analytic coefficient-space operations and a finite integer-trigonometric hierarchy with convergence auditing. No second formal spatial subdomain is permitted.
+```text
+Pcr_AR2               = 39.2880147150 MN
+Pyth_full              = 88.089888 MN
+Zhou Eq.(5-87)/(5-88) = 49.4867667519 MN
+Winter                 = 50.1858541295 MN
 
-## 01:21 artifacts
+Pu/Pcr    = 1.30562
+Pu/Pyth   = 0.58231
+vs Zhou   = +3.65%
+vs Winter = +2.21%
+```
 
-- `semantic_v2/10_governance/20260816_0121__NZSCCM__ZHOU_BOTTOM_UY0_TOP_UYFREE_ONE_HALFWAVE_COMPATIBILITY__LOCK.md`
-- `semantic_v2/20_theory/nc_steel_shell_panel/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY_ONE_HALFWAVE_COMPATIBILITY__THEORY.md`
-- `semantic_v2/40_execution/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY__REPRO.py`
-- `semantic_v2/60_validation/steel_shell/20260816_0121__NZSCCM__ZHOU_AXIAL_END_ASYMMETRY_ONE_HALFWAVE_COMPATIBILITY__AUDIT.md`
-- `semantic_v2/00_index/20260816_0121__NZSCCM__PROJECT__CURRENT_STATE_ZHOU_AXIAL_END_ASYMMETRY_GATE__SEMANTIC_INDEX.md`
+No comparator entered the solve.
+
+## Historical values
+
+```text
+Pu=40.97334 MN = RETRACTED / INVALID (Gauss + free p20/p02 path)
+44.552919 MN    = historical reduced q-only audit only
+51.30 MN        = current theoretical-four-edge-SSSS full-section Z6 capacity
+```
+
+## Current artifacts
+
+- `semantic_v2/10_governance/20260816_0249__NZSCCM__ZHOU_Z6_FOUR_EDGE_SIMPLY_SUPPORTED_PRODUCTION_SCOPE__LOCK.md`
+- `semantic_v2/40_execution/steel_shell/20260816_0249__NZSCCM__Z6_AR2_SSSS_FULLSECTION_CAPACITY__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260816_0249__NZSCCM__Z6_AR2_SSSS_FULLSECTION__PARAMS_BRANCH_AND_INTERMEDIATES.json`
+- `semantic_v2/60_validation/steel_shell/20260816_0249__NZSCCM__Z6_AR2_SSSS_FULLSECTION_CAPACITY__AUDIT.md`
+- `semantic_v2/00_index/20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md`
