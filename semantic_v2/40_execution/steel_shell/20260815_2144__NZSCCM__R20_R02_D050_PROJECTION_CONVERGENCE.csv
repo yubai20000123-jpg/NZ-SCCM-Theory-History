@@ -1,0 +1,11 @@
+family,setting,P_or_component_MN,Rq_or_component_MNmm,Rc_or_component_MNmm,R20_component_MNmm,R02_component_MNmm,notes
+concrete_pruning_tol,1.5e-6,21.0700549117,-2648.3222761749,-28.6914959217,-18.9869189755,-33.6218596842,same N48 interval and D15 moments
+concrete_pruning_tol,1.0e-6,21.0700468912,-2648.3202391388,-28.6919529930,-18.9868207624,-33.6219426179,same N48 interval and D15 moments
+concrete_pruning_tol,7.0e-7,21.0700464554,-2648.3219743393,-28.6920839260,-18.9867602647,-33.6219616761,released primary projection setting
+concrete_pruning_tol,5.0e-7,21.0700473791,-2648.3225699433,-28.6919559780,-18.9867649964,-33.6219194026,same N48 interval and D15 moments
+steel_cap_degree,12,16.2739035796,2647.9764360734,28.6903037521,-0.4967526367,10.1491267885,material-coordinate cap degree only; structural points zero
+steel_cap_degree,16,16.2753875347,2648.2505296347,28.6652759561,-0.5041798771,10.1370285513,material-coordinate cap degree only; structural points zero
+steel_cap_degree,20,16.2755034979,2648.4334080855,28.6779966621,-0.5016534166,10.1420385773,material-coordinate cap degree only; structural points zero
+steel_cap_degree,24,16.2750936407,2648.3233455869,28.6921829072,-0.5000979550,10.1484776160,released primary projection setting
+steel_cap_degree,28,16.2748755533,2648.2804050962,28.6970284495,-0.4989276263,10.1508178321,material-coordinate cap degree only; structural points zero
+steel_cap_degree,32,16.2750043977,2648.2999699042,28.6955655158,-0.5000586787,10.1504939113,material-coordinate cap degree only; structural points zero
