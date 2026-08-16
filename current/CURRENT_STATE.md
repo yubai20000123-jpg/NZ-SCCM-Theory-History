@@ -1,152 +1,160 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 00:10 +08:00  
+**Updated:** 2026-08-17 00:28 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-## Current operational entry
+## Current operational identity
 
-`semantic_v2/00_index/20260817_0010__NZSCCM__PROJECT__CURRENT_STATE_MEMBRANE_CLOSURE_RECOVERED_INTERNAL_STABILITY_GATE__SEMANTIC_INDEX.md`
+The 00:10 `STABLE_CURRENT_MEMBRANE_CONDENSATION_AND_MIXED_EVENT_GATE` is downgraded from mainline to archived error-diagnostic support.
 
-## Frozen backbone
+Controlling governance:
 
-```text
-UNIFIED_PRODUCTION_WORKFLOW_V1=ACTIVE
-ONE_CONTINUOUS_COMPLETE_HALFWAVE=ACTIVE
-Nguyen second-order continuous kinematics=ACTIVE
-R10=FROZEN
-reinforcement before coupled solve=REQUIRED
-General-D15 exact structural moments=ACTIVE
-N_formal_spatial_sampling=0
-N_formal_spatial_quadrature=0
-N_formal_spatial_subdomains=1
-N_formal_thickness_quadrature=0
-```
+`semantic_v2/10_governance/20260817_0028__NZSCCM__ANTI_LOOP_ORIGINAL_INTENT_AND_CORRECT_ROUTE_RECOVERY__LOCK.md`
 
-## Membrane closure recovery result
-
-The 18:48 -> 19:12 -> 21:36 transition has now been traced.
+## Frozen physics backbone
 
 ```text
-1848 compatibility-coupled membrane delta = RETAIN
-1912 five-term elastic Airy recovery = PASS_EXACT / RETAIN
-1912 legacy N48 five-coordinate current root = REJECTED / NEW_R_SOLVE_NOT_AUTHORIZED
-2136 anti-loop legacy-N48 five-coordinate production override = RETRACTED
+UNIFIED_PRODUCTION_WORKFLOW_V1 = ACTIVE
+ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
+Nguyen second-order continuous kinematics = ACTIVE
+MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
+CLASSICAL_FVK_MEMBRANE_POSTBUCKLING_SIGN = POSITIVE
+R10 physical current operator = FROZEN
+reinforcement before coupled solve = REQUIRED
+General-D15 exact structural moments = ACTIVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+N_formal_thickness_quadrature = 0
 ```
 
-The five-term basis itself remains valid. The first explicit governance regression occurred when the 21:36 anti-loop pivot restored the legacy N48 five-coordinate current root without a new mechanics/fidelity acceptance gate.
+## Correctly recovered pre-anti-loop state
 
-## Corrected internal membrane qualification
-
-Current internal equilibrium remains
+The correct production-development state is the 19:12 result:
 
 ```text
-Rm(D,q,r)=0
-r=[r0,r20,r22,s02,s22]
-Krr=dRm/dr
+FIVE_TERM_ELASTIC_CONDENSATION = PASS_EXACT
+FIVE_TERM_AIRY_FVK_RECOVERY = PASS_EXACT
+FIVE_TERM_GENERAL_D15_TARGET_CLOSURE = PASS
+CURRENT_MATERIAL_RESIDUAL_AND_CONDENSATION_FORM = PASS_FORMAL
+LEGACY_N48_AS_CURRENT_PRODUCTION = REJECTED
+SOURCE_FAITHFUL_CURRENT_MATERIAL_TARGET_RUNTIME = OPEN
+NEW_MEMBRANE_REDISTRIBUTED_Pu = NOT RUN
 ```
 
-but `Rm=0` and `det(Krr)!=0` are not enough to authorize Schur condensation.
-
-Stable condensation additionally requires the internal second-work block to be positive. Minimum current gate:
+Therefore:
 
 ```text
-Krr_sym=(Krr+Krr^T)/2
-lambda_min(Krr_sym)>0
+MEMBRANE_PHYSICS_CLOSURE = ESTABLISHED
+MAIN_OPEN_ITEM = PRACTICAL SOURCE_FAITHFUL TARGET EVALUATION
 ```
 
-(or the strict equivalent from the final consistent tangent when its symmetry is established).
+Do not reopen the retracted `320.749 kN` Case21 path as a theory-development target.
 
-Only then may the model use
+## Why “do not enter a loop” was said
+
+19:32 provided a valid fail-fast result: target-side adjoint Clenshaw is algebraically exact, but the active RC1 nested representation still propagates huge nested degree because no closed moment primitive existed for its beta/Chebyshev atoms.
+
+Instead of converting that blocker into an engineering production decision, the execution opened a chain of increasingly abstract exact-backend gates (nested atom closure -> quartic algebraic periods -> holonomic thickness -> quadratic-tower/64-state -> dual-holonomic regularity ...).
+
+The user anti-loop instruction means:
 
 ```text
-r_,g=-Krr^-1 Rm_,g
-Kgg_cond=Kgg-Kgr Krr^-1 Krg
+DO_NOT_ALLOW_EXACT_BACKEND_RESEARCH_TO_FORM_AN_UNBOUNDED_CHAIN_OF_Pu_PREREQUISITES
 ```
 
-At the first internal stability loss:
+It does NOT mean:
 
 ```text
-INTERNAL_MEMBRANE_STABILITY_EVENT=ACTIVE
-DO_NOT_CONTINUE_TO_ANOTHER_Rm_ROOT=YES
-DO_NOT_SCHUR_CONDENSE_UNSTABLE_ROOT=YES
+RETURN_TO_A_PREVIOUSLY_REJECTED_LEGACY_APPROXIMATION_TO_FORCE_A_Pu_NUMBER
 ```
 
-The event must enter the full coupled tangent / outer-limit event ordering.
+The 21:36 N48 five-coordinate production pivot was therefore an overcorrection and is superseded.
 
-## Diagnostic evidence
+## Production accuracy / backend policy
 
-K-inner-product projection onto the exact elastic Airy leading direction:
+Retain zero formal structural spatial integration, but do not require theorem-level universal exactness as a Pu prerequisite.
 
 ```text
-Case21 low-q point1: lambda_A=+1.13729089, K-perp=.1624
-Case21 low-q point2: lambda_A=+1.09794176, K-perp=.2198
-retracted 320.749-kN state: lambda_A=-1.14600789, K-perp=.97188
+TIGHT_STRICT_REMAINDER_CERTIFICATE = NOT_HARD_GATE
+UNIVERSAL_EXACT_SPECIAL_FUNCTION_BACKEND = NOT_HARD_GATE
+UNIVERSAL_SINGLE_COMPILER_ORDER = NOT_REQUIRED
 ```
 
-Direct frozen-R10 high-order oracle, at historical Case21 D,q, used only as an independent audit:
+Allowed/preferred production representation:
 
 ```text
-scalar Airy projected equilibrium root lambda=+0.06773338661
-projected derivative=+4.13439792
-=> physical Airy direction does not reverse
-
-full five-coordinate Rm=0 root exists
-sym(Krr) eig ~= [-238.65,-28.05,+281.46,+492.27,+733.27]
-=> root is internally unstable / saddle-like
+source-faithful finite analytic material representation
+specimen-derived material-coordinate domain/order
+value + first-tangent + target-functional convergence gates
+mature CAS and/or finite analytic-series contraction for actual targets
+accuracy commensurate with physical/model uncertainty
 ```
 
-Low-q point1/point2 direct-R10 `sym(Krr)` eigenvalues are all positive; the branch therefore starts internally stable and later loses that property.
+Still prohibited:
 
-The Gauss-Legendre oracle above is NOT a formal production integration route.
+```text
+formal structural spatial Gauss/Simpson/adaptive quadrature
+spatial collocation/material-point grid
+trial-load calibration
+R10 retuning
+panel-level surrogate hiding the source operator
+```
+
+## Anti-loop execution discipline
+
+Every next technical subtask must directly return or enable one of:
+
+```text
+P, Rq, Rm_j, L, KZ, or a directly required derivative
+```
+
+For a backend/representation attempt:
+
+```text
+ONE DECLARED ATTEMPT
+ -> PASS: use it
+ -> FAIL: record blocker and move to pre-authorized practical analytic representation
+ -> DO NOT automatically create another exact-backend research gate
+```
+
+No mathematical representation may become a new Pu prerequisite unless it has an explicit complexity bound and an executable path on the actual Case21/Z6 targets.
+
+## Case roles
+
+```text
+Case21 = low membrane-driver control case; corrected membrane effect expected small
+Z6 = high-b/t / large membrane-driver decisive case; corrected membrane effect expected much larger
+```
+
+Historical scale diagnostic retained:
+
+```text
+Case21 M=.02869338081, (M/4)/D=.85814%
+Z6 M=1.69487261562, (M/4)/D=26.7275%
+M_Z6/M_Case21=59.0684
+```
+
+Z6 must use its actual mixed in-plane boundary-admissible membrane family; do not mechanically reuse the simple Case21/free-Poisson boundary field.
 
 ## Capacity status
 
 ```text
-Case21 320.749185 kN = RETRACTED_AS_PHYSICAL_MEMBRANE_Pu / unstable-overrelaxation diagnostic only
-Z6 43.762840 MN = RETRACTED_AS_PHYSICAL_MEMBRANE_Pu / boundary+stability diagnostic only
-Case21 historical/current-support closure = 368.189 kN
-Z6 retained engineering baseline = 51.30 MN
+Case21 320.749185 kN = RETRACTED DIAGNOSTIC ONLY
+Z6 43.762840 MN = RETRACTED DIAGNOSTIC ONLY
+Case21 retained support baseline = 368.189 kN
+Z6 retained engineering support baseline = 51.30 MN
 NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 ```
 
-## Recovered membrane physics/scale rule
+## Restored mainline
 
 ```text
-CLASSICAL_FVK_MEMBRANE_POSTBUCKLING_SIGN=POSITIVE
-EDGEWARD_AXIAL_STRESS_REDISTRIBUTION=REQUIRED
-Case21 M=.02869338081, (M/4)/D=.85814% -> small-perturbation expectation
-Z6 M=1.69487261562, (M/4)/D=26.7275% -> first-order / strong membrane effect
-M_Z6/M_Case21=59.0684
+19:12 source-faithful five-term/current-material target formulation
+ -> build/choose practical finite analytic target evaluator under zero spatial quadrature
+ -> Case21 low-effect control calculation
+ -> Z6 mixed-boundary high-effect calculation
+ -> compare membrane correction and Pu
 ```
 
-This is a theory/source qualification rule, not a calibration target.
-
-## Z6 boundary rule
-
-Z6 must not reuse the simple Case21/free-Poisson five-term membrane field. The historical Zhou/Z6 gate requires loaded-end `ux=0`, free lateral in-plane sides, and the corresponding Airy/homogeneous-biharmonic mixed-boundary family before current-material internal condensation.
-
-## Anti-loop / anti-calibration
-
-```text
-DO_NOT_REOPEN_R10=YES
-DO_NOT_TUNE_R10_TO_RECOVER_CAPACITY=YES
-DO_NOT_FIT_MEMBRANE_AMPLITUDES_TO_CASE21_OR_Z6=YES
-DO_NOT_USE_GAUSS_ORACLE_AS_FORMAL_PRODUCTION=YES
-DO_NOT_START_ANOTHER_UNBOUNDED_SYMBOLIC_BACKEND_LOOP=YES
-DO_NOT_RELEASE_NEW_Pu_BEFORE_INTERNAL_EVENT_ORDERING=YES
-```
-
-## Current unique next gate
-
-`STABLE_CURRENT_MEMBRANE_CONDENSATION_AND_MIXED_EVENT_GATE`
-
-First apply the corrected stable-condensation rule to the origin-connected Case21 membrane branch. Locate the first `lambda_min(Krr_sym)=0` event and establish its order relative to the retained support peak / outer limit event. Do not relax through the event. After Case21 closes, enter Z6 only with its mixed-boundary admissible membrane family.
-
-## Current key artifacts
-
-- `semantic_v2/00_index/20260817_0010__NZSCCM__PROJECT__CURRENT_STATE_MEMBRANE_CLOSURE_RECOVERED_INTERNAL_STABILITY_GATE__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__REPRO.py`
-- `semantic_v2/60_validation/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_AND_INTERNAL_STABILITY__AUDIT.md`
-- `semantic_v2/10_governance/20260817_0010__NZSCCM__STABLE_CURRENT_MEMBRANE_CONDENSATION__GATE_LOCK.md`
+Do not spend additional mainline cycles explaining the already retracted Case21 low-Pu branch unless a future implementation regression requires it.
