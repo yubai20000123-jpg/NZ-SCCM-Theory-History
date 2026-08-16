@@ -1,7 +1,8 @@
 # NZ-SCCM unified production workflow V1 — theory and execution contract
 
 **Timestamp:** 2026-08-16 12:17 +08:00  
-**Identity:** CURRENT PROJECT-WIDE THEORY / EXECUTION CONTRACT
+**Identity:** CURRENT PROJECT-WIDE THEORY / EXECUTION CONTRACT  
+**17:12 clarification:** unified workflow means unified governing rules, not identical numerical boundary/domain inputs for every specimen.
 
 ## 0. Objective
 
@@ -22,7 +23,7 @@ UHPC + steel shell
 S0  specimen/source input freeze
 S1  boundary + complete-halfwave selection
 S2  continuous Nguyen second-order strain construction
-S3  material-family current-operator compilation
+S3  material-family current-operator compilation on a parameter-derived reachable domain
 S4  phase analytic mapping
 S5  moment-first General-D15 exact assembly
 S6  internal-coordinate equilibrium/condensation when required
@@ -88,6 +89,14 @@ The current Zhou Z-series uses the theoretical four-edge simply-supported/Navier
 
 If another specimen family has a genuinely different boundary, its boundary formulas may differ, but the selector must remain theoretical/source-side and independent of experimental Pu.
 
+The halfwave length is likewise not globally fixed. Under the same selector, specimen parameters may generate different `m*` and
+
+\[
+\ell_i=a_i/m_i^*.
+\]
+
+This is an input/result of the common boundary/halfwave rule, not a change of calculation method.
+
 ## 4. S2 — common continuous Nguyen second-order kinematics
 
 The global coordinates are
@@ -119,17 +128,45 @@ and, where internal coordinates exist,
 \varepsilon_{,a_i}.
 \]
 
-## 5. S3 — material-family analytic compiler
+## 5. S3 — material-family analytic compiler on a parameter-derived reachable domain
 
 The compiler takes a source current operator and returns a finite analytic representation compatible with matrix lift and exact moments.
+
+The **compiler policy is common to a material family, but its numerical validity interval is allowed to vary with specimen/source parameters through one deterministic reachability rule**.
+
+For specimen `i`, first derive
+
+\[
+\boxed{
+\Lambda_i=\mathcal B(\text{geometry}_i,\text{physical boundary}_i,\text{halfwave}_i,\theta_{m,i},\text{declared generalized-coordinate admissibility/search bounds})
+}
+\]
+
+without using experimental `Pu`, Zhou, Winter or discrepancy direction. Then apply the same family compiler policy on that derived domain:
+
+\[
+\boxed{
+\widehat{\mathcal M}_i=\mathcal C_{family}(\mathcal M,\Lambda_i,\text{same source-fidelity gates})
+}
+\]
 
 Common interface:
 
 ```text
+derive_material_domain(
+    geometry,
+    physical_boundary,
+    halfwave,
+    material_parameters,
+    declared_generalized_coordinate_bounds
+)
+-> reachable_domain
+-> compiler_guard
+
 compile_material(
     source_operator,
     source_tangent,
-    material_family_domain,
+    reachable_domain,
     family_compiler_policy
 )
 -> finite_coefficients
@@ -140,16 +177,26 @@ compile_material(
 
 The internal representation may use different analytic bases or converged order for NC and UHPC if their source operators require it. This is an allowed material-family adapter difference.
 
+Likewise, two specimens of the same material family may produce different converged orders or intervals **only because the same parameter-derived domain and same convergence rule yield different numerical requirements**. This is not case-specific tuning.
+
+Allowed:
+
+```text
+same domain-generation rule + different geometry/boundary/material parameters -> different domains
+same source-fidelity convergence rule + different derived domains -> different converged orders
+```
+
 Not allowed:
 
 ```text
-case ID -> choose special compiler
-Pu error sign -> change compiler
-experiment/Zhou/Winter -> select order/domain/coefficients
-steel phase type -> change NC/UHPC compiler
+case label -> manually choose special compiler/domain/order
+Pu error sign -> change compiler/domain/order
+experiment/Zhou/Winter -> select domain/order/coefficients
+steel phase type alone -> change the parent NC/UHPC compiler policy
+Z6-only fallback solver
 ```
 
-The same frozen NC compiler must feed both NC+rebar and NC+shell. The same future UHPC compiler must feed both UHPC+rebar and UHPC+shell.
+Thus "same NC compiler" means the same NC source operator, domain-generation law, analytic grammar, fidelity gates and convergence procedure; it does **not** mean every NC specimen must carry one identical global numerical interval such as `[-2.35,+1.90]`.
 
 ## 6. S4 — phase analytic mappings
 
@@ -310,7 +357,8 @@ The tangent audit must not use a pre-buckling elastic tangent frozen from an ear
 Every run records:
 
 ```text
-material compiler/domain identity
+specimen parameter-derived domain/guard identity
+material compiler policy identity
 material spectrum/envelope
 source-value compiler error
 source-tangent compiler error
@@ -323,7 +371,9 @@ branch/peak bracketing data
 formal spatial/thickness counters
 ```
 
-If the continuous material state exits a frozen material-family domain, the result is not accepted. The material-family domain/compiler must be enlarged/recompiled consistently, then all affected family results rerun.
+If the continuous material state exits its parameter-derived validity domain, the result is not accepted. The **same domain-generation rule** must be rerun with enlarged declared generalized-coordinate admissibility/search bounds if those bounds were insufficient, followed by recompilation under the same family policy. This is not authorization to tune the domain from observed `Pu` error.
+
+A family-wide conservative interval may be retained as an audit/reference envelope, but it must not be confused with a mandatory identical production compiler interval for every specimen.
 
 ## 14. S12 — comparison only after the solve
 
@@ -342,7 +392,8 @@ These comparators may diagnose model bias but may not retrospectively select coe
 | Item | NC+rebar | NC+shell | UHPC+rebar | UHPC+shell |
 |---|---|---|---|---|
 | continuum source operator | R10 | R10 | UHPC source | UHPC source |
-| continuum family compiler | same NC compiler | same NC compiler | same UHPC compiler | same UHPC compiler |
+| continuum compiler policy | same NC policy | same NC policy | same UHPC policy | same UHPC policy |
+| production domain | parameter-derived | parameter-derived | parameter-derived | parameter-derived |
 | Nguyen second order | same | same | same | same |
 | membrane redistribution | same | same | same | same |
 | zero spatial integration | same | same | same | same |
@@ -357,14 +408,20 @@ These comparators may diagnose model bias but may not retrospectively select coe
 ## 16. Current implementation state
 
 ```text
-COMMON_WORKFLOW_CONTRACT = FROZEN_V1
+COMMON_WORKFLOW_CONTRACT = FROZEN_V1_WITH_1712_DOMAIN_CLARIFICATION
 NC_SOURCE_OPERATOR = R10_FROZEN
-NC_FAMILY_COMPILER = TO_BE_FROZEN_UNDER_V1
+NC_FAMILY_COMPILER_POLICY = TO_BE_FROZEN_UNDER_PARAMETER_DERIVED_DOMAIN_RULE
 UHPC_SOURCE_OPERATOR = NOT_YET_FINAL_PRODUCTION_FROZEN
-UHPC_FAMILY_COMPILER = WAITING_FOR_UHPC_SOURCE_FREEZE
+UHPC_FAMILY_COMPILER_POLICY = WAITING_FOR_UHPC_SOURCE_FREEZE
 REBAR_ADAPTER = CURRENT_SUPPORT
 STEEL_SHELL_STRUCTURAL_ADAPTER = CURRENT_SUPPORT
-STEEL_SHELL_FULL_SOURCE_CURRENT_OPERATOR = SOURCE_FREEZE/PROMOTION STATUS MUST BE CHECKED BEFORE EACH PRODUCTION USE
+STEEL_SHELL_FULL_SOURCE_CURRENT_OPERATOR = SOURCE FREEZE/PROMOTION STATUS MUST BE CHECKED BEFORE EACH PRODUCTION USE
 ```
 
-The next numerical gate is to freeze the NC family compiler under this workflow and rerun Z0-Z6 with no specimen-specific method change.
+Current next numerical gate:
+
+```text
+UNIFIED_V1_PARAMETER_DERIVED_MATERIAL_DOMAIN_AND_COMPILER_GATE
+```
+
+It must first derive specimen/source-parameter-controlled material domains under one common rule, then test the same NC source-fidelity/compiler policy on those domains. It must not force all Z0-Z6 to carry one family-wide numerical interval merely for the sake of method unification.
