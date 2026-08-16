@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-08-17T01:15:00+08:00",
+  "status": "EXECUTED_COMPACTNESS_PASS_XY_FEEDBACK_OPEN",
+  "formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "Z6_boundary": "FOUR_EDGE_SIMPLY_SUPPORTED_SSSS",
+  "retained_prototype": {
+    "kappa": 2.0,
+    "rho": 0.1,
+    "eta": 0.0025,
+    "H": 0.09799750427197301,
+    "UR": 0.03,
+    "ACC": 0.1072329249362415,
+    "AT": "1-2^(-1/8)"
+  },
+  "spectral_gap": {
+    "Delta_E": "(tr(E))^2-4*det(E)",
+    "prototype_Delta_E": "(28624*x^2+47880*x+50121)/176400",
+    "threshold_shift_invariance": "(tr(E-lambda*I))^2-4*det(E-lambda*I)=Delta_E",
+    "shared_projector_radical": "g=sqrt(Delta_E)"
+  },
+  "branch_field": {
+    "basis": ["1", "q", "s", "q*s", "g", "q*g", "s*g", "q*s*g"],
+    "max_dimension": 8,
+    "smooth_field_dimension": 4,
+    "global_branch_free_old_bound": 64
+  },
+  "projector": {
+    "Pplus": "0.5*(I+(2E-tr(E)I)/g)",
+    "exact_idempotence_residual": 0
+  },
+  "uR_support": {
+    "low_branch": 4,
+    "middle_branch": 8,
+    "high_branch": 8
+  },
+  "full_Syy_support": {
+    "low_branch": 4,
+    "middle_branch": 8,
+    "high_branch": 8
+  },
+  "full_Syy_factor_graph": [
+    "smooth Pi(E),Pi(-E)",
+    "c,t",
+    "C",
+    "uR low/mid/high source spline",
+    "T=uR/rho",
+    "U",
+    "CH b7,b8",
+    "U-ACC det(C)C+C adj(T)-rho AT det(T)(b8 I-b7 T)"
+  ],
+  "observed_symbolic_assembly_seconds": {
+    "middle_branch_full_Syy": 1.05,
+    "low_branch_full_Syy": 0.85,
+    "high_branch_full_Syy": 0.96
+  },
+  "thickness_source_event_bound": {
+    "equation": "det(E_m+zeta*E_b-lambda_m*I)=0",
+    "polynomial_degree_in_zeta": 2,
+    "max_roots_per_threshold": 2,
+    "number_of_thresholds": 2,
+    "max_events": 4
+  },
+  "downstream_feedback": {
+    "event_resolved_risk": "zeta_m(X,Y) algebraic endpoints may increase XY contraction complexity",
+    "global_positive_part_risk": "larger local state but hides variable event endpoints from XY layer",
+    "production_choice": "NOT_YET_LOCKED"
+  },
+  "new_Pu": null
+}
