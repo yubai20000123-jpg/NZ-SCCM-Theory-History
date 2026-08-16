@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 21:18 +08:00  
+**Updated:** 2026-08-16 21:36 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_2136__NZSCCM__PROJECT__CURRENT_STATE_ANTI_LOOP_N48_MEMBRANE_PRODUCTION_REACTIVATED__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide backbone
 
@@ -28,148 +28,108 @@ Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter response calibration = PROHIBITED
 ```
 
-## Structural coordinates retained
+## Structural coordinates
 
 ```text
 global coordinates = (D,q), A=bq
 internal membrane coordinates = [r0,r20,r22,s02,s22]
 ```
 
-with `Rm=0` and consistent Schur condensation retained.
+with `Rm=0` and consistent Schur condensation.
 
-## Exact 64-state field retained
+## 21:36 decisive dual-holonomic audit
 
-The exact R10 source graph remains represented by the fixed three-generator quadratic tower
-
-```text
-s_eta,s_1,s_10
-4 x 4 x 4 = 64 field states
-A64 nonzeros = 159 / 4096
-```
-
-Historical N48/RC1 remain reconstruction/audit references only.
-
-## 21:18 exact CH elimination of matrix T^7
-
-For
+The denominator-gauge identity is exact:
 
 ```text
-t=tr(T), d=det(T)
-b0=0, b1=1
-bn=t*b(n-1)-d*b(n-2)
+d V' = B V
+W = V/G
+=> (dG) W' = (BG-dG'I) W
 ```
 
-2x2 Cayley-Hamilton gives
+so regular rational dual-target signatures admit exact polynomial vector-moment recurrences.
+
+However the currently rationalized quadratic-tower basis has an interior apparent pole even for the retained smooth noncommuting prototype:
 
 ```text
-T^n=bn*T-d*b(n-1)*I
-adj(T^7)=b8*I-b7*T
+A^2-4Q=(260*x-21)^2*(28624*x^2+47880*x+50121)/31116960000
+x*=21/260=0.080769230769... in [-1,1]
 ```
 
-where
+while the physical atom is regular:
 
 ```text
-b7=t^6-5*t^4*d+6*t^2*d^2-d^3
-b8=t^7-6*t^5*d+10*t^3*d^2-4*t*d^3.
+q(x*)=0.07678482746648955...
+s(x*)=0.55420150655330974...
+lim(c0+c1*q)=29577184/61042095=0.48453749826246953...
 ```
 
-Therefore the full frozen R10 stress is carried as
+Thus the pole belongs to the rationalized basis representation, not to the physical R10 source.
+
+## 64-state local-matrix erratum
+
+For basis `[1,q,s,q*s]`, the correct local matrix is
 
 ```text
-S=U-ACC*det(C)*C+C*adj(T)-rho*AT*det(T)*(b8*I-b7*T).
+[0, 0,   0,        0]
+[0, ell, 0,        0]
+[0, 0,   c0,       c1]
+[0, 0,   c1*Q,     ell+c0]
 ```
 
-The previously materialized matrix `T7` remains diagnostic evidence only. It is no longer a production target node.
+The 20:59 displayed matrix interchanged `c1` and `c1*Q`. The stated differential equations were correct. The full state dimension remains `64` and the nonzero-pattern count remains `159/4096`. The 21:18 x-fiber target audit is unaffected because it did not use the x-dependent derivative matrix.
+
+## Anti-loop production decision
+
+A globally robust continuation of the exact-algebraic route would require an additional algebraic regularization layer such as an integral basis / Hermite reduction. Under the explicit anti-loop rule, that new backend is not opened automatically.
 
 ```text
-T7_MATRIX_POWER_PRODUCTION_NODE = ELIMINATED_EXACT_BY_2X2_CH
-T7_MATRIX_DERIVATIVE_PRODUCTION_NODE = ELIMINATED_TO_SCALAR_RECURRENCE
+EXACT_ALGEBRAIC_HOLONOMIC_Pu_ROUTE = PAUSED_RESEARCH_BRANCH
+NO_FURTHER_EXACT_INTEGRATION_MICRO_GATE = YES
+N48_C1_MM_GENERAL_D15_PRODUCTION = REACTIVATED
+FIVE_TERM_MEMBRANE_REDISTRIBUTION = REQUIRED
 ```
 
-## 21:18 target-side field adjoint
+The active production contract is again
 
-For field multiplication
+`current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md`
+
+with
 
 ```text
-e_i*e_j=sum_k m_ij^k e_k
+N48_ORDER=48
+U=N48-C1
+C=N48-C1
+T7=N48-C1
+T=N48-C1-CONSTRAINED-MINIMAX
+CAYLEY_HAMILTON=GOVERNING
+D15_GENERAL_TRIG_MOMENTS=ACTIVE
 ```
 
-and a linear target `lambda`,
-
-```text
-lambda(a*b)=<M_a^T lambda,b>=<M_b^T lambda,a>.
-```
-
-Thus structural stress targets are pulled backward through the fixed 64-state field DAG. A final coefficient-by-coefficient `SymPy.cancel` on the full target vector is not required.
-
-Executed full-R10 `Syy` audit on the retained noncommuting prototype at exact rational fibers
-
-```text
-x=0
-x=1/2
-```
-
-gives
-
-```text
-Syy support = 60/64
-b7 support  = 64/64
-b8 support  = 64/64
-adjoint Syy - direct materialized Syy = 0 exactly at both fibers
-```
-
-At `x=0`, the complete CH stress and the predecessor matrix-`T7` stress agree entry-by-entry with exact zero field residual.
-
-Diagnostic timing:
-
-```text
-x=0   : 14.897 s -> 5.103 s
-x=1/2 : 17.459 s -> 5.681 s
-```
-
-for the old binary-`T7` target path versus the CH compact target path. These times are implementation diagnostics, not theory constants.
-
-```text
-FIELD_PRODUCT_ADJOINT_PULLBACK = PASS_EXACT
-FULL_R10_COMPACT_STRESS_TARGET = PASS_EXACT
-FULL_R10_SYY_ADJOINT_FIBER_AUDIT = PASS_EXACT_2_FIBERS
-FINAL_64_COEFFICIENT_CANONICALIZATION = NOT_REQUIRED
-```
-
-## Current implementation boundary
-
-The remaining thickness problem is now narrower: the x-dependent rational dual target must be contracted through the already accepted 64-state holonomic thickness system without flattening rational coefficient functions.
-
-```text
-FULL_R10_DUAL_HOLONOMIC_THICKNESS_MOMENT_RUNTIME = OPEN
-BETA_WEIGHTED_XY_CREATIVE_TELESCOPING_RUNTIME = OPEN
-NEW_CURRENT_MEMBRANE_r_SOLVE = NOT_RUN
-NEW_Pu = NOT_RUN
-```
-
-The algebraic audit fibers are not structural quadrature points.
+N48 roots are material-coordinate compiler roots, not spatial integration points.
 
 ## Capacity status
 
 ```text
 Case21 368.189 kN = historical/current-support closure only
 Z6 51.30 MN = retained engineering baseline only
-Z0-Z5 old values = retracted/diagnostic under current governance
-NEW membrane-redistributed Pu = NOT_RELEASED
+NEW membrane-redistributed Case21 Pu = NOT YET RUN
 ```
 
 ## Current unique next gate
 
 ```text
-UNIFIED_V1_FULL_R10_DUAL_HOLONOMIC_THICKNESS_MOMENT_RUNTIME_GATE
+UNIFIED_V1_CASE21_MEMBRANE_REDISTRIBUTED_N48_PRODUCTION_GATE
 ```
+
+This is an actual structural production calculation gate: solve five-term `Rm=0`, Schur-condense, solve the connected `(D,q)` limit state, and run same-state `KZ`. Do not reopen another symbolic-integration backend automatically.
 
 ## Current key artifacts
 
-- `semantic_v2/00_index/20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md`
-- `semantic_v2/20_theory/nc_rebar_panel/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET_REDUCTION__THEORY.md`
-- `semantic_v2/40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__AUDIT.md`
-- `semantic_v2/10_governance/20260816_2118__NZSCCM__FULL_R10_ADJOINT_CH_TARGET_AND_DUAL_HOLONOMIC_NEXT__GATE_LOCK.md`
+- `semantic_v2/00_index/20260816_2136__NZSCCM__PROJECT__CURRENT_STATE_ANTI_LOOP_N48_MEMBRANE_PRODUCTION_REACTIVATED__SEMANTIC_INDEX.md`
+- `semantic_v2/20_theory/nc_rebar_panel/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_ERRATUM_AND_PRODUCTION_PIVOT__THEORY.md`
+- `semantic_v2/40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__AUDIT.md`
+- `semantic_v2/10_governance/20260816_2136__NZSCCM__ANTI_LOOP_EXACT_BRANCH_PAUSE_AND_N48_MEMBRANE_PRODUCTION__LOCK.md`
