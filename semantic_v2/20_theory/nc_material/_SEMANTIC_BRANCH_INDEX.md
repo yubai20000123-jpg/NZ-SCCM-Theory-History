@@ -6,19 +6,15 @@
 - R10 material physics is not reopened.
 - Governing project workflow is `UNIFIED_PRODUCTION_WORKFLOW_V1`.
 
-## NC family compiler source freeze — PASS
+## 12:29 NC source-fidelity result — PASS
 
-Current governance:
-
-- `../10_governance/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_SOURCE_FIDELITY_AND_ORDER_FREEZE__LOCK.md`
-
-Current source-fidelity execution:
+Current source-fidelity support:
 
 - `../../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__EXECUTION_REPORT.md`
 - `../../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__PARAMS_AND_INTERMEDIATES.json`
 - `../../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__REPRO.py`
 
-Frozen current NC compiler contract:
+Material-only result:
 
 ```text
 source operator = R10
@@ -29,36 +25,64 @@ single global Chebyshev polynomial per channel
 same order for all four channels
 M = 8*(N+1)
 exact C1 at lambda=0
-E_sigma <= 0.005
-E_tangent <= 0.05
-E_divided_difference <= 0.05
-N_NC = 3584
+E_sigma <= .005
+E_tangent <= .05
+E_divided_difference <= .05
+N_source_candidate = 3584
 ```
 
-The order is the first passing candidate from the deterministic V1 ladder. It is not selected from any case `Pu`, experiment or Zhou/Winter comparison.
-
-Reference R10 assembled-current errors at `N=3584`:
+Reference errors:
 
 ```text
-E_sigma = 0.00107218
-E_tangent = 0.04066517
-E_divided_difference = 0.00381386
+E_sigma = .00107218
+E_tangent = .04066517
+E_divided_difference = .00381386
 ```
 
-The same order/core/guard/algorithm passes the current Swartz `kappa` extrema `1.9993148515` and `2.0008935611`.
+The same source-only order/core/guard/algorithm passes the audited NC kappa extrema.
 
-## Meaning of “same NC compiler”
+## 12:48 production-promotion correction
 
-All NC specimens use the same **compiler protocol, core/guard policy, source-fidelity contract, frozen family order and downstream CH/D15/root architecture**.
+The 12:48 structural gate establishes that `N=3584` is a **source-fidelity candidate order**, not yet a fully frozen production NC family compiler.
 
-Actual coefficient values may vary with physical R10 material parameters such as `kappa`, because the source operator itself varies with those parameters. That is a parameterized family compiler, not a specimen-specific method.
+Current governance:
+
+- `../../10_governance/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_TRACTABILITY_GATE__LOCK.md`
+
+Execution / validation:
+
+- `../../40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_AND_Z0_Z6_RERUN__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260816_1248__NZSCCM__N3584_CH_CLENSHAW_D15_BACKEND__REPRO.py`
+- `../../60_validation/common/20260816_1248__NZSCCM__N3584_CH_D15_COMMON_BACKEND_TRACTABILITY__AUDIT.md`
+
+An order-agnostic backward Chebyshev/Cayley-Hamilton Clenshaw pair was derived and verified against the historical forward N48 CH recurrence at roundoff scale:
 
 ```text
-NC+REBAR -> SAME_NC_FAMILY_COMPILER_PROTOCOL / ORDER / DOMAIN POLICY
-NC+SHELL -> SAME_NC_FAMILY_COMPILER_PROTOCOL / ORDER / DOMAIN POLICY
+ORDER_AGNOSTIC_CH_CLENSHAW_IDENTITY = PASS
 ```
 
-If a future NC source parameter or admissible principal spectrum exits the frozen envelope, the NC family is audited/recompiled consistently; a one-off case order is prohibited.
+However the current high-order coefficient-tensor realization fails the family-level structural tractability requirement at the wide-spectrum Z6 state. Simple coefficient-threshold pruning is also not production-certified because generalized residual convergence is non-monotone under support changes.
+
+Therefore:
+
+```text
+NC_N3584_SOURCE_FIDELITY = PASS
+NC_N3584_FULL_PRODUCTION_COMPILER_PROMOTION = WITHHELD
+CURRENT_N3584_COEFFICIENT_TENSOR_BACKEND = FAIL_COMMON_TRACTABILITY
+```
+
+## Meaning of “same NC method”
+
+All NC specimens must share the same family-level material representation/convergence policy and the same downstream kinematics, CH/approved matrix lift, General-D15, `P,Rq,L`, and same-state `KZ` logic.
+
+A source parameter may change coefficient values physically, but a case ID may not select a different representation, order, interval, or fallback structural solver.
+
+```text
+NC+REBAR -> SAME_NC_FAMILY_METHOD
+NC+SHELL -> SAME_NC_FAMILY_METHOD
+Z0-Z6    -> SAME_NC_FAMILY_METHOD
+```
 
 ## Common mechanics inherited by every NC specimen
 
@@ -74,14 +98,31 @@ COMMON_P_Rq_L_CONNECTED_BRANCH_LIMIT
 SAME_STATE_MATERIAL_PLUS_GEOMETRIC_KZ
 ```
 
-## Retained historical diagnostics
+## Current numerical result boundary
 
-- 10:54: the old Z6-wide N48 coefficient set has order-one T/T7 error in the Z0-Z5 occupied range.
-- 11:34: one global degree-48 C1 polynomial per primitive cannot satisfy the broad NC source fidelity need.
-- 11:10 multirate high-order result remains diagnostic only; its ad hoc different channel orders are not the current family compiler.
+```text
+Z6 51.30 MN = RETAINED ENGINEERING BASELINE ONLY
+Z0-Z5 10:43 Pu = RETRACTED
+Z0-Z5 12:48 N3584 values = DIAGNOSTIC LOCATORS ONLY
+NEW Z0-Z6 PRODUCTION Pu = NOT RELEASED
+```
+
+The 12:48 diagnostic locators remaining near several old load neighborhoods means the old discrepancy is not yet explained solely by the old N48 source error. This is a diagnosis to be resolved only after a common production backend reaches converged `Rq`, same-expression `L`, and same-state `KZ`.
 
 ## Current next gate
 
-`UNIFIED_V1_N3584_CH_MOMENT_FIRST_D15_BACKEND_AND_Z0_Z6_RERUN_GATE`
+`UNIFIED_V1_NC_COMPILER_STRUCTURAL_TRACTABILITY_REDESIGN_GATE`
 
-The next step is to implement the frozen high-order family compiler through an order-agnostic/factorized Cayley-Hamilton and moment-first General-D15 backend, then rerun Z0-Z6 under the same workflow. No further specimen-specific compiler redesign is authorized.
+The next gate must retain R10 and all project-wide mechanics while redesigning the **family-level finite analytic representation and/or exact coefficient contraction architecture** so one source-controlled method is tractable across Z0-Z6.
+
+Allowed directions include universal factorized/low-rank analytic representations or another finite analytic material-family representation with explicit source stress/tangent error and General-D15-compatible contraction.
+
+Prohibited:
+
+```text
+case-specific compiler/order/domain
+Z6-only fallback solver
+spatial numerical quadrature/collocation/material points
+experiment/Zhou/Winter-driven representation choice
+disabling membrane redistribution in stocky cases
+```
