@@ -4,33 +4,76 @@ Current repository role: source/evidence and historical closure-development bran
 
 Primary source/evidence remains under `evidence/materials/UHPC/` and its source-data/core-source registries. Historical UHPC operator baselines remain under `history/materials/UHPC/`.
 
-## Project-wide compiler architecture
+## Governing workflow
 
-Current governance:
+Current project-wide governance / theory:
 
-- `../10_governance/20260816_1152__NZSCCM__UNIFIED_COMPILER_WORKFLOW_ACROSS_NC_UHPC_REBAR_SHELL__LOCK.md`
-- `../20260816_1152__NZSCCM__UNIFIED_CURRENT_OPERATOR_COMPILER_AND_D15_PRODUCTION_ARCHITECTURE__THEORY.md`
+- `../10_governance/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_COMMON_INVARIANTS_AND_TYPE_ADAPTERS__LOCK.md`
+- `../20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
 
-Once the UHPC multidimensional current operator is source-frozen, it must enter the **same analytic compiler interface, same source-value/tangent fidelity contract, same deterministic order/domain convergence procedure, same matrix lift, same moment-first General-D15 engine and same generalized root architecture** as ordinary concrete.
-
-The same frozen UHPC material compiler must then be reused for both:
+Once the UHPC multidimensional current operator is source-frozen, it must enter the same V1 production interface:
 
 ```text
-UHPC + reinforcement
-UHPC + steel shell
+source current operator
+-> finite analytic material-family compiler
+-> source-value fidelity audit
+-> source-tangent fidelity audit
+-> deterministic family domain/order convergence
+-> matrix/spectral lift
+-> Nguyen second-order continuous field
+-> moment-first General-D15
+-> common P,Rq,L connected-branch root
+-> same-state consistent material + geometric KZ
 ```
 
-A UHPC specimen may not trigger its own bespoke compiler or structural solver.
-
-## What must not be inherited from NC
-
-Do not inherit NC numerical material parameters, transition scales, compiler domain or final polynomial order merely because the architecture is shared.
+## What is common with NC
 
 ```text
-SAME_METHOD != SAME_MATERIAL_PARAMETERS
-SAME_METHOD != FORCED_SAME_NUMERICAL_ORDER
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+NGUYEN_SECOND_ORDER
+MEMBRANE_STRESS_REDISTRIBUTION
+ZERO_FORMAL_SPATIAL_QUADRATURE
+CURRENT_STRESS + CONSISTENT_CURRENT_TANGENT
+COMMON_P_Rq_L_ROOT_TOPOLOGY
+SAME_STATE_KZ_AUDIT
+NO_EXPERIMENT_ZHOU_WINTER_IN_COMPILER_OR_ROOT
 ```
 
-If UHPC converges at a different algebraic order from NC, this remains the same method provided the **same deterministic source-only order-selection rule** produced it.
+## What may legitimately differ from NC
+
+UHPC is a different physical material family. Therefore it may have:
+
+- a different multidimensional source current operator;
+- different physical parameters and transition scales;
+- a different finite analytic basis or converged algebraic order if the source operator requires it;
+- a different material-family domain.
+
+This remains the same calculation method because the compiler interface, source-fidelity governance, family-freeze rule, structural kinematics, D15 engine, root topology and tangent-stability contract are unchanged.
+
+```text
+SAME_METHOD != SAME_MATERIAL_FORMULA
+SAME_METHOD != SAME_NUMERICAL_ORDER
+SAME_METHOD != SAME_MATERIAL_DOMAIN
+```
+
+## Rebar versus shell within UHPC
+
+After the UHPC family compiler is frozen:
+
+```text
+UHPC + reinforcement -> SAME_UHPC_COMPILER
+UHPC + steel shell    -> SAME_UHPC_COMPILER
+```
+
+The rebar/shell difference is a structural phase adapter only. A steel phase may not change the UHPC material compiler or parent D15/root architecture.
+
+## Current status
+
+```text
+UHPC_MULTIDIMENSIONAL_SOURCE_OPERATOR = PENDING_FINAL_PRODUCTION_FREEZE
+UHPC_FAMILY_COMPILER_UNDER_V1 = WAITING_FOR_SOURCE_FREEZE
+UHPC_REBAR_PRODUCTION = PENDING
+UHPC_SHELL_PRODUCTION = PENDING
+```
 
 Semantic status for leaf sources remains `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER` until a technical claim requires direct source/body inspection.
