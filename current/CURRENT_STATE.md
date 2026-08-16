@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 20:59 +08:00  
+**Updated:** 2026-08-16 21:18 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_2059__NZSCCM__PROJECT__CURRENT_STATE_FULL_R10_64_STATE_ADJOINT_TARGET_OPEN__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide backbone
 
@@ -35,83 +35,119 @@ global coordinates = (D,q), A=bq
 internal membrane coordinates = [r0,r20,r22,s02,s22]
 ```
 
-with current-material equilibrium and consistent Schur condensation retained.
+with `Rm=0` and consistent Schur condensation retained.
 
-## Retained predecessor results
+## Exact 64-state field retained
 
-```text
-five-term elastic Airy/FvK recovery = PASS_EXACT
-five membrane General-D15 targets = PASS
-20:05 exact finite-matrix R10 source lift = PASS_EXACT
-20:14 scalar quartic atom reduction = PASS_EXACT
-20:34 noncommuting smooth-quartic holonomic thickness recurrence = PASS_EXACT
-```
-
-## 20:59 full R10 three-generator compositum state
-
-The exact atom families `s_eta,s_1,s_10` are represented as three quadratic towers
+The exact R10 source graph remains represented by the fixed three-generator quadratic tower
 
 ```text
-q^2=Q(x)
-s^2=A(x)+2q
-basis=[1,q,s,q*s]
+s_eta,s_1,s_10
+4 x 4 x 4 = 64 field states
+A64 nonzeros = 159 / 4096
 ```
 
-and the complete field basis has exactly
+Historical N48/RC1 remain reconstruction/audit references only.
+
+## 21:18 exact CH elimination of matrix T^7
+
+For
 
 ```text
-4 x 4 x 4 = 64 states.
+t=tr(T), d=det(T)
+b0=0, b1=1
+bn=t*b(n-1)-d*b(n-2)
 ```
 
-Each local four-state derivative operator is exact and the full derivative operator is the Kronecker sum of the three blocks.
+2x2 Cayley-Hamilton gives
 
 ```text
-FULL_64_STATE_DERIVATIVE_CLOSURE = PASS_EXACT
-FULL_64_STATE_VECTOR_MOMENT_FORM = PASS_EXACT
-A64_NONZEROS = 159 / 4096
+T^n=bn*T-d*b(n-1)*I
+adj(T^7)=b8*I-b7*T
 ```
 
-For the retained noncommuting prototype, the LCM denominator degree of the nine local derivative coefficients is `13`.
-
-## Actual R10 source graph reaches the complete field
-
-The exact source graph was executed through
+where
 
 ```text
-R_eta -> t,c -> shifted knot projectors -> uR -> T -> T7=T^7
+b7=t^6-5*t^4*d+6*t^2*d^2-d^3
+b8=t^7-6*t^5*d+10*t^3*d^2-4*t*d^3.
 ```
 
-inside the fixed field.
-
-Observed support:
+Therefore the full frozen R10 stress is carried as
 
 ```text
-t entries = 3/64
-uR entries = 20/64
-T7 entries = 64/64
-tr(T7) = 64/64
+S=U-ACC*det(C)*C+C*adj(T)-rho*AT*det(T)*(b8*I-b7*T).
 ```
 
-The raw `T^7` field multiplication took about `36.95 s` in the diagnostic Python/SymPy implementation.
+The previously materialized matrix `T7` remains diagnostic evidence only. It is no longer a production target node.
 
-The knot rationalization used in that timing probe is diagnostic only; the formal material law retains the exact algebraic R10 knot roots.
+```text
+T7_MATRIX_POWER_PRODUCTION_NODE = ELIMINATED_EXACT_BY_2X2_CH
+T7_MATRIX_DERIVATIVE_PRODUCTION_NODE = ELIMINATED_TO_SCALAR_RECURRENCE
+```
+
+## 21:18 target-side field adjoint
+
+For field multiplication
+
+```text
+e_i*e_j=sum_k m_ij^k e_k
+```
+
+and a linear target `lambda`,
+
+```text
+lambda(a*b)=<M_a^T lambda,b>=<M_b^T lambda,a>.
+```
+
+Thus structural stress targets are pulled backward through the fixed 64-state field DAG. A final coefficient-by-coefficient `SymPy.cancel` on the full target vector is not required.
+
+Executed full-R10 `Syy` audit on the retained noncommuting prototype at exact rational fibers
+
+```text
+x=0
+x=1/2
+```
+
+gives
+
+```text
+Syy support = 60/64
+b7 support  = 64/64
+b8 support  = 64/64
+adjoint Syy - direct materialized Syy = 0 exactly at both fibers
+```
+
+At `x=0`, the complete CH stress and the predecessor matrix-`T7` stress agree entry-by-entry with exact zero field residual.
+
+Diagnostic timing:
+
+```text
+x=0   : 14.897 s -> 5.103 s
+x=1/2 : 17.459 s -> 5.681 s
+```
+
+for the old binary-`T7` target path versus the CH compact target path. These times are implementation diagnostics, not theory constants.
+
+```text
+FIELD_PRODUCT_ADJOINT_PULLBACK = PASS_EXACT
+FULL_R10_COMPACT_STRESS_TARGET = PASS_EXACT
+FULL_R10_SYY_ADJOINT_FIBER_AUDIT = PASS_EXACT_2_FIBERS
+FINAL_64_COEFFICIENT_CANONICALIZATION = NOT_REQUIRED
+```
 
 ## Current implementation boundary
 
-Naively flattening and canonicalizing all rational coefficients of `tr(T7)` exceeded the 60 s execution limit. A smaller flattened `tr(uR)` canonicalization also exceeded the limit.
-
-Therefore:
+The remaining thickness problem is now narrower: the x-dependent rational dual target must be contracted through the already accepted 64-state holonomic thickness system without flattening rational coefficient functions.
 
 ```text
-THREE_GENERATOR_QUADRATIC_TOWER = PASS_EXACT_PARAMETRIC
-FULL_R10_T7_64_BASIS_SUPPORT = PASS_EXECUTED_DIAGNOSTIC
-NAIVE_FLATTENED_RATIONAL_COEFFICIENT_NORMALIZATION = FAIL_TRACTABILITY
-FULL_R10_THICKNESS_TARGET_CONTRACTION = PARTIAL_PASS_TO_ADJOINT_DAG_BOUNDARY
+FULL_R10_DUAL_HOLONOMIC_THICKNESS_MOMENT_RUNTIME = OPEN
+BETA_WEIGHTED_XY_CREATIVE_TELESCOPING_RUNTIME = OPEN
+NEW_CURRENT_MEMBRANE_r_SOLVE = NOT_RUN
+NEW_Pu = NOT_RUN
 ```
 
-This is not a return of the old polynomial-degree explosion: the algebraic state remains fixed at 64. The rejected implementation is only full rational-expression flattening.
-
-The next implementation must keep the 4x4x4 factor graph and perform target-side/adjoint rational reduction in the fixed state.
+The algebraic audit fibers are not structural quadrature points.
 
 ## Capacity status
 
@@ -119,22 +155,21 @@ The next implementation must keep the 4x4x4 factor graph and perform target-side
 Case21 368.189 kN = historical/current-support closure only
 Z6 51.30 MN = retained engineering baseline only
 Z0-Z5 old values = retracted/diagnostic under current governance
-NEW current membrane r(D,q) solve = NOT_RUN
 NEW membrane-redistributed Pu = NOT_RELEASED
 ```
 
 ## Current unique next gate
 
 ```text
-UNIFIED_V1_FULL_R10_64_STATE_ADJOINT_RATIONAL_TARGET_REDUCTION_GATE
+UNIFIED_V1_FULL_R10_DUAL_HOLONOMIC_THICKNESS_MOMENT_RUNTIME_GATE
 ```
 
 ## Current key artifacts
 
-- `semantic_v2/00_index/20260816_2059__NZSCCM__PROJECT__CURRENT_STATE_FULL_R10_64_STATE_ADJOINT_TARGET_OPEN__SEMANTIC_INDEX.md`
-- `semantic_v2/20_theory/nc_rebar_panel/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE_THICKNESS_COMPOSITUM__THEORY.md`
-- `semantic_v2/40_execution/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__AUDIT.md`
-- `semantic_v2/10_governance/20260816_2059__NZSCCM__FULL_R10_64_STATE_ADJOINT_TARGET_NEXT__GATE_LOCK.md`
+- `semantic_v2/00_index/20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md`
+- `semantic_v2/20_theory/nc_rebar_panel/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET_REDUCTION__THEORY.md`
+- `semantic_v2/40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__AUDIT.md`
+- `semantic_v2/10_governance/20260816_2118__NZSCCM__FULL_R10_ADJOINT_CH_TARGET_AND_DUAL_HOLONOMIC_NEXT__GATE_LOCK.md`
