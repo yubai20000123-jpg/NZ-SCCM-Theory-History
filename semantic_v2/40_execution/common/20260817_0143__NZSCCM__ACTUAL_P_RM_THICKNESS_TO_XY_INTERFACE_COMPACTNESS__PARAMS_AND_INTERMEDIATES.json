@@ -1,0 +1,128 @@
+{
+  "timestamp": "2026-08-17T01:43:00+08:00",
+  "status": "EXECUTED_INTERFACE_CLOSED_PRODUCTION_REPRESENTATION_SELECTED",
+  "formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "Z6_boundary": "FOUR_EDGE_SIMPLY_SUPPORTED_SSSS",
+  "actual_common_thickness_interface": {
+    "definitions": {
+      "Nx0": "int_-1^1 sigma_x dzeta",
+      "Ny0": "int_-1^1 sigma_y dzeta",
+      "Nxy0": "int_-1^1 tau_xy dzeta"
+    },
+    "required_for_P_plus_5Rm": 3,
+    "P": "-bt/(2*pi^2) * intint Ny0 dX dY",
+    "Rm0": "Cvol * intint Nx0",
+    "Rm20": "Cvol * intint cos(2X)*Nx0",
+    "Rmu22": "Cvol * intint [cos(2X)cos(2Y)Nx0-sin(2X)sin(2Y)Nxy0]",
+    "Rm02": "Cvol * intint cos(2Y)*Ny0",
+    "Rmv22": "Cvol * intint [cos(2X)cos(2Y)Ny0-sin(2X)sin(2Y)Nxy0]"
+  },
+  "downstream_moment_order_feedback": {
+    "stress_value_moments": [0, 1],
+    "tangent_kernel_moments": [0, 1, 2],
+    "P_Rm_value_only": [0],
+    "reason": "Nguyen q-derivative is affine in zeta; quadratic tangent contractions require at most zeta^2"
+  },
+  "route_A_global_fixed_endpoint": {
+    "pointwise_branch_free_field_bound": 64,
+    "common_three_resultant_augmented_descriptor_bound": 67,
+    "scalar_stress_holonomic_order_bound": 64,
+    "scalar_antiderivative_order_bound": 65,
+    "thickness_endpoints": [-1, 1],
+    "moving_event_endpoints_exposed_to_XY": false,
+    "selected_for_production": true
+  },
+  "route_B_event_resolved": {
+    "branchwise_field_bound": 8,
+    "fixed_topology_common_three_resultant_descriptor_bound": 11,
+    "scalar_branch_antiderivative_order_bound": 9,
+    "selected_for_global_production": false,
+    "retained_as": "LOCAL_EXACT_AND_AUDIT_REPRESENTATION"
+  },
+  "event_equation_symbolic_complexity_generic_five_coordinate": {
+    "equation": "a2(X,Y) zeta^2 + a1(X,Y) zeta + a0(X,Y)=0",
+    "trig_total_degree_a2": 4,
+    "trig_terms_a2": 2,
+    "trig_total_degree_a1": 6,
+    "trig_terms_a1": 9,
+    "trig_total_degree_a0": 8,
+    "trig_terms_a0": 36,
+    "event_discriminant_total_degree": 12,
+    "event_discriminant_terms": 63,
+    "endpoint_front_total_degree": 8,
+    "endpoint_front_terms": 45
+  },
+  "case21_topology_audit_input": {
+    "D": 0.8359179831666168,
+    "q": 0.0017897894751107222,
+    "q0": 0.0025,
+    "Cm": 0.02869338081034484,
+    "Cb": 0.06685330648582646,
+    "nu": 0.18,
+    "kappa": 2.0005129533678754,
+    "lambda1": 0.05008051764913755,
+    "lambda10": 0.49988116674539307,
+    "elastic_Airy_r": [
+      -0.008464547339051727,
+      -0.0058821430661206925,
+      0.00717334520258621,
+      -0.0058821430661206925,
+      0.00717334520258621
+    ]
+  },
+  "case21_topology_audit_61x61": {
+    "r_zero": {
+      "total": 3721,
+      "no_event": 2260,
+      "no_event_percent": 60.73636119322763,
+      "one_lambda1_no_lambda10": 1461,
+      "one_lambda1_no_lambda10_percent": 39.26363880677237
+    },
+    "elastic_Airy": {
+      "total": 3721,
+      "no_event": 2646,
+      "no_event_percent": 71.10991668906208,
+      "one_lambda1_no_lambda10": 1075,
+      "one_lambda1_no_lambda10_percent": 28.89008331093792
+    }
+  },
+  "representative_event_roots": {
+    "r0_center": 0.6142706566203897,
+    "r0_edge_mid": null,
+    "elastic_Airy_center": 0.5262848354947325,
+    "elastic_Airy_edge_mid": null
+  },
+  "audit_thickness_resultants_normalized": {
+    "r0_center": {
+      "Nx0": -0.008123709089485608,
+      "Ny0": -1.2564804933299716,
+      "Nxy0": 0.0,
+      "max_global_vs_event_split_abs_diff": 2.220446049250313e-16
+    },
+    "r0_pi4_pi3": {
+      "Nx0": 0.05308843805915956,
+      "Ny0": -1.1700505691347807,
+      "Nxy0": 0.016744936289816503,
+      "event_root": 0.7645958247563336,
+      "max_global_vs_event_split_abs_diff": 6.938893903907228e-18
+    },
+    "elastic_Airy_center": {
+      "Nx0": 0.014344421825753101,
+      "Ny0": -1.167862053500704,
+      "Nxy0": 0.0,
+      "max_global_vs_event_split_abs_diff": 6.938893903907228e-18
+    }
+  },
+  "decision": {
+    "production_thickness_to_XY_representation": "GLOBAL_FIXED_ENDPOINT_POSITIVE_PART_FACTORISED_PERIOD",
+    "event_resolved_8_state_global_status": "REJECTED_FOR_INTERFACE_COMPLEXITY_RETAINED_FOR_LOCAL_AUDIT",
+    "reason": "event topology changes over X,Y; explicit event resolution requires XY region partition or reintroduction of clipped-root/positive-part selectors",
+    "next_gate": "GLOBAL_FIXED_ENDPOINT_THREE_STRESS_MOMENT_DESCRIPTOR_GATE"
+  },
+  "new_Pu": null
+}
