@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 17:20 +08:00  
+**Updated:** 2026-08-16 17:34 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide production backbone
 
@@ -28,43 +28,18 @@ Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter calibration in solve/compiler = PROHIBITED
 ```
 
-## Unified workflow clarification retained
+## Unified workflow/domain rule
 
-Unified workflow means one governing rule set, not identical numerical boundary/domain values for all specimens.
+Unified workflow means one common governing rule set, not one identical numerical boundary/domain/order for all specimens.
 
-For specimen `i`, a common source/design-side reachability rule generates
-
-\[
-\Lambda_i=\mathcal B(\text{geometry}_i,\text{physical boundary}_i,\text{halfwave}_i,\theta_{m,i},\text{declared generalized-coordinate bounds}).
-\]
-
-The same material-family compiler policy and source-value/tangent/divided-difference gates are then applied on `Lambda_i`.
+For specimen `i`, the common source/design-side reachability rule generates its certified material domain from geometry, physical/source boundary, selected complete halfwave, material parameters and declared generalized-coordinate bounds. The same material-family compiler policy and source-fidelity gates are then applied.
 
 ```text
 same rule + different specimen parameters -> different domains/orders = ALLOWED
 case label / Pu error / experiment -> special domain/order = PROHIBITED
 ```
 
-## 17:20 parameter-derived-domain gate — executed
-
-For the current Zhou AR2 Z0-Z6 set:
-
-```text
-boundary = theoretical four-edge SSSS/Navier
-m*=2
-ell=b
-q0=.004
-D in [0,2]
-q_post=(tc/b)*sqrt(max(Pyth/Pcr-1,0)/kp)
-kp=3*(1-nu^2)/8
-q_max=1.25*max(q0,q_post)
-```
-
-`D_max=2` and the 25% amplitude/domain guards are project-level source/design-side search-envelope rules, not capacity calibration. If a future connected branch hits a declared generalized-coordinate bound before a valid first limit point, the same bound-expansion rule is rerun and the compiler/domain is regenerated before acceptance.
-
-The continuous material spectrum is bounded analytically, with no spatial sampling, using the rank-one positive membrane structure plus the bounded bending operator.
-
-Generated certified cores:
+The 17:20 parameter-derived domains remain active:
 
 ```text
 Z0 [-2.326966,+.398162]
@@ -76,55 +51,88 @@ Z5 [-2.980899,+1.194486]
 Z6 [-2.768805,+2.128027]
 ```
 
-All previously stored diagnostic/engineering envelopes lie inside these domains; those old states were checked only after generation and did not generate the bounds.
+## R10 source identity
 
-## Same baseline compiler convergence on each derived domain
+R10 ordinary-concrete current material physics remains frozen and unchanged.
 
-The former wide single-global-lambda Chebyshev grammar was retained only as a common baseline screen:
-
-```text
-channels=U,C,T,T7
-M=8*(N+1) material-coordinate projection nodes
-exact C1 zero anchors
-E_sigma<=.005
-E_tangent<=.05
-E_divided_difference<=.05
-same order sequence for every specimen
-```
-
-First passing orders:
+The old single-global-lambda baseline on the specimen-derived domains required first passing orders:
 
 ```text
-Z0 N=1792
-Z1 N=1536
-Z2 N=1792
-Z3 N=1536
-Z4 N=1792
-Z5 N=3072
-Z6 N=3840
+Z0 1792
+Z1 1536
+Z2 1792
+Z3 1536
+Z4 1792
+Z5 3072
+Z6 3840
 ```
 
-Hence:
+This remains a source-representability baseline only, not the preferred production grammar.
+
+## 17:34 historical multiscale reconnection — R10-MSAC-RC1
+
+The historical R3/R4/R5 architecture has been reconnected to the corrected specimen-derived domains as the deterministic current reconstruction candidate:
 
 ```text
-PARAMETER_DERIVED_DOMAIN_RULE = PASS
-OLD_IDENTICAL_FAMILY_WIDE_PRODUCTION_DOMAIN = RETIRED
-N3584_FAMILY_WIDE_RESULT = RETAINED_DIAGNOSTIC_ONLY
-SINGLE_GLOBAL_LAMBDA_POLYNOMIAL_LOW_COMPLEXITY = FAIL
-R10_PHYSICAL_OPERATOR = UNCHANGED
+R10-MSAC-RC1
 ```
 
-The governance correction was necessary but does not by itself make one-global-lambda polynomial compilation a low-order theory. The persistent Z5/Z6 order confirms that the next step must address representation architecture, not force identical domains and not immediately modify R10 physics.
+RC1 means a current reconstruction of the historical multiscale principles, not a claim of bitwise identity with an old NC-MSAC-v1 executable.
 
-## Retained exact-Pi diagnostic
-
-The 14:17 exact-`Pi_eta` elliptic-period result remains mathematically valid, but it is not the current mandatory next route.
+Common architecture:
 
 ```text
-EXACT_PI_MATRIX_LIFT = PASS
-EXACT_PI_TO_EXISTING_GENERAL_D15 = FAIL
-PI_REGULARIZATION_AS_MANDATORY_NEXT_TASK = CANCELLED
+lambda guard
+ -> finite beta-lens gate around lambda=0
+ -> c(lambda), t(lambda)
+ -> C(c) in natural compression coordinate
+ -> uR(t), T7(t) using xcr and 10*xcr source landmarks
+ -> T=uR/rho
+ -> U reassembled from the same factors
+ -> full 2D R10 current master
 ```
+
+The same map-generation rule, source landmarks, origin constraints, fidelity gates and resolution ladder are used for Z0-Z6.
+
+First passing material levels:
+
+```text
+Z0 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z1 L3: Ng=640,  Nc=14, Nt=320, coeff=1939
+Z2 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z3 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z4 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z5 L6: Ng=1024, Nc=14, Nt=512, coeff=3091
+Z6 L7: Ng=1152, Nc=16, Nt=576, coeff=3477
+```
+
+Worst first-pass source errors:
+
+```text
+max E_sigma = .0008861083
+max E_tangent = .0379151680
+max E_divided_difference = .0221037356
+```
+
+All pass the frozen `.005/.05/.05` material gates. The immediately higher common-ladder level also passes for every specimen.
+
+Compared with the single-global-lambda baseline, scalar coefficient count is reduced by approximately `3.17x` to `4.61x`.
+
+## Important structural boundary
+
+R10-MSAC-RC1 is currently a **material-level passing candidate**, not yet a fully promoted structural production compiler.
+
+The finite beta-lens/Chebyshev object must remain nested. Expanding it into ordinary monomials would inflate first-pass formal degrees to roughly `6656-29952`, recreating the historical expression-swell failure.
+
+```text
+R10_MSAC_RC1_FULL_2D_SOURCE_FIDELITY = PASS_Z0_Z6
+NEXT_LEVEL_CONFIRMATION = PASS_Z0_Z6
+FULL_MONOMIAL_EXPANSION = PROHIBITED
+NESTED_FACTOR_GRAPH = REQUIRED
+NESTED_GENERAL_D15_TARGET_FUNCTIONAL_ADAPTER = OPEN
+```
+
+The old exact-Pi elliptic-period result remains a valid mathematical diagnostic but does not control the current route. No R10/eta transition regularization has been authorized or executed.
 
 ## Capacity-result status
 
@@ -138,27 +146,29 @@ SAME_EXPRESSION_L = NOT COMPLETED
 SAME_STATE_KZ = NOT COMPLETED
 ```
 
+No new `Pu` was run in the 17:34 material gate.
+
 ## Current unique next gate
 
 ```text
-UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE
+UNIFIED_V1_R10_MSAC_RC1_NESTED_CLENSHAW_QNM_D15_CONTRACTION_GATE
 ```
 
 Required next work:
 
-1. keep the corrected specimen-derived domains/source-side domain rule;
-2. reconnect the historical R5/MSAC/source-landmark multiscale compiler and G26 moment-first contraction lessons;
-3. build one common NC multiscale analytic compiler policy whose numerical coefficients/orders may vary only through the same specimen-derived domain and source landmarks;
-4. retain source stress/tangent/divided-difference gates;
-5. retain zero formal spatial/thickness numerical integration and General-D15 compatibility;
-6. do not use case labels, experiment, Zhou/Winter or desired Pu to choose maps/orders;
-7. do not modify R10 or Pi_eta unless this corrected multiscale compiler gate independently fails.
+1. keep RC1 factor graph and parameter-derived specimen domains unchanged;
+2. reconnect the historical `Q_nm` / adjoint-Clenshaw target-functional moment-first contraction;
+3. do not expand the nested compiler into a giant ordinary polynomial;
+4. preserve zero formal spatial/thickness numerical integration;
+5. verify nested algebra identity and fixed-state D15 tractability before any new Pu solve;
+6. after the adapter passes, use the same backend for `P,Rq,L` and same-state `KZ`.
 
 ## Current key artifacts
 
-- `semantic_v2/10_governance/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER_GATE__LOCK.md`
-- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_GLOBAL_COMPILER__AUDIT.md`
-- `semantic_v2/00_index/20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
+- `semantic_v2/10_governance/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION_GATE__LOCK.md`
+- `semantic_v2/40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_1734__NZSCCM__R10_MSAC_RC1_SOURCE_FIDELITY_AND_COMPLEXITY__AUDIT.md`
+- `semantic_v2/00_index/20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md`
+- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md` — predecessor
