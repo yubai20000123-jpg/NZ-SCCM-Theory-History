@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 23:50 +08:00  
+**Updated:** 2026-08-17 00:02 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_2350__NZSCCM__PROJECT__CURRENT_STATE_Z6_FIVE_MEMBRANE_DOWNSHIFT_DIAGNOSTIC__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260817_0002__NZSCCM__PROJECT__CURRENT_STATE_MEMBRANE_HISTORY_RECOVERED_DOWNSHIFT_RETRACTED__SEMANTIC_INDEX.md`
 
 ## Frozen backbone
 
@@ -14,144 +14,113 @@ UNIFIED_PRODUCTION_WORKFLOW_V1=ACTIVE
 ONE_CONTINUOUS_COMPLETE_HALFWAVE=ACTIVE
 Nguyen second-order continuous kinematics=ACTIVE
 R10=FROZEN
-five-term membrane redistribution=REQUIRED BUT NOW UNDER PHYSICAL-ADMISSIBILITY AUDIT
-reinforcement before root solve=REQUIRED
 General-D15 exact structural moments=ACTIVE
-same-state KZ before formal Pu release=REQUIRED
 N_formal_spatial_sampling=0
 N_formal_spatial_quadrature=0
 N_formal_spatial_subdomains=1
 N_formal_thickness_quadrature=0
 ```
 
-## Case21 current formal five-membrane result
+## Membrane-history correction
+
+The 2026-08-16 23:50 state that interpreted Case21/Z6 capacity reductions as physical membrane-redistribution behavior is superseded.
+
+Recovered higher-priority project evidence establishes:
 
 ```text
-D_u=0.4597278541813354
-q_u=0.0018330938013757293
-A_u=2.2363744376783896 mm
-r=[-0.012475802483156403,
-   -0.007141864103343101,
-   +0.04699488414266459,
-   +0.041946118067216,
-   -0.09983629747628982]
-Pc=304.05427812103903 kN
-Ps=16.69490720454312 kN
-Pu=320.7491853255822 kN
-KZ=+260.1709056728 N/mm
-CONTROL=FIRST_CONNECTED_LOAD_MAXIMUM
+CLASSICAL_FVK_MEMBRANE_POSTBUCKLING_SIGN = POSITIVE
+EDGEWARD_AXIAL_STRESS_REDISTRIBUTION = REQUIRED
+p20,p02 INDEPENDENT FREE RELAXATION = RETIRED
+FIVE_TERM_ELASTIC_AIRY_LIMIT = EXACT / RETAINED
+UNCONSTRAINED_NONLINEAR_FIVE_COORDINATE_CONDENSATION = REOPENED
 ```
 
-Comparison:
+The exact classical one-halfwave relation contains a positive membrane term proportional to `A^2+2*A0*A`; the postbuckling load is increasing in the elastic degeneration.
+
+## Recovered scale hierarchy
+
+At historical frozen reference states:
 
 ```text
-old r=0 Case21=365.5804275653 kN
-five-membrane Case21=320.7491853256 kN
-shift=-12.2630%
-experiment=336 kN
-new error=-4.5389%
+Case21:
+M=.02869338081
+(M/4)/D=.00858140 = .85814%
+
+Z6:
+M=1.69487261562
+(M/4)/D=.26727511 = 26.7275%
+
+M_Z6/M_Case21=59.0684
 ```
 
-## Z6 five-membrane direct-R10 diagnostic
-
-A controlled same-evaluator full-section audit was executed to isolate the membrane-release effect.
+Therefore the recovered project expectation is:
 
 ```text
-METHOD = direct frozen R10 + independent Gauss-Legendre oracle
-FORMAL_PRODUCTION = NO
+CASE21_MEMBRANE_REDISTRIBUTION = SMALL PERTURBATION
+Z6_MEMBRANE_REDISTRIBUTION = FIRST-ORDER / STRONG EFFECT
+HIGH b/t MEMBRANE EFFECT > LOW b/t MEMBRANE EFFECT
 ```
 
-Same direct-R10 evaluator, r=0 peak:
+This is a physics/source constraint, not a calibration target.
+
+## Retracted recent membrane Pu interpretations
 
 ```text
-D~=1.59388703
-q~=0.021556525
-P~=51.480540 MN
-Pc~=20.585826 MN
-Ps~=21.876769 MN
-Pw~=9.017946 MN
+Case21 five-free-coordinate 320.749185 kN
+= RETRACTED_AS_PHYSICAL_MEMBRANE_Pu
+= OVERRELAXATION_DIAGNOSTIC_ONLY
+
+Z6 direct-R10 five-free-coordinate 43.762840 MN
+= RETRACTED_AS_PHYSICAL_MEMBRANE_Pu
+= OVERRELAXATION_DIAGNOSTIC_ONLY
 ```
 
-Same direct-R10 evaluator, five membrane coordinates free:
+These values remain preserved as implementation-error evidence but must not be used to argue that correct membrane redistribution lowers capacity.
+
+## Retained support baselines pending corrected closure
 
 ```text
-D~=1.15617344
-q~=0.024015334
-A_increment~=288.184 mm
-r=[-0.37472588,-0.37684276,+0.39596319,-0.25455699,+0.67363743]
-P~=43.762840 MN
-Pc~=19.982876 MN
-Ps~=17.392895 MN
-Pw~=6.387069 MN
-lambda~=[-1.54031,+1.36017]
+Case21 historical/current-support closure = 368.189 kN
+Z6 retained engineering baseline = 51.30 MN
+NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 ```
 
-Isolated effect:
+## Current error hypothesis
 
-```text
-Z6 r=0 -> five-membrane shift = -14.9915%
-```
+The five-term displacement/strain basis itself is retained because its linear-elastic condensation exactly recovers the Airy/FvK redistribution.
 
-External audit-only comparison:
-
-```text
-vs Zhou = -11.5666%
-vs Winter = -12.7985%
-```
-
-## Current interpretation
-
-```text
-SYSTEMATIC_DOWNSHIFT_RELATIVE_TO_PREVIOUS_CONSTRAINED_MEMBRANE_MODEL = EVIDENCE_PRESENT
-CASE21 shift = -12.2630%
-Z6 same-evaluator shift = -14.9915%
-SYSTEMATIC_EXPERIMENTAL_UNDERPREDICTION = NOT_YET_PROVEN
-```
-
-The Z6 result `43.762840 MN` is AUDIT-ONLY and must NOT be cited as formal Z6 Pu.
-
-The similarity of the Case21 and Z6 capacity reductions makes a one-off numerical accident unlikely. The five membrane coordinates, especially the large Z6 `s22`, substantially redistribute axial strain and unload face-steel/web participation. The membrane module must therefore be audited before any material recalibration.
-
-## Compiler / formal Z6 boundary
-
-```text
-CASE21_LOCAL_N48=ALLOWED / REPRODUCED / DOMAIN_CERTIFIED
-N48_AS_UNIVERSAL_NC_FAMILY_COMPILER=NOT_ALLOWED
-wide-family N48 source fidelity=FAIL
-N3584 source fidelity candidate=PASS
-current N3584 coefficient-tensor structural backend=FAIL_COMMON_TRACTABILITY
-NEW_FORMAL_Z6_FIVE_MEMBRANE_Pu=NOT_RELEASED
-```
+The reopened element is the nonlinear promotion in which all five amplitudes were solved as unrestricted current-material `Rm=0` internal relaxation coordinates. The recent Case21 solution moved far outside the small classical leading-direction scale and produced sign reversals/large amplification in several coordinates, indicating over-relaxation or loss of compatibility/boundary/external-work coupling.
 
 ## Anti-loop / anti-calibration rule
 
 ```text
 DO_NOT_REOPEN_R10=YES
 DO_NOT_TUNE_R10_TO_RECOVER_CAPACITY=YES
-DO_NOT_TUNE_MEMBRANE_COEFFICIENTS_TO_CASE21_OR_Z6=YES
-DO_NOT_REUSE_CASE21_LOCAL_N48_FOR_Z6=YES
-DO_NOT_RELEASE_AUDIT_GAUSS_RESULT_AS_FORMAL=YES
+DO_NOT_FIT_MEMBRANE_AMPLITUDES_TO_CASE21_OR_Z6=YES
+DO_NOT_REINTERPRET_RECENT_DOWNSHIFT_AS_NEW_PHYSICS=YES
 DO_NOT_START_ANOTHER_UNBOUNDED_SYMBOLIC_BACKEND_LOOP=YES
+DO_NOT_COMPUTE_NEW_MEMBRANE_Pu_BEFORE_CLOSURE_RECOVERY=YES
 ```
 
 ## Current unique next gate
 
-`FIVE_MEMBRANE_PARENT_DISPLACEMENT_BOUNDARY_WORK_AND_CONDENSATION_AUDIT`
+`RECOVER_COMPATIBILITY_COUPLED_CURRENT_MEMBRANE_CLOSURE_FROM_1848_1912_TRANSITION`
 
-Trace each of `r0,r20,r22,s02,s22` back to its parent in-plane displacement field and verify:
+Trace the exact transition from the 18:48 historical-backbone + compatibility-coupled membrane delta to the 19:12 five-term current-material condensation and later runtime. Determine exactly where the classical coupling / boundary work / admissibility constraints were lost, while retaining the five-term basis and the low-dimensional `(D,q)` outer topology.
 
-1. four-edge in-plane boundary admissibility under the intended theoretical SSSS scope;
-2. generalized external work at loaded edges;
-3. no duplication of free-Poisson or global loading coordinates;
-4. coordinate independence;
-5. correct classification as internal condensable coordinates rather than imposed/global coordinates.
+Acceptance requires:
 
-Only after this gate should a new formal Z6 capacity solve be pursued.
+1. exact elastic Airy/FvK degeneration;
+2. positive classical postbuckling stiffness;
+3. correct edgeward axial stress redistribution;
+4. no arbitrary independent free harmonic relaxation;
+5. Case21 correction commensurate with its small membrane-driver scale;
+6. Z6/high-b/t effect much stronger than Case21/low-b/t;
+7. zero formal structural spatial/thickness numerical integration.
 
 ## Current key artifacts
 
-- `semantic_v2/00_index/20260816_2350__NZSCCM__PROJECT__CURRENT_STATE_Z6_FIVE_MEMBRANE_DOWNSHIFT_DIAGNOSTIC__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/steel_shell/20260816_2350__NZSCCM__Z6_FIVE_MEMBRANE_DIRECT_R10_DIAGNOSTIC__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260816_2350__NZSCCM__Z6_FIVE_MEMBRANE_DIRECT_R10_DIAGNOSTIC__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/60_validation/steel_shell/20260816_2350__NZSCCM__Z6_FIVE_MEMBRANE_SYSTEMATIC_DOWNSHIFT__AUDIT.md`
-- `semantic_v2/10_governance/20260816_2350__NZSCCM__MEMBRANE_REDISTRIBUTION_DOWNSHIFT_DIAGNOSTIC__GATE_LOCK.md`
+- `semantic_v2/00_index/20260817_0002__NZSCCM__PROJECT__CURRENT_STATE_MEMBRANE_HISTORY_RECOVERED_DOWNSHIFT_RETRACTED__SEMANTIC_INDEX.md`
+- `semantic_v2/60_validation/common/20260817_0002__NZSCCM__MEMBRANE_HISTORY_RECOVERY_AND_DOWNSHIFT_RETRACTION__AUDIT.md`
+- `semantic_v2/10_governance/20260817_0002__NZSCCM__POSITIVE_MEMBRANE_POSTBUCKLING_SIGN_AND_SCALE_RECOVERY__LOCK.md`
+- historical controlling evidence: `20260815_2358`, `20260816_0007`, `20260816_0016`, `20260816_1848`, `20260816_1912` membrane records.
