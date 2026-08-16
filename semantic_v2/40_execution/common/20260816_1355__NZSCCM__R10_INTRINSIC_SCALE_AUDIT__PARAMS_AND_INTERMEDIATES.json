@@ -1,0 +1,88 @@
+{
+  "timestamp": "2026-08-16T13:55:00+08:00",
+  "identity": "R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION_AND_INTRINSIC_SCALE_AUDIT",
+  "formal_structural_counters": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "spatial_subdomains": 1,
+    "thickness_quadrature": 0
+  },
+  "r10": {
+    "kappa": 2.0005129533678754,
+    "rho": 0.1,
+    "xcr": 0.04998717945397425,
+    "eta": 0.0024993589726987125,
+    "ur": 0.03,
+    "h": 0.09799750427197301,
+    "core": [-2.35, 1.9],
+    "guard": [-2.6, 2.15],
+    "core_width": 4.25,
+    "guard_width": 4.75,
+    "core_over_eta": 1700.4360103626939,
+    "guard_over_eta": 1900.4873056994816,
+    "u1_tau_coefficients": [0.0, 0.1, 0.0, 0.37997504271973004, -0.6699625640795952, 0.28798502563183803],
+    "u2_s_coefficients": [0.09799750427197301, 0.0, 0.0, -0.6799750427197302, 1.0199625640795953, -0.4079850256318381],
+    "third_derivative_jump_at_xcr": -27905.03403270119,
+    "third_derivative_jump_at_10xcr": 44.806477046941154
+  },
+  "global_lambda_primitive_error_keypoints": [
+    {"N":48,"C_value":0.0898526576,"C_derivative":2.140775289,"T_value":0.9003574291,"T_derivative":28.49984442,"T7_value":0.8145512176,"T7_derivative":54.52864402},
+    {"N":384,"C_value":0.0106900099,"C_derivative":1.691472793,"T_value":0.1011888443,"T_derivative":16.08683923,"T7_value":0.0847763167,"T7_derivative":17.96555571},
+    {"N":768,"C_value":0.00455984363,"C_derivative":1.261269283,"T_value":0.0446678665,"T_derivative":12.32683620,"T7_value":0.00888597069,"T7_derivative":3.222221108},
+    {"N":1536,"C_value":0.00142689353,"C_derivative":0.671068451,"T_value":0.0140590948,"T_derivative":6.615310503,"T7_value":0.00067592429,"T7_derivative":0.520159312},
+    {"N":2048,"C_value":0.00073610098,"C_derivative":0.444250286,"T_value":0.00727458196,"T_derivative":4.386620340,"T7_value":0.00028341977,"T7_derivative":0.291200698},
+    {"N":3072,"C_value":0.00021401125,"C_derivative":0.208835881,"T_value":0.00212944362,"T_derivative":2.075622587,"T7_value":0.00008366201,"T7_derivative":0.128098415},
+    {"N":3584,"C_value":0.00011785545,"C_derivative":0.137706446,"T_value":0.00118130101,"T_derivative":1.374865610,"T7_value":0.00005267802,"T7_derivative":0.093684358}
+  ],
+  "N3584_error_locations": {
+    "C_derivative": {"lambda": -0.00283125, "max_abs_error": 0.1377064465},
+    "T_derivative": {"lambda": 0.00290625, "max_abs_error": 1.3748656101},
+    "T7_derivative": {"lambda": 0.04955, "max_abs_error": 0.0936843580}
+  },
+  "Pi_global_lambda_derivative_error": [
+    {"N":48,"Pi_plus":0.6544313391,"Pi_minus":0.6538845187},
+    {"N":384,"Pi_plus":0.5869939757,"Pi_minus":0.5874717061},
+    {"N":768,"Pi_plus":0.4869571450,"Pi_minus":0.4865414663},
+    {"N":1536,"Pi_plus":0.2979630599,"Pi_minus":0.2973421897},
+    {"N":2048,"Pi_plus":0.2041269143,"Pi_minus":0.2045829581},
+    {"N":3072,"Pi_plus":0.0898356118,"Pi_minus":0.0902006000},
+    {"N":3584,"Pi_plus":0.0585829054,"Pi_minus":0.0583075704}
+  ],
+  "natural_C_coordinate": [
+    {"N":4,"value_max":0.0184606181,"derivative_max":0.4836034740,"derivative_relative_peak":0.2417397364},
+    {"N":6,"value_max":0.00254183443,"derivative_max":0.0776711881,"derivative_relative_peak":0.0388256362},
+    {"N":8,"value_max":0.000442043958,"derivative_max":0.0330862071,"derivative_relative_peak":0.0165388617},
+    {"N":10,"value_max":0.0000419979801,"derivative_max":0.00345881813,"derivative_relative_peak":0.00172896563},
+    {"N":16,"value_max":2.06326860e-7,"derivative_max":5.06334683e-5,"derivative_relative_peak":2.53102427e-5}
+  ],
+  "natural_uR_coordinate": [
+    {"N":32,"value_max":0.00213974368,"derivative_max":0.7450394753,"derivative_relative_peak":0.2520610732},
+    {"N":48,"value_max":0.000548862285,"derivative_max":0.5712068230,"derivative_relative_peak":0.1932501694},
+    {"N":56,"assembled_screen_note":"used only in combined screen; divided-difference gate still failed at NC=6"},
+    {"N":64,"value_max":0.000298338760,"derivative_max":0.1059858335,"derivative_relative_peak":0.0358570302},
+    {"N":96,"value_max":0.000085649271,"derivative_max":0.0811579189,"derivative_relative_peak":0.0274572728},
+    {"N":192,"value_max":0.0000115096664,"derivative_max":0.00902454730,"derivative_relative_peak":0.00305317658}
+  ],
+  "hybrid_exact_Pi_screen": {
+    "definition": "Pi exact; C(c) Chebyshev; uR(t) Chebyshev; T=uR/rho; T7=T^7; U rebuilt from same factors",
+    "gates": {"E_sigma":0.005,"E_tangent":0.05,"E_divided_difference":0.05},
+    "nearby_cases": [
+      {"N_C":6,"N_u":48,"E_sigma":0.005270,"E_tangent":0.084317,"E_divided_difference":0.082100,"pass":false},
+      {"N_C":6,"N_u":56,"E_sigma":0.003695,"E_tangent":0.037615,"E_divided_difference":0.057805,"pass":false},
+      {"N_C":6,"N_u":60,"E_sigma":0.004103,"E_tangent":0.054840,"E_divided_difference":0.059742,"pass":false},
+      {"N_C":6,"N_u":64,"E_sigma":0.003337,"E_tangent":0.030469,"E_divided_difference":0.046869,"pass":true},
+      {"N_C":8,"N_u":64,"E_sigma":0.002622,"E_tangent":0.030350,"E_divided_difference":0.045518,"pass":true},
+      {"N_C":10,"N_u":64,"E_sigma":0.002667,"E_tangent":0.030335,"E_divided_difference":0.045759,"pass":true}
+    ],
+    "selected_diagnostic": {"N_C":6,"N_u":64,"fitted_coefficients":72,"E_sigma":0.003337,"E_tangent":0.030469,"E_divided_difference":0.046869,"status":"MATERIAL_ONLY_PASS_DIAGNOSTIC_NOT_D15_PRODUCTION"},
+    "N3584_four_channel_coefficients":14340,
+    "coefficient_count_ratio_N3584_to_selected":199.1666666667
+  },
+  "decision": {
+    "R10_physics": "UNCHANGED",
+    "N3584_source_fidelity_evidence": "RETAINED",
+    "N3584_as_next_production_basis": "REJECTED",
+    "new_Z0_Z6_Pu": "NOT_RUN",
+    "next_gate": "UNIFIED_V1_R10_INTRINSIC_SCALE_FACTORIZED_PI_ADAPTER_GATE"
+  }
+}
