@@ -1,0 +1,148 @@
+{
+  "timestamp": "2026-08-16T19:12:00+08:00",
+  "gate": "UNIFIED_V1_CURRENT_MATERIAL_FIVE_TERM_MEMBRANE_CONDENSATION_PLUS_RC1_D15_GATE",
+  "formal_counters": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "spatial_subdomains": 1,
+    "thickness_quadrature": 0,
+    "spatial_Gauss": 0,
+    "spatial_Simpson": 0,
+    "spatial_adaptive": 0,
+    "spatial_collocation": 0,
+    "material_point_grid": 0
+  },
+  "global_coordinates": ["D", "q"],
+  "internal_membrane_coordinates": ["r0", "r20", "r22", "s02", "s22"],
+  "square_halfwave_basis": {
+    "B0": ["1", "0", "0"],
+    "B20": ["cos(2X)", "0", "0"],
+    "Bu22": ["cos(2X)cos(2Y)", "0", "-sin(2X)sin(2Y)"],
+    "B02": ["0", "cos(2Y)", "0"],
+    "Bv22": ["0", "cos(2X)cos(2Y)", "-sin(2X)sin(2Y)"]
+  },
+  "elastic_exact": {
+    "K_over_pi2": [
+      ["1", "0", "0", "0", "0"],
+      ["0", "1/2", "0", "0", "0"],
+      ["0", "0", "(3-nu)/8", "0", "(1+nu)/8"],
+      ["0", "0", "0", "1/2", "0"],
+      ["0", "0", "(1+nu)/8", "0", "(3-nu)/8"]
+    ],
+    "fM_over_pi2": ["(1+nu)/4", "(1-nu)/8", "-1/8", "(1-nu)/8", "-1/8"],
+    "fD_over_pi2": ["0", "0", "0", "0", "0"],
+    "det_K": "pi^10*(1-nu)/32",
+    "eigenvalues_K_over_pi2": ["1", "1/2", "1/2", "1/2", "(1-nu)/4"],
+    "r_over_M": ["-(1+nu)/4", "-(1-nu)/4", "1/4", "-(1-nu)/4", "1/4"],
+    "nu_018": {
+      "K_over_pi2_numeric": [
+        [1.0,0,0,0,0],
+        [0,0.5,0,0,0],
+        [0,0,0.3525,0,0.1475],
+        [0,0,0,0.5,0],
+        [0,0,0.1475,0,0.3525]
+      ],
+      "fM_over_pi2_numeric": [0.295,0.1025,-0.125,0.1025,-0.125],
+      "eigenvalues": [0.205,0.5,0.5,0.5,1.0],
+      "condition_2": 4.878048780487805,
+      "det_K_over_pi10": 0.025625
+    },
+    "recovered_stress": {
+      "sigma_x_over_Eeps0": "-M*cos(2Y)/4",
+      "sigma_y_over_Eeps0": "-D + M*sin(X)^2/2",
+      "tau_xy_over_Eeps0": "0"
+    }
+  },
+  "current_material_condensation": {
+    "residual": "Rm_j=sum_p integral sigma_p:B_j dV=0",
+    "Krr": "dRm/dr from same current tangent",
+    "r_g": "-Krr^-1 Rm_g",
+    "Pbar_g": "P_g+P_r*r_g",
+    "Rqbar_g": "Rq_g+Rq_r*r_g",
+    "Lbar": "Pbar_D*Rqbar_q-Pbar_q*Rqbar_D",
+    "Kgg_cond": "Kgg-Kgr*Krr^-1*Krg"
+  },
+  "general_D15_targets": {
+    "R0": "D15[Sxx]",
+    "R20": "D15[Sxx*cos2X]",
+    "Ru22": "D15[Sxx*cos2X*cos2Y-Sxy*sin2X*sin2Y]",
+    "R02": "D15[Syy*cos2Y]",
+    "Rv22": "D15[Syy*cos2X*cos2Y-Sxy*sin2X*sin2Y]",
+    "closure": "PASS"
+  },
+  "benchmark_states": {
+    "Case21": {
+      "identity": "historical/current-support state; benchmark only",
+      "b_mm": 1220.0,
+      "eps0": 0.00209,
+      "nu": 0.18,
+      "D": 0.8359179831666168,
+      "q": 0.0017897894751107222,
+      "M": 0.02869338081034484,
+      "r": [-0.008464547339051727,-0.0058821430661206925,0.00717334520258621,-0.0058821430661206925,0.00717334520258621],
+      "physical_displacement_mm": {
+        "u0_full_width": -0.02158290280511409,
+        "u20_amp": -0.002387051735185416,
+        "u22_amp": 0.002911038701445629,
+        "v02_amp": -0.002387051735185416,
+        "v22_amp": 0.002911038701445629
+      }
+    },
+    "Z6": {
+      "identity": "retained engineering baseline state; benchmark only",
+      "b_mm": 12000.0,
+      "eps0": 0.0018712490394580678,
+      "nu": 0.18,
+      "D": 1.5853259042928987,
+      "q": 0.02166488056894769,
+      "M": 1.6948726156196714,
+      "r": [-0.499987421607803,-0.3474488862020327,0.42371815390491785,-0.3474488862020327,0.42371815390491785],
+      "physical_displacement_mm": {
+        "u0_full_width": -11.227211789096609,
+        "u20_amp": -1.2417206167516515,
+        "u22_amp": 1.5142934350629895,
+        "v02_amp": -1.2417206167516515,
+        "v22_amp": 1.5142934350629895
+      }
+    }
+  },
+  "legacy_N48_fail_fast_diagnostic": {
+    "production_identity": false,
+    "source_kernel": "historical Case21 N48-C1 coefficient-space CH/D15 diagnostic",
+    "compiler_interval": [-1.01,0.105],
+    "N": 48,
+    "state": {"D":0.8359179831666168,"q":0.0017897894751107222},
+    "initial_r": [-0.008464547339051727,-0.0058821430661206925,0.00717334520258621,-0.0058821430661206925,0.00717334520258621],
+    "Rhat_total": [2.69233687,0.13819441,-0.31339370,-15.52815375,3.00791537],
+    "Rhat_concrete": [0.38452432,0.12820657,-0.31339370,-15.53814159,3.00791537],
+    "Rhat_rebar": [2.30781255,0.009987839,0.0,0.009987839,0.0],
+    "generalized_coordinate_fd_step": 0.0002,
+    "J": [
+      [448.483939,16.366324,-16.407897,1.448734,-2.781585],
+      [16.464411,223.457600,2.909393,-3.059928,0.555910],
+      [-29.372389,-0.411754,131.031918,1.413017,39.744523],
+      [-602.844440,-272.711727,25.354833,117.628140,6.391122],
+      [-286.584350,-327.662779,270.294124,4.492820,78.413268]
+    ],
+    "condition_2_J": 853.1865919579224,
+    "first_Newton_delta_r": [-0.01434073,0.00398039,-0.48827257,0.08583724,1.60404024],
+    "decision": "STOP_FAIL_FAST_DO_NOT_USE_AS_RC1_PRODUCTION"
+  },
+  "RC1_status": {
+    "material_source_fidelity_Z0_Z6": "PASS",
+    "nested_factor_graph": "REQUIRED",
+    "full_monomial_expansion": "PROHIBITED",
+    "target_functional_API": "FORMALLY_DEFINED",
+    "adjoint_Clenshaw_Qnm_General_D15_runtime": "OPEN"
+  },
+  "gate_decision": {
+    "five_term_elastic_condensation": "PASS_EXACT",
+    "five_term_Airy_FvK_recovery": "PASS_EXACT",
+    "five_term_General_D15_closure": "PASS",
+    "current_material_condensation_form": "PASS_FORMAL",
+    "RC1_nested_target_execution": "OPEN",
+    "new_Pu": "NOT_RUN",
+    "overall": "PARTIAL_PASS_TO_IMPLEMENTATION_BOUNDARY",
+    "next_gate": "UNIFIED_V1_RC1_ADJOINT_CLENSHAW_GENERAL_D15_TARGET_FUNCTIONAL_EXECUTION_GATE"
+  }
+}
