@@ -1,0 +1,110 @@
+{
+  "timestamp": "2026-08-16T11:10:00+08:00",
+  "task": "Z0_Z5_AR2_CURRENT_OPERATOR_FIDELITY_REBUILD_ZERO_SPATIAL_INTEGRATION",
+  "formal_spatial_sampling": 0,
+  "formal_spatial_quadrature": 0,
+  "formal_spatial_subdomains": 1,
+  "R10_physical_operator": "FROZEN_UNCHANGED",
+  "old_1043_Z0_Z5_capacity_status": "RETRACTED_PENDING_RECALCULATION",
+  "accepted_Z6": {"Pu_MN": 51.30, "status": "USER_ACCEPTED_AND_RETAINED"},
+  "compiler": {
+    "identity": "R10-MR-C1(256,1024,1280,512)",
+    "guard_interval": [-1.50, 0.35],
+    "lambda_c": -0.575,
+    "lambda_h": 0.925,
+    "operational_core": [-1.40, 0.30],
+    "orders": {"U":256,"C":1024,"T":1280,"T7":512},
+    "coefficient_generation": "overdetermined Chebyshev material-coordinate least squares + exact C1 KKT constraints",
+    "material_coordinate_nodes_are_spatial_points": false,
+    "piecewise_material_compiler": false,
+    "spatial_partition": false
+  },
+  "primitives": {
+    "U": {
+      "degree": 256,
+      "sha256_float64_le": "3eac577c2328353eb47782c00d55b68ae4b95a00a623701bae2b81108daea0d8",
+      "max_abs_coef": 0.5948283222150132,
+      "sum_abs_coef": 1.7073934455883406,
+      "C1_value_at_0": 2.220446049250313e-16,
+      "C1_derivative_at_0": 2.000512953367875,
+      "core_E0_max": 8.601472492597226e-05,
+      "core_E0_at": 0.005220000000000002,
+      "core_derivative_error_rel_source_peak": 0.009402882817119864,
+      "head_coefficients": [-0.5618729095738182,0.5948283222150132,0.20094605223699824,-0.1046228785615469,-0.10041996880787939,-0.025756105017808187,0.014360148665021175,0.021381456581940975],
+      "tail_coefficients": [-1.219228281358402e-06,-5.46545648944026e-07,3.874434456855457e-07,8.797216179958974e-07,6.557591954357772e-07,9.237825931964802e-09,-5.004891736727136e-07,-5.126041919924715e-07]
+    },
+    "C": {
+      "degree": 1024,
+      "sha256_float64_le": "8362c28978bd9efa58fd2ab67a8f0231cd7e6c54442f457aae3e54230de30188",
+      "max_abs_coef": 0.5812635920485164,
+      "sum_abs_coef": 1.6563059564275078,
+      "C1_value_at_0": 1.1102230246251565e-16,
+      "C1_derivative_at_0": -4.800964430811487e-16,
+      "core_E0_max": 0.0001565098358448278,
+      "core_E0_at": -0.0019766666666667376,
+      "core_derivative_error_rel_source_peak": 0.076098080060131,
+      "head_coefficients": [0.5812635920485164,-0.5619283565641747,-0.1830217889360117,0.10520949271195214,0.08856806483586308,0.01054762961521857,-0.024498389689358566,-0.022591543107513438],
+      "tail_coefficients": [-7.758007281773751e-07,-1.1128725202917247e-06,-6.068669550873893e-07,3.56984361079123e-07,1.048051191353053e-06,9.441293211743956e-07,1.2602733106573823e-07,-7.852287731113855e-07]
+    },
+    "T": {
+      "degree": 1280,
+      "sha256_float64_le": "674c56aa94cfe55520a658fee497a1788f7b10ee54a8958df2e0ee6c9e60b630",
+      "max_abs_coef": 0.32872882044651447,
+      "sum_abs_coef": 2.0239803992541523,
+      "C1_value_at_0": -1.1102230246251565e-16,
+      "C1_derivative_at_0": -2.688540081254433e-14,
+      "core_E0_max": 0.0006006230704925439,
+      "core_E0_at": 0.0016499999999999293,
+      "core_derivative_error_rel_source_peak": 0.028118052951413636,
+      "head_coefficients": [0.19390557365798183,0.32872882044651447,0.17890956423119458,0.005722481703624193,-0.11836621958317382,-0.15175273155352836,-0.10112283186079182,-0.012109028492943725],
+      "tail_coefficients": [-2.584546881803616e-06,8.00979527014696e-07,3.5682792148869417e-06,3.6321718570954577e-06,9.554288262275405e-07,-2.4312544010029697e-06,-3.9696095114151964e-06,-2.5062129930305646e-06]
+    },
+    "T7": {
+      "degree": 512,
+      "sha256_float64_le": "a876af6c1de5b784b73d012810451dbd07f4a5d46651bbf0120ab22422496118",
+      "max_abs_coef": 0.11545667782197858,
+      "sum_abs_coef": 1.7014051976800113,
+      "C1_value_at_0": 5.551115123125783e-17,
+      "C1_derivative_at_0": 2.8805786584868924e-15,
+      "core_E0_max": 0.0004365042185795476,
+      "core_E0_at": 0.05015666666666663,
+      "core_derivative_error_rel_source_peak": 0.006909443535510304,
+      "head_coefficients": [0.06712167626507021,0.10177017156697579,0.02128425705893018,-0.06566752785433794,-0.11545667782197858,-0.10552357253386994,-0.04536444285187485,0.03027943285919928],
+      "tail_coefficients": [4.3785121250366515e-06,7.576901827467231e-07,-3.3020461655282495e-06,-5.195081214135364e-06,-3.7342977648041895e-06,1.050693426638838e-07,3.83371566521008e-06,5.059685599510266e-06]
+    }
+  },
+  "current_master_material_coordinate_audit": {
+    "operational_core": [-1.40,0.30],
+    "audit_nodes_per_axis": 1201,
+    "audit_nodes_identity": "material-coordinate source audit only; not structural spatial points",
+    "new_compiler": {
+      "stress_max_abs_error": 0.00042152930293537505,
+      "stress_error_at_lambda_pair": [-0.9948333333333332,0.001083333333333325],
+      "stress_source": -0.9939997880529748,
+      "stress_compiled": -0.9944213173559102,
+      "tangent_max_abs_error": 0.8431213562586528,
+      "source_peak_tangent_abs": 29.89173289746822,
+      "tangent_rel_to_source_peak": 0.028205837351439195,
+      "tangent_error_at_lambda_pair": [-0.9990833333333333,0.0024999999999999467]
+    },
+    "rejected_wide_N48": {
+      "stress_max_abs_error": 0.7185201346004494,
+      "tangent_max_abs_error": 24.369611348080635,
+      "tangent_rel_to_source_peak": 0.815262582188559
+    },
+    "improvement_factor": {
+      "stress_error": 1704.555601702988,
+      "tangent_relative_error": 28.904037558982818
+    }
+  },
+  "guard_hull_derivative_note": "Full guard-hull endpoint derivative errors remain larger, especially at unused endpoints. Structural production is therefore conditional on the blind recalculated spectrum remaining in the certified operational core [-1.40,+0.30].",
+  "decision": {
+    "material_source_fidelity_gate": "PASS",
+    "C1_anchor_gate": "PASS",
+    "O1_coefficient_gate": "PASS",
+    "Cayley_Hamilton_formal_compatibility": "PASS",
+    "General_D15_formal_compatibility": "PASS",
+    "new_Z0_Z5_Pu": "NOT_CALCULATED",
+    "next_gate": "Z0_Z5_AR2_MULTIRATE_R10_TO_VARIABLE_ORDER_MOMENT_FIRST_D15_RECOMPILE_GATE"
+  }
+}
