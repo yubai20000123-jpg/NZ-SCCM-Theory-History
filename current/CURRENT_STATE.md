@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 13:55 +08:00  
+**Updated:** 2026-08-16 14:17 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide production backbone
 
@@ -29,13 +29,11 @@ Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter calibration in solve/compiler = PROHIBITED
 ```
 
-The same parent workflow continues to govern NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ; the common mechanics above may not change case by case.
+The same parent workflow governs NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ; common kinematics, membrane redistribution, exact-moment philosophy, connected-root topology and tangent consistency may not change case by case.
 
 ## NC source identity
 
-The ordinary-concrete physical current operator remains the frozen R10 source. It is **not reopened** by the current gate.
-
-Current R10 reference constants:
+The ordinary-concrete physical current operator remains frozen R10.
 
 ```text
 kappa = 2.0005129533678754
@@ -46,120 +44,114 @@ h     = .09799750427197301
 ur    = .03
 ```
 
-## 12:29 / 12:48 predecessor results retained
+No R10 material parameter is changed by the current gate.
 
-The wide single-global lambda-space compiler screen established:
+## Retained 12:29 / 12:48 evidence
+
+The wide single-global lambda-space screen established a source-fidelity witness at `N=3584`:
 
 ```text
 core  = [-2.35,+1.90]
 guard = [-2.60,+2.15]
-N=3584 source errors:
 E_sigma = .00107218
 E_tangent = .04066517
 E_divided_difference = .00381386
 ```
 
-Thus:
+The order-agnostic backward CH/Clenshaw identity also passed against the historical N48 forward recurrence at roundoff scale.
+
+However the N3584 giant coefficient-tensor realization failed common tractability at the wide-spectrum Z6 state, and coefficient-threshold pruning was not production-certified.
+
+Therefore:
 
 ```text
-N3584_SOURCE_FIDELITY_WITNESS = PASS / RETAINED
+N3584_SOURCE_FIDELITY_WITNESS = RETAINED
+N3584_AS_PRODUCTION_BASIS = REJECTED
 ```
 
-The 12:48 order-agnostic CH/Clenshaw algebra also remains valid, but the N3584 coefficient-tensor structural realization failed common tractability at the wide-spectrum Z6 state. Coefficient-threshold pruning remains diagnostic only.
+## 13:55 intrinsic-scale diagnosis retained
 
-## 13:55 historical reconnection / intrinsic-scale diagnosis
-
-The project history was reconnected to R5, M1R/PF1/P2A, the NC energy-potential gate, G26 moment-first D15, and the R10 energy-smoothing construction.
-
-Controlling historical lesson:
+The current R10 scale separation is approximately
 
 ```text
-compiler/representation failure != material architecture failure
-expand-all-then-D15 = rejected
-hidden global high-degree coefficient inflation = rejected as a theory simplification
-R10 itself = low-parameter material construction
+core width / eta  = 1700.436
+guard width / eta = 1900.487
 ```
 
-### Quantified current scale separation
+The main global-order pressure was localized to the narrow `Pi_eta` sign-split layer. The R10 tensile scalar itself is two local quintics plus a constant branch.
+
+A material-only intrinsic-coordinate screen retaining exact `Pi_eta` and using
 
 ```text
-core width  = 4.25
- guard width = 4.75
-eta         = .0024993589727
-core/eta    = 1700.436
-guard/eta   = 1900.487
+C(c): N_C=6
+u_R(t): N_u=64
 ```
 
-The R10 tensile scalar is two local quintics plus a constant branch. Its C2 joins have third-derivative jumps approximately
+then rebuilding `T,T7,U` and the same 2D current master gave
 
 ```text
-t=xcr:    -2.7905034e4
-t=10xcr:  +4.4806477e1
-```
-
-### Global lambda-space pressure localized
-
-At N=3584:
-
-```text
-C derivative max error ~= .137706 near lambda=-.002831
-T derivative max error ~= 1.374866 near lambda=+.002906
-T7 derivative max error ~= .093684 near lambda=+.04955
-```
-
-The exact sign-split factor `Pi_eta` alone, if forced into the same wide global lambda polynomial, still has maximum derivative error about `.0586` at N=3584.
-
-Therefore the major order pressure is the narrow `Pi_eta` sign-split layer; the C2 tensile joins are a secondary global-spectral pressure.
-
-## Intrinsic-coordinate material-only screen
-
-The source factors are much simpler when represented in their own physical coordinates:
-
-```text
-C(c), N=6: derivative error / peak ~= 3.8826%
-C(c), N=10: derivative error / peak ~= .1729%
-u_R(t), N=64: derivative error / peak ~= 3.5857%
-```
-
-A material-only factor screen keeping `Pi_eta` exact and using
-
-```text
-N_C=6
-N_u=64
-```
-
-then reconstructing `T=u_R/rho`, `T7=T^7`, `U`, and the same 2D current master gives
-
-```text
+fitted scalar coefficients = 72
 E_sigma = .003337
 E_tangent = .030469
 E_divided_difference = .046869
 ```
 
-which passes the existing source-material gates.
+and passed the existing material gates.
 
-This object uses 72 fitted scalar coefficients versus 14340 in four N3584 channels.
+This demonstrated that thousands-order complexity is a representation-coordinate artifact rather than an intrinsic requirement of the R10 material law.
 
-Important boundary:
+## 14:17 exact Pi -> existing General-D15 adapter gate
+
+The exact scalar identities are
+
+\[
+\Pi_\eta(z)+\Pi_\eta(-z)=\frac{z^2}{\sqrt{z^2+\eta^2}},
+\]
+
+\[
+\Pi_\eta(z)-\Pi_\eta(-z)=\frac{z^3}{z^2+\eta^2}.
+\]
+
+For the traceless finite-trigonometric field
+
+\[
+\mathbf X(\xi)=\beta\sin\xi\,\mathrm{diag}(1,-1),
+\]
+
+the exact 2x2 spectral lift is
+
+\[
+\Pi_\eta(\mathbf X)=
+\frac{r^2}{2\sqrt{r^2+\eta^2}}\mathbf I
++\frac{r^2}{2(r^2+\eta^2)}\mathbf X,
+\qquad r=\beta\sin\xi.
+\]
+
+Even its trace requires
+
+\[
+J(\beta,\eta)=
+\int_0^\pi\frac{\beta^2\sin^2\xi}{\sqrt{\eta^2+\beta^2\sin^2\xi}}d\xi
+=2\eta\,[E(-m)-K(-m)],
+\quad m=(\beta/\eta)^2,
+\]
+
+where `K,E` are complete elliptic integrals.
+
+The current General-D15 S5 closure is a finite Beta/Gamma moment algebra for finite trigonometric/thickness powers. It contains no elliptic primitive family.
+
+Hence:
 
 ```text
-LOW_COMPLEXITY_INTRINSIC_FACTOR_SCREEN = MATERIAL_ONLY PASS DIAGNOSTIC
-EXACT_PI_TO_GENERAL_D15_ADAPTER = NOT YET CLOSED
+EXACT_PI_MATRIX_LIFT = PASS
+EXACT_PI_TO_EXISTING_GENERAL_D15_FINITE_MOMENT_CLOSURE = FAIL
+SPECIAL_FUNCTION_STRUCTURAL_BACKEND = NOT_AUTHORIZED
+R10_MATERIAL_CHANGE = NOT_EXECUTED
 ```
 
-No Pu can be produced from this factor screen yet.
+This is a moment-algebra closure result, not a numerical timeout and not a claim that every conceivable special-function backend is mathematically impossible.
 
-## Current governance consequence
-
-```text
-R10_PHYSICAL_OPERATOR = FROZEN / UNCHANGED
-N3584_SOURCE_FIDELITY_WITNESS = RETAINED
-N3584_AS_NEXT_PRODUCTION_BASIS = REJECTED
-N3584_GLOBAL_LAMBDA_COMPILER = DIAGNOSTIC_ONLY
-CURRENT_HIGH_ORDER_BACKEND_ENGINEERING = PAUSED
-```
-
-The present evidence supports that `N=3584` is primarily a representation-coordinate artifact, not an intrinsic statement that ordinary concrete needs a thousands-order theory.
+Historical consistency: opening a new elliptic/Appell/Lauricella/Picard-Fuchs structural moment family would revisit the earlier algebraic-period complexity route that failed the project complexity gate. It is not activated automatically.
 
 ## Capacity-result status
 
@@ -173,29 +165,46 @@ SAME_EXPRESSION_L = NOT COMPLETED
 SAME_STATE_KZ = NOT COMPLETED
 ```
 
+## Mandatory intermediate-state record
+
+Every future production run must preserve at least:
+
+1. specimen/source inputs;
+2. boundary and halfwave selection;
+3. material family/operator identity and representation contract;
+4. source value/tangent/divided-difference errors;
+5. `D,q,A=q*b` and any source-grounded finite internal amplitudes;
+6. continuous principal/invariant material envelope;
+7. phase `P` and `Rq` decompositions;
+8. `P_D,P_q,Rq_D,Rq_q,L` or exact condensed equivalents;
+9. same-state material/geometric `KZ` phase decomposition;
+10. branch/peak bracket;
+11. formal spatial/thickness counters;
+12. exact-moment closure/conditioning diagnostics.
+
 ## Current unique next gate
 
-`UNIFIED_V1_R10_INTRINSIC_SCALE_FACTORIZED_PI_ADAPTER_GATE`
+```text
+UNIFIED_V1_R10_PI_D15_COMPATIBLE_LOW_PARAMETER_REGULARIZATION_DECISION_GATE
+```
 
-Required next work:
+The next gate is material-level and must explicitly decide the representation philosophy after exact `Pi_eta` failed existing-D15 closure.
 
-1. keep R10 physics unchanged;
-2. retain the one common NC method across NC+rebar, NC+shell and Z0-Z6;
-3. keep material factors in intrinsic coordinates rather than recompressing the entire source into one wide lambda polynomial;
-4. solve the `Pi_eta -> zero-spatial exact-moment` adapter problem;
-5. retain source stress/tangent/divided-difference gates;
-6. prove General-D15 or another already-approved zero-spatial exact-moment contraction before Pu;
-7. retain low parameter count and hand-auditable factor identities;
-8. no case-specific order/domain, no Z6-only fallback, no structural calibration.
+It may compare only source-controlled options:
 
-A change of `eta`, R10 knot locations, or material transition width is **not authorized** by this gate. If the exact R10 factor graph itself later fails the low-complexity exact-moment adapter gate, material regularization requires a separate explicit decision.
+```text
+A. deliberately open a new exact special-function structural moment backend;
+B. retain General-D15 and screen a very small D15-compatible smooth sign-split replacement.
+```
+
+No replacement `Pi`, `eta`, transition width or knot is authorized yet. Any material candidate must be selected from source stress/tangent/work/shape criteria only, not from Z0-Z6 `Pu`, experiment, Zhou or Winter.
 
 ## Current key artifacts
 
-- `semantic_v2/10_governance/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION_AND_INTRINSIC_SCALE__LOCK.md`
-- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_CAUSE_AND_INTRINSIC_FACTOR_SCREEN__AUDIT.md`
-- `semantic_v2/00_index/20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_AND_Z0_Z6_RERUN__EXECUTION_REPORT.md` — predecessor structural tractability gate
+- `semantic_v2/10_governance/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER_GATE__LOCK.md`
+- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_1417__NZSCCM__R10_EXACT_PI_TO_GENERAL_D15_CLOSURE__AUDIT.md`
+- `semantic_v2/00_index/20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md`
+- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION__EXECUTION_REPORT.md` — predecessor
