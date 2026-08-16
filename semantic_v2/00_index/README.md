@@ -6,7 +6,7 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_2059__NZSCCM__PROJECT__CURRENT_STATE_FULL_R10_64_STATE_ADJOINT_TARGET_OPEN__SEMANTIC_INDEX.md`
+`20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md`
 
 ## Frozen production backbone
 
@@ -37,67 +37,68 @@ r=[r0,r20,r22,s02,s22]
 
 with `Rm=0` and consistent Schur condensation.
 
-## Exact R10 algebraic route
+## Exact 64-state R10 field
 
-The frozen R10 physical law is unchanged.  The preferred current structural representation is the exact finite matrix/algebraic source graph rather than an N48/RC1 material-coordinate polynomial compiler.
-
-## 20:59 full three-generator quadratic-tower state
-
-The retained atom families `s_eta,s_1,s_10` are represented as three exact nested quadratic pairs
+The frozen R10 physical law is carried by the exact three-generator quadratic tower
 
 ```text
-q^2=Q
-s^2=A+2q
-basis=[1,q,s,q*s]
+s_eta,s_1,s_10
+4 x 4 x 4 = 64 field states
+A64 nonzeros = 159 / 4096
 ```
 
-so the full compositum basis has exactly `4^3=64` states.
+Historical N48/RC1 remain reconstruction/audit references, not the preferred structural material representation.
 
-The full derivative system is a Kronecker sum of three local 4x4 blocks and has only
+## 21:18 exact target reduction
+
+2x2 Cayley-Hamilton removes the matrix `T^7` production node. With
 
 ```text
-159 nonzeros / 4096 possible entries.
+t=tr(T), d=det(T)
+b0=0, b1=1
+bn=t*b(n-1)-d*b(n-2)
 ```
 
-The complete 64-state vector thickness moments satisfy one exact denominator-cleared integration-by-parts recurrence.
+we have
 
 ```text
-THREE_GENERATOR_QUADRATIC_TOWER = PASS_EXACT_PARAMETRIC
-FULL_64_STATE_DERIVATIVE_CLOSURE = PASS_EXACT
-FULL_64_STATE_VECTOR_MOMENT_FORM = PASS_EXACT
+T^n=bn*T-d*b(n-1)*I
+adj(T^7)=b8*I-b7*T
 ```
 
-## Actual R10 graph probe
-
-The exact field graph was executed through
+and the exact stress target becomes
 
 ```text
-R_eta -> t,c -> knot projectors -> uR -> T -> T7=T^7.
+S=U-ACC*det(C)*C+C*adj(T)-rho*AT*det(T)*(b8*I-b7*T).
 ```
 
-The diagnostic prototype reaches the complete field:
+For field multiplication `e_i e_j=sum_k m_ij^k e_k`, structural targets are pulled backward by the transpose multiplication action
 
 ```text
-t entries = 3/64
-uR entries = 20/64
-T7 entries = 64/64
-tr(T7) = 64/64
+lambda(a*b)=<M_a^T lambda,b>.
 ```
 
-Thus the full compositum is not merely a formal upper bound.
+The final 64 product coefficients therefore do not need coefficient-by-coefficient canonicalization.
+
+Executed full-R10 `Syy` target audits at exact rational fibers `x=0` and `x=1/2` give exact zero residual against the directly materialized stress. `b7` and `b8` occupy all 64 states in both audits.
+
+```text
+T7_MATRIX_POWER_PRODUCTION_NODE = ELIMINATED_EXACT_BY_2X2_CH
+FIELD_PRODUCT_ADJOINT_PULLBACK = PASS_EXACT
+FULL_R10_COMPACT_STRESS_TARGET = PASS_EXACT
+FULL_R10_SYY_ADJOINT_FIBER_AUDIT = PASS_EXACT_2_FIBERS
+FINAL_64_COEFFICIENT_CANONICALIZATION = NOT_REQUIRED
+```
 
 ## Current implementation boundary
 
-Naively flattening/canonicalizing all rational coefficients of the complete `tr(T7)` field exceeded the 60 s execution window; even flattened `tr(uR)` canonicalization exceeded the same limit.
+The remaining thickness problem is the x-dependent rational dual functional. It must be contracted through the accepted 64-state holonomic thickness system without flattening the rational coefficient vector.
 
 ```text
-NAIVE_FLATTENED_RATIONAL_COEFFICIENT_NORMALIZATION = FAIL_TRACTABILITY
-FULL_R10_THICKNESS_TARGET_CONTRACTION = PARTIAL_PASS_TO_ADJOINT_DAG_BOUNDARY
+FULL_R10_DUAL_HOLONOMIC_THICKNESS_MOMENT_RUNTIME = OPEN
+BETA_WEIGHTED_XY_CREATIVE_TELESCOPING_RUNTIME = OPEN
+NEW_Pu = NOT_RUN
 ```
-
-This does not reopen the field dimension or material physics.  The next runtime must keep the fixed 4x4x4 factor graph and perform target-side/adjoint rational reduction without coefficient flattening.
-
-Unlike the 19:32 RC1 adjoint-Clenshaw failure, every multiplication here is reduced modulo exact quadratic relations and the algebraic state cannot grow beyond 64.
 
 ## Capacity boundary
 
@@ -111,20 +112,19 @@ NEW membrane-redistributed Pu = not released
 ## Current next gate
 
 ```text
-UNIFIED_V1_FULL_R10_64_STATE_ADJOINT_RATIONAL_TARGET_REDUCTION_GATE
+UNIFIED_V1_FULL_R10_DUAL_HOLONOMIC_THICKNESS_MOMENT_RUNTIME_GATE
 ```
 
 ## Repository semantic read order
 
-1. `20260816_2059__NZSCCM__PROJECT__CURRENT_STATE_FULL_R10_64_STATE_ADJOINT_TARGET_OPEN__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_2059__NZSCCM__FULL_R10_64_STATE_ADJOINT_TARGET_NEXT__GATE_LOCK.md`
-3. `../20_theory/nc_rebar_panel/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE_THICKNESS_COMPOSITUM__THEORY.md`
-4. `../40_execution/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__EXECUTION_REPORT.md`
-5. `../40_execution/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__PARAMS_AND_INTERMEDIATES.json`
-6. `../40_execution/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__REPRO.py`
-7. `../60_validation/common/20260816_2059__NZSCCM__FULL_R10_QUADRATIC_TOWER_64_STATE__AUDIT.md`
-8. `20260816_2034__NZSCCM__PROJECT__CURRENT_STATE_NONCOMMUTING_QUARTIC_HOLONOMIC_PASS_FULL_R10_COMPOSITUM_OPEN__SEMANTIC_INDEX.md` — predecessor
-9. `20260816_2014__NZSCCM__PROJECT__CURRENT_STATE_QUARTIC_ALGEBRAIC_PERIOD_HOLONOMIC_OPEN__SEMANTIC_INDEX.md` — predecessor
-10. `20260816_2005__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_MATRIX_SOURCE_LIFT_FIXED_ATOM_OPEN__SEMANTIC_INDEX.md` — predecessor
+1. `20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_2118__NZSCCM__FULL_R10_ADJOINT_CH_TARGET_AND_DUAL_HOLONOMIC_NEXT__GATE_LOCK.md`
+3. `../20_theory/nc_rebar_panel/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET_REDUCTION__THEORY.md`
+4. `../40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__EXECUTION_REPORT.md`
+5. `../40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__PARAMS_AND_INTERMEDIATES.json`
+6. `../40_execution/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__REPRO.py`
+7. `../60_validation/common/20260816_2118__NZSCCM__FULL_R10_64_STATE_ADJOINT_CH_TARGET__AUDIT.md`
+8. `20260816_2059__NZSCCM__PROJECT__CURRENT_STATE_FULL_R10_64_STATE_ADJOINT_TARGET_OPEN__SEMANTIC_INDEX.md` — predecessor
+9. `20260816_2034__NZSCCM__PROJECT__CURRENT_STATE_NONCOMMUTING_QUARTIC_HOLONOMIC_PASS_FULL_R10_COMPOSITUM_OPEN__SEMANTIC_INDEX.md` — predecessor
 
 No legacy file is deleted, moved or renamed solely from filename identity.
