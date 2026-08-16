@@ -2,72 +2,81 @@
 
 ## Current production identity
 
-`20260812_2245__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15__THEORY_EXECUTION_CONTRACT.LOCATOR.md`
+Case21 current production result is now closed under the already reproduced Case21-local N48-C1/MM + Cayley-Hamilton + General-D15 evaluator with five-term membrane redistribution.
 
-Current governance: `UNIFIED_PRODUCTION_WORKFLOW_V1` + anti-loop N48 production pivot + five-term connected-continuation gate.
+Current governance: `UNIFIED_PRODUCTION_WORKFLOW_V1` + anti-loop lock + N48 scope clarification.
 
-## Active production skeleton
+## Active mechanics
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
  -> global (D,q), A=bq
  -> Nguyen second-order continuous strain
  -> five internal compatible membrane coordinates r=[r0,r20,r22,s02,s22]
- -> R10 concrete + same-field reinforcement
- -> N48-C1/MM material compiler
- -> Cayley-Hamilton / equivalent Chebyshev-in-sine coefficient lift
- -> General-D15 exact structural moments
- -> solve five Rm + total Rq on origin-connected branch
- -> consistent Schur condensation
+ -> same-state R10 concrete + reinforcement
+ -> solve five Rm + total Rq
+ -> eliminate internal membrane response / follow connected equilibrium set
  -> first connected load maximum
  -> same-state KZ
- -> Pu release only after gates pass
 ```
 
-## Active compiler
+## Case21 result
 
 ```text
-N48_ORDER=48
+D_u=0.4597278541813354
+q_u=0.0018330938013757293
+A_u=2.2363744376783896 mm
+r0 =-0.012475802483156403
+r20=-0.007141864103343101
+r22=+0.04699488414266459
+s02=+0.041946118067216
+s22=-0.09983629747628982
+Pc=304.05427812103903 kN
+Ps=16.69490720454312 kN
+Pu=320.7491853255822 kN
+KZ(Pu)=+260.1709056728 N/mm
+CONTROL=FIRST_CONNECTED_LOAD_MAXIMUM
+```
+
+Rounded current Case21 capacity: `320.75 kN`.
+
+## Case21-local compiler identity
+
+```text
+interval=[-1.15,+0.12]
+N=48
 U=N48-C1
 C=N48-C1
 T=N48-C1-CONSTRAINED-MINIMAX
 T7=N48-C1
-CAYLEY_HAMILTON=GOVERNING
-D15_GENERAL_TRIG_MOMENTS=ACTIVE
 ```
 
-The frozen R10 law is unchanged. FFT is coefficient-index convolution only. N48 roots are material-coordinate roots, not structural spatial points.
+The final membrane state passes a continuous Bernstein domain certificate inside this interval. The old 18:02 r=0 load fingerprint was reproduced to `6.4e-7 kN`.
 
-## 18:02 fingerprint
+## Critical N48 scope clarification
+
+The above does **not** make N48 a universal NC family compiler.
+
+12:29 broad family source-fidelity gate:
 
 ```text
-P_freeze=365.58042756532977 kN
-P_repro =365.58042692483133 kN
-DeltaP=-6.4049844e-7 kN
-Rqc component relative difference ~=7.8e-7
+core=[-2.35,+1.90]
+guard=[-2.60,+2.15]
+N48 E_sigma=0.817103, E_tan=0.954681 -> FAIL
+first passing source-fidelity candidate=N3584
 ```
 
-`PASS`.
+12:48 then found the present N3584 coefficient-tensor structural backend impractical for Z6. Both results remain valid.
 
-## Connected membrane branch — accepted states
+Therefore:
 
 ```text
-point1: q=1e-4, D=0.016046306, P=15.2626325741107 kN,
-        ||Rm||2=6.9022384258e-6, Rq=1.9082556149e-6 kN mm
-
-point2: q=2e-4, D=0.031737797, P=31.4300211269425 kN,
-        ||Rm||2=1.3545457160e-5, Rq=3.9798686409e-6 kN mm
+CASE21_LOCAL_N48=ALLOWED
+N48_UNIVERSAL_NC_FAMILY=NOT_ALLOWED
+CASE21_N48_COEFFICIENTS_FOR_Z6=PROHIBITED
 ```
 
-Point2 compiler-domain enclosure is `[-0.0486323165234,+0.0188154748336]`, inside `[-1.15,+0.12]`.
-
-Direct near-limit insertion of the membrane variables is not the active path; the branch is continued from the origin.
-
-## Exact-algebraic research branch
-
-`EXACT_ALGEBRAIC_HOLONOMIC_Pu_ROUTE=PAUSED_RESEARCH_BRANCH` under anti-loop governance. It remains retained evidence and is not deleted.
-
-## Zero-integration lock
+## Formal zero-integration identity
 
 ```text
 N_formal_spatial_sampling=0
@@ -76,27 +85,27 @@ N_formal_spatial_subdomains=1
 N_formal_thickness_quadrature=0
 ```
 
-## Capacity boundary
+## Capacity comparison
 
 ```text
-Case21 368.189 kN=historical/current-support only
-Z6 51.30 MN=retained engineering baseline only
-NEW membrane-redistributed Case21 Pu=NOT RELEASED
+old Case21 r=0=365.5804275653 kN
+new membrane Case21=320.7491853256 kN
+change=-12.2630%
+experiment=336 kN
+new error=-4.5389%
 ```
 
-## Current unique next gate
+## Next task
 
-`CASE21_N48_MEMBRANE_CONNECTED_BRANCH_CONTINUATION_AND_SCHUR_GATE`
+`Z6_MEMBRANE_REDISTRIBUTED_CAPACITY_EXECUTION_WITH_EXISTING_FAMILY_EVIDENCE`
 
-Use points 1–2 as the next secant predictor, continue accepted N=28-corrected states, accumulate `r/Rm/Rq/P/Krr/cond/domain` ledger, then close Schur and same-state KZ at the first connected load maximum.
+Do not restart a new symbolic backend automatically. Try the existing family-level route; if common tractability remains the hard blocker, record the blocker and stop rather than silently falling back to the Case21-local N48 compiler.
 
 ## Current artifacts
 
-- `../../00_index/20260816_2240__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_BRANCH_TWO_POINTS_ACCEPTED__SEMANTIC_INDEX.md`
-- `../../40_execution/common/20260816_2240__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_BRANCH__LEDGER.jsonl`
-- `../../40_execution/common/20260816_2240__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_BRANCH_POINT2__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__REPRO.py`
-- `../../60_validation/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__AUDIT.md`
-- `../../10_governance/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_CONTINUATION__GATE_LOCK.md`
+- `../../00_index/20260816_2253__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_PU_320P75_N48_SCOPE_CLARIFIED__SEMANTIC_INDEX.md`
+- `../../40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__REPRO.py`
+- `../../60_validation/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__AUDIT.md`
+- `../../10_governance/20260816_2253__NZSCCM__N48_SCOPE_CLARIFICATION_CASE21_VS_NC_FAMILY__LOCK.md`
