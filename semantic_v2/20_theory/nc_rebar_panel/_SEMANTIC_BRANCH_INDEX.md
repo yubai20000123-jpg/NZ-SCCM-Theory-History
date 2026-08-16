@@ -1,115 +1,113 @@
 # NC + rebar panel theory semantic branch
 
-## Current production identity
+## Current production-development identity
 
-The previously published Case21 five-free-coordinate membrane result `320.749185 kN` is retracted as a physical membrane Pu. It remains diagnostic evidence of unstable internal over-relaxation.
-
-Current controlling mechanics are the recovered historical RC backbone plus a compatibility/equilibrium membrane-redistribution layer whose internal coordinates may be Schur-condensed **only while the internal membrane block remains stable**.
-
-## Active mechanics
+The current mainline is the compact exact R10 target route, not the retracted Case21 N48 five-free-coordinate membrane Pu path.
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
- -> global (D,q), A=bq
  -> Nguyen second-order continuous strain
- -> five-term leading compatible membrane subspace r=[r0,r20,r22,s02,s22]
+ -> compatible membrane-stress redistribution
  -> same-state R10 concrete + reinforcement
- -> solve Rm=0
- -> verify internal membrane stability lambda_min(sym(Krr))>0
- -> ONLY THEN Schur-condense r
- -> outer P,Rq,L / same-state KZ event ordering
+ -> regular source/matrix material DAG
+ -> fixed finite algebraic-state closure bound
+ -> compact P/Rq/Rm/KZ target contraction
+ -> low-dimensional connected structural solve
 ```
 
-At first `lambda_min(sym(Krr))=0`, the internal membrane mode is an explicit stability event. The solver must not jump to another relaxed `Rm=0` root and must not condense an unstable internal state.
+Formal structural spatial/thickness numerical quadrature remains zero.
 
-## Historical recovery
+## Formal-series rule
 
 ```text
-20260816_1848 compatibility-coupled Airy/FvK delta = RETAIN
-20260816_1912 five-term elastic Airy recovery = PASS_EXACT
-20260816_1912 legacy N48 five-coordinate current solve = REJECTED / NEW_R_SOLVE_NOT_AUTHORIZED
-20260816_2136 anti-loop override to legacy N48 five-coordinate production = RETRACTED
+FORMAL_INFINITE_OR_HIGH_ORDER_SERIES = ALLOWED_AS_REPRESENTATION
+TERM_EXPANSION_FOR_THEORY_AUDIT = ALLOWED
+DIRECT_THOUSANDS_OF_COEFFICIENTS_PRODUCTION = PROHIBITED
 ```
 
-## Exact elastic leading direction
+The target runtime must use finite recurrence/algebraic-state/special-function contraction rather than a large truncated material series.
 
-For square halfwave and `nu=.18`:
+## Compact exact material state
+
+Retained exact branch results:
 
 ```text
-r/M=[-.295,-.205,+.25,-.205,+.25]
-Kbar eig=[.205,.5,.5,.5,1]
+20:59 three-generator quadratic-tower field-state bound = 64
+20:59 derivative-operator sparsity = 159/4096
+21:18 T^7 matrix-power node = eliminated by exact 2x2 Cayley-Hamilton
+21:18 compact R10 stress target = PASS_EXACT
+21:18 field-product adjoint pullback = PASS_EXACT
 ```
 
-This reproduces the positive classical Airy/FvK postbuckling membrane redistribution exactly.
+The 64-state object is a material algebraic field-state bound, not a structural DOF count or spatial/material-point discretization.
 
-## Case21 diagnostic
+## 2026-08-17 source-regularization result
 
-Airy-direction K-projection:
+The old rationalized `c0,c1` connection has an apparent pole at `x=21/260`, but the physical principal matrix square root is regular there.
+
+At the retained prototype repeated-eigenvalue point:
 
 ```text
-low-q point1: lambda_A=+1.1373, K-perp=.1624
-low-q point2: lambda_A=+1.0979, K-perp=.2198
-retracted 320.749-kN state: lambda_A=-1.1460, K-perp=.9719
+R=sqrt(E^2+eta^2 I)=.27710075327665... I
+Sylvester derivative relation: R R' + R' R = M'
+cond2(Sylvester operator)=1
 ```
 
-A direct frozen-R10 audit-only oracle confirms that a full five-coordinate `Rm=0` root can become internally unstable:
+Therefore the source/matrix square-root plus Frechet/Sylvester derivative is controlling. The old separate `c0,c1` differential connection is retired as a production representation.
+
+True source spline knots remain material events and are represented without a standalone singular projector:
 
 ```text
-sym(Krr) eig ~= [-238.65,-28.05,+281.46,+492.27,+733.27]
+D_+^p=((D+sqrt(D^2))/2)^p, p=3,4,5
 ```
 
-while the two low-q states retain all-positive internal symmetric tangent eigenvalues.
+with the finite Frechet/divided-difference tangent of `z_+^p`.
 
-Therefore:
+## Real target preflight
+
+The actual compression interaction subtarget
+
+`Yc=det(C)*Cyy`
+
+has been executed in the retained smooth algebraic field. For the exact rational prototype:
 
 ```text
-Case21 320.749185 kN = RETRACTED / unstable-overrelaxation diagnostic
-NEW_CORRECTED_CASE21_MEMBRANE_Pu = NOT RELEASED
+field dimension=4
+Yc support=4/4
+exact characteristic polynomial degree in Y=4
 ```
 
-Retained support baseline pending corrected event ordering:
+This proves that a real stress target is compactly algebraic rather than requiring a high-order material series.
 
-`Case21 historical/current-support closure = 368.189 kN`.
+Explicit canonical rational annihilator generation in the current SymPy representation exceeded the fail-fast runtime and is rejected as the production architecture. The target remains factorized as a finite algebraic-period/descriptor object instead of being flattened into giant rational coefficients.
 
-## Compiler identity / scope
-
-Case21-local N48 remains useful as a value-evaluator regression object on its certified local interval, but the 19:12 legacy-five-coordinate production rejection is controlling for this membrane-root task. N48 is not a universal NC-family compiler and Case21 coefficients must not be reused for Z6.
-
-## Z6 boundary
-
-Z6 requires its historical mixed in-plane boundary class:
+## Z6 boundary correction
 
 ```text
-loaded ends ux=0
-lateral sides in-plane free
+Z6_BOUNDARY = FOUR_EDGE_SIMPLY_SUPPORTED / SSSS
 ```
 
-and the corresponding Airy/homogeneous-biharmonic family before current-material internal condensation. Simple Case21/free-Poisson five-term fields are not a complete Z6 closure.
+Earlier branch text describing Z6 as a mixed in-plane-boundary case is superseded.
 
-Retained Z6 support baseline pending corrected closure: `51.30 MN`.
-
-## Formal zero-integration identity
+## Capacity status
 
 ```text
-N_formal_spatial_sampling=0
-N_formal_spatial_quadrature=0
-N_formal_spatial_subdomains=1
-N_formal_thickness_quadrature=0
+Case21 320.749185 kN = RETRACTED DIAGNOSTIC ONLY
+Z6 43.762840 MN = RETRACTED DIAGNOSTIC ONLY
+Case21 retained support baseline = 368.189 kN
+Z6 retained engineering support baseline = 51.30 MN
+NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 ```
-
-Direct Gauss-Legendre calculations used in the recovery gate are independent audit oracles only, not formal production integration.
 
 ## Current next task
 
-`STABLE_CURRENT_MEMBRANE_CONDENSATION_AND_MIXED_EVENT_GATE`
+`FULL_COMPACT_R10_FACTOR_GRAPH_ALGEBRAIC_PERIOD_TARGET_EVALUATOR`
 
-First locate the first internal-stability event on the origin-connected Case21 membrane branch and compare its order with the retained support peak / outer limit event. Do not relax through the event and do not release a new Pu before the ordering is closed.
+It must operate on an actual full `Syy` or `Rm` target, preserve a fixed finite algebraic/descriptor bound, produce the complete-thickness target plus consistent derivative package, and must not fall back to high-order coefficient enumeration or formal spatial quadrature.
 
 ## Current artifacts
 
-- `../../00_index/20260817_0010__NZSCCM__PROJECT__CURRENT_STATE_MEMBRANE_CLOSURE_RECOVERED_INTERNAL_STABILITY_GATE__SEMANTIC_INDEX.md`
-- `../../40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__REPRO.py`
-- `../../60_validation/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_AND_INTERNAL_STABILITY__AUDIT.md`
-- `../../10_governance/20260817_0010__NZSCCM__STABLE_CURRENT_MEMBRANE_CONDENSATION__GATE_LOCK.md`
+- `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__REPRO.py`
+- `../../10_governance/20260817_0100__NZSCCM__SOURCE_REGULAR_DAG_AND_FACTORISED_ALGEBRAIC_PERIOD__LOCK.md`
