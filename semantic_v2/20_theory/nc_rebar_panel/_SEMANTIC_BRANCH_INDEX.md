@@ -6,7 +6,7 @@ Current production anchor:
 
 `20260812_2245__NZSCCM__NC_REBAR_PANEL__R10_N48C1MM_CH_NGUYEN_GENERAL_D15__THEORY_EXECUTION_CONTRACT.LOCATOR.md`
 
-Current governance is `UNIFIED_PRODUCTION_WORKFLOW_V1` plus the 21:36 anti-loop production-pivot lock.
+Current governance is `UNIFIED_PRODUCTION_WORKFLOW_V1` plus the 21:36 anti-loop pivot and the 22:34 connected-continuation gate lock.
 
 ## Retained global RC skeleton
 
@@ -14,67 +14,26 @@ Current governance is `UNIFIED_PRODUCTION_WORKFLOW_V1` plus the 21:36 anti-loop 
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
  -> global (D,q), A=bq
  -> Nguyen second-order continuous strain
+ -> compatible five-term membrane internal coordinates r=[r0,r20,r22,s02,s22]
  -> R10 concrete + reinforcement current laws
- -> compatible five-term membrane redistribution internal solve
  -> N48-C1/MM material-coordinate analytic compiler
- -> Cayley-Hamilton matrix lift
+ -> Cayley-Hamilton / equivalent Chebyshev-in-sine coefficient lift
  -> General-D15 exact structural moments
- -> P,Rq,L connected branch
+ -> solve five Rm + total Rq on origin-connected branch
+ -> consistent Schur condensation
+ -> P,Rq,L connected limit
  -> same-state KZ
 ```
 
-## Five internal membrane coordinates
+## Exact-algebraic research branch
 
-```text
-r=[r0,r20,r22,s02,s22]
-```
+The 20:05–21:36 exact R10 algebraic/holonomic work remains retained research evidence. Under the anti-loop rule it is paused for Pu production:
 
-remain finite internal response coordinates with `Rm=0` and consistent Schur condensation. The outer root topology remains `(D,q)`.
+`EXACT_ALGEBRAIC_HOLONOMIC_Pu_ROUTE = PAUSED_RESEARCH_BRANCH`.
 
-## Exact-algebraic research branch retained but paused for Pu production
+No new regularization/integration backend is opened automatically.
 
-The 20:05–21:18 exact R10 matrix/quartic/64-state/CH/adjoint work remains retained research evidence. It is not deleted.
-
-The 21:36 dual-holonomic regularity audit proved the denominator-gauge identity
-
-```text
-d V'=B V, W=V/G
-=> (dG)W'=(BG-dG'I)W
-```
-
-for globally regular denominator signatures, but also found an interior apparent pole in the current rationalized quadratic-tower basis:
-
-```text
-A^2-4Q=(260*x-21)^2*(28624*x^2+47880*x+50121)/31116960000
-x*=21/260 in [-1,1]
-```
-
-while the physical smooth atom remains regular and
-
-```text
-lim(c0+c1*q)=29577184/61042095.
-```
-
-Therefore an additional algebraic regularization layer would be required for a globally robust exact-production backend. Under the anti-loop rule, that layer is not opened automatically.
-
-```text
-EXACT_ALGEBRAIC_HOLONOMIC_Pu_ROUTE = PAUSED_RESEARCH_BRANCH
-```
-
-## 64-state erratum
-
-For basis `[1,q,s,q*s]`, the correct local derivative matrix is
-
-```text
-[0, 0,   0,        0]
-[0, ell, 0,        0]
-[0, 0,   c0,       c1]
-[0, 0,   c1*Q,     ell+c0]
-```
-
-The 20:59 displayed matrix interchanged `c1` and `c1*Q`. State dimension remains `64`; nonzero-pattern count remains `159/4096`. The 21:18 fiber target audit is unaffected.
-
-## Reactivated production compiler
+## Active production compiler
 
 ```text
 N48_ORDER = 48
@@ -86,11 +45,41 @@ CAYLEY_HAMILTON = GOVERNING
 D15_GENERAL_TRIG_MOMENTS = ACTIVE
 ```
 
-The frozen R10 physical material law is unchanged. N48 roots are one-dimensional material-coordinate compiler roots, not spatial integration points.
+N48 roots are one-dimensional material-coordinate compiler roots, not structural spatial points.
+
+## 22:34 executable progress
+
+The 2026-08-12 18:02 r=0 Case21 fingerprint was reconstructed with
+
+```text
+P_freeze = 365.58042756532977 kN
+P_repro  = 365.58042692483133 kN
+DeltaP   = -6.4049844e-7 kN
+Rqc relative component difference ~= 7.8e-7
+```
+
+Direct near-limit insertion of the new five membrane coordinates is rejected as a start strategy. Origin-connected continuation is active.
+
+First accepted nonzero state:
+
+```text
+q=1e-4
+D=0.016046306
+r=[-0.0004765646208971642,
+   -0.0002322819318541890,
+   +0.0002805628349612065,
+   -0.0002432861950486819,
+   +0.0003034158793738149]
+||Rm||2=6.9022384258e-6
+Rq=1.9082556149e-6 kN mm
+P=15.2626325741107 kN
+```
+
+Continuous compiler-domain enclosure is `[-0.02454674538198,+0.00935909011672]`, safely within `[-1.15,+0.12]`.
 
 ## Reinforcement adapter
 
-Rebar remains on the same redistributed continuous strain field and contributes before condensation/root solve. No post-hoc `As*fy` capacity addition is introduced.
+Rebar remains on the same redistributed continuous strain field and contributes before internal condensation/root solve. No post-hoc `As*fy` capacity addition is introduced.
 
 ## Zero-integration lock
 
@@ -106,24 +95,21 @@ N_formal_thickness_quadrature=0
 ```text
 Case21 368.189 kN = historical/current-support closure only
 Z6 51.30 MN = retained engineering baseline only
-NEW membrane-redistributed Case21 Pu = NOT YET RUN
+NEW membrane-redistributed Case21 Pu = NOT RELEASED
 ```
 
 ## Current unique next gate
 
-```text
-UNIFIED_V1_CASE21_MEMBRANE_REDISTRIBUTED_N48_PRODUCTION_GATE
-```
+`CASE21_N48_MEMBRANE_CONNECTED_BRANCH_CONTINUATION_AND_SCHUR_GATE`
 
-This is an actual production calculation gate: solve `Rm=0`, Schur-condense, solve the connected `(D,q)` limit state, and audit same-state `KZ`. Do not reopen another symbolic-integration backend automatically.
+Advance from the accepted `q=1e-4` state, close all five `Rm` and total `Rq` at every accepted continuation state, keep N=28 as acceptance corrector, then form consistent Schur derivatives near the first connected load maximum and run same-state `KZ`.
 
 ## Current artifacts
 
-- `20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_ERRATUM_AND_PRODUCTION_PIVOT__THEORY.md`
-- `../../40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__REPRO.py`
-- `../../60_validation/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__AUDIT.md`
-- `../../10_governance/20260816_2136__NZSCCM__ANTI_LOOP_EXACT_BRANCH_PAUSE_AND_N48_MEMBRANE_PRODUCTION__LOCK.md`
-- `../../00_index/20260816_2136__NZSCCM__PROJECT__CURRENT_STATE_ANTI_LOOP_N48_MEMBRANE_PRODUCTION_REACTIVATED__SEMANTIC_INDEX.md`
+- `../../00_index/20260816_2234__NZSCCM__PROJECT__CURRENT_STATE_CASE21_N48_MEMBRANE_CONTINUATION_STARTED__SEMANTIC_INDEX.md`
+- `../../40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__REPRO.py`
+- `../../60_validation/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__AUDIT.md`
+- `../../10_governance/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_CONTINUATION__GATE_LOCK.md`
 - `20260816_2034__NZSCCM__HISTORICAL_RC_VS_CURRENT_EXACT_ALGEBRAIC_METHOD_DELTA__NOTE.md` — retained comparison note
