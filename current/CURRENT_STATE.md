@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 01:15 +08:00  
+**Updated:** 2026-08-17 01:43 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current controlling governance
 
-`semantic_v2/10_governance/20260817_0100__NZSCCM__SOURCE_REGULAR_DAG_AND_FACTORISED_ALGEBRAIC_PERIOD__LOCK.md`
+`semantic_v2/10_governance/20260817_0143__NZSCCM__GLOBAL_FIXED_ENDPOINT_P_RM_INTERFACE__LOCK.md`
 
 ## Frozen backbone
 
@@ -26,9 +26,9 @@ Z6_BOUNDARY = FOUR_EDGE_SIMPLY_SUPPORTED / SSSS
 
 Formal infinite/high-order analytic representations are allowed. Direct production computation by enumerating thousands of analytic coefficients is prohibited.
 
-## Source-level regularity result
+## Source-level regularity retained
 
-The old rationalized `c0,c1` connection pole at `x=21/260` is a representation artifact. The physical principal matrix square root is regular there and its Sylvester derivative operator has condition number 1 in the retained prototype.
+The old rationalized `c0,c1` pole at `x=21/260` is a basis artifact, not a physical R10 singularity.
 
 ```text
 OLD_RATIONALIZED_c0_c1_CONNECTION = RETIRED_AS_PRODUCTION_DIFFERENTIAL_REPRESENTATION
@@ -36,140 +36,146 @@ SOURCE_LEVEL_MATRIX_SQRT_PLUS_FRECHET/SYLVESTER = RETAIN
 TRUE_FOSTER_KNOTS = RETAIN_AS_SOURCE MATERIAL EVENTS
 ```
 
-The source spline positive-part terms are retained in projector-free form
+The source spline positive-part terms remain in exact source form, and consistent tangent is generated from the same factorized matrix-function DAG.
+
+## Algebraic state results retained
 
 ```text
-D_+^p=((D+sqrt(D^2))/2)^p, p=3,4,5
+64_STATE = valid global branch-free algebraic closure bound
+8_STATE  = valid branch-aware full-R10 stress bound on a fixed source-event topology
 ```
 
-with consistent tangent from finite divided differences/Frechet derivatives.
-
-## Real target preflight
-
-The actual compression interaction subtarget
+The 8-state field is
 
 ```text
-Yc=det(C)*Cyy
+[1,q,s,q*s,g,q*g,s*g,q*s*g]
 ```
 
-is an exact degree-4 algebraic target in the retained smooth four-state field. This establishes real-target compact algebraicity.
+with the two Foster thresholds sharing the same spectral gap radical `g`.
 
-Explicit canonical rational annihilator generation in the present SymPy representation exceeded the fail-fast runtime and is rejected as a production architecture. The target remains factorized as an algebraic-period/descriptor object.
+The 8-state result remains a valuable local exact/audit representation; it is no longer a candidate for the global thickness-to-XY production interface.
 
-## New 01:15 full-Syy result: 64 is not the required branchwise runtime size
+## 01:43 actual P/Rm interface closure
 
-The two exact source knots are thresholds of functions of the same symmetric 2x2 strain matrix `E`. Their spectral projectors therefore share the same principal-value gap radical
+Define the three common complete-thickness stress resultants
 
 ```text
-g=sqrt((tr E)^2-4 det E)
+Nx0  = int_-1^1 sigma_x  dzeta
+Ny0  = int_-1^1 sigma_y  dzeta
+Nxy0 = int_-1^1 tau_xy   dzeta
 ```
 
-because
+The actual concrete axial load and all five current membrane residuals use only these same three functions:
 
 ```text
-(tr(E-lambda I))^2-4 det(E-lambda I)
-= (tr E)^2-4 det E
+P_c      <- Ny0
+Rm0_c    <- Nx0
+Rm20_c   <- cos(2X) Nx0
+Rmu22_c  <- cos(2X)cos(2Y) Nx0 - sin(2X)sin(2Y) Nxy0
+Rm02_c   <- cos(2Y) Ny0
+Rmv22_c  <- cos(2X)cos(2Y) Ny0 - sin(2X)sin(2Y) Nxy0
 ```
 
-for every threshold `lambda`.
-
-The smooth R10 field has dimension <=4. A one-principal-value-active source-knot correction adds at most the single shared `g` extension. Therefore every exact source branch of the full R10 stress lies in
+Therefore:
 
 ```text
-B8=[1,q,s,q*s,g,q*g,s*g,q*s*g]
-branchwise field dimension <= 8
+P_PLUS_FIVE_RM_COMMON_THICKNESS_RESULTANTS = 3
 ```
 
-rather than requiring an independent four-state tower for each knot.
+There is no need for six independent material integrations.
 
-This was executed on the complete retained prototype chain
+## Downstream thickness-moment order is finite and low
+
+The later full state evaluator does not require an unbounded thickness-moment ladder.
 
 ```text
-Pi(E),Pi(-E)
- -> c,t,C
- -> uR low/middle/high source branch
- -> T,U
- -> CH b7,b8
- -> complete Syy
+P/Rm values -> stress moment k=0
+Rq value    -> stress moments k=0,1
+P/Rm same-source derivatives -> tangent moments k=0,1 as required by q bending term
+Rq,q / quadratic bending-tangent kernels -> tangent moments through k=2
 ```
 
-with exact field support:
+Current design bound:
 
 ```text
-uR low/middle/high = 4 / 8 / 8
-Syy low/middle/high = 4 / 8 / 8
+stress moments required: k=0,1
+tangent target moments required: k=0,1,2
 ```
 
-Observed complete `Syy` factor-graph assembly times were approximately `.85 / 1.05 / .96 s` in the retained Python/SymPy prototype without any high-order material series.
+## Thickness-to-XY representation decision
 
-## Meaning of the historical 64-state result
+Two exact candidates were compared:
+
+### A. global positive-part / factorised period
 
 ```text
-64_STATE = valid global branch-free closure bound
-8_STATE  = current branch-aware exact full-Syy runtime bound
+branch-free point field bound <=64
+fixed thickness endpoints zeta=-1,+1
+no moving source-knot endpoint exposed to XY
+common P/Rm zero-order descriptor conceptual bound <=67 states (64 common + 3 target accumulators)
 ```
 
-The 64-state result is not revoked; it remains the branch-free algebraic closure proof. The new 8-state result shows that exact source-knot resolution can substantially reduce production state size.
+The exact implementation is not required to materialize 67 scalar rational coefficient functions; source-regular factorized/adjoint/holonomic forms are preferred.
 
-## Thickness material-event bound
-
-At fixed `(X,Y)`, through-thickness strain is affine:
+### B. event-resolved branchwise <=8-state
 
 ```text
-E(zeta)=Em+zeta Eb
+fixed-topology local field bound <=8
+fixed-topology three-resultant descriptor conceptual bound <=11
 ```
 
-For either exact source threshold, the event equation
+but the event equation
 
 ```text
-det(E(zeta)-lambda_m I)=0
+det(E_m(X,Y)+zeta E_b(X,Y)-lambda_m I)=0
 ```
 
-is quadratic in `zeta`. Therefore the two source thresholds create at most four exact thickness material events.
-
-These are source events, not spatial cells; formal spatial/thickness subdomain count remains one.
-
-## Critical downstream feedback before choosing production representation
-
-The event-resolved 8-state form is locally much smaller, but its exact event roots
+has generic five-coordinate trigonometric complexity
 
 ```text
-zeta_m=zeta_m(X,Y)
+deg_zeta = 2
+deg_XY(a2,a1,a0) = 4,6,8
+deg_XY(event discriminant) = 12
+deg_XY(endpoint front det(E(X,Y,+/-1)-lambda_m I)) = 8
 ```
 
-may become variable algebraic endpoints passed to the later `(X,Y)` contraction.
+and the existence/order of roots changes over the complete halfwave.
 
-Therefore the project must not choose the locally smallest thickness representation blindly.
+A Case21 historical-state audit confirms both `no-event` and `one lambda1 event` regions occur in the same `(X,Y)` domain. Thus global event resolution would require either XY region subdivision or clipped-root/positive-part selectors.
 
-Two exact candidates remain to be compared on an actual `P/Rm` target:
+Decision:
 
 ```text
-A. global positive-part / factorised period form
-   - larger local algebraic closure bound
-   - hides event endpoints from XY layer
+PRODUCTION_THICKNESS_TO_XY_REPRESENTATION
+ = GLOBAL_FIXED_ENDPOINT_POSITIVE_PART_FACTORISED_PERIOD
 
-B. event-resolved <=8-state period form
-   - much smaller thickness branch field
-   - may expose algebraic zeta_m(X,Y) to XY layer
+EVENT_RESOLVED_8_STATE
+ = LOCAL_EXACT/AUDIT ONLY FOR GLOBAL STRUCTURAL CALCULATION
 ```
+
+This preserves the single complete formal domain and avoids exporting moving material-event fronts into the General-D15/XY layer.
 
 ## Current unique next task
 
-`ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS_GATE`
+`GLOBAL_FIXED_ENDPOINT_THREE_STRESS_MOMENT_DESCRIPTOR_GATE`
 
-Execute one actual `P` or `Rm` target through the thickness-to-XY interface under both exact representations where practical, and compare:
+Construct the actual common analytic operator
 
 ```text
-1. resulting finite descriptor/state dimension;
-2. whether variable knot roots are exposed explicitly;
-3. algebraic/holonomic order delivered to the XY moment operator;
-4. consistent derivative complexity;
-5. whether the combined thickness+XY route retains a fixed finite bound.
+(D,q,r;X,Y)
+ -> [Nx0,Ny0,Nxy0]
 ```
 
-Choose the production representation by combined end-to-end complexity, not by thickness complexity alone.
+between fixed physical thickness endpoints `[-1,+1]`, using the source-regular factorized R10 DAG, without numerical thickness quadrature and without explicit high-order coefficient enumeration.
 
-Do not compute new Pu until this interface is closed.
+The operator must:
+
+1. return all three resultants from one current material state;
+2. avoid explicit final 64-rational-coefficient canonicalization;
+3. carry same-source parameter derivatives needed by P/Rm;
+4. remain extensible to stress k=1 and tangent k<=2 without changing the architecture.
+
+After this passes, contract the three fixed-endpoint period outputs over `(X,Y)` to obtain actual `P_c` and all five `Rm,c` values.
 
 ## Capacity status
 
@@ -184,8 +190,8 @@ NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 ## Current artifacts
 
 - `semantic_v2/40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__REPRO.py`
-- `semantic_v2/10_governance/20260817_0100__NZSCCM__SOURCE_REGULAR_DAG_AND_FACTORISED_ALGEBRAIC_PERIOD__LOCK.md`
 - `semantic_v2/40_execution/common/20260817_0115__NZSCCM__FULL_SYY_BRANCH_AWARE_8_STATE_REDUCTION__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260817_0115__NZSCCM__FULL_SYY_BRANCH_AWARE_8_STATE_REDUCTION__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__REPRO.py`
+- `semantic_v2/10_governance/20260817_0143__NZSCCM__GLOBAL_FIXED_ENDPOINT_P_RM_INTERFACE__LOCK.md`
