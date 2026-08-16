@@ -10,7 +10,8 @@ ONE_CONTINUOUS_COMPLETE_HALFWAVE
  -> compatible membrane-stress redistribution
  -> same-state R10 concrete + reinforcement
  -> regular source/matrix material DAG
- -> compact exact target period/descriptor contraction
+ -> global fixed-endpoint compact thickness period
+ -> finite beta/XY target contraction
  -> low-dimensional connected structural solve
 ```
 
@@ -24,76 +25,91 @@ TERM_EXPANSION_FOR_THEORY_AUDIT = ALLOWED
 DIRECT_THOUSANDS_OF_COEFFICIENTS_PRODUCTION = PROHIBITED
 ```
 
-## Compact exact source route
+## Source regularity
 
-The old rationalized `c0,c1` connection pole at `x=21/260` is a representation artifact. The physical matrix square root is regular there; the Sylvester derivative operator has condition number 1 in the retained prototype.
+The old rationalized `c0,c1` connection pole at `x=21/260` is a representation artifact. The source matrix square root is regular there, so production differentiation stays at matrix/source level through Fréchet/Sylvester rules. True Foster source knots remain physical material events.
 
-Controlling source operations are therefore:
-
-```text
-principal matrix sqrt + Sylvester/Frechet derivative
-projector-free positive-part spline powers
-2x2 Cayley-Hamilton reduction
-```
-
-True Foster source knots remain finite material events.
-
-## Real target algebraicity
-
-The actual compression interaction subtarget
-
-`Yc=det(C)*Cyy`
-
-has exact algebraic degree 4 in the smooth four-state field. Explicit giant rational annihilator canonicalization is rejected as a production representation after fail-fast symbolic runtime; the target remains factorized.
-
-## Full Syy branch-aware reduction
-
-The two exact spline knots are thresholds of functions of the same 2x2 matrix `E`, hence all knot projectors share
+## Algebraic state identities
 
 ```text
-g=sqrt((tr E)^2-4 det E)
+64_STATE = global branch-free algebraic closure bound
+8_STATE  = exact branch-aware full-R10 stress bound on fixed event topology
 ```
 
-and do not require independent knot radical towers.
+The branchwise 8-state field remains retained for local exact/audit use.
 
-The exact smooth field has dimension <=4. Adding the common gap radical gives the worst-case branch field
+## Actual P/Rm interface closure
+
+The six concrete structural targets
 
 ```text
-B8=[1,q,s,q*s,g,q*g,s*g,q*s*g]
-branchwise full-R10 field dimension <=8
+P_c + five Rm,c
 ```
 
-The complete retained prototype source/stress chain was assembled exactly with support:
+share only three common thickness resultants:
 
 ```text
-uR low/middle/high = 4/8/8
-full Syy low/middle/high = 4/8/8
+Nx0  = int sigma_x dzeta
+Ny0  = int sigma_y dzeta
+Nxy0 = int tau_xy dzeta
 ```
+
+with fixed physical endpoints `zeta=-1,+1`.
+
+All five `Rm` are finite trigonometric combinations of these three resultants, and `P_c` uses `Ny0`.
 
 Therefore:
 
 ```text
-64_STATE = retained global branch-free closure bound
-8_STATE  = current exact branch-aware full-Syy bound
+P_PLUS_FIVE_RM_COMMON_THICKNESS_RESULTANTS = 3
 ```
 
-At fixed `(X,Y)`, each source-knot equation `det(E(zeta)-lambda_m I)=0` is quadratic in `zeta`, so the two exact source knots produce at most four thickness material events. These are not spatial cells.
-
-## Downstream interface warning
-
-The smaller event-resolved thickness state may expose algebraic event roots `zeta_m(X,Y)` to the subsequent in-plane moment contraction. The project therefore has not yet selected branch-aware 8-state evaluation as the final production representation.
-
-Current comparison is:
+The downstream full state evaluator also needs only the finite thickness-moment family
 
 ```text
-A. global positive-part factorised period
-   larger local field, no explicit variable event endpoints
-
-B. event-resolved <=8-state period
-   smaller local field, may expose zeta_m(X,Y)
+stress: k=0,1
+tangent target kernels: k=0,1,2
 ```
 
-The winner must be chosen by the combined thickness + XY target complexity.
+rather than an unbounded moment ladder.
+
+## Thickness-to-XY representation decision
+
+The event-resolved `<=8`-state form is locally smaller but its source-knot roots
+
+```text
+zeta_m(X,Y)
+```
+
+change existence/order over the complete halfwave.
+
+For generic five-coordinate kinematics:
+
+```text
+deg_zeta event equation = 2
+XY trig degree of a2,a1,a0 = 4,6,8
+XY trig degree of event discriminant = 12
+XY trig degree of endpoint event front = 8
+```
+
+A Case21 audit confirms both `no-event` and `one lambda1 event` regions occur within the same `(X,Y)` domain.
+
+Thus global event resolution would require either in-plane region subdivision or clipped-root/positive-part selectors. The former conflicts with the single-domain formal architecture; the latter reconstructs the branch-free source structure.
+
+Current production choice is therefore locked as
+
+```text
+GLOBAL_FIXED_ENDPOINT_POSITIVE_PART_FACTORISED_PERIOD = PRODUCTION
+EVENT_RESOLVED_8_STATE = LOCAL_EXACT/AUDIT ONLY
+```
+
+Conceptual fixed bound for the actual zero-order three-resultant package is
+
+```text
+<=64 common branch-free field states + 3 target accumulators = <=67
+```
+
+without requiring materialization/canonicalization of 67 giant rational functions.
 
 ## Z6 boundary
 
@@ -115,15 +131,23 @@ NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 
 ## Current next task
 
-`ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS_GATE`
+`GLOBAL_FIXED_ENDPOINT_THREE_STRESS_MOMENT_DESCRIPTOR_GATE`
 
-Run one actual `P` or `Rm` target through the thickness-to-XY interface and compare the global positive-part and event-resolved compact forms by total descriptor/state size, algebraic order, derivative complexity, and whether a fixed finite bound survives.
+Construct the actual compact analytic operator
+
+```text
+(D,q,r;X,Y) -> [Nx0,Ny0,Nxy0]
+```
+
+from the source-regular factorized R10 DAG, with no numerical thickness quadrature and no explicit high-order coefficient enumeration. The same operator must carry same-source derivatives needed by P/Rm and remain extensible to the already bounded k=1 stress / k<=2 tangent moment family.
+
+After that passes, perform exact `(X,Y)` contraction to obtain actual `P_c` and all five `Rm,c`.
 
 ## Current artifacts
 
 - `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__REPRO.py`
-- `../../10_governance/20260817_0100__NZSCCM__SOURCE_REGULAR_DAG_AND_FACTORISED_ALGEBRAIC_PERIOD__LOCK.md`
 - `../../40_execution/common/20260817_0115__NZSCCM__FULL_SYY_BRANCH_AWARE_8_STATE_REDUCTION__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260817_0115__NZSCCM__FULL_SYY_BRANCH_AWARE_8_STATE_REDUCTION__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__REPRO.py`
+- `../../10_governance/20260817_0143__NZSCCM__GLOBAL_FIXED_ENDPOINT_P_RM_INTERFACE__LOCK.md`
