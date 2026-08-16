@@ -1,15 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 00:28 +08:00  
+**Updated:** 2026-08-17 00:36 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
-## Current operational identity
+## Current controlling governance
 
-The 00:10 `STABLE_CURRENT_MEMBRANE_CONDENSATION_AND_MIXED_EVENT_GATE` is downgraded from mainline to archived error-diagnostic support.
-
-Controlling governance:
-
-`semantic_v2/10_governance/20260817_0028__NZSCCM__ANTI_LOOP_ORIGINAL_INTENT_AND_CORRECT_ROUTE_RECOVERY__LOCK.md`
+`semantic_v2/10_governance/20260817_0036__NZSCCM__ANTI_LOOP_CLARIFICATION_V2_COMPACT_EXACT_CLOSURE_NOT_HIGH_ORDER_ENUMERATION__LOCK.md`
 
 ## Frozen physics backbone
 
@@ -28,114 +24,140 @@ N_formal_spatial_subdomains = 1
 N_formal_thickness_quadrature = 0
 ```
 
-## Correctly recovered pre-anti-loop state
+## Formal series / production computation rule
 
-The correct production-development state is the 19:12 result:
+The user-approved rule is:
+
+```text
+FORMAL_INFINITE_OR_VERY_HIGH_ORDER_SERIES = ALLOWED_AS_THEORY_REPRESENTATION
+TERM_BY_TERM_EXPANSION_FOR_EXPLANATION_AUDIT = ALLOWED
+DIRECT_COMPUTATION_OF_THOUSANDS_OF_ANALYTIC_COEFFICIENTS = NOT ACCEPTABLE
+EXPAND_ALL_THEN_SOLVE = PROHIBITED
+```
+
+A production operator must therefore sum/contract the formal analytic structure through a compact exact recurrence, finite algebraic state, or closed target-functional moment operator. It must not escape tractability by choosing N=1000/3000/5000 and enumerating those terms.
+
+## Correct recovered execution point
+
+The mainline is no longer reset to 19:12. The later compact exact branch is retained.
+
+### 19:12
 
 ```text
 FIVE_TERM_ELASTIC_CONDENSATION = PASS_EXACT
 FIVE_TERM_AIRY_FVK_RECOVERY = PASS_EXACT
 FIVE_TERM_GENERAL_D15_TARGET_CLOSURE = PASS
 CURRENT_MATERIAL_RESIDUAL_AND_CONDENSATION_FORM = PASS_FORMAL
-LEGACY_N48_AS_CURRENT_PRODUCTION = REJECTED
-SOURCE_FAITHFUL_CURRENT_MATERIAL_TARGET_RUNTIME = OPEN
-NEW_MEMBRANE_REDISTRIBUTED_Pu = NOT RUN
 ```
+
+### 19:32
+
+Ordinary nested polynomial / adjoint-Clenshaw flattening was proven degree-propagating and not a viable production runtime.
+
+### 20:59
+
+The exact R10 algebraic graph was reduced to a fixed finite quadratic-tower state:
+
+```text
+THREE_GENERATOR_QUADRATIC_TOWER = PASS_EXACT_PARAMETRIC
+FULL_COMPOSITUM_STATE_DIMENSION = 64
+FULL_DERIVATIVE_OPERATOR_NONZEROS = 159/4096
+FULL_64_STATE_VECTOR_MOMENT_FORM = PASS_EXACT
+NO_POLYNOMIAL_DEGREE_GROWTH = RETAINED OBJECTIVE / ACHIEVED IN FIELD ALGEBRA
+```
+
+This is a field-state dimension, not structural DOFs, material points, spatial samples, or analytic-series order.
+
+### 21:18
+
+```text
+T7_MATRIX_POWER = ELIMINATED_EXACT_BY_2X2_CAYLEY_HAMILTON
+T7_DERIVATIVE = ELIMINATED_TO_SCALAR_CH_RECURRENCE
+FULL_R10_COMPACT_STRESS_TARGET = PASS_EXACT
+FIELD_PRODUCT_ADJOINT_PULLBACK = PASS_EXACT
+FINAL_64_COEFFICIENT_CANONICALIZATION = PROHIBITED
+```
+
+This is the current correct recovery point.
+
+### 21:36
+
+The rationalized local connection introduced an apparent pole at `x=21/260`, while the physical algebraic atom remained regular and the relevant combined derivative had a finite limit.
 
 Therefore:
 
 ```text
-MEMBRANE_PHYSICS_CLOSURE = ESTABLISHED
-MAIN_OPEN_ITEM = PRACTICAL SOURCE_FAITHFUL TARGET EVALUATION
+64_STATE_COMPACT_EXACT_FIELD = RETAIN
+PHYSICAL_R10_REGULARITY = RETAIN
+RATIONALIZED_LOCAL_CONNECTION = NEEDS_GLOBAL_REGULARIZATION
+N48_FALLBACK_PIVOT = RETRACTED
 ```
 
-Do not reopen the retracted `320.749 kN` Case21 path as a theory-development target.
+The anti-loop instruction does NOT mean abandoning the compact exact route.
 
-## Why “do not enter a loop” was said
+## Why the prior loop felt impossible
 
-19:32 provided a valid fail-fast result: target-side adjoint Clenshaw is algebraically exact, but the active RC1 nested representation still propagates huge nested degree because no closed moment primitive existed for its beta/Chebyshev atoms.
+The mathematical direction was valid, but the execution had no explicit convergence/termination contract. Each local closure generated another backend gate without proving that:
 
-Instead of converting that blocker into an engineering production decision, the execution opened a chain of increasingly abstract exact-backend gates (nested atom closure -> quartic algebraic periods -> holonomic thickness -> quadratic-tower/64-state -> dual-holonomic regularity ...).
+1. the number of remaining mathematical layers decreased;
+2. the runtime state/order was permanently bounded;
+3. no 1000+ coefficient enumeration would appear later;
+4. the next gate would directly return an actual `P,Rq,Rm,L,KZ` target;
+5. the route had a finite number of remaining closure layers.
 
-The user anti-loop instruction means:
+This, rather than the exact/holonomic direction itself, is the recovered anti-loop problem.
+
+## Compact exact closure contract
+
+Only two production layers remain open:
 
 ```text
-DO_NOT_ALLOW_EXACT_BACKEND_RESEARCH_TO_FORM_AN_UNBOUNDED_CHAIN_OF_Pu_PREREQUISITES
+OPEN_LAYER_1 = globally regular fixed-state thickness target contraction
+OPEN_LAYER_2 = beta-weighted X,Y exact target contraction
 ```
 
-It does NOT mean:
+No automatically generated third/fourth/fifth backend layer is authorized.
+
+For each open layer:
 
 ```text
-RETURN_TO_A_PREVIOUSLY_REJECTED_LEGACY_APPROXIMATION_TO_FORCE_A_Pu_NUMBER
+formal infinite/high-order representation may remain symbolic
+runtime must not enumerate thousands of terms or coefficients
+runtime state/order must have an explicit finite bound BEFORE implementation
+state/order may not grow with a chosen high-order truncation because truncation is not the production mechanism
+output must directly contract actual P/Rq/Rm/L/KZ kernels
+unbounded state/order growth => FAIL FAST
 ```
 
-The 21:36 N48 five-coordinate production pivot was therefore an overcorrection and is superseded.
+## Current unique next gate
 
-## Production accuracy / backend policy
+`FIXED_STATE_GLOBAL_REGULARIZATION_AND_THICKNESS_TARGET_CLOSURE`
 
-Retain zero formal structural spatial integration, but do not require theorem-level universal exactness as a Pu prerequisite.
+Task:
 
 ```text
-TIGHT_STRICT_REMAINDER_CERTIFICATE = NOT_HARD_GATE
-UNIVERSAL_EXACT_SPECIAL_FUNCTION_BACKEND = NOT_HARD_GATE
-UNIVERSAL_SINGLE_COMPILER_ORDER = NOT_REQUIRED
+21:18 compact R10 target DAG + fixed 64-state quadratic-tower field
+ -> remove the removable apparent-pole defect by a globally regular fixed-state algebraic connection
+ -> keep one continuous thickness domain (no spatial/thickness subdivision)
+ -> close an actual P or Rm thickness target end-to-end in the same bounded state
 ```
 
-Allowed/preferred production representation:
+This is not a new generic symbolic-integration program. It is the missing closure of the already established compact 64-state route.
+
+After this passes, the only remaining mathematical layer is the beta-weighted `(X,Y)` exact target contraction. After that, calculate actual `P,Rq,Rm,L,KZ`, then Case21 control and Z6 mixed-boundary decisive case.
+
+## Prohibited regressions
 
 ```text
-source-faithful finite analytic material representation
-specimen-derived material-coordinate domain/order
-value + first-tangent + target-functional convergence gates
-mature CAS and/or finite analytic-series contraction for actual targets
-accuracy commensurate with physical/model uncertainty
+DIRECT_N1000_N3000_N5000_COEFFICIENT_ENUMERATION = PROHIBITED
+HIGH_ORDER_CHEBYSHEV_AS_PRODUCTION_ESCAPE = PROHIBITED
+FULL_SERIES_FLATTENING = PROHIBITED
+FULL_64_COEFFICIENT_CANONICALIZATION = PROHIBITED
+SPATIAL_GAUSS/SIMPSON/ADAPTIVE = PROHIBITED
+SPATIAL_COLLOCATION/MATERIAL_POINT_GRID = PROHIBITED
+N48_LEGACY_FALLBACK = PROHIBITED_AS_COMPACT_ROUTE_FIX
+R10_RETUNING_OR_TRIAL_LOAD_CALIBRATION = PROHIBITED
 ```
-
-Still prohibited:
-
-```text
-formal structural spatial Gauss/Simpson/adaptive quadrature
-spatial collocation/material-point grid
-trial-load calibration
-R10 retuning
-panel-level surrogate hiding the source operator
-```
-
-## Anti-loop execution discipline
-
-Every next technical subtask must directly return or enable one of:
-
-```text
-P, Rq, Rm_j, L, KZ, or a directly required derivative
-```
-
-For a backend/representation attempt:
-
-```text
-ONE DECLARED ATTEMPT
- -> PASS: use it
- -> FAIL: record blocker and move to pre-authorized practical analytic representation
- -> DO NOT automatically create another exact-backend research gate
-```
-
-No mathematical representation may become a new Pu prerequisite unless it has an explicit complexity bound and an executable path on the actual Case21/Z6 targets.
-
-## Case roles
-
-```text
-Case21 = low membrane-driver control case; corrected membrane effect expected small
-Z6 = high-b/t / large membrane-driver decisive case; corrected membrane effect expected much larger
-```
-
-Historical scale diagnostic retained:
-
-```text
-Case21 M=.02869338081, (M/4)/D=.85814%
-Z6 M=1.69487261562, (M/4)/D=26.7275%
-M_Z6/M_Case21=59.0684
-```
-
-Z6 must use its actual mixed in-plane boundary-admissible membrane family; do not mechanically reuse the simple Case21/free-Poisson boundary field.
 
 ## Capacity status
 
@@ -147,14 +169,4 @@ Z6 retained engineering support baseline = 51.30 MN
 NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 ```
 
-## Restored mainline
-
-```text
-19:12 source-faithful five-term/current-material target formulation
- -> build/choose practical finite analytic target evaluator under zero spatial quadrature
- -> Case21 low-effect control calculation
- -> Z6 mixed-boundary high-effect calculation
- -> compare membrane correction and Pu
-```
-
-Do not spend additional mainline cycles explaining the already retracted Case21 low-Pu branch unless a future implementation regression requires it.
+No new Pu is to be released before the compact exact target contraction is closed.
