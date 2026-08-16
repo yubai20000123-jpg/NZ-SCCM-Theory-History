@@ -1,21 +1,20 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 10:43 +08:00  
+**Updated:** 2026-08-16 10:54 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1043__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z6_AR2_SSSS_CAPACITY_MATRIX__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1054__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_AR2_COMPILER_FIDELITY_RETRACTION__SEMANTIC_INDEX.md`
 
 ## Current production scope
-
-The analytical production boundary is the theoretical **four-edge simply-supported plate**. Zhou FE-specific translational `ux/uy` reverse-engineering is out of scope.
 
 ```text
 PRODUCTION_BOUNDARY = THEORETICAL_FOUR_EDGE_SIMPLY_SUPPORTED
 ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
 Nguyen second-order kinematics = ACTIVE
-R10/N48-C1-MM/Cayley-Hamilton = ACTIVE
+R10 physical current operator = ACTIVE
+Cayley-Hamilton = ACTIVE
 General D15 exact moments = ACTIVE
 A0=a/500
 N_formal_spatial_sampling=0
@@ -25,11 +24,9 @@ Gauss/Simpson/adaptive/collocation/cells/material-point-grid=PROHIBITED
 Zhou/Winter calibration=PROHIBITED
 ```
 
-No PF/end-warp/axial-trace FE correction and no free `p20,p02` membrane coordinate enters current SSSS production.
-
 ## Accepted Z6 base
 
-User accepted:
+User-accepted result remains:
 
 ```text
 Z6 a/b=2
@@ -43,64 +40,93 @@ Zhou=49.4867667519 MN
 Winter=50.1858541295 MN
 ```
 
-## New controlled Z0–Z5 AR2 calculation
+No current action retracts this user-accepted Z6 value.
 
-For Z0–Z5 only the physical panel length `a` was changed so that `a/b=2`; source section/material parameters were retained.
+## Z0–Z5 10:43 calculation status
 
-All six modified cases have:
-
-```text
-m*=2
-ell=a/m*=b
-q0=A0/b=.004
-```
-
-Current final degree-48 full-section capacities:
-
-|Case|NZ-SCCM Pu (MN)|Zhou (MN)|Winter (MN)|NZ−Zhou|NZ−Winter|
-|---|---:|---:|---:|---:|---:|
-|Z0|33.4910|36.9455|41.5008|-9.35%|-19.30%|
-|Z1|19.7360|23.7214|26.1001|-16.80%|-24.38%|
-|Z2|35.9781|41.2134|45.7333|-12.70%|-21.33%|
-|Z3|39.6889|44.3203|49.0469|-10.45%|-19.08%|
-|Z4|63.7385|69.3399|79.3861|-8.08%|-19.71%|
-|Z5|14.7824|14.6816|14.6816|+0.69%|+0.69%|
-|Z6|51.30|49.4868|50.1859|+3.65%|+2.21%|
-
-All Z0–Z5 final `Rq` component-scale residuals satisfy `Rnorm<=1e-5`, and all final principal-value envelopes lie inside the predeclared `[-2.35,+1.90]` compiler interval.
-
-## Regime distinction
-
-For modified Z0–Z5:
+The 10:43 AR2 capacities and their Zhou/Winter error percentages are now:
 
 ```text
-Pcr > Pyth
+RETRACTED_PENDING_RECALCULATION
 ```
 
-whereas accepted Z6 AR2 has:
+They are preserved in GitHub as challenged historical calculation artifacts but must not be used as current production values.
+
+## Proven reason
+
+The 10:43 process reused the Z6-wide single N48 compiler over
+
+`lambda in [-2.35,+1.90]`.
+
+The frozen R10 tension activation functions are not represented faithfully on this hull:
 
 ```text
-Pcr < Pyth
+T max error   ~= 0.704
+T^7 max error ~= 0.796
 ```
 
-Thus Z0–Z5 are primarily material-strength-scale controlled before classical elastic plate buckling, while Z6 remains a buckling/postbuckling-controlled object. This distinction must be retained in later interpretation.
+The decisive point is that these order-one errors occur **inside the actual Z0–Z5 reachable material ranges**, around `lambda~+0.04 to +0.05`, not only in a remote unused part of the wide hull.
+
+Therefore the earlier 8–24% capacity differences cannot be physically interpreted.
+
+## Independent localization checks
+
+### Exact flat q=0 reference
+
+Using the exact scalar R10 target with uniform steel/web caps gives:
+
+```text
+Z0 45.0752 MN   vs Zhou Pyth 44.0449
+Z1 31.0016 MN   vs Zhou Pyth 30.3196
+Z2 51.5421 MN   vs Zhou Pyth 50.6221
+Z3 55.9792 MN   vs Zhou Pyth 54.9488
+Z4 80.7600 MN   vs Zhou Pyth 79.3861
+Z5 15.0251 MN   vs Zhou Pyth 14.6816
+```
+
+Thus the base material/section assembly is healthy at the uniform axial state and does not explain a 20–36% loss.
+
+### q-amplitude sanity
+
+The challenged `A/A0` values are broadly comparable to the classical imperfect-plate estimate `eta/(1-eta)`. Hence an order-of-magnitude error in the generalized q-equilibrium is **not established**.
+
+However, because `A0=a/500=0.004b` in AR2, Z0–Z4 have `A0/tc≈0.17–0.26` and challenged total deflection `A_total/tc≈0.26–0.50`; this geometric sensitivity must be reassessed after the material compiler is repaired.
+
+## Narrow single-N48 precheck
+
+Simply narrowing a single N48 interval is still insufficient. Trial reachable-range errors remain approximately:
+
+```text
+Z0 T~.197  T7~.354
+Z1 T~.121  T7~.274
+Z2 T~.256  T7~.392
+Z3 T~.133  T7~.237
+Z4 T~.170  T7~.214
+Z5 T~.104  T7~.217
+```
+
+So the next fix is not another arbitrary single-interval N48 sweep.
+
+## Current mandatory next gate
+
+```text
+Z0_Z5_AR2_CURRENT_OPERATOR_FIDELITY_REBUILD_ZERO_SPATIAL_INTEGRATION
+```
+
+Requirements:
+- retain original R10 physical material law;
+- retain one complete representative halfwave and Nguyen second-order kinematics;
+- retain General D15 and zero spatial numerical integration;
+- rebuild the material-coordinate analytic representation so the small-positive tension transition is faithfully represented;
+- validate material fidelity before any new Pu solve;
+- only then recompute Z0–Z5 and compare with Zhou/Winter.
 
 ## Current artifacts
 
-- `semantic_v2/10_governance/20260816_1043__NZSCCM__Z0_Z6_AR2_FOUR_EDGE_SSSS_COMPARISON_SCOPE__LOCK.md`
-- `semantic_v2/40_execution/steel_shell/20260816_1043__NZSCCM__Z0_Z5_AR2_SSSS_FULLSECTION_CAPACITY__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260816_1043__NZSCCM__Z0_Z5_AR2_SSSS_FULLSECTION__PARAMS_BRANCH_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260816_1043__NZSCCM__Z0_Z5_AR2_SSSS_ZHOU_WINTER__COMPARISON.csv`
-- `semantic_v2/40_execution/steel_shell/20260816_1043__NZSCCM__Z0_Z5_AR2_SSSS_FULLSECTION__REPRO.py`
-- `semantic_v2/60_validation/steel_shell/20260816_1043__NZSCCM__Z0_Z5_AR2_SSSS_ZHOU_WINTER_COMPARISON__AUDIT.md`
-- `semantic_v2/00_index/20260816_1043__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z6_AR2_SSSS_CAPACITY_MATRIX__SEMANTIC_INDEX.md`
+- `semantic_v2/10_governance/20260816_1054__NZSCCM__Z0_Z5_AR2_RESULT_RETRACTION_AND_COMPILER_FIDELITY_GATE__LOCK.md`
+- `semantic_v2/40_execution/steel_shell/20260816_1054__NZSCCM__Z0_Z5_AR2_DISCREPANCY_LOCALIZATION__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260816_1054__NZSCCM__Z0_Z5_AR2_DISCREPANCY_LOCALIZATION__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260816_1054__NZSCCM__Z0_Z5_AR2_DISCREPANCY_LOCALIZATION__REPRO.py`
+- `semantic_v2/00_index/20260816_1054__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_AR2_COMPILER_FIDELITY_RETRACTION__SEMANTIC_INDEX.md`
 
-## Historical values retained
-
-```text
-Pu=40.97334 MN = RETRACTED / INVALID
-44.552919 MN    = historical reduced q-only audit only
-Z6=51.30 MN     = user-accepted current SSSS full-section result
-```
-
-The modified Z0–Z5 AR2 objects are controlled theory-comparison geometries, not direct reproductions of the original physical tests at their historical aspect ratios.
+Historical 10:43 Z0–Z5 files remain preserved but are superseded as production evidence.
