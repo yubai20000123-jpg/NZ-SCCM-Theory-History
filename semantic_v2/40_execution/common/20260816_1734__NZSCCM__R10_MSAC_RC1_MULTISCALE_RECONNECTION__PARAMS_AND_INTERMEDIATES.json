@@ -1,0 +1,123 @@
+{
+  "timestamp": "2026-08-16T17:34:00+08:00",
+  "gate": "UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE",
+  "candidate": "R10-MSAC-RC1",
+  "status": "MATERIAL_PASS_Z0_Z6_STRUCTURAL_NESTED_D15_OPEN",
+  "formal_structural_counters": {
+    "sampling": 0,
+    "quadrature": 0,
+    "subdomains": 1,
+    "thickness_quadrature": 0
+  },
+  "policy": {
+    "gate_center": "Fraction(s0).limit_denominator(32)",
+    "alpha_g": 30,
+    "tension_landmarks": ["xcr", "10*xcr when inside t-domain"],
+    "tension_center": "Fraction(pos).limit_denominator(32)",
+    "alpha_t": 50,
+    "origin_constraints": ["c(0)=0", "cprime(0)=0", "t(0)=0", "tprime(0)=0", "C(0)=0", "C_c(0)=kappa", "uR(0)=0", "uR_t(0)=kappa", "T7(0)=0", "T7_t(0)=0"],
+    "U": "reassembled, not fitted",
+    "projection_nodes": "8*(N+1) material-coordinate nodes",
+    "gates": {"E_sigma": 0.005, "E_tangent": 0.05, "E_div": 0.05},
+    "ladder": [
+      {"level":"L0","Ng":256,"Nc":10,"Nt":128},
+      {"level":"L1","Ng":384,"Nc":12,"Nt":192},
+      {"level":"L2","Ng":512,"Nc":14,"Nt":256},
+      {"level":"L3","Ng":640,"Nc":14,"Nt":320},
+      {"level":"L4","Ng":768,"Nc":14,"Nt":384},
+      {"level":"L5","Ng":896,"Nc":14,"Nt":448},
+      {"level":"L6","Ng":1024,"Nc":14,"Nt":512},
+      {"level":"L7","Ng":1152,"Nc":16,"Nt":576},
+      {"level":"L8","Ng":1280,"Nc":16,"Nt":640}
+    ],
+    "selection": "first full-2D pass + next-level pass"
+  },
+  "cases": {
+    "Z0": {
+      "core": [-2.326966223778822, 0.3981623553727774],
+      "guard": [-2.4632226527364014, 0.534418784330357],
+      "kappa": 2.000512953368,
+      "convergence": [
+        {"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.006740730356719137,"E_tangent":0.1605128731462088,"E_div":0.03326333420466713,"pass":false},
+        {"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.001962660644106017,"E_tangent":0.07084481239201303,"E_div":0.01064386692526894,"pass":false},
+        {"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.0006261534693062812,"E_tangent":0.031168932215856857,"E_div":0.0051874520538151055,"pass":true},
+        {"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.00019584187268799894,"E_tangent":0.012652171855604267,"E_div":0.0014472433454738413,"pass":true}
+      ],
+      "first_pass": {
+        "level":"L2","Ng":512,"Nc":14,"Nt":256,"coeff_count":1555,
+        "E_sigma":0.0006261534693062812,"E_tangent":0.031168932215856857,"E_div":0.0051874520538151055,
+        "gate":{"p":23,"q":5,"center":0.8214285714285714,"s0":0.821720243881705,"alpha":30},
+        "gate_errors":{"c":3.359052788384862e-05,"t":3.3640144867135143e-05},
+        "cdom":[-4.128297271406542e-05,2.463262965474318],"tdom":[-4.1771076376675855e-05,0.5344521581103419],
+        "lenses":[{"p":3,"q":29,"alpha":50},{"p":29,"q":2,"alpha":50}],
+        "anchors":{"chat0":9.71445146547012e-17,"that0":6.938893903907228e-18,"chd0":-3.617970493501834e-15,"thd0":-1.4471881974007336e-15,"C0":0.0,"u0":5.551115123125783e-17,"T70":0.0,"U0":2.359686640098224e-16,"Ud0":2.000512953368},
+        "naive_gate_degree":14848,"naive_tension_degree":8448,"runtime_s_reference":0.4892512960000204,
+        "coefficient_sha256":{"gate_c":"99027d43537451573b78077e8cb5cd2391bb61db75f45f3734b3000803d6141e","gate_t":"8d9418f9d380b86232853a46ddbe309c71fac345bd819f8de4e1c823f2717290","C":"90b4edbe8fb90d88d80c1f23f032debe2bcd54a1e81905705ef8983b0125f90d","uR":"a71e601ba6256630cc58606b75771b7485b549fc86fb6425a5689e071efec5c6","T7":"b71dfde720b61704d2af6113dd9dcbcb4c5ef1e0d47c86122f1508e052a4b584"},
+        "coefficient_lengths":{"gate_c":513,"gate_t":513,"C":15,"uR":257,"T7":257}
+      },
+      "next_level":{"level":"L3","E_sigma":0.00019584187268799894,"E_tangent":0.012652171855604267,"E_div":0.0014472433454738413,"pass":true},
+      "old_global":{"N":1792,"coeff_count":7172},"reduction":{"N_ratio":3.5,"coeff_ratio":4.6122186495176845}
+    },
+    "Z1": {
+      "core": [-2.2465646933414067, 0.30437677393062584], "guard": [-2.3741117667045084, 0.4319238472937275], "kappa": 2.000512953368,
+      "convergence": [
+        {"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.010512239797117852,"E_tangent":0.20742441708576293,"E_div":0.04043817271673308,"pass":false},
+        {"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.003631316349121617,"E_tangent":0.10774071650645593,"E_div":0.017101772034177093,"pass":false},
+        {"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.0013325512990962685,"E_tangent":0.05496997663022872,"E_div":0.007575276859036721,"pass":false},
+        {"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.0005034137554194982,"E_tangent":0.026679343393648074,"E_div":0.0033291462879351734,"pass":true},
+        {"level":"L4","Ng":768,"Nc":14,"Nt":384,"E_sigma":0.00019336823557382368,"E_tangent":0.012518535142236654,"E_div":0.0014447079879843067,"pass":true}
+      ],
+      "first_pass":{"level":"L3","Ng":640,"Nc":14,"Nt":320,"coeff_count":1939,"E_sigma":0.0005034137554194982,"E_tangent":0.026679343393648074,"E_div":0.0033291462879351734,
+        "gate":{"p":11,"q":2,"center":0.8461538461538461,"s0":0.8460732839102166,"alpha":30},"gate_errors":{"c":2.7439226374102927e-05,"t":2.705715874374811e-05},
+        "cdom":[-3.3259761576868946e-05,2.3741442307541614],"tdom":[-3.319802177032497e-05,0.4319464984367707],"lenses":[{"p":3,"q":23,"alpha":50}],
+        "anchors":{"chat0":1.1102230246251565e-16,"that0":0.0,"chd0":7.396829251554053e-15,"thd0":9.76381461205135e-15,"C0":4.440892098500626e-16,"u0":5.551115123125783e-17,"T70":-2.220446049250313e-16,"U0":-1.664765044298022e-16,"Ud0":2.000512953368},
+        "naive_gate_degree":8960,"naive_tension_degree":8640,"runtime_s_reference":0.28247632000011436,
+        "coefficient_sha256":{"gate_c":"764d983cc6ad9aa300c7e597c6a29f036fc9b8bc84d65c12e0e59088cd7577e1","gate_t":"46e89ae07b43454c5341fd1c164485f70f1b0d64316e783dbdbb2f796ea17c0f","C":"d3bc32838d85e9a61156434406daa05276fb2323dd0224d29f1c87fd55f9879e","uR":"903053570108bad0410e2dde51e47f8d0bf3fcd90a7de606633480daf825c1b9","T7":"43d71ebd926639042997601189658aef0e84032d0cc8c8ac787e4a7c4a82e4ae"},"coefficient_lengths":{"gate_c":641,"gate_t":641,"C":15,"uR":321,"T7":321}},
+      "next_level":{"level":"L4","E_sigma":0.00019336823557382368,"E_tangent":0.012518535142236654,"E_div":0.0014447079879843067,"pass":true},
+      "old_global":{"N":1536,"coeff_count":6148},"reduction":{"N_ratio":2.4,"coeff_ratio":3.1707065497679214}
+    },
+    "Z2": {
+      "core": [-2.326966223778822,0.3981623553727774],"guard":[-2.4632226527364014,0.534418784330357],"kappa":2.000512953368,
+      "convergence":[{"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.006740730356719137,"E_tangent":0.1605128731462088,"E_div":0.03326333420466713,"pass":false},{"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.001962660644106017,"E_tangent":0.07084481239201303,"E_div":0.01064386692526894,"pass":false},{"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.0006261534693062812,"E_tangent":0.031168932215856857,"E_div":0.0051874520538151055,"pass":true},{"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.00019584187268799894,"E_tangent":0.012652171855604267,"E_div":0.0014472433454738413,"pass":true}],
+      "first_pass":{"level":"L2","Ng":512,"Nc":14,"Nt":256,"coeff_count":1555,"E_sigma":0.0006261534693062812,"E_tangent":0.031168932215856857,"E_div":0.0051874520538151055,"gate":{"p":23,"q":5,"center":0.8214285714285714,"s0":0.821720243881705,"alpha":30},"lenses":[{"p":3,"q":29,"alpha":50},{"p":29,"q":2,"alpha":50}],"naive_gate_degree":14848,"naive_tension_degree":8448,"runtime_s_reference":0.2554405770001722},
+      "next_level":{"level":"L3","E_sigma":0.00019584187268799894,"E_tangent":0.012652171855604267,"E_div":0.0014472433454738413,"pass":true},"old_global":{"N":1792,"coeff_count":7172},"reduction":{"N_ratio":3.5,"coeff_ratio":4.6122186495176845}
+    },
+    "Z3": {
+      "core":[-2.241404,0.293969],"guard":[-2.368172,0.420738],"kappa":2.0009130559586734,
+      "convergence":[{"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.00667461818557918,"E_tangent":0.1582652046521512,"E_div":0.02581930496273903,"pass":false},{"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.001970076025350906,"E_tangent":0.07242492684713313,"E_div":0.010651695418384075,"pass":false},{"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.000611033317639766,"E_tangent":0.030263888354298604,"E_div":0.00377824553226825,"pass":true},{"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.00019297416811790664,"E_tangent":0.01246797859746944,"E_div":0.001290136922880604,"pass":true}],
+      "first_pass":{"level":"L2","Ng":512,"Nc":14,"Nt":256,"coeff_count":1555,"E_sigma":0.000611033317639766,"E_tangent":0.030263888354298604,"E_div":0.00377824553226825,"gate":{"p":17,"q":3,"center":0.85,"s0":0.8491389109006744,"alpha":30},"gate_errors":{"c":3.301626176950123e-05,"t":3.319121267207398e-05},"cdom":[-3.897867882710423e-05,2.3682111278236633],"tdom":[-4.11370497988346e-05,0.4207681152796255],"lenses":[{"p":3,"q":22,"alpha":50}],"anchors":{"U0":2.3597941311867585e-16,"Ud0":2.0009130559586734},"naive_gate_degree":10752,"naive_tension_degree":6656,"runtime_s_reference":0.24317857699998058},
+      "next_level":{"level":"L3","E_sigma":0.00019297416811790664,"E_tangent":0.01246797859746944,"E_div":0.001290136922880604,"pass":true},"old_global":{"N":1536,"coeff_count":6148},"reduction":{"N_ratio":3.0,"coeff_ratio":3.9536977491961416}
+    },
+    "Z4": {
+      "core":[-2.385927,0.469962],"guard":[-2.528721,0.612756],"kappa":2.000512953368,
+      "convergence":[{"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.007768984662852011,"E_tangent":0.17427464513841427,"E_div":0.05518739108718284,"pass":false},{"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.00264165668405265,"E_tangent":0.12817224142955265,"E_div":0.0778796818790977,"pass":false},{"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.00074547490329769,"E_tangent":0.03791516797615302,"E_div":0.004674633525358524,"pass":true},{"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.00023910379954172894,"E_tangent":0.015084736629458933,"E_div":0.002580346542823024,"pass":true}],
+      "first_pass":{"level":"L2","Ng":512,"Nc":14,"Nt":256,"coeff_count":1555,"E_sigma":0.00074547490329769,"E_tangent":0.03791516797615302,"E_div":0.004674633525358524,"gate":{"p":25,"q":6,"center":0.8064516129032258,"s0":0.804946526745222,"alpha":30},"gate_errors":{"c":4.070156364970826e-05,"t":4.035229858054886e-05},"cdom":[-4.8377111472817326e-05,2.528770420242141],"tdom":[-5.015970140487908e-05,0.6127984603756801],"lenses":[{"p":2,"q":23,"alpha":50},{"p":22,"q":5,"alpha":50}],"anchors":{"U0":-1.803720888826077e-16,"Ud0":2.000512953368},"naive_gate_degree":16384,"naive_tension_degree":7168,"runtime_s_reference":0.25654661299995496},
+      "next_level":{"level":"L3","E_sigma":0.00023910379954172894,"E_tangent":0.015084736629458933,"E_div":0.002580346542823024,"pass":true},"old_global":{"N":1792,"coeff_count":7172},"reduction":{"N_ratio":3.5,"coeff_ratio":4.6122186495176845}
+    },
+    "Z5": {
+      "core":[-2.980899,1.194486],"guard":[-3.189668,1.403255],"kappa":2.000512953368,
+      "convergence":[{"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.02915755026576059,"E_tangent":0.36547668264959316,"E_div":0.09417981346459361,"pass":false},{"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.013490875946984668,"E_tangent":0.25584684259004147,"E_div":0.05976704775783307,"pass":false},{"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.006826662005389819,"E_tangent":0.1732946125901372,"E_div":0.02989167791687168,"pass":false},{"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.0037179927407556583,"E_tangent":0.11883481545343691,"E_div":0.03488184982468171,"pass":false},{"level":"L4","Ng":768,"Nc":14,"Nt":384,"E_sigma":0.002067163134681669,"E_tangent":0.08476784615671144,"E_div":0.03393838925090874,"pass":false},{"level":"L5","Ng":896,"Nc":14,"Nt":448,"E_sigma":0.0011765984675934846,"E_tangent":0.05588774106320821,"E_div":0.03110745647413875,"pass":false},{"level":"L6","Ng":1024,"Nc":14,"Nt":512,"E_sigma":0.0006489587355593626,"E_tangent":0.0360840198641615,"E_div":0.022103735643776445,"pass":true},{"level":"L7","Ng":1152,"Nc":16,"Nt":576,"E_sigma":0.00038732441174978507,"E_tangent":0.026800645111625918,"E_div":0.01747684601450898,"pass":true}],
+      "first_pass":{"level":"L6","Ng":1024,"Nc":14,"Nt":512,"coeff_count":3091,"E_sigma":0.0006489587355593626,"E_tangent":0.0360840198641615,"E_div":0.022103735643776445,"gate":{"p":16,"q":7,"center":0.6956521739130435,"s0":0.6944745209096691,"alpha":30},"gate_errors":{"c":3.2015604901842955e-05,"t":3.143141946363858e-05},"cdom":[-3.906748466557562e-05,3.1897066462075823],"tdom":[-3.881014763638631e-05,1.4032907442370717],"lenses":[{"p":1,"q":27,"alpha":50},{"p":5,"q":9,"alpha":50}],"anchors":{"U0":-1.5269481850493927e-16,"Ud0":2.000512953368},"naive_gate_degree":24576,"naive_tension_degree":14848,"runtime_s_reference":0.5090586110000004},
+      "next_level":{"level":"L7","E_sigma":0.00038732441174978507,"E_tangent":0.026800645111625918,"E_div":0.01747684601450898,"pass":true},"old_global":{"N":3072,"coeff_count":12292},"reduction":{"N_ratio":3.0,"coeff_ratio":3.9767065674538986}
+    },
+    "Z6": {
+      "core":[-2.768805,2.128027],"guard":[-3.013646,2.372868],"kappa":2.000512953368,
+      "convergence":[{"level":"L0","Ng":256,"Nc":10,"Nt":128,"E_sigma":0.04034870116702611,"E_tangent":0.4144661001233957,"E_div":0.10151758509707914,"pass":false},{"level":"L1","Ng":384,"Nc":12,"Nt":192,"E_sigma":0.020463922985343995,"E_tangent":0.31107171044340635,"E_div":0.07754823582804928,"pass":false},{"level":"L2","Ng":512,"Nc":14,"Nt":256,"E_sigma":0.011079027313110395,"E_tangent":0.21754728114314074,"E_div":0.03958286319995897,"pass":false},{"level":"L3","Ng":640,"Nc":14,"Nt":320,"E_sigma":0.006373159357221682,"E_tangent":0.1552035958666849,"E_div":0.028011154835579453,"pass":false},{"level":"L4","Ng":768,"Nc":14,"Nt":384,"E_sigma":0.0038260322402875594,"E_tangent":0.11194291614426025,"E_div":0.027322683540866514,"pass":false},{"level":"L5","Ng":896,"Nc":14,"Nt":448,"E_sigma":0.002324952915961723,"E_tangent":0.0800694073876446,"E_div":0.023526813129224253,"pass":false},{"level":"L6","Ng":1024,"Nc":14,"Nt":512,"E_sigma":0.001397854312527696,"E_tangent":0.05454763574724759,"E_div":0.018181836884227914,"pass":false},{"level":"L7","Ng":1152,"Nc":16,"Nt":576,"E_sigma":0.0008861082735399669,"E_tangent":0.03745407650158463,"E_div":0.014228105116197562,"pass":true},{"level":"L8","Ng":1280,"Nc":16,"Nt":640,"E_sigma":0.0005445909124589685,"E_tangent":0.02839015881166599,"E_div":0.009567875517887278,"pass":true}],
+      "first_pass":{"level":"L7","Ng":1152,"Nc":16,"Nt":576,"coeff_count":3477,"E_sigma":0.0008861082735399669,"E_tangent":0.03745407650158463,"E_div":0.014228105116197562,"gate":{"p":14,"q":11,"center":0.56,"s0":0.5594798416935332,"alpha":30},"gate_errors":{"c":4.312947954189018e-05,"t":4.595388858163823e-05},"cdom":[-5.3476864135124155e-05,3.013698423291551],"tdom":[-5.711168437707065e-05,2.3729235931049653],"lenses":[{"p":1,"q":31,"alpha":50},{"p":4,"q":15,"alpha":50}],"anchors":{"chat0":-7.632783294297951e-17,"that0":4.85722573273506e-17,"chd0":-2.7680766037315077e-14,"thd0":-2.675162144305555e-14,"C0":2.220446049250313e-16,"u0":1.1102230246251565e-16,"T70":4.440892098500626e-16,"U0":-3.6088655092514354e-16,"Ud0":2.000512953368},"naive_gate_degree":29952,"naive_tension_degree":19008,"runtime_s_reference":0.6963511009998911,
+        "coefficient_sha256":{"gate_c":"f4e741c47aac411f6048f21fb81533e8f1123035f153db1157f391d3a581f9f3","gate_t":"73fd7aadd16f772d4caedd102e35f6d2acef60acebfded7148877261a6b16a2b","C":"d99b15908d111ff3b4f70ab840636a31993a95a2a6570251714866fc94bed8a9","uR":"dce08084de05ec3b716a151973cce9b6123b9cd06f4af800f41cd2ff44acf1e2","T7":"fb7ebd0b54e6383ce6d5a25159b6cde7c12d7f49ffdad7875c874cc195b589c5"},"coefficient_lengths":{"gate_c":1153,"gate_t":1153,"C":17,"uR":577,"T7":577}},
+      "next_level":{"level":"L8","E_sigma":0.0005445909124589685,"E_tangent":0.02839015881166599,"E_div":0.009567875517887278,"pass":true},"old_global":{"N":3840,"coeff_count":15364},"reduction":{"N_ratio":3.3333333333333335,"coeff_ratio":4.418751797526603}
+    }
+  },
+  "aggregate": {
+    "all_cases_first_pass": true,
+    "all_cases_next_level_pass": true,
+    "max_first_pass_outer_order": 1152,
+    "max_first_pass_coeff_count": 3477,
+    "max_first_pass_E_sigma": 0.0008861082735399669,
+    "max_first_pass_E_tangent": 0.03791516797615302,
+    "max_first_pass_E_divided_difference": 0.022103735643776445,
+    "min_coeff_count_reduction_ratio_vs_old_global": 3.1707065497679214,
+    "max_coeff_count_reduction_ratio_vs_old_global": 4.6122186495176845
+  },
+  "next_gate": "UNIFIED_V1_R10_MSAC_RC1_NESTED_CLENSHAW_QNM_D15_CONTRACTION_GATE"
+}
