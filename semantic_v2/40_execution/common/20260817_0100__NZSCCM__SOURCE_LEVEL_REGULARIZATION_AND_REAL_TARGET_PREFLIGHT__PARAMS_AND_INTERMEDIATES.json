@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-08-17T01:00:00+08:00",
+  "status": "EXECUTED_PARTIAL_PASS",
+  "boundary_correction": {
+    "Z6": "FOUR_EDGE_SIMPLY_SUPPORTED_SSSS"
+  },
+  "formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "prototype_affine_pencil": {
+    "E11": "1/5+x/3",
+    "E12": "1/7+x/5",
+    "E22": "-1/4+2*x/7"
+  },
+  "apparent_pole": {
+    "x_exact": "21/260",
+    "x_decimal": 0.08076923076923077,
+    "discriminant_factor": "(260*x-21)^2*(28624*x^2+47880*x+50121)/31116960000",
+    "E_at_x": [["59/260", "1447/9100"], ["1447/9100", "-59/260"]],
+    "prototype_eta": "1/400",
+    "prototype_M_scalar_exact": "4069473/52998400",
+    "prototype_R_scalar_decimal": 0.27710075327665487,
+    "prototype_sylvester_eigenvalue": 0.5542015065533097,
+    "prototype_sylvester_cond2": 1.0,
+    "prototype_Rprime": [[0.387740640083909, 0.177616576255538], [0.177616576255538, -0.119209228565276]],
+    "old_combination_limit_exact": "29577184/61042095",
+    "old_combination_limit_decimal": 0.48453749826246953
+  },
+  "case21_material": {
+    "fc_MPa": 21.23,
+    "E0_MPa": 20321.0,
+    "eps0": 0.00209,
+    "nu": 0.18,
+    "rho": 0.1,
+    "kappa_exact": "386099/193000",
+    "kappa": 2.0005129533678756,
+    "a": 0.04998717945397424,
+    "eta_exact": "965/386099",
+    "eta": 0.002499358972698712,
+    "R_at_prototype_xstar_scalar": 0.2771007474940549,
+    "sylvester_eigenvalue_at_prototype_xstar": 0.5542014949881098,
+    "lambda1": 0.050080517649137544,
+    "lambda10": 0.499881166745393
+  },
+  "prototype_true_knot_crossings_using_case21_material": {
+    "lambda1_inside_root": -0.46672607504899004,
+    "lambda1_other_root": 2.536593945254842,
+    "lambda10_inside_root": 0.5655380435733645,
+    "lambda10_other_root": 6.545199169952592
+  },
+  "source_spline": {
+    "rho": 0.1,
+    "H": 0.09799750427197301,
+    "UR": 0.03,
+    "A3": -0.5809077931212661,
+    "A4": -0.7698071056793392,
+    "A5": -0.28799193489407166,
+    "B3": 0.0009327504015359809,
+    "B4": 0.00015545840025599682,
+    "B5": 0.000006909262233599859,
+    "C2_jump_z1": [0, 0, 0],
+    "C2_jump_z10": [0, 0, 0]
+  },
+  "real_target_preflight": {
+    "target": "Yc=det(C)*Cyy",
+    "stress_context": "Syy=Uyy-ACC*det(C)*Cyy+...",
+    "prototype_kappa": 2.0,
+    "prototype_eta": 0.0025,
+    "algebraic_basis": ["1", "q", "s", "q*s"],
+    "field_support": 4,
+    "field_dimension": 4,
+    "target_characteristic_polynomial_degree_Y": 4,
+    "characteristic_polynomial_build_seconds": 0.9,
+    "charpoly_coefficient_operation_counts": [0, 230, 473, 464, 455],
+    "audit_period_integral_minus1_plus1": 0.03256204357343014,
+    "audit_only": true
+  },
+  "fail_fast": {
+    "explicit_target_derivative_rational_swell": "order_3_exceeded_60s_in_direct_canonicalization_attempt",
+    "charpoly_to_scalar_annihilator_route_A": "P_x conversion_plus_modular_inverse_exceeded_60s",
+    "charpoly_to_scalar_annihilator_route_B": "coefficientwise_Qx_modular_inverse_exceeded_60s",
+    "actual_case21_kappa_expanded_field_inverse": "explicit_canonicalization_exceeded_60s",
+    "decision": "DO_NOT_ESCALATE_TIMEOUT_OR_HIGH_ORDER_ENUMERATION"
+  },
+  "selected_representation": {
+    "smooth_matrix_sqrt": "SOURCE_LEVEL_PRINCIPAL_MATRIX_SQRT_PLUS_SYLVESTER_FRECHET",
+    "spline_positive_part": "PROJECTOR_FREE_DPLUS_POWER",
+    "T7": "2X2_CAYLEY_HAMILTON",
+    "target": "FACTORISED_ALGEBRAIC_PERIOD_DESCRIPTOR",
+    "explicit_64_rational_coefficient_canonicalization": false,
+    "high_order_series_enumeration": false
+  },
+  "new_Pu": null
+}
