@@ -4,67 +4,79 @@
 
 - R10 physical current material target remains **CURRENT_SUPPORT / FROZEN**.
 - R10 material physics is not reopened.
-- The previous Z6-wide single `N48-C1/MM` representation is **not valid for Z0–Z5 AR2 production** after the 2026-08-16 stocky-panel fidelity audit.
+- Material compiler order is restored and locked at **48 for every primitive** by explicit user instruction.
 
-## Current Z0–Z5 material representation candidate
+Current order-level identity:
 
-Source-only fidelity gate passed for:
+```text
+MATERIAL_COMPILER_ORDER = 48
+U  = N48-C1
+C  = N48-C1
+T7 = N48-C1
+T  = N48-C1-CONSTRAINED-MINIMAX
+```
+
+No future change of polynomial order is permitted without explicit user authorization.
+
+## 2026-08-16 order restoration
+
+Current governance:
+
+- `../10_governance/20260816_1131__NZSCCM__N48_ORDER_RESTORATION_AND_MULTIRATE_RETRACTION__LOCK.md`
+
+The 11:10 multirate candidate
 
 `R10-MR-C1(256,1024,1280,512)`
 
-with
+is **RETRACTED_FROM_CURRENT_PRODUCTION** and retained only as historical diagnostic evidence that the source transition can be approximated accurately when approximation capacity is increased. It has no current production identity.
+
+## Retained source-fidelity problem
+
+The fixed order restoration does not revive the old Z6-wide N48 coefficient set for Z0–Z5.
+
+The 10:54 audit established that on the wide interval `[-2.35,+1.90]`, inside the actually occupied Z0–Z5 small-positive tension region, the current wide-hull representation had approximately
 
 ```text
-guard material interval = [-1.50,+0.35]
-operational fidelity core = [-1.40,+0.30]
-U degree=256
-C degree=1024
-T degree=1280
-T7 degree=512
+T error   ~= .704
+T7 error  ~= .796
 ```
 
-Each primitive remains one global finite Chebyshev polynomial. `MR` means different finite polynomial orders for different source primitives; it does **not** mean material zones, spatial cells, piecewise structural integration, or material-point states.
-
-Exact R10 C1 anchors at `lambda=0` are retained. On the operational core, the unchanged R10 current master reconstructed from the multirate primitives has approximately
+Therefore:
 
 ```text
-max spectral stress-scalar error = 4.22e-4
-max tangent error / source peak tangent = 2.82%
+REUSE_Z6_WIDE_N48_COMPILER_FOR_Z0_Z5 = PROHIBITED
 ```
 
-The rejected Z6-wide N48 representation on the same core was approximately
+The required repair space is now strictly:
 
 ```text
-max spectral stress-scalar error = .7185
-max tangent error / source peak tangent = 81.5%
+fixed degree 48
++ unchanged R10 source law
++ exact C1 anchors
++ improved source-only coefficient-generation / analytic representation
++ Cayley-Hamilton compatibility
++ General-D15 compatibility
++ zero structural spatial integration
 ```
 
-Current artifact:
-
-- `20260816_1110__NZSCCM__NC_MATERIAL__R10_MULTIRATE_C1_SOURCE_FIDELITY__THEORY.md`
-
-## Production-status boundary
+## Current production-status boundary
 
 ```text
-R10_MR_C1_SOURCE_FIDELITY = PASS
-CAYLEY_HAMILTON_FORMAL_COMPATIBILITY = PASS
-GENERAL_D15_FORMAL_COMPATIBILITY = PASS
-VARIABLE_ORDER_STRUCTURAL_D15_BACKEND = NOT_YET_EXECUTED
+FIXED_N48_ORDER = ACTIVE
+R10_PHYSICAL_OPERATOR = FROZEN
+OLD_Z6_WIDE_N48_Z0_Z5_COEFFICIENT_SET = INVALID
+1110_MULTIRATE_ORDER_ESCALATION = HISTORICAL_DIAGNOSTIC_ONLY
 NEW_Z0_Z5_Pu = NOT_CALCULATED
 ```
 
-The existing structural execution code assumes N48-style fixed recurrence, so the new material compiler is **not yet a released Z0–Z5 production structural backend**.
+Current next gate:
 
-Unique next compiler/structure gate:
+`Z0_Z5_AR2_FIXED_N48_CURRENT_OPERATOR_FIDELITY_REBUILD_ZERO_SPATIAL_INTEGRATION`
 
-`Z0_Z5_AR2_MULTIRATE_R10_TO_VARIABLE_ORDER_MOMENT_FIRST_D15_RECOMPILE_GATE`
-
-The blind structural solution must also re-certify that the continuous reachable principal spectrum stays inside `[-1.40,+0.30]`; otherwise the material guard/core must be rebuilt before a Pu is accepted.
-
-## Historical compiler-fidelity review
+## Historical compiler-fidelity support
 
 - `20260813_1719__NZSCCM__NC_MATERIAL__VALUE_TANGENT_BALANCED_MINIMAX_AND_REACHABLE_SPECTRUM__COMPILER_AUDIT.md`
+- `20260812_TUNK__NZSCCM__NC_MATERIAL__N48C1_T_CONSTRAINED_MINIMAX__GOVERNANCE.md`
+- `20260812_TUNK__NZSCCM__NC_MATERIAL__T_CONSTRAINED_MINIMAX_BOUNDARY_LAYER__AUDIT.md`
 
-That audit introduced a source-only balanced-minimax candidate and the non-calibrating reachable-spectrum self-consistency concept. It remains historical support for the present fidelity governance; it is not itself the current Z0–Z5 production compiler.
-
-Older direct-N48, global-energy, rational/PF1 and other compiler routes remain semantic history/rejected branches and do not become current merely because files remain in the repository.
+These may inform a fixed-N48 coefficient-generation repair, but they do not authorize a change of order.
