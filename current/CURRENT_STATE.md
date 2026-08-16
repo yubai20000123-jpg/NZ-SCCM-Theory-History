@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 17:12 +08:00  
+**Updated:** 2026-08-16 17:20 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide production backbone
 
@@ -28,72 +28,102 @@ Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter calibration in solve/compiler = PROHIBITED
 ```
 
-## 17:12 correction — unified workflow does not mean identical numerical boundaries/domains
+## Unified workflow clarification retained
 
-The project had previously already established that method unification applies to the **calculation rules**, not to every numerical input/boundary/domain value.
+Unified workflow means one governing rule set, not identical numerical boundary/domain values for all specimens.
 
-For specimen `i`, physical/source boundary, halfwave selector, geometry and material parameters may differ. Under one common reachability rule they may therefore generate different material-coordinate domains:
+For specimen `i`, a common source/design-side reachability rule generates
 
 \[
 \Lambda_i=\mathcal B(\text{geometry}_i,\text{physical boundary}_i,\text{halfwave}_i,\theta_{m,i},\text{declared generalized-coordinate bounds}).
 \]
 
-Then the same material-family compiler policy and source-value/tangent/divided-difference gates are applied on `Lambda_i`.
+The same material-family compiler policy and source-value/tangent/divided-difference gates are then applied on `Lambda_i`.
 
 ```text
-UNIFIED_WORKFLOW != ONE_IDENTICAL_DOMAIN_FOR_ALL_SPECIMENS
-UNIFIED_WORKFLOW != ONE_IDENTICAL_BOUNDARY_INPUT_FOR_ALL_SPECIMENS
-UNIFIED_WORKFLOW != ONE_IDENTICAL_HALFWAVE_LENGTH_FOR_ALL_SPECIMENS
+same rule + different specimen parameters -> different domains/orders = ALLOWED
+case label / Pu error / experiment -> special domain/order = PROHIBITED
 ```
 
-Allowed:
+## 17:20 parameter-derived-domain gate — executed
+
+For the current Zhou AR2 Z0-Z6 set:
 
 ```text
-same domain-generation rule + different specimen parameters -> different domains
-same convergence rule + different derived domains -> different converged orders
+boundary = theoretical four-edge SSSS/Navier
+m*=2
+ell=b
+q0=.004
+D in [0,2]
+q_post=(tc/b)*sqrt(max(Pyth/Pcr-1,0)/kp)
+kp=3*(1-nu^2)/8
+q_max=1.25*max(q0,q_post)
 ```
 
-Prohibited:
+`D_max=2` and the 25% amplitude/domain guards are project-level source/design-side search-envelope rules, not capacity calibration. If a future connected branch hits a declared generalized-coordinate bound before a valid first limit point, the same bound-expansion rule is rerun and the compiler/domain is regenerated before acceptance.
+
+The continuous material spectrum is bounded analytically, with no spatial sampling, using the rank-one positive membrane structure plus the bounded bending operator.
+
+Generated certified cores:
 
 ```text
-case label -> manually selected special interval/order
-observed Pu error -> change interval/order
-experiment/Zhou/Winter -> select compiler domain/order
-Z6-only fallback solver
+Z0 [-2.326966,+.398162]
+Z1 [-2.246565,+.304377]
+Z2 [-2.326966,+.398162]
+Z3 [-2.241404,+.293969]
+Z4 [-2.385927,+.469962]
+Z5 [-2.980899,+1.194486]
+Z6 [-2.768805,+2.128027]
 ```
 
-For the Zhou Z-series, the theoretical four-edge simply-supported/Navier source boundary remains the current boundary model; `m*`, `ell=a/m*`, strain reachability and resulting compiler domain may still vary with specimen geometry/parameters under the common selector.
+All previously stored diagnostic/engineering envelopes lie inside these domains; those old states were checked only after generation and did not generate the bounds.
 
-## NC source and recent diagnostics
+## Same baseline compiler convergence on each derived domain
 
-R10 remains frozen and unchanged.
-
-The former family-wide wide-domain screen:
+The former wide single-global-lambda Chebyshev grammar was retained only as a common baseline screen:
 
 ```text
-core=[-2.35,+1.90]
-guard=[-2.60,+2.15]
-N=3584
-E_sigma=.00107218
-E_tangent=.04066517
-E_divided_difference=.00381386
+channels=U,C,T,T7
+M=8*(N+1) material-coordinate projection nodes
+exact C1 zero anchors
+E_sigma<=.005
+E_tangent<=.05
+E_divided_difference<=.05
+same order sequence for every specimen
 ```
 
-remains a valid conservative source-representability witness only. It is **not** a mandatory identical production interval for Z0-Z6.
-
-The 13:55 intrinsic-scale result and 14:17 exact-Pi closure test remain diagnostic evidence:
+First passing orders:
 
 ```text
-N3584_AS_PRODUCTION_BASIS = REJECTED
+Z0 N=1792
+Z1 N=1536
+Z2 N=1792
+Z3 N=1536
+Z4 N=1792
+Z5 N=3072
+Z6 N=3840
+```
+
+Hence:
+
+```text
+PARAMETER_DERIVED_DOMAIN_RULE = PASS
+OLD_IDENTICAL_FAMILY_WIDE_PRODUCTION_DOMAIN = RETIRED
+N3584_FAMILY_WIDE_RESULT = RETAINED_DIAGNOSTIC_ONLY
+SINGLE_GLOBAL_LAMBDA_POLYNOMIAL_LOW_COMPLEXITY = FAIL
+R10_PHYSICAL_OPERATOR = UNCHANGED
+```
+
+The governance correction was necessary but does not by itself make one-global-lambda polynomial compilation a low-order theory. The persistent Z5/Z6 order confirms that the next step must address representation architecture, not force identical domains and not immediately modify R10 physics.
+
+## Retained exact-Pi diagnostic
+
+The 14:17 exact-`Pi_eta` elliptic-period result remains mathematically valid, but it is not the current mandatory next route.
+
+```text
 EXACT_PI_MATRIX_LIFT = PASS
 EXACT_PI_TO_EXISTING_GENERAL_D15 = FAIL
-```
-
-But the previous conclusion that the next task must regularize `Pi_eta` is cancelled, because that conclusion followed an over-strict family-wide fixed-domain interpretation.
-
-```text
-PI_REGULARIZATION_AS_CURRENT_MANDATORY_NEXT_TASK = CANCELLED
-R10_MATERIAL_CHANGE = NOT_AUTHORIZED / NOT_EXECUTED
+PI_REGULARIZATION_AS_MANDATORY_NEXT_TASK = CANCELLED
 ```
 
 ## Capacity-result status
@@ -111,22 +141,24 @@ SAME_STATE_KZ = NOT COMPLETED
 ## Current unique next gate
 
 ```text
-UNIFIED_V1_PARAMETER_DERIVED_MATERIAL_DOMAIN_AND_COMPILER_GATE
+UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE
 ```
 
 Required next work:
 
-1. derive one analytic/closed specimen-parameter reachability-domain rule;
-2. use geometry, physical/source boundary, halfwave and material parameters plus declared generalized-coordinate admissibility/search bounds only;
-3. apply the same rule to Z0-Z6 and preserve each resulting domain/guard;
-4. apply the same R10 compiler grammar and source stress/tangent/divided-difference convergence gates to each derived domain;
-5. allow numerical interval/order differences only as deterministic consequences of the same rule;
-6. retain all common mechanics and zero-spatial-integration constraints;
-7. only after this gate determine whether any particular derived domain still requires intrinsic-factor or Pi-specific treatment.
+1. keep the corrected specimen-derived domains/source-side domain rule;
+2. reconnect the historical R5/MSAC/source-landmark multiscale compiler and G26 moment-first contraction lessons;
+3. build one common NC multiscale analytic compiler policy whose numerical coefficients/orders may vary only through the same specimen-derived domain and source landmarks;
+4. retain source stress/tangent/divided-difference gates;
+5. retain zero formal spatial/thickness numerical integration and General-D15 compatibility;
+6. do not use case labels, experiment, Zhou/Winter or desired Pu to choose maps/orders;
+7. do not modify R10 or Pi_eta unless this corrected multiscale compiler gate independently fails.
 
 ## Current key artifacts
 
-- `semantic_v2/10_governance/20260816_1712__NZSCCM__UNIFIED_WORKFLOW_PARAMETER_DERIVED_DOMAIN_BOUNDARY__CORRECTION_LOCK.md`
-- `semantic_v2/00_index/20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md`
-- `semantic_v2/20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md` — updated with 17:12 clarification
-- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__EXECUTION_REPORT.md` — retained diagnostic predecessor
+- `semantic_v2/10_governance/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER_GATE__LOCK.md`
+- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_GLOBAL_COMPILER__AUDIT.md`
+- `semantic_v2/00_index/20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
