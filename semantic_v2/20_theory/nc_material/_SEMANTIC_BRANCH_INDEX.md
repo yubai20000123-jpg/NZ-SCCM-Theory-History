@@ -3,12 +3,12 @@
 ## Current material target
 
 - R10 physical current material target remains **CURRENT_SUPPORT / FROZEN**.
-- R10 material physics is not reopened by the 14:17 adapter gate.
 - Governing project workflow is `UNIFIED_PRODUCTION_WORKFLOW_V1`.
+- The 17:12/17:20 correction restores specimen-parameter-derived compiler domains under one common NC rule.
 
 ## Retained source-fidelity evidence
 
-The former wide single-global lambda-space screen remains useful only as a source-representability witness:
+The former family-wide single-global lambda-space screen remains only a source-representability witness:
 
 ```text
 core = [-2.35,+1.90]
@@ -19,100 +19,101 @@ E_tangent = .04066517
 E_divided_difference = .00381386
 ```
 
-The N3584 coefficient-tensor structural realization failed common tractability at the wide-spectrum Z6 state. N3584 is therefore not the desired NC production grammar.
+It is not a mandatory identical production interval for every NC specimen.
 
-## 13:55 intrinsic-scale result
+## 13:55 intrinsic-scale diagnostic retained
 
-The scale ratios are
+R10 remains substantially lower-complexity in natural material coordinates. The prior material-only exact-Pi factor screen using
 
 ```text
-eta=.0024993589727
-core_width/eta=1700.436
-guard_width/eta=1900.487
+C(c): N_C=6
+u_R(t): N_u=64
 ```
 
-The global-order pressure localizes mainly to the narrow `Pi_eta` sign-split layer.
-
-In natural coordinates:
+used 72 fitted scalar coefficients and gave
 
 ```text
-C(c), N=6: derivative error / peak ~=3.8826%
-u_R(t), N=64: derivative error / peak ~=3.5857%
-```
-
-A material-only factor screen with exact `Pi_eta`, `N_C=6`, `N_u=64`, and the unchanged R10 2D current master gives
-
-```text
-72 fitted scalar coefficients
 E_sigma=.003337
 E_tangent=.030469
 E_divided_difference=.046869
 ```
 
-and passes the existing source-material gates.
+This remains diagnostic evidence, not a production D15 compiler.
 
-## 14:17 exact Pi -> existing D15 closure test
+## 14:17 exact-Pi diagnostic retained but demoted from next task
 
-Current governance:
-
-- `../../10_governance/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER_GATE__LOCK.md`
-
-Execution / validation:
-
-- `../../40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__REPRO.py`
-- `../../60_validation/common/20260816_1417__NZSCCM__R10_EXACT_PI_TO_GENERAL_D15_CLOSURE__AUDIT.md`
-
-Exact identities:
-
-\[
-\Pi(z)+\Pi(-z)=z^2/\sqrt{z^2+\eta^2},
-\qquad
-\Pi(z)-\Pi(-z)=z^3/(z^2+\eta^2).
-\]
-
-For the traceless finite-trigonometric field
-
-\[
-X(\xi)=\beta\sin\xi\,\mathrm{diag}(1,-1),
-\]
-
-the exact spectral lift produces the exact trace moment
-
-\[
-J=2\eta[E(-m)-K(-m)],\qquad m=(\beta/\eta)^2,
-\]
-
-where `K,E` are complete elliptic integrals.
-
-The currently approved General-D15 moment algebra is a finite Beta/Gamma closure of finite trigonometric/thickness powers. It therefore does not close exact `Pi_eta` even in this simple admissible special case.
-
-Current verdict:
+Exact `Pi_eta` leaves the current finite Beta/Gamma General-D15 moment class even in a simple admissible trigonometric witness. Therefore:
 
 ```text
-R10_PHYSICAL_OPERATOR = UNCHANGED
-N3584_SOURCE_FIDELITY_WITNESS = RETAINED
-N3584_GLOBAL_LAMBDA_COMPILER_AS_PRODUCTION = REJECTED
-LOW_COMPLEXITY_INTRINSIC_FACTOR_SCREEN = MATERIAL_ONLY PASS DIAGNOSTIC
 EXACT_PI_MATRIX_LIFT = PASS
 EXACT_PI_TO_EXISTING_GENERAL_D15 = FAIL
-NEW_SPECIAL_FUNCTION_STRUCTURAL_BACKEND = NOT_AUTHORIZED
 ```
 
-The failure is not a timeout and does not prove every conceivable special-function backend impossible. It establishes that exact `Pi_eta` is outside the existing D15 finite moment class.
+This mathematical result remains valid. However `Pi_eta` regularization is **not** the current mandatory next step after restoring parameter-derived specimen domains.
+
+## 17:20 parameter-derived domain/compiler gate
+
+Current governance/execution:
+
+- `../../10_governance/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER_GATE__LOCK.md`
+- `../../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__REPRO.py`
+- `../../60_validation/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_GLOBAL_COMPILER__AUDIT.md`
+
+One common analytic/source-side domain rule gives:
+
+```text
+Z0 [-2.326966,+.398162]
+Z1 [-2.246565,+.304377]
+Z2 [-2.326966,+.398162]
+Z3 [-2.241404,+.293969]
+Z4 [-2.385927,+.469962]
+Z5 [-2.980899,+1.194486]
+Z6 [-2.768805,+2.128027]
+```
+
+Applying the same baseline single-global-lambda source-fidelity convergence policy gives:
+
+```text
+Z0 N=1792
+Z1 N=1536
+Z2 N=1792
+Z3 N=1536
+Z4 N=1792
+Z5 N=3072
+Z6 N=3840
+```
+
+Hence:
+
+```text
+PARAMETER_DERIVED_DOMAIN_RULE = PASS
+IDENTICAL_FAMILY_WIDE_DOMAIN_REQUIREMENT = RETIRED
+SINGLE_GLOBAL_LAMBDA_POLYNOMIAL_LOW_COMPLEXITY = FAIL
+R10_PHYSICAL_OPERATOR = UNCHANGED
+```
+
+This establishes that the old fixed family-wide interval was an over-constraint, but it was not the sole reason for high order.
 
 ## Meaning of “same NC method”
 
-All NC specimens still share one family-level representation policy and the same downstream mechanics:
+All NC specimens share the same source operator, domain-generation law, compiler architecture/convergence policy and downstream mechanics. Numerical domains/orders may differ only as deterministic consequences of specimen parameters.
 
 ```text
-NC+REBAR -> SAME_NC_FAMILY_METHOD
-NC+SHELL -> SAME_NC_FAMILY_METHOD
-Z0-Z6    -> SAME_NC_FAMILY_METHOD
+NC+REBAR -> SAME_NC_RULE_SET
+NC+SHELL -> SAME_NC_RULE_SET
+Z0-Z6    -> SAME_NC_RULE_SET
 ```
 
-A case ID may not select a special interval/order/fallback solver.
+Not allowed:
+
+```text
+case label -> manually selected interval/order
+observed Pu error -> compiler change
+experiment/Zhou/Winter -> domain/order selection
+Z6-only fallback solver
+```
 
 ## Common mechanics inherited by every NC specimen
 
@@ -133,19 +134,14 @@ SAME_STATE_MATERIAL_PLUS_GEOMETRIC_KZ
 ```text
 Z6 51.30 MN = RETAINED ENGINEERING BASELINE ONLY
 Z0-Z5 10:43 Pu = RETRACTED
-Z0-Z5 12:48 N3584 values = DIAGNOSTIC LOCATORS ONLY
+Z0-Z5 12:48 values = DIAGNOSTIC LOCATORS ONLY
 NEW Z0-Z6 PRODUCTION Pu = NOT RELEASED
 ```
 
 ## Current next gate
 
 ```text
-UNIFIED_V1_R10_PI_D15_COMPATIBLE_LOW_PARAMETER_REGULARIZATION_DECISION_GATE
+UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE
 ```
 
-The next step must explicitly decide whether to:
-
-1. create/approve a new exact special-function structural moment family; or
-2. retain General-D15 and screen a small D15-compatible smooth sign-split material regularization.
-
-No replacement splitter, `eta`, transition width or R10 knot is frozen yet. Any material candidate must be judged by source stress/tangent/work/shape and D15 compatibility before any structural `Pu` comparison.
+The next task must reconnect the earlier R5/MSAC/source-landmark multiscale compiler and G26 moment-first contraction lessons **on the corrected specimen-derived domains**. It must remain one common NC algorithm, source-controlled, General-D15 compatible and zero-spatial-integration. R10 or `Pi_eta` must not be modified unless that corrected multiscale route independently fails.
