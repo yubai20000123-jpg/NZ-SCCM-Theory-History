@@ -6,7 +6,7 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md`
+`20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md`
 
 ## Current locked production backbone
 
@@ -16,11 +16,11 @@ ONE_CONTINUOUS_COMPLETE_HALFWAVE
 Nguyen second-order continuous kinematics
 MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
 source current material operator
-same-state consistent current tangent
+same-state current stress + consistent current tangent
 Cayley-Hamilton / approved finite matrix lift
 moment-first General-D15 exact structural moments
 P,Rq,L connected-branch primary limit root
-same-state material + geometric tangent/stability audit
+same-state material + geometric KZ audit
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
@@ -28,13 +28,13 @@ N_formal_thickness_quadrature = 0
 structural calibration = NO
 ```
 
-The same workflow serves NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ; the common mechanics may not change case by case.
+The same workflow serves NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ; the parent kinematics, membrane redistribution, zero-integration philosophy, generalized root topology and consistent-current-tangent requirement may not change case by case.
 
-## NC representation status after 13:55 diagnosis
+## NC representation status
 
-R10 physical material equations remain frozen.
+The ordinary-concrete source remains frozen R10.
 
-The earlier wide-global N3584 source screen remains valid evidence:
+The former wide single-global lambda-space `N=3584` result is retained only as a source-fidelity witness:
 
 ```text
 E_sigma=.00107218
@@ -42,25 +42,9 @@ E_tangent=.04066517
 E_divided_difference=.00381386
 ```
 
-but N3584 is no longer the preferred production representation basis.
+It is no longer the intended production representation.
 
-Historical reconnection plus a new intrinsic-scale audit established:
-
-```text
-core/eta  = 1700.436
-guard/eta = 1900.487
-N3584 C/T derivative-error maxima localize at lambda≈±.0028-.0029
-Pi_eta alone remains difficult for one wide global lambda polynomial
-```
-
-In intrinsic source coordinates:
-
-```text
-C(c), N=6 -> derivative error / peak ≈3.88%
-u_R(t), N=64 -> derivative error / peak ≈3.59%
-```
-
-A material-only exact-Pi factor screen with `N_C=6,N_u=64` passes the same assembled source gates:
+The 13:55 intrinsic-coordinate material screen retained exact `Pi_eta` and used `N_C=6`, `N_u=64`, giving 72 fitted scalar coefficients and
 
 ```text
 E_sigma=.003337
@@ -68,18 +52,35 @@ E_tangent=.030469
 E_divided_difference=.046869
 ```
 
-using 72 fitted scalar coefficients rather than 14340 in four N3584 channels.
+which passes the material gates.
 
-This screen is not production because exact `Pi_eta` has not yet been contracted through the formal zero-spatial exact-moment backend.
+## 14:17 exact Pi adapter result
 
-Therefore:
+Exact algebra gives
 
 ```text
-R10_PHYSICS = UNCHANGED
-N3584_SOURCE_FIDELITY_WITNESS = RETAINED
-N3584_NEXT_PRODUCTION_BASIS = REJECTED
-LOW_COMPLEXITY_INTRINSIC_FACTOR_SCREEN = MATERIAL_ONLY PASS DIAGNOSTIC
+Pi(z)+Pi(-z)=z^2/sqrt(z^2+eta^2)
+Pi(z)-Pi(-z)=z^3/(z^2+eta^2)
 ```
+
+For a simple traceless finite-trigonometric matrix field, exact spectral lifting already requires a moment
+
+```text
+J=2*eta*[E(-m)-K(-m)]
+```
+
+with complete elliptic integrals.
+
+Therefore exact `Pi_eta` is outside the currently approved finite Beta/Gamma General-D15 closure algebra.
+
+```text
+EXACT_PI_MATRIX_LIFT = PASS
+EXACT_PI_TO_EXISTING_GENERAL_D15_FINITE_MOMENT_CLOSURE = FAIL
+NEW_SPECIAL_FUNCTION_STRUCTURAL_BACKEND = NOT_AUTHORIZED
+R10_MATERIAL_CHANGE = NOT_EXECUTED
+```
+
+This does not prove every possible exact special-function backend impossible; it establishes that the current General-D15 engine cannot absorb exact `Pi_eta` without leaving its finite moment class.
 
 ## Capacity status
 
@@ -93,20 +94,22 @@ new Z0-Z6 production Pu = not released
 
 ## Current next gate
 
-`UNIFIED_V1_R10_INTRINSIC_SCALE_FACTORIZED_PI_ADAPTER_GATE`
+```text
+UNIFIED_V1_R10_PI_D15_COMPATIBLE_LOW_PARAMETER_REGULARIZATION_DECISION_GATE
+```
 
-The next task is to preserve exact R10 while connecting its intrinsic factor graph, especially `Pi_eta`, to General-D15 or another already-approved zero-spatial exact-moment contraction. No case-specific compiler/order/domain, Z6-only fallback, material-width change or structural-response calibration is authorized.
+No new splitter is frozen yet. The next decision must compare a deliberately new special-function moment backend against a low-parameter D15-compatible material splitter, using material/source criteria only and no structural calibration.
 
 ## Repository semantic read order
 
-1. `20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION_AND_INTRINSIC_SCALE__LOCK.md`
-3. `../40_execution/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION__EXECUTION_REPORT.md`
-4. `../40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__PARAMS_AND_INTERMEDIATES.json`
-5. `../40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__REPRO.py`
-6. `../60_validation/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_CAUSE_AND_INTRINSIC_FACTOR_SCREEN__AUDIT.md`
-7. `20260816_1248__NZSCCM__PROJECT__CURRENT_STATE_N3584_COMMON_BACKEND_TRACTABILITY_FAIL__SEMANTIC_INDEX.md` — predecessor
+1. `20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER_GATE__LOCK.md`
+3. `../40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__EXECUTION_REPORT.md`
+4. `../40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__PARAMS_AND_INTERMEDIATES.json`
+5. `../40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__REPRO.py`
+6. `../60_validation/common/20260816_1417__NZSCCM__R10_EXACT_PI_TO_GENERAL_D15_CLOSURE__AUDIT.md`
+7. `20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md` — predecessor
 8. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
-9. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 engineering baseline
+9. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 baseline
 
 No legacy file is deleted, moved or renamed solely from filename identity.
