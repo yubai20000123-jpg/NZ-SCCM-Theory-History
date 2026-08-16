@@ -2,27 +2,25 @@
 
 This namespace is the **content-first, non-destructive semantic reconstruction** of the repository.
 
-A legacy path or filename is a locator only. It does not confer current/superseded/rejected identity.
-
 ## Current operational entry
 
 Use first:
 
-`20260816_1217__NZSCCM__PROJECT__CURRENT_STATE_UNIFIED_PRODUCTION_WORKFLOW_V1__SEMANTIC_INDEX.md`
+`20260816_1229__NZSCCM__PROJECT__CURRENT_STATE_NC_FAMILY_COMPILER_SOURCE_FREEZE_PASS__SEMANTIC_INDEX.md`
 
 ## Current locked production backbone
 
 ```text
+UNIFIED_PRODUCTION_WORKFLOW_V1
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
-source/design-side boundary + halfwave selector
 Nguyen second-order continuous kinematics
 MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
 source current material operator
-material-family finite analytic compiler under common interface
+same-state consistent current tangent
 Cayley-Hamilton / approved finite matrix lift
 moment-first General-D15 exact structural moments
 P,Rq,L connected-branch primary limit root
-same-state consistent material + geometric tangent/stability audit
+same-state material + geometric tangent/stability audit
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
@@ -30,94 +28,73 @@ N_formal_thickness_quadrature = 0
 structural calibration = NO
 ```
 
-## Unified method, legitimate adapters
+## Unified method / physical adapters
 
-The same workflow contract serves:
+The same workflow serves NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Source material laws and steel-phase geometry may differ physically, but they may not replace the common kinematics, membrane redistribution, exact-moment engine, generalized root topology, consistent-tangent rule or zero-spatial-integration governance.
 
-```text
-NC + rebar
-NC + steel shell
-UHPC + rebar
-UHPC + steel shell
-```
+## NC family compiler source freeze
 
-Common mechanics may not change case by case. Genuine physical adapters may differ:
-
-- NC versus UHPC source current operator;
-- rebar versus finite-thickness shell steel phase;
-- source-grounded shell local amplitudes, exactly condensed when active;
-- physical boundary/halfwave formula if a different real specimen boundary requires it;
-- material-family analytic basis/order if required by the source operator.
-
-A case ID, experiment, Zhou/Winter value, desired Pu or error sign may not select any of those adapters or tune the compiler/root.
-
-## Material compiler governance
-
-The project is not hard-locked to N48.
+The frozen ordinary-concrete source remains R10.
 
 ```text
-POLYNOMIAL_ORDER_IS_NOT_A_THEORY_IDENTITY
-CASE_BY_CASE_MANUAL_ORDER_TUNING = PROHIBITED
-SAME_COMPILER_INTERFACE_AND_SOURCE_FIDELITY_GOVERNANCE = REQUIRED
-FAMILY_COMPILER_FREEZE = REQUIRED
+operational core = [-2.35,+1.90]
+coefficient guard = [-2.60,+2.15]
+channels = U,C,T,T7
+one global Chebyshev polynomial per channel
+same order for all channels
+M=8*(N+1)
+exact C1 at lambda=0
+E_sigma <= 0.5%
+E_tangent <= 5%
+E_divided_difference <= 5%
 ```
 
-NC+rebar and NC+shell must share one frozen NC material compiler. UHPC+rebar and UHPC+shell must share one frozen UHPC material compiler after its source operator is frozen.
+The deterministic order ladder reaches its first passing candidate at
 
-The 11:34 N48 result remains a representation-capacity diagnostic, not a project-wide order lock.
+```text
+N_NC = 3584
+```
 
-## Z6 / Z0-Z5 status
+Reference assembled-current audit:
+
+```text
+E_sigma = 0.107218%
+E_tangent = 4.06652%
+E_divided_difference = 0.381386%
+```
+
+The same frozen order/core/guard/algorithm passes the current Swartz R10 kappa extrema.
+
+```text
+NC_FAMILY_SOURCE_COMPILER_FREEZE = PASS
+N3584_CH_D15_STRUCTURAL_BACKEND = NOT_YET_EXECUTED
+NEW_Z0_Z6_UNIFIED_RESULTS = NOT_CALCULATED
+```
+
+The earlier N48 and ad hoc multirate calculations remain historical diagnostics only.
+
+## Capacity status
 
 ```text
 Z6 51.30 MN = retained user-accepted engineering baseline; unified rerun required
 Z0-Z5 10:43 values = retracted pending unified rerun
 ```
 
-Z0-Z5 are computationally solvable. They exposed a source-material compiler fidelity problem that had not been used as a rejection gate for Z6. Z6 therefore must be rerun together with Z0-Z5 after the NC family compiler is frozen.
-
-## Mandatory intermediate record
-
-Every production run must preserve:
-
-- input/source record;
-- boundary/halfwave selection;
-- compiler identity/domain/value+tangent fidelity;
-- `D,q` and active finite internal amplitudes;
-- material envelope;
-- phase `P` and `Rq` decomposition;
-- `P_D,P_q,Rq_D,Rq_q,L` or exact condensed equivalents;
-- internal residual/condensation conditioning;
-- current material/geometric `KZ` decomposition;
-- branch peak bracket;
-- formal spatial/thickness counters.
-
-Schema:
-`../40_execution/common/20260816_1217__NZSCCM__UNIFIED_WORKFLOW_V1__INTERMEDIATE_STATE_SCHEMA_AND_CURRENT_BASELINE.json`
-
 ## Current next gate
 
-`UNIFIED_PRODUCTION_WORKFLOW_V1_IMPLEMENTATION_AND_NC_FAMILY_COMPILER_FREEZE`
+`UNIFIED_V1_N3584_CH_MOMENT_FIRST_D15_BACKEND_AND_Z0_Z6_RERUN_GATE`
 
 ## Repository semantic read order
 
-1. `20260816_1217__NZSCCM__PROJECT__CURRENT_STATE_UNIFIED_PRODUCTION_WORKFLOW_V1__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_COMMON_INVARIANTS_AND_TYPE_ADAPTERS__LOCK.md`
-3. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
-4. `../40_execution/common/20260816_1217__NZSCCM__UNIFIED_WORKFLOW_V1__INTERMEDIATE_STATE_SCHEMA_AND_CURRENT_BASELINE.json`
-5. `../60_validation/common/20260816_1217__NZSCCM__UNIFIED_WORKFLOW_V1__COMMON_VS_TYPE_SPECIFIC_MATRIX__AUDIT.md`
-6. `../60_validation/steel_shell/20260816_1205__NZSCCM__Z6_VS_Z0_Z5_CALCULABILITY_AND_COMPILER_CONSISTENCY__AUDIT.md`
-7. `../10_governance/20260816_1152__NZSCCM__UNIFIED_COMPILER_WORKFLOW_ACROSS_NC_UHPC_REBAR_SHELL__LOCK.md` — earlier common-workflow step; superseded where V1 permits explicit physical adapter differences
-8. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 baseline
-9. `20260816_1134__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_FIXED_N48_REPRESENTATION_CAPACITY_FAIL__SEMANTIC_INDEX.md` — retained N48 representation-capacity diagnostic
-
-## Audit levels
-
-- `A_DIRECT_CONTENT_AUDIT`: file body opened/read; identity derived from content + chronology.
-- `B_CONTENT_DERIVED_REGISTRY_OR_LEDGER`: stable source/history role derived from a content-read registry/ledger; open the leaf before using it for a technical claim.
-- `C_NOT_YET_DIRECT_CONTENT_AUDITED`: locator known, semantic identity not yet asserted beyond family/locator role.
-
-## Canonical naming
-
-`YYYYMMDD_HHMM__NZSCCM__<SCOPE>__<SPECIFIC_CONTENT>__<ARTIFACT_KIND>.<ext>`
+1. `20260816_1229__NZSCCM__PROJECT__CURRENT_STATE_NC_FAMILY_COMPILER_SOURCE_FREEZE_PASS__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_SOURCE_FIDELITY_AND_ORDER_FREEZE__LOCK.md`
+3. `../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__EXECUTION_REPORT.md`
+4. `../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__PARAMS_AND_INTERMEDIATES.json`
+5. `../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__REPRO.py`
+6. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
+7. `20260816_1217__NZSCCM__PROJECT__CURRENT_STATE_UNIFIED_PRODUCTION_WORKFLOW_V1__SEMANTIC_INDEX.md`
+8. `../60_validation/steel_shell/20260816_1205__NZSCCM__Z6_VS_Z0_Z5_CALCULABILITY_AND_COMPILER_CONSISTENCY__AUDIT.md`
+9. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 baseline
+10. `20260816_1134__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_FIXED_N48_REPRESENTATION_CAPACITY_FAIL__SEMANTIC_INDEX.md` — retained representation-capacity diagnostic
 
 No legacy file is deleted, moved or renamed solely from filename identity.
