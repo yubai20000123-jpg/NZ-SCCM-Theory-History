@@ -4,42 +4,37 @@
 
 - R10 physical current material target remains **CURRENT_SUPPORT / FROZEN**.
 - R10 material physics is not reopened.
-- Material compiler order is locked at **48 for every primitive** by explicit user instruction.
+- The governing project requirement is a **universal compiler workflow**, not a hard N48 order.
 
-Current hard order identity:
+Current governance:
+
+- `../10_governance/20260816_1152__NZSCCM__UNIFIED_COMPILER_WORKFLOW_ACROSS_NC_UHPC_REBAR_SHELL__LOCK.md`
+- `../20260816_1152__NZSCCM__UNIFIED_CURRENT_OPERATOR_COMPILER_AND_D15_PRODUCTION_ARCHITECTURE__THEORY.md`
+
+## Order/status correction
+
+The earlier 11:31 fixed-N48 hard lock is superseded as project-wide governance.
 
 ```text
-MATERIAL_COMPILER_ORDER = 48
-U_ORDER  = 48
-C_ORDER  = 48
-T_ORDER  = 48
-T7_ORDER = 48
+POLYNOMIAL_ORDER_IS_NOT_A_THEORY_IDENTITY
+CASE_BY_CASE_MANUAL_ORDER_TUNING = PROHIBITED
+UNIVERSAL_ORDER_SELECTION_ALGORITHM = REQUIRED
 ```
 
-No future order change is permitted without explicit user authorization.
+A numerical compiler order may change only as the output of the same deterministic source-only fidelity/convergence procedure. It may not be selected from a specimen's Pu, experiment, Zhou/Winter comparison or error sign.
 
-## Historical order escalation — not current
+Once an NC compiler/order/domain is frozen, it must be reused for **all NC specimens**, whether the steel phase is reinforcement or steel shell.
 
-The 11:10 multirate candidate
+```text
+NC+REBAR  -> SAME_NC_COMPILER
+NC+SHELL  -> SAME_NC_COMPILER
+```
 
-`R10-MR-C1(256,1024,1280,512)`
+## Retained representation-capacity evidence
 
-is **RETRACTED_FROM_CURRENT_PRODUCTION / HISTORICAL_DIAGNOSTIC_ONLY**.
+The 10:54 audit established that the old Z6-wide N48 coefficient set is invalid for Z0-Z5. The 11:34 gate established that simply regenerating coefficients inside one single global degree-48 C1 polynomial per primitive is still insufficient for the broad NC transition range.
 
-It does not define the current compiler.
-
-## 2026-08-16 11:34 fixed-N48 representation-capacity result
-
-Current governance / theory:
-
-- `../10_governance/20260816_1134__NZSCCM__Z0_Z5_FIXED_N48_FIDELITY_REBUILD__LOCK.md`
-- `20260816_1134__NZSCCM__NC_MATERIAL__FIXED_N48_REPRESENTATION_CAPACITY__THEORY.md`
-
-The 10:54 finding that the old Z6-wide N48 coefficient set is invalid remains active. The 11:34 gate then tested whether that defect can be repaired **only by regenerating coefficients inside one global degree-48 Chebyshev polynomial per primitive**.
-
-For each conservative Z0–Z5 source interval, a source-only degree-48 constrained minimax problem with exact R10 C1 anchors was solved.
-
-Best found T maximum value errors remain approximately:
+Representative best-found fixed-N48 T errors remained approximately:
 
 ```text
 Z0 .19812
@@ -50,47 +45,31 @@ Z4 .17144
 Z5 .10580
 ```
 
-Even on the challenged occupied ranges with no conservative margin, T errors remain about `.0655–.1968`.
+This remains valid evidence about N48 representation capacity. Its consequence is **not** a special Z0-Z5 compiler and **not** a permanent hard N48 rule.
 
-The unchanged R10 current-master stress error after separate value-minimax fitting remains approximately `.116–.285`; keeping U/C/T7 exact and replacing only T still leaves `.106–.257` error.
-
-Therefore:
-
-```text
-FIXED_N48_ORDER = ACTIVE / RETAINED
-SINGLE_GLOBAL_N48_COEFFICIENT_ONLY_REPAIR = FAIL_REPRESENTATION_CAPACITY
-R10_PHYSICAL_OPERATOR = FROZEN
-OLD_Z6_WIDE_N48_Z0_Z5_COEFFICIENT_SET = INVALID
-NEW_Z0_Z5_Pu = NOT_CALCULATED
-```
-
-The failure is not coefficient blow-up: C1 anchors remain at roundoff and coefficient magnitudes remain O(1). The controlling issue is the narrow small-positive R10 tensile transition relative to the broad compression-to-tension material interval.
+The 11:10 higher-order/multirate experiment remains historical diagnostic evidence only; its ad hoc orders are not current production because they were not produced by the universal order-selection contract.
 
 ## Current required repair space
 
-The next gate is strictly:
+Current next gate:
 
-`Z0_Z5_AR2_FIXED_N48_MULTISCALE_ANALYTIC_REPRESENTATION_GATE`
+`UNIFIED_CURRENT_OPERATOR_ANALYTIC_COMPILER_ARCHITECTURE_NC_UHPC_REBAR_SHELL_GATE`
 
-It must retain:
+For NC, this gate must:
 
 ```text
-fixed order ceiling = 48
-unchanged R10 source law
-source-only representation design
-exact C1 behavior
-Cayley-Hamilton compatibility
-moment-first General-D15 compatibility
-zero structural spatial integration
-no experiment / Zhou / Winter / desired Pu in representation design
+keep R10 source law unchanged
+use the project-wide compiler architecture
+use the project-wide value+tangent fidelity contract
+use the project-wide deterministic order/domain convergence rule
+freeze one NC compiler for all NC+rebar and NC+shell cases
+retain Cayley-Hamilton + moment-first General-D15
+retain zero formal structural spatial integration
 ```
-
-A weighting, node-density or least-squares change inside the same single-global N48 polynomial form is no longer sufficient evidence of a repair.
 
 ## Historical compiler-fidelity support
 
 - `20260813_1719__NZSCCM__NC_MATERIAL__VALUE_TANGENT_BALANCED_MINIMAX_AND_REACHABLE_SPECTRUM__COMPILER_AUDIT.md`
 - `20260812_TUNK__NZSCCM__NC_MATERIAL__N48C1_T_CONSTRAINED_MINIMAX__GOVERNANCE.md`
 - `20260812_TUNK__NZSCCM__NC_MATERIAL__T_CONSTRAINED_MINIMAX_BOUNDARY_LAYER__AUDIT.md`
-
-These remain useful evidence about fixed-N48 source fidelity and value/tangent trade-offs, but they do not authorize a change of order.
+- `20260816_1134__NZSCCM__NC_MATERIAL__FIXED_N48_REPRESENTATION_CAPACITY__THEORY.md`
