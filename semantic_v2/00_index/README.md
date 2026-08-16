@@ -6,7 +6,7 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md`
+`20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
 
 ## Current locked production backbone
 
@@ -28,29 +28,50 @@ N_formal_thickness_quadrature = 0
 structural calibration = NO
 ```
 
-## 17:12 unification clarification
+## Unified workflow means unified rules, not identical numerical domains
 
-The project unifies the **workflow and governing rules**, not every specimen's numerical interval, physical/source boundary input, or halfwave length.
-
-For each specimen, a common source-side reachability rule derives its material-coordinate validity domain from geometry, boundary, selected complete halfwave, material parameters, and declared generalized-coordinate admissibility/search bounds. The same material-family compiler policy and source stress/tangent gates are then applied on that domain.
+The 17:12 correction is now executed. Each specimen receives a material-coordinate validity domain from one common source/design-side reachability rule using its geometry, physical boundary, selected complete halfwave, material parameters and declared generalized-coordinate bounds. The same material-family compiler policy and source stress/tangent gates are then applied.
 
 ```text
 same rule + different specimen parameters -> different domains/orders = ALLOWED
 case ID / Pu error / experiment -> special domain/order = PROHIBITED
 ```
 
-The earlier `[-2.35,+1.90]` NC interval remains a conservative audit/source-fidelity envelope; it is not a mandatory identical production interval for all Z0-Z6 specimens.
+## 17:20 parameter-derived-domain result
 
-## Retained recent diagnostics
-
-The N3584 result remains a source-representability witness, not the desired production grammar. The intrinsic-scale audit remains evidence that R10 is much lower-complexity in natural coordinates. The exact-Pi elliptic-period closure failure remains a valid mathematical diagnostic, but `Pi_eta` regularization is **not** the mandatory next task after restoring parameter-derived domains.
+Generated Z0-Z6 cores:
 
 ```text
-R10_PHYSICAL_OPERATOR = UNCHANGED
-N3584_AS_PRODUCTION_BASIS = REJECTED
-EXACT_PI_EXISTING_D15_FAIL = RETAINED_DIAGNOSTIC
-PI_REGULARIZATION_AS_MANDATORY_NEXT_TASK = CANCELLED
+Z0 [-2.326966,+.398162]
+Z1 [-2.246565,+.304377]
+Z2 [-2.326966,+.398162]
+Z3 [-2.241404,+.293969]
+Z4 [-2.385927,+.469962]
+Z5 [-2.980899,+1.194486]
+Z6 [-2.768805,+2.128027]
 ```
+
+Applying the same baseline single-global-lambda R10 convergence screen on each domain gives:
+
+```text
+Z0 N=1792
+Z1 N=1536
+Z2 N=1792
+Z3 N=1536
+Z4 N=1792
+Z5 N=3072
+Z6 N=3840
+```
+
+Therefore the former identical family-wide interval requirement is retired, but one global lambda polynomial remains too high-order to be the desired production grammar.
+
+```text
+PARAMETER_DERIVED_DOMAIN_RULE = PASS
+SINGLE_GLOBAL_LAMBDA_POLYNOMIAL_LOW_COMPLEXITY = FAIL
+R10_PHYSICAL_OPERATOR = UNCHANGED
+```
+
+The exact-Pi elliptic-period audit remains diagnostic only; Pi regularization is not the mandatory next task.
 
 ## Capacity status
 
@@ -65,18 +86,20 @@ new Z0-Z6 production Pu = not released
 ## Current next gate
 
 ```text
-UNIFIED_V1_PARAMETER_DERIVED_MATERIAL_DOMAIN_AND_COMPILER_GATE
+UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE
 ```
 
-First derive specimen/source-parameter-controlled domains under one common analytic rule; then apply one common NC compiler/convergence policy. Only after that gate should any remaining intrinsic-factor or Pi-specific difficulty be reconsidered.
+The next step reconnects the historical R5/MSAC/source-landmark multiscale analytic compiler and moment-first contraction lessons on the corrected specimen-derived domains. No R10 material-law change is authorized before that gate is tested.
 
 ## Repository semantic read order
 
-1. `20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_1712__NZSCCM__UNIFIED_WORKFLOW_PARAMETER_DERIVED_DOMAIN_BOUNDARY__CORRECTION_LOCK.md`
-3. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md` — updated with 17:12 clarification
-4. `20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md` — retained diagnostic predecessor
-5. `20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md` — retained diagnostic predecessor
-6. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 baseline
+1. `20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER_GATE__LOCK.md`
+3. `../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md`
+4. `../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__PARAMS_AND_INTERMEDIATES.json`
+5. `../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__REPRO.py`
+6. `../60_validation/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_GLOBAL_COMPILER__AUDIT.md`
+7. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
+8. `20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md` — governance predecessor
 
 No legacy file is deleted, moved or renamed solely from filename identity.
