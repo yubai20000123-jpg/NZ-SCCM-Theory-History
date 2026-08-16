@@ -1,18 +1,17 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 14:17 +08:00  
+**Updated:** 2026-08-16 17:12 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide production backbone
 
 ```text
 UNIFIED_PRODUCTION_WORKFLOW_V1 = ACTIVE
 ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
-THEORETICAL FOUR-EDGE SSSS/NAVIER for Zhou Z-series
 Nguyen second-order continuous kinematics = ACTIVE
 MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
 source current material operator = REQUIRED
@@ -29,129 +28,73 @@ Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter calibration in solve/compiler = PROHIBITED
 ```
 
-The same parent workflow governs NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ; common kinematics, membrane redistribution, exact-moment philosophy, connected-root topology and tangent consistency may not change case by case.
+## 17:12 correction — unified workflow does not mean identical numerical boundaries/domains
 
-## NC source identity
+The project had previously already established that method unification applies to the **calculation rules**, not to every numerical input/boundary/domain value.
 
-The ordinary-concrete physical current operator remains frozen R10.
+For specimen `i`, physical/source boundary, halfwave selector, geometry and material parameters may differ. Under one common reachability rule they may therefore generate different material-coordinate domains:
+
+\[
+\Lambda_i=\mathcal B(\text{geometry}_i,\text{physical boundary}_i,\text{halfwave}_i,\theta_{m,i},\text{declared generalized-coordinate bounds}).
+\]
+
+Then the same material-family compiler policy and source-value/tangent/divided-difference gates are applied on `Lambda_i`.
 
 ```text
-kappa = 2.0005129533678754
-rho   = .1
-xcr   = .04998717945397425
-eta   = .0024993589726987125
-h     = .09799750427197301
-ur    = .03
+UNIFIED_WORKFLOW != ONE_IDENTICAL_DOMAIN_FOR_ALL_SPECIMENS
+UNIFIED_WORKFLOW != ONE_IDENTICAL_BOUNDARY_INPUT_FOR_ALL_SPECIMENS
+UNIFIED_WORKFLOW != ONE_IDENTICAL_HALFWAVE_LENGTH_FOR_ALL_SPECIMENS
 ```
 
-No R10 material parameter is changed by the current gate.
-
-## Retained 12:29 / 12:48 evidence
-
-The wide single-global lambda-space screen established a source-fidelity witness at `N=3584`:
+Allowed:
 
 ```text
-core  = [-2.35,+1.90]
-guard = [-2.60,+2.15]
-E_sigma = .00107218
-E_tangent = .04066517
-E_divided_difference = .00381386
+same domain-generation rule + different specimen parameters -> different domains
+same convergence rule + different derived domains -> different converged orders
 ```
 
-The order-agnostic backward CH/Clenshaw identity also passed against the historical N48 forward recurrence at roundoff scale.
-
-However the N3584 giant coefficient-tensor realization failed common tractability at the wide-spectrum Z6 state, and coefficient-threshold pruning was not production-certified.
-
-Therefore:
+Prohibited:
 
 ```text
-N3584_SOURCE_FIDELITY_WITNESS = RETAINED
+case label -> manually selected special interval/order
+observed Pu error -> change interval/order
+experiment/Zhou/Winter -> select compiler domain/order
+Z6-only fallback solver
+```
+
+For the Zhou Z-series, the theoretical four-edge simply-supported/Navier source boundary remains the current boundary model; `m*`, `ell=a/m*`, strain reachability and resulting compiler domain may still vary with specimen geometry/parameters under the common selector.
+
+## NC source and recent diagnostics
+
+R10 remains frozen and unchanged.
+
+The former family-wide wide-domain screen:
+
+```text
+core=[-2.35,+1.90]
+guard=[-2.60,+2.15]
+N=3584
+E_sigma=.00107218
+E_tangent=.04066517
+E_divided_difference=.00381386
+```
+
+remains a valid conservative source-representability witness only. It is **not** a mandatory identical production interval for Z0-Z6.
+
+The 13:55 intrinsic-scale result and 14:17 exact-Pi closure test remain diagnostic evidence:
+
+```text
 N3584_AS_PRODUCTION_BASIS = REJECTED
-```
-
-## 13:55 intrinsic-scale diagnosis retained
-
-The current R10 scale separation is approximately
-
-```text
-core width / eta  = 1700.436
-guard width / eta = 1900.487
-```
-
-The main global-order pressure was localized to the narrow `Pi_eta` sign-split layer. The R10 tensile scalar itself is two local quintics plus a constant branch.
-
-A material-only intrinsic-coordinate screen retaining exact `Pi_eta` and using
-
-```text
-C(c): N_C=6
-u_R(t): N_u=64
-```
-
-then rebuilding `T,T7,U` and the same 2D current master gave
-
-```text
-fitted scalar coefficients = 72
-E_sigma = .003337
-E_tangent = .030469
-E_divided_difference = .046869
-```
-
-and passed the existing material gates.
-
-This demonstrated that thousands-order complexity is a representation-coordinate artifact rather than an intrinsic requirement of the R10 material law.
-
-## 14:17 exact Pi -> existing General-D15 adapter gate
-
-The exact scalar identities are
-
-\[
-\Pi_\eta(z)+\Pi_\eta(-z)=\frac{z^2}{\sqrt{z^2+\eta^2}},
-\]
-
-\[
-\Pi_\eta(z)-\Pi_\eta(-z)=\frac{z^3}{z^2+\eta^2}.
-\]
-
-For the traceless finite-trigonometric field
-
-\[
-\mathbf X(\xi)=\beta\sin\xi\,\mathrm{diag}(1,-1),
-\]
-
-the exact 2x2 spectral lift is
-
-\[
-\Pi_\eta(\mathbf X)=
-\frac{r^2}{2\sqrt{r^2+\eta^2}}\mathbf I
-+\frac{r^2}{2(r^2+\eta^2)}\mathbf X,
-\qquad r=\beta\sin\xi.
-\]
-
-Even its trace requires
-
-\[
-J(\beta,\eta)=
-\int_0^\pi\frac{\beta^2\sin^2\xi}{\sqrt{\eta^2+\beta^2\sin^2\xi}}d\xi
-=2\eta\,[E(-m)-K(-m)],
-\quad m=(\beta/\eta)^2,
-\]
-
-where `K,E` are complete elliptic integrals.
-
-The current General-D15 S5 closure is a finite Beta/Gamma moment algebra for finite trigonometric/thickness powers. It contains no elliptic primitive family.
-
-Hence:
-
-```text
 EXACT_PI_MATRIX_LIFT = PASS
-EXACT_PI_TO_EXISTING_GENERAL_D15_FINITE_MOMENT_CLOSURE = FAIL
-SPECIAL_FUNCTION_STRUCTURAL_BACKEND = NOT_AUTHORIZED
-R10_MATERIAL_CHANGE = NOT_EXECUTED
+EXACT_PI_TO_EXISTING_GENERAL_D15 = FAIL
 ```
 
-This is a moment-algebra closure result, not a numerical timeout and not a claim that every conceivable special-function backend is mathematically impossible.
+But the previous conclusion that the next task must regularize `Pi_eta` is cancelled, because that conclusion followed an over-strict family-wide fixed-domain interpretation.
 
-Historical consistency: opening a new elliptic/Appell/Lauricella/Picard-Fuchs structural moment family would revisit the earlier algebraic-period complexity route that failed the project complexity gate. It is not activated automatically.
+```text
+PI_REGULARIZATION_AS_CURRENT_MANDATORY_NEXT_TASK = CANCELLED
+R10_MATERIAL_CHANGE = NOT_AUTHORIZED / NOT_EXECUTED
+```
 
 ## Capacity-result status
 
@@ -165,46 +108,25 @@ SAME_EXPRESSION_L = NOT COMPLETED
 SAME_STATE_KZ = NOT COMPLETED
 ```
 
-## Mandatory intermediate-state record
-
-Every future production run must preserve at least:
-
-1. specimen/source inputs;
-2. boundary and halfwave selection;
-3. material family/operator identity and representation contract;
-4. source value/tangent/divided-difference errors;
-5. `D,q,A=q*b` and any source-grounded finite internal amplitudes;
-6. continuous principal/invariant material envelope;
-7. phase `P` and `Rq` decompositions;
-8. `P_D,P_q,Rq_D,Rq_q,L` or exact condensed equivalents;
-9. same-state material/geometric `KZ` phase decomposition;
-10. branch/peak bracket;
-11. formal spatial/thickness counters;
-12. exact-moment closure/conditioning diagnostics.
-
 ## Current unique next gate
 
 ```text
-UNIFIED_V1_R10_PI_D15_COMPATIBLE_LOW_PARAMETER_REGULARIZATION_DECISION_GATE
+UNIFIED_V1_PARAMETER_DERIVED_MATERIAL_DOMAIN_AND_COMPILER_GATE
 ```
 
-The next gate is material-level and must explicitly decide the representation philosophy after exact `Pi_eta` failed existing-D15 closure.
+Required next work:
 
-It may compare only source-controlled options:
-
-```text
-A. deliberately open a new exact special-function structural moment backend;
-B. retain General-D15 and screen a very small D15-compatible smooth sign-split replacement.
-```
-
-No replacement `Pi`, `eta`, transition width or knot is authorized yet. Any material candidate must be selected from source stress/tangent/work/shape criteria only, not from Z0-Z6 `Pu`, experiment, Zhou or Winter.
+1. derive one analytic/closed specimen-parameter reachability-domain rule;
+2. use geometry, physical/source boundary, halfwave and material parameters plus declared generalized-coordinate admissibility/search bounds only;
+3. apply the same rule to Z0-Z6 and preserve each resulting domain/guard;
+4. apply the same R10 compiler grammar and source stress/tangent/divided-difference convergence gates to each derived domain;
+5. allow numerical interval/order differences only as deterministic consequences of the same rule;
+6. retain all common mechanics and zero-spatial-integration constraints;
+7. only after this gate determine whether any particular derived domain still requires intrinsic-factor or Pi-specific treatment.
 
 ## Current key artifacts
 
-- `semantic_v2/10_governance/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER_GATE__LOCK.md`
-- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_1417__NZSCCM__R10_EXACT_PI_TO_GENERAL_D15_CLOSURE__AUDIT.md`
-- `semantic_v2/00_index/20260816_1417__NZSCCM__PROJECT__CURRENT_STATE_R10_EXACT_PI_EXISTING_D15_ADAPTER_FAIL__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION__EXECUTION_REPORT.md` — predecessor
+- `semantic_v2/10_governance/20260816_1712__NZSCCM__UNIFIED_WORKFLOW_PARAMETER_DERIVED_DOMAIN_BOUNDARY__CORRECTION_LOCK.md`
+- `semantic_v2/00_index/20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md`
+- `semantic_v2/20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md` — updated with 17:12 clarification
+- `semantic_v2/40_execution/common/20260816_1417__NZSCCM__R10_FACTORIZED_PI_EXISTING_D15_ADAPTER__EXECUTION_REPORT.md` — retained diagnostic predecessor
