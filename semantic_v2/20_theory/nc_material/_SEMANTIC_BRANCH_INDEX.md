@@ -4,115 +4,118 @@
 
 - R10 physical current material target remains **CURRENT_SUPPORT / FROZEN**.
 - Governing project workflow is `UNIFIED_PRODUCTION_WORKFLOW_V1`.
-- The 17:12/17:20 correction restores specimen-parameter-derived compiler domains under one common NC rule.
+- Production material domains are specimen-parameter-derived under one common source/design-side rule.
 
-## Retained source-fidelity evidence
+## Retained global-polynomial diagnostics
 
-The former family-wide single-global lambda-space screen remains only a source-representability witness:
+The earlier family-wide/global-lambda screens remain useful as source-representability diagnostics, not as the desired NC production grammar.
 
-```text
-core = [-2.35,+1.90]
-guard = [-2.60,+2.15]
-N_source_witness = 3584
-E_sigma = .00107218
-E_tangent = .04066517
-E_divided_difference = .00381386
-```
-
-It is not a mandatory identical production interval for every NC specimen.
-
-## 13:55 intrinsic-scale diagnostic retained
-
-R10 remains substantially lower-complexity in natural material coordinates. The prior material-only exact-Pi factor screen using
+On the corrected specimen-derived domains, the first passing single-global-lambda orders were:
 
 ```text
-C(c): N_C=6
-u_R(t): N_u=64
+Z0 1792
+Z1 1536
+Z2 1792
+Z3 1536
+Z4 1792
+Z5 3072
+Z6 3840
 ```
 
-used 72 fitted scalar coefficients and gave
+Thus the fixed common-domain governance error was corrected, but one global lambda polynomial remained too high-order.
 
-```text
-E_sigma=.003337
-E_tangent=.030469
-E_divided_difference=.046869
-```
+## Retained intrinsic/exact-Pi diagnostics
 
-This remains diagnostic evidence, not a production D15 compiler.
+The 13:55 intrinsic-coordinate screen showed that R10 is much lower-complexity in natural material coordinates. The 14:17 exact-Pi calculation established that exact `Pi_eta` leaves the present finite Beta/Gamma General-D15 closure even in a simple trigonometric witness.
 
-## 14:17 exact-Pi diagnostic retained but demoted from next task
+Those results remain mathematically valid, but no R10/eta regularization is currently authorized or required.
 
-Exact `Pi_eta` leaves the current finite Beta/Gamma General-D15 moment class even in a simple admissible trigonometric witness. Therefore:
-
-```text
-EXACT_PI_MATRIX_LIFT = PASS
-EXACT_PI_TO_EXISTING_GENERAL_D15 = FAIL
-```
-
-This mathematical result remains valid. However `Pi_eta` regularization is **not** the current mandatory next step after restoring parameter-derived specimen domains.
-
-## 17:20 parameter-derived domain/compiler gate
+## 17:34 R10-MSAC-RC1 multiscale reconnection
 
 Current governance/execution:
 
-- `../../10_governance/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER_GATE__LOCK.md`
-- `../../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__REPRO.py`
-- `../../60_validation/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_GLOBAL_COMPILER__AUDIT.md`
+- `../../10_governance/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION_GATE__LOCK.md`
+- `../../40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__REPRO.py`
+- `../../60_validation/common/20260816_1734__NZSCCM__R10_MSAC_RC1_SOURCE_FIDELITY_AND_COMPLEXITY__AUDIT.md`
 
-One common analytic/source-side domain rule gives:
+`R10-MSAC-RC1` is a current deterministic reconstruction of the historical R3/R4/R5 multiscale principles. It is not claimed to be bitwise identical to an older NC-MSAC-v1 executable.
 
-```text
-Z0 [-2.326966,+.398162]
-Z1 [-2.246565,+.304377]
-Z2 [-2.326966,+.398162]
-Z3 [-2.241404,+.293969]
-Z4 [-2.385927,+.469962]
-Z5 [-2.980899,+1.194486]
-Z6 [-2.768805,+2.128027]
-```
-
-Applying the same baseline single-global-lambda source-fidelity convergence policy gives:
+Common factor graph:
 
 ```text
-Z0 N=1792
-Z1 N=1536
-Z2 N=1792
-Z3 N=1536
-Z4 N=1792
-Z5 N=3072
-Z6 N=3840
+specimen-derived lambda guard
+ -> finite beta-lens gate around lambda=0
+ -> c(lambda), t(lambda)
+ -> C(c) in natural compression coordinate
+ -> uR(t), T7(t) using xcr and 10*xcr source landmarks
+ -> T=uR/rho
+ -> U reassembled from the same factors
+ -> full 2D R10 current master
 ```
 
-Hence:
+The map-generation rule, rational-center denominator limit, source landmarks, origin C1 constraints, source-fidelity gates and resolution ladder are common to all Z0-Z6 specimens.
+
+First passing material levels:
 
 ```text
-PARAMETER_DERIVED_DOMAIN_RULE = PASS
-IDENTICAL_FAMILY_WIDE_DOMAIN_REQUIREMENT = RETIRED
-SINGLE_GLOBAL_LAMBDA_POLYNOMIAL_LOW_COMPLEXITY = FAIL
-R10_PHYSICAL_OPERATOR = UNCHANGED
+Z0 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z1 L3: Ng=640,  Nc=14, Nt=320, coeff=1939
+Z2 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z3 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z4 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z5 L6: Ng=1024, Nc=14, Nt=512, coeff=3091
+Z6 L7: Ng=1152, Nc=16, Nt=576, coeff=3477
 ```
 
-This establishes that the old fixed family-wide interval was an over-constraint, but it was not the sole reason for high order.
+Worst first-pass metrics:
+
+```text
+max E_sigma = .0008861083
+max E_tangent = .0379151680
+max E_divided_difference = .0221037356
+```
+
+All pass the current material gates. Each first-pass candidate is also confirmed by a passing next ladder level.
+
+The finite scalar coefficient count is approximately `3.17x` to `4.61x` smaller than the corrected one-global-lambda baseline.
 
 ## Meaning of “same NC method”
 
-All NC specimens share the same source operator, domain-generation law, compiler architecture/convergence policy and downstream mechanics. Numerical domains/orders may differ only as deterministic consequences of specimen parameters.
+All NC specimens share:
 
 ```text
-NC+REBAR -> SAME_NC_RULE_SET
-NC+SHELL -> SAME_NC_RULE_SET
-Z0-Z6    -> SAME_NC_RULE_SET
+R10 source operator
+parameter-derived domain law
+RC1 source-landmark map-generation rule
+source stress/tangent/divided-difference gates
+common resolution ladder and first-pass rule
+downstream Nguyen/membrane/D15/P-Rq-L/KZ mechanics
 ```
+
+Numerical domains, lens indices and converged orders may differ only because the same rules receive different specimen/source parameters.
 
 Not allowed:
 
 ```text
-case label -> manually selected interval/order
+case label -> manual interval/order/map
 observed Pu error -> compiler change
-experiment/Zhou/Winter -> domain/order selection
+experiment/Zhou/Winter -> domain/order/map selection
 Z6-only fallback solver
+```
+
+## Structural compiler boundary
+
+RC1 is currently **material-level passing**, not yet fully promoted for structural production.
+
+The nested beta-lens/Chebyshev representation must not be expanded into ordinary monomials. Naive full expansion would raise first-pass ordinary-polynomial degrees into approximately `6656-29952`.
+
+```text
+R10_MSAC_RC1_MATERIAL_LEVEL = PASS_Z0_Z6
+FULL_MONOMIAL_EXPANSION = PROHIBITED
+NESTED_FACTOR_GRAPH = REQUIRED
+NESTED_GENERAL_D15_TARGET_FUNCTIONAL_ADAPTER = OPEN
 ```
 
 ## Common mechanics inherited by every NC specimen
@@ -141,7 +144,7 @@ NEW Z0-Z6 PRODUCTION Pu = NOT RELEASED
 ## Current next gate
 
 ```text
-UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE
+UNIFIED_V1_R10_MSAC_RC1_NESTED_CLENSHAW_QNM_D15_CONTRACTION_GATE
 ```
 
-The next task must reconnect the earlier R5/MSAC/source-landmark multiscale compiler and G26 moment-first contraction lessons **on the corrected specimen-derived domains**. It must remain one common NC algorithm, source-controlled, General-D15 compatible and zero-spatial-integration. R10 or `Pi_eta` must not be modified unless that corrected multiscale route independently fails.
+The next task is to connect the RC1 factor graph directly to the historical `Q_nm` / adjoint-Clenshaw target-functional General-D15 contraction, preserving the nested basis and zero structural spatial integration. No full monomial expansion is permitted.
