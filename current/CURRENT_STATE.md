@@ -1,19 +1,19 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 10:54 +08:00  
+**Updated:** 2026-08-16 11:10 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1054__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_AR2_COMPILER_FIDELITY_RETRACTION__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1110__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_AR2_R10_MULTIRATE_C1_FIDELITY_PASS__SEMANTIC_INDEX.md`
 
-## Current production scope
+## Frozen production scope
 
 ```text
 PRODUCTION_BOUNDARY = THEORETICAL_FOUR_EDGE_SIMPLY_SUPPORTED
 ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
 Nguyen second-order kinematics = ACTIVE
-R10 physical current operator = ACTIVE
+R10 physical current operator = FROZEN / UNCHANGED
 Cayley-Hamilton = ACTIVE
 General D15 exact moments = ACTIVE
 A0=a/500
@@ -24,109 +24,142 @@ Gauss/Simpson/adaptive/collocation/cells/material-point-grid=PROHIBITED
 Zhou/Winter calibration=PROHIBITED
 ```
 
-## Accepted Z6 base
-
-User-accepted result remains:
+## Capacity-result status
 
 ```text
-Z6 a/b=2
-m*=2
-ell=b=12000 mm
-q0=.004
-Pu=51.30 MN
-Pcr=39.2880147150 MN
-Pyth=88.089888 MN
-Zhou=49.4867667519 MN
-Winter=50.1858541295 MN
+Z6_AR2_Pu = 51.30 MN  # user accepted and retained
+Z0_Z5_20260816_1043_Pu = RETRACTED_PENDING_RECALCULATION
+Z0_Z5_20260816_1043_ZHOU_WINTER_TABLE = RETRACTED_PENDING_RECALCULATION
 ```
 
-No current action retracts this user-accepted Z6 value.
+The previous physical interpretation that membrane redistribution itself caused the 20–36% Z0–Z4 loss remains withdrawn.
 
-## Z0–Z5 10:43 calculation status
+## 10:54 proven process defect
 
-The 10:43 AR2 capacities and their Zhou/Winter error percentages are now:
-
-```text
-RETRACTED_PENDING_RECALCULATION
-```
-
-They are preserved in GitHub as challenged historical calculation artifacts but must not be used as current production values.
-
-## Proven reason
-
-The 10:43 process reused the Z6-wide single N48 compiler over
+The challenged run reused the Z6-wide single N48 material compiler on
 
 `lambda in [-2.35,+1.90]`.
 
-The frozen R10 tension activation functions are not represented faithfully on this hull:
+Inside the actual Z0–Z5 material ranges, it produced approximately
 
 ```text
-T max error   ~= 0.704
-T^7 max error ~= 0.796
+T error   ~= .704
+T7 error  ~= .796
 ```
 
-The decisive point is that these order-one errors occur **inside the actual Z0–Z5 reachable material ranges**, around `lambda~+0.04 to +0.05`, not only in a remote unused part of the wide hull.
-
-Therefore the earlier 8–24% capacity differences cannot be physically interpreted.
-
-## Independent localization checks
-
-### Exact flat q=0 reference
-
-Using the exact scalar R10 target with uniform steel/web caps gives:
+and an unchanged-R10 current-master audit over the stocky operational range gives approximately
 
 ```text
-Z0 45.0752 MN   vs Zhou Pyth 44.0449
-Z1 31.0016 MN   vs Zhou Pyth 30.3196
-Z2 51.5421 MN   vs Zhou Pyth 50.6221
-Z3 55.9792 MN   vs Zhou Pyth 54.9488
-Z4 80.7600 MN   vs Zhou Pyth 79.3861
-Z5 15.0251 MN   vs Zhou Pyth 14.6816
+spectral stress-scalar max error ~= .71852
+spectral tangent relative error  ~= 81.5%
 ```
 
-Thus the base material/section assembly is healthy at the uniform axial state and does not explain a 20–36% loss.
+The old wide N48 compiler is prohibited for Z0–Z5 production.
 
-### q-amplitude sanity
+## 11:10 material-fidelity rebuild
 
-The challenged `A/A0` values are broadly comparable to the classical imperfect-plate estimate `eta/(1-eta)`. Hence an order-of-magnitude error in the generalized q-equilibrium is **not established**.
+The R10 physical law was retained exactly. The new source-only representation candidate is
 
-However, because `A0=a/500=0.004b` in AR2, Z0–Z4 have `A0/tc≈0.17–0.26` and challenged total deflection `A_total/tc≈0.26–0.50`; this geometric sensitivity must be reassessed after the material compiler is repaired.
+`R10-MR-C1(256,1024,1280,512)`
 
-## Narrow single-N48 precheck
+with one global material guard interval
 
-Simply narrowing a single N48 interval is still insufficient. Trial reachable-range errors remain approximately:
+`[-1.50,+0.35]`
+
+and tangent-certified operational core
+
+`[-1.40,+0.30]`.
+
+Orders:
 
 ```text
-Z0 T~.197  T7~.354
-Z1 T~.121  T7~.274
-Z2 T~.256  T7~.392
-Z3 T~.133  T7~.237
-Z4 T~.170  T7~.214
-Z5 T~.104  T7~.217
+U=256
+C=1024
+T=1280
+T7=512
 ```
 
-So the next fix is not another arbitrary single-interval N48 sweep.
+`MR` is material-primitive multirate polynomial order only; it is not a material-zone or spatial-domain subdivision.
 
-## Current mandatory next gate
+The coefficient generator uses oversampled Gauss-Chebyshev **material coordinates**. Because their normal matrix is diagonal, the reproducible implementation uses a DCT-II source projection plus an exact two-equality Schur correction for the R10 C1 anchors. These coordinates are not structural spatial points.
+
+### Source primitive fidelity on operational core
 
 ```text
-Z0_Z5_AR2_CURRENT_OPERATOR_FIDELITY_REBUILD_ZERO_SPATIAL_INTEGRATION
+U  max value error ~= 8.60e-5
+C  max value error ~= 1.57e-4
+T  max value error ~= 6.01e-4
+T7 max value error ~= 4.37e-4
 ```
 
-Requirements:
-- retain original R10 physical material law;
-- retain one complete representative halfwave and Nguyen second-order kinematics;
-- retain General D15 and zero spatial numerical integration;
-- rebuild the material-coordinate analytic representation so the small-positive tension transition is faithfully represented;
-- validate material fidelity before any new Pu solve;
-- only then recompute Z0–Z5 and compare with Zhou/Winter.
+All coefficient maxima remain O(1), with overall maximum below `.60`.
 
-## Current artifacts
+### Unchanged current-master fidelity
 
-- `semantic_v2/10_governance/20260816_1054__NZSCCM__Z0_Z5_AR2_RESULT_RETRACTION_AND_COMPILER_FIDELITY_GATE__LOCK.md`
-- `semantic_v2/40_execution/steel_shell/20260816_1054__NZSCCM__Z0_Z5_AR2_DISCREPANCY_LOCALIZATION__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260816_1054__NZSCCM__Z0_Z5_AR2_DISCREPANCY_LOCALIZATION__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260816_1054__NZSCCM__Z0_Z5_AR2_DISCREPANCY_LOCALIZATION__REPRO.py`
-- `semantic_v2/00_index/20260816_1054__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_AR2_COMPILER_FIDELITY_RETRACTION__SEMANTIC_INDEX.md`
+Reinsert the compiled primitives into the exact unchanged R10 spectral master. Material-coordinate audit gives
 
-Historical 10:43 Z0–Z5 files remain preserved but are superseded as production evidence.
+```text
+max spectral stress-scalar abs error = 4.2153e-4
+max spectral tangent abs error       = 8.4312e-1
+source peak tangent magnitude        = 2.98917e1
+relative tangent error               = 2.8206%
+```
+
+Worst stress pair approximately:
+
+```text
+(lambda1,lambda2)=(-.994833,+.001083)
+source   = -.9939997881
+compiled = -.9944213174
+```
+
+Relative to the rejected wide N48 representation, the stress error is reduced by about `1705x` and tangent-relative error by about `28.9x`.
+
+Therefore:
+
+```text
+R10_MR_C1_SOURCE_VALUE_GATE = PASS
+R10_MR_C1_CURRENT_MASTER_VALUE_GATE = PASS
+R10_MR_C1_CURRENT_MASTER_TANGENT_GATE = PASS_ON_OPERATIONAL_CORE
+C1_ANCHOR_GATE = PASS
+O1_COEFFICIENT_GATE = PASS
+CAYLEY_HAMILTON_FORMAL_COMPATIBILITY = PASS
+GENERAL_D15_FORMAL_COMPATIBILITY = PASS
+ZERO_SPATIAL_NUMERICAL_INTEGRATION = PASS
+```
+
+## Remaining block
+
+The current structural execution kernel is fixed around N48-style recurrence. The multirate orders up to 1280 have not yet been implemented in the variable-order moment-first structural D15 backend.
+
+Therefore:
+
+```text
+NEW_Z0_Z5_Pu = NOT_CALCULATED
+```
+
+No new Z0–Z5 capacity may be released from this material gate alone.
+
+The next blind structural calculation must also certify that its continuous reachable principal spectrum remains inside `[-1.40,+0.30]`. Leaving that core is a fail-fast event requiring material-hull regeneration.
+
+## Current unique next gate
+
+`Z0_Z5_AR2_MULTIRATE_R10_TO_VARIABLE_ORDER_MOMENT_FIRST_D15_RECOMPILE_GATE`
+
+Required next actions:
+1. implement variable-order Cayley-Hamilton recurrence for U/C/T/T7;
+2. preserve moment-first General-D15 and zero spatial quadrature;
+3. audit coefficient conditioning/computational tractability;
+4. only after backend PASS, blind-solve Z0–Z5 connected `Rq=0` branches;
+5. continuously enclose principal-value spectrum and verify core containment;
+6. only then release corrected Pu and post-solve Zhou/Winter comparison.
+
+## Current 11:10 artifacts
+
+- `semantic_v2/10_governance/20260816_1110__NZSCCM__Z0_Z5_AR2_R10_MULTIRATE_C1_COMPILER_FIDELITY__LOCK.md`
+- `semantic_v2/20_theory/nc_material/20260816_1110__NZSCCM__NC_MATERIAL__R10_MULTIRATE_C1_SOURCE_FIDELITY__THEORY.md`
+- `semantic_v2/40_execution/steel_shell/20260816_1110__NZSCCM__Z0_Z5_AR2_R10_MULTIRATE_C1_FIDELITY_REBUILD__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260816_1110__NZSCCM__Z0_Z5_AR2_R10_MULTIRATE_C1_FIDELITY__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/steel_shell/20260816_1110__NZSCCM__Z0_Z5_AR2_R10_MULTIRATE_C1_FIDELITY__REPRO.py`
+- `semantic_v2/60_validation/steel_shell/20260816_1110__NZSCCM__Z0_Z5_AR2_R10_MULTIRATE_C1_SOURCE_FIDELITY__AUDIT.md`
+- `semantic_v2/00_index/20260816_1110__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_AR2_R10_MULTIRATE_C1_FIDELITY_PASS__SEMANTIC_INDEX.md`
