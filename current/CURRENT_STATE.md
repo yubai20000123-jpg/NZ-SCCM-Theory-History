@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 22:40 +08:00  
+**Updated:** 2026-08-16 22:53 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_2240__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_BRANCH_TWO_POINTS_ACCEPTED__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_2253__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_PU_320P75_N48_SCOPE_CLARIFIED__SEMANTIC_INDEX.md`
 
 ## Frozen backbone
 
@@ -15,83 +15,99 @@ ONE_CONTINUOUS_COMPLETE_HALFWAVE=ACTIVE
 Nguyen second-order continuous kinematics=ACTIVE
 R10=FROZEN
 five-term membrane redistribution=REQUIRED
-N48-C1/MM + Cayley-Hamilton=ACTIVE PRODUCTION COMPILER
-General-D15 exact structural moments=ACTIVE
 reinforcement before root solve=REQUIRED
-connected P,Rq,L branch=ACTIVE
-same-state Schur + KZ before Pu=REQUIRED
+General-D15 exact structural moments=ACTIVE
+same-state KZ before Pu release=REQUIRED
 N_formal_spatial_sampling=0
 N_formal_spatial_quadrature=0
 N_formal_spatial_subdomains=1
 N_formal_thickness_quadrature=0
 ```
 
-The exact-algebraic/holonomic Pu route remains a paused research branch under the anti-loop rule.
-
-## N48 evaluator fingerprint
-
-The 2026-08-12 18:02 `r=0` Case21 closure has been reconstructed:
+## Case21 membrane-redistributed result
 
 ```text
-P_freeze=365.58042756532977 kN
-P_repro =365.58042692483133 kN
-DeltaP  =-6.4049844e-7 kN
-Rqc component relative difference ~=7.8e-7
+D_u=0.4597278541813354
+q_u=0.0018330938013757293
+A_u=2.2363744376783896 mm
+r=[-0.012475802483156403,
+   -0.007141864103343101,
+   +0.04699488414266459,
+   +0.041946118067216,
+   -0.09983629747628982]
+Pc=304.05427812103903 kN
+Ps=16.69490720454312 kN
+Pu=320.7491853255822 kN
+Rq=2.33356e-4 kN mm
+||Rm||2=3.48901e-6
+KZ=+260.1709056728 N/mm
+CONTROL=FIRST_CONNECTED_LOAD_MAXIMUM
 ```
 
-`N48_1802_FINGERPRINT=PASS`.
+Case21 current rounded capacity:
 
-## Origin-connected five-membrane branch
+`CASE21_MEMBRANE_REDISTRIBUTED_Pu=320.75 kN`
 
-Direct insertion of new membrane coordinates at the old `r=0` limit is rejected as a start strategy. Continuation starts from the origin.
-
-Accepted points:
+## Case21 gates
 
 ```text
-point1:
- q=1e-4
- D=0.016046306
- P=15.2626325741107 kN
- ||Rm||2=6.9022384258e-6
- Rq=+1.9082556149e-6 kN mm
- r=[-0.0004765646208971642,-0.0002322819318541890,+0.0002805628349612065,-0.0002432861950486819,+0.0003034158793738149]
-
-point2:
- q=2e-4
- D=0.031737797
- P=31.4300211269425 kN
- ||Rm||2=1.3545457160e-5
- Rq=+3.9798686409e-6 kN mm
- r=[-0.0009851269073948984,-0.0004459452528374698,+0.0006055135286393538,-0.0003630828054164307,+0.0005376886688340636]
+18:02 N48 fingerprint=PASS
+five membrane equilibrium=PASS
+total Rq=PASS
+first connected load maximum=PASS
+continuous compiler-domain Bernstein certificate=PASS
+rebar elastic branch=PASS
+same-state KZ=PASS positive
 ```
 
-Point2 continuous compiler-domain enclosure:
+Continuous final domain remains inside `[-1.15,+0.12]`.
 
-`lambda in [-0.0486323165234,+0.0188154748336]`, inside `[-1.15,+0.12]`.
-
-The load is increasing from point1 to point2; no limit conclusion is made from only two states.
-
-## Capacity boundary
+## Comparison
 
 ```text
-Case21 368.189 kN=historical/current-support closure only
-Z6 51.30 MN=retained engineering baseline only
-NEW membrane-redistributed Case21 Pu=NOT RELEASED
+old r=0 Case21=365.5804275653 kN
+new membrane Case21=320.7491853256 kN
+change=-12.2630%
+experiment-only source=336 kN
+new error=-4.5389%
 ```
 
-## Current unique next gate
+## N48 scope clarification
 
-`CASE21_N48_MEMBRANE_CONNECTED_BRANCH_CONTINUATION_AND_SCHUR_GATE`
+```text
+CASE21_LOCAL_N48=ALLOWED / REPRODUCED / DOMAIN_CERTIFIED
+N48_AS_UNIVERSAL_NC_FAMILY_COMPILER=NOT_ALLOWED
+```
 
-Use point1-point2 secant predictor to compute point3 and continue monotonically in q. Every accepted state must close five `Rm` and total `Rq`, pass the continuous compiler-domain certificate, and be rechecked by N=28 corrector. Near the first connected load maximum, construct consistent Schur derivatives and run same-state KZ before releasing Pu.
+The 12:29 broad family source-fidelity gate still stands:
 
-## Current artifacts
+```text
+N48: E_sigma=0.817103, E_tan=0.954681 -> FAIL
+N3584: first passing source-fidelity candidate on declared ladder
+```
 
-- `semantic_v2/00_index/20260816_2240__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_BRANCH_TWO_POINTS_ACCEPTED__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/common/20260816_2240__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_BRANCH__LEDGER.jsonl`
-- `semantic_v2/40_execution/common/20260816_2240__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_BRANCH_POINT2__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONTINUATION_START__AUDIT.md`
-- `semantic_v2/10_governance/20260816_2234__NZSCCM__CASE21_N48_MEMBRANE_CONNECTED_CONTINUATION__GATE_LOCK.md`
+The 12:48 N3584 structural coefficient-tensor backend still stands as `FAIL_COMMON_TRACTABILITY`, especially for Z6. The current Case21 use of N48 is scoped to the already validated narrow Case21 compiler and does not erase the family audit.
+
+## Anti-loop rule
+
+```text
+EXACT_ALGEBRAIC_HOLONOMIC_Pu_ROUTE=PAUSED_RESEARCH_BRANCH
+DO_NOT_REOPEN_R10=YES
+DO_NOT_REUSE_CASE21_N48_COEFFICIENTS_FOR_Z6=YES
+DO_NOT_START_ANOTHER_SYMBOLIC_BACKEND_AUTOMATICALLY=YES
+```
+
+## Current next task
+
+`Z6_MEMBRANE_REDISTRIBUTED_CAPACITY_EXECUTION_WITH_EXISTING_FAMILY_EVIDENCE`
+
+Attempt the actual Z6 capacity calculation using existing family-level representations/evidence. If common high-order structural tractability remains the blocker, stop and report it concretely; do not open an endless new backend chain.
+
+## Current key artifacts
+
+- `semantic_v2/00_index/20260816_2253__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_PU_320P75_N48_SCOPE_CLARIFIED__SEMANTIC_INDEX.md`
+- `semantic_v2/40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__AUDIT.md`
+- `semantic_v2/10_governance/20260816_2253__NZSCCM__N48_SCOPE_CLARIFICATION_CASE21_VS_NC_FAMILY__LOCK.md`
