@@ -1,163 +1,177 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 00:36 +08:00  
+**Updated:** 2026-08-17 01:00 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current controlling governance
 
-`semantic_v2/10_governance/20260817_0036__NZSCCM__ANTI_LOOP_CLARIFICATION_V2_COMPACT_EXACT_CLOSURE_NOT_HIGH_ORDER_ENUMERATION__LOCK.md`
+`semantic_v2/10_governance/20260817_0100__NZSCCM__SOURCE_REGULAR_DAG_AND_FACTORISED_ALGEBRAIC_PERIOD__LOCK.md`
 
-## Frozen physics backbone
+## Frozen backbone
 
 ```text
 UNIFIED_PRODUCTION_WORKFLOW_V1 = ACTIVE
 ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
 Nguyen second-order continuous kinematics = ACTIVE
-MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
-CLASSICAL_FVK_MEMBRANE_POSTBUCKLING_SIGN = POSITIVE
 R10 physical current operator = FROZEN
 reinforcement before coupled solve = REQUIRED
-General-D15 exact structural moments = ACTIVE
+membrane-stress redistribution = REQUIRED
+General-D15 target philosophy = ACTIVE
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
 N_formal_thickness_quadrature = 0
 ```
 
-## Formal series / production computation rule
+Formal infinite/high-order analytic representations are allowed. Direct production computation by enumerating thousands of analytic coefficients is prohibited.
 
-The user-approved rule is:
-
-```text
-FORMAL_INFINITE_OR_VERY_HIGH_ORDER_SERIES = ALLOWED_AS_THEORY_REPRESENTATION
-TERM_BY_TERM_EXPANSION_FOR_EXPLANATION_AUDIT = ALLOWED
-DIRECT_COMPUTATION_OF_THOUSANDS_OF_ANALYTIC_COEFFICIENTS = NOT ACCEPTABLE
-EXPAND_ALL_THEN_SOLVE = PROHIBITED
-```
-
-A production operator must therefore sum/contract the formal analytic structure through a compact exact recurrence, finite algebraic state, or closed target-functional moment operator. It must not escape tractability by choosing N=1000/3000/5000 and enumerating those terms.
-
-## Correct recovered execution point
-
-The mainline is no longer reset to 19:12. The later compact exact branch is retained.
-
-### 19:12
+## Z6 correction
 
 ```text
-FIVE_TERM_ELASTIC_CONDENSATION = PASS_EXACT
-FIVE_TERM_AIRY_FVK_RECOVERY = PASS_EXACT
-FIVE_TERM_GENERAL_D15_TARGET_CLOSURE = PASS
-CURRENT_MATERIAL_RESIDUAL_AND_CONDENSATION_FORM = PASS_FORMAL
+Z6_BOUNDARY = FOUR_EDGE_SIMPLY_SUPPORTED / SSSS
 ```
 
-### 19:32
+Earlier current-mainline descriptions of Z6 as a mixed in-plane-boundary specimen are superseded.
 
-Ordinary nested polynomial / adjoint-Clenshaw flattening was proven degree-propagating and not a viable production runtime.
+## Compact exact route retained
 
-### 20:59
-
-The exact R10 algebraic graph was reduced to a fixed finite quadratic-tower state:
+The controlling mathematical development remains the 20:59/21:18 compact exact branch:
 
 ```text
-THREE_GENERATOR_QUADRATIC_TOWER = PASS_EXACT_PARAMETRIC
-FULL_COMPOSITUM_STATE_DIMENSION = 64
-FULL_DERIVATIVE_OPERATOR_NONZEROS = 159/4096
-FULL_64_STATE_VECTOR_MOMENT_FORM = PASS_EXACT
-NO_POLYNOMIAL_DEGREE_GROWTH = RETAINED OBJECTIVE / ACHIEVED IN FIELD ALGEBRA
+R10 exact source lift
+ -> fixed finite algebraic state / 64-state closure bound
+ -> exact 2x2 Cayley-Hamilton reduction of T^7
+ -> compact stress/tangent target DAG
 ```
 
-This is a field-state dimension, not structural DOFs, material points, spatial samples, or analytic-series order.
+The 64-state object is an algebraic field-state bound, not a structural DOF count, material-point count, spatial sampling count, or high-order series order.
 
-### 21:18
+## 2026-08-17 01:00 execution result
+
+The 21:36 apparent pole at
 
 ```text
-T7_MATRIX_POWER = ELIMINATED_EXACT_BY_2X2_CAYLEY_HAMILTON
-T7_DERIVATIVE = ELIMINATED_TO_SCALAR_CH_RECURRENCE
-FULL_R10_COMPACT_STRESS_TARGET = PASS_EXACT
-FIELD_PRODUCT_ADJOINT_PULLBACK = PASS_EXACT
-FINAL_64_COEFFICIENT_CANONICALIZATION = PROHIBITED
+x*=21/260
 ```
 
-This is the current correct recovery point.
+has been reclassified decisively.
 
-### 21:36
+For the retained noncommuting affine thickness pencil, `E(x*)^2` is scalar and the physical principal matrix square root
 
-The rationalized local connection introduced an apparent pole at `x=21/260`, while the physical algebraic atom remained regular and the relevant combined derivative had a finite limit.
+```text
+R=sqrt(E^2+eta^2 I)
+```
+
+is regular. Its derivative follows the Sylvester relation
+
+```text
+R R' + R' R = M'
+```
+
+and the Sylvester operator at the apparent pole has
+
+```text
+cond2 = 1
+```
+
+in the retained prototype. The actual Case21 eta gives the same regular structure.
 
 Therefore:
 
 ```text
-64_STATE_COMPACT_EXACT_FIELD = RETAIN
-PHYSICAL_R10_REGULARITY = RETAIN
-RATIONALIZED_LOCAL_CONNECTION = NEEDS_GLOBAL_REGULARIZATION
-N48_FALLBACK_PIVOT = RETRACTED
+OLD_c0_c1_APPARENT_POLE = REPRESENTATION_ARTIFACT
+OLD_RATIONALIZED_FIRST_ORDER_CONNECTION = RETIRED_AS_PRODUCTION_REPRESENTATION
+SOURCE_LEVEL_MATRIX_SQRT_PLUS_FRECHET/SYLVESTER = RETAIN
 ```
 
-The anti-loop instruction does NOT mean abandoning the compact exact route.
+## True R10 source knots
 
-## Why the prior loop felt impossible
-
-The mathematical direction was valid, but the execution had no explicit convergence/termination contract. Each local closure generated another backend gate without proving that:
-
-1. the number of remaining mathematical layers decreased;
-2. the runtime state/order was permanently bounded;
-3. no 1000+ coefficient enumeration would appear later;
-4. the next gate would directly return an actual `P,Rq,Rm,L,KZ` target;
-5. the route had a finite number of remaining closure layers.
-
-This, rather than the exact/holonomic direction itself, is the recovered anti-loop problem.
-
-## Compact exact closure contract
-
-Only two production layers remain open:
+The exact source spline retains two genuine material transition thresholds. For actual Case21 material:
 
 ```text
-OPEN_LAYER_1 = globally regular fixed-state thickness target contraction
-OPEN_LAYER_2 = beta-weighted X,Y exact target contraction
+kappa = 2.0005129533678756
+lambda1  = .05008051764913754
+lambda10 = .49988116674539300
 ```
 
-No automatically generated third/fourth/fifth backend layer is authorized.
-
-For each open layer:
+On the retained affine thickness prototype the in-domain crossings are
 
 ```text
-formal infinite/high-order representation may remain symbolic
-runtime must not enumerate thousands of terms or coefficients
-runtime state/order must have an explicit finite bound BEFORE implementation
-state/order may not grow with a chosen high-order truncation because truncation is not the production mechanism
-output must directly contract actual P/Rq/Rm/L/KZ kernels
-unbounded state/order growth => FAIL FAST
+x(lambda1)  = -.4667260750489900...
+x(lambda10) = +.5655380435733645...
 ```
 
-## Current unique next gate
+These are source-defined material events, not spatial cells.
 
-`FIXED_STATE_GLOBAL_REGULARIZATION_AND_THICKNESS_TARGET_CLOSURE`
-
-Task:
+The C2 spline/truncated-power source is retained in projector-free form:
 
 ```text
-21:18 compact R10 target DAG + fixed 64-state quadratic-tower field
- -> remove the removable apparent-pole defect by a globally regular fixed-state algebraic connection
- -> keep one continuous thickness domain (no spatial/thickness subdivision)
- -> close an actual P or Rm thickness target end-to-end in the same bounded state
+D_+^p = ((D+sqrt(D^2))/2)^p,  p=3,4,5
 ```
 
-This is not a new generic symbolic-integration program. It is the missing closure of the already established compact 64-state route.
+with tangent from the finite divided-difference/Frechet derivative of `z_+^p`, not from a singular standalone sign projector.
 
-After this passes, the only remaining mathematical layer is the beta-weighted `(X,Y)` exact target contraction. After that, calculate actual `P,Rq,Rm,L,KZ`, then Case21 control and Z6 mixed-boundary decisive case.
+## Real target preflight
 
-## Prohibited regressions
+A real term of the 21:18 compact stress target was executed:
 
 ```text
-DIRECT_N1000_N3000_N5000_COEFFICIENT_ENUMERATION = PROHIBITED
-HIGH_ORDER_CHEBYSHEV_AS_PRODUCTION_ESCAPE = PROHIBITED
-FULL_SERIES_FLATTENING = PROHIBITED
-FULL_64_COEFFICIENT_CANONICALIZATION = PROHIBITED
-SPATIAL_GAUSS/SIMPSON/ADAPTIVE = PROHIBITED
-SPATIAL_COLLOCATION/MATERIAL_POINT_GRID = PROHIBITED
-N48_LEGACY_FALLBACK = PROHIBITED_AS_COMPACT_ROUTE_FIX
-R10_RETUNING_OR_TRIAL_LOAD_CALIBRATION = PROHIBITED
+Yc = det(C)*Cyy
 ```
+
+which enters `Syy` as the compression interaction term.
+
+For the retained exact rational prototype (`kappa=2`, `eta=1/400`):
+
+```text
+field dimension = 4
+field support of Yc = 4/4
+exact characteristic polynomial degree in Y = 4
+charpoly construction runtime ~= .9 s
+```
+
+Thus an actual stress target is compactly algebraic and does not require a high-order material series.
+
+Audit-only period value:
+
+```text
+integral[-1,1] Yc dx ~= .03256204357343014004437563918
+```
+
+No production result depends on this audit quadrature.
+
+## Important implementation feedback
+
+Attempts to flatten the degree-4 algebraic target into a fully canonical scalar differential annihilator over `Q(x)` exceeded the 60 s symbolic fail-fast boundary in multiple equivalent SymPy formulations. A direct canonicalized field-derivative route also swelled rapidly.
+
+Therefore:
+
+```text
+TARGET_ALGEBRAICITY = PASS
+EXPLICIT_GIANT_RATIONAL_ANNIHILATOR_CANONICALIZATION = REJECTED AS PRODUCTION ARCHITECTURE
+DO_NOT_ESCALATE_TIMEOUT = YES
+DO_NOT_REOPEN_HIGH_ORDER_SERIES = YES
+```
+
+The surviving representation is a factorised algebraic-period / descriptor object operating directly on the regular source DAG.
+
+## Current unique next task
+
+`FULL_COMPACT_R10_FACTOR_GRAPH_ALGEBRAIC_PERIOD_TARGET_EVALUATOR`
+
+Required execution:
+
+```text
+regular source/matrix R10 DAG
+ -> actual full 21:18 Syy or Rm target
+ -> finite factorised algebraic/descriptor period object
+ -> complete-thickness target value
+ -> same-source consistent derivative package
+```
+
+Pass requires no formal numerical quadrature, no high-order coefficient enumeration, no new spatial cells/subdomains, and a fixed finite complexity bound.
+
+If the factorised period backend cannot retain that bound, stop at the mathematical blocker rather than spawning another backend chain.
 
 ## Capacity status
 
@@ -169,4 +183,9 @@ Z6 retained engineering support baseline = 51.30 MN
 NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
 ```
 
-No new Pu is to be released before the compact exact target contraction is closed.
+## Current artifacts
+
+- `semantic_v2/40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__REPRO.py`
+- `semantic_v2/10_governance/20260817_0100__NZSCCM__SOURCE_REGULAR_DAG_AND_FACTORISED_ALGEBRAIC_PERIOD__LOCK.md`
