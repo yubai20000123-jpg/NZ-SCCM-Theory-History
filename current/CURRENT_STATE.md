@@ -1,25 +1,25 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 12:48 +08:00  
+**Updated:** 2026-08-16 13:55 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260816_1248__NZSCCM__PROJECT__CURRENT_STATE_N3584_COMMON_BACKEND_TRACTABILITY_FAIL__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md`
 
 ## Frozen project-wide production backbone
 
 ```text
 UNIFIED_PRODUCTION_WORKFLOW_V1 = ACTIVE
 ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
-HALFWAVE_SELECTION = source/design-side physical rule
+THEORETICAL FOUR-EDGE SSSS/NAVIER for Zhou Z-series
 Nguyen second-order continuous kinematics = ACTIVE
 MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
 source current material operator = REQUIRED
-same-state consistent current tangent = REQUIRED
+same-state current stress + consistent current tangent = REQUIRED
 Cayley-Hamilton / approved finite matrix lift = ACTIVE
 General D15 moment-first exact moments = ACTIVE
-P,Rq,L connected-branch root topology = ACTIVE
+P,Rq,L connected-branch topology = ACTIVE
 same-state material + geometric KZ audit = ACTIVE
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
@@ -29,221 +29,173 @@ Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter calibration in solve/compiler = PROHIBITED
 ```
 
-The four intended combinations remain under this one workflow:
+The same parent workflow continues to govern NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ; the common mechanics above may not change case by case.
+
+## NC source identity
+
+The ordinary-concrete physical current operator remains the frozen R10 source. It is **not reopened** by the current gate.
+
+Current R10 reference constants:
 
 ```text
-ordinary concrete + reinforcement
-ordinary concrete + steel shell
-UHPC + reinforcement
-UHPC + steel shell
+kappa = 2.0005129533678754
+rho   = .1
+xcr   = .04998717945397425
+eta   = .0024993589726987125
+h     = .09799750427197301
+ur    = .03
 ```
 
-Physical adapters may differ, but they may not replace the common kinematics, membrane redistribution, zero-integration philosophy, generalized root topology or tangent-consistency rules.
+## 12:29 / 12:48 predecessor results retained
 
-For the Zhou Z-series the production boundary remains theoretical four-edge simply-supported/Navier. No FE-specific ux/uy boundary reconstruction is part of the production problem.
-
-## NC material source and source-fidelity compiler status
-
-The ordinary-concrete source operator remains frozen R10.
-
-The 12:29 material-only convergence gate established the first source-fidelity passing candidate:
+The wide single-global lambda-space compiler screen established:
 
 ```text
-NC operational principal-coordinate core = [-2.35,+1.90]
-NC coefficient-generation guard = [-2.60,+2.15]
-channels = U,C,T,T7
-single global Chebyshev polynomial per channel
-same order for all four channels
-M=8*(N+1) material-coordinate coefficient nodes
-exact C1 anchors at lambda=0
-E_sigma <= .005
-E_tangent <= .05
-E_divided_difference <= .05
-N_source_candidate = 3584
-```
-
-Reference source errors:
-
-```text
+core  = [-2.35,+1.90]
+guard = [-2.60,+2.15]
+N=3584 source errors:
 E_sigma = .00107218
 E_tangent = .04066517
 E_divided_difference = .00381386
 ```
 
-Therefore:
+Thus:
 
 ```text
-NC_N3584_SOURCE_FIDELITY = PASS
+N3584_SOURCE_FIDELITY_WITNESS = PASS / RETAINED
 ```
 
-but after the 12:48 structural gate it is no longer correct to call N=3584 a fully promoted production compiler. Production promotion also requires one common tractable exact-moment backend across Z0-Z6 and later NC+rebar/NC+shell.
+The 12:48 order-agnostic CH/Clenshaw algebra also remains valid, but the N3584 coefficient-tensor structural realization failed common tractability at the wide-spectrum Z6 state. Coefficient-threshold pruning remains diagnostic only.
 
-## 12:48 order-agnostic Cayley-Hamilton backend result
+## 13:55 historical reconnection / intrinsic-scale diagnosis
 
-A backward matrix-Chebyshev Clenshaw recurrence was derived for
+The project history was reconnected to R5, M1R/PF1/P2A, the NC energy-potential gate, G26 moment-first D15, and the R10 energy-smoothing construction.
+
+Controlling historical lesson:
 
 ```text
-f(Y)=sum c_n T_n(Y)
-Y^2=K1*Y-K2*I
-B_k=A_k I+G_k Y
+compiler/representation failure != material architecture failure
+expand-all-then-D15 = rejected
+hidden global high-degree coefficient inflation = rejected as a theory simplification
+R10 itself = low-parameter material construction
 ```
 
-with
+### Quantified current scale separation
 
 ```text
-A_k=-2*K2*G_(k+1)-A_(k+2)+c_k
-G_k= 2*A_(k+1)+2*K1*G_(k+1)-G_(k+2)
+core width  = 4.25
+ guard width = 4.75
+eta         = .0024993589727
+core/eta    = 1700.436
+guard/eta   = 1900.487
 ```
 
-and the final CH pair
+The R10 tensile scalar is two local quintics plus a constant branch. Its C2 joins have third-derivative jumps approximately
 
 ```text
-A_f=-K2*G1-A2+c0
-G_f=A1+K1*G1-G2
+t=xcr:    -2.7905034e4
+t=10xcr:  +4.4806477e1
 ```
 
-At N=48 this agrees with the historical forward CH recurrence at roundoff scale:
+### Global lambda-space pressure localized
+
+At N=3584:
 
 ```text
-max I-pair coefficient difference ~= 2.4e-12
-max Y-pair coefficient difference ~= 1.9e-11
-ORDER_AGNOSTIC_CH_CLENSHAW_IDENTITY = PASS
+C derivative max error ~= .137706 near lambda=-.002831
+T derivative max error ~= 1.374866 near lambda=+.002906
+T7 derivative max error ~= .093684 near lambda=+.04955
 ```
 
-No spatial sampling/quadrature is introduced.
+The exact sign-split factor `Pi_eta` alone, if forced into the same wide global lambda polynomial, still has maximum derivative error about `.0586` at N=3584.
 
-## Coefficient-support compression is not production-certified
+Therefore the major order pressure is the narrow `Pi_eta` sign-split layer; the C2 tensile joins are a secondary global-spectral pressure.
 
-At N=3584 a coefficient-amplitude pruning tolerance was tested only as a tractability probe. For Z0 at `D=.915, q=.002573`:
+## Intrinsic-coordinate material-only screen
+
+The source factors are much simpler when represented in their own physical coordinates:
 
 ```text
-tol=2e-4  Pc=11.081098 MN  Rq,c=493.845303 MNmm  time=.617 s
-tol=1e-4  Pc=11.107623 MN  Rq,c=485.805665 MNmm  time=.603 s
-tol=5e-5  Pc=11.110069 MN  Rq,c=485.251638 MNmm  time=1.476 s
-tol=2e-5  Pc=11.106763 MN  Rq,c=487.025622 MNmm  time=3.282 s
-tol=1e-5  Pc=11.109297 MN  Rq,c=486.610020 MNmm  time=10.982 s
+C(c), N=6: derivative error / peak ~= 3.8826%
+C(c), N=10: derivative error / peak ~= .1729%
+u_R(t), N=64: derivative error / peak ~= 3.5857%
 ```
 
-The load resultant is fairly stable but the generalized residual is non-monotone because thresholding changes nonlinear coefficient support.
+A material-only factor screen keeping `Pi_eta` exact and using
 
 ```text
-COEFFICIENT_THRESHOLD_PRUNING_AS_EXACT_PRODUCTION_D15 = NOT_ACCEPTED
+N_C=6
+N_u=64
 ```
 
-## Z0-Z5 12:48 diagnostic locator status
-
-The same N3584 source compiler and same SSSS/Nguyen/membrane/steel-phase equations can reach Z0-Z5 branch neighborhoods diagnostically:
+then reconstructing `T=u_R/rho`, `T7=T^7`, `U`, and the same 2D current master gives
 
 ```text
-case  Dloc      qloc          Ploc(MN)  lambda_min  lambda_max
-Z0    .907427   .002488991    32.9277   -1.07019    +.16276
-Z1    .595916   .003143830    19.5542   -.75095     +.15841
-Z2   1.133786   .004060976    36.0559   -1.39935    +.26556
-Z3    .667726   .002496755    39.0559   -.78827     +.12055
-Z4    .932337   .001342230    64.0427   -1.03594    +.10360
-Z5    .997894   .000184231    14.5423   -1.03404    +.03614
+E_sigma = .003337
+E_tangent = .030469
+E_divided_difference = .046869
 ```
 
-All six diagnostic material envelopes stay inside `[-2.35,+1.90]`.
+which passes the existing source-material gates.
 
-A finer Z0 `1e-4` locator gave approximately:
+This object uses 72 fitted scalar coefficients versus 14340 in four N3584 channels.
+
+Important boundary:
 
 ```text
-D=.9091939627
-q=.00251762190
-A=15.1057 mm
-P=32.9241946 MN
-Rq=.542972 MNmm
-Pc_eff=10.983038 MN
-Ps=16.922780 MN
-Pw=5.018377 MN
-lambda=[-1.073829,+.164635]
+LOW_COMPLEXITY_INTRINSIC_FACTOR_SCREEN = MATERIAL_ONLY PASS DIAGNOSTIC
+EXACT_PI_TO_GENERAL_D15_ADAPTER = NOT YET CLOSED
 ```
 
-These are **diagnostic locators only**, not new production `Pu`, because exact/common coefficient convergence, same-expression `L`, and same-state `KZ` are not closed.
+No Pu can be produced from this factor screen yet.
 
-The fact that several locators remain near the retracted 10:43 load neighborhoods means the old Z0-Z4 discrepancy can no longer be attributed solely to the former wide-N48 material error. The production mechanism remains open.
-
-## Z6 controlling common-backend failure
-
-The retained Z6 engineering state is approximately
+## Current governance consequence
 
 ```text
-D=1.5853259043
-q=.02166488057
-old lambda envelope=[-2.2937,+1.8232]
-Pu baseline=51.30 MN
+R10_PHYSICAL_OPERATOR = FROZEN / UNCHANGED
+N3584_SOURCE_FIDELITY_WITNESS = RETAINED
+N3584_AS_NEXT_PRODUCTION_BASIS = REJECTED
+N3584_GLOBAL_LAMBDA_COMPILER = DIAGNOSTIC_ONLY
+CURRENT_HIGH_ORDER_BACKEND_ENGINEERING = PAUSED
 ```
 
-At this wide occupied spectrum the present N3584 coefficient-tensor realization becomes impractical:
-
-```text
-full Z6 concrete, tol=2e-4: >180 s / not completed
-full Z6 concrete, tol=1e-3: >120 s / not completed
-T-channel CH/Clenshaw pair alone, tol=1e-3: >120 s / not completed
-```
-
-Hence:
-
-```text
-NC_N3584_SOURCE_FIDELITY = PASS
-ORDER_AGNOSTIC_CH_CLENSHAW_ALGEBRA = PASS
-N3584_CURRENT_COEFFICIENT_TENSOR_COMMON_TRACTABILITY = FAIL
-NC_N3584_FULL_PRODUCTION_COMPILER_PROMOTION = WITHHELD
-```
-
-A Z6-only fallback to the old N48 solver is prohibited because it would break the unified workflow.
+The present evidence supports that `N=3584` is primarily a representation-coordinate artifact, not an intrinsic statement that ordinary concrete needs a thousands-order theory.
 
 ## Capacity-result status
 
 ```text
-Z6_AR2_Pu=51.30 MN  # retained user-accepted engineering baseline only
-Z6_UNIFIED_RERUN=NOT_COMPLETED
-Z0_Z5_20260816_1043_Pu=RETRACTED
-Z0_Z5_20260816_1248_LOCATORS=DIAGNOSTIC_ONLY
-NEW_Z0_Z6_PRODUCTION_Pu=NOT_RELEASED
-SAME_EXPRESSION_L=NOT_COMPLETED
-SAME_STATE_KZ=NOT_COMPLETED
+Z6_AR2_Pu = 51.30 MN  # retained user-accepted engineering baseline only
+Z6_UNIFIED_RERUN = NOT COMPLETED
+Z0_Z5_20260816_1043_Pu = RETRACTED
+Z0_Z5_20260816_1248_LOCATORS = DIAGNOSTIC_ONLY
+NEW_Z0_Z6_PRODUCTION_Pu = NOT RELEASED
+SAME_EXPRESSION_L = NOT COMPLETED
+SAME_STATE_KZ = NOT COMPLETED
 ```
-
-## Mandatory intermediate-state record
-
-Every future production run must preserve at least:
-
-1. specimen/source inputs;
-2. boundary and halfwave selection;
-3. material family/compiler identity, source parameters, core/guard, representation and source errors;
-4. `D,q,A=q*b` and source-grounded finite internal amplitudes;
-5. continuous principal/invariant material envelope;
-6. phase load and `Rq` decompositions;
-7. `P_D,P_q,Rq_D,Rq_q,L` or exact condensed equivalents;
-8. internal residual/condensation conditioning where applicable;
-9. same-state material/geometric `KZ` phase decomposition;
-10. branch/peak bracket;
-11. formal spatial/thickness counters;
-12. structural-backend algebraic convergence/conditioning diagnostics.
 
 ## Current unique next gate
 
-`UNIFIED_V1_NC_COMPILER_STRUCTURAL_TRACTABILITY_REDESIGN_GATE`
+`UNIFIED_V1_R10_INTRINSIC_SCALE_FACTORIZED_PI_ADAPTER_GATE`
 
 Required next work:
 
-1. retain frozen R10 physics and the project-wide V1 mechanics;
-2. retain zero structural spatial/thickness numerical integration;
-3. redesign the **family-level analytic material representation and/or exact coefficient contraction architecture** so it is source-faithful and tractable for Z0-Z6;
-4. no specimen-specific compiler interval/order and no Z6-only solver;
-5. after the family backend passes, rerun Z0-Z6 through one common `P,Rq,L,KZ` path.
+1. keep R10 physics unchanged;
+2. retain the one common NC method across NC+rebar, NC+shell and Z0-Z6;
+3. keep material factors in intrinsic coordinates rather than recompressing the entire source into one wide lambda polynomial;
+4. solve the `Pi_eta -> zero-spatial exact-moment` adapter problem;
+5. retain source stress/tangent/divided-difference gates;
+6. prove General-D15 or another already-approved zero-spatial exact-moment contraction before Pu;
+7. retain low parameter count and hand-auditable factor identities;
+8. no case-specific order/domain, no Z6-only fallback, no structural calibration.
 
-Allowed candidates include a universal factorized/low-rank analytic coefficient representation or another finite analytic source-controlled representation that contracts through General-D15 without a giant full coefficient tensor.
+A change of `eta`, R10 knot locations, or material transition width is **not authorized** by this gate. If the exact R10 factor graph itself later fails the low-complexity exact-moment adapter gate, material regularization requires a separate explicit decision.
 
 ## Current key artifacts
 
-- `semantic_v2/10_governance/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_TRACTABILITY_GATE__LOCK.md`
-- `semantic_v2/40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_AND_Z0_Z6_RERUN__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260816_1248__NZSCCM__N3584_CH_CLENSHAW_D15_BACKEND__REPRO.py`
-- `semantic_v2/60_validation/common/20260816_1248__NZSCCM__N3584_CH_D15_COMMON_BACKEND_TRACTABILITY__AUDIT.md`
-- `semantic_v2/00_index/20260816_1248__NZSCCM__PROJECT__CURRENT_STATE_N3584_COMMON_BACKEND_TRACTABILITY_FAIL__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__EXECUTION_REPORT.md`
-- `semantic_v2/20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
+- `semantic_v2/10_governance/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION_AND_INTRINSIC_SCALE__LOCK.md`
+- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__PARAMS_AND_INTERMEDIATES.json`
+- `semantic_v2/40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__REPRO.py`
+- `semantic_v2/60_validation/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_CAUSE_AND_INTRINSIC_FACTOR_SCREEN__AUDIT.md`
+- `semantic_v2/00_index/20260816_1355__NZSCCM__PROJECT__CURRENT_STATE_R10_INTRINSIC_SCALE_GLOBAL_ORDER_DIAGNOSIS__SEMANTIC_INDEX.md`
+- `semantic_v2/40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_AND_Z0_Z6_RERUN__EXECUTION_REPORT.md` — predecessor structural tractability gate
