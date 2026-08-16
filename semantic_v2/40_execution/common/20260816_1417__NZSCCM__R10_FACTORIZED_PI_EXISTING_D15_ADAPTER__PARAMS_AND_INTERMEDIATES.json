@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-08-16T14:17:00+08:00",
+  "identity": "UNIFIED_V1_R10_INTRINSIC_SCALE_FACTORIZED_PI_ADAPTER_GATE",
+  "result": "FAIL_EXISTING_GENERAL_D15_EXACT_CLOSURE",
+  "formal_structural_counters": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "spatial_subdomains": 1,
+    "thickness_quadrature": 0
+  },
+  "r10": {
+    "kappa": 2.0005129533678754,
+    "rho": 0.1,
+    "xcr": 0.04998717945397425,
+    "eta": 0.0024993589726987125,
+    "h": 0.09799750427197301,
+    "ur": 0.03,
+    "physical_operator_changed": false
+  },
+  "retained_1355_material_screen": {
+    "Pi_eta": "exact",
+    "N_C": 6,
+    "N_u": 64,
+    "fitted_scalar_coefficients": 72,
+    "E_sigma": 0.003337,
+    "E_tangent": 0.030469,
+    "E_divided_difference": 0.046869,
+    "status": "MATERIAL_ONLY_PASS_DIAGNOSTIC"
+  },
+  "exact_scalar_identities": {
+    "Pi_plus_Pi_minus": "z^2/sqrt(z^2+eta^2)",
+    "Pi_plus_minus_Pi_minus": "z^3/(z^2+eta^2)",
+    "Pi_plus": "0.5*(z^2/sqrt(z^2+eta^2)+z^3/(z^2+eta^2))"
+  },
+  "traceless_matrix_lift": {
+    "field": "X(xi)=beta*sin(xi)*diag(1,-1)",
+    "eigenvalues": "+/- r, r=beta*sin(xi)",
+    "Pi_X": "alpha(r)*I+gamma(r)*X",
+    "alpha": "r^2/(2*sqrt(r^2+eta^2))",
+    "gamma": "r^2/(2*(r^2+eta^2))",
+    "trace": "r^2/sqrt(r^2+eta^2)"
+  },
+  "minimal_exact_moment": {
+    "integrand": "beta^2*sin(xi)^2/sqrt(eta^2+beta^2*sin(xi)^2)",
+    "m": "(beta/eta)^2",
+    "exact_result": "2*eta*(E(-m)-K(-m))",
+    "special_function_class": "complete elliptic integrals",
+    "existing_General_D15_finite_beta_gamma_closure": false
+  },
+  "closed_form_values_no_spatial_quadrature": [
+    {
+      "beta": 0.0024993589726987125,
+      "beta_over_eta": 1.0,
+      "m": 1.0,
+      "J": 0.002994582546237745
+    },
+    {
+      "beta": 0.012496794863493563,
+      "beta_over_eta": 5.0,
+      "m": 25.0,
+      "J": 0.02376005550948612
+    },
+    {
+      "beta": 0.04998717945397425,
+      "beta_over_eta": 20.0,
+      "m": 400.0,
+      "J": 0.09948961588791436
+    },
+    {
+      "beta": 0.1,
+      "beta_over_eta": 40.010258946735085,
+      "m": 1600.820830637064,
+      "J": 0.19971424063469126
+    }
+  ],
+  "gate_decision": {
+    "exact_Pi_matrix_lift": "PASS",
+    "exact_Pi_existing_General_D15_adapter": "FAIL",
+    "new_special_function_structural_backend": "NOT_AUTHORIZED",
+    "R10_material_change": "NOT_EXECUTED",
+    "new_Z0_Z6_Pu": "NOT_RUN",
+    "next_gate": "UNIFIED_V1_R10_PI_D15_COMPATIBLE_LOW_PARAMETER_REGULARIZATION_DECISION_GATE"
+  }
+}
