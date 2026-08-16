@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-08-17T02:10:00+08:00",
+  "status": "EXECUTED_DIRECT_SOURCE_CONVERGED_FORMAL_ZERO_QUADRATURE_OPEN",
+  "formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "boundary": {
+    "Z6": "FOUR_EDGE_SIMPLY_SUPPORTED_SSSS"
+  },
+  "case21": {
+    "b_mm": 1220.0,
+    "ell_mm": 1220.0,
+    "t_mm": 19.30,
+    "fc_MPa": 21.23,
+    "E0_MPa": 20321.0,
+    "eps0": 0.00209,
+    "nu": 0.18,
+    "q0": 0.0025,
+    "A0_mm": 3.05,
+    "rho_sx": 0.00375,
+    "rho_sy": 0.00375,
+    "Es_MPa": 200000.0,
+    "steel_yield_strain": 0.00265
+  },
+  "r10": {
+    "kappa": 2.0005129533678754,
+    "rho": 0.1,
+    "eta": 0.0024993589726987125,
+    "energy_smoothed_peak_h": 0.09799750427197301,
+    "residual_tension": 0.03,
+    "acc": 0.1072329249362415,
+    "at": "1-2^(-1/8)"
+  },
+  "membrane_closure": {
+    "type": "AIRY_SCALAR_CURRENT_GALERKIN",
+    "formula": "r=lambda*M*a(nu)",
+    "M": "pi^2/eps0*(q0*q+0.5*q^2)",
+    "a_nu_018": [-0.295, -0.205, 0.25, -0.205, 0.25],
+    "equilibrium": ["Rq=0", "RA=a^T Rm=0"],
+    "five_free_Rm": "REJECTED_FOR_CASE21_NONLINEAR_PRODUCTION"
+  },
+  "peak": {
+    "D": 0.7887924801,
+    "q": 0.0018083573,
+    "lambda": 0.0862359635,
+    "M": 0.0290703347814157,
+    "Cb": 0.0675468615526608,
+    "A_increment_mm": 2.2061958525,
+    "A_total_mm": 5.2561958525,
+    "r": [-0.00073954, -0.00051392, 0.00062673, -0.00051392, 0.00062673],
+    "Pc_kN": 337.92303037,
+    "Ps_kN": 28.84479832,
+    "Pu_kN": 366.76782869,
+    "Rq_kNmm": 6.25e-13,
+    "RA": 3.55e-15,
+    "steel_ex_min": 0.00029496246,
+    "steel_ex_max": 0.00035355420,
+    "steel_ey_min": -0.00164881192,
+    "steel_ey_max": -0.00159022018,
+    "steel_elastic": true
+  },
+  "experiment": {
+    "Pu_kN": 368.3127497435694,
+    "difference_kN": -1.54492106,
+    "error_percent": -0.419459
+  },
+  "r0_direct_source_baseline": {
+    "D_peak": 0.84322533,
+    "q_peak": 0.0017831589,
+    "Pu_kN": 368.73145691,
+    "delta_new_minus_r0_kN": -1.96362822,
+    "delta_percent": -0.532536
+  },
+  "audit_convergence": [
+    {"grid":"64x64x36","P_kN":366.771341},
+    {"grid":"72x72x40","P_kN":366.770509},
+    {"grid":"80x80x44","P_kN":366.769423},
+    {"grid":"96x96x52","P_kN":366.768496},
+    {"grid":"112x112x60","P_kN":366.768080},
+    {"grid":"128x128x68","P_kN":366.767919},
+    {"grid":"144x144x76","P_kN":366.767823}
+  ],
+  "production_status": {
+    "direct_source_continuum_oracle": "CONVERGED",
+    "formal_zero_quadrature_numeric_release": "OPEN",
+    "experimental_calibration_used": false
+  }
+}
