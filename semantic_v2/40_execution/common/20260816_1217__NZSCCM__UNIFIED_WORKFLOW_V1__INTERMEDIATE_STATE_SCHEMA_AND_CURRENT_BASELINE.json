@@ -1,0 +1,178 @@
+{
+  "timestamp": "2026-08-16T12:17:00+08:00",
+  "identity": "UNIFIED_PRODUCTION_WORKFLOW_V1_INTERMEDIATE_STATE_SCHEMA_AND_CURRENT_BASELINE",
+  "common_formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "common_hard_invariants": {
+    "one_continuous_complete_halfwave": true,
+    "nguyen_second_order": true,
+    "membrane_stress_redistribution": true,
+    "current_material_operator": true,
+    "consistent_current_tangent": true,
+    "moment_first_general_D15": true,
+    "connected_branch_root": true,
+    "same_state_tangent_stability_audit": true,
+    "spatial_gauss_simpson_adaptive": false,
+    "spatial_collocation": false,
+    "spatial_material_point_grid": false,
+    "panel_level_surrogate": false,
+    "experiment_in_solve": false,
+    "zhou_winter_in_solve": false
+  },
+  "stage_schema": {
+    "S0_input_freeze": {
+      "geometry": ["a", "b", "thicknesses", "A0", "boundary_type", "stiffener_or_PBL_design_data"],
+      "continuum_material": ["material_family_id", "source_operator_id", "source_parameters"],
+      "steel_phase": ["phase_type", "steel_parameters", "layer_or_direction_geometry"],
+      "comparators_sequestered_until_S12": true
+    },
+    "S1_halfwave": {
+      "inputs": ["physical_boundary", "design_geometry", "design_stiffness"],
+      "outputs": ["m_star_or_equivalent_selector", "ell", "representative_complete_halfwave_domain"],
+      "experiment_mode_fit": false
+    },
+    "S2_kinematics": {
+      "global_coordinates": ["D", "q"],
+      "derived": ["A=q*b", "continuous_strain_field", "epsilon_D", "epsilon_q"],
+      "optional_internal_coordinates": "finite source-grounded structural amplitudes only"
+    },
+    "S3_material_compiler": {
+      "family_contract_fields": [
+        "source_operator_id",
+        "compiler_architecture_id",
+        "declared_material_domain",
+        "representation_order_or_resolution",
+        "source_value_error_metrics",
+        "source_tangent_error_metrics",
+        "domain_convergence_record",
+        "coefficient_hash_or_exact_definition"
+      ],
+      "case_specific_manual_order_tuning": false,
+      "steel_phase_may_change_continuum_compiler": false
+    },
+    "S4_phase_mapping": {
+      "continuum_outputs": ["sigma_continuum", "Ct_continuum"],
+      "rebar_outputs": ["sigma_bar", "Ct_bar", "directional_projection"],
+      "shell_outputs": ["sigma_shell", "Ct_shell", "finite_thickness_analytic_mapping"],
+      "optional_local_shell_outputs": ["R_a", "R_a_g", "R_a_a"]
+    },
+    "S5_D15": {
+      "phase_outputs": ["P_p", "Rq_p", "same_expression_derivatives", "KZ_mat_p", "KZ_geo_p"],
+      "formal_spatial_points": 0
+    },
+    "S6_condensation": {
+      "identity_if_no_internal_coordinates": true,
+      "if_active": ["a_g=-Raa^-1*Rag", "P_g_tilde", "Rq_g_tilde", "Kgg_cond"]
+    },
+    "S7_assembly": {
+      "outputs": ["P", "Rq", "P_D", "P_q", "Rq_D", "Rq_q", "L"],
+      "formula": "L=P_D*Rq_q-P_q*Rq_D (or exact condensed counterpart)"
+    },
+    "S8_branch": {
+      "equation": "Rq=0 plus internal residuals when present",
+      "branch_rule": "connected physical branch from declared unloaded/imperfect state",
+      "forbidden": ["largest-root selection", "closest-to-experiment", "closest-to-Zhou/Winter"]
+    },
+    "S9_limit": {
+      "condition": ["L=0", "first admissible plus-to-minus load maximum"],
+      "structural_equilibrium_residual_norm_gate": 1e-05
+    },
+    "S10_tangent_stability": {
+      "formula": "KZ=sum(KZ_mat_p+KZ_geo_p), with exact condensation if local coordinates active",
+      "same_current_state_required": true,
+      "frozen_prebuckling_elastic_tangent": false
+    },
+    "S11_validity": {
+      "records": [
+        "material_domain_containment",
+        "compiler_value_error",
+        "compiler_tangent_error",
+        "phase_load_decomposition",
+        "phase_Rq_decomposition",
+        "derivative_matrix",
+        "limit_determinant",
+        "internal_residuals",
+        "condensation_condition",
+        "KZ_decomposition",
+        "peak_bracket",
+        "formal_counters"
+      ]
+    },
+    "S12_comparison": {
+      "allowed_only_after_production_solve": ["experiment", "Zhou", "Winter", "FE", "other design formula"]
+    }
+  },
+  "type_adapter_matrix": {
+    "NC_REBAR": {
+      "continuum_source": "R10_FROZEN",
+      "continuum_family_compiler": "SAME_NC_FAMILY_COMPILER",
+      "steel_phase": "REBAR",
+      "shell_local_coordinates": false,
+      "parent_root_topology": "COMMON_P_Rq_L"
+    },
+    "NC_STEEL_SHELL": {
+      "continuum_source": "R10_FROZEN",
+      "continuum_family_compiler": "SAME_NC_FAMILY_COMPILER",
+      "steel_phase": "FINITE_THICKNESS_SHELL",
+      "shell_local_coordinates": "WHEN_SOURCE_GROUNDED_PHYSICALLY_ACTIVE",
+      "parent_root_topology": "COMMON_P_Rq_L_WITH_EXACT_CONDENSATION_IF_ACTIVE"
+    },
+    "UHPC_REBAR": {
+      "continuum_source": "UHPC_MULTIDIMENSIONAL_CURRENT_OPERATOR_PENDING_FINAL_FREEZE",
+      "continuum_family_compiler": "SAME_UHPC_FAMILY_COMPILER_AFTER_FREEZE",
+      "steel_phase": "REBAR",
+      "shell_local_coordinates": false,
+      "parent_root_topology": "COMMON_P_Rq_L"
+    },
+    "UHPC_STEEL_SHELL": {
+      "continuum_source": "UHPC_MULTIDIMENSIONAL_CURRENT_OPERATOR_PENDING_FINAL_FREEZE",
+      "continuum_family_compiler": "SAME_UHPC_FAMILY_COMPILER_AFTER_FREEZE",
+      "steel_phase": "FINITE_THICKNESS_SHELL",
+      "shell_local_coordinates": "WHEN_SOURCE_GROUNDED_PHYSICALLY_ACTIVE",
+      "parent_root_topology": "COMMON_P_Rq_L_WITH_EXACT_CONDENSATION_IF_ACTIVE"
+    }
+  },
+  "material_family_compiler_governance": {
+    "N48_project_wide_hard_lock": false,
+    "same_numeric_order_for_NC_and_UHPC_required": false,
+    "same_order_selection_governance_required": true,
+    "same_source_value_tangent_audit_required": true,
+    "same_family_compiler_for_rebar_and_shell_required": true,
+    "family_domain_expand_then_recompile_consistently": true,
+    "case_specific_one_off_compiler": false,
+    "numerical_source_value_threshold": {
+      "status": "TO_BE_FROZEN_IN_NC_FAMILY_COMPILER_GATE",
+      "reason": "must be one project/family-level engineering gate, not chosen from a specimen error"
+    },
+    "numerical_source_tangent_threshold": {
+      "status": "TO_BE_FROZEN_IN_NC_FAMILY_COMPILER_GATE",
+      "reason": "must be one project/family-level engineering gate, not chosen from a specimen error"
+    }
+  },
+  "current_NC_diagnostics": {
+    "source_operator": "R10_FROZEN",
+    "old_Z6_wide_N48_interval": [-2.35, 1.90],
+    "old_wide_N48_T_max_error_about": 0.704,
+    "old_wide_N48_T7_max_error_about": 0.796,
+    "single_global_N48_coefficient_only_repair": "FAIL_REPRESENTATION_CAPACITY",
+    "high_order_multirate_1110": "HISTORICAL_DIAGNOSTIC_ONLY_NOT_PRODUCTION",
+    "family_compiler_status": "NOT_YET_FROZEN_UNDER_WORKFLOW_V1"
+  },
+  "current_capacity_baseline": {
+    "Z6": {
+      "Pu_MN": 51.30,
+      "status": "USER_ACCEPTED_ENGINEERING_BASELINE_REQUIRES_UNIFIED_NC_RERUN",
+      "old_final_state": {
+        "D": 1.5853259042928987,
+        "q": 0.02166488056894769,
+        "A_mm": 259.978566827
+      }
+    },
+    "Z0_Z5_20260816_1043": "RETRACTED_PENDING_UNIFIED_RERUN"
+  },
+  "next_gate": "UNIFIED_PRODUCTION_WORKFLOW_V1_IMPLEMENTATION_AND_NC_FAMILY_COMPILER_FREEZE"
+}
