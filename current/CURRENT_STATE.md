@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-16 17:34 +08:00  
+**Updated:** 2026-08-16 18:41 +08:00  
 **Status:** LEGACY MUTABLE POINTER ONLY
 
 ## Current operational entry
@@ -27,6 +27,77 @@ N_formal_thickness_quadrature = 0
 Gauss/Simpson/adaptive/collocation/material-point-grid = PROHIBITED
 experiment/Zhou/Winter calibration in solve/compiler = PROHIBITED
 ```
+
+## 18:41 formal-series / solve-order clarification
+
+A formally infinite or high-order analytic series is allowed as an intermediate representation and may be expanded term-by-term for theoretical interpretation and audit. It must not be confused with the dimension of the nonlinear structural solve.
+
+Three different orders are now explicitly separated:
+
+```text
+FORMAL_STRUCTURAL_MODAL_SERIES_ORDER
+MATERIAL_ANALYTIC_COMPILER_ORDER
+STRUCTURAL_GENERALIZED_COORDINATE_DIMENSION
+```
+
+For the current one-complete-halfwave RC backbone, the nonlinear structural unknowns remain `(D,q)` plus only finite source-grounded internal coordinates when physically required. Hundreds or thousands of known material-series coefficients are not hundreds or thousands of structural unknowns.
+
+```text
+FORMAL_INFINITE_SERIES = ALLOWED_AS_REPRESENTATION
+TERM_BY_TERM_EXPANSION_FOR_AUDIT = ALLOWED
+THOUSANDS_OF_SERIES_COEFFICIENTS_AS_NONLINEAR_UNKNOWNS = PROHIBITED
+EXPAND_ALL_THEN_SOLVE = PROHIBITED
+```
+
+Governance lock:
+
+`semantic_v2/10_governance/20260816_1841__NZSCCM__FORMAL_SERIES_VS_SOLVE_ORDER_AND_RC_BACKBONE_EQUIVALENCE__LOCK.md`
+
+## Historical RC backbone recovered and retained
+
+The accepted old RC Case21 chain is:
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE
+ -> (D,q), A=bq
+ -> Nguyen second-order continuous strain field
+ -> NC current operator M_NC
+ -> analytic representation / Cayley-Hamilton lift
+ -> moment-first D15 -> Pc, Rq,c
+ -> reinforcement strain from the same continuous strain field
+ -> bilinear reinforcement current operator Ms
+ -> Ps, Rq,s
+ -> P=Pc+Ps
+ -> Rq=Rq,c+Rq,s
+ -> connected physical branch Rq=0
+ -> L=P_D Rq_q-P_q Rq_D=0
+ -> Pu
+```
+
+Steel participates before the coupled root/limit solve; it is not appended as a post-peak scalar capacity.
+
+## Membrane-effect wording correction
+
+The old RC route already contained Nguyen/von-Karman **second-order membrane strain** through the `Cm(q)` terms. Therefore `old RC = no membrane effect` is incorrect.
+
+The present refinement is specifically:
+
+```text
+NEW_DELTA = MEMBRANE_STRESS_REDISTRIBUTION / IN-PLANE EQUILIBRIUM REFINEMENT
+```
+
+beyond the previously prescribed fixed in-plane strain pattern.
+
+Thus the intended current architecture is:
+
+```text
+historical accepted RC computational skeleton
++ membrane-stress redistribution refinement
+```
+
+not a new thousands-of-modes structural solution.
+
+The redistribution layer must preserve the one-complete-halfwave, low-dimensional generalized coordinates, current material operator, reinforcement embedding, moment-first D15, common P/Rq/L topology and zero formal spatial/thickness numerical integration. Free arbitrary `p20,p02` fields remain retired.
 
 ## Unified workflow/domain rule
 
@@ -151,24 +222,24 @@ No new `Pu` was run in the 17:34 material gate.
 ## Current unique next gate
 
 ```text
-UNIFIED_V1_R10_MSAC_RC1_NESTED_CLENSHAW_QNM_D15_CONTRACTION_GATE
+UNIFIED_V1_HISTORICAL_RC_BACKBONE_EQUIVALENCE_AND_MEMBRANE_REDISTRIBUTION_DELTA_GATE
 ```
 
 Required next work:
 
-1. keep RC1 factor graph and parameter-derived specimen domains unchanged;
-2. reconnect the historical `Q_nm` / adjoint-Clenshaw target-functional moment-first contraction;
-3. do not expand the nested compiler into a giant ordinary polynomial;
-4. preserve zero formal spatial/thickness numerical integration;
-5. verify nested algebra identity and fixed-state D15 tractability before any new Pu solve;
-6. after the adapter passes, use the same backend for `P,Rq,L` and same-state `KZ`.
+1. reproduce the old accepted RC Case21 calculation chain algebraically from `(D,q)` through concrete + reinforcement `P,Rq,L` without changing its computational skeleton;
+2. explicitly identify which terms are already Nguyen second-order membrane strain and which terms constitute the **new membrane-stress redistribution** refinement;
+3. write the current equations as `old RC backbone + redistribution delta`, term by term;
+4. confirm that no new thousands-of-mode structural unknown system is introduced;
+5. only after this equivalence/delta audit, connect the RC1 nested factor graph to the historical `Q_nm` / adjoint-Clenshaw moment-first D15 contraction;
+6. preserve zero formal spatial/thickness numerical integration throughout.
 
 ## Current key artifacts
 
+- `semantic_v2/10_governance/20260816_1841__NZSCCM__FORMAL_SERIES_VS_SOLVE_ORDER_AND_RC_BACKBONE_EQUIVALENCE__LOCK.md`
 - `semantic_v2/10_governance/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION_GATE__LOCK.md`
 - `semantic_v2/40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__EXECUTION_REPORT.md`
 - `semantic_v2/40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__PARAMS_AND_INTERMEDIATES.json`
 - `semantic_v2/40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__REPRO.py`
 - `semantic_v2/60_validation/common/20260816_1734__NZSCCM__R10_MSAC_RC1_SOURCE_FIDELITY_AND_COMPLEXITY__AUDIT.md`
 - `semantic_v2/00_index/20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md`
-- `semantic_v2/40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md` — predecessor
