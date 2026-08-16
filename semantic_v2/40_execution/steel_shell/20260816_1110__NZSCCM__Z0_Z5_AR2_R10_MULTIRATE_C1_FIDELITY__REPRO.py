@@ -3,10 +3,18 @@
 No structural spatial sampling/quadrature is used.
 Material-coordinate nodes below are coefficient-generation/audit coordinates only.
 The R10 physical current operator is unchanged.
+
+Implementation note:
+The oversampled Gauss-Chebyshev design matrix has exactly diagonal normal
+matrix. We therefore evaluate the unconstrained least-squares Chebyshev
+projection by DCT-II and impose the two C1 equalities with a 2x2 Schur
+correction. This is algebraically the same constrained least-squares problem
+as the dense KKT form, but avoids forming/solving a 1280x1280 normal system.
 """
 import hashlib, math
 import numpy as np
-from numpy.polynomial.chebyshev import chebvander, chebval, chebder
+from scipy.fft import dct
+from numpy.polynomial.chebyshev import chebval, chebder
 
 KAPPA=2.0005129533678754
 RHO=.1
@@ -71,18 +79,29 @@ def target_derivatives(lam):
 
 
 def compile_primitive(name,oversample=4):
+    """Constrained LS on oversampled Gauss-Chebyshev material coordinates."""
     idx=IDX[name]; deg=ORDERS[name]; n=oversample*(deg+1)
-    th=(np.arange(n)+.5)*math.pi/n
-    lam=LC+LH*np.cos(th); xi=(lam-LC)/LH
-    V=chebvander(xi,deg); y=targets(lam)[idx]
-    E=np.eye(deg+1); xi0=-LC/LH
-    vr=np.array([chebval(xi0,E[j]) for j in range(deg+1)])
-    dr=np.array([chebval(xi0,chebder(E[j]))/LH for j in range(deg+1)])
+    theta=(np.arange(n)+.5)*math.pi/n
+    xi=np.cos(theta); lam=LC+LH*xi; y=targets(lam)[idx]
+
+    # For these nodes, V^T V = diag(n,n/2,...,n/2).
+    raw=dct(y,type=2,norm=None)
+    a0=np.empty(deg+1)
+    a0[0]=raw[0]/(2*n)
+    a0[1:]=raw[1:deg+1]/n
+    hinv=np.full(deg+1,2.0/n); hinv[0]=1.0/n
+
+    xi0=-LC/LH; theta0=math.acos(xi0); k=np.arange(deg+1,dtype=float)
+    vr=np.cos(k*theta0)
+    dr=np.zeros(deg+1)
+    dr[1:]=k[1:]*np.sin(k[1:]*theta0)/math.sin(theta0)/LH
     G=np.vstack([vr,dr])
-    d=np.array([0,KAPPA]) if name=='U' else np.array([0.,0.])
-    H=V.T@V
-    K=np.block([[H,G.T],[G,np.zeros((2,2))]])
-    return np.linalg.solve(K,np.r_[V.T@y,d])[:deg+1]
+    target=np.array([0.0,KAPPA]) if name=='U' else np.array([0.0,0.0])
+
+    # Equality-constrained LS correction: H^-1 G^T (G H^-1 G^T)^-1(d-Ga0).
+    GHGT=(G*hinv)@G.T
+    correction=(hinv[:,None]*G.T)@np.linalg.solve(GHGT,target-G@a0)
+    return a0+correction
 
 
 def primitive_metrics(name,coef,a,b,n=60001):
@@ -140,7 +159,7 @@ def main():
     for name,coef in coefs.items():
         xi0=-LC/LH
         print(name,'degree',ORDERS[name],
-              'sha256',hashlib.sha256(np.asarray(coef,dtype='<f8').tobytes()).hexdigest(),
+              'sha256_diagnostic',hashlib.sha256(np.asarray(coef,dtype='<f8').tobytes()).hexdigest(),
               'maxabs',np.max(np.abs(coef)),'sumabs',np.sum(np.abs(coef)),
               'F0',chebval(xi0,coef),
               'dF0',chebval(xi0,chebder(coef))/LH,
