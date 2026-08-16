@@ -6,133 +6,93 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_1912__NZSCCM__PROJECT__CURRENT_STATE_FIVE_TERM_MEMBRANE_CONDENSATION_PARTIAL_PASS__SEMANTIC_INDEX.md`
+`20260816_1932__NZSCCM__PROJECT__CURRENT_STATE_RC1_ADJOINT_TARGET_PREFLIGHT_FAIL__SEMANTIC_INDEX.md`
 
-## Current locked production backbone
+## Frozen production backbone
 
 ```text
 UNIFIED_PRODUCTION_WORKFLOW_V1
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
 Nguyen second-order continuous kinematics
 MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
-source current material operator
-same-state current stress + consistent current tangent
+R10 source current material operator
+reinforcement/steel phase before root solve
+same-state current stress + consistent tangent
 Cayley-Hamilton / approved finite matrix lift
-moment-first General-D15 exact structural moments
-P,Rq,L connected-branch primary limit root
-same-state material + geometric tangent/stability audit
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-N_formal_thickness_quadrature = 0
-structural calibration = NO
+General-D15 exact target moments
+P,Rq,L connected-branch topology
+same-state material + geometric KZ
+N_formal_spatial_sampling=0
+N_formal_spatial_quadrature=0
+N_formal_spatial_subdomains=1
+N_formal_thickness_quadrature=0
 ```
 
-## Current RC membrane architecture
+## Five-term membrane model retained
 
-The historical RC global backbone remains `(D,q)`. The old Nguyen/von-Karman field already contained quadratic membrane strain; current work adds compatible membrane-stress redistribution/in-plane equilibrium.
-
-Five exact classical leading membrane displacement components are now represented by finite internal coordinates
+Global production remains `(D,q)`. Compatible membrane redistribution uses finite internal coordinates
 
 ```text
-r=[r0,r20,r22,s02,s22].
+r=[r0,r20,r22,s02,s22]
 ```
 
-They are solved internally and must be consistently condensed; they are not five new global Pu paths.
+with current equilibrium `Rm=0` and consistent Schur condensation. The exact elastic Airy/FvK recovery and General-D15 target closure remain PASS.
 
-## 19:12 five-term result
+## R10-MSAC-RC1 material status
 
-Exact elastic square-halfwave condensation gives
+`R10-MSAC-RC1` remains material-level source-fidelity PASS for Z0-Z6. Its nested factor graph is retained and full monomial expansion remains prohibited.
+
+## 19:32 adjoint target gate
+
+The adjoint/transpose Clenshaw algebra was implemented and verified exactly against a low-order nested beta/Chebyshev D15 example:
 
 ```text
-r/M=[-(1+nu)/4,-(1-nu)/4,1/4,-(1-nu)/4,1/4]
-fD=0
-detK=pi^10*(1-nu)/32
+final nested degree = 192
+DIRECT_MINUS_ADJOINT = 0 exactly
+functional/pi = .11633931515896061
 ```
 
-and exactly recovers
+However the contributing target kernels reached degrees `65,129,193`; adjoint Clenshaw changes recurrence direction but does not remove nested composition degree unless multiplication by the nested atom has a direct closed moment rule.
+
+Active RC1 composition preflight gives `DuR/DT7` from about `7.16e7` to `5.69e8` and nominal TT total-degree scale up to `1.708e9` for Z6. These are diagnostics, not production orders. They show that resolving the nested target back into ordinary polynomial General-D15 leaves recreates expansion swell.
 
 ```text
-sigma_x/(E eps0)=-M cos2Y/4
-sigma_y/(E eps0)=-D+M sin^2X/2
-tau_xy=0.
-```
-
-For `nu=.18`, the five-coordinate elastic matrix has `cond2=4.87805`.
-
-The nonlinear current-material formulation is fixed as
-
-```text
-Rm=0
-Krr=dRm/dr
-r_g=-Krr^-1 Rm_g
-Pbar_g=P_g+P_r r_g
-Rqbar_g=Rq_g+Rq_r r_g
-Lbar=Pbar_D Rqbar_q-Pbar_q Rqbar_D
-Kgg_cond=Kgg-Kgr Krr^-1 Krg
-```
-
-and all five `Rm` targets close in the existing General-D15 function space with zero formal spatial/thickness quadrature.
-
-```text
-FIVE_TERM_ELASTIC_CONDENSATION = PASS_EXACT
-FIVE_TERM_AIRY_FVK_RECOVERY = PASS_EXACT
-FIVE_TERM_GENERAL_D15_TARGET_CLOSURE = PASS
-CURRENT_MATERIAL_CONDENSATION_FORM = PASS_FORMAL
-```
-
-## RC1 status
-
-`R10-MSAC-RC1` remains material-level source-fidelity PASS for Z0-Z6. The nested factor graph is mandatory; full monomial expansion is prohibited.
-
-The remaining implementation gap is:
-
-```text
-nested RC1
- -> arbitrary target kernel
- -> adjoint-Clenshaw/Qnm recurrence
- -> General-D15 exact contraction
-```
-
-This high-order structural target-functional runtime has not yet passed.
-
-A legacy N48 current-material diagnostic confirmed that the classical elastic five-coordinate amplitudes are not nonlinear R10+rebar equilibrium values. That diagnostic was stopped immediately and is not used as RC1 production or to release a new Pu.
-
-## Capacity status
-
-```text
-Case21 historical/current-support closure = 368.189 kN
-Z6 51.30 MN = retained engineering baseline only
-Z0-Z5 old production values = retracted/diagnostic under current governance
-NEW membrane-redistributed Pu = not released
-```
-
-## Current gate verdict
-
-```text
-OVERALL_GATE = PARTIAL_PASS_TO_IMPLEMENTATION_BOUNDARY
-RC1_NESTED_TARGET_FUNCTIONAL_RUNTIME = OPEN
+ADJOINT_CLENSHAW_ALGEBRA = PASS_EXACT
+LOW_ORDER_GENERAL_D15_TARGET_IDENTITY = PASS_EXACT
+RC1_NESTED_ATOM_CLOSED_MOMENT_RULE = ABSENT
+ACTIVE_RC1_STRUCTURAL_TARGET_RUNTIME = FAIL_PREFLIGHT
 NEW_Pu = NOT_RUN
+```
+
+This structural failure does not revoke the RC1 material source-fidelity pass and does not change the R10 physical law.
+
+## Capacity boundary
+
+```text
+Case21 368.189 kN = historical/current-support closure only
+Z6 51.30 MN = retained engineering baseline only
+Z0-Z5 old values = retracted/diagnostic under current governance
+NEW membrane-redistributed Pu = not released
 ```
 
 ## Current next gate
 
 ```text
-UNIFIED_V1_RC1_ADJOINT_CLENSHAW_GENERAL_D15_TARGET_FUNCTIONAL_EXECUTION_GATE
+UNIFIED_V1_NC_EXACT_NESTED_ATOM_MOMENT_CLOSURE_OR_STRUCTURALLY_CLOSED_COMPILER_REDESIGN_GATE
 ```
 
-The next task is to implement one common nested RC1 target-functional backend for `P,Rq,Rm1...Rm5,KZ`, validate it against direct low-order General-D15 expansion, execute it at the Z0-Z6 RC1 first-pass levels, and preserve zero structural spatial/thickness numerical integration.
+The next route must either derive a true exact moment transform for RC1 nested atoms or redesign the NC analytic compiler, without changing R10 physics, into a source-faithful basis whose structural target moments close directly through General-D15/CAS/special-function algebra. Repeating forward/adjoint ordinary polynomial Clenshaw without such a closure is not a new route.
 
 ## Repository semantic read order
 
-1. `20260816_1912__NZSCCM__PROJECT__CURRENT_STATE_FIVE_TERM_MEMBRANE_CONDENSATION_PARTIAL_PASS__SEMANTIC_INDEX.md`
-2. `../20_theory/nc_rebar_panel/20260816_1912__NZSCCM__FIVE_TERM_CURRENT_MEMBRANE_CONDENSATION_AND_RC1_D15__THEORY.md`
-3. `../40_execution/common/20260816_1912__NZSCCM__FIVE_TERM_MEMBRANE_CONDENSATION_RC1_D15__EXECUTION_REPORT.md`
-4. `../40_execution/common/20260816_1912__NZSCCM__FIVE_TERM_MEMBRANE_CONDENSATION_RC1_D15__PARAMS_AND_INTERMEDIATES.json`
-5. `../40_execution/common/20260816_1912__NZSCCM__FIVE_TERM_MEMBRANE_CONDENSATION_RC1_D15__REPRO.py`
-6. `../60_validation/common/20260816_1912__NZSCCM__FIVE_TERM_MEMBRANE_CONDENSATION_RC1_D15__AUDIT.md`
-7. `20260816_1848__NZSCCM__PROJECT__CURRENT_STATE_RC_BACKBONE_MEMBRANE_DELTA_PASS__SEMANTIC_INDEX.md` — predecessor
-8. `20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md` — compiler predecessor
-9. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
+1. `20260816_1932__NZSCCM__PROJECT__CURRENT_STATE_RC1_ADJOINT_TARGET_PREFLIGHT_FAIL__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_1932__NZSCCM__RC1_ADJOINT_TARGET_FAILURE_AND_NEXT_CLOSURE__GATE_LOCK.md`
+3. `../20_theory/nc_rebar_panel/20260816_1932__NZSCCM__RC1_ADJOINT_CLENSHAW_GENERAL_D15_TARGET_CLOSURE__THEORY.md`
+4. `../40_execution/common/20260816_1932__NZSCCM__RC1_ADJOINT_CLENSHAW_D15_TARGET__EXECUTION_REPORT.md`
+5. `../40_execution/common/20260816_1932__NZSCCM__RC1_ADJOINT_CLENSHAW_D15_TARGET__PARAMS_AND_INTERMEDIATES.json`
+6. `../40_execution/common/20260816_1932__NZSCCM__RC1_ADJOINT_CLENSHAW_D15_TARGET__REPRO.py`
+7. `../60_validation/common/20260816_1932__NZSCCM__RC1_ADJOINT_CLENSHAW_D15_TARGET__AUDIT.md`
+8. `20260816_1912__NZSCCM__PROJECT__CURRENT_STATE_FIVE_TERM_MEMBRANE_CONDENSATION_PARTIAL_PASS__SEMANTIC_INDEX.md` — predecessor
+9. `20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md` — compiler predecessor
 
 No legacy file is deleted, moved or renamed solely from filename identity.
