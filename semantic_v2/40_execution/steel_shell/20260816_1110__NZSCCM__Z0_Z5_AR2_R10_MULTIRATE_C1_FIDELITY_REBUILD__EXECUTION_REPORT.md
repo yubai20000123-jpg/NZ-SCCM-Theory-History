@@ -33,9 +33,9 @@ The previous challenged Z0–Z5 structural spectra are used only to construct a 
 
 The upcoming blind structural recalculation must verify that its continuous reachable spectrum remains in the operational core. Otherwise the calculation stops and the compiler interval is regenerated.
 
-## 3. C1 coefficient-generation method
+## 3. C1 coefficient-generation method and verification
 
-For each source primitive, use an overdetermined Chebyshev material-coordinate least-squares problem on the guard interval with exact equality constraints at `lambda=0` enforced by a KKT system.
+For each source primitive, the coefficient definition is the overdetermined Gauss-Chebyshev material-coordinate least-squares projection on the guard interval with exact R10 C1 equality constraints at `lambda=0`.
 
 ```text
 U : value=0, derivative=kappa
@@ -44,20 +44,26 @@ T : value=0, derivative=0
 T7: value=0, derivative=0
 ```
 
+For the oversampled Gauss-Chebyshev roots, `V^T V` is diagonal. The committed reproducer therefore evaluates the unconstrained projection with DCT-II and applies the exact two-constraint correction through the 2x2 Schur system
+
+`H^-1 G^T (G H^-1 G^T)^-1 (d-G a0)`.
+
+This is algebraically the same constrained least-squares problem as the dense KKT form, but is fast enough for orders 1024–1280 and was independently rerun after the initial artifact write.
+
 Material-coordinate nodes are coefficient-generation/audit coordinates only. They are not plate coordinates, material points, structural collocation points or numerical spatial integration points.
 
 ## 4. Primitive fidelity
 
-Operational-core source errors:
+Verified operational-core source errors are approximately:
 
 ```text
-U  N=256   E0=8.6015e-5   derivative-relative-to-source-peak=0.9403%
-C  N=1024  E0=1.5651e-4   derivative-relative-to-source-peak=7.6098%
-T  N=1280  E0=6.0062e-4   derivative-relative-to-source-peak=2.8118%
-T7 N=512   E0=4.3650e-4   derivative-relative-to-source-peak=0.6909%
+U  N=256   E0=8.60e-5   derivative-relative-to-source-peak=0.940%
+C  N=1024  E0=1.57e-4   derivative-relative-to-source-peak=7.61%
+T  N=1280  E0=6.01e-4   derivative-relative-to-source-peak=2.812%
+T7 N=512   E0=4.37e-4   derivative-relative-to-source-peak=0.691%
 ```
 
-Coefficient magnitudes:
+Coefficient magnitudes remain O(1):
 
 ```text
 U  max|a|=.5948283  sum|a|=1.70739
@@ -66,36 +72,24 @@ T  max|a|=.3287288  sum|a|=2.02398
 T7 max|a|=.1154567  sum|a|=1.70141
 ```
 
-No large coefficient pathology is introduced.
+No large-coefficient pathology is introduced.
 
 ## 5. Current-master audit
 
 The compiled U/C/T/T7 functions are inserted into the unchanged R10 spectral master; the master itself is not fitted.
 
-On the material-coordinate operational core, the maximum audited spectral stress-scalar error is
-
-`4.215293029e-4`.
-
-Worst audited pair:
+Verified material-coordinate audit on the operational core gives:
 
 ```text
-lambda_1=-.9948333333
-lambda_2=+.0010833333
-source stress scalar   = -.9939997881
-compiled stress scalar = -.9944213174
+max spectral stress-scalar abs error = 0.000421529302935264
+worst pair = (-0.9948333333,+0.0010833333)
+source stress scalar   = -0.9939997881
+compiled stress scalar = -0.9944213174
+
+max first-spectral-derivative error = 0.8431213563
+source peak tangent magnitude       = 29.8917328975
+relative tangent error              = 2.8206%
 ```
-
-The maximum first-spectral-derivative discrepancy is
-
-`0.8431213563`,
-
-versus a source peak tangent magnitude
-
-`29.8917328975`,
-
-so
-
-`max tangent error / source peak tangent = 2.8206%`.
 
 ## 6. Old-vs-new comparison on the same operational core
 
@@ -120,20 +114,13 @@ stress-scalar error reduction ~= 1705x
 tangent-relative error reduction ~= 28.9x
 ```
 
-This directly closes the process defect identified at 10:54: the upcoming stocky-panel calculation will no longer evaluate mixed tension/compression states with a 70–80% primitive activation error.
+This closes the process defect identified at 10:54 at the source-material level: the upcoming stocky-panel calculation will no longer evaluate the small-positive mixed tension/compression transition with the former 70–80% activation-function error.
 
-## 7. Exact C1 audit
+## 7. C1 / coefficient verification
 
-```text
-U(0)    = +2.22e-16
-U'(0)   = 2.000512953367875
-C(0)    = +1.11e-16
-C'(0)   = -4.80e-16
-T(0)    = -1.11e-16
-T'(0)   = -2.69e-14
-T7(0)   = +5.55e-17
-T7'(0)  = +2.88e-15
-```
+The rerun retains the exact source anchors to numerical roundoff. Representative residual levels are `10^-13` or smaller in value/first derivative, and every coefficient remains O(1).
+
+The JSON companion records the verified coefficient heads/tails, diagnostic float64 hashes, source errors and operator audit values. The bit hashes are reproducibility diagnostics only, not theory gates.
 
 ## 8. Structural zero-integration status
 
@@ -147,7 +134,7 @@ N_formal_spatial_subdomains=1
 
 Each new primitive is still a finite polynomial, so Cayley-Hamilton and General D15 remain formally applicable.
 
-However the existing Z0–Z6 execution kernel is coded around fixed N48 recurrence. It has not yet been rewritten for the multirate orders above. Therefore no corrected Z0–Z5 Pu is calculated in this execution.
+However, the existing Z0–Z6 structural kernel is coded around fixed N48 recurrence. It has not yet been rebuilt for the multirate orders above. Therefore no corrected Z0–Z5 Pu is calculated in this execution.
 
 ## 9. Gate decision
 
@@ -168,4 +155,4 @@ Z6_51_30_MN = RETAINED_USER_ACCEPTED
 
 `Z0_Z5_AR2_MULTIRATE_R10_TO_VARIABLE_ORDER_MOMENT_FIRST_D15_RECOMPILE_GATE`
 
-The next gate must implement the variable-order recurrence/moment path, avoid full spatial-point evaluation, verify coefficient conditioning and continuous spectrum containment, and only after those checks calculate new Z0–Z5 connected branches.
+The next gate must implement the variable-order recurrence/moment path, avoid full spatial-point evaluation, verify coefficient conditioning and computational tractability, and only after those checks calculate new Z0–Z5 connected branches. The recalculated continuous principal spectrum must remain inside `[-1.40,+0.30]`; otherwise the material hull is rebuilt before any Pu is accepted.
