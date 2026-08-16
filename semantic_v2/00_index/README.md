@@ -6,7 +6,7 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_1229__NZSCCM__PROJECT__CURRENT_STATE_NC_FAMILY_COMPILER_SOURCE_FREEZE_PASS__SEMANTIC_INDEX.md`
+`20260816_1248__NZSCCM__PROJECT__CURRENT_STATE_N3584_COMMON_BACKEND_TRACTABILITY_FAIL__SEMANTIC_INDEX.md`
 
 ## Current locked production backbone
 
@@ -28,73 +28,80 @@ N_formal_thickness_quadrature = 0
 structural calibration = NO
 ```
 
-## Unified method / physical adapters
+The same workflow serves NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Physical adapters may differ, but the parent kinematics, membrane redistribution, zero-integration philosophy, generalized root topology and consistent-current-tangent requirement may not change case by case.
 
-The same workflow serves NC+rebar, NC+steel shell, UHPC+rebar and UHPC+steel shell. Source material laws and steel-phase geometry may differ physically, but they may not replace the common kinematics, membrane redistribution, exact-moment engine, generalized root topology, consistent-tangent rule or zero-spatial-integration governance.
+## NC source-fidelity result retained
 
-## NC family compiler source freeze
-
-The frozen ordinary-concrete source remains R10.
+The ordinary-concrete source remains frozen R10. The 12:29 source-only convergence result remains:
 
 ```text
-operational core = [-2.35,+1.90]
-coefficient guard = [-2.60,+2.15]
-channels = U,C,T,T7
-one global Chebyshev polynomial per channel
-same order for all channels
-M=8*(N+1)
-exact C1 at lambda=0
-E_sigma <= 0.5%
-E_tangent <= 5%
-E_divided_difference <= 5%
+core = [-2.35,+1.90]
+guard = [-2.60,+2.15]
+source-fidelity candidate order = 3584
+E_sigma = .00107218
+E_tangent = .04066517
+E_divided_difference = .00381386
 ```
 
-The deterministic order ladder reaches its first passing candidate at
+Therefore `N3584_SOURCE_FIDELITY = PASS`.
+
+## 12:48 structural-backend result
+
+An order-agnostic backward Chebyshev/Cayley-Hamilton Clenshaw pair was implemented and verified against the historical degree-48 forward recurrence at roundoff scale.
 
 ```text
-N_NC = 3584
+ORDER_AGNOSTIC_CH_CLENSHAW_IDENTITY = PASS
 ```
 
-Reference assembled-current audit:
+However a simple coefficient-amplitude pruning strategy is not a certified exact production backend: Z0 generalized residuals vary non-monotonically as the threshold is reduced.
+
+Z0-Z5 branch neighborhoods can be reached diagnostically using the N3584 source coefficients and the common SSSS/Nguyen/membrane equations, but the values are not production Pu because `L`, same-state `KZ`, and algebraic convergence are not closed.
+
+At the wide-spectrum Z6 engineering state the present N3584 coefficient-tensor realization becomes impractical:
 
 ```text
-E_sigma = 0.107218%
-E_tangent = 4.06652%
-E_divided_difference = 0.381386%
+full concrete tol=2e-4: >180 s / not completed
+full concrete tol=1e-3: >120 s / not completed
+T-channel CH pair only tol=1e-3: >120 s / not completed
 ```
 
-The same frozen order/core/guard/algorithm passes the current Swartz R10 kappa extrema.
+Hence:
 
 ```text
-NC_FAMILY_SOURCE_COMPILER_FREEZE = PASS
-N3584_CH_D15_STRUCTURAL_BACKEND = NOT_YET_EXECUTED
-NEW_Z0_Z6_UNIFIED_RESULTS = NOT_CALCULATED
+N3584_SOURCE_FIDELITY = PASS
+N3584_FULL_PRODUCTION_COMPILER_PROMOTION = WITHHELD
+CURRENT_COEFFICIENT_TENSOR_COMMON_BACKEND = FAIL_TRACTABILITY
 ```
 
-The earlier N48 and ad hoc multirate calculations remain historical diagnostics only.
+No Z6-only fallback solver is permitted.
 
 ## Capacity status
 
 ```text
-Z6 51.30 MN = retained user-accepted engineering baseline; unified rerun required
-Z0-Z5 10:43 values = retracted pending unified rerun
+Z6 51.30 MN = retained user-accepted engineering baseline only
+Z6 unified rerun = incomplete
+Z0-Z5 10:43 values = retracted
+Z0-Z5 12:48 values = diagnostic locators only
+new Z0-Z6 production Pu = not released
 ```
 
 ## Current next gate
 
-`UNIFIED_V1_N3584_CH_MOMENT_FIRST_D15_BACKEND_AND_Z0_Z6_RERUN_GATE`
+`UNIFIED_V1_NC_COMPILER_STRUCTURAL_TRACTABILITY_REDESIGN_GATE`
+
+The next representation/backend must be family-level, source-controlled, zero-spatial-integration, General-D15 compatible, and tractable across Z0-Z6. Case-specific compiler intervals/orders and Z6-only fallbacks remain prohibited.
 
 ## Repository semantic read order
 
-1. `20260816_1229__NZSCCM__PROJECT__CURRENT_STATE_NC_FAMILY_COMPILER_SOURCE_FREEZE_PASS__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_SOURCE_FIDELITY_AND_ORDER_FREEZE__LOCK.md`
-3. `../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__EXECUTION_REPORT.md`
-4. `../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__PARAMS_AND_INTERMEDIATES.json`
-5. `../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__REPRO.py`
-6. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
-7. `20260816_1217__NZSCCM__PROJECT__CURRENT_STATE_UNIFIED_PRODUCTION_WORKFLOW_V1__SEMANTIC_INDEX.md`
-8. `../60_validation/steel_shell/20260816_1205__NZSCCM__Z6_VS_Z0_Z5_CALCULABILITY_AND_COMPILER_CONSISTENCY__AUDIT.md`
-9. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 baseline
-10. `20260816_1134__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_FIXED_N48_REPRESENTATION_CAPACITY_FAIL__SEMANTIC_INDEX.md` — retained representation-capacity diagnostic
+1. `20260816_1248__NZSCCM__PROJECT__CURRENT_STATE_N3584_COMMON_BACKEND_TRACTABILITY_FAIL__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_TRACTABILITY_GATE__LOCK.md`
+3. `../40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_AND_Z0_Z6_RERUN__EXECUTION_REPORT.md`
+4. `../40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND__PARAMS_AND_INTERMEDIATES.json`
+5. `../40_execution/common/20260816_1248__NZSCCM__N3584_CH_CLENSHAW_D15_BACKEND__REPRO.py`
+6. `../60_validation/common/20260816_1248__NZSCCM__N3584_CH_D15_COMMON_BACKEND_TRACTABILITY__AUDIT.md`
+7. `20260816_1229__NZSCCM__PROJECT__CURRENT_STATE_NC_FAMILY_COMPILER_SOURCE_FREEZE_PASS__SEMANTIC_INDEX.md` — source-fidelity predecessor
+8. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
+9. `20260816_0249__NZSCCM__PROJECT__CURRENT_STATE_Z6_AR2_SSSS_CAPACITY__SEMANTIC_INDEX.md` — retained Z6 engineering baseline
+10. `20260816_1134__NZSCCM__PROJECT__CURRENT_STATE_Z0_Z5_FIXED_N48_REPRESENTATION_CAPACITY_FAIL__SEMANTIC_INDEX.md` — historical N48 representation diagnostic
 
 No legacy file is deleted, moved or renamed solely from filename identity.
