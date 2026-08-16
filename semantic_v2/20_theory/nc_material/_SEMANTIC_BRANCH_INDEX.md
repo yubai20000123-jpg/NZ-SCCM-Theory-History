@@ -6,83 +6,85 @@
 - R10 material physics is not reopened.
 - Governing project workflow is `UNIFIED_PRODUCTION_WORKFLOW_V1`.
 
-## 12:29 NC source-fidelity result — PASS
+## Retained 12:29 source-fidelity witness
 
-Current source-fidelity support:
-
-- `../../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_1229__NZSCCM__NC_FAMILY_COMPILER_FREEZE__REPRO.py`
-
-Material-only result:
+The wide single-global lambda-space compiler screen remains valid as a source-fidelity witness:
 
 ```text
-source operator = R10
-operational core = [-2.35,+1.90]
-coefficient guard = [-2.60,+2.15]
-channels = U,C,T,T7
-single global Chebyshev polynomial per channel
-same order for all four channels
-M = 8*(N+1)
-exact C1 at lambda=0
-E_sigma <= .005
-E_tangent <= .05
-E_divided_difference <= .05
-N_source_candidate = 3584
-```
-
-Reference errors:
-
-```text
+core = [-2.35,+1.90]
+guard = [-2.60,+2.15]
+N_source_witness = 3584
 E_sigma = .00107218
 E_tangent = .04066517
 E_divided_difference = .00381386
 ```
 
-The same source-only order/core/guard/algorithm passes the audited NC kappa extrema.
+The 12:48 structural gate also retains the order-agnostic CH/Clenshaw identity result, while rejecting the current giant coefficient-tensor realization as a common production backend.
 
-## 12:48 production-promotion correction
-
-The 12:48 structural gate establishes that `N=3584` is a **source-fidelity candidate order**, not yet a fully frozen production NC family compiler.
+## 13:55 historical reconnection and intrinsic-scale audit
 
 Current governance:
 
-- `../../10_governance/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_TRACTABILITY_GATE__LOCK.md`
+- `../../10_governance/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION_AND_INTRINSIC_SCALE__LOCK.md`
 
 Execution / validation:
 
-- `../../40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND_AND_Z0_Z6_RERUN__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_1248__NZSCCM__N3584_CH_D15_BACKEND__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_1248__NZSCCM__N3584_CH_CLENSHAW_D15_BACKEND__REPRO.py`
-- `../../60_validation/common/20260816_1248__NZSCCM__N3584_CH_D15_COMMON_BACKEND_TRACTABILITY__AUDIT.md`
+- `../../40_execution/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_HISTORICAL_RECONNECTION__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260816_1355__NZSCCM__R10_INTRINSIC_SCALE_AUDIT__REPRO.py`
+- `../../60_validation/common/20260816_1355__NZSCCM__R10_GLOBAL_ORDER_CAUSE_AND_INTRINSIC_FACTOR_SCREEN__AUDIT.md`
 
-An order-agnostic backward Chebyshev/Cayley-Hamilton Clenshaw pair was derived and verified against the historical forward N48 CH recurrence at roundoff scale:
-
-```text
-ORDER_AGNOSTIC_CH_CLENSHAW_IDENTITY = PASS
-```
-
-However the current high-order coefficient-tensor realization fails the family-level structural tractability requirement at the wide-spectrum Z6 state. Simple coefficient-threshold pruning is also not production-certified because generalized residual convergence is non-monotone under support changes.
-
-Therefore:
+The current R10 scale separation is
 
 ```text
-NC_N3584_SOURCE_FIDELITY = PASS
-NC_N3584_FULL_PRODUCTION_COMPILER_PROMOTION = WITHHELD
-CURRENT_N3584_COEFFICIENT_TENSOR_BACKEND = FAIL_COMMON_TRACTABILITY
+eta=.0024993589727
+core_width/eta=1700.436
+guard_width/eta=1900.487
 ```
+
+The N3584 C/T derivative-error maxima localize near `lambda≈±.0028-.0029`, while the `Pi_eta` splitter itself remains costly to approximate by one wide global lambda polynomial.
+
+The source factors are much simpler in intrinsic coordinates:
+
+```text
+C(c), N=6: derivative error / peak ~=3.8826%
+u_R(t), N=64: derivative error / peak ~=3.5857%
+```
+
+A material-only factor screen retaining exact `Pi_eta` and using `N_C=6,N_u=64` gives
+
+```text
+E_sigma=.003337
+E_tangent=.030469
+E_divided_difference=.046869
+```
+
+which passes the existing material gates with 72 fitted scalar coefficients.
+
+This is not yet production because exact `Pi_eta` has not been connected to the formal zero-spatial exact-moment backend.
+
+## Current representation verdict
+
+```text
+R10_PHYSICAL_OPERATOR = UNCHANGED
+N3584_SOURCE_FIDELITY_WITNESS = RETAINED
+N3584_GLOBAL_LAMBDA_COMPILER_AS_NEXT_PRODUCTION_BASIS = REJECTED
+LOW_COMPLEXITY_INTRINSIC_FACTOR_SCREEN = MATERIAL_ONLY PASS DIAGNOSTIC
+```
+
+The project therefore no longer treats 3584 as the target theory order. It is evidence that the one-wide-global-lambda-polynomial grammar is mismatched to the R10 intrinsic scales.
 
 ## Meaning of “same NC method”
 
-All NC specimens must share the same family-level material representation/convergence policy and the same downstream kinematics, CH/approved matrix lift, General-D15, `P,Rq,L`, and same-state `KZ` logic.
-
-A source parameter may change coefficient values physically, but a case ID may not select a different representation, order, interval, or fallback structural solver.
+All NC specimens still share one family-level representation policy and downstream mechanics:
 
 ```text
 NC+REBAR -> SAME_NC_FAMILY_METHOD
 NC+SHELL -> SAME_NC_FAMILY_METHOD
 Z0-Z6    -> SAME_NC_FAMILY_METHOD
 ```
+
+A case ID may not select a special interval/order/fallback solver.
 
 ## Common mechanics inherited by every NC specimen
 
@@ -107,19 +109,22 @@ Z0-Z5 12:48 N3584 values = DIAGNOSTIC LOCATORS ONLY
 NEW Z0-Z6 PRODUCTION Pu = NOT RELEASED
 ```
 
-The 12:48 diagnostic locators remaining near several old load neighborhoods means the old discrepancy is not yet explained solely by the old N48 source error. This is a diagnosis to be resolved only after a common production backend reaches converged `Rq`, same-expression `L`, and same-state `KZ`.
-
 ## Current next gate
 
-`UNIFIED_V1_NC_COMPILER_STRUCTURAL_TRACTABILITY_REDESIGN_GATE`
+`UNIFIED_V1_R10_INTRINSIC_SCALE_FACTORIZED_PI_ADAPTER_GATE`
 
-The next gate must retain R10 and all project-wide mechanics while redesigning the **family-level finite analytic representation and/or exact coefficient contraction architecture** so one source-controlled method is tractable across Z0-Z6.
-
-Allowed directions include universal factorized/low-rank analytic representations or another finite analytic material-family representation with explicit source stress/tangent error and General-D15-compatible contraction.
-
-Prohibited:
+The next gate must retain exact R10 physics and test whether the intrinsic factor graph
 
 ```text
+Pi_eta -> c,t -> C(c),u_R(t) -> T,T7,U -> current map
+```
+
+can be carried through General-D15 or another already-approved zero-spatial exact-moment contraction without returning to a thousands-order global lambda polynomial.
+
+Prohibited until a separate explicit decision:
+
+```text
+changing eta or R10 transition widths
 case-specific compiler/order/domain
 Z6-only fallback solver
 spatial numerical quadrature/collocation/material points
