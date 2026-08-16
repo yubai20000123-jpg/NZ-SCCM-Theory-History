@@ -6,7 +6,7 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
+`20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md`
 
 ## Current locked production backbone
 
@@ -28,78 +28,64 @@ N_formal_thickness_quadrature = 0
 structural calibration = NO
 ```
 
-## Unified workflow means unified rules, not identical numerical domains
+## Unified workflow/domain rule
 
-The 17:12 correction is now executed. Each specimen receives a material-coordinate validity domain from one common source/design-side reachability rule using its geometry, physical boundary, selected complete halfwave, material parameters and declared generalized-coordinate bounds. The same material-family compiler policy and source stress/tangent gates are then applied.
+One common source/design-side rule derives each specimen's reachable material domain from its own geometry, boundary, complete halfwave, material parameters and declared generalized-coordinate bounds. Different numerical domains/orders are allowed only as deterministic outputs of this common rule.
+
+## 17:34 R10-MSAC-RC1 material-level result
+
+The historical R3/R4/R5 multiscale/source-landmark architecture has been reconnected to the corrected Z0-Z6 domains as `R10-MSAC-RC1`.
+
+First passing levels:
 
 ```text
-same rule + different specimen parameters -> different domains/orders = ALLOWED
-case ID / Pu error / experiment -> special domain/order = PROHIBITED
+Z0 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z1 L3: Ng=640,  Nc=14, Nt=320, coeff=1939
+Z2 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z3 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z4 L2: Ng=512,  Nc=14, Nt=256, coeff=1555
+Z5 L6: Ng=1024, Nc=14, Nt=512, coeff=3091
+Z6 L7: Ng=1152, Nc=16, Nt=576, coeff=3477
 ```
 
-## 17:20 parameter-derived-domain result
-
-Generated Z0-Z6 cores:
+Worst first-pass source errors:
 
 ```text
-Z0 [-2.326966,+.398162]
-Z1 [-2.246565,+.304377]
-Z2 [-2.326966,+.398162]
-Z3 [-2.241404,+.293969]
-Z4 [-2.385927,+.469962]
-Z5 [-2.980899,+1.194486]
-Z6 [-2.768805,+2.128027]
+max E_sigma = .0008861083
+max E_tangent = .0379151680
+max E_divided_difference = .0221037356
 ```
 
-Applying the same baseline single-global-lambda R10 convergence screen on each domain gives:
+All pass the frozen material gates, and the immediately higher common-ladder level also passes for every specimen.
+
+Compared with the corrected one-global-lambda baseline, finite scalar coefficient count falls by approximately `3.17x` to `4.61x`.
 
 ```text
-Z0 N=1792
-Z1 N=1536
-Z2 N=1792
-Z3 N=1536
-Z4 N=1792
-Z5 N=3072
-Z6 N=3840
-```
-
-Therefore the former identical family-wide interval requirement is retired, but one global lambda polynomial remains too high-order to be the desired production grammar.
-
-```text
-PARAMETER_DERIVED_DOMAIN_RULE = PASS
-SINGLE_GLOBAL_LAMBDA_POLYNOMIAL_LOW_COMPLEXITY = FAIL
 R10_PHYSICAL_OPERATOR = UNCHANGED
-```
-
-The exact-Pi elliptic-period audit remains diagnostic only; Pi regularization is not the mandatory next task.
-
-## Capacity status
-
-```text
-Z6 51.30 MN = retained user-accepted engineering baseline only
-Z6 unified rerun = incomplete
-Z0-Z5 10:43 values = retracted
-Z0-Z5 12:48 values = diagnostic locators only
-new Z0-Z6 production Pu = not released
+R10_MSAC_RC1_MATERIAL_LEVEL = PASS_Z0_Z6
+FULL_MONOMIAL_EXPANSION = PROHIBITED
+NESTED_FACTOR_GRAPH = REQUIRED
+NESTED_GENERAL_D15_TARGET_FUNCTIONAL_ADAPTER = OPEN
+NEW_Z0_Z6_PRODUCTION_Pu = NOT_RUN
 ```
 
 ## Current next gate
 
 ```text
-UNIFIED_V1_PARAMETER_DERIVED_DOMAIN_PLUS_HISTORICAL_MULTISCALE_COMPILER_RECONNECTION_GATE
+UNIFIED_V1_R10_MSAC_RC1_NESTED_CLENSHAW_QNM_D15_CONTRACTION_GATE
 ```
 
-The next step reconnects the historical R5/MSAC/source-landmark multiscale analytic compiler and moment-first contraction lessons on the corrected specimen-derived domains. No R10 material-law change is authorized before that gate is tested.
+The next step must connect RC1 directly to the historical `Q_nm` / adjoint-Clenshaw moment-first General-D15 target contractions while keeping the compiler nested. No giant ordinary-polynomial expansion and no structural spatial numerical quadrature are permitted.
 
 ## Repository semantic read order
 
-1. `20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER_GATE__LOCK.md`
-3. `../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__EXECUTION_REPORT.md`
-4. `../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__PARAMS_AND_INTERMEDIATES.json`
-5. `../40_execution/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_COMPILER__REPRO.py`
-6. `../60_validation/common/20260816_1720__NZSCCM__PARAMETER_DERIVED_DOMAIN_AND_GLOBAL_COMPILER__AUDIT.md`
-7. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
-8. `20260816_1712__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_WORKFLOW_CORRECTION__SEMANTIC_INDEX.md` — governance predecessor
+1. `20260816_1734__NZSCCM__PROJECT__CURRENT_STATE_R10_MSAC_RC1_MATERIAL_PASS__SEMANTIC_INDEX.md`
+2. `../10_governance/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION_GATE__LOCK.md`
+3. `../40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__EXECUTION_REPORT.md`
+4. `../40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__PARAMS_AND_INTERMEDIATES.json`
+5. `../40_execution/common/20260816_1734__NZSCCM__R10_MSAC_RC1_MULTISCALE_RECONNECTION__REPRO.py`
+6. `../60_validation/common/20260816_1734__NZSCCM__R10_MSAC_RC1_SOURCE_FIDELITY_AND_COMPLEXITY__AUDIT.md`
+7. `20260816_1720__NZSCCM__PROJECT__CURRENT_STATE_PARAMETER_DERIVED_DOMAIN_GATE_RESULT__SEMANTIC_INDEX.md` — predecessor
+8. `../20_theory/20260816_1217__NZSCCM__UNIFIED_PRODUCTION_WORKFLOW_V1__THEORY_AND_EXECUTION_CONTRACT.md`
 
 No legacy file is deleted, moved or renamed solely from filename identity.
