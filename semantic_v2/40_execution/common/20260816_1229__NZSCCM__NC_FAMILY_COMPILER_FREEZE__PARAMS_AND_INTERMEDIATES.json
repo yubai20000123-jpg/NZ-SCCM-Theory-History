@@ -1,0 +1,90 @@
+{
+  "timestamp": "2026-08-16T12:29:00+08:00",
+  "gate": "UNIFIED_PRODUCTION_WORKFLOW_V1_IMPLEMENTATION_AND_NC_FAMILY_COMPILER_FREEZE",
+  "scope": "ordinary_concrete_material_compiler_source_fidelity",
+  "source_operator": "R10_FROZEN",
+  "structural_invariants": {
+    "one_continuous_complete_halfwave": true,
+    "nguyen_second_order": true,
+    "membrane_stress_redistribution": true,
+    "general_D15_moment_first": true,
+    "same_state_consistent_tangent": true,
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "r10_constants_reference": {
+    "rho": 0.1,
+    "kappa": 2.0005129533678754,
+    "xcr": 0.04998717945397425,
+    "eta": 0.0024993589726987125,
+    "m_t": -0.07777777777777778,
+    "eta_r": 0.05,
+    "u_r": 0.03,
+    "integral_Tsrc_0_10": 6.3498752135985095,
+    "Wsrc": 0.031741235181249175,
+    "h": 0.09799750427197018,
+    "a_cc": 0.1072329249362415,
+    "a_t": 0.08299595679532878
+  },
+  "kappa_audit_envelope": [1.9993148515, 2.0008935611],
+  "lambda_core": [-2.35, 1.9],
+  "lambda_guard": [-2.6, 2.15],
+  "compiler": {
+    "basis": "single_global_Chebyshev_per_R10_channel",
+    "channels": ["U", "C", "T", "T7"],
+    "same_order_for_all_channels": true,
+    "oversample_M_rule": "M=8*(N+1)",
+    "constraint": "exact_R10_C1_at_lambda_0",
+    "coefficient_solver": "Gauss-Chebyshev projection + 2x2 Schur equality correction",
+    "piecewise_material_coordinate_split": false,
+    "specimen_specific_order": false
+  },
+  "fidelity_thresholds": {
+    "E_sigma_rel_max": 0.005,
+    "E_tangent_rel_max": 0.05,
+    "E_divided_difference_rel_max": 0.05
+  },
+  "candidate_order_rule": {
+    "initial": [48, 96, 192, 384, 768],
+    "after_768": "increase by 256"
+  },
+  "reference_convergence": [
+    {"N":48,"E_sigma_rel":0.8171028219553226,"E_tangent_rel":0.9546806746293119,"E_div_rel":0.5453849252650941},
+    {"N":96,"E_sigma_rel":0.6373929517980912,"E_tangent_rel":0.8172699429135094},
+    {"N":192,"E_sigma_rel":0.29144271051646325,"E_tangent_rel":0.6849204089847745},
+    {"N":384,"E_sigma_rel":0.09179192577099697,"E_tangent_rel":0.5355361460101005,"E_div_rel":0.20255005635065945},
+    {"N":768,"E_sigma_rel":0.04046402842242285,"E_tangent_rel":0.4096412847587073,"E_div_rel":0.07179360031603209},
+    {"N":1024,"E_sigma_rel":0.026292371787889086,"E_tangent_rel":0.33301270331845506},
+    {"N":1280,"E_sigma_rel":0.018035309569206515,"E_tangent_rel":0.2746782210625552},
+    {"N":1536,"E_sigma_rel":0.012511621348339127,"E_tangent_rel":0.2212115674349304,"E_div_rel":0.02933766596620912},
+    {"N":1792,"E_sigma_rel":0.009136601854426123,"E_tangent_rel":0.17317563227314658},
+    {"N":2048,"E_sigma_rel":0.006374275087004684,"E_tangent_rel":0.14759067844351342,"E_div_rel":0.016698292883467122},
+    {"N":2304,"E_sigma_rel":0.004806770678962978,"E_tangent_rel":0.12072902546376323},
+    {"N":2560,"E_sigma_rel":0.0035271238269171897,"E_tangent_rel":0.10257375623793487},
+    {"N":2816,"E_sigma_rel":0.002504062652094193,"E_tangent_rel":0.0800816900395277},
+    {"N":3072,"E_sigma_rel":0.0018374558538088524,"E_tangent_rel":0.06975282991354596,"E_div_rel":0.0063614127273432615},
+    {"N":3328,"E_sigma_rel":0.0014136520025822231,"E_tangent_rel":0.05569866042648462,"E_div_rel":0.004930015582801868},
+    {"N":3584,"E_sigma_rel":0.001072180122191361,"E_tangent_rel":0.040665166915353886,"E_div_rel":0.0038138585821465626}
+  ],
+  "selected_order": 3584,
+  "selected_order_gate": "PASS_FIRST_CANDIDATE_ON_DETERMINISTIC_LADDER",
+  "kappa_extreme_audits_N3584": [
+    {"kappa":1.9993148515,"xcr":0.0500171345823667,"eta":0.0025008567291183352,"stress_abs":0.0011841747356668986,"E_sigma_rel":0.0010695113127387674,"tangent_abs":1.2128603140246632,"E_tangent_rel":0.04060077203210306,"max_abs_coefficient":0.511589461789983,"max_sum_abs_coefficients":2.0816865118041084},
+    {"kappa":2.0005129533678754,"xcr":0.04998717945397425,"eta":0.0024993589726987125,"stress_abs":0.001187129685014443,"E_sigma_rel":0.001072180122191361,"tangent_abs":1.215497703087621,"E_tangent_rel":0.040665166915353886,"max_abs_coefficient":0.5116513603114167,"max_sum_abs_coefficients":2.081721829289933},
+    {"kappa":2.0008935611,"xcr":0.04997767094868583,"eta":0.002498883547434292,"stress_abs":0.0011880692259628178,"E_sigma_rel":0.0010730286835201643,"tangent_abs":1.216336042568141,"E_tangent_rel":0.040685629269784584,"max_abs_coefficient":0.5116710126777392,"max_sum_abs_coefficients":2.081732945994997}
+  ],
+  "reference_coefficients_diagnostics_N3584": {
+    "U": {"sha256_float64_le":"4a04909f645d74e25ea66d848c95a9eae647724cea78be41058ab742e70be063","max_abs":0.5116513603114167,"sum_abs":1.7856933495843637,"C1_value":5.551115123125783e-16,"C1_derivative":2.00051295336788,"head":[-0.3913617132010217,0.5116513603114167,0.06650654169282771,-0.24607387276670403,0.018842813693280946,0.1334269606565241],"tail":[-3.3403437643332805e-10,-2.0694742409875347e-09,-9.361280063087919e-11,1.9952123934259388e-09,4.937672688427876e-10,-1.8404162961815664e-09]},
+    "C": {"sha256_float64_le":"f6979a8591db6e165eac1f1fd9d797ddbe39d34a486ec88c7e2cc8eaf25689af","max_abs":0.4918774740167891,"sum_abs":1.729742854721363,"C1_value":6.38378239159465e-16,"C1_derivative":1.8156236747975193e-13},
+    "T": {"sha256_float64_le":"54a305629bca62dcc47f0fab3484f9d5aa7b61d310812e60dc8c66dc931da1a7","max_abs":0.1976337382971493,"sum_abs":2.081721829289933,"C1_value":1.942890293094024e-16,"C1_derivative":1.8227291021551203e-12,"head":[0.16370296213333457,0.1976337382971493,-0.024879371014914612,-0.08268271876811993,0.017707676487222115,0.06689978452001205],"tail":[2.510610254174844e-06,1.4827777483105272e-07,-2.4805670653912105e-06,-6.193884620755104e-07,2.361030230619706e-06,1.0674418528752865e-06]},
+    "T7": {"sha256_float64_le":"143ff63f0fd7c5f34e18f36128ec2a12b08b092a38cce40d7099321c412cd3c1","max_abs":0.032715711024965476,"sum_abs":1.665476260256149,"C1_value":4.440892098500626e-16,"C1_derivative":-1.3462914993349266e-14}
+  },
+  "status": {
+    "NC_source_fidelity_freeze": "PASS",
+    "NC_family_order": 3584,
+    "high_order_CH_D15_structural_backend": "NOT_YET_EXECUTED",
+    "Z0_Z6_unified_rerun": "PENDING"
+  }
+}
