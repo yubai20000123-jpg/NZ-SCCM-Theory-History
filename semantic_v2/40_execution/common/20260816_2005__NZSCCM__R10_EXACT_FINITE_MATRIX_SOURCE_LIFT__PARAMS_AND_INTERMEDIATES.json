@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-08-16T20:05:00+08:00",
+  "parent_gate": "UNIFIED_V1_NC_EXACT_NESTED_ATOM_MOMENT_CLOSURE_OR_STRUCTURALLY_CLOSED_COMPILER_REDESIGN_GATE",
+  "result": "EXACT_SOURCE_MATRIX_LIFT_PASS_FIXED_ALGEBRAIC_ATOMS_STRUCTURAL_MOMENT_OPEN_NO_PU",
+  "formal_structural_counters": {
+    "sampling": 0,
+    "quadrature": 0,
+    "subdomains": 1,
+    "thickness_quadrature": 0,
+    "Gauss": 0,
+    "Simpson": 0,
+    "adaptive": 0,
+    "collocation": 0,
+    "material_point_grid": 0
+  },
+  "source_constants": {
+    "rho": 0.1,
+    "H": 0.09799750427197301,
+    "UR": 0.03,
+    "ACC": 0.1072329249362415,
+    "AT": 0.08299595679532878,
+    "kappa_default": 2.0005129533678754
+  },
+  "spline_dimensionless_coefficients": {
+    "A3": -0.5809077931212661,
+    "A4": -0.7698071056793392,
+    "A5": -0.28799193489407166,
+    "B3": 0.0009327504015359809,
+    "B4": 0.00015545840025599682,
+    "B5": 0.000006909262233599859
+  },
+  "spline_symbolic_identity": {
+    "middle_residual": "0 exactly",
+    "upper_residual": "0 exactly"
+  },
+  "fixed_atom_families": [
+    "sqrt(E^2+eta^2 I)",
+    "inverse(I+(kappa-2)c+c^2)",
+    "(t/a-I)_+^k, k=3..5",
+    "(t/a-10I)_+^k, k=3..5"
+  ],
+  "independent_T7_fit_required": false,
+  "case_audit": {
+    "Z0": {"stress_identity_max": 6.2727600891321345e-15, "pi_matrix_max": 3.7831959787126834e-12},
+    "Z1": {"stress_identity_max": 6.6717464886068e-15, "pi_matrix_max": 1.531180737757154e-11},
+    "Z2": {"stress_identity_max": 5.818262538426211e-15, "pi_matrix_max": 4.914246368506719e-11},
+    "Z3": {"stress_identity_max": 5.717648576819556e-15, "pi_matrix_max": 6.668410268417801e-11},
+    "Z4": {"stress_identity_max": 5.6343818499726694e-15, "pi_matrix_max": 4.657829677512382e-12},
+    "Z5": {"stress_identity_max": 8.049116928532385e-15, "pi_matrix_max": 1.9172774479159216e-11},
+    "Z6": {"stress_identity_max": 4.928349395250109e-15, "pi_matrix_max": 3.667688375230682e-11}
+  },
+  "gate_decision": {
+    "R10_physical_current_law": "RETAIN_FROZEN",
+    "R10_exact_smooth_split_matrix_lift": "PASS_EXACT",
+    "uR_truncated_power_spline": "PASS_EXACT",
+    "R10_2D_stress_invariant_matrix_identity": "PASS_EXACT",
+    "consistent_tangent_finite_graph": "PASS_FORMAL",
+    "material_fit_order_dependence_in_source_graph": "ELIMINATED",
+    "fixed_algebraic_atom_graph": "PASS_FORMAL",
+    "General_D15_algebraic_atom_moment_closure": "OPEN",
+    "new_internal_r_solve": "NOT_RUN",
+    "new_Pu": "NOT_RUN",
+    "next_gate": "UNIFIED_V1_R10_FIXED_ALGEBRAIC_ATOM_GENERAL_D15_CAS_MOMENT_CLOSURE_GATE"
+  }
+}
