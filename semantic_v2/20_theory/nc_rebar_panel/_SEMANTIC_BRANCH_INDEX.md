@@ -2,9 +2,9 @@
 
 ## Current production identity
 
-Case21 current production result is now closed under the already reproduced Case21-local N48-C1/MM + Cayley-Hamilton + General-D15 evaluator with five-term membrane redistribution.
+The previously published Case21 five-free-coordinate membrane result `320.749185 kN` is retracted as a physical membrane Pu. It remains diagnostic evidence of unstable internal over-relaxation.
 
-Current governance: `UNIFIED_PRODUCTION_WORKFLOW_V1` + anti-loop lock + N48 scope clarification.
+Current controlling mechanics are the recovered historical RC backbone plus a compatibility/equilibrium membrane-redistribution layer whose internal coordinates may be Schur-condensed **only while the internal membrane block remains stable**.
 
 ## Active mechanics
 
@@ -12,69 +12,81 @@ Current governance: `UNIFIED_PRODUCTION_WORKFLOW_V1` + anti-loop lock + N48 scop
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
  -> global (D,q), A=bq
  -> Nguyen second-order continuous strain
- -> five internal compatible membrane coordinates r=[r0,r20,r22,s02,s22]
+ -> five-term leading compatible membrane subspace r=[r0,r20,r22,s02,s22]
  -> same-state R10 concrete + reinforcement
- -> solve five Rm + total Rq
- -> eliminate internal membrane response / follow connected equilibrium set
- -> first connected load maximum
- -> same-state KZ
+ -> solve Rm=0
+ -> verify internal membrane stability lambda_min(sym(Krr))>0
+ -> ONLY THEN Schur-condense r
+ -> outer P,Rq,L / same-state KZ event ordering
 ```
 
-## Case21 result
+At first `lambda_min(sym(Krr))=0`, the internal membrane mode is an explicit stability event. The solver must not jump to another relaxed `Rm=0` root and must not condense an unstable internal state.
+
+## Historical recovery
 
 ```text
-D_u=0.4597278541813354
-q_u=0.0018330938013757293
-A_u=2.2363744376783896 mm
-r0 =-0.012475802483156403
-r20=-0.007141864103343101
-r22=+0.04699488414266459
-s02=+0.041946118067216
-s22=-0.09983629747628982
-Pc=304.05427812103903 kN
-Ps=16.69490720454312 kN
-Pu=320.7491853255822 kN
-KZ(Pu)=+260.1709056728 N/mm
-CONTROL=FIRST_CONNECTED_LOAD_MAXIMUM
+20260816_1848 compatibility-coupled Airy/FvK delta = RETAIN
+20260816_1912 five-term elastic Airy recovery = PASS_EXACT
+20260816_1912 legacy N48 five-coordinate current solve = REJECTED / NEW_R_SOLVE_NOT_AUTHORIZED
+20260816_2136 anti-loop override to legacy N48 five-coordinate production = RETRACTED
 ```
 
-Rounded current Case21 capacity: `320.75 kN`.
+## Exact elastic leading direction
 
-## Case21-local compiler identity
+For square halfwave and `nu=.18`:
 
 ```text
-interval=[-1.15,+0.12]
-N=48
-U=N48-C1
-C=N48-C1
-T=N48-C1-CONSTRAINED-MINIMAX
-T7=N48-C1
+r/M=[-.295,-.205,+.25,-.205,+.25]
+Kbar eig=[.205,.5,.5,.5,1]
 ```
 
-The final membrane state passes a continuous Bernstein domain certificate inside this interval. The old 18:02 r=0 load fingerprint was reproduced to `6.4e-7 kN`.
+This reproduces the positive classical Airy/FvK postbuckling membrane redistribution exactly.
 
-## Critical N48 scope clarification
+## Case21 diagnostic
 
-The above does **not** make N48 a universal NC family compiler.
-
-12:29 broad family source-fidelity gate:
+Airy-direction K-projection:
 
 ```text
-core=[-2.35,+1.90]
-guard=[-2.60,+2.15]
-N48 E_sigma=0.817103, E_tan=0.954681 -> FAIL
-first passing source-fidelity candidate=N3584
+low-q point1: lambda_A=+1.1373, K-perp=.1624
+low-q point2: lambda_A=+1.0979, K-perp=.2198
+retracted 320.749-kN state: lambda_A=-1.1460, K-perp=.9719
 ```
 
-12:48 then found the present N3584 coefficient-tensor structural backend impractical for Z6. Both results remain valid.
+A direct frozen-R10 audit-only oracle confirms that a full five-coordinate `Rm=0` root can become internally unstable:
+
+```text
+sym(Krr) eig ~= [-238.65,-28.05,+281.46,+492.27,+733.27]
+```
+
+while the two low-q states retain all-positive internal symmetric tangent eigenvalues.
 
 Therefore:
 
 ```text
-CASE21_LOCAL_N48=ALLOWED
-N48_UNIVERSAL_NC_FAMILY=NOT_ALLOWED
-CASE21_N48_COEFFICIENTS_FOR_Z6=PROHIBITED
+Case21 320.749185 kN = RETRACTED / unstable-overrelaxation diagnostic
+NEW_CORRECTED_CASE21_MEMBRANE_Pu = NOT RELEASED
 ```
+
+Retained support baseline pending corrected event ordering:
+
+`Case21 historical/current-support closure = 368.189 kN`.
+
+## Compiler identity / scope
+
+Case21-local N48 remains useful as a value-evaluator regression object on its certified local interval, but the 19:12 legacy-five-coordinate production rejection is controlling for this membrane-root task. N48 is not a universal NC-family compiler and Case21 coefficients must not be reused for Z6.
+
+## Z6 boundary
+
+Z6 requires its historical mixed in-plane boundary class:
+
+```text
+loaded ends ux=0
+lateral sides in-plane free
+```
+
+and the corresponding Airy/homogeneous-biharmonic family before current-material internal condensation. Simple Case21/free-Poisson five-term fields are not a complete Z6 closure.
+
+Retained Z6 support baseline pending corrected closure: `51.30 MN`.
 
 ## Formal zero-integration identity
 
@@ -85,27 +97,19 @@ N_formal_spatial_subdomains=1
 N_formal_thickness_quadrature=0
 ```
 
-## Capacity comparison
+Direct Gauss-Legendre calculations used in the recovery gate are independent audit oracles only, not formal production integration.
 
-```text
-old Case21 r=0=365.5804275653 kN
-new membrane Case21=320.7491853256 kN
-change=-12.2630%
-experiment=336 kN
-new error=-4.5389%
-```
+## Current next task
 
-## Next task
+`STABLE_CURRENT_MEMBRANE_CONDENSATION_AND_MIXED_EVENT_GATE`
 
-`Z6_MEMBRANE_REDISTRIBUTED_CAPACITY_EXECUTION_WITH_EXISTING_FAMILY_EVIDENCE`
-
-Do not restart a new symbolic backend automatically. Try the existing family-level route; if common tractability remains the hard blocker, record the blocker and stop rather than silently falling back to the Case21-local N48 compiler.
+First locate the first internal-stability event on the origin-connected Case21 membrane branch and compare its order with the retained support peak / outer limit event. Do not relax through the event and do not release a new Pu before the ordering is closed.
 
 ## Current artifacts
 
-- `../../00_index/20260816_2253__NZSCCM__PROJECT__CURRENT_STATE_CASE21_MEMBRANE_PU_320P75_N48_SCOPE_CLARIFIED__SEMANTIC_INDEX.md`
-- `../../40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__REPRO.py`
-- `../../60_validation/common/20260816_2253__NZSCCM__CASE21_MEMBRANE_REDISTRIBUTED_N48_LIMIT__AUDIT.md`
-- `../../10_governance/20260816_2253__NZSCCM__N48_SCOPE_CLARIFICATION_CASE21_VS_NC_FAMILY__LOCK.md`
+- `../../00_index/20260817_0010__NZSCCM__PROJECT__CURRENT_STATE_MEMBRANE_CLOSURE_RECOVERED_INTERNAL_STABILITY_GATE__SEMANTIC_INDEX.md`
+- `../../40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_RECOVERY__REPRO.py`
+- `../../60_validation/common/20260817_0010__NZSCCM__MEMBRANE_CLOSURE_TRANSITION_AND_INTERNAL_STABILITY__AUDIT.md`
+- `../../10_governance/20260817_0010__NZSCCM__STABLE_CURRENT_MEMBRANE_CONDENSATION__GATE_LOCK.md`
