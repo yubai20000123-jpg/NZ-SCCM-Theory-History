@@ -1,35 +1,99 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 14:42 +08:00  
-**Status:** UNIFIED END-TO-END THEORY CHAIN LOCKED / Z6 a=24000 ACTIVE
+**Updated:** 2026-08-17 14:49 +08:00  
+**Status:** TRUE INFINITE MATERIAL SERIES -> EXACT D15 MOMENT SERIES -> FINITE LIMIT SOLUTION LOCKED
 
 ## Controlling governance
 
-`semantic_v2/10_governance/20260817_1442__NZSCCM__UNIFIED_END_TO_END_THEORY_CHAIN__CANONICAL_LOCK.md`
+`semantic_v2/10_governance/20260817_1449__NZSCCM__TRUE_INFINITE_SERIES_TO_FINITE_INTEGRAL_SOLUTION__CANONICAL_CORRECTION_LOCK.md`
 
-This canonical lock supersedes interpretations that turn an isolated correction in geometry, membrane closure, compiler order, or integration representation into a separate theory route.
+This supersedes the 14:42 wording that still treated production as testing finite orders `48,96,144,...` until engineering convergence.
 
 ## Canonical production chain
 
 ```text
-actual specimen/panel dimensions + material inputs
- -> geometry-specific analytical boundary and complete-halfwave definition
+actual specimen/panel dimensions + physical boundaries
+ -> geometry-specific analytic boundary/domain + one complete representative halfwave
  -> one unified physical current material target
-      NC: frozen R10
-      UHPC: one unified UHPC current operator
- -> N48-prototype convergent analytic material series
-      N48 is a prototype/refinement quantum, not a universal fixed final degree
- -> compose with Nguyen second-order complete-halfwave kinematics
- -> include mechanically admissible membrane-stress redistribution
- -> include the full same-source directional consistent tangent
- -> exact multiple structural integration term-by-term
- -> General-D15 finite exact target moments
- -> coupled equilibrium + tangent/limit solve
+      NC   = frozen R10
+      UHPC = one unified UHPC current operator
+ -> use N48 only as the finite prototype from which to derive a TRUE infinite convergent analytic material series
+      basis law
+      coefficient sequence / recurrence / generating relation
+      convergence / tail law
+ -> compose with Nguyen second-order complete-halfwave field
+ -> include physically admissible membrane-stress redistribution before material evaluation
+ -> derive the full same-source directional consistent tangent from the same infinite series
+ -> exact multiple integration term-by-term
+ -> General-D15 transforms the infinite material series into an infinite exact structural-moment series
+ -> analytically sum, generate, or take the n->infinity limit of that moment series
+ -> obtain finite target functions P, residuals, tangent/stability entries
+ -> solve the finite coupled equilibrium + limit system
  -> Pu
- -> case-specific post-solve comparison only
+ -> case-specific comparison only after solving
 ```
 
-This is one theory and one solve chain. `material compiler -> CH/current map -> D15 -> coupled solver` are implementation stages, not competing routes.
+## Critical interpretation of N48
+
+```text
+N48 = prototype exposing the analytic basis/representation structure
+N48 = NOT the universal final degree
+N48 = NOT a refinement block to stack as 48,96,144,... in the formal theory
+N48 -> N96 -> N144 trial escalation = development diagnostic only
+```
+
+The formal material identity is genuinely infinite:
+
+\[
+F(\lambda)=\sum_{n=0}^{\infty}a_n\phi_n(\lambda),
+\]
+
+with a derived coefficient law / recurrence / generating relation and a mathematically controlled convergence law.
+
+For a structural target `J`, D15 acts term-by-term:
+
+\[
+J=\sum_{n=0}^{\infty}J_n,
+\qquad
+J_n=\mathscr D_{15}[\sigma_n],
+\]
+
+and the formal result is
+
+\[
+\boxed{J=\lim_{N\to\infty}\sum_{n=0}^{N}J_n.}
+\]
+
+Where possible the limit should be reduced to a closed generating/summation formula; otherwise it is evaluated through the derived convergence/tail law. This is not spatial numerical integration.
+
+## Membrane redistribution
+
+Membrane stress redistribution is mandatory and enters the continuous strain field before the material operator:
+
+\[
+\varepsilon=\varepsilon(D,q,\mathbf r;X,Y,\zeta).
+\]
+
+Then
+
+\[
+\sigma=\mathcal M(\varepsilon)=\sum_{n=0}^{\infty}\sigma_n.
+\]
+
+The membrane coordinates/shapes are determined by the geometry and admissible boundary/mechanics representation. Neither `r=0` nor arbitrary unconstrained free membrane variables are the production default.
+
+## Directional tangent
+
+The full current tangent comes from the SAME infinite material identity:
+
+\[
+\mathbf D_t=\frac{\partial\sigma}{\partial\varepsilon}
+=\sum_{n=0}^{\infty}\frac{\partial\sigma_n}{\partial\varepsilon},
+\]
+
+under the required derivative-series convergence conditions.
+
+No independently fitted tangent or scalar secant replacement is admissible.
 
 ## Formal counters
 
@@ -41,129 +105,62 @@ N_formal_spatial_subdomains = 1
 N_formal_thickness_quadrature = 0
 ```
 
-A physical panel may contain repeated halfwaves. The formal domain contains one physically complete representative halfwave only.
+The series index is a material analytic index, not a spatial/material-point discretization index.
 
-## Material-series interpretation
-
-The intended material representation is conceptually convergent:
-
-\[
-\mathcal M(\varepsilon)=\sum_{n=0}^{\infty}\mathcal M_n(\varepsilon),
-\]
-
-with production using a finite partial sum after the required source values, directional tangents, and structural target functionals converge to engineering accuracy.
-
-Therefore:
-
-```text
-N48 = successful prototype / base refinement block
-literal fixed N48 for every geometry = NO
-blind one-number high-degree escalation = NO
-source-consistent convergent analytic refinement = YES
-```
-
-Every retained finite series term is composed with the finite trigonometric-thickness field and integrated by exact D15 moments. Infinite material-series identity does not imply spatial numerical integration.
-
-## Membrane redistribution and tangent
-
-Membrane redistribution is inside the strain -> material -> stress chain, before integration. It is neither omitted nor appended afterward.
-
-The membrane coordinates must come from the geometry/boundary-admissible analytical representation. `r=0` is not the current default; arbitrary free membrane coordinates without mechanics/boundary qualification are also not production.
-
-The full directional consistent tangent
-
-\[
-D_t=\partial\sigma/\partial\varepsilon
-\]
-
-from the same current material operator is mandatory in the coupled limit/stability equations.
-
-## Z6 current identity
+## Z6 identity
 
 ```text
 a = 24000 mm
 b = 12000 mm
 m* = 2
-ell = a/m* = 12000 mm = b
+ell = 12000 mm = b
 A0 = 48 mm
 q0 = .004
 ```
 
-The physical plate contains two repeated halfwaves; the formal calculation uses one complete 12000-mm halfwave.
+The physical Z6 contains two repeated halfwaves; the formal structural calculation uses one complete representative halfwave.
 
-The earlier `a=9000 mm` reinterpretation is superseded and wrong.
-
-## Z6 current engineering checkpoint
-
-The corrected constrained-Airy membrane-redistribution raw-R10 mechanics branch gives approximately
-
-```text
-D ~= 1.36181
-q ~= 0.0264854
-lambda_Airy ~= 0.78692
-Pu_raw_R10_audit ~= 48.41 MN
-```
-
-The N48-prototype refinement family over the required material domain gives high-order engineering convergence around
-
-```text
-N192 ~= 48.4290 MN
-N240 ~= 48.4216 MN
-N288 ~= 48.4160 MN
-```
-
-so the present engineering compiler/mechanics checkpoint is
-
-\[
-\boxed{P_u(Z6)\approx48.42\ \mathrm{MN}.}
-\]
-
-This is not yet relabelled as a separately promoted high-block formal D15 certificate; the remaining implementation step is the exact target-first high-block contraction on the already selected theory chain.
-
-## Case-specific comparison rules
-
-### Z6
-
-After Pu is solved, compare to:
+After the final infinite-series/D15 coupled Pu solve, compare with:
 
 ```text
 Zhou empirical axial-stability formula
 Winter formula
 ```
 
-These are post-solve comparators only.
+only as post-solve comparators.
 
-### Case21
+## Case21 identity
 
-After Pu is solved, compare to the experimental failure/ultimate load
+After the final infinite-series/D15 coupled Pu solve, compare ultimate capacity with
 
 \[
-P_{f,exp}=368.312750\ \mathrm{kN}.
+P_{f,exp}=368.312750\ \mathrm{kN},
 \]
 
-Do not compare ultimate Pu to the experimental buckling load.
+not with the experimental buckling load.
 
-## Current Case21 retained checkpoint
+## Existing numerical checkpoints — development/audit only under the new canonical interpretation
 
-The existing Case21 formal finite-compiler result remains
-
-```text
-Pu_formal = 365.257 kN
-raw-R10 mechanics oracle = 366.767829 kN
-formal-vs-raw difference = -0.4120%
-formal-vs-Pf error = -0.82976%
-```
-
-It remains a valid checkpoint under the unified chain, not a license to copy its exact fixed material compiler unchanged to other geometries.
-
-## Current next implementation step
+The previously obtained values remain useful diagnostics but are NOT the mathematical definition of the new infinite-series theory:
 
 ```text
-HIGH-BLOCK N48-PROTOTYPE CONVERGENT MATERIAL SERIES
- -> SAME-SOURCE DIRECTIONAL TANGENT
- -> 2x2 CAYLEY-HAMILTON
- -> TARGET-FIRST GENERAL-D15 EXACT MULTIPLE MOMENTS
- -> COUPLED EQUILIBRIUM/LIMIT SOLVE
+Case21 finite N48 formal checkpoint ~= 365.257 kN
+Z6 a=24000 constrained-Airy raw-R10 audit ~= 48.41 MN
+Z6 finite-order N192/N240/N288 development convergence ~= 48.43/48.42/48.42 MN
 ```
 
-No new mechanics route is authorized by this step.
+These values may be used to regression-test the future infinite-series runtime, but they may not define its series law, truncation, convergence rule, or root.
+
+## Current next task
+
+```text
+DERIVE_N48_PROTOTYPE_TRUE_INFINITE_R10_SERIES
+ -> derive coefficient recurrence / generating relation / convergence law
+ -> derive same-source infinite tangent series
+ -> compose with membrane-redistributed finite trigonometric field
+ -> derive exact D15 term sequence J_n
+ -> derive/sum the n->infinity structural-moment limit
+ -> solve the finite coupled Pu system
+```
+
+The same mathematical architecture must later be available for the unified UHPC current operator.
