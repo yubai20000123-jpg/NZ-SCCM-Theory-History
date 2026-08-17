@@ -1,0 +1,138 @@
+{
+  "timestamp": "2026-08-17T11:26:00+08:00",
+  "end_to_end_task": "CASE21_AIRY_SCALAR_FORMAL_ZERO_SPATIAL_ULTIMATE_LOAD",
+  "status": "BLOCKED_AT_FIXED_ENDPOINT_ALGEBRAIC_PERIOD_NUMERIC_RUNTIME",
+  "route_changed_due_to_user_question": false,
+  "formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "case21_load_identity": {
+    "Pcr_exp_kN": 336.28555411369376,
+    "Pf_exp_kN": 368.3127497435694,
+    "Pu_comparison_target": "Pf_exp"
+  },
+  "peak_state_for_audit": {
+    "D": 0.7887924801,
+    "q": 0.0018083572562965242,
+    "lambda": 0.08623596353826937,
+    "M": 0.02907033478365149,
+    "direct_source_Pu_kN": 366.7678286852115
+  },
+  "compact_R10_identity_audit": {
+    "stress_max_abs_mismatch_MPa": 7.11e-15,
+    "parameter_derivative_max_abs_mismatch": {
+      "D": 1.78e-9,
+      "q": 2.78e-8,
+      "lambda": 3.55e-9
+    },
+    "identity": "S=U-acc*det(C)*C+C*adj(T)-rho*at*det(T)*(b8*I-b7*T)",
+    "verdict": "PASS"
+  },
+  "T12_audit": {
+    "executor": "128x128x68 direct-R10 Gauss-Legendre audit only",
+    "targets": {
+      "Jx00": 8.145683883609898,
+      "Jx20": 3.0169508751999206,
+      "Jx02": -2.679407839983953,
+      "Jx22c": -2.254762879355014,
+      "Jy00": -283.28939507865266,
+      "Jy20": 3.8352824286080818,
+      "Jy02": -41.48567515226086,
+      "Jy22c": -11.58460291071195,
+      "Jxy22s": 1.1983236728328215,
+      "Jx11s_1": 5.71314345984967,
+      "Jy11s_1": 33.494712972857826,
+      "Jxy11c_1": -2.0187784124555597
+    },
+    "reconstructed_structural_values": {
+      "P_kN": 366.7677699713608,
+      "Rq": 7.343248989855056e-05,
+      "RA": 9.467007778507508e-05
+    },
+    "verdict": "PASS_AUDIT"
+  },
+  "T12_derivatives_audit": {
+    "dT12_dD": [
+      -0.07245348445650279,
+      -0.03560090291454543,
+      -0.015772432382377133,
+      -0.006039400002322281,
+      -86.43991716894561,
+      -0.33297692603184714,
+      -17.933762364563677,
+      -2.1966896376568457,
+      -1.1952005182003234,
+      -0.00591020961060451,
+      7.506186071282172,
+      1.9071502388001702
+    ],
+    "dT12_dq": [
+      3559.465624203284,
+      2928.058501017183,
+      -314.6277910648365,
+      -1833.5562955940077,
+      59001.73771919981,
+      15042.889675598302,
+      -10585.371607163552,
+      -11931.103464757341,
+      916.3936417255769,
+      1885.657880951186,
+      6879.899941480971,
+      -843.0445301188527
+    ],
+    "dT12_dlambda": [
+      -8.260102736112884,
+      -3.0247022248630624,
+      -0.5561816816213039,
+      2.0629494090762535,
+      -63.219690940741195,
+      -28.327234469216474,
+      1.1107595401682602,
+      17.90622732738001,
+      -0.6705270622520132,
+      0.10660820373153966,
+      -2.2826863141034437,
+      -0.2696717662731274
+    ],
+    "structural_jacobian_rows_P_Rq_RA_cols_D_q_lambda": [
+      [140.0185814560473, -70568.2046060474, 75.41187986817022],
+      [-1587.6192496222072, 920300.975843702, -1212.9090151148603],
+      [6.414708002733248, -10552.056054446979, 25.24731013706649]
+    ],
+    "branch_derivatives": {
+      "dq_dD": 0.0030951797419123466,
+      "dlambda_dD": 1.0395484505092745,
+      "dP_dD_kN": -0.008392996768264993
+    },
+    "verdict": "PASS_AUDIT"
+  },
+  "formal_runtime": {
+    "selected_representation": "GLOBAL_FIXED_ENDPOINT_POSITIVE_PART_FACTORISED_PERIOD",
+    "stress_moment_orders": [0, 1],
+    "tangent_kernel_orders": [0, 1, 2],
+    "global_algebraic_state_bound": 64,
+    "event_resolved_8_state_role": "LOCAL_EXACT_AUDIT_ONLY",
+    "executable_fixed_endpoint_algebraic_period_numeric_runtime": "NOT_IMPLEMENTED",
+    "formal_T12_values_released": false,
+    "formal_T12_derivatives_released": false,
+    "formal_Rq_RA_L3_solve_run": false,
+    "formal_Pu_released": false
+  },
+  "prohibited_fallbacks": [
+    "formal_Gauss_Simpson_adaptive_quadrature",
+    "XY_event_topology_cells_or_subdomains",
+    "material_point_grid_or_history",
+    "high_order_coefficient_enumeration",
+    "explicit_64_rational_coefficient_canonicalization",
+    "N48_fallback_as_compact_exact_blocker_fix"
+  ],
+  "classification": {
+    "mechanics_failure": false,
+    "T12_failure": false,
+    "proof_period_does_not_exist": false,
+    "implementation_runtime_gap": true
+  }
+}
