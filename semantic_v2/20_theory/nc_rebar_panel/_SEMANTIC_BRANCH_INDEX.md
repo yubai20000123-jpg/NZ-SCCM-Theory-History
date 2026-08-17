@@ -1,153 +1,242 @@
 # NC + rebar panel theory semantic branch
 
-## Current production-development identity
+## Current end-to-end production-development identity
 
-The current mainline is the compact exact R10 target route, not the retracted Case21 N48 five-free-coordinate membrane Pu path.
+The current mainline remains a **single Case21 end-to-end formal calculation**, not a sequence of newly created project tasks:
+
+```text
+CASE21_AIRY_SCALAR_FORMAL_ZERO_SPATIAL_ULTIMATE_LOAD
+```
+
+Current path:
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE
  -> Nguyen second-order continuous strain
- -> compatible membrane-stress redistribution
- -> same-state R10 concrete + reinforcement
+ -> Airy-compatible scalar membrane redistribution r=lambda*M*a(nu)
+ -> same-state frozen R10 concrete + reinforcement
  -> regular source/matrix material DAG
- -> global fixed-endpoint compact thickness period
- -> finite beta/XY target contraction
- -> low-dimensional connected structural solve
+ -> global fixed-endpoint compact algebraic period
+ -> finite T12 / XY target contraction
+ -> low-dimensional connected (D,q,lambda) solve
+ -> Rq=0, RA=0, L3=0
+ -> formal Case21 Pu
 ```
 
-Formal structural spatial/thickness numerical quadrature remains zero.
+The final formal solve is currently blocked only because the executable fixed-endpoint algebraic-period numeric runtime is not yet implemented. The `T12 fixed-endpoint descriptor` is an internal implementation layer of this same end-to-end task, not a new physical route.
 
-## Formal-series rule
+## Formal counters
 
 ```text
-FORMAL_INFINITE_OR_HIGH_ORDER_SERIES = ALLOWED_AS_REPRESENTATION
-TERM_EXPANSION_FOR_THEORY_AUDIT = ALLOWED
-DIRECT_THOUSANDS_OF_COEFFICIENTS_PRODUCTION = PROHIBITED
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+N_formal_thickness_quadrature = 0
 ```
 
-## Source regularity
-
-The old rationalized `c0,c1` connection pole at `x=21/260` is a representation artifact. The source matrix square root is regular there, so production differentiation stays at matrix/source level through Fréchet/Sylvester rules. True Foster source knots remain physical material events.
-
-## Algebraic state identities
+## Frozen physics
 
 ```text
-64_STATE = global branch-free algebraic closure bound
+R10 physical current operator = FROZEN
+reinforcement before solve = REQUIRED
+Airy-scalar r=lambda*M*a(nu) = ACTIVE
+five-free nonlinear Rm relaxation = REJECTED
+Z6 analytical boundary = FOUR_EDGE_SIMPLY_SUPPORTED / SSSS
+```
+
+## Case21 load identities
+
+```text
+Pcr_exp = 336.285554 kN   # buckling only
+Pf_exp  = 368.312750 kN   # failure / ultimate
+```
+
+Cross-comparison is prohibited.
+
+## Mechanics qualification retained
+
+Exact restricted-coordinate residual transformation:
+
+```text
+R_lambda = M*RA
+Rq_restricted = Rq_base + lambda*Mq*RA
+```
+
+Pure isotropic continuum benchmark:
+
+```text
+lambda=1 exactly
+```
+
+Actual reinforced linear scalar benchmark for Case21:
+
+```text
+lambda_lin_RC = 0.999266844854884
+              + 0.0096124785693025*D/M
+```
+
+Scalar internal stability criterion:
+
+```text
+dRA/dlambda > 0
+```
+
+At the current direct-source peak:
+
+```text
+dRA/dlambda = +25.24850924
+M*dRA/dlambda = +0.733982616
+```
+
+so no scalar internal membrane instability is found before the current mechanics peak.
+
+## Current direct-source mechanics oracle
+
+```text
+D = 0.7887924801
+q = 0.0018083573
+lambda = 0.0862359635
+M = 0.02907033478
+Pc = 337.923030 kN
+Ps = 28.844798 kN
+Pu = 366.767829 kN
+Pf_exp = 368.312750 kN
+error = -0.419459 %
+```
+
+This is an audit/mechanics oracle only, not a formal zero-spatial numeric release.
+
+## Source regularity and algebraic state identities
+
+The old rationalized `c0,c1` pole at `x=21/260` is a representation artifact. Production remains at source/matrix level through Fréchet/Sylvester differentiation.
+
+```text
+64_STATE = valid global branch-free algebraic closure bound
 8_STATE  = exact branch-aware full-R10 stress bound on fixed event topology
 ```
 
-The branchwise 8-state field remains retained for local exact/audit use.
+The 8-state form remains local exact/audit only because source-knot event topology changes over `(X,Y)`.
 
-## Actual P/Rm interface closure
-
-The six concrete structural targets
-
-```text
-P_c + five Rm,c
-```
-
-share only three common thickness resultants:
-
-```text
-Nx0  = int sigma_x dzeta
-Ny0  = int sigma_y dzeta
-Nxy0 = int tau_xy dzeta
-```
-
-with fixed physical endpoints `zeta=-1,+1`.
-
-All five `Rm` are finite trigonometric combinations of these three resultants, and `P_c` uses `Ny0`.
-
-Therefore:
-
-```text
-P_PLUS_FIVE_RM_COMMON_THICKNESS_RESULTANTS = 3
-```
-
-The downstream full state evaluator also needs only the finite thickness-moment family
-
-```text
-stress: k=0,1
-tangent target kernels: k=0,1,2
-```
-
-rather than an unbounded moment ladder.
-
-## Thickness-to-XY representation decision
-
-The event-resolved `<=8`-state form is locally smaller but its source-knot roots
-
-```text
-zeta_m(X,Y)
-```
-
-change existence/order over the complete halfwave.
-
-For generic five-coordinate kinematics:
-
-```text
-deg_zeta event equation = 2
-XY trig degree of a2,a1,a0 = 4,6,8
-XY trig degree of event discriminant = 12
-XY trig degree of endpoint event front = 8
-```
-
-A Case21 audit confirms both `no-event` and `one lambda1 event` regions occur within the same `(X,Y)` domain.
-
-Thus global event resolution would require either in-plane region subdivision or clipped-root/positive-part selectors. The former conflicts with the single-domain formal architecture; the latter reconstructs the branch-free source structure.
-
-Current production choice is therefore locked as
+## Production thickness representation
 
 ```text
 GLOBAL_FIXED_ENDPOINT_POSITIVE_PART_FACTORISED_PERIOD = PRODUCTION
 EVENT_RESOLVED_8_STATE = LOCAL_EXACT/AUDIT ONLY
 ```
 
-Conceptual fixed bound for the actual zero-order three-resultant package is
+Fixed physical thickness endpoints:
 
 ```text
-<=64 common branch-free field states + 3 target accumulators = <=67
+zeta=-1,+1
 ```
 
-without requiring materialization/canonicalization of 67 giant rational functions.
+No moving event fronts are promoted to formal XY subdomains.
 
-## Z6 boundary
+## Current T12 structural contract
+
+The Airy-scalar concrete value interface is the fixed 12-functional package
 
 ```text
-Z6_BOUNDARY = FOUR_EDGE_SIMPLY_SUPPORTED / SSSS
+Jx00, Jx20, Jx02, Jx22c,
+Jy00, Jy20, Jy02, Jy22c,
+Jxy22s,
+Jx11s_1, Jy11s_1, Jxy11c_1
 ```
 
-Any older mixed-boundary branch text is superseded.
-
-## Capacity status
+which feeds exactly
 
 ```text
-Case21 320.749185 kN = RETRACTED DIAGNOSTIC ONLY
-Z6 43.762840 MN = RETRACTED DIAGNOSTIC ONLY
-Case21 retained support baseline = 368.189 kN
-Z6 retained engineering support baseline = 51.30 MN
-NEW_CORRECTED_MEMBRANE_REDISTRIBUTED_Pu = NOT RELEASED
+Pc
+RAc
+Rqc
 ```
 
-## Current next task
+without reconstructing a full stress surface.
 
-`GLOBAL_FIXED_ENDPOINT_THREE_STRESS_MOMENT_DESCRIPTOR_GATE`
-
-Construct the actual compact analytic operator
+Finite thickness family:
 
 ```text
-(D,q,r;X,Y) -> [Nx0,Ny0,Nxy0]
+stress moments  : k=0,1
+tangent kernels : k=0,1,2
 ```
 
-from the source-regular factorized R10 DAG, with no numerical thickness quadrature and no explicit high-order coefficient enumeration. The same operator must carry same-source derivatives needed by P/Rm and remain extensible to the already bounded k=1 stress / k<=2 tangent moment family.
+## 11:26 descriptor execution status
 
-After that passes, perform exact `(X,Y)` contraction to obtain actual `P_c` and all five `Rm,c`.
+Compact pointwise R10 identity against the direct frozen source:
+
+```text
+max abs physical stress mismatch = 7.11e-15 MPa
+COMPACT_SOURCE_R10 = PASS
+```
+
+Independent 128x128x68 audit of the T12 contract at the current peak reconstructs
+
+```text
+P  = 366.767769971 kN
+Rq = +7.34325e-5
+RA = +9.46701e-5
+```
+
+and the T12 audit Jacobian gives
+
+```text
+dP/dD along equilibrium branch = -0.008393 kN
+```
+
+near zero at the independently refined direct-source peak.
+
+Therefore:
+
+```text
+T12_VALUE_CONTRACT = PASS_AUDIT
+T12_DERIVATIVE_CONTRACT = PASS_AUDIT
+```
+
+## Current true blocker
+
+The mathematical compact representation is retained, but the repository does not yet contain an executable production routine that maps
+
+```text
+(D,q,lambda)
+ -> source-regular fixed-endpoint algebraic periods
+ -> formal T12 + same-source derivatives
+```
+
+without prohibited fallback mechanisms.
+
+```text
+FORMAL_FIXED_ENDPOINT_ALGEBRAIC_PERIOD_NUMERIC_RUNTIME = NOT IMPLEMENTED / BLOCKING
+FORMAL_CASE21_Rq_RA_L3_SOLVE = NOT RUN
+FORMAL_CASE21_Pu = NOT RELEASED
+```
+
+This is an implementation/runtime gap, not a mechanics failure or a T12 failure.
+
+## Prohibited regressions
+
+```text
+NO XY EVENT-TOPOLOGY CELLS/SUBDOMAINS
+NO MATERIAL-POINT GRID/HISTORY
+NO GAUSS/SIMPSON/ADAPTIVE PRODUCTION INTEGRATION
+NO N1000/N3000/N5000 COEFFICIENT ENUMERATION
+NO EXPLICIT 64-RATIONAL-COEFFICIENT CANONICALIZATION AS PRODUCTION REQUIREMENT
+NO N48 FALLBACK AS FIX FOR COMPACT-EXACT BLOCKERS
+NO AUTOMATIC NEW CAS/BACKEND CHAIN
+```
 
 ## Current artifacts
 
-- `../../40_execution/common/20260817_0100__NZSCCM__SOURCE_LEVEL_REGULARIZATION_AND_REAL_TARGET_PREFLIGHT__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260817_0115__NZSCCM__FULL_SYY_BRANCH_AWARE_8_STATE_REDUCTION__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__EXECUTION_REPORT.md`
-- `../../40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__PARAMS_AND_INTERMEDIATES.json`
-- `../../40_execution/common/20260817_0143__NZSCCM__ACTUAL_P_RM_THICKNESS_TO_XY_INTERFACE_COMPACTNESS__REPRO.py`
-- `../../10_governance/20260817_0143__NZSCCM__GLOBAL_FIXED_ENDPOINT_P_RM_INTERFACE__LOCK.md`
+- `../../10_governance/20260817_1126__NZSCCM__CASE21_FORMAL_ZERO_SPATIAL_CONTINUATION_NO_TASK_PROLIFERATION__LOCK.md`
+- `20260817_1126__NZSCCM__CASE21_T12_FIXED_ENDPOINT_DESCRIPTOR_FORM_AND_RUNTIME_BOUNDARY__THEORY.md`
+- `../../40_execution/common/20260817_1126__NZSCCM__CASE21_T12_FIXED_ENDPOINT_DESCRIPTOR_ATTEMPT__EXECUTION_REPORT.md`
+- `../../40_execution/common/20260817_1126__NZSCCM__CASE21_T12_FIXED_ENDPOINT_DESCRIPTOR_ATTEMPT__PARAMS_AND_INTERMEDIATES.json`
+- `../../40_execution/common/20260817_1126__NZSCCM__CASE21_T12_FIXED_ENDPOINT_DESCRIPTOR_ATTEMPT__REPRO.py`
+
+## Current status
+
+```text
+CURRENT_END_TO_END_TASK = CASE21_AIRY_SCALAR_FORMAL_ZERO_SPATIAL_ULTIMATE_LOAD
+STATUS = BLOCKED_AT_FIXED_ENDPOINT_ALGEBRAIC_PERIOD_NUMERIC_RUNTIME
+NEW_PROJECT_TASK_CREATED = NO
+ROUTE_CHANGED_DUE_TO_USER_QUESTION = NO
+```
