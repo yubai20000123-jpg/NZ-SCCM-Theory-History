@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-08-17T14:56:00+08:00",
+  "identity": "R10_TRUE_INFINITE_SERIES_STAGE1",
+  "status": "SERIES_LAW_STAGE1_PASS_NO_NEW_PU_RELEASE",
+  "formal_counters": {
+    "ONE_CONTINUOUS_COMPLETE_HALFWAVE": true,
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "frozen_R10": {
+    "kappa": 2.0005129533678754,
+    "rho": 0.1,
+    "a_rho_over_kappa": 0.0499871794539742,
+    "eta": 0.00249935897269871,
+    "H": 0.0979975042719730,
+    "UR": 0.03
+  },
+  "universal_kernel": {
+    "q": "lambda^2+eta^2",
+    "f": "q^(-1/2)",
+    "r": "q^(-1)",
+    "t": "lambda^2*f/2 + lambda^3*r/2",
+    "c": "lambda^2*f/2 - lambda^3*r/2"
+  },
+  "z6_stage1_material_interval": {
+    "L": -1.75,
+    "U": 1.45,
+    "c0": -0.15,
+    "h": 1.6,
+    "affine_map": "lambda=c0+h*x, x=cos(theta)"
+  },
+  "sqrt_kernel_chebyshev_recurrence": {
+    "general": "(h^2/4)(n-1)a[n-2] + h*c0*(n-1/2)a[n-1] + A0*n*a[n] + h*c0*(n+1/2)a[n+1] + (h^2/4)(n+1)a[n+2] = 0",
+    "A0_definition": "c0^2+eta^2+h^2/2",
+    "z6_coefficients": {
+      "h2_over_4": 0.64,
+      "h_times_c0": -0.24,
+      "A0": 1.30250624679527
+    },
+    "external_sequence_diagnostic_relative_residuals": {
+      "n10": 2.76e-17,
+      "n100": 0.0,
+      "n1000": 3.55e-17
+    }
+  },
+  "rational_kernel_chebyshev_recurrence": {
+    "tail_general": "(h^2/4)(b[n-2]+b[n+2]) + h*c0*(b[n-1]+b[n+1]) + A0*b[n] = 0",
+    "z6": "0.64*(b[n-2]+b[n+2]) - 0.24*(b[n-1]+b[n+1]) + 1.30250624679527*b[n] = 0"
+  },
+  "compression_C": {
+    "global_transform": "s=c/(1+c)^2",
+    "infinite_identity": "C=kappa*sum_{m=1..infinity}(4-kappa)^(m-1)*s^m",
+    "uniform_geometric_ratio_upper_bound": 0.499871761658031,
+    "quadratic_field": "C=A_C(lambda)+B_C(lambda)/sqrt(lambda^2+eta^2)",
+    "cleared_first_order_ODE_degrees": {
+      "P1": 17,
+      "P0": 16,
+      "PR": 14
+    }
+  },
+  "tension_knots": {
+    "lambda_1": 0.0500805176491376,
+    "lambda_10": 0.499881166745393,
+    "tprime_lambda_1": 1.00185527313813,
+    "tprime_lambda_10": 1.00001874800801,
+    "z6_x_1": 0.125050323530711,
+    "z6_theta_1_rad": 1.44541777411337,
+    "z6_x_10": 0.406175729215871,
+    "z6_theta_10_rad": 1.15253121911414,
+    "step_chebyshev_sequence": {
+      "h0": "theta_k/pi",
+      "hn_n_ge_1": "2*sin(n*theta_k)/(pi*n)"
+    }
+  },
+  "tension_branch_contact": {
+    "u_mid_minus_u_low_factor": "-(r-1)^3/196830 * Q2(r)",
+    "u_high_minus_u_mid_factor": "(H-UR)*(r-10)^3*(2*r^2+5*r+20)/19683",
+    "regularity": "C2_at_both_knots",
+    "branch_ODE_degree_triples": {
+      "T_low": [25, 24, 23],
+      "T_mid": [25, 24, 24],
+      "T_high": "constant"
+    }
+  },
+  "third_derivative_jumps": {
+    "u_wrt_t": {
+      "at_t_equal_a": -27905.0340327012,
+      "at_t_equal_10a": 44.8064770469412
+    },
+    "T_wrt_lambda": {
+      "at_lambda_1": -280606.367416764,
+      "at_lambda_10": 448.089971907599
+    },
+    "theta_map": {
+      "T": [-1122509.44854571, 1400.46250338021],
+      "U": [-112250.944854571, 140.046250338021],
+      "T7": [-6959501.59272060, 7.14656015474921]
+    }
+  },
+  "asymptotic_coefficient_law": {
+    "formula": "a_n = 2/(pi*n^4) * [Delta_g3_1*cos(n*theta_1)+Delta_g3_10*cos(n*theta_10)] + O(n^-5) + analytic_kernel_tail",
+    "order": "O(n^-4)",
+    "external_actual_over_predicted_diagnostic": {
+      "T": {"n10000": 1.10046, "n15000": 1.02420, "n20000": 0.99323, "n30000": 0.98517},
+      "U": {"n10000": 0.98904, "n15000": 1.02367, "n20000": 0.99324, "n30000": 0.98525},
+      "T7": {"n10000": 0.99487, "n15000": 1.02351, "n20000": 0.99323, "n30000": 0.98515}
+    }
+  },
+  "analytic_kernel_complex_singularity": {
+    "lambda_branch_points": "+/- i*eta",
+    "z6_nearest_Bernstein_ellipse_parameter": 1.0015702405147586
+  },
+  "same_source_tangent": {
+    "derivative_identity": "F'(lambda)=h^(-1)*sum_{n>=1} n*a_n*U_{n-1}(x)",
+    "bound": "|U_{n-1}(x)|<=n",
+    "tail_test": "sum n^2*|a_n| converges because a_n=O(n^-4)",
+    "status": "PASS_AT_SEQUENCE_THEORY_LEVEL"
+  },
+  "D15_limit": {
+    "term": "J_n=D15[W:T_n(Ehat)]",
+    "Ehat": "(E-c0*I)/h",
+    "formal_limit": "J_infinity=sum_{n=0..infinity} a_n*J_n",
+    "value_convergence": "absolute under certified spectral interval",
+    "first_tangent_convergence": "absolute under n^-4 coefficient tail",
+    "streaming_CH_D15_runtime": "NOT_YET_IMPLEMENTED_IN_THIS_STAGE"
+  },
+  "stage1_gates": {
+    "TRUE_INFINITE_R10_SERIES_ARCHITECTURE": "PASS",
+    "UNIVERSAL_KERNEL_P_RECURSIVE_LAW": "PASS",
+    "COMPRESSION_INFINITE_LAW": "PASS",
+    "TENSION_GLOBAL_STITCHING_SEQUENCE": "PASS",
+    "R10_TENSION_N_MINUS_4_TAIL": "PASS",
+    "SAME_SOURCE_FIRST_TANGENT_CONVERGENCE": "PASS",
+    "TERM_BY_TERM_EXACT_D15_LIMIT_THEOREM": "PASS",
+    "NEW_Pu_RELEASE": "NO"
+  },
+  "next_task": "STREAMING_R10_SEQUENCE -> 2x2_CH_TERM_GENERATOR -> TARGET_FIRST_D15_Jn -> N_TO_INFINITY_SUMMATION -> FINITE_TARGET_FUNCTIONS -> COUPLED_Z6_CASE21_SOLVE"
+}
