@@ -1,0 +1,89 @@
+{
+  "timestamp": "2026-08-17T14:07:00+08:00",
+  "identity": "Z6_A24000_COMPLETE_HALFWAVE_AIRY_N48_FAMILY",
+  "correction": {
+    "a_9000_status": "SUPERSEDED_WRONG_SOURCE_READING",
+    "a_mm": 24000.0,
+    "b_mm": 12000.0,
+    "m_star": 2,
+    "ell_mm": 12000.0,
+    "k_b_over_ell": 1.0,
+    "A0_mm": 48.0,
+    "q0": 0.004
+  },
+  "section": {
+    "tc_mm": 122.0,
+    "ts_mm": 4.0,
+    "rho_w": 0.02,
+    "fc_MPa": 30.4,
+    "eps0": 0.0018712490394580678,
+    "nu_c": 0.18,
+    "Es_MPa": 206000.0,
+    "fy_MPa": 355.0,
+    "nu_s": 0.30
+  },
+  "airy": {
+    "a_vector": [-0.295, -0.205, 0.25, -0.205, 0.25],
+    "equations": ["Rq_base=0", "RA=0"],
+    "r0_production": false,
+    "free_five_production": false
+  },
+  "formal_counters": {
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "raw_R10_high_resolution": {
+    "branch": [
+      {"D": 1.34, "q": 0.0261760206889, "lambda_Airy": 0.787196466695, "P_MN": 48.4041313462, "Pc_eff_MN": 22.7968961088, "Ps_face_MN": 18.5879650105, "Pw_MN": 7.0192702269},
+      {"D": 1.35, "q": 0.0263183350915, "lambda_Airy": 0.787071117450, "P_MN": 48.4055837637, "Pc_eff_MN": 22.8066864823, "Ps_face_MN": 18.5734311602, "Pw_MN": 7.0254661211},
+      {"D": 1.36, "q": 0.0264598928575, "lambda_Airy": 0.786940204133, "P_MN": 48.4061169147, "Pc_eff_MN": 22.8155839433, "Ps_face_MN": 18.5590263090, "Pw_MN": 7.0315066623},
+      {"D": 1.37, "q": 0.0266007049642, "lambda_Airy": 0.786804591173, "P_MN": 48.4058113781, "Pc_eff_MN": 22.8237103919, "Ps_face_MN": 18.5447287134, "Pw_MN": 7.0373722727},
+      {"D": 1.38, "q": 0.0267406771317, "lambda_Airy": 0.786659014635, "P_MN": 48.4047699626, "Pc_eff_MN": 22.8311383104, "Ps_face_MN": 18.5305172131, "Pw_MN": 7.0431144392}
+    ],
+    "peak": {
+      "D": 1.36180797999,
+      "q": 0.0264854039055,
+      "lambda_Airy": 0.786915818655,
+      "P_MN": 48.4061215048,
+      "Pc_eff_MN": 22.8171044422,
+      "Ps_face_MN": 18.5564373307,
+      "Pw_MN": 7.0325797319,
+      "material_lambda_min": -1.6641650380,
+      "material_lambda_max": 1.3539153191,
+      "face_vm_over_fy_max": 1.9474010190
+    }
+  },
+  "N48_family": {
+    "interval": [-1.75, 1.45],
+    "orders": [48, 96, 144, 192, 240, 288],
+    "common_audit_resolution_raw_P_MN": 48.4396623780,
+    "common_resolution_convergence": [
+      {"N": 48, "P_MN": 48.9600333683, "delta_raw_MN": 0.5203709903, "delta_raw_percent": 1.0742663444},
+      {"N": 96, "P_MN": 48.6084771856, "delta_raw_MN": 0.1688148076, "delta_raw_percent": 0.3485053349},
+      {"N": 144, "P_MN": 48.5093061161, "delta_raw_MN": 0.0696437380, "delta_raw_percent": 0.1437742020},
+      {"N": 192, "P_MN": 48.4688891904, "delta_raw_MN": 0.0292268124, "delta_raw_percent": 0.0603365320},
+      {"N": 240, "P_MN": 48.4641307893, "delta_raw_MN": 0.0244684112, "delta_raw_percent": 0.0505131746},
+      {"N": 288, "P_MN": 48.4588024716, "delta_raw_MN": 0.0191400935, "delta_raw_percent": 0.0395132678}
+    ],
+    "high_resolution_raw_P_MN": 48.4051508736,
+    "high_resolution": [
+      {"N": 192, "D": 1.36741427970, "q": 0.0265645050707, "lambda_Airy": 0.786734624539, "P_MN": 48.4289618791, "delta_raw_percent": 0.0491910573},
+      {"N": 240, "D": 1.36084551373, "q": 0.0264712930067, "lambda_Airy": 0.786756642227, "P_MN": 48.4215997748, "Pc_eff_MN": 22.8331230912, "Ps_face_MN": 18.5563166162, "Pw_MN": 7.0321600673, "material_lambda_min": -1.6625433131, "material_lambda_max": 1.3518233623, "face_vm_over_fy_max": 1.9458484690, "delta_raw_percent": 0.0339817166},
+      {"N": 288, "D": 1.35985553940, "q": 0.0264569885993, "lambda_Airy": 0.786814113980, "P_MN": 48.4159921432, "delta_raw_percent": 0.0223969338}
+    ]
+  },
+  "engineering_release": {
+    "Pu_MN": 48.42,
+    "status": "CORRECTED_Z6_ENGINEERING_PREDICTION",
+    "high_block_exact_D15_formal_promotion": "NOT_YET_CLAIMED"
+  },
+  "comparators": {
+    "Pcr_AR2_MN": 39.2880147150,
+    "Zhou_MN": 49.4867667519,
+    "Winter_MN": 50.1858541295,
+    "N240_vs_Zhou_percent": -2.1524279055,
+    "N240_vs_Winter_percent": -3.5154415229
+  }
+}
