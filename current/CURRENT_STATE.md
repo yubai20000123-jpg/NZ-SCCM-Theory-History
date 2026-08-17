@@ -1,15 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 11:55 +08:00  
-**Status:** LEGACY MUTABLE POINTER ONLY
-
-## Current operational entry
-
-`semantic_v2/00_index/20260817_1155__NZSCCM__PROJECT__CASE21_FORMAL_ZERO_SPATIAL_16_STATE_SEMIALGEBRAIC_PERIOD__SEMANTIC_INDEX.md`
-
-## Current controlling governance
-
-`semantic_v2/10_governance/20260817_1155__NZSCCM__CASE21_16_STATE_SEMIALGEBRAIC_PERIOD_REFINEMENT__LOCK.md`
+**Updated:** 2026-08-17 13:04 +08:00  
+**Status:** CURRENT FORMAL CASE21 AIRY RELEASE ON RESTORED COMPILER+CH+D15 PATH
 
 ## Current end-to-end task
 
@@ -17,303 +9,137 @@
 CASE21_AIRY_SCALAR_FORMAL_ZERO_SPATIAL_ULTIMATE_LOAD
 ```
 
-No new project-level task has been created. The 11:55 work continues the same Case21 formal calculation and refines the previously generic `fixed-endpoint algebraic-period runtime` blocker.
+This task has now produced a formal zero-spatial Case21 ultimate-load result on the restored previously-proven implementation chain.
 
-## Frozen backbone
+## Controlling governance
+
+`semantic_v2/10_governance/20260817_1304__NZSCCM__CASE21_RESTORE_N48_CH_D15_AIRY_PRODUCTION_PATH__LOCK.md`
+
+## Production chain
 
 ```text
-ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
-Nguyen second-order continuous kinematics = ACTIVE
-R10 physical current operator = FROZEN
-reinforcement before coupled solve = REQUIRED
-Airy-scalar r=lambda*M*a(nu) = ACTIVE
-General-D15 / target-first exact-moment philosophy = ACTIVE
+frozen R10 source
+ -> frozen Case21 N48-C1/MM U,C,T,T7 compiler on [-1.15,+0.12]
+ -> 2x2 Cayley-Hamilton
+ -> Nguyen second-order + Airy scalar r=lambda*M*a(nu)
+ -> General-D15 exact structural moments
+ -> exact elastic reinforcement
+ -> Rq=0, RA=0 connected branch
+ -> first load maximum
+```
+
+The recent raw-R10 `64/16-state -> semialgebraic period` branch is retained as research/diagnostic provenance but is no longer a prerequisite for production. The user correctly identified that it had silently strengthened the integration requirement beyond the earlier successful compiler+D15 contract.
+
+## Formal counters
+
+```text
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
 N_formal_spatial_subdomains = 1
 N_formal_thickness_quadrature = 0
-formal Gauss/Simpson/adaptive/cells/material-point-grid = PROHIBITED
-high-order coefficient enumeration as production architecture = PROHIBITED
-experimental calibration/root selection = PROHIBITED
-Z6_BOUNDARY = FOUR_EDGE_SIMPLY_SUPPORTED / SSSS
 ```
 
-Gauss-Legendre and dense coefficient-space evaluators are audit/development tools only and never acquire formal production identity.
+Material-coordinate Chebyshev compiler nodes are not structural spatial points.
 
-## Case21 load identity — hard locked
+## Frozen Case21 identities
 
 ```text
-Pcr_exp = 336.285554 kN   # experimental buckling only
-Pf_exp  = 368.312750 kN   # experimental failure / ultimate
-Nguyen FE buckling comparator = 298 kN
+Pcr_exp = 336.285554 kN   # buckling only
+Pf_exp  = 368.312750 kN   # failure / ultimate
 ```
 
-`Pcr` and `Pu` cross-comparison is prohibited.
-
-## Active Case21 mechanics
+## Current mechanics
 
 ```text
 r = lambda*M*a(nu)
-M = pi^2/eps0*(q0*q + 0.5*q^2)
+M = pi^2/eps0*(q0*q+0.5*q^2)
 a(0.18) = [-0.295,-0.205,+0.25,-0.205,+0.25]
 RA = a^T Rm = 0
 Rq_base = 0
 ```
 
-Exact restricted-coordinate identities:
+Airy only augments the finite trigonometric kinematic field. It does not create a new structural integration class for the accepted finite material compiler + CH + D15 architecture.
+
+## Old-path regression
+
+The reconstructed N48/CH/D15 evaluator at the old `lambda=0` Case21 candidate reproduces the 2026-08-12 frozen exact-moment result:
 
 ```text
-R_lambda = M*RA
-Rq_restricted = Rq_base + lambda*Mq*RA
+D15[Syy] recreated = -13.30614551
+old frozen         = -13.306145538701315
+
+D15[Qq] recreated  = +4.47970960
+old frozen         = +4.479715227945151
+
+Pc recreated       = 336.96877664 kN
+old frozen         = 336.96877733 kN
 ```
 
-Pure isotropic continuum benchmark: `lambda=1` exactly.
+## Current Airy formal branch
 
-Current reinforced linear scalar benchmark:
+Refined connected-branch samples:
 
 ```text
-lambda_lin_RC = 0.999266844854884
-              + 0.0096124785693025*D/M
+D=.775  P=365.239690 kN
+D=.776  P=365.252822 kN
+D=.777  P=365.255952 kN
+D=.778  P=365.253582 kN
+D=.779  P=365.244928 kN
+D=.780  P=365.227725 kN
 ```
 
-Scalar internal stability criterion:
+Local branch interpolation gives
 
 ```text
-dRA/dlambda > 0
+D_u ~= 0.7770781
+Pu ~= 365.25665 kN
 ```
 
-At the direct-source peak:
+A direct formal evaluation at a refined peak coordinate gives
 
 ```text
-dRA/dlambda = +25.24850924
-M*dRA/dlambda = +0.733982616
+D = 0.7771614625
+q = 0.00180590635
+lambda = 0.0434741730
+M = 0.02902048450
+
+Pc = 336.84063912 kN
+Ps =  28.41597657 kN
+P  = 365.25661569 kN
+Rq = -0.00113057 kN mm
+RA = +0.00000752 kN mm
 ```
 
-## Current direct-source mechanics oracle
-
-```text
-D      = 0.7887924801
-q      = 0.0018083572563
-lambda = 0.0862359635383
-M      = 0.0290703347837
-A_increment = 2.20620 mm
-A_total     = 5.25620 mm
-
-Pc = 337.923030 kN
-Ps =  28.844798 kN
-Pu = 366.767829 kN
-Pf_exp = 368.312750 kN
-error = -0.419459 %
-```
-
-This is the current direct-source mechanics/audit oracle, not a formal zero-spatial numeric release.
-
-## T12 contract retained
-
-Concrete values are represented by the fixed 12-functional target package
-
-```text
-Jx00, Jx20, Jx02, Jx22c,
-Jy00, Jy20, Jy02, Jy22c,
-Jxy22s,
-Jx11s_1, Jy11s_1, Jxy11c_1
-```
-
-which feeds exactly `Pc, RAc, Rqc`.
-
-Finite thickness family:
-
-```text
-stress moments  : k=0,1
-tangent kernels : k=0,1,2
-```
-
-11:26 audit status remains:
-
-```text
-COMPACT_SOURCE_R10 = PASS
-T12_VALUE_CONTRACT = PASS_AUDIT
-T12_DERIVATIVE_CONTRACT = PASS_AUDIT
-```
-
-## 11:55 stable conformal source refinement
-
-Define
+Engineering formal release:
 
 \[
-W=E(\sqrt{E^2+\eta^2I}+\eta I)^{-1}.
+\boxed{P_u^{N48-CH-D15}=365.257\ \mathrm{kN}}
 \]
 
-The smoothed source maps now use the exact stable identities
-
-\[
-\pi_\eta(E)=EW(I+W)^2(I+W^2)^{-2},
-\]
-
-\[
-\pi_\eta(-E)=EW(I-W)^2(I+W^2)^{-2}.
-\]
-
-These remove the poor conditioning of separate `I+W` / `I-W` inversions for strongly compressive principal states.
+## Comparison after formal solve
 
 ```text
-STABLE_CONFORMAL_SOURCE_IDENTITY = PASS_EXACT
+direct raw-R10 mechanics oracle = 366.767829 kN
+formal N48-D15 difference        = -1.51118 kN = -0.4120 %
+Pf_exp                           = 368.312750 kN
+formal error vs Pf               = -0.82976 %
 ```
 
-## 11:55 no-spatial-sampling Bernstein certificates
+The remaining difference to the raw-R10 oracle is classified as material-compiler representation difference, not failure of Airy structural integration.
 
-At the current peak, exact tensor Bernstein coefficient enclosure gives
+## Current artifacts
 
-```text
-tr(E)    in [-0.9516607416735428, -0.6221638560307847]
-Delta(E) in [+0.5843087672642922, +0.6592312757236101]
-gap       in [+0.7644009205019916, +0.8119305855327844]
+- `current/case21/CASE21_AIRY_N48_CH_D15_FORMAL_ZERO_SPATIAL_20260817_1304.md`
+- `semantic_v2/10_governance/20260817_1304__NZSCCM__CASE21_RESTORE_N48_CH_D15_AIRY_PRODUCTION_PATH__LOCK.md`
+- `semantic_v2/40_execution/case21/20260817_1304__NZSCCM__CASE21_AIRY_N48_CH_D15_FORMAL_ZERO_SPATIAL__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/case21/20260817_1304__NZSCCM__CASE21_AIRY_N48_CH_D15_FORMAL_ZERO_SPATIAL__PARAMS_AND_INTERMEDIATES.json`
 
-lambda_plus  in [-0.09362991058577558, +0.09488336475099984]
-lambda_minus in [-0.8817956636031636, -0.6932823882663881]
-
-t_plus/a  <= 1.8971668284751766 < 10
-t_minus/a <= 4.506313752829062e-5 < 1
-```
-
-A six-variable Bernstein enclosure over the formal solve neighborhood
+## Current status
 
 ```text
-D      in [0.75,0.82]
-q      in [0.00175,0.00187]
-lambda in [0.0,0.15]
-```
-
-certifies
-
-```text
-gap >= 0.7242936864852092
-t_plus/a  <= 2.6948274361042803 < 10
-t_minus/a <= 4.804460717539394e-5 < 1
-```
-
-No spatial point grid is used in either certificate.
-
-## Case21 branch-specific algebraic state reduction
-
-Inside the certified solve box the only required radicals are
-
-```text
-g      = sqrt(Delta_E)
-splus  = sqrt(lambda_plus^2+eta^2)
-sminus = sqrt(lambda_minus^2+eta^2)
-h1     = sqrt((t_plus-a)^2) = |t_plus-a|
-```
-
-so the complete source/stress field is contained in
-
-```text
-g^i*splus^j*sminus^k*h1^l, i,j,k,l in {0,1}
-```
-
-and therefore
-
-```text
-CASE21_CERTIFIED_SEARCH_BOX_ALGEBRAIC_STATE_BOUND = 16
-GENERIC_GLOBAL_R10_BRANCH_FREE_STATE_BOUND = 64  # retained outside the certified box
-```
-
-This is exact and does not use N48/N96 material approximation.
-
-## Positive-part gluing and refined mathematical period identity
-
-The first tensile source knot is physically crossed inside the complete halfwave. At `X=Y=pi/2`:
-
-```text
-lambda_plus(zeta=-1) = -0.0817474943281 < lambda1
-lambda_plus(zeta=+1) = +0.0830009484933 > lambda1
-zeta(lambda_plus=lambda1) ~= +0.600355180536
-```
-
-The frozen tensile source is C2 but not analytic at this knot:
-
-```text
-jump derivatives 0,1,2 = 0
-jump derivative 3 = -3.485446758727596
-A3 truncated-power coefficient = -0.580907793121266 != 0
-```
-
-Therefore `h1=|t_plus-a|` is a semialgebraic branch gluing. The previously selected
-
-```text
-GLOBAL_FIXED_ENDPOINT_POSITIVE_PART_FACTORISED_PERIOD
-```
-
-is retained, but its precise mathematical class is now
-
-```text
-SINGLE_FIXED_DOMAIN_SEMIALGEBRAIC_PERIOD
-```
-
-rather than one holomorphic algebraic branch across the physical Foster knot.
-
-An exact tangent-half-angle rationalization maps the complete `(X,Y,zeta)` continuum to one fixed unit cube `[0,1]^3`, so this classification introduces no XY/thickness cells and preserves `N_formal_spatial_subdomains=1`.
-
-## 11:55 actual runtime attempt verdict
-
-An ordinary analytic 16-state Pfaffian propagator was preflighted against the real knot. Since
-
-\[
-h_1'=\frac{(t_+-a)t_+'}{h_1},
-\]
-
-it is singular at the physical `h1=0` branch switch and therefore cannot by itself represent the real positive-part gluing on the whole interval.
-
-```text
-ORDINARY_SINGLE_ANALYTIC_16_STATE_PFAFFIAN = FAIL_PRECONDITION
-```
-
-The missing formal primitive is now precisely
-
-```text
-NONENUMERATIVE_SINGLE_DOMAIN_SEMIALGEBRAIC_PERIOD_NUMERIC_RUNTIME
-```
-
-which must return T12 and same-source `(D,q,lambda)` derivatives without spatial quadrature, cells, material points, or high-order multivariate coefficient enumeration.
-
-## Development-only dense spectral audit
-
-A branch-restricted dense coefficient-space evaluator was rerun only for diagnosis. At the fixed mechanics-oracle state:
-
-```text
-N=12 P=366.907127085 kN Rq=-3.36219 RA=-0.07991
-N=14 P=366.773503788 kN Rq=-2.20228 RA=-0.07074
-N=16 P=366.750133196 kN Rq=-0.82994 RA=-0.05310
-N=20 P=366.758757710 kN Rq=+0.53761 RA=-0.03878
-N=24 P=366.744803343 kN Rq=+0.21580 RA=-0.02825
-```
-
-Although `P` is close to the direct-source oracle, the equilibrium residuals remain order-sensitive. This route is explicitly not promoted to production.
-
-## Current capacity / blocker status
-
-```text
-CURRENT_END_TO_END_TASK = CASE21_AIRY_SCALAR_FORMAL_ZERO_SPATIAL_ULTIMATE_LOAD
-STATUS = BLOCKED_AT_NONENUMERATIVE_SINGLE_DOMAIN_SEMIALGEBRAIC_PERIOD_NUMERIC_RUNTIME
+CASE21_AIRY_N48_CH_D15_FORMAL_ZERO_SPATIAL = PASS
+FORMAL_CASE21_Pu = 365.257 kN
+RAW_R10_DIRECT_PERIOD_RUNTIME = NOT_REQUIRED_FOR_CURRENT_FORMAL_BASELINE
 NEW_PROJECT_TASK_CREATED = NO
-ROUTE_CHANGED = NO
-
-CASE21_CURRENT_DIRECT_SOURCE_MECHANICS_TARGET_Pu = 366.767829 kN
-CASE21_FORMAL_ZERO_QUADRATURE_NUMERIC_RELEASE = OPEN
-FORMAL_T12_VALUES = NOT RELEASED
-FORMAL_T12_DERIVATIVES = NOT RELEASED
-FORMAL_Rq_RA_L3_SOLVE = NOT RUN
-FORMAL_CASE21_Pu = NOT RELEASED
-Z6_NEW_CALCULATION_UNDER_CURRENT_CLOSURE = NOT YET RUN
+ROUTE_CHANGED_PHYSICALLY = NO
 ```
-
-## Current 11:55 artifacts
-
-- `current/case21/CASE21_FORMAL_ZERO_SPATIAL_STATUS_20260817_1155.md`
-- `semantic_v2/10_governance/20260817_1155__NZSCCM__CASE21_16_STATE_SEMIALGEBRAIC_PERIOD_REFINEMENT__LOCK.md`
-- `semantic_v2/20_theory/nc_rebar_panel/20260817_1155__NZSCCM__CASE21_STABLE_CONFORMAL_SOURCE_16_STATE_AND_SINGLE_DOMAIN_SEMIALGEBRAIC_PERIOD__THEORY.md`
-- `semantic_v2/40_execution/common/20260817_1155__NZSCCM__CASE21_16_STATE_SEMIALGEBRAIC_PERIOD_RUNTIME_ATTEMPT__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/common/20260817_1155__NZSCCM__CASE21_16_STATE_SEMIALGEBRAIC_PERIOD_RUNTIME_ATTEMPT__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/common/20260817_1155__NZSCCM__CASE21_16_STATE_SEMIALGEBRAIC_PERIOD_RUNTIME_ATTEMPT__REPRO.py`
-- `semantic_v2/40_execution/common/20260817_1155__NZSCCM__CASE21_16_STATE_SEMIALGEBRAIC_PERIOD_RUNTIME_ATTEMPT__DEVELOPMENT_DENSE_SPECTRAL_T12_REPRO.py`
-- `semantic_v2/00_index/20260817_1155__NZSCCM__PROJECT__CASE21_FORMAL_ZERO_SPATIAL_16_STATE_SEMIALGEBRAIC_PERIOD__SEMANTIC_INDEX.md`
