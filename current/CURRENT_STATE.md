@@ -1,25 +1,29 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-17 13:37 +08:00  
-**Status:** Z6 RECTANGULAR AIRY MECHANICS CALCULABLE / DIRECT-COPY FIXED-N48 COMPILER FAILED / COMPILER REORGANIZATION ACTIVE
+**Updated:** 2026-08-17 14:07 +08:00  
+**Status:** Z6 a=24000 CORRECTED / AIRY MEMBRANE REDISTRIBUTION ACTIVE / N48-FAMILY MATERIAL REBUILD CALCULATED
 
 ## Current operational entry
 
-`semantic_v2/00_index/20260817_1337__NZSCCM__PROJECT__Z6_RECTANGULAR_AIRY_COMPILER_REORGANIZATION__SEMANTIC_INDEX.md`
+`semantic_v2/10_governance/20260817_1407__NZSCCM__Z6_LENGTH24000_COMPLETE_HALFWAVE_AND_N48_FAMILY_REBUILD__CORRECTION_LOCK.md`
 
-## Current active task
+## Critical source correction
+
+The 13:37 `a=9000 mm` Z6 interpretation is **superseded and wrong**.
+
+The backup Z6 production record explicitly fixes
 
 ```text
-Z6_CONVERGENT_SERIES_FINITE_MOMENT_MATERIAL_COMPILER
+a = 24000 mm
+b = 12000 mm
+a/b = 2
+m* = 2
+ell = a/m* = 12000 mm = b
+A0 = a/500 = 48 mm
+q0 = .004
 ```
 
-## Latest user correction
-
-The successful Case21 N48/CH/D15 path is a **reasoning precedent**, not a command to copy the Case21 fixed-N48 material representation literally to every geometry.
-
-The Case21 result already obtained is retained, but Z6 is now used as the cross-geometry compiler diagnostic. If the direct-copy compiler shows an obvious source-fidelity error, the compiler must be reorganized as a convergent analytic series whose individual structural terms have finite exact moments.
-
-## Formal project counters
+Therefore the full physical plate has two repeated halfwaves, while the formal structural domain remains one continuous complete halfwave of length `12000 mm`.
 
 ```text
 ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
@@ -29,197 +33,154 @@ N_formal_spatial_subdomains = 1
 N_formal_thickness_quadrature = 0
 ```
 
-Gauss/direct continuum remains audit-only.
+## Membrane redistribution
 
-## Case21 retained result
-
-The 13:04 Case21 finite-compiler formal baseline remains:
-
-```text
-Airy scalar + N48-C1/MM + 2x2 CH + General-D15
-Pu_formal = 365.257 kN
-raw-R10 mechanics oracle = 366.767829 kN
-formal-vs-raw difference = -0.4120%
-Pf_exp = 368.312750 kN
-formal-vs-Pf error = -0.82976%
-```
-
-This remains a valid Case21 result; it is no longer interpreted as proof that the same fixed-N48 compiler should be copied unchanged to Z6.
-
-## Real Z6 identity
-
-```text
-a = 9000 mm
-b = 12000 mm
-ell = 9000 mm
-m* = 1
-k = b/ell = 4/3
-h = 130 mm
-tc = 122 mm
-ts = 4 mm
-ns = 60
-ls = 200 mm
-rho_w = 0.02
-fc = 30.4 MPa
-eps0 = 0.0018712490394580678
-nu_c = 0.18
-Es = 206000 MPa
-fy = 355 MPa
-nu_s = 0.30
-A0 = 18 mm
-q0 = 0.0015
-```
-
-The historical virtual AR2 object (`a=24000,b=12000,m=2,ell=12000,q0=.004`) is not the current Z6 and may not be substituted for it.
-
-## Rectangular Airy scalar
-
-For `k=b/ell`, the mechanically derived direction is
+Current production-direction membrane closure is
 
 \[
-a(k,\nu)=\left[
--\frac{1+\nu k^2}{4},
-\frac{\nu k^2-1}{4},
-\frac14,
-\frac{\nu-k^2}{4},
-\frac{k^2}{4}
-\right]^T.
+r=\lambda M a(\nu),
+\qquad
+M=\frac{\pi^2}{\varepsilon_0}(q_0q+q^2/2),
 \]
 
-For Z6 (`k=4/3, nu=.18`):
+with the square-halfwave Airy direction
 
 ```text
-[-0.33, -0.17, +0.25, -0.3994444444, +0.4444444444]
-shear Airy coefficient = -2/3
+a(.18)=[-.295,-.205,+.25,-.205,+.25]
 ```
 
-At `lambda=1` the pure isotropic elastic field reduces to
+and branch equations
 
 ```text
-sigma_x/(E eps0) = -M/4 cos(2Y)
-sigma_y/(E eps0) = k^2 M/4 [1-cos(2X)]
-tau_xy = 0
+Rq_base = 0
+RA = a^T Rm = 0
 ```
 
-so the square Case21 direction has been generalized rather than copied.
+Neither `r=0` nor the five fully independent membrane amplitudes is the current production closure. The historical free-five direct-R10 value `43.76284 MN` remains diagnostic history and is not the current Z6 prediction.
 
-## Z6 direct-source mechanics audit
+## Corrected Z6 direct mechanics
 
-Using frozen raw R10 concrete + effective concrete factor `.98` + two face-shell local ideal-EP caps + homogenized longitudinal web phase `.02`, and solving the rectangular Airy scalar branch `Rq_base=0, RA=0`, the direct continuum audit gives a first peak near
+Full phases are active before solving:
 
 ```text
-D ~= 1.30722
-q ~= 0.0214430
-lambda ~= 0.84614
-Pu_direct_R10_audit ~= 43.46 MN
-Pc_eff ~= 20.238 MN
-Ps_face ~= 16.759 MN
-Pw ~= 6.460 MN
+effective R10 concrete = .98 core
+face steel plates = two local ideal-EP radial-cap phases
+longitudinal web/PBL phase = rho_w=.02
 ```
 
-The face-shell local plastic cap is active (`trial VM ratio max ~=1.78`).
-
-The raw-R10 concrete principal normalized material coordinate spans approximately
+High-resolution raw-R10 Airy branch peak:
 
 ```text
-[-1.6225,+1.0732]
+D ~= 1.36180798
+q ~= 0.026485404
+lambda_Airy ~= 0.786915819
+P ~= 48.4061215 MN
+Pc_eff ~= 22.8171044 MN
+Ps_face ~= 18.5564373 MN
+Pw ~= 7.0325797 MN
+material lambda range ~= [-1.66417,+1.35392]
+face VM/fy max ~= 1.9474
 ```
 
-at the peak neighborhood.
+Thus the corrected mechanics oracle is
 
-This is **audit-only**, not formal Z6 Pu.
+\[
+\boxed{P_u^{raw\ R10}\approx48.41\ \mathrm{MN}.}
+\]
 
-## External Zhou comparator
+The same-evaluator old `r=0` peak was about `51.48054 MN`; the constrained Airy redistribution therefore lowers the peak by about `5.97%`, not by the roughly 15% produced by the over-released free-five branch.
 
-For the same real nominal Z6 parameter combination, Zhou's original full-MCFSTW formula chain gives
+## N48-family material rebuild
+
+N48 is retained as the source-compiler prototype/refinement quantum rather than copied once over an excessively broad domain.
+
+Current source interval:
 
 ```text
-Pyth_full = 88.089888 MN
-Pcr = 42.831476 MN
-Pu_Zhou_original_formula = 49.672436 MN
+[-1.75,+1.45]
 ```
 
-The raw-R10 mechanics audit is therefore about `-12.5%` below the Zhou fitted formula. Since this comparison bypasses N48, that residual difference cannot be assigned to material-compiler error.
-
-## Fixed-N48 direct-copy gate
-
-Historical narrow Z6 compiler:
+Current convergence family:
 
 ```text
-[-1.15,+.23]
+N=48,96,144,192,240,288
 ```
 
-cannot cover the current Airy branch.
+All `U,C,T,T7` material representations retain the frozen R10 source and C1 origin constraints. No Zhou/Winter value enters coefficient generation or order selection.
 
-Regenerating a fixed N48 compiler on the previously used broad interval
+Common-resolution capacity convergence versus the same raw-R10 evaluator:
 
 ```text
-[-2.35,+1.90]
+N48  : 48.96003 MN  (+1.0743%)
+N96  : 48.60848 MN  (+0.3485%)
+N144 : 48.50931 MN  (+0.1438%)
+N192 : 48.46889 MN  (+0.0603%)
+N240 : 48.46413 MN  (+0.0505%)
+N288 : 48.45880 MN  (+0.0395%)
 ```
 
-produces large primitive value errors:
+Higher-resolution gate:
 
 ```text
-U  ~= 0.02625
-C  ~= 0.08247
-T  ~= 0.71062
-T7 ~= 0.79605
+raw R10 = 48.40515087 MN
+N192    = 48.42896188 MN  (+0.0492%)
+N240    = 48.42159977 MN  (+0.0340%)
+N288    = 48.41599214 MN  (+0.0224%)
 ```
 
-At the same raw-R10 peak state:
+Representative N240 state:
 
 ```text
-Pc_full_N48 ~= 18.5008 MN
-Pc_full_raw  ~= 20.6509 MN
-same-state concrete difference ~= -10.4%
+D = 1.36084551
+q = 0.0264712930
+lambda_Airy = 0.786756642
+P = 48.4215998 MN
+Pc_eff = 22.8331231 MN
+Ps_face = 18.5563166 MN
+Pw = 7.0321601 MN
+material lambda range = [-1.66254,+1.35182]
 ```
 
-Therefore:
+Current corrected engineering result:
+
+\[
+\boxed{P_u(Z6,a=24000)\approx48.42\ \mathrm{MN}.}
+\]
+
+## Comparator — post solve only
 
 ```text
-DIRECT_COPY_FIXED_N48_TO_WIDE_Z6_DOMAIN = FAIL
-FORMAL_Z6_Pu_FROM_THIS_COMPILER = NOT RELEASED
-FAILURE_CLASS = MATERIAL_ANALYTIC_COMPILER_FIDELITY
-SPATIAL_INTEGRATION_FAILURE = NO
+Pcr_AR2 = 39.2880147150 MN
+Zhou Eq.(5-87)/(5-88) = 49.4867667519 MN
+Winter = 50.1858541295 MN
 ```
 
-The old CH/D15 structural integrator itself remains valid: at the historical `D=.705,q=.0058975999,lambda=0` Z6 state it reproduces the persisted H0 concrete load to engineering precision.
-
-## Current compiler direction
-
-The next compiler must preserve frozen R10 physics but reorganize its analytic representation:
+Using the N240 engineering value:
 
 ```text
-R10 scalar source
- -> source-regular convergent scalar series / factorized analytic expansion
- -> termwise 2x2 Cayley-Hamilton lift
- -> target-first General-D15 exact moments
- -> finite partial sum at source/target engineering convergence
+vs Zhou ~= -2.15%
+vs Winter ~= -3.52%
 ```
 
-Key principle:
+These comparators did not participate in the solve.
 
-```text
-INFINITE_CONVERGENT_MATERIAL_SERIES = ALLOWED
-EACH_STRUCTURAL_TERM_HAS_FINITE_EXACT_INTEGRAL = REQUIRED
-FORMAL_SPATIAL_QUADRATURE = 0
-BLIND_GLOBAL_N_ESCALATION = NOT THE GOVERNING STRATEGY
-```
+## Formal exact-moment identity
 
-The new compiler must be validated by same-state source consistency against raw R10, not by fitting the final Z6 capacity to Zhou/experiment.
+Every finite N48-family member remains a finite source polynomial. After 2x2 Cayley-Hamilton lifting, each retained term has finite General-D15 exact structural moments. The direct-continuum grids used above remain **audit-only** and are not promoted to formal spatial quadrature.
+
+The high-block N192-N288 exact-D15 contraction has not yet been separately promoted as a formal runtime result; therefore the current `48.42 MN` is the corrected engineering material-compiler/mechanics result, not falsely labelled as a completed high-block formal certificate.
 
 ## Current artifacts
 
-- `semantic_v2/10_governance/20260817_1337__NZSCCM__Z6_RECTANGULAR_AIRY_AND_COMPILER_REORGANIZATION__LOCK.md`
-- `semantic_v2/20_theory/nc_steel_shell_panel/20260817_1337__NZSCCM__RECTANGULAR_AIRY_SCALAR_AND_CONVERGENT_SERIES_FINITE_MOMENT_COMPILER__THEORY.md`
-- `semantic_v2/40_execution/steel_shell/20260817_1337__NZSCCM__Z6_RECTANGULAR_AIRY_DIRECT_R10_AND_N48_FIXED_STATE_GATE__EXECUTION_REPORT.md`
-- `semantic_v2/40_execution/steel_shell/20260817_1337__NZSCCM__Z6_RECTANGULAR_AIRY_DIRECT_R10_AND_N48_FIXED_STATE_GATE__PARAMS_AND_INTERMEDIATES.json`
-- `semantic_v2/40_execution/steel_shell/20260817_1337__NZSCCM__Z6_RECTANGULAR_AIRY_AND_COMPILER_GATE__REPRO.py`
+- `semantic_v2/10_governance/20260817_1407__NZSCCM__Z6_LENGTH24000_COMPLETE_HALFWAVE_AND_N48_FAMILY_REBUILD__CORRECTION_LOCK.md`
+- `semantic_v2/20_theory/nc_steel_shell_panel/20260817_1407__NZSCCM__Z6_N48_FAMILY_SOURCE_COMPILER_AND_AIRY_MEMBRANE_REDIStribution__THEORY.md`
+- `semantic_v2/40_execution/steel_shell/20260817_1407__NZSCCM__Z6_A24000_AIRY_N48_FAMILY_REBUILD_AND_CAPACITY__EXECUTION_REPORT.md`
+- `semantic_v2/40_execution/steel_shell/20260817_1407__NZSCCM__Z6_A24000_AIRY_N48_FAMILY__PARAMS_AND_INTERMEDIATES.json`
 
-## Next gate
+## Current next implementation step
 
 ```text
-CURRENT_NEXT_TASK = Z6_CONVERGENT_SERIES_FINITE_MOMENT_MATERIAL_COMPILER
+HIGH_BLOCK_N48_FAMILY -> 2x2 CH -> TARGET_FIRST_GENERAL_D15 EXACT CONTRACTION
 ```
 
-No formal Z6 ultimate-load value shall be released until that compiler passes same-state value/tangent target convergence and the coupled branch is rerun.
+This is an implementation promotion of the already selected material/physical path; it is not a new mechanics route and must not reopen the 9000-mm geometry or free-five membrane model.
