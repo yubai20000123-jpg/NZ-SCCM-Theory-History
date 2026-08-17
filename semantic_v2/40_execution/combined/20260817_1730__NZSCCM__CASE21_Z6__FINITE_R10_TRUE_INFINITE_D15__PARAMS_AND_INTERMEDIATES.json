@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-08-17T17:30:00+08:00",
+  "identity": "JOINT_EXECUTION_NO_NEW_THEORY_BRANCH",
+  "formal_interpretation": {
+    "R10_is_finite_material_operator": true,
+    "infinity_belongs_to_analytic_representation_only": true,
+    "full_R10_new_standalone_infinite_recurrence_required": false,
+    "finite_prefix_is_material_degree": false,
+    "N_formal_spatial_sampling": 0,
+    "N_formal_spatial_quadrature": 0,
+    "N_formal_spatial_subdomains": 1,
+    "N_formal_thickness_quadrature": 0
+  },
+  "case21": {
+    "geometry": {"b_mm": 1220.0, "ell_mm": 1220.0, "t_mm": 19.3, "q0": 0.0025},
+    "material": {"fc_MPa": 21.23, "eps0": 0.00209, "nu": 0.18, "rho_s": 0.00375, "Es_MPa": 200000.0},
+    "root": {"D": 0.7887924801, "q": 0.0018083572562965242, "lambda_A": 0.08623596353826937},
+    "kinematics": {
+      "M": 0.02907033478365149,
+      "Mq": 20.345350113975815,
+      "B": 0.0675468615567654,
+      "Bq": 37.352609016594364,
+      "alpha": 0.002506908330448254,
+      "M_minus_alpha": 0.026563426453203236
+    },
+    "strain_coefficients": {
+      "ex_const": 0.14135591933538794,
+      "ex_u2": -0.00022562174974034282,
+      "ex_v2": 0.027816880618427364,
+      "ex_u2v2": -0.026563426453203236,
+      "ex_uv_zeta": 0.0675468615567654,
+      "ey_const": -0.7886796692251299,
+      "ey_u2": 0.027816880618427364,
+      "ey_v2": -0.00022562174974034282,
+      "ey_u2v2": -0.026563426453203236,
+      "ey_uv_zeta": 0.0675468615567654
+    },
+    "targets": {
+      "D15_Syy": -13.343826863031058,
+      "concrete_residual_factor_Nmm": 64571.891683080845,
+      "D15_Qq_equilibrium_implied": 4.563964376475574,
+      "D15_QA_equilibrium_implied": 0.06707853610423357,
+      "Pc_kN": 337.92303037,
+      "reinforcement_prefactor_N": 36908.355,
+      "CR": 2.94090386184375,
+      "Ps_kN": 28.84479831782027,
+      "Rq_s_kNmm": -294.7038133632204,
+      "RA_s_kNmm": -4.331387967582198,
+      "Pu_kN": 366.7678286852115
+    },
+    "comparison": {"Pf_exp_kN": 368.3127497435694, "delta_kN": -1.544921058357886, "error_percent": -0.41945902210377417}
+  },
+  "z6": {
+    "geometry": {"a_mm": 24000.0, "b_mm": 12000.0, "m_star": 2, "ell_mm": 12000.0, "A0_mm": 48.0, "q0": 0.004, "tc_mm": 122.0, "ts_mm": 4.0, "rho_w": 0.02},
+    "material": {"fc_MPa": 30.4, "eps0": 0.0018712490394580678, "nu_c": 0.18, "Es_MPa": 206000.0, "fy_MPa": 355.0, "nu_s": 0.3},
+    "root": {"D": 1.36180798, "q": 0.0264854039, "lambda_A": 0.786915819},
+    "kinematics": {
+      "M": 2.4086853792820073,
+      "Mq": 160.79039729931628,
+      "B_concrete": 0.7101062648720707,
+      "Bq_concrete": 26.81123034986341,
+      "alpha": 1.8954326279510263,
+      "M_minus_alpha": 0.513252751330981,
+      "beta_face_per_mm": 0.011641086309378207
+    },
+    "strain_coefficients": {
+      "ex_const": -0.22873272058775657,
+      "ex_u2": -0.17058893651559237,
+      "ex_v2": 1.4609690653064942,
+      "ex_u2v2": -0.513252751330981,
+      "ex_uv_zeta": 0.7101062648720707,
+      "ey_const": -1.2765135117422037,
+      "ey_u2": 1.4609690653064942,
+      "ey_v2": -0.17058893651559237,
+      "ey_u2v2": -0.513252751330981,
+      "ey_uv_zeta": 0.7101062648720707
+    },
+    "targets": {
+      "D15_Syy_full_concrete": -10.326414048438727,
+      "Pc_full_MN": 23.282759591836736,
+      "concrete_effective_factor": 0.98,
+      "Pc_eff_MN": 22.8171044,
+      "face_trial_VM_over_fy_max": 1.9474,
+      "Ps_face_MN": 18.5564373,
+      "Pw_MN": 7.0325797,
+      "Pu_MN": 48.4061215
+    },
+    "comparison": {
+      "Zhou_MN": 49.4867667519,
+      "error_vs_Zhou_percent": -2.1837055092279067,
+      "Winter_MN": 50.1858541295,
+      "error_vs_Winter_percent": -3.546283430600916
+    }
+  }
+}
