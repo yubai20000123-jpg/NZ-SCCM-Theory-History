@@ -11,9 +11,19 @@ Creation commit:
 
 `ab5ec6299a1586dca8ee58dd20174440e489347a`
 
+### Mandatory notation errata
+
+`semantic_v2/20_theory/20260818_2135__NZSCCM__CURRENT_COMPLETE_THEORY_LEDGER_CASE21_Z6__ERRATA_R01.md`
+
+Errata commit:
+
+`0f4db991ada73001bae4d555672ea4d4d4222d53`
+
+The errata is notation-only: in the first GitHub copy, displayed `\nu_R`, `\nu_R'`, and `\nu_w` are to be read as `u_R`, `u_R'`, and `u_w`. No theory, model, root, or numerical result changes.
+
 ## Position
 
-This file is the current consolidated entry point for the Case21 + Z6 theory state as of 2026-08-18 21:35 +08:00. It does **not** delete, overwrite, or replace the evidentiary identity of the 2026-08-17 execution/audit/REPRO artifacts; instead it consolidates them together with the formula expansions and corrections completed in the 2026-08-18 conversation.
+The handoff plus mandatory R01 errata is the current consolidated entry point for the Case21 + Z6 theory state as of 2026-08-18 21:35 +08:00. It does **not** delete, overwrite, or replace the evidentiary identity of the 2026-08-17 execution/audit/REPRO artifacts; instead it consolidates them together with the formula expansions and corrections completed in the 2026-08-18 conversation.
 
 The current formal Pu production chain is:
 
@@ -63,4 +73,4 @@ error vs Winter = -3.546283 %
 
 ## New-chat restore instruction
 
-Read the canonical current handoff above first. Do not reopen R10 calibration, the released Case21/Z6 roots, spatial quadrature, or load-stepping as a formal production route. Resume from `GAP A` unless the user explicitly changes priority.
+Read the canonical current handoff **and R01 errata** first. Do not reopen R10 calibration, the released Case21/Z6 roots, spatial quadrature, or load-stepping as a formal production route. Resume from `GAP A` unless the user explicitly changes priority.
