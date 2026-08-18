@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
 **Updated:** 2026-08-19  
-**Status:** `CASE21_GLOBAL_RESIDUE_GKZ_RELATIVE_A_HYPERGEOMETRIC_R11 = ACTIVE`
+**Status:** `CASE21_SPARSE_CH_CIRCUIT_MASTER_GKZ_ASTAR_R12 = ACTIVE`
 
 ## Canonical current-state artifact
 
-`semantic_v2/00_index/20260819__NZSCCM__CURRENT_STATE_GLOBAL_RESIDUE_GKZ_R11__INDEX.md`
+`semantic_v2/00_index/20260819__NZSCCM__CURRENT_STATE_SPARSE_GKZ_ASTAR_R12__INDEX.md`
 
 ## Mandatory governance
 
@@ -24,44 +24,49 @@ PROACTIVE_CHAT_LENGTH_CHECKPOINT = REQUIRED
 
 `semantic_v2/20_theory/20260819__NZSCCM__MATERIAL_SERIES_LAYER_REMOVAL_AND_MAINLINE_REBASE__R09.md`
 
-The former true-infinite Chebyshev/material-prefix production layer is removed. The exact finite current material operator is the formal object. Nguyen second-order kinematics, exact continuous generalized integrals, same-source derivatives, and the direct three-variable limit equations remain unchanged.
+The former true-infinite Chebyshev/material-prefix production layer remains removed. The exact finite current material operator is the formal object.
 
-## R10 local representation retained
+## Exact-integration progression
 
+R10:
 `semantic_v2/20_theory/20260819__NZSCCM__CASE21_CONCRETE__THICKNESS_ALGEBRAIC_FIELD_TO_FINITE_LAURICELLA_CLOSURE__R10.md`
 
-Fixed-(r,s) thickness integrals admit finite elementary / elliptic / Lauricella FD representations. This remains valid but is not mandatory as the sole production constructor.
-
-## R11 active global constructor
-
+R11:
 `semantic_v2/20_theory/20260819__NZSCCM__CASE21_CONCRETE__GLOBAL_RESIDUE_GKZ_AND_RELATIVE_INCOMPLETE_A_HYPERGEOMETRIC_CLOSURE__R11.md`
 
-R11 keeps all spatial variables together. The finite algebraic generators are removed by exact iterated residues; the whole complete-halfwave target becomes one finite rational period. Its finite denominator polynomial supports define a Cayley A-configuration, hence a standard GKZ A-hypergeometric family. Because the physical cube is a bounded relative chain, the strict physical identity is ordinary GKZ after suitable closed-cycle/Pochhammer continuation or relative/incomplete A-hypergeometric when boundary terms remain.
+R12:
+`semantic_v2/20_theory/20260819__NZSCCM__CASE21__SPARSE_CH_CIRCUIT_MASTER_GKZ_ASTAR__R12.md`
+
+R12 avoids a huge expanded rational denominator by residue-lifting the full 2x2 Cayley-Hamilton R10 computation graph as a sparse polynomial circuit.
 
 ```text
-MATERIAL_TRUE_INFINITE_SERIES_LAYER = REMOVED
-OUTER_RS_SEQUENTIAL_LAURICELLA = NOT REQUIRED
-GLOBAL_MULTIRESIDUE_RATIONALIZATION = PASS
-GLOBAL_RATIONAL_PERIOD = PASS
-GLOBAL_GKZ_STANDARD_FUNCTION_CLASSIFICATION = PASS
-PHYSICAL_CHAIN_RELATIVE_INCOMPLETE_GKZ_CLASSIFICATION = PASS
-FULL_MINIMAL_A_MATRIX_PRINTED = NO
-FULL_CASE21_Pc_STANDARD_FUNCTION_EVALUATED = NO
-ZERO_DISCRETIZATION = PASS
+R12 circuit relations = 78
+R12 monomial-space variables = 81
+R12 Cayley A* rows = 159
+R12 Cayley A* columns = 271
+R12 max monomials in one relation = 13
 ```
 
-## Exact backend hierarchy
+This count is exact symbolic structure for the R07 globally first-tension-branch pilot and uses no spatial/material discretization.
+
+`P`, `Rq`, and `Ralpha` share the same support family; same-source derivatives increase denominator powers but not denominator support, so one master A* can serve the target system under finite differential/contiguity shifts.
+
+## Scope warning
+
+The 159x271 A* is a certified first-tension-branch pilot configuration, not yet the final full three-branch Case21 Pu configuration. Threshold crossings at xcr or 10*xcr must be added as exact relative/incomplete-A-hypergeometric boundary/divisor data, never as numerical spatial cells.
+
+## Current backend hierarchy
 
 ```text
 elementary/Beta/Gamma
--> Carlson R / Appell F1 / Lauricella FD when favorable
--> GKZ generalized Euler/residue representation
--> relative/incomplete A-hypergeometric for physical bounded chains or exact threshold boundaries
--> Picard-Fuchs/holonomic only as optional evaluation reduction
+-> Carlson R / Appell/Lauricella when favorable
+-> GKZ generalized Euler/residue
+-> relative/incomplete A-hypergeometric for bounded physical chains / threshold boundaries
+-> Mellin-Barnes or differential-system representation if useful for evaluation
 ```
 
-Failure of one named standard-function reduction is not a theory failure and is not a reason to return to a custom material series or any discretization.
+Failure of one exact constructor is not a theory failure and does not authorize custom material series or discretization.
 
 ## Current unique next task
 
-Extract the actual finite denominator set from Case21 finite-R10 Syy; print the monomial supports of G1,G2,G3 and D_S; construct the actual finite Cayley matrix A_GKZ; then test whether P,Rq,Ralpha and all J_lim entries share one master A_* support family. Reduce support only by exact factorization/elimination/symmetry.
+Extend the sparse CH circuit to the complete three-branch R10 law by adding finite threshold algebraic variables/divisors and construct the full Case21 relative/incomplete-GKZ master A*. Keep Nguyen, finite R10, P/R/J definitions and the direct three-variable limit equations unchanged.
