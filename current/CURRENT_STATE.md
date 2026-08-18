@@ -1,42 +1,34 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-18 12:01 +08:00  
-**Status:** `STEEL_SHELL_SOURCE_CONSISTENT_PLANE_STRESS_OPERATOR_GATE = OPEN`
+**Updated:** 2026-08-18 14:21 +08:00  
+**Status:** `UNIFIED_YUN_IDEAL_EP_LOCAL_AMPLITUDE_Z1_Z4_RECALC = EXECUTED`
 
 ## Canonical current-state artifact
 
-`semantic_v2/00_index/20260818_1201__NZSCCM__PROJECT__CURRENT_STATE_STEEL_SHELL_SOURCE_CONSISTENT_OPERATOR_GATE__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260818_1421__NZSCCM__PROJECT__CURRENT_STATE_UNIFIED_YUN_IEP_Z1_Z4_RECALC__SEMANTIC_INDEX.md`
 
-Read that timestamped semantic index for the detailed current state. This file is intentionally a short pointer/snapshot to avoid duplicating a long state description that can drift from the execution tree.
+## Controlling execution artifact
 
-## Immediate technical stop
+`semantic_v2/40_execution/steel_shell/20260818_1421__NZSCCM__Z1_Z4__UNIFIED_YUN_IDEAL_EP_LOCAL_AMPLITUDE_FULL_RECALC.md`
 
-The latest controlling steel-shell audit is:
-
-`semantic_v2/40_execution/steel_shell/20260817_2342__NZSCCM__Z0_Z5__STEEL_LOCAL_YIELD_SEQUENCE_AND_TANGENT_RECALC_AUDIT.md`
-
-Current conclusions:
+Current face-shell interpretation:
 
 ```text
-CENTER_FIRST_LOCAL_YIELD_FRONT = ESTABLISHED_FOR_Z0_TO_Z5
-CURRENT_RADIAL_CAP_TANGENT_PHYSICAL_ACCEPTANCE = FAIL / NOT PRODUCTION-FROZEN
-OLD_Z0_TO_Z5_Pu_FULL_STEEL_TANGENT_PRODUCTION_CERTIFICATE = NOT PASSED
-IDEAL_J2_TANGENT_ONLY_SENSITIVITY = AUDIT ONLY
+Yun/Karman local-amplitude geometry = retained continuously
+pointwise scalar longitudinal ideal-EP steel = active
+first yield = material event, not Yun branch deletion
+one Yun Galerkin R_Ai row per real local subpanel = retained
+old radial-cap/J2 face operator = not the active Z1/Z4 route
 ```
 
-The unique next production route is:
+Current recalculated decimal-localized values:
 
 ```text
-locate exact production steel stress-update implementation
- -> freeze same-source plane-stress sigma_s(epsilon), Ct_s(epsilon)
- -> independently audit d sigma_s / d epsilon
- -> compile Ct_s(X,Y,z) into steel material tangent while retaining current-stress geometric terms
- -> rerun P,Rq,RA,KZ,L with the SAME operator
- -> Z1/Z4 first
- -> Z0-Z5 batch
- -> global / Phase-C hard gate
- -> production Pu freeze only after PASS
+Z1 Pu ~= 14.44689544 MN
+Z4 Pu ~= 52.43155584 MN
 ```
+
+No comparator was used in the solve.
 
 ## Formal counters retained
 
@@ -48,8 +40,10 @@ N_formal_spatial_subdomains = 1
 N_formal_thickness_quadrature = 0
 ```
 
-## Historical note
+The formal target remains analytic/General-D15 zero-spatial. Any direct-continuum evaluator used to print decimal coordinates is audit/localization only.
 
-The previous 2026-08-17 15:26 R10/CH/D15 true-infinite Case21/Z6 state remains retained theoretical/execution evidence. It is superseded only as the **current operational stop point**; it is not erased or silently invalidated.
+## Superseded current-stop interpretation
 
-Likewise, earlier Z6/N48/membrane entries remain in the repository as history and support evidence unless their own content/supersession chain states otherwise.
+The 2026-08-18 12:01 `STEEL_SHELL_SOURCE_CONSISTENT_PLANE_STRESS_OPERATOR_GATE = OPEN` entry is retained as history but is no longer the active operational stop for the unified Yun-IEP steel-shell route.
+
+Likewise, the 14:01 inference `sigma_cr,Yun > fy -> Yun inactive` is superseded. The numerical event-ordering calculation itself remains historical evidence; only that branch-deletion inference is withdrawn.
