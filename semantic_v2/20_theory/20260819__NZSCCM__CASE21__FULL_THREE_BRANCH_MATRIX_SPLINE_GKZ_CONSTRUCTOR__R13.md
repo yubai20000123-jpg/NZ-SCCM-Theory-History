@@ -110,8 +110,7 @@ B5 = +0.0000069092622335998587614
 Therefore the original three-branch law is exactly the **single global spline**
 
 \[
-\boxed{
-u_R(r)
+\boxed{u_R(r)
 =
 p_1(r)
 +A_3(r-1)_+^3
