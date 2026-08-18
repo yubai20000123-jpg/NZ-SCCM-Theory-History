@@ -1,49 +1,73 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-18 14:21 +08:00  
-**Status:** `UNIFIED_YUN_IDEAL_EP_LOCAL_AMPLITUDE_Z1_Z4_RECALC = EXECUTED`
+**Updated:** 2026-08-19 01:42 +08:00  
+**Status:** `CASE21_CONCRETE_ANALYTIC_CLOSURE_R06 = ACTIVE`
 
 ## Canonical current-state artifact
 
-`semantic_v2/00_index/20260818_1421__NZSCCM__PROJECT__CURRENT_STATE_UNIFIED_YUN_IEP_Z1_Z4_RECALC__SEMANTIC_INDEX.md`
+`semantic_v2/00_index/20260819_0142__NZSCCM__CURRENT_STATE_AND_FILE_TREE__INDEX.md`
 
-## Controlling execution artifact
+## Mandatory project-wide governance
 
-`semantic_v2/40_execution/steel_shell/20260818_1421__NZSCCM__Z1_Z4__UNIFIED_YUN_IDEAL_EP_LOCAL_AMPLITUDE_FULL_RECALC.md`
+`semantic_v2/10_governance/20260819_0142__NZSCCM__PROJECT__ZERO_DISCRETIZATION_AND_GITHUB_CONTINUITY__LOCKED_GOVERNANCE.md`
 
-Current face-shell interpretation:
-
-```text
-Yun/Karman local-amplitude geometry = retained continuously
-pointwise scalar longitudinal ideal-EP steel = active
-first yield = material event, not Yun branch deletion
-one Yun Galerkin R_Ai row per real local subpanel = retained
-old radial-cap/J2 face operator = not the active Z1/Z4 route
-```
-
-Current recalculated decimal-localized values:
+Current locked rules:
 
 ```text
-Z1 Pu ~= 14.44689544 MN
-Z4 Pu ~= 52.43155584 MN
+ZERO_DISCRETIZATION_DEFAULT = LOCKED
+DISCRETE_AUDIT_ORACLE = PROHIBITED
+TASK_LOCAL_DISCRETIZATION_EXCEPTION_ONLY = TRUE
+AUTO_GITHUB_CHECKPOINT_AFTER_MATERIAL_CHANGE = REQUIRED
+PROACTIVE_CHAT_LENGTH_CHECKPOINT = REQUIRED
 ```
 
-No comparator was used in the solve.
+Unless the user explicitly authorizes discretization for a specific task, no Gauss/grid/material-point/collocation/numerical-cell/finite-prefix side validation is permitted, including audit/oracle use.
 
-## Formal counters retained
+## Current analytic-closure artifact
+
+`semantic_v2/20_theory/20260819_0142__NZSCCM__CASE21_CONCRETE__ANALYTIC_ALGEBRAIC_IDEAL_AND_PICARD_FUCHS_INITIAL_JET__R06.md`
+
+R06 status:
 
 ```text
-ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-N_formal_thickness_quadrature = 0
+P0_FINITE_R10_GLOBAL_INTEGRAND = PASS
+P1_FINITE_ALGEBRAIC_SEMIALGEBRAIC_IDEAL = PASS
+TAU0_INITIAL_JET_P0_P1_P2 = PASS
+FULL_Pc_TAU_TELESCOPER_GENERATED = NO
+FULL_Pc_FINITE_PICARD_FUCHS_OPERATOR = OPEN
 ```
 
-The formal target remains analytic/General-D15 zero-spatial. Any direct-continuum evaluator used to print decimal coordinates is audit/localization only.
+Current candidate chain:
 
-## Superseded current-stop interpretation
+```text
+raw specimen
+-> one continuous complete representative halfwave
+-> Nguyen/von-Karman finite second-order kinematics
+-> finite R10 current operator
+-> finite algebraic / semialgebraic period
+-> creative telescoping / holonomic / Picard-Fuchs finite system
+-> exact initial jet
+-> P,Rq,Ralpha and same-source derivatives
+-> direct finite-dimensional limit equations
+```
 
-The 2026-08-18 12:01 `STEEL_SHELL_SOURCE_CONSISTENT_PLANE_STRESS_OPERATOR_GATE = OPEN` entry is retained as history but is no longer the active operational stop for the unified Yun-IEP steel-shell route.
+## Current unique next task
 
-Likewise, the 14:01 inference `sigma_cr,Yun > fy -> Yun inactive` is superseded. The numerical event-ordering calculation itself remains historical evidence; only that branch-deletion inference is withdrawn.
+Generate a finite creative-telescoping / Picard–Fuchs operator for Case21 concrete `Pc(tau;D,q,alpha)` from the R06 finite algebraic/semi-algebraic ideal.
+
+Do **not** use historical Case21 root/Pu as a target. Do **not** use discrete oracle or finite-prefix convergence checking. If the available symbolic backend cannot generate the operator, stop at the first exact blocked expression and report:
+
+```text
+ANALYTIC_CLOSURE_BACKEND_BLOCK = YES
+```
+
+## Withdrawals in this chat
+
+```text
+R04 finite-prefix/oracle execution layer = SUPERSEDED FOR CURRENT ROUTE
+R05 discrete P4 oracle regression = REVOKED
+Pc ~= 401.58558 kN discrete side-check = WITHDRAWN / DO NOT USE
+finite-prefix stability as formal convergence proof = REVOKED
+```
+
+Previously released Case21/Z6 Pu values remain historical result artifacts and are not silently changed or deleted by the current analytic-closure research.
