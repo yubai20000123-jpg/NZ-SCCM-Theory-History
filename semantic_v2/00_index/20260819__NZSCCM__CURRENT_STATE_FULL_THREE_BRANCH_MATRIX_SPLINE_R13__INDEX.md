@@ -1,7 +1,7 @@
 # NZ-SCCM CURRENT STATE — FULL THREE-BRANCH MATRIX-SPLINE CONSTRUCTOR R13
 
 **Date:** 2026-08-19  
-**Status:** `MATERIAL_SERIES_REPLACEMENT_COMPLETE_R13`
+**Status:** `R13_CASE21_ZERO_DISCRETE_TRIAL_CALC_COMPLETE`
 
 ## Governing constructor
 
@@ -24,16 +24,6 @@ finite R10 projector t,c
 
 No material-state spatial partition is used.
 
-## Constructor switch
-
-The previously planned R12 extension
-
-```text
-threshold xcr / 10*xcr surfaces -> separate relative-GKZ divisors
-```
-
-is rejected as unnecessary. The global matrix truncated-power spline absorbs all three material branches into one finite expression before integration.
-
 ## Complete machine structure
 
 ```text
@@ -48,9 +38,21 @@ Metadata:
 
 `semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21__R13__FULL_THREE_BRANCH_SPLINE_GKZ_METADATA.json`
 
-Local derived dense A* SHA-256:
+## First real-specimen execution
 
-`979e1f9a4e2e7c43712815d74e617f40468559afdcc26b027a2857ad69c60fe8`
+`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21__R13_ZERO_DISCRETE_TRIAL_CALC_UNBUCKLED_BRANCH.md`
+
+The real Case21 specimen has been executed on the exact continuous unbuckled branch `q=0, alpha=0` with the R13 finite constructor and no discretization.
+
+```text
+D* = 1.0837948701065467
+Pc = 498.272412466126 kN
+Ps = 40.0010858130713 kN
+P*(unbuckled stationary) = 538.273498279198 kN
+Pcr(exact Navier reference) = 407.136279059126 kN
+```
+
+This is an execution test of the material-series replacement, not the final nonuniform plate Pu.
 
 ## Same-source tangent
 
@@ -86,6 +88,6 @@ There is no material degree N and no material-series convergence gate.
 
 ## Execution discipline
 
-Do not create a new theory gate when one exact evaluation representation is inconvenient. Switch among mathematically equivalent mature representations of the same fixed function object (Euler/residue/Mellin-Barnes/differential-system, or lower standard functions when available). A representation-specific failure is crossed out, not promoted into a new project gate.
+Do not create a new theory gate when one exact evaluation representation is inconvenient. Cross out that representation and switch among mathematically equivalent mature representations of the same fixed function object. A representation-specific failure is not promoted into a new project gate, and no discrete fallback is allowed unless the user explicitly authorizes it for that task.
 
-The material-series replacement itself is complete at R13.
+The material-series replacement itself is complete at R13; the next calculation may proceed to the full nonuniform continuous `(D,q,alpha)` target system.
