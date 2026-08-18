@@ -6,14 +6,15 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260819__NZSCCM__CURRENT_STATE_SERIES_LAYER_REMOVED_R09__INDEX.md`
+`20260819__NZSCCM__CURRENT_STATE_GLOBAL_RESIDUE_GKZ_R11__INDEX.md`
 
-Current correction is deliberately narrow:
+Current correction remains deliberately narrow:
 
 ```text
-remove the true-infinite Chebyshev/material-prefix production layer
+remove the former true-infinite Chebyshev/material-prefix production layer
 restore the exact finite current material operator as the formal object
 keep Nguyen kinematics, exact continuous P/R/J definitions and the direct limit system unchanged
+replace difficult sequential exact integration by mature standard-function constructors as needed
 ```
 
 ## Current main chain
@@ -24,7 +25,7 @@ raw specimen
 -> continuous Nguyen/von-Karman second-order kinematics
 -> exact finite current material operator
 -> exact continuous generalized integrals
--> lowest-complexity exact standard-function integration backend
+-> exact algebraic residue lift / standard hypergeometric backend
 -> P,Rq,Ralpha + same-source derivatives
 -> direct solve Rq=0, Ralpha=0, det(J_lim)=0
 -> Pu
@@ -49,56 +50,63 @@ PROACTIVE_CHAT_LENGTH_CHECKPOINT = REQUIRED
 
 Unless the user explicitly authorizes discretization for a specific task, no Gauss/grid/material-point/collocation/numerical-cell/finite-prefix side validation is permitted.
 
-## Governing correction
+## Governing material-series correction
 
 `../20_theory/20260819__NZSCCM__MATERIAL_SERIES_LAYER_REMOVAL_AND_MAINLINE_REBASE__R09.md`
 
-## Latest exact-integration step
+## R10 local exact representation
 
 `../20_theory/20260819__NZSCCM__CASE21_CONCRETE__THICKNESS_ALGEBRAIC_FIELD_TO_FINITE_LAURICELLA_CLOSURE__R10.md`
 
-For Case21 `k=1`, at fixed outer algebraic coordinates `(r,s)`, the thickness integrand is a finite biquadratic algebraic function. Finite rationalization, factorization and partial fractions reduce each exact thickness integral to a finite combination of elementary / elliptic / Lauricella `F_D` values. This closes the thickness structure without material series and without requiring Picard-Fuchs.
+At fixed `(r,s)`, thickness integration can be reduced to finite elementary / elliptic / Lauricella FD combinations. This remains a valid local representation, but moving outer arguments mean it is not mandatory as the only global constructor.
+
+## R11 active global exact constructor
+
+`../20_theory/20260819__NZSCCM__CASE21_CONCRETE__GLOBAL_RESIDUE_GKZ_AND_RELATIVE_INCOMPLETE_A_HYPERGEOMETRIC_CLOSURE__R11.md`
+
+R11 keeps all spatial variables together, removes the finite algebraic radicals by exact iterated residue lifting, and converts the complete-halfwave target into one finite rational period. The monomial supports of its denominator polynomials define a finite Cayley A-configuration and hence a standard GKZ A-hypergeometric family. The physical bounded chain is treated, when required, as a relative/incomplete A-hypergeometric period rather than forcing a closed-cycle identity.
 
 ```text
-MATERIAL_SERIES_LAYER = REMOVED
-THICKNESS_EXACT_STANDARD_FUNCTION_CLOSURE = PASS AT STRUCTURAL FORM LEVEL
-OUTER_RS_EXACT_CLOSURE = OPEN
-PICARD_FUCHS_REQUIRED_AT_THICKNESS_LEVEL = NO
+MATERIAL_TRUE_INFINITE_SERIES_LAYER = REMOVED
+OUTER_RS_SEQUENTIAL_LAURICELLA = NOT REQUIRED
+GLOBAL_MULTIRESIDUE_RATIONALIZATION = PASS
+GLOBAL_RATIONAL_PERIOD = PASS
+GLOBAL_GKZ_STANDARD_FUNCTION_CLASSIFICATION = PASS
+PHYSICAL_CHAIN_RELATIVE_INCOMPLETE_GKZ_CLASSIFICATION = PASS
+FULL_MINIMAL_A_MATRIX_PRINTED = NO
+FULL_CASE21_Pc_STANDARD_FUNCTION_EVALUATED = NO
+ZERO_DISCRETIZATION = PASS
 ```
 
-## R06-R08 identity
+## Exact integration backend hierarchy
 
-R06-R08 are retained non-destructively as exact-integration-backend research evidence only. They do not define the material theory and do not make Picard-Fuchs a mandatory production layer.
-
-## Exact integration backend priority
-
-Use the lowest-complexity mature exact representation that closes the same continuous integral:
+Do not deadlock on one named special function. Use the lowest-complexity mature exact representation that closes the same continuous integral:
 
 ```text
-elementary
--> Beta/Gamma
--> Gauss hypergeometric / Appell / Lauricella
--> Legendre/Carlson elliptic
--> Abelian / hyperelliptic
--> holonomic / Picard-Fuchs only if necessary
+elementary / Beta / Gamma
+-> Carlson R / Gauss-Appell-Lauricella when favorable
+-> GKZ generalized Euler/residue representation
+-> relative/incomplete A-hypergeometric system for bounded physical chains or exact threshold boundaries
+-> holonomic/Picard-Fuchs only as optional evaluation reduction if useful
 ```
 
-Do not create a new NZ-SCCM material function merely to make an integration backend work.
+Failure of one constructor does not authorize custom material series, finite-prefix convergence, or discretization.
 
 ## Current read order
 
 1. this `README.md`;
-2. `20260819__NZSCCM__CURRENT_STATE_SERIES_LAYER_REMOVED_R09__INDEX.md`;
-3. the mandatory governance file;
+2. `20260819__NZSCCM__CURRENT_STATE_GLOBAL_RESIDUE_GKZ_R11__INDEX.md`;
+3. mandatory governance;
 4. R09;
 5. R10;
-6. `../20_theory/20260818_2135__NZSCCM__CURRENT_COMPLETE_THEORY_LEDGER_CASE21_Z6__LOCKED_HANDOFF.md` plus its R01 errata for the unchanged surrounding theory;
-7. R06-R08 only when investigating higher exact-integration backends;
-8. `../../current/CURRENT_STATE.md`.
+6. R11;
+7. `../20_theory/20260818_2135__NZSCCM__CURRENT_COMPLETE_THEORY_LEDGER_CASE21_Z6__LOCKED_HANDOFF.md` plus R01 errata for unchanged surrounding theory;
+8. R06-R08 only as optional higher-backend research evidence;
+9. `../../current/CURRENT_STATE.md`.
 
 ## Current unique next task
 
-Keep R10, Nguyen kinematics, P/R/J definitions and the three-variable limit system fixed. Continue only with the remaining exact outer `(r,s)` integration. Test Beta/Gamma -> Appell/Lauricella -> Carlson/elliptic symmetry before any higher exact backend.
+Extract the actual finite denominator set from the Case21 finite-R10 Syy expression; print monomial supports of G1,G2,G3 and D_S; construct the actual finite Cayley matrix A_GKZ; then test a shared master A_* for P,Rq,Ralpha and all J_lim entries. Reduce support only by exact factorization/elimination/symmetry.
 
 No discrete fallback and no finite-prefix convergence study are permitted.
 
