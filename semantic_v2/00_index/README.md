@@ -53,14 +53,22 @@ Unless the user explicitly authorizes discretization for a specific task, no Gau
 
 `../20_theory/20260819__NZSCCM__MATERIAL_SERIES_LAYER_REMOVAL_AND_MAINLINE_REBASE__R09.md`
 
+## Latest exact-integration step
+
+`../20_theory/20260819__NZSCCM__CASE21_CONCRETE__THICKNESS_ALGEBRAIC_FIELD_TO_FINITE_LAURICELLA_CLOSURE__R10.md`
+
+For Case21 `k=1`, at fixed outer algebraic coordinates `(r,s)`, the thickness integrand is a finite biquadratic algebraic function. Finite rationalization, factorization and partial fractions reduce each exact thickness integral to a finite combination of elementary / elliptic / Lauricella `F_D` values. This closes the thickness structure without material series and without requiring Picard-Fuchs.
+
+```text
+MATERIAL_SERIES_LAYER = REMOVED
+THICKNESS_EXACT_STANDARD_FUNCTION_CLOSURE = PASS AT STRUCTURAL FORM LEVEL
+OUTER_RS_EXACT_CLOSURE = OPEN
+PICARD_FUCHS_REQUIRED_AT_THICKNESS_LEVEL = NO
+```
+
 ## R06-R08 identity
 
 R06-R08 are retained non-destructively as exact-integration-backend research evidence only. They do not define the material theory and do not make Picard-Fuchs a mandatory production layer.
-
-```text
-PICARD_FUCHS = OPTIONAL HIGH-LEVEL EXACT-INTEGRATION BACKEND
-PICARD_FUCHS_BACKEND_FAILURE != MATERIAL_THEORY_FAILURE
-```
 
 ## Exact integration backend priority
 
@@ -82,14 +90,15 @@ Do not create a new NZ-SCCM material function merely to make an integration back
 1. this `README.md`;
 2. `20260819__NZSCCM__CURRENT_STATE_SERIES_LAYER_REMOVED_R09__INDEX.md`;
 3. the mandatory governance file;
-4. `../20_theory/20260819__NZSCCM__MATERIAL_SERIES_LAYER_REMOVAL_AND_MAINLINE_REBASE__R09.md`;
-5. `../20_theory/20260818_2135__NZSCCM__CURRENT_COMPLETE_THEORY_LEDGER_CASE21_Z6__LOCKED_HANDOFF.md` plus its R01 errata for the unchanged surrounding theory;
-6. R06-R08 only when investigating exact-integration backends;
-7. `../../current/CURRENT_STATE.md`.
+4. R09;
+5. R10;
+6. `../20_theory/20260818_2135__NZSCCM__CURRENT_COMPLETE_THEORY_LEDGER_CASE21_Z6__LOCKED_HANDOFF.md` plus its R01 errata for the unchanged surrounding theory;
+7. R06-R08 only when investigating higher exact-integration backends;
+8. `../../current/CURRENT_STATE.md`.
 
 ## Current unique next task
 
-Keep R10, Nguyen kinematics, P/R/J definitions and the three-variable limit system fixed. Work only on the exact continuous integration backend, beginning from Case21 concrete `Pc(D,q,alpha)` and stopping at the lowest standard-function layer that closes it.
+Keep R10, Nguyen kinematics, P/R/J definitions and the three-variable limit system fixed. Continue only with the remaining exact outer `(r,s)` integration. Test Beta/Gamma -> Appell/Lauricella -> Carlson/elliptic symmetry before any higher exact backend.
 
 No discrete fallback and no finite-prefix convergence study are permitted.
 
