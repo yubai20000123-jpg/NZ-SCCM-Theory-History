@@ -1,7 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
 **Updated:** 2026-08-19  
-**Status:** `MATERIAL_SERIES_REPLACEMENT_COMPLETE_R13 = ACTIVE`
+**Status:** `R13_CASE21_ZERO_DISCRETE_TRIAL_CALC_COMPLETE = ACTIVE`
 
 ## Canonical current-state artifact
 
@@ -49,25 +49,25 @@ A* columns= 403
 max monomials/relation = 13
 ```
 
-Metadata:
+## Case21 zero-discretization trial calculation
 
-`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21__R13__FULL_THREE_BRANCH_SPLINE_GKZ_METADATA.json`
+`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21__R13_ZERO_DISCRETE_TRIAL_CALC_UNBUCKLED_BRANCH.md`
 
-## Constructor-switch correction
-
-The R12 planned next step
+The trial uses the real Case21 specimen on the exact continuous unbuckled branch `q=0, alpha=0`. The field is uniform, so the full specimen concrete integral reduces analytically to area times the exact finite R10 stress; no spatial quadrature or discrete oracle is involved.
 
 ```text
-add xcr / 10*xcr material threshold surfaces as separate relative-GKZ divisors
+D* = 1.0837948701065467
+Pc(D*) = 498.272412466126 kN
+Ps(D*) = 40.0010858130713 kN
+P*(unbuckled stationary) = 538.273498279198 kN
+Pcr(exact Navier halfwave reference) = 407.136279059126 kN
 ```
 
-is rejected as unnecessary. R13 absorbs all three material branches exactly through matrix positive-part/truncated-power functions before integration.
-
-No new material gate is created.
+The reinforcement remains elastic at the stationary point. This calculation validates actual execution of the finite R13 constructor on a real specimen branch. It does **not** claim the final nonlinear plate Pu; that requires the full nonuniform `(D,q,alpha)` continuous system.
 
 ## Same-source tangent
 
-The global spline is C2 and its tangent is generated from the same scalar function by exact derivative/divided-difference spectral calculus. No finite-difference tangent, no fitted tangent and no independent stiffness surrogate is introduced.
+The global spline is C2 and its tangent is generated from the same scalar function by exact derivative/divided-difference spectral calculus. No finite-difference tangent, fitted tangent, or independent stiffness surrogate is introduced.
 
 ## Formal chain
 
