@@ -7,7 +7,22 @@
 
 `semantic_v2/20_theory/20260819__NZSCCM__MATERIAL_SERIES_LAYER_REMOVAL_AND_MAINLINE_REBASE__R09.md`
 
-## What changed
+## Latest exact-integration backend step
+
+`semantic_v2/20_theory/20260819__NZSCCM__CASE21_CONCRETE__THICKNESS_ALGEBRAIC_FIELD_TO_FINITE_LAURICELLA_CLOSURE__R10.md`
+
+R10 proves, at structural-form level, that for Case21 `k=1` and fixed in-plane algebraic coordinates `(r,s)`, the exact finite-R10 thickness integrand belongs to a finite biquadratic algebraic field and its thickness integral reduces by finite factorization/partial fractions to a finite linear combination of elementary / elliptic / Lauricella `F_D` standard-function values. No material series or Picard-Fuchs operator is required at the thickness level.
+
+Current exact status:
+
+```text
+MATERIAL_SERIES_LAYER = REMOVED
+THICKNESS_EXACT_STANDARD_FUNCTION_CLOSURE = PASS AT STRUCTURAL FORM LEVEL
+OUTER_RS_EXACT_CLOSURE = OPEN
+PICARD_FUCHS_REQUIRED_AT_THICKNESS_LEVEL = NO
+```
+
+## What changed in R09
 
 Only the material-series layer changed.
 
@@ -62,8 +77,6 @@ PROACTIVE_CHAT_LENGTH_CHECKPOINT = REQUIRED
 
 R06-R08 are retained as exact-integration-backend research evidence only. They do not define the current material theory and do not control whether the material-series replacement is accepted.
 
-In particular:
-
 ```text
 PICARD_FUCHS = OPTIONAL HIGH-LEVEL EXACT-INTEGRATION BACKEND
 PICARD_FUCHS_BACKEND_FAILURE != MATERIAL_THEORY_FAILURE
@@ -71,17 +84,12 @@ PICARD_FUCHS_BACKEND_FAILURE != MATERIAL_THEORY_FAILURE
 
 ## Current unique next task
 
-Evaluate the exact continuous Case21 concrete generalized integrals with the lowest-complexity mature standard-function backend possible, without altering R10, Nguyen kinematics, or the direct limit system.
-
-Priority:
+Do not expand theory scope. Keep R10, Nguyen, P/R/J definitions and the direct limit system fixed. Continue only with the remaining exact outer `(r,s)` integration and first test the lowest-complexity mature closures:
 
 ```text
-elementary
--> Beta/Gamma
--> hypergeometric/Appell/Lauricella
--> elliptic/Carlson
--> Abelian/hyperelliptic
--> holonomic/Picard-Fuchs only if necessary
+Beta/Gamma
+-> Appell/Lauricella
+-> Carlson/elliptic symmetry
 ```
 
-No finite material-prefix convergence study is permitted.
+Only if these do not close the outer integral may a higher exact backend be considered. No finite material-prefix convergence study and no discretization are permitted.
