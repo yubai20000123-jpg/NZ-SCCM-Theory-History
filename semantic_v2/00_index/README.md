@@ -6,117 +6,78 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260816_2136__NZSCCM__PROJECT__CURRENT_STATE_ANTI_LOOP_N48_MEMBRANE_PRODUCTION_REACTIVATED__SEMANTIC_INDEX.md`
+`20260818_1201__NZSCCM__PROJECT__CURRENT_STATE_STEEL_SHELL_SOURCE_CONSISTENT_OPERATOR_GATE__SEMANTIC_INDEX.md`
 
-## Frozen production backbone
-
-```text
-UNIFIED_PRODUCTION_WORKFLOW_V1
-ONE_CONTINUOUS_COMPLETE_HALFWAVE
-Nguyen second-order continuous kinematics
-MEMBRANE_STRESS_REDISTRIBUTION = REQUIRED
-R10 source current material operator = FROZEN
-reinforcement/steel phase before root solve
-same-state current stress + consistent tangent
-General-D15 exact/controlled target framework
-P,Rq,L connected-branch topology
-same-state material + geometric KZ
-N_formal_spatial_sampling=0
-N_formal_spatial_quadrature=0
-N_formal_spatial_subdomains=1
-N_formal_thickness_quadrature=0
-```
-
-## Structural coordinates
-
-Global production remains `(D,q)` with internal membrane coordinates
+The active technical gate is now the steel-shell same-source plane-stress current operator:
 
 ```text
-r=[r0,r20,r22,s02,s22]
+exact production steel stress update
+ -> sigma_s(epsilon) + same-source Ct_s(epsilon)
+ -> independent local full-map derivative audit
+ -> Ct_s(X,Y,z) into KZ_s^mat + current-stress KZ_s^geo
+ -> same operator in P,Rq,RA,KZ,L
+ -> Z1/Z4 rerun
+ -> Z0-Z5 batch
+ -> global / Phase-C hard gate
+ -> production Pu freeze only after PASS
 ```
 
-solved from `Rm=0` and consistently Schur-condensed.
+The 20260816 N48 membrane-production entry and the 20260817 true-infinite Case21/Z6 checkpoints remain retained historical/theoretical evidence, but they no longer define the current execution stop point.
 
-## Exact-algebraic branch status
+## Current controlling steel-shell audit
 
-The exact R10 matrix/quartic/64-state/CH/adjoint results remain retained research evidence. A 21:36 regularity audit found that the current rationalized quadratic-tower basis has an apparent interior pole at `x=21/260` even though the physical smooth atom is regular there.
+`../40_execution/steel_shell/20260817_2342__NZSCCM__Z0_Z5__STEEL_LOCAL_YIELD_SEQUENCE_AND_TANGENT_RECALC_AUDIT.md`
 
-The exact denominator-gauge identity
+Key status:
 
 ```text
-d V'=B V, W=V/G
-=> (dG)W'=(BG-dG'I)W
+CENTER_FIRST_LOCAL_YIELD_FRONT = ESTABLISHED_FOR_Z0_TO_Z5
+CURRENT_RADIAL_CAP_TANGENT_PHYSICAL_ACCEPTANCE = FAIL / NOT PRODUCTION-FROZEN
+OLD_Z0_TO_Z5_Pu_FULL_STEEL_TANGENT_PRODUCTION_CERTIFICATE = NOT PASSED
+TANGENT_ONLY_IDEAL_J2_SUBSTITUTION = AUDIT ONLY
+NEXT = SAME-SOURCE PLANE-STRESS STEEL OPERATOR FREEZE
 ```
 
-passes for globally regular denominator signatures, but the current rationalized field requires an additional algebraic regularization layer before this can become a robust global production backend.
+## Short current pointer
 
-Under the anti-loop rule, that new backend is not opened automatically.
+Also read:
 
-```text
-EXACT_ALGEBRAIC_HOLONOMIC_Pu_ROUTE = PAUSED_RESEARCH_BRANCH
-```
+`../../current/CURRENT_STATE.md`
 
-## 64-state erratum
-
-For basis `[1,q,s,q*s]`, the accepted local derivative matrix is
-
-```text
-[0, 0,   0,        0]
-[0, ell, 0,        0]
-[0, 0,   c0,       c1]
-[0, 0,   c1*Q,     ell+c0]
-```
-
-The 20:59 displayed matrix interchanged `c1` and `c1*Q`. State dimension `64` and sparsity `159/4096` are unchanged.
-
-## Reactivated production route
-
-The active Pu route is again the accepted zero-spatial production contract
-
-`../current/theory/NZ_SCCM_NC_REBAR_ZERO_SPATIAL_PRODUCTION_THEORY_CONTRACT_20260812_2245.md`
-
-with
-
-```text
-N48_ORDER=48
-U=N48-C1
-C=N48-C1
-T7=N48-C1
-T=N48-C1-CONSTRAINED-MINIMAX
-CAYLEY_HAMILTON=GOVERNING
-D15_GENERAL_TRIG_MOMENTS=ACTIVE
-```
-
-plus the five-term membrane redistribution before the outer `(D,q)` solve.
-
-N48 roots remain material-coordinate compiler roots, not structural spatial points.
-
-## Capacity boundary
-
-```text
-Case21 368.189 kN = historical/current-support closure only
-Z6 51.30 MN = retained engineering baseline only
-NEW membrane-redistributed Case21 Pu = not yet run
-```
-
-## Current next gate
-
-```text
-UNIFIED_V1_CASE21_MEMBRANE_REDISTRIBUTED_N48_PRODUCTION_GATE
-```
-
-This is an actual structural calculation gate, not another integration-backend gate.
+That file is intentionally kept short so the detailed current-state identity lives in one timestamped semantic artifact rather than being duplicated and drifting again.
 
 ## Repository semantic read order
 
-1. `20260816_2136__NZSCCM__PROJECT__CURRENT_STATE_ANTI_LOOP_N48_MEMBRANE_PRODUCTION_REACTIVATED__SEMANTIC_INDEX.md`
-2. `../10_governance/20260816_2136__NZSCCM__ANTI_LOOP_EXACT_BRANCH_PAUSE_AND_N48_MEMBRANE_PRODUCTION__LOCK.md`
-3. `../20_theory/nc_rebar_panel/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_ERRATUM_AND_PRODUCTION_PIVOT__THEORY.md`
-4. `../40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__EXECUTION_REPORT.md`
-5. `../40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__PARAMS_AND_INTERMEDIATES.json`
-6. `../40_execution/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__REPRO.py`
-7. `../60_validation/common/20260816_2136__NZSCCM__DUAL_HOLONOMIC_REGULARITY_AND_PRODUCTION_PIVOT__AUDIT.md`
-8. `20260816_2118__NZSCCM__PROJECT__CURRENT_STATE_ADJOINT_CH_TARGET_PASS_DUAL_HOLONOMIC_THICKNESS_OPEN__SEMANTIC_INDEX.md` — predecessor
-9. `20260816_2059__NZSCCM__PROJECT__CURRENT_STATE_FULL_R10_64_STATE_ADJOINT_TARGET_OPEN__SEMANTIC_INDEX.md` — predecessor
+1. this `README.md`;
+2. the current operational entry above;
+3. `../../current/CURRENT_STATE.md`;
+4. the controlling leaf audit/execution artifact named by the current state;
+5. `20260813_1328__NZSCCM__REPOSITORY__CONTENT_FIRST_NAMING_AND_TREE_POLICY__GOVERNANCE.md`;
+6. `20260813_1328__NZSCCM__REPOSITORY__CONTENT_SEMANTIC_TREE__SEMANTIC_MANIFEST.md`;
+7. `20260813_1328__NZSCCM__REPOSITORY__ARTIFACT_SUPERSESSION__SUPERSESSION_MAP.csv`;
+8. legacy/source files only through their semantic locator/provenance chain.
 
-No legacy file is deleted, moved or renamed solely from filename identity.
+## Identity discipline
+
+```text
+PATH_NAME_ONLY_CLASSIFICATION = PROHIBITED
+LEGACY_CURRENT_DIRECTORY_SEMANTIC_PURITY = FALSE
+CONTENT_AUDIT_BEFORE_USE = REQUIRED
+NON_DESTRUCTIVE_HISTORY = REQUIRED
+```
+
+A filename containing `current`, `production`, `PASS`, or a later date does not by itself establish governing status. Current identity is determined by content, direct audit, and the supersession/revocation chain.
+
+## Formal production boundaries retained
+
+```text
+ONE_CONTINUOUS_COMPLETE_HALFWAVE = ACTIVE
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_formal_spatial_subdomains = 1
+N_formal_thickness_quadrature = 0
+PRODUCTION_TRUTH = Stage3/Stage4 only
+FULL_24_PANEL_PRODUCTION_RELEASE = BLOCKED until hard model-path gates pass
+```
+
+No legacy file is deleted, moved, or renamed solely from filename identity.
