@@ -1,7 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
 **Updated:** 2026-08-19  
-**Status:** `R13_CASE21_ZERO_DISCRETE_TRIAL_CALC_COMPLETE = ACTIVE`
+**Status:** `R13_CASE21_Z6_UNBUCKLED_BRANCH_BIAS_DIAGNOSED = ACTIVE`
 
 ## Canonical current-state artifact
 
@@ -30,8 +30,6 @@ The former true-infinite Chebyshev/material-prefix production layer remains remo
 
 `semantic_v2/20_theory/20260819__NZSCCM__CASE21__FULL_THREE_BRANCH_MATRIX_SPLINE_GKZ_CONSTRUCTOR__R13.md`
 
-R13 replaces the entire three-branch R10 tension piecewise execution by one exact global truncated-power spline and its spectral matrix lift.
-
 ```text
 GLOBAL_THREE_BRANCH_MATRIX_SPLINE = PASS
 FULL_THREE_BRANCH_SPARSE_CH_CIRCUIT = PASS
@@ -39,52 +37,57 @@ FULL_THREE_BRANCH_MASTER_ASTAR = PASS
 MATERIAL_SERIES_REPLACEMENT = COMPLETE
 ```
 
-Exact sparse master structure:
+## Latest execution diagnosis
+
+`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21_Z6__R13_UNBUCKLED_BRANCH_OVERPREDICTION_DIAGNOSIS.md`
+
+The previous Case21 `q=0, alpha=0` calculation was a **uniform material/section stationary point**, not the plate Pu. Using `dP(D,0,0)/dD=0` suppresses the nonuniform buckling/postbuckling branch and is therefore rejected as a Pu definition.
+
+Case21:
 
 ```text
-relations = 112
-variables = 115
-A* rows   = 227
-A* columns= 403
-max monomials/relation = 13
+P*_uniform = 538.273498279198 kN
+Pcr        = 407.136279059126 kN
+D(Pcr)     = 0.478843845165660
+D*_uniform = 1.083794870106547
+released coupled Pu = 366.767828685212 kN
+experiment          = 368.312749743569 kN
+uniform-vs-experiment = +46.1458 %
 ```
 
-## Case21 zero-discretization trial calculation
-
-`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21__R13_ZERO_DISCRETE_TRIAL_CALC_UNBUCKLED_BRANCH.md`
-
-The trial uses the real Case21 specimen on the exact continuous unbuckled branch `q=0, alpha=0`. The field is uniform, so the full specimen concrete integral reduces analytically to area times the exact finite R10 stress; no spatial quadrature or discrete oracle is involved.
+Z6 was then calculated by the same exact zero-discretization uniform-branch method while retaining the frozen Z6 concrete/face/web current laws:
 
 ```text
-D* = 1.0837948701065467
-Pc(D*) = 498.272412466126 kN
-Ps(D*) = 40.0010858130713 kN
-P*(unbuckled stationary) = 538.273498279198 kN
-Pcr(exact Navier halfwave reference) = 407.136279059126 kN
+web yield D       = 0.920936195308814
+face radial-cap D = 0.939442186454484
+uniform stationary D* = 0.999995310340506
+Pc,eff   = 43.6158967880144 MN
+Pfaces   = 36.1401413279875 MN
+Pweb     = 10.3944000000000 MN
+P*_uniform,Z6 = 90.1504381160020 MN
+Pcr,Z6        = 39.2880147150278 MN
+D(Pcr,Z6)     = 0.303002225781078
 ```
 
-The reinforcement remains elastic at the stationary point. This calculation validates actual execution of the finite R13 constructor on a real specimen branch. It does **not** claim the final nonlinear plate Pu; that requires the full nonuniform `(D,q,alpha)` continuous system.
-
-## Same-source tangent
-
-The global spline is C2 and its tangent is generated from the same scalar function by exact derivative/divided-difference spectral calculus. No finite-difference tangent, fitted tangent, or independent stiffness surrogate is introduced.
-
-## Formal chain
+Post-solve comparison only:
 
 ```text
-raw specimen
--> controlling complete representative halfwave
--> continuous Nguyen/von-Karman second-order kinematics
--> exact finite R10 current operator
--> exact global three-branch matrix-spline constructor
--> exact continuous generalized integrals in standard A-hypergeometric/relative-period representation
--> P,Rq,Ralpha + same-source derivatives
--> direct solve Rq=0, Ralpha=0, det(Jlim)=0
--> Pu
+vs released coupled Z6 Pu = +86.2377 %
+vs Zhou comparator         = +82.1708 %
+vs Winter comparator       = +79.6332 %
 ```
 
-There is no production material degree N and no material-series convergence gate.
+Therefore the severe overprediction is systematic for the **uniform unbuckled branch used as a surrogate for Pu**, especially when the instability scale lies far below the material section capacity. It does not establish an overprediction of the R13 finite material constructor itself.
 
-## Execution rule after R13
+## Correct structural limit identity
 
-If one exact evaluation representation becomes inconvenient, cross out that representation and switch to another mature equivalent representation of the same fixed mathematical object. Do not promote representation-specific difficulty into a new theory gate and do not fall back to discretization.
+The formal plate limit remains
+
+```text
+Rq(D,q,alpha) = 0
+Ralpha(D,q,alpha) = 0
+det(Jlim(D,q,alpha)) = 0
+Pu = P(Du,qu,alphau)
+```
+
+The next execution must use the full nonuniform continuous `(D,q,alpha)` system with the same R13 finite material constructor. No new material gate is created and no discrete fallback is allowed.
