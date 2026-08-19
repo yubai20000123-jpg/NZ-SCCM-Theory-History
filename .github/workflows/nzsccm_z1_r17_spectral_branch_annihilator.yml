@@ -10,7 +10,7 @@ permissions:
 jobs:
   annihilator:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -24,8 +24,22 @@ jobs:
             echo "GITHUB_REF=$GITHUB_REF"
             python --version
           } > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+      - name: Install native exact-arithmetic build headers
+        id: native
+        continue-on-error: true
+        env: {DEBIAN_FRONTEND: noninteractive}
+        run: |
+          set +e
+          {
+            sudo apt-get update
+            sudo apt-get install -y build-essential libgmp-dev libmpfr-dev libflint-dev
+          } >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt 2>&1
+          RC=$?
+          echo "R17_NATIVE_DEPS_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          exit $RC
       - name: Install PassageMath ore_algebra
         id: install
+        if: always()
         continue-on-error: true
         run: |
           set +e
@@ -40,7 +54,7 @@ jobs:
           timeout 1200 python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.py >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt 2>&1
           RC=$?
           echo "R17_BRANCH_ANNIHILATOR_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
-          tail -120 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          tail -140 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
           exit 0
       - name: Commit result
         if: always()
