@@ -1,0 +1,42 @@
+{
+  "identity": "NZSCCM_Z1_R18_BOUNDED_GLOBAL_COMPACTIFICATION",
+  "parent": "R17_GLOBAL_SPECTRAL_HEAVISIDE_CONSTRUCTOR",
+  "map": {
+    "x": "u/(1-u), u in [0,1]",
+    "y": "v/(1-v), v in [0,1]",
+    "z": "z in [-1,1]"
+  },
+  "measure": "4/((2*u**2-2*u+1)*(2*v**2-2*v+1)) du dv dz",
+  "strictly_positive_denominators": {
+    "Achi": "4603272637066846788000000000000000*(2*u**2 - 2*u + 1)**2*(2*v**2 - 2*v + 1)**2",
+    "Dchi": "4610175258664816703049000524877153555129000000000000000000000000000000*(2*u**2 - 2*u + 1)**4*(2*v**2 - 2*v + 1)**4"
+  },
+  "predicate_complexity": {
+    "Achi_numerator": {
+      "terms": 125,
+      "deg_u": 4,
+      "deg_v": 4,
+      "deg_z": 1,
+      "sha256": "ca0c603a7ae9494c1b30018b5e70bd6faaae8152449a4b7c17e9dd6dbfb76cdc"
+    },
+    "Dchi_numerator": {
+      "terms": 1395,
+      "deg_u": 8,
+      "deg_v": 8,
+      "deg_z": 2,
+      "sha256": "310d2200cab91a963c40f9705e509cd43068b9394d2463c31edd9be13d03905d"
+    }
+  },
+  "governance": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "spatial_subdomains": 1,
+    "material_points": 0,
+    "finite_prefix": 0
+  },
+  "status": {
+    "GLOBAL_COMPACTIFICATION": "PASS",
+    "BOUNDED_BOX_FOR_OAKU": "PASS",
+    "NO_SUBDIVISION": "PASS"
+  }
+}
