@@ -24,28 +24,30 @@ jobs:
             echo "GITHUB_REF=$GITHUB_REF"
             python --version
           } > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
-      - name: Install native exact-arithmetic build headers
-        id: native
+      - name: Install symbolic-only PassageMath ore_algebra
+        id: install
         continue-on-error: true
-        env: {DEBIAN_FRONTEND: noninteractive}
         run: |
           set +e
           {
-            sudo apt-get update
-            sudo apt-get install -y build-essential libgmp-dev libmpfr-dev libmpfi-dev libflint-dev
-          } >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt 2>&1
+            rm -rf /tmp/ore_algebra
+            git clone --filter=blob:none https://github.com/mkauers/ore_algebra.git /tmp/ore_algebra
+            cd /tmp/ore_algebra
+            git checkout 18680180c884fac869a064db99f29a221aad9dfe
+            python - <<'PY'
+          from pathlib import Path
+          p=Path('/tmp/ore_algebra/setup.py')
+          s=p.read_text()
+          a=s.index('if list(map(int, sage.version.version.split')
+          b=s.index('\nsetup(',a)
+          s=s[:a]+'# NZ-SCCM symbolic-only install: exact OreAlgebra core is required; numerical analytic C extensions are not.\nextensions = []\n'+s[b:]
+          p.write_text(s)
+          PY
+            python -m pip install --disable-pip-version-check '/tmp/ore_algebra[passagemath]'
+          } >> "$GITHUB_WORKSPACE/semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt" 2>&1
           RC=$?
-          echo "R17_NATIVE_DEPS_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
-          exit $RC
-      - name: Install PassageMath ore_algebra
-        id: install
-        if: always()
-        continue-on-error: true
-        run: |
-          set +e
-          python -m pip install --disable-pip-version-check 'ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git' >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt 2>&1
-          RC=$?
-          echo "R17_ORE_INSTALL_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          cd "$GITHUB_WORKSPACE"
+          echo "R17_ORE_SYMBOLIC_INSTALL_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
           exit $RC
       - name: Build exact branch annihilator
         if: always()
@@ -54,7 +56,7 @@ jobs:
           timeout 1200 python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.py >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt 2>&1
           RC=$?
           echo "R17_BRANCH_ANNIHILATOR_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
-          tail -140 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          tail -180 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
           exit 0
       - name: Commit result
         if: always()
