@@ -1,0 +1,33 @@
+name: NZSCCM Z1 R17 exact smooth spectral branch annihilator
+on:
+  push:
+    paths:
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.py'
+      - '.github/workflows/nzsccm_z1_r17_spectral_branch_annihilator.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  annihilator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install PassageMath ore_algebra
+        run: python -m pip install --disable-pip-version-check 'ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git'
+      - name: Build exact branch annihilator
+        run: |
+          set +e
+          timeout 1200 python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.py > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt 2>&1
+          RC=$?
+          echo "R17_BRANCH_ANNIHILATOR_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          tail -100 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          exit 0
+      - name: Commit result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
+          if ! git diff --cached --quiet; then git commit -m 'Record exact R17 smooth spectral branch annihilator'; git push; fi
