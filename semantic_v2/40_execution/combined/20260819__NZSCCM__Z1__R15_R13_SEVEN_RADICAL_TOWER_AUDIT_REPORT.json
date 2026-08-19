@@ -1,0 +1,149 @@
+{
+  "identity": "NZSCCM_Z1_R15_R13_SEVEN_RADICAL_TOWER_AUDIT",
+  "governance": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "material_points": 0,
+    "finite_prefix": 0,
+    "numerical_ode_stepping": 0
+  },
+  "circuit": {
+    "equations": 112,
+    "physical_variables": [
+      "r",
+      "s",
+      "u"
+    ],
+    "auxiliary_outputs": 112,
+    "linear_outputs": 105,
+    "quadratic_outputs": 7
+  },
+  "quadratic_radical_tower": [
+    {
+      "equation": 0,
+      "output": "w",
+      "dependencies": [
+        "r",
+        "s"
+      ],
+      "prior_radical_ancestors": []
+    },
+    {
+      "equation": 6,
+      "output": "Del",
+      "dependencies": [
+        "deltaE",
+        "tauE"
+      ],
+      "prior_radical_ancestors": [
+        "w"
+      ]
+    },
+    {
+      "equation": 7,
+      "output": "Sig",
+      "dependencies": [
+        "Del",
+        "deltaE",
+        "tauE"
+      ],
+      "prior_radical_ancestors": [
+        "Del",
+        "w"
+      ]
+    },
+    {
+      "equation": 50,
+      "output": "absdetX1",
+      "dependencies": [
+        "detX1"
+      ],
+      "prior_radical_ancestors": [
+        "Del",
+        "Sig",
+        "w"
+      ]
+    },
+    {
+      "equation": 53,
+      "output": "sigAbsX1",
+      "dependencies": [
+        "X120",
+        "X121",
+        "absdetX1",
+        "tauE"
+      ],
+      "prior_radical_ancestors": [
+        "Del",
+        "Sig",
+        "absdetX1",
+        "w"
+      ]
+    },
+    {
+      "equation": 67,
+      "output": "absdetX10",
+      "dependencies": [
+        "detX10"
+      ],
+      "prior_radical_ancestors": [
+        "Del",
+        "Sig",
+        "w"
+      ]
+    },
+    {
+      "equation": 70,
+      "output": "sigAbsX10",
+      "dependencies": [
+        "X1020",
+        "X1021",
+        "absdetX10",
+        "tauE"
+      ],
+      "prior_radical_ancestors": [
+        "Del",
+        "Sig",
+        "absdetX10",
+        "w"
+      ]
+    }
+  ],
+  "radical_names": [
+    "w",
+    "Del",
+    "Sig",
+    "absdetX1",
+    "sigAbsX1",
+    "absdetX10",
+    "sigAbsX10"
+  ],
+  "Syy_radical_ancestors": [
+    "Del",
+    "Sig",
+    "absdetX1",
+    "absdetX10",
+    "sigAbsX1",
+    "sigAbsX10",
+    "w"
+  ],
+  "Syy_uses_all_seven_radicals": true,
+  "generic_algebraic_extension_degree_upper_bound": 128,
+  "linear_outputs_with_nonconstant_diagonal_coefficient": [
+    "R0",
+    "R1",
+    "Ai0",
+    "Ai1",
+    "Ki0",
+    "Ki1",
+    "absX10",
+    "absX11",
+    "absX100",
+    "absX101"
+  ],
+  "status": {
+    "112_AUX_TO_7_RADICAL_TOWER": "PASS",
+    "GENERIC_EXTENSION_DEGREE_BOUND": "128",
+    "Syy_SEVEN_RADICAL_CLOSURE": "PASS"
+  }
+}
