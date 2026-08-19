@@ -1,5 +1,5 @@
 NZSCCM_R17_BRANCH_ANNIHILATOR_RESUME_START
-GITHUB_SHA=3e0f7ea9406979c569664f5fe876e0c87d273f88
+GITHUB_SHA=d5316ad87b9af024477aefb8bb52a0a544279167
 GITHUB_REF=refs/heads/r17-exact-evaluator-continuation-20260819
 Python 3.12.13
 Cloning into '/tmp/ore_algebra'...
@@ -157,9 +157,9 @@ Collecting passagemath-gsl~=10.8.9.0 (from passagemath-symbolics->ore_algebra==0
 Collecting sympy<2.0,>=1.6 (from passagemath-symbolics->ore_algebra==0.5)
   Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
 Downloading fpylll-0.6.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (41.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.6/41.6 MB 56.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.6/41.6 MB 137.3 MB/s  0:00:00
 Downloading passagemath_combinat-10.8.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.8/20.8 MB 55.3 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.8/20.8 MB 115.5 MB/s  0:00:00
 Using cached gmpy2-2.4.0a1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
 Using cached memory_allocator-0.1.4-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (540 kB)
 Using cached passagemath_categories-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (46.6 MB)
@@ -170,48 +170,48 @@ Using cached packaging-26.3-py3-none-any.whl (129 kB)
 Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
 Using cached cython-3.2.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
 Downloading passagemath_graphs-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (36.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.8/36.8 MB 70.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.8/36.8 MB 145.1 MB/s  0:00:00
 Using cached passagemath_modules-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (80.0 MB)
 Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
 Downloading passagemath_pari-10.8.9-cp312-cp312-manylinux_2_28_x86_64.whl (85.4 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 MB 73.0 MB/s  0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 MB 56.5 MB/s  0:00:01
 Downloading conway_polynomials-0.10-py3-none-any.whl (212 kB)
 Downloading passagemath_plot-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (19.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.6/19.6 MB 73.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.6/19.6 MB 174.9 MB/s  0:00:00
 Downloading matplotlib-3.11.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (10.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 88.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 205.9 MB/s  0:00:00
 Downloading contourpy-1.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (362 kB)
 Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
 Downloading fonttools-4.63.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.0/5.0 MB 49.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.0/5.0 MB 222.8 MB/s  0:00:00
 Downloading kiwisolver-1.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 43.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 145.3 MB/s  0:00:00
 Using cached numpy-2.5.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 64.3 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 225.3 MB/s  0:00:00
 Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
 Downloading scipy-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 69.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 233.1 MB/s  0:00:00
 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
 Downloading jupyter_threejs_sage-130-py3-none-any.whl (979 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.1/979.1 kB 18.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.1/979.1 kB 143.6 MB/s  0:00:00
 Downloading passagemath_repl-10.8.9-py3-none-any.whl (624 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 625.0/625.0 kB 53.8 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 625.0/625.0 kB 93.7 MB/s  0:00:00
 Downloading ipykernel-7.3.0-py3-none-any.whl (120 kB)
 Downloading comm-0.2.3-py3-none-any.whl (7.3 kB)
 Downloading debugpy-1.8.21-cp312-cp312-manylinux_2_34_x86_64.whl (4.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 30.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 163.1 MB/s  0:00:00
 Downloading ipython-9.16.1-py3-none-any.whl (625 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 626.0/626.0 kB 2.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 626.0/626.0 kB 60.7 MB/s  0:00:00
 Downloading prompt_toolkit-3.0.53-py3-none-any.whl (392 kB)
 Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl (8.1 kB)
 Downloading ipywidgets-8.1.9-py3-none-any.whl (140 kB)
 Downloading jupyterlab_widgets-3.0.17-py3-none-any.whl (217 kB)
 Downloading widgetsnbextension-4.0.16-py3-none-any.whl (2.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 30.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 164.5 MB/s  0:00:00
 Downloading jedi-0.20.0-py2.py3-none-any.whl (4.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 94.3 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 276.0 MB/s  0:00:00
 Downloading parso-0.8.7-py2.py3-none-any.whl (107 kB)
 Downloading jupyter_client-8.9.1-py3-none-any.whl (109 kB)
 Downloading jupyter_core-5.9.1-py3-none-any.whl (29 kB)
@@ -222,9 +222,9 @@ Using cached platformdirs-4.11.3-py3-none-any.whl (23 kB)
 Downloading psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl (155 kB)
 Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 19.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 204.8 MB/s  0:00:00
 Downloading pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (840 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 841.0/841.0 kB 4.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 841.0/841.0 kB 172.2 MB/s  0:00:00
 Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
 Downloading asttokens-3.0.2-py3-none-any.whl (28 kB)
 Downloading executing-2.2.1-py2.py3-none-any.whl (28 kB)
@@ -232,21 +232,21 @@ Downloading tornado-6.5.8-cp39-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.many
 Downloading traitlets-5.16.1-py3-none-any.whl (86 kB)
 Downloading wcwidth-0.8.2-py3-none-any.whl (323 kB)
 Downloading passagemath_singular-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (32.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 32.0/32.0 MB 70.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 32.0/32.0 MB 155.9 MB/s  0:00:00
 Using cached passagemath_flint-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (48.7 MB)
 Using cached passagemath_ntl-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (17.5 MB)
 Downloading passagemath_symbolics-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (43.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 48.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 81.0 MB/s  0:00:00
 Downloading passagemath_gsl-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 46.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 160.0 MB/s  0:00:00
 Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 71.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 280.8 MB/s  0:00:00
 Downloading pure_eval-0.2.3-py3-none-any.whl (11 kB)
 Building wheels for collected packages: ore_algebra
   Building wheel for ore_algebra (pyproject.toml): started
   Building wheel for ore_algebra (pyproject.toml): finished with status 'done'
-  Created wheel for ore_algebra: filename=ore_algebra-0.5-py3-none-any.whl size=625763 sha256=2a0fb60a774f63d36db5d3a34c91044e49d7498d50578096f3eacfb2dc1917a7
-  Stored in directory: /tmp/pip-ephem-wheel-cache-8s_x0f8a/wheels/16/2f/8b/653bf8c0c2611b4ac18557b1e8dc5e40c3789c2c9aeeddcbf6
+  Created wheel for ore_algebra: filename=ore_algebra-0.5-py3-none-any.whl size=625763 sha256=06911930fe57ab156e753bf56cd6401a0425ffd126f8446d44e2ce25827dfa45
+  Stored in directory: /tmp/pip-ephem-wheel-cache-cr18g_3g/wheels/16/2f/8b/653bf8c0c2611b4ac18557b1e8dc5e40c3789c2c9aeeddcbf6
 Successfully built ore_algebra
 Installing collected packages: pure-eval, ptyprocess, ore_algebra, mpmath, jupyter-threejs-sage, fpylll, widgetsnbextension, wcwidth, typing_extensions, traitlets, tornado, sympy, six, pyzmq, pyparsing, pygments, psutil, platformdirs, pillow, pexpect, parso, packaging, numpy, nest-asyncio2, kiwisolver, jupyterlab_widgets, gmpy2, fonttools, executing, debugpy, Cython, cysignals, cycler, conway-polynomials, comm, asttokens, stack_data, scipy, python-dateutil, prompt_toolkit, passagemath-objects, passagemath-environment, memory_allocator, matplotlib-inline, jupyter-core, jedi, ipython-pygments-lexers, contourpy, passagemath-categories, matplotlib, jupyter-client, ipython, passagemath-pari, passagemath-ntl, passagemath-modules, passagemath-graphs, passagemath-combinat, ipywidgets, ipykernel, passagemath-repl, passagemath-plot, passagemath-gsl, passagemath-flint, passagemath-symbolics, passagemath-singular
 
@@ -254,6 +254,10 @@ Successfully installed Cython-3.2.9 asttokens-3.0.2 comm-0.2.3 contourpy-1.3.3 c
 R17_ORE_SYMBOLIC_INSTALL_EXIT_CODE=0
 Traceback (most recent call last):
   File "/home/runner/work/NZ-SCCM-Theory-History/NZ-SCCM-Theory-History/semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.py", line 12, in <module>
-    from sage.all import QQ, PolynomialRing
-ModuleNotFoundError: No module named 'sage.all'
+    from sage.rings.rational_field import QQ
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/sage/rings/rational_field.py", line 57, in <module>
+    from sage.rings.integer import Integer
+  File "sage/rings/integer.pyx", line 1, in init sage.rings.integer
+  File "sage/rings/rational.pyx", line 63, in init sage.rings.rational
+ImportError: cannot import name QQ
 R17_BRANCH_ANNIHILATOR_EXIT_CODE=1
