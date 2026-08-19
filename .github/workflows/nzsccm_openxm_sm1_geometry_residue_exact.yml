@@ -1,4 +1,4 @@
-name: NZSCCM exact SM1 geometry residue integration
+name: NZSCCM exact SM1 geometry residue and algebraic branch
 
 on:
   push:
@@ -27,22 +27,24 @@ jobs:
           touch /tmp/i-agree-with-asir-license
           sudo -E apt-get install -y openxm
           rm -f /tmp/i-agree-with-asir-license
-      - name: Exact D-module residue elimination for omega geometry radical
+      - name: Exact residue-cycle audit and direct algebraic-branch D-module
         run: |
           cat > /tmp/nzsccm_geometry_residue.rr <<'EOF'
           load("sm1.rr")$
           print("NZSCCM_GEOMETRY_RESIDUE_START")$
-          F=w^2-r*(1-r)*v*(1-v)$
-          print("DENOMINATOR_F")$
-          print(F)$
+          A=r*(1-r)*v*(1-v)$
+          F=w^2-A$
           G=[F*dw+diff(F,w),F*dr+diff(F,r),F*dv+diff(F,v)]$
-          print("EXACT_ANN_1_OVER_F")$
-          print(G)$
-          J=sm1.integration(G,[w,r,v],[w])$
-          print("INTEGRATE_OUT_RESIDUE_VARIABLE_W")$
-          print(J)$
-          print("EXPECTED_POSITIVE_SHEET_RESIDUE_OPERATORS")$
+          print("NAIVE_DIRECT_IMAGE_OF_1_OVER_F")$
+          print(sm1.integration(G,[w,r,v],[w]))$
+          print("EXPECTED_SELECTED_POSITIVE_RESIDUE_BRANCH")$
           print([2*r*(1-r)*dr+(1-2*r),2*v*(1-v)*dv+(1-2*v)])$
+          print("GENERIC_ANN_A_POW_SS")$
+          GA=sm1.genericAnn([A,[ss,r,v]])$
+          print(GA)$
+          GHalf=map(subst,GA,ss,-1/2)$
+          print("SPECIALIZE_SS_MINUS_ONE_HALF")$
+          print(GHalf)$
           print("NZSCCM_GEOMETRY_RESIDUE_END")$
           end$
           EOF
@@ -59,6 +61,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt
           if ! git diff --cached --quiet; then
-            git commit -m 'Record exact SM1 geometry residue integration'
+            git commit -m 'Record exact SM1 geometry branch audit'
             git push
           fi
