@@ -20,7 +20,6 @@ eps0=sp.Rational('0.0018712490394580678')
 b=sp.Integer(6000); tc=sp.Integer(92); q0=sp.Rational(1,250)
 kappa=sp.Rational('2.0005129533678754'); rho=sp.Rational(1,10)
 xcr=sp.factor(rho/kappa)
-
 x=sp.cancel(u/(1-u)); y=sp.cancel(v/(1-v))
 sx=sp.cancel(2*x/(1+x**2)); cx=sp.cancel((1-x**2)/(1+x**2))
 sy=sp.cancel(2*y/(1+y**2)); cy=sp.cancel((1-y**2)/(1+y**2))
@@ -37,10 +36,7 @@ Achi=sp.cancel(mu/xcr-chi); Dchi=sp.cancel(Achi**2-r2/xcr**2)
 NA,_=sp.fraction(sp.factor(Achi)); ND,_=sp.fraction(sp.factor(Dchi))
 subs={D:sp.Integer(1),q:tt*sp.Rational(1,100),al:tt,P2:p2,chi:cc}
 NA=sp.expand(NA.subs(subs)); ND=sp.expand(ND.subs(subs))
-
-def asir(expr):
-    return sp.sstr(expr).replace('**','^')
-
+def asir(expr): return sp.sstr(expr).replace('**','^')
 rr=f'''import("nn_ndbf.rr")$
 import("nk_restriction.rr")$
 print("NZSCCM_R18_ACTUAL_R17_MASK_OAKU_START")$
@@ -63,3 +59,4 @@ end$
 out=pathlib.Path('semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.rr')
 out.write_text(rr,encoding='utf-8')
 print(out)
+# workflow retrigger marker: 2026-08-19 continuation branch
