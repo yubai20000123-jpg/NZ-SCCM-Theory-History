@@ -12,17 +12,29 @@ from time import time
 from sage.all import QQ, PolynomialRing
 from ore_algebra import OreAlgebra
 
+def qdec(s):
+    """Exact rational from a finite decimal string; no floating conversion."""
+    neg=s.startswith('-')
+    if neg: s=s[1:]
+    if '.' in s:
+        a,b=s.split('.',1)
+        n=int(a or '0')*10**len(b)+int(b or '0')
+        q=QQ(n)/QQ(10**len(b))
+    else:
+        q=QQ(int(s))
+    return -q if neg else q
+
 T0=time()
 Cpoly=PolynomialRing(QQ,names=('y','z','tt','p2'))
 y,z,tt,p2=Cpoly.gens(); C=Cpoly.fraction_field()
 Rx=PolynomialRing(C,'x'); x=Rx.gen(); F=Rx.fraction_field()
 D=QQ(1); Q=QQ(1)/100; AL=QQ(1)
 nu=QQ(9)/50
-eps0=QQ('0.0018712490394580678'); b=QQ(6000); tc=QQ(92); qimp=QQ(1)/250
-kappa=QQ('2.0005129533678754'); rho=QQ(1)/10
+eps0=qdec('0.0018712490394580678'); b=QQ(6000); tc=QQ(92); qimp=QQ(1)/250
+kappa=qdec('2.0005129533678754'); rho=QQ(1)/10
 xcr=rho/kappa; eta=xcr/20
-HR=QQ('0.09799750427197301'); UR=QQ(3)/100
-acc=QQ('0.1072329249362415')
+HR=qdec('0.09799750427197301'); UR=QQ(3)/100
+acc=qdec('0.1072329249362415')
 Cpoly=PolynomialRing(QQ,names=('y','z','tt','p2','atp'))
 y,z,tt,p2,atp=Cpoly.gens(); C=Cpoly.fraction_field(); Rx=PolynomialRing(C,'x'); x=Rx.gen(); F=Rx.fraction_field()
 def ff(v): return F(v)
