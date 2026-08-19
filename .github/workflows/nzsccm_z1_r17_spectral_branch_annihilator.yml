@@ -58,7 +58,7 @@ jobs:
           echo "R17_BRANCH_ANNIHILATOR_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
           tail -180 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
           exit 0
-      - name: Commit result
+      - name: Commit result safely on continuation branch
         if: always()
         run: |
           git config user.name 'github-actions[bot]'
@@ -66,5 +66,6 @@ jobs:
           git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.txt
           if ! git diff --cached --quiet; then
             git commit -m 'Record resumed exact R17 smooth spectral branch annihilator'
-            git push
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin HEAD:"$GITHUB_REF_NAME"
           fi
