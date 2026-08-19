@@ -2,6 +2,7 @@
 """Compile the seven R13 quadratic generators to exact formulas over (r,s,u,D,M,B,al).
 No numerical evaluation or discretization. Linear circuit dependencies are eliminated recursively;
 quadratic generators remain explicit algebraic generators.
+All decimal literals in the manifest are parsed as exact rationals.
 """
 from __future__ import annotations
 import csv,json,re
@@ -9,6 +10,9 @@ from collections import defaultdict
 from functools import lru_cache
 from pathlib import Path
 import sympy as sp
+from sympy.parsing.sympy_parser import (
+    parse_expr, standard_transformations, rationalize
+)
 
 REPO=Path(__file__).resolve().parents[3]
 MANIFEST=REPO/"semantic_v2"/"40_execution"/"combined"/"20260819__NZSCCM__CASE21__R13__FULL_THREE_BRANCH_SPLINE_GKZ_COLUMN_MANIFEST.csv"
@@ -17,6 +21,7 @@ RADICALS=["w","Del","Sig","absdetX1","sigAbsX1","absdetX10","sigAbsX10"]
 PARAM_NAMES=["D","M","B","al","eta","xcr","kappa","rho","HR","UR","acc","at"]
 PHYSICAL=["r","s","u"]
 SYMS={n:sp.Symbol(n) for n in PHYSICAL+PARAM_NAMES+RADICALS}
+TRANSFORMATIONS=standard_transformations+(rationalize,)
 
 def parse_mon(s):
     s=s.strip()
@@ -33,7 +38,6 @@ def main():
     byeq=defaultdict(list); producer={}; known=set(PHYSICAL)
     for row in raw:
         x=dict(row);x["exp"]=parse_mon(x["monomial"]);byeq[int(x["equation_index"])].append(x)
-    # recover the unique output in each topologically ordered equation
     for i in range(112):
         vars_i=set().union(*(set(t["exp"]) for t in byeq[i]))
         new=sorted(vars_i-known)
@@ -41,7 +45,11 @@ def main():
         producer[new[0]]=i;known.add(new[0])
 
     locals_map={**SYMS,"Rational":sp.Rational}
-    def coeff(s): return sp.sympify(s,locals=locals_map)
+    def coeff(s):
+        z=parse_expr(s,local_dict=locals_map,transformations=TRANSFORMATIONS,evaluate=True)
+        if z.has(sp.Float):
+            raise RuntimeError(("nonexact coefficient survived rationalize",s,z))
+        return z
 
     @lru_cache(None)
     def resolve(v):
@@ -59,7 +67,6 @@ def main():
         deg=sp.degree(expr,y)
         if deg!=1: raise RuntimeError(("expected linear",v,i,deg))
         a=expr.coeff(y,1); b=expr.subs(y,0)
-        # keep factorized/rational structure; together without global expand
         return sp.factor(-b/a)
 
     formulas=[]
@@ -77,6 +84,7 @@ def main():
         if a1!=0: raise RuntimeError(("quadratic has linear term",rad,a1))
         R=sp.factor(-b/a2)
         num,den=sp.fraction(R)
+        if R.has(sp.Float): raise RuntimeError(("nonexact radical formula",rad,R))
         formulas.append({
           "output":rad,"equation_index":i,
           "relation":f"{rad}^2 = R_{rad}",
@@ -86,7 +94,6 @@ def main():
           "free_symbols":sorted(str(x) for x in R.free_symbols),
         })
 
-    # Exact Z1 parameter specialization kept separately to avoid obscuring the compact tower.
     eps0=sp.Rational("0.0018712490394580678")
     q=sp.Symbol("q")
     Mz=sp.factor(sp.pi**2/eps0*(sp.Rational(1,250)*q+q**2/2))
@@ -96,12 +103,13 @@ def main():
     report={
       "identity":"NZSCCM_Z1_R15_R13_SEVEN_RADICAL_FORMULA_COMPILER",
       "governance":{"spatial_sampling":0,"spatial_quadrature":0,"material_points":0,"finite_prefix":0,"numerical_ode_stepping":0},
+      "coefficient_parser":"sympy parse_expr + rationalize; Float forbidden after parse",
       "base_symbols":["r","s","u","D","M","B","al","eta","xcr"],
       "z1_substitution":{"M_of_q":sp.sstr(Mz),"B_of_q":sp.sstr(Bz),"xcr":sp.sstr(xcr),"eta":sp.sstr(eta)},
       "tower":formulas,
       "max_ops_R":max(x["ops_R"] for x in formulas),
       "total_ops_R":sum(x["ops_R"] for x in formulas),
-      "status":{"SEVEN_QUADRATIC_RELATIONS_EXPLICIT":"PASS","NO_LINEAR_AUXILIARY_REQUIRED_IN_PRINTED_TOWER":"PASS"}
+      "status":{"SEVEN_QUADRATIC_RELATIONS_EXPLICIT":"PASS","NO_LINEAR_AUXILIARY_REQUIRED_IN_PRINTED_TOWER":"PASS","ALL_MANIFEST_DECIMALS_EXACT_RATIONAL":"PASS"}
     }
     print(json.dumps(report,indent=2,ensure_ascii=False))
 if __name__=="__main__":main()
