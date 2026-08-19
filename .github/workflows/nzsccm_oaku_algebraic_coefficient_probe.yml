@@ -1,0 +1,42 @@
+name: NZSCCM Oaku algebraic coefficient probe
+on:
+  push:
+    paths: ['.github/workflows/nzsccm_oaku_algebraic_coefficient_probe.yml']
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenXM
+        env: {DEBIAN_FRONTEND: noninteractive}
+        run: |
+          sudo apt-get update; sudo apt-get install -y wget ca-certificates
+          sudo wget -q -O /etc/apt/sources.list.d/fe-deb2.list https://www.math.kobe-u.ac.jp/deb2/fe-deb2.list
+          sudo wget -q -O /usr/share/keyrings/fe-deb2-archive-keyring.gpg https://www.math.kobe-u.ac.jp/deb2/fe-deb2-archive-keyring.gpg
+          sudo apt-get update; touch /tmp/i-agree-with-asir-license; sudo -E apt-get install -y openxm; rm -f /tmp/i-agree-with-asir-license
+      - name: Exact algebraic-coefficient Heaviside annihilator
+        run: |
+          cat >/tmp/probe.rr <<'EOF'
+          import("nn_ndbf.rr")$
+          print("ALG_COEF_PROBE_START")$
+          A=newalg(t^2-2)$
+          print(A)$ print(defpoly(A))$
+          F=x-A$
+          print(F)$
+          I=ndbf.ann_n([F])$
+          print(I)$
+          I0=map(subst,I,s0,0)$ print(I0)$
+          print("ALG_COEF_PROBE_PASS")$
+          end$
+          EOF
+          set +e
+          timeout 600 asir -quiet -f /tmp/probe.rr > semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt 2>&1
+          RC=$?; echo "EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt; cat semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt; exit 0
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt
+          if ! git diff --cached --quiet; then git commit -m 'Record Oaku algebraic coefficient probe'; git push; fi
