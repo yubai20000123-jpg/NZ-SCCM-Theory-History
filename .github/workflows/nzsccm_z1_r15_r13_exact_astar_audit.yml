@@ -1,0 +1,22 @@
+name: NZSCCM Z1 R15 R13 exact Astar audit
+
+on:
+  push:
+    paths:
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT.py'
+      - '.github/workflows/nzsccm_z1_r15_r13_exact_astar_audit.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-astar-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact symbolic backend
+        run: python -m pip install --disable-pip-version-check 'sympy==1.14.0'
+      - name: Reconstruct R13 Astar and audit Z1 support exactly
+        run: python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT.py
