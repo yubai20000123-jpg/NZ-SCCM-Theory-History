@@ -1,10 +1,92 @@
 NZSCCM_R17_BRANCH_ANNIHILATOR_RESUME_START
-GITHUB_SHA=36e077a7c14ff27d60af7e35c68029189df1c0ec
+GITHUB_SHA=42b7ab8badcc72061519dcaff90a2e1aee196f26
 GITHUB_REF=refs/heads/r17-exact-evaluator-continuation-20260819
 Python 3.12.13
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Get:6 https://packages.microsoft.com/repos/azure-cli noble InRelease [3564 B]
+Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:9 https://packages.microsoft.com/repos/azure-cli noble/main amd64 Packages [2452 B]
+Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.4 kB]
+Get:11 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [357 kB]
+Get:12 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [315 kB]
+Get:13 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1417 B]
+Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1216 kB]
+Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [285 kB]
+Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1683 kB]
+Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [336 kB]
+Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1463 kB]
+Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [334 kB]
+Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [12.6 kB]
+Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5760 B]
+Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.7 kB]
+Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [952 kB]
+Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [204 kB]
+Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1201 kB]
+Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [240 kB]
+Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
+Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1357 kB]
+Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [312 kB]
+Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [10.9 kB]
+Fetched 11.4 MB in 2s (5847 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libgmp-dev is already the newest version (2:6.3.0+dfsg-2ubuntu6.1).
+Suggested packages:
+  libmpfr-doc
+The following NEW packages will be installed:
+  build-essential libflint-dev libflint18t64 libmpfr-dev
+0 upgraded, 4 newly installed, 0 to remove and 12 not upgraded.
+Need to get 4506 kB of archives.
+After this operation, 15.0 MB of additional disk space will be used.
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
+Get:3 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libflint18t64 amd64 3.0.1-3.1build1 [3989 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libmpfr-dev amd64 4.2.1-1build1.1 [288 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libflint-dev amd64 3.0.1-3.1build1 [224 kB]
+Fetched 4506 kB in 35s (128 kB/s)
+Selecting previously unselected package build-essential.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 203139 files and directories currently installed.)
+Preparing to unpack .../build-essential_12.10ubuntu1_amd64.deb ...
+Unpacking build-essential (12.10ubuntu1) ...
+Selecting previously unselected package libflint18t64:amd64.
+Preparing to unpack .../libflint18t64_3.0.1-3.1build1_amd64.deb ...
+Unpacking libflint18t64:amd64 (3.0.1-3.1build1) ...
+Selecting previously unselected package libmpfr-dev:amd64.
+Preparing to unpack .../libmpfr-dev_4.2.1-1build1.1_amd64.deb ...
+Unpacking libmpfr-dev:amd64 (4.2.1-1build1.1) ...
+Selecting previously unselected package libflint-dev.
+Preparing to unpack .../libflint-dev_3.0.1-3.1build1_amd64.deb ...
+Unpacking libflint-dev (3.0.1-3.1build1) ...
+Setting up libmpfr-dev:amd64 (4.2.1-1build1.1) ...
+Setting up libflint18t64:amd64 (3.0.1-3.1build1) ...
+Setting up build-essential (12.10ubuntu1) ...
+Setting up libflint-dev (3.0.1-3.1build1) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.8) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+R17_NATIVE_DEPS_EXIT_CODE=0
 Collecting ore_algebra @ git+https://github.com/mkauers/ore_algebra.git (from ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
-  Cloning https://github.com/mkauers/ore_algebra.git to /tmp/pip-install-ux26nxrl/ore-algebra_4be05a4898204dec889840766e166013
-  Running command git clone --filter=blob:none --quiet https://github.com/mkauers/ore_algebra.git /tmp/pip-install-ux26nxrl/ore-algebra_4be05a4898204dec889840766e166013
+  Cloning https://github.com/mkauers/ore_algebra.git to /tmp/pip-install-oo1bm074/ore-algebra_c0393ff5458a4f1da597c36e9baa02f6
+  Running command git clone --filter=blob:none --quiet https://github.com/mkauers/ore_algebra.git /tmp/pip-install-oo1bm074/ore-algebra_c0393ff5458a4f1da597c36e9baa02f6
   Resolved https://github.com/mkauers/ore_algebra.git to commit 18680180c884fac869a064db99f29a221aad9dfe
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
@@ -141,9 +223,9 @@ Collecting passagemath-gsl~=10.8.9.0 (from passagemath-symbolics->ore_algebra @ 
 Collecting sympy<2.0,>=1.6 (from passagemath-symbolics->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
   Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
 Downloading fpylll-0.6.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (41.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.6/41.6 MB 196.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.6/41.6 MB 272.8 MB/s  0:00:00
 Downloading passagemath_combinat-10.8.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.8/20.8 MB 217.5 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.8/20.8 MB 162.4 MB/s  0:00:00
 Using cached gmpy2-2.4.0a1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
 Using cached memory_allocator-0.1.4-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (540 kB)
 Using cached passagemath_categories-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (46.6 MB)
@@ -154,48 +236,48 @@ Using cached packaging-26.3-py3-none-any.whl (129 kB)
 Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
 Using cached cython-3.2.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
 Downloading passagemath_graphs-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (36.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.8/36.8 MB 211.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.8/36.8 MB 149.2 MB/s  0:00:00
 Using cached passagemath_modules-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (80.0 MB)
 Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
 Downloading passagemath_pari-10.8.9-cp312-cp312-manylinux_2_28_x86_64.whl (85.4 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 MB 182.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 MB 140.6 MB/s  0:00:00
 Downloading conway_polynomials-0.10-py3-none-any.whl (212 kB)
 Downloading passagemath_plot-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (19.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.6/19.6 MB 235.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.6/19.6 MB 154.3 MB/s  0:00:00
 Downloading matplotlib-3.11.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (10.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 202.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 177.5 MB/s  0:00:00
 Downloading contourpy-1.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (362 kB)
 Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
 Downloading fonttools-4.63.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.0/5.0 MB 301.5 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.0/5.0 MB 308.7 MB/s  0:00:00
 Downloading kiwisolver-1.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 211.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 263.4 MB/s  0:00:00
 Using cached numpy-2.5.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 330.8 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 283.2 MB/s  0:00:00
 Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
 Downloading scipy-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 347.3 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 292.9 MB/s  0:00:00
 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
 Downloading jupyter_threejs_sage-130-py3-none-any.whl (979 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.1/979.1 kB 25.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.1/979.1 kB 189.6 MB/s  0:00:00
 Downloading passagemath_repl-10.8.9-py3-none-any.whl (624 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 625.0/625.0 kB 111.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 625.0/625.0 kB 74.7 MB/s  0:00:00
 Downloading ipykernel-7.3.0-py3-none-any.whl (120 kB)
 Downloading comm-0.2.3-py3-none-any.whl (7.3 kB)
 Downloading debugpy-1.8.21-cp312-cp312-manylinux_2_34_x86_64.whl (4.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 348.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 119.3 MB/s  0:00:00
 Downloading ipython-9.16.1-py3-none-any.whl (625 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 626.0/626.0 kB 145.8 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 626.0/626.0 kB 123.4 MB/s  0:00:00
 Downloading prompt_toolkit-3.0.53-py3-none-any.whl (392 kB)
 Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl (8.1 kB)
 Downloading ipywidgets-8.1.9-py3-none-any.whl (140 kB)
 Downloading jupyterlab_widgets-3.0.17-py3-none-any.whl (217 kB)
 Downloading widgetsnbextension-4.0.16-py3-none-any.whl (2.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 259.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 248.0 MB/s  0:00:00
 Downloading jedi-0.20.0-py2.py3-none-any.whl (4.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 210.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 303.3 MB/s  0:00:00
 Downloading parso-0.8.7-py2.py3-none-any.whl (107 kB)
 Downloading jupyter_client-8.9.1-py3-none-any.whl (109 kB)
 Downloading jupyter_core-5.9.1-py3-none-any.whl (29 kB)
@@ -206,9 +288,9 @@ Using cached platformdirs-4.11.3-py3-none-any.whl (23 kB)
 Downloading psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl (155 kB)
 Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 223.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 228.3 MB/s  0:00:00
 Downloading pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (840 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 841.0/841.0 kB 191.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 841.0/841.0 kB 173.5 MB/s  0:00:00
 Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
 Downloading asttokens-3.0.2-py3-none-any.whl (28 kB)
 Downloading executing-2.2.1-py2.py3-none-any.whl (28 kB)
@@ -216,15 +298,15 @@ Downloading tornado-6.5.8-cp39-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.many
 Downloading traitlets-5.16.1-py3-none-any.whl (86 kB)
 Downloading wcwidth-0.8.2-py3-none-any.whl (323 kB)
 Downloading passagemath_singular-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (32.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 32.0/32.0 MB 45.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 32.0/32.0 MB 157.0 MB/s  0:00:00
 Using cached passagemath_flint-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (48.7 MB)
 Using cached passagemath_ntl-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (17.5 MB)
 Downloading passagemath_symbolics-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (43.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 45.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 148.7 MB/s  0:00:00
 Downloading passagemath_gsl-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 26.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 189.2 MB/s  0:00:00
 Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 160.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 325.9 MB/s  0:00:00
 Downloading pure_eval-0.2.3-py3-none-any.whl (11 kB)
 Building wheels for collected packages: ore_algebra
   Building wheel for ore_algebra (pyproject.toml): started
@@ -233,7 +315,7 @@ Building wheels for collected packages: ore_algebra
   
   × Building wheel for ore_algebra (pyproject.toml) did not run successfully.
   │ exit code: 1
-  ╰─> [76 lines of output]
+  ╰─> [75 lines of output]
       running bdist_wheel
       running build
       running build_py
@@ -303,13 +385,12 @@ Building wheels for collected packages: ore_algebra
       copying src/ore_algebra/examples/cbt.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
       running build_ext
       building 'ore_algebra.analytic.binary_splitting_arb' extension
-      g++ -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -I/tmp/pip-build-env-fb9vakes/overlay/lib/python3.12/site-packages/sage/libs/flint -I/tmp/pip-build-env-fb9vakes/overlay/lib/python3.12/site-packages/sage/cpython -I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12 -c src/ore_algebra/analytic/binary_splitting_arb.cpp -o build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/binary_splitting_arb.o -std=c++11
-      In file included from src/ore_algebra/analytic/binary_splitting_arb.cpp:1174:
-      /tmp/pip-build-env-fb9vakes/overlay/lib/python3.12/site-packages/sage/libs/flint/flint_wrap.h:24:10: fatal error: mpfr.h: No such file or directory
-         24 | #include <mpfr.h>
+      g++ -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -I/tmp/pip-build-env-adxcolik/overlay/lib/python3.12/site-packages/sage/libs/flint -I/tmp/pip-build-env-adxcolik/overlay/lib/python3.12/site-packages/sage/cpython -I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12 -c src/ore_algebra/analytic/binary_splitting_arb.cpp -o build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/binary_splitting_arb.o -std=c++11
+      src/ore_algebra/analytic/binary_splitting_arb.cpp:1179:10: fatal error: mpfi.h: No such file or directory
+       1179 | #include "mpfi.h"
             |          ^~~~~~~~
       compilation terminated.
-      error: Command '['g++', '-fno-strict-overflow', '-Wsign-compare', '-DNDEBUG', '-g', '-O3', '-Wall', '-fPIC', '-I/tmp/pip-build-env-fb9vakes/overlay/lib/python3.12/site-packages/sage/libs/flint', '-I/tmp/pip-build-env-fb9vakes/overlay/lib/python3.12/site-packages/sage/cpython', '-I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12', '-c', 'src/ore_algebra/analytic/binary_splitting_arb.cpp', '-o', 'build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/binary_splitting_arb.o', '-std=c++11']' returned non-zero exit status 1.
+      error: Command '['g++', '-fno-strict-overflow', '-Wsign-compare', '-DNDEBUG', '-g', '-O3', '-Wall', '-fPIC', '-I/tmp/pip-build-env-adxcolik/overlay/lib/python3.12/site-packages/sage/libs/flint', '-I/tmp/pip-build-env-adxcolik/overlay/lib/python3.12/site-packages/sage/cpython', '-I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12', '-c', 'src/ore_algebra/analytic/binary_splitting_arb.cpp', '-o', 'build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/binary_splitting_arb.o', '-std=c++11']' returned non-zero exit status 1.
       [end of output]
   
   note: This error originates from a subprocess, and is likely not a problem with pip.
