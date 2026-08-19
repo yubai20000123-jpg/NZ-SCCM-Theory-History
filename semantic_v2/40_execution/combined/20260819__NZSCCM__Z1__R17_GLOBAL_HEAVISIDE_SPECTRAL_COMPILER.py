@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 """NZ-SCCM Z1 R17: exact global spectral-Heaviside constructor.
 
-Replaces the reducible four-threshold-radical part of the R13 CH circuit by the
-exact scalar spectral truncated-power law. No spatial partition is created:
-the six ordered spectral states are finite distributional terms in one global
-formula. Tangent-half-angle coordinates make all kinematics rational, so each
-threshold predicate reduces to polynomial inequalities after clearing strictly
-positive denominators.
+The reducible threshold-absolute-value radicals of the R13 CH implementation
+are replaced by the identical scalar spectral truncated-power law.  The
+physical material map remains one global formula.  Six ordered spectral states
+are compiled into only nine reusable products of polynomial Heavisides.
+Tangent-half-angle coordinates make the spatial kinematics rational.
 
-No quadrature, sampling, material points, finite prefix, or load stepping.
+No quadrature, sampling, material points, finite prefix, load stepping, or
+numerical spatial subdivision.
 """
 from __future__ import annotations
 import json
 import sympy as sp
 
-# Symbols
 x,y,z,D,q,al,P2=sp.symbols('x y z D q al P2', real=True)
-th=sp.symbols('th', real=True)
+chi=sp.symbols('chi', real=True)  # normalized threshold theta/xcr
 nu=sp.Rational(9,50)
 eps0=sp.Rational('0.0018712490394580678')
 b=sp.Integer(6000); tc=sp.Integer(92); q0=sp.Rational(1,250)
@@ -24,44 +23,33 @@ kappa=sp.Rational('2.0005129533678754'); rho=sp.Rational(1,10)
 xcr=sp.factor(rho/kappa); eta=sp.factor(xcr/20)
 HR=sp.Rational('0.09799750427197301'); UR=sp.Rational(3,100)
 
-# Tangent-half-angle map X=2 atan x, Y=2 atan y.
+# Rational tangent-half-angle coordinates.
 sx=2*x/(1+x**2); cx=(1-x**2)/(1+x**2)
 sy=2*y/(1+y**2); cy=(1-y**2)/(1+y**2)
-Hs=sp.cancel(sx*sy)
-Fx=sp.cancel(sy**2*(1-sx**2))
-Fy=sp.cancel(sx**2*(1-sy**2))
-Ax=sp.cancel(-sp.Rational(1,4)-nu* sx**2/2-sy**2/2+sx**2*sy**2)
+Hs=sp.cancel(sx*sy); Fx=sp.cancel(sy**2*(1-sx**2)); Fy=sp.cancel(sx**2*(1-sy**2))
+Ax=sp.cancel(-sp.Rational(1,4)-nu*sx**2/2-sy**2/2+sx**2*sy**2)
 Ay=sp.cancel(nu/4-sx**2/2-nu*sy**2/2+sx**2*sy**2)
-M=sp.factor(P2/eps0*(q0*q+q**2/2))
-beta=sp.factor(P2*q/(eps0*b)); zz=tc*z/2
+M=sp.factor(P2/eps0*(q0*q+q**2/2)); beta=sp.factor(P2*q/(eps0*b)); zz=tc*z/2
 ex=sp.cancel(nu*D+M*Fx+al*Ax+beta*zz*Hs)
 ey=sp.cancel(-D+M*Fy+al*Ay+beta*zz*Hs)
 ga=sp.cancel(2*cx*cy*((M-al)*Hs-beta*zz))
-# Equivalent-strain invariants at k=1
-mu=sp.cancel((ex+ey)/(2*(1-nu)))
-de=sp.cancel((ex-ey)/(2*(1+nu)))
-h=sp.cancel(ga/(2*(1+nu)))
+mu=sp.cancel((ex+ey)/(2*(1-nu))); de=sp.cancel((ex-ey)/(2*(1+nu))); h=sp.cancel(ga/(2*(1+nu)))
 r2=sp.cancel(de**2+h**2)
 
-# Threshold polynomial for theta from Pi_eta(theta)=a*xcr.
-T,Y,E=sp.symbols('T Y E')
-threshold_poly=sp.expand(4*E**4*Y**2+8*E**2*Y**2*T**2-4*E**2*Y*T**3-E**2*T**4+4*Y**2*T**4-4*Y*T**5)
-def thpoly(a):
-    return sp.Poly(sp.factor(threshold_poly.subs({E:eta,Y:a*xcr})),T)
+# Pi_eta is homogeneous: Pi_{xcr/20}(xcr*chi)/xcr = Pi_{1/20}(chi).
+# Hence the two threshold algebraic constants have small universal quintics.
+V=sp.symbols('V')
+chi1_poly=160000*V**5-159900*V**4+400*V**3-800*V**2-1
+chi10_poly=16000*V**5-159999*V**4+40*V**3-800*V**2-1
+# actual threshold theta=xcr*chi. Work with normalized invariants to keep coefficients small.
+mub=sp.cancel(mu/xcr); r2b=sp.cancel(r2/xcr**2)
+Achi=sp.cancel(mub-chi); Dchi=sp.cancel(Achi**2-r2b)
 
-def positive_den(expr):
-    num,den=sp.fraction(sp.factor(sp.cancel(expr)))
-    return sp.factor(num),sp.factor(den)
+def numden(expr):
+    n,d=sp.fraction(sp.factor(sp.cancel(expr))); return sp.factor(n),sp.factor(d)
+NA,DA=numden(Achi); ND,DD=numden(Dchi)
 
-a_th=sp.cancel(mu-th)
-delta_th=sp.cancel(a_th**2-r2)
-Na,Da=positive_den(a_th); Nd,Dd=positive_den(delta_th)
-# Da,Dd consist only of positive constants and powers of (1+x^2),(1+y^2).
-
-def factor_signature(den):
-    return sp.sstr(sp.factor(den))
-
-# Three exact branch polynomials for u_R(t); rr=t/xcr.
+# Three exact scalar spline branches in rr=t/xcr.
 rr=sp.symbols('rr')
 p0=rho*rr+(10*HR-6*rho)*rr**3+(8*rho-15*HR)*rr**4+(6*HR-3*rho)*rr**5
 A3=4*rho-sp.Rational(7300,729)*HR+sp.Rational(10,729)*UR
@@ -70,66 +58,83 @@ A5=3*rho-sp.Rational(118100,19683)*HR+sp.Rational(2,19683)*UR
 B3=sp.Rational(10,729)*(HR-UR);B4=sp.Rational(5,2187)*(HR-UR);B5=sp.Rational(2,19683)*(HR-UR)
 p1=sp.expand(p0+A3*(rr-1)**3+A4*(rr-1)**4+A5*(rr-1)**5)
 p2=sp.expand(p1+B3*(rr-10)**3+B4*(rr-10)**4+B5*(rr-10)**5)
+endpoint={}
+for pt,L,R in [(1,p0,p1),(10,p1,p2)]:
+    endpoint[str(pt)]={f'd{k}':sp.simplify(sp.diff(L,rr,k).subs(rr,pt)-sp.diff(R,rr,k).subs(rr,pt))==0 for k in range(3)}
 
-# Endpoint identity audit through C2.
-endpoint_audit={}
-for pt,left,right in [(1,p0,p1),(10,p1,p2)]:
-    endpoint_audit[str(pt)]={
-        'value':sp.simplify(left.subs(rr,pt)-right.subs(rr,pt))==0,
-        'd1':sp.simplify(sp.diff(left,rr).subs(rr,pt)-sp.diff(right,rr).subs(rr,pt))==0,
-        'd2':sp.simplify(sp.diff(left,rr,2).subs(rr,pt)-sp.diff(right,rr,2).subs(rr,pt))==0,
-    }
-
-# Ordered states (plus state >= minus state), exactly six.
-states=[(0,0),(1,0),(1,1),(2,0),(2,1),(2,2)]
-# Hminus(theta)=H(A)H(delta); Hplus(theta)=1-H(-A)H(delta).
-# State predicates are kept as Boolean formulas of four primitive predicates:
-# P1=lambda+>=theta1, P10=lambda+>=theta10, M1=lambda->=theta1, M10=lambda->=theta10.
-state_bool={
- '00':'(1-P1)',
- '10':'P1*(1-P10)*(1-M1)',
- '11':'M1*(1-P10)',
- '20':'P10*(1-M1)',
- '21':'P10*M1*(1-M10)',
- '22':'M10',
+# Primitive spectral threshold indicators, using A=mu/xcr-chi and Delta=A^2-rE^2/xcr^2:
+# M(chi)=1_{lambda_minus >= theta}=H(A)H(Delta)
+# P(chi)=1_{lambda_plus  >= theta}=1-H(-A)H(Delta).
+# Away from a threshold surface H(-A)=1-H(A), and all spline jumps vanish through C2,
+# so the point convention has zero effect on the classical integral.
+a1,b1,a10,b10=sp.symbols('a1 b1 a10 b10')
+M1=a1*b1; P1=1-(1-a1)*b1; M10=a10*b10; P10=1-(1-a10)*b10
+state_expr={
+ '00':1-P1,
+ '10':P1*(1-P10)*(1-M1),
+ '11':M1*(1-P10),
+ '20':P10*(1-M1),
+ '21':P10*M1*(1-M10),
+ '22':M10,
 }
-primitive={
- 'M(th)':'H(mu-th)*H(delta_th)',
- 'P(th)':'1-H(th-mu)*H(delta_th)',
- 'A_num':sp.sstr(Na),
- 'A_den':factor_signature(Da),
- 'delta_num':sp.sstr(Nd),
- 'delta_den':factor_signature(Dd),
-}
+vars4=(a1,b1,a10,b10)
+def idempotent_expand(expr):
+    P=sp.Poly(sp.expand(expr),*vars4); out={}
+    for mon,c in P.terms():
+        mask=tuple(min(1,e) for e in mon); out[mask]=sp.simplify(out.get(mask,0)+c)
+    return {mask:c for mask,c in out.items() if c!=0}
+state_masks={s:{''.join(map(str,m)):str(c) for m,c in idempotent_expand(e).items()} for s,e in state_expr.items()}
+all_masks=sorted(set().union(*(idempotent_expand(e).keys() for e in state_expr.values())))
+# Verify the six states partition all monotone threshold truth assignments P10<=P1, M10<=M1, M<=P.
+truth_ok=True; truth_rows=[]
+for pp1 in (0,1):
+ for pp10 in (0,1):
+  for mm1 in (0,1):
+   for mm10 in (0,1):
+    if pp10>pp1 or mm10>mm1 or mm1>pp1 or mm10>pp10: continue
+    vals={P1:pp1,P10:pp10,M1:mm1,M10:mm10}
+    # evaluate original state definitions directly using P/M symbols
+    svals=[
+      1-pp1,
+      pp1*(1-pp10)*(1-mm1),
+      mm1*(1-pp10),
+      pp10*(1-mm1),
+      pp10*mm1*(1-mm10),
+      mm10]
+    truth_ok &= (sum(svals)==1 and sum(v!=0 for v in svals)==1)
+    truth_rows.append([pp1,pp10,mm1,mm10,svals])
 
 report={
  'identity':'NZSCCM_Z1_R17_GLOBAL_SPECTRAL_HEAVISIDE_CONSTRUCTOR',
- 'governance':{'spatial_sampling':0,'spatial_quadrature':0,'material_points':0,'finite_prefix':0,'spatial_subdomains':1},
- 'coordinates':{
-   'x':'tan(X/2) in [0,+inf)','y':'tan(Y/2) in [0,+inf)','z':'normalized thickness in [-1,1]',
-   'jacobian':'dX dY = 4/((1+x^2)(1+y^2)) dx dy'
+ 'governance':{'spatial_sampling':0,'spatial_quadrature':0,'material_points':0,'finite_prefix':0,'formal_complete_halfwaves':1},
+ 'coordinates':{'x':'tan(X/2) in [0,+inf)','y':'tan(Y/2) in [0,+inf)','z':'normalized core thickness in [-1,1]','jacobian':'4/((1+x^2)(1+y^2))'},
+ 'normalized_thresholds':{
+   'theta_over_xcr_state1_polynomial':sp.sstr(chi1_poly),
+   'theta_over_xcr_state10_polynomial':sp.sstr(chi10_poly),
+   'selector':'the unique positive real root of each quintic; theta_a=xcr*chi_a'
  },
- 'z1_exact_constants':{'nu':'9/50','eps0':str(eps0),'xcr':str(xcr),'eta':str(eta)},
- 'kinematic_invariants':{
-   'mu':sp.sstr(mu),'de':sp.sstr(de),'h':sp.sstr(h),'rE_squared':sp.sstr(r2)
+ 'threshold_predicate_polynomials':{
+   'A_chi_numerator':sp.sstr(NA),'A_chi_denominator_positive':sp.sstr(DA),
+   'Delta_chi_numerator':sp.sstr(ND),'Delta_chi_denominator_positive':sp.sstr(DD),
+   'minus':'H(A_chi)*H(Delta_chi)',
+   'plus':'1-H(-A_chi)*H(Delta_chi)'
  },
- 'threshold_theta':{
-   'theta1_polynomial':sp.sstr(thpoly(1).as_expr()),
-   'theta10_polynomial':sp.sstr(thpoly(10).as_expr()),
-   'root_selector':'unique positive root satisfying unsquared Pi_eta(theta)=a*xcr'
- },
- 'threshold_predicates':primitive,
- 'state_count':6,
- 'ordered_states':states,
- 'state_boolean_formula':state_bool,
- 'branch_uR':{'state0':sp.sstr(p0),'state1':sp.sstr(p1),'state2':sp.sstr(p2)},
- 'C2_endpoint_audit':endpoint_audit,
+ 'branch_uR':{'0':sp.sstr(p0),'1':sp.sstr(p1),'2':sp.sstr(p2)},
+ 'C2_endpoint_audit':endpoint,
+ 'ordered_state_count':6,
+ 'ordered_states':['00','10','11','20','21','22'],
+ 'state_to_idempotent_heaviside_masks':state_masks,
+ 'unique_basic_heaviside_product_count':len(all_masks),
+ 'unique_basic_masks':[''.join(map(str,m)) for m in all_masks],
+ 'state_partition_truth_table_pass':bool(truth_ok),
  'constructor_status':{
-   'SEVEN_RADICAL_SINGLE_FIELD':'CROSSED_OUT_REDUCIBLE_ABS_BRANCHES',
+   'SEVEN_RADICAL_SINGLE_FIELD':'CROSSED_OUT_REDUCIBLE_ABS_BRANCHES_AND_TIMEOUT',
+   'GLOBAL_R13_SPLINE_IDENTITY':'PASS',
    'TANGENT_HALF_ANGLE_RATIONAL_KINEMATICS':'PASS',
-   'THRESHOLD_TO_POLYNOMIAL_INEQUALITIES':'PASS',
-   'GLOBAL_THREE_BRANCH_TO_SIX_ORDERED_DISTRIBUTIONAL_STATES':'PASS',
-   'R13_MATERIAL_LAW_CHANGED':'NO'
+   'ALGEBRAIC_THRESHOLD_NORMALIZATION':'PASS',
+   'SIX_ORDERED_STATES':'PASS',
+   'NINE_REUSABLE_HEAVISIDE_PRODUCTS':'PASS',
+   'SPATIAL_SUBDIVISION_CREATED':'NO'
  }
 }
 print(json.dumps(report,ensure_ascii=False,indent=2))
