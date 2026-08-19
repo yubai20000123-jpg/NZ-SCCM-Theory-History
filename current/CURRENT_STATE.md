@@ -1,28 +1,72 @@
 # CURRENT STATE — NZ-SCCM
 
 **Updated:** 2026-08-19  
-**Status:** `R15_FULL_FROM_ZERO_CALCULATION_LEDGER = ACTIVE`
+**Status:** `R15_Z1_EXECUTION_AUDIT_CORRECTED = ACTIVE`
 
-## Canonical current-state artifact
-
-`semantic_v2/00_index/20260819__NZSCCM__CURRENT_STATE_R15_FULL_FROM_ZERO_CALCULATION_LEDGER__INDEX.md`
-
-## Canonical single-file ledger
+## Canonical theory/specification ledger
 
 `semantic_v2/20_theory/20260819__NZSCCM__R15_FULL_FROM_ZERO_CALCULATION_LEDGER_CASE21_Z6.md`
 
-R15 consolidates the active Case21/Z6 theory into one zero-discretization from-zero execution specification:
+## Latest execution audit
+
+`semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_ZERO_DISCRETIZATION_EXECUTION_AUDIT_AND_LEDGER_CORRECTION.md`
+
+The requested Z1 trial exposed an important identity correction:
 
 ```text
-raw specimen parameters
--> Dx,Dy,H
--> physical controlling halfwave
--> continuous Nguyen/von-Karman kinematics
--> finite global material constructors
--> continuous P,Rq,Ralpha + same-source derivatives
--> direct solve Rq=0, Ralpha=0, det(Jlim)=0
--> Pu
+R15 = complete from-zero THEORY / SPECIFICATION ledger
+R15 != complete executable exact-integral evaluator
 ```
+
+R15 correctly and completely defines the raw-input front end, continuous Nguyen/von-Karman kinematics, finite global current material maps, continuous P/Rq/Ralpha/Jlim definitions and direct three-variable limit equations. However, Section 7 lists allowable exact standard-function backend classes without instantiating one concrete evaluator that maps the full finite R10 + steel material composition to numerically evaluable exact P(D,q,alpha), Rq(D,q,alpha), Ralpha(D,q,alpha).
+
+A direct exact Wolfram `Integrate` representation was attempted for the algebraic R10 projector kernel with symbolic affine parameters. It did not close in the available service and is crossed out as a production constructor. No NIntegrate, spatial sampling, grid, material point, finite prefix or discrete oracle was substituted.
+
+## Z1 independent R15 front-end result
+
+Raw Z1:
+
+```text
+a_phys = 12000 mm
+b = 6000 mm
+tc = 92 mm
+ts = 4 mm each face
+rho_w = 0.02
+fc = 30.4 MPa
+eps0 = 0.0018712490394580678
+Es = 206000 MPa
+fy = 235 MPa
+A0 = 24 mm
+```
+
+New from-zero front-end calculation:
+
+```text
+Ec0 = 32499.999999998 MPa
+Dx = 5.90813599999987e9 Nmm
+Dy = 6.13330661333320e9 Nmm
+H  = 6.24427058738729e9 Nmm
+j0 = 1.98138534989740
+Pcr(j=1) = 61.9390247832 MN
+Pcr(j=2) = 40.3502059923 MN
+Pcr(j=3) = 47.5621487985 MN
+m_phys = 2
+ell = 6000 mm
+k = 1
+q0 = 0.004
+```
+
+These values were computed without using the historical nonlinear Z1 root or comparator.
+
+The following were NOT independently produced in this R15 run and must not be relabeled as new results:
+
+```text
+Du, qu, alphau
+Pc, Pface, Pw
+Pu
+```
+
+Historical Z1 nonlinear results remain sealed/comparison-only provenance until an exact continuous evaluator independently solves the R15 system.
 
 ## Mandatory governance
 
@@ -35,36 +79,6 @@ AUTO_GITHUB_CHECKPOINT_AFTER_MATERIAL_CHANGE = REQUIRED
 PROACTIVE_CHAT_LENGTH_CHECKPOINT = REQUIRED
 ```
 
-## Key R15 corrections
+## Execution discipline
 
-```text
-Case21 raw physical geometry: a_phys=2440 mm, b=1220 mm
-physical controlling mode: m_phys=2 -> ell=1220 mm
-historical a=b=ell=1220 notation = already-reduced representative-halfwave coordinates
-
-material true-infinite series layer = removed
-R10 three-branch law = finite global matrix spline
-Z6 face radial cap = finite global algebraic cap
-Z6 web ideal EP = finite global algebraic clip
-uniform q=alpha=0 stationary load = rejected as Pu
-```
-
-## Evidence identity
-
-R15 is the current **complete from-zero calculation specification / single-file ledger**. It is intended to be sufficient as the only theory/input document for an independent execution.
-
-The released Case21/Z6 roots and Pu values are included only in a `SEALED REGRESSION TARGETS` section. They must not be used as solve inputs, seed tuning, parameter calibration, or root-selection criteria during a blind re-execution.
-
-R15 does **not** claim that this chat has independently re-solved the full nonuniform roots using a new CAS backend. That independent blind re-execution is the next verification step.
-
-## Formal discretization counters
-
-```text
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_formal_spatial_subdomains = 1
-N_formal_thickness_quadrature = 0
-N_formal_material_points = 0
-```
-
-No new theory gate is introduced by R15.
+Do not create a new theory gate from this finding. A failed exact representation is crossed out and another mature exact representation must be attempted. Do not fall back to discretization.
