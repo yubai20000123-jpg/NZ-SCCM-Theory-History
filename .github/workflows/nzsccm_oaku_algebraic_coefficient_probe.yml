@@ -1,4 +1,4 @@
-name: NZSCCM Oaku algebraic coefficient probe
+name: NZSCCM Oaku actual R17 algebraic coefficient probe
 on:
   push:
     paths: ['.github/workflows/nzsccm_oaku_algebraic_coefficient_probe.yml']
@@ -10,33 +10,73 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Initialize log
+        run: |
+          mkdir -p semantic_v2/40_execution/combined
+          {
+            echo 'NZSCCM_R17_OAKU_ACTUAL_ALGEBRAIC_COEFFICIENT_PROBE_START'
+            echo "GITHUB_SHA=$GITHUB_SHA"
+            echo "GITHUB_REF=$GITHUB_REF"
+          } > semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt
       - name: Install OpenXM
+        id: install
+        continue-on-error: true
         env: {DEBIAN_FRONTEND: noninteractive}
         run: |
-          sudo apt-get update; sudo apt-get install -y wget ca-certificates
-          sudo wget -q -O /etc/apt/sources.list.d/fe-deb2.list https://www.math.kobe-u.ac.jp/deb2/fe-deb2.list
-          sudo wget -q -O /usr/share/keyrings/fe-deb2-archive-keyring.gpg https://www.math.kobe-u.ac.jp/deb2/fe-deb2-archive-keyring.gpg
-          sudo apt-get update; touch /tmp/i-agree-with-asir-license; sudo -E apt-get install -y openxm; rm -f /tmp/i-agree-with-asir-license
-      - name: Exact algebraic-coefficient Heaviside annihilator
+          set +e
+          {
+            sudo apt-get update
+            sudo apt-get install -y wget ca-certificates
+            sudo wget -q -O /etc/apt/sources.list.d/fe-deb2.list https://www.math.kobe-u.ac.jp/deb2/fe-deb2.list
+            sudo wget -q -O /usr/share/keyrings/fe-deb2-archive-keyring.gpg https://www.math.kobe-u.ac.jp/deb2/fe-deb2-archive-keyring.gpg
+            sudo apt-get update
+            touch /tmp/i-agree-with-asir-license
+            sudo -E apt-get install -y openxm
+            rm -f /tmp/i-agree-with-asir-license
+          } >> semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt 2>&1
+          RC=$?
+          echo "OPENXM_INSTALL_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt
+          exit $RC
+      - name: Exact R17 algebraic-coefficient Heaviside annihilators
+        if: always()
         run: |
           cat >/tmp/probe.rr <<'EOF'
           import("nn_ndbf.rr")$
-          print("ALG_COEF_PROBE_START")$
-          A=newalg(t^2-2)$
-          print(A)$ print(defpoly(A))$
-          F=x-A$
-          print(F)$
-          I=ndbf.ann_n([F])$
-          print(I)$
-          I0=map(subst,I,s0,0)$ print(I0)$
-          print("ALG_COEF_PROBE_PASS")$
+          print("R17_ACTUAL_ALGEBRAIC_COEFFICIENTS_START")$
+          /* normalized threshold chi_1 */
+          C1=newalg(160000*t^5-159900*t^4+400*t^3-800*t^2-1)$
+          print("CHI1_DEF")$ print(defpoly(C1))$
+          I1=ndbf.ann_n([x-C1])$
+          I10=map(subst,I1,s0,0)$
+          print("CHI1_HEAVISIDE_ANN")$ print(I10)$
+          /* normalized threshold chi_10 */
+          C10=newalg(16000*u^5-159999*u^4+40*u^3-800*u^2-1)$
+          print("CHI10_DEF")$ print(defpoly(C10))$
+          J1=ndbf.ann_n([x-C10])$
+          J10=map(subst,J1,s0,0)$
+          print("CHI10_HEAVISIDE_ANN")$ print(J10)$
+          /* tensile interaction constant atp=1-2^(-1/8); minimal relation 2*(1-atp)^8-1=0 */
+          AT=newalg(2*(1-v)^8-1)$
+          print("ATP_DEF")$ print(defpoly(AT))$
+          K1=ndbf.ann_n([x-AT])$
+          K10=map(subst,K1,s0,0)$
+          print("ATP_HEAVISIDE_ANN_DIAGNOSTIC")$ print(K10)$
+          print("R17_ACTUAL_ALGEBRAIC_COEFFICIENTS_PASS")$
           end$
           EOF
           set +e
-          timeout 600 asir -quiet -f /tmp/probe.rr > semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt 2>&1
-          RC=$?; echo "EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt; cat semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt; exit 0
+          timeout 600 asir -quiet -f /tmp/probe.rr >> semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt 2>&1
+          RC=$?
+          echo "R17_ACTUAL_ALGEBRAIC_COEFFICIENT_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt
+          tail -120 semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt
+          exit 0
       - name: Commit
+        if: always()
         run: |
-          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add semantic_v2/40_execution/combined/20260819__NZSCCM__OAKU_ALGEBRAIC_COEFFICIENT_PROBE.txt
-          if ! git diff --cached --quiet; then git commit -m 'Record Oaku algebraic coefficient probe'; git push; fi
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record actual R17 Oaku algebraic coefficient probe'
+            git push
+          fi
