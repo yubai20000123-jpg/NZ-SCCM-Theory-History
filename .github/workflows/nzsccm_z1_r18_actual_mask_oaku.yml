@@ -1,0 +1,74 @@
+name: NZSCCM Z1 R18 actual compactified R17 mask Oaku
+on:
+  push:
+    paths:
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU_GENERATOR.py'
+      - '.github/workflows/nzsccm_z1_r18_actual_mask_oaku.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  actual-mask:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Initialize durable log
+        run: |
+          mkdir -p semantic_v2/40_execution/combined
+          {
+            echo 'NZSCCM_R18_ACTUAL_MASK_WORKFLOW_START'
+            echo "GITHUB_SHA=$GITHUB_SHA"
+            echo "GITHUB_REF=$GITHUB_REF"
+          } > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
+      - name: Install generator dependency
+        continue-on-error: true
+        run: |
+          set +e
+          python -m pip install --disable-pip-version-check sympy >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt 2>&1
+          RC=$?; echo "SYMPY_INSTALL_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt; exit $RC
+      - name: Generate exact Asir input
+        if: always()
+        continue-on-error: true
+        run: |
+          set +e
+          python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU_GENERATOR.py >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt 2>&1
+          RC=$?; echo "R18_MASK_GENERATOR_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt; exit $RC
+      - name: Install OpenXM
+        if: always()
+        id: openxm
+        continue-on-error: true
+        env: {DEBIAN_FRONTEND: noninteractive}
+        run: |
+          set +e
+          {
+            sudo apt-get update
+            sudo apt-get install -y wget ca-certificates
+            sudo wget -q -O /etc/apt/sources.list.d/fe-deb2.list https://www.math.kobe-u.ac.jp/deb2/fe-deb2.list
+            sudo wget -q -O /usr/share/keyrings/fe-deb2-archive-keyring.gpg https://www.math.kobe-u.ac.jp/deb2/fe-deb2-archive-keyring.gpg
+            sudo apt-get update
+            touch /tmp/i-agree-with-asir-license
+            sudo -E apt-get install -y openxm
+            rm -f /tmp/i-agree-with-asir-license
+          } >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt 2>&1
+          RC=$?; echo "OPENXM_INSTALL_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt; exit $RC
+      - name: Run actual R17 primitive mask annihilator and bounded-u integration ideal
+        if: always()
+        run: |
+          set +e
+          timeout 1200 asir -quiet -f semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.rr >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt 2>&1
+          RC=$?
+          echo "R18_ACTUAL_MASK_OAKU_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
+          tail -160 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
+          exit 0
+      - name: Commit exact input and result
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.rr semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record actual compactified R17 primitive mask Oaku result'
+            git push
+          fi
