@@ -9,8 +9,7 @@ the Oaku semialgebraic constructor; threshold Heavisides are handled separately.
 No spatial quadrature/sampling/material points/prefixes.
 """
 from time import time
-from sage.rings.rational_field import QQ
-from sage.rings.polynomial.polynomial_ring_constructor import PolynomialRing
+from sage.all import QQ, PolynomialRing
 from ore_algebra import OreAlgebra
 
 T0=time()
