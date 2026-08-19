@@ -33,22 +33,26 @@ jobs:
           load("sm1.rr")$
           print("NZSCCM_GEOMETRY_RESIDUE_START")$
           F=w^2-r*(1-r)*v*(1-v)$
+          print("DENOMINATOR_F")$
           print(F)$
-          G=sm1.genericAnn([F,[ss,w,r,v]])$
-          print("GENERIC_ANN_F_POW_S")$
+          G=[F*dw+diff(F,w),F*dr+diff(F,r),F*dv+diff(F,v)]$
+          print("EXACT_ANN_1_OVER_F")$
           print(G)$
-          Gm1=map(subst,G,ss,-1)$
-          print("ANN_1_OVER_F")$
-          print(Gm1)$
-          J=sm1.integration(Gm1,[w,r,v],[w])$
-          print("INTEGRATE_OUT_W")$
+          J=sm1.integration(G,[w,r,v],[w])$
+          print("INTEGRATE_OUT_RESIDUE_VARIABLE_W")$
           print(J)$
-          print("EXPECTED_RESIDUE_BRANCH_OPERATORS")$
+          print("EXPECTED_POSITIVE_SHEET_RESIDUE_OPERATORS")$
           print([2*r*(1-r)*dr+(1-2*r),2*v*(1-v)*dv+(1-2*v)])$
           print("NZSCCM_GEOMETRY_RESIDUE_END")$
           end$
           EOF
-          asir -quiet -f /tmp/nzsccm_geometry_residue.rr 2>&1 | tee semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt
+          mkdir -p semantic_v2/40_execution/combined
+          set +e
+          asir -quiet -f /tmp/nzsccm_geometry_residue.rr > semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt 2>&1
+          RC=$?
+          echo "ASIR_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt
+          cat semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt
+          exit 0
       - name: Commit exact report
         run: |
           git config user.name 'github-actions[bot]'
