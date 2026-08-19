@@ -1,0 +1,28 @@
+name: NZSCCM Z1 R17 exact global Heaviside spectral compiler
+on:
+  push:
+    paths:
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_GLOBAL_HEAVISIDE_SPECTRAL_COMPILER.py'
+      - '.github/workflows/nzsccm_z1_r17_global_heaviside_compiler.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --disable-pip-version-check 'sympy==1.14.0'
+      - name: Compile exact global Heaviside constructor
+        run: |
+          python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_GLOBAL_HEAVISIDE_SPECTRAL_COMPILER.py > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_GLOBAL_HEAVISIDE_SPECTRAL_COMPILER_REPORT.json
+          cat semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_GLOBAL_HEAVISIDE_SPECTRAL_COMPILER_REPORT.json
+      - name: Commit report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_GLOBAL_HEAVISIDE_SPECTRAL_COMPILER_REPORT.json
+          if ! git diff --cached --quiet; then git commit -m 'Record exact Z1 R17 Heaviside spectral constructor'; git push; fi
