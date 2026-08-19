@@ -1,249 +1,165 @@
 NZSCCM_R17_BRANCH_ANNIHILATOR_RESUME_START
-GITHUB_SHA=8f4eb355ef6b00ddd138e8b108ceb97908cf175e
+GITHUB_SHA=3e0f7ea9406979c569664f5fe876e0c87d273f88
 GITHUB_REF=refs/heads/r17-exact-evaluator-continuation-20260819
 Python 3.12.13
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-Get:6 https://packages.microsoft.com/repos/azure-cli noble InRelease [3564 B]
-Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
-Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
-Get:9 https://packages.microsoft.com/repos/azure-cli noble/main amd64 Packages [2452 B]
-Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.4 kB]
-Get:11 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [315 kB]
-Get:12 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [357 kB]
-Get:13 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1417 B]
-Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
-Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1216 kB]
-Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [285 kB]
-Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
-Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1683 kB]
-Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [336 kB]
-Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
-Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1463 kB]
-Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [334 kB]
-Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [12.6 kB]
-Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
-Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5760 B]
-Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.7 kB]
-Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [952 kB]
-Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [204 kB]
-Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
-Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1201 kB]
-Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [240 kB]
-Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
-Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1357 kB]
-Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [312 kB]
-Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [10.9 kB]
-Fetched 11.4 MB in 17s (682 kB/s)
-Reading package lists...
-Reading package lists...
-Building dependency tree...
-Reading state information...
-libgmp-dev is already the newest version (2:6.3.0+dfsg-2ubuntu6.1).
-The following additional packages will be installed:
-  libflint18t64 libmpfi-dev-common libmpfi0
-Suggested packages:
-  libmpfi-doc libmpfr-doc
-The following NEW packages will be installed:
-  build-essential libflint-dev libflint18t64 libmpfi-dev libmpfi-dev-common
-  libmpfi0 libmpfr-dev
-0 upgraded, 7 newly installed, 0 to remove and 12 not upgraded.
-Need to get 4580 kB of archives.
-After this operation, 15.5 MB of additional disk space will be used.
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
-Get:3 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libflint18t64 amd64 3.0.1-3.1build1 [3989 kB]
-Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libmpfi0 amd64 1.5.3+ds-6build1 [33.5 kB]
-Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libmpfi-dev-common all 1.5.3+ds-6build1 [7042 B]
-Get:6 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libmpfr-dev amd64 4.2.1-1build1.1 [288 kB]
-Get:7 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libmpfi-dev amd64 1.5.3+ds-6build1 [33.8 kB]
-Get:8 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libflint-dev amd64 3.0.1-3.1build1 [224 kB]
-Fetched 4580 kB in 51s (89.0 kB/s)
-Selecting previously unselected package build-essential.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 203139 files and directories currently installed.)
-Preparing to unpack .../0-build-essential_12.10ubuntu1_amd64.deb ...
-Unpacking build-essential (12.10ubuntu1) ...
-Selecting previously unselected package libflint18t64:amd64.
-Preparing to unpack .../1-libflint18t64_3.0.1-3.1build1_amd64.deb ...
-Unpacking libflint18t64:amd64 (3.0.1-3.1build1) ...
-Selecting previously unselected package libmpfi0:amd64.
-Preparing to unpack .../2-libmpfi0_1.5.3+ds-6build1_amd64.deb ...
-Unpacking libmpfi0:amd64 (1.5.3+ds-6build1) ...
-Selecting previously unselected package libmpfi-dev-common.
-Preparing to unpack .../3-libmpfi-dev-common_1.5.3+ds-6build1_all.deb ...
-Unpacking libmpfi-dev-common (1.5.3+ds-6build1) ...
-Selecting previously unselected package libmpfr-dev:amd64.
-Preparing to unpack .../4-libmpfr-dev_4.2.1-1build1.1_amd64.deb ...
-Unpacking libmpfr-dev:amd64 (4.2.1-1build1.1) ...
-Selecting previously unselected package libmpfi-dev:amd64.
-Preparing to unpack .../5-libmpfi-dev_1.5.3+ds-6build1_amd64.deb ...
-Unpacking libmpfi-dev:amd64 (1.5.3+ds-6build1) ...
-Selecting previously unselected package libflint-dev.
-Preparing to unpack .../6-libflint-dev_3.0.1-3.1build1_amd64.deb ...
-Unpacking libflint-dev (3.0.1-3.1build1) ...
-Setting up libmpfi-dev-common (1.5.3+ds-6build1) ...
-Setting up libmpfr-dev:amd64 (4.2.1-1build1.1) ...
-Setting up libflint18t64:amd64 (3.0.1-3.1build1) ...
-Setting up libmpfi0:amd64 (1.5.3+ds-6build1) ...
-Setting up build-essential (12.10ubuntu1) ...
-Setting up libflint-dev (3.0.1-3.1build1) ...
-Setting up libmpfi-dev:amd64 (1.5.3+ds-6build1) ...
-Processing triggers for libc-bin (2.39-0ubuntu8.8) ...
+Cloning into '/tmp/ore_algebra'...
+Note: switching to '18680180c884fac869a064db99f29a221aad9dfe'.
 
-Running kernel seems to be up-to-date.
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
 
-No services need to be restarted.
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
 
-No containers need to be restarted.
+  git switch -c <new-branch-name>
 
-No user sessions are running outdated binaries.
+Or undo this operation with:
 
-No VM guests are running outdated hypervisor (qemu) binaries on this host.
-R17_NATIVE_DEPS_EXIT_CODE=0
-Collecting ore_algebra @ git+https://github.com/mkauers/ore_algebra.git (from ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
-  Cloning https://github.com/mkauers/ore_algebra.git to /tmp/pip-install-n0ggx1om/ore-algebra_3cb6287470c64e949f6ba5b84f2be023
-  Running command git clone --filter=blob:none --quiet https://github.com/mkauers/ore_algebra.git /tmp/pip-install-n0ggx1om/ore-algebra_3cb6287470c64e949f6ba5b84f2be023
-  Resolved https://github.com/mkauers/ore_algebra.git to commit 18680180c884fac869a064db99f29a221aad9dfe
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 1868018 Merge pull request #165 from fchapoton/rst_plus_typo
+Processing ./.
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
   Getting requirements to build wheel: started
   Getting requirements to build wheel: finished with status 'done'
   Preparing metadata (pyproject.toml): started
   Preparing metadata (pyproject.toml): finished with status 'done'
-Collecting fpylll (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting fpylll (from ore_algebra==0.5)
   Downloading fpylll-0.6.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
-Collecting passagemath-combinat (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-combinat (from ore_algebra==0.5)
   Downloading passagemath_combinat-10.8.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.4 kB)
-Collecting passagemath-graphs (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-graphs (from ore_algebra==0.5)
   Downloading passagemath_graphs-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (15 kB)
-Collecting passagemath-modules (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-modules (from ore_algebra==0.5)
   Using cached passagemath_modules-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (13 kB)
-Collecting passagemath-pari (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-pari (from ore_algebra==0.5)
   Downloading passagemath_pari-10.8.9-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (9.4 kB)
-Collecting passagemath-plot (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-plot (from ore_algebra==0.5)
   Downloading passagemath_plot-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
-Collecting passagemath-repl (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-repl (from ore_algebra==0.5)
   Downloading passagemath_repl-10.8.9-py3-none-any.whl.metadata (5.9 kB)
-Collecting passagemath-singular (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-singular (from ore_algebra==0.5)
   Downloading passagemath_singular-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (8.6 kB)
-Collecting passagemath-symbolics (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-symbolics (from ore_algebra==0.5)
   Downloading passagemath_symbolics-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.6 kB)
-Collecting scipy (from ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting scipy (from ore_algebra==0.5)
   Downloading scipy-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
-Collecting gmpy2~=2.1.b999 (from passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting gmpy2~=2.1.b999 (from passagemath-combinat->ore_algebra==0.5)
   Using cached gmpy2-2.4.0a1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
-Collecting cysignals!=1.12.0,>=1.11.2 (from passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting cysignals!=1.12.0,>=1.11.2 (from passagemath-combinat->ore_algebra==0.5)
   Using cached cysignals-1.12.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (12 kB)
-Collecting memory_allocator<0.2 (from passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting memory_allocator<0.2 (from passagemath-combinat->ore_algebra==0.5)
   Using cached memory_allocator-0.1.4-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.7 kB)
-Collecting passagemath-categories~=10.8.9.0 (from passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-categories~=10.8.9.0 (from passagemath-combinat->ore_algebra==0.5)
   Using cached passagemath_categories-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (9.7 kB)
-Collecting passagemath-environment~=10.8.9.0 (from passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-environment~=10.8.9.0 (from passagemath-combinat->ore_algebra==0.5)
   Using cached passagemath_environment-10.8.9-py3-none-any.whl.metadata (6.7 kB)
-Collecting Cython (from memory_allocator<0.2->passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting Cython (from memory_allocator<0.2->passagemath-combinat->ore_algebra==0.5)
   Using cached cython-3.2.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.6 kB)
-Collecting passagemath-objects~=10.8.9.0 (from passagemath-categories~=10.8.9.0->passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-objects~=10.8.9.0 (from passagemath-categories~=10.8.9.0->passagemath-combinat->ore_algebra==0.5)
   Using cached passagemath_objects-10.8.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (6.1 kB)
-Collecting packaging>=24.2 (from passagemath-environment~=10.8.9.0->passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting packaging>=24.2 (from passagemath-environment~=10.8.9.0->passagemath-combinat->ore_algebra==0.5)
   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
-Collecting platformdirs (from passagemath-environment~=10.8.9.0->passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting platformdirs (from passagemath-environment~=10.8.9.0->passagemath-combinat->ore_algebra==0.5)
   Using cached platformdirs-4.11.3-py3-none-any.whl.metadata (5.5 kB)
-Collecting typing_extensions>=4.13.0 (from passagemath-objects~=10.8.9.0->passagemath-categories~=10.8.9.0->passagemath-combinat->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting typing_extensions>=4.13.0 (from passagemath-objects~=10.8.9.0->passagemath-categories~=10.8.9.0->passagemath-combinat->ore_algebra==0.5)
   Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
-Collecting mpmath<1.4,>=1.1.0 (from passagemath-modules->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting mpmath<1.4,>=1.1.0 (from passagemath-modules->ore_algebra==0.5)
   Using cached mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
-Collecting conway-polynomials>=0.8 (from passagemath-pari->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting conway-polynomials>=0.8 (from passagemath-pari->ore_algebra==0.5)
   Downloading conway_polynomials-0.10-py3-none-any.whl.metadata (4.1 kB)
-Collecting numpy>=1.25 (from passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting numpy>=1.25 (from passagemath-plot->ore_algebra==0.5)
   Using cached numpy-2.5.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
-Collecting pillow>=7.2.0 (from passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting pillow>=7.2.0 (from passagemath-plot->ore_algebra==0.5)
   Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
-Collecting matplotlib>=3.7.0 (from passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting matplotlib>=3.7.0 (from passagemath-plot->ore_algebra==0.5)
   Downloading matplotlib-3.11.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (80 kB)
-Collecting jupyter-threejs-sage (from passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting jupyter-threejs-sage (from passagemath-plot->ore_algebra==0.5)
   Downloading jupyter_threejs_sage-130-py3-none-any.whl.metadata (2.8 kB)
-Collecting contourpy>=1.0.1 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting contourpy>=1.0.1 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading contourpy-1.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (5.5 kB)
-Collecting cycler>=0.10 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting cycler>=0.10 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
-Collecting fonttools>=4.28.2 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting fonttools>=4.28.2 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading fonttools-4.63.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (118 kB)
-Collecting kiwisolver>=1.3.1 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting kiwisolver>=1.3.1 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading kiwisolver-1.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.1 kB)
-Collecting pyparsing>=3 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting pyparsing>=3 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
-Collecting python-dateutil>=2.7 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting python-dateutil>=2.7 (from matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
-Collecting six>=1.5 (from python-dateutil>=2.7->matplotlib>=3.7.0->passagemath-plot->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting six>=1.5 (from python-dateutil>=2.7->matplotlib>=3.7.0->passagemath-plot->ore_algebra==0.5)
   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
-Collecting ipykernel>=5.2.1 (from passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting ipykernel>=5.2.1 (from passagemath-repl->ore_algebra==0.5)
   Downloading ipykernel-7.3.0-py3-none-any.whl.metadata (4.5 kB)
-Collecting ipython>=8.9.0 (from passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting ipython>=8.9.0 (from passagemath-repl->ore_algebra==0.5)
   Downloading ipython-9.16.1-py3-none-any.whl.metadata (4.6 kB)
-Collecting ipywidgets>=7.5.1 (from passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting ipywidgets>=7.5.1 (from passagemath-repl->ore_algebra==0.5)
   Downloading ipywidgets-8.1.9-py3-none-any.whl.metadata (2.4 kB)
-Collecting jupyter-client (from passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting jupyter-client (from passagemath-repl->ore_algebra==0.5)
   Downloading jupyter_client-8.9.1-py3-none-any.whl.metadata (8.5 kB)
-Collecting comm>=0.1.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting comm>=0.1.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading comm-0.2.3-py3-none-any.whl.metadata (3.7 kB)
-Collecting debugpy>=1.6.5 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting debugpy>=1.6.5 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading debugpy-1.8.21-cp312-cp312-manylinux_2_34_x86_64.whl.metadata (1.4 kB)
-Collecting jupyter-core!=6.0.*,>=5.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting jupyter-core!=6.0.*,>=5.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading jupyter_core-5.9.1-py3-none-any.whl.metadata (1.5 kB)
-Collecting matplotlib-inline>=0.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting matplotlib-inline>=0.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading matplotlib_inline-0.2.2-py3-none-any.whl.metadata (2.4 kB)
-Collecting nest-asyncio2>=1.7.0 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting nest-asyncio2>=1.7.0 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading nest_asyncio2-1.7.2-py3-none-any.whl.metadata (6.3 kB)
-Collecting psutil>=5.7 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting psutil>=5.7 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl.metadata (22 kB)
-Collecting pyzmq>=25 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting pyzmq>=25 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (6.0 kB)
-Collecting tornado>=6.4.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting tornado>=6.4.1 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading tornado-6.5.8-cp39-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (2.8 kB)
-Collecting traitlets>=5.4.0 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting traitlets>=5.4.0 (from ipykernel>=5.2.1->passagemath-repl->ore_algebra==0.5)
   Downloading traitlets-5.16.1-py3-none-any.whl.metadata (10 kB)
-Collecting ipython-pygments-lexers>=1.0.0 (from ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting ipython-pygments-lexers>=1.0.0 (from ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl.metadata (1.1 kB)
-Collecting jedi>=0.18.2 (from ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting jedi>=0.18.2 (from ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading jedi-0.20.0-py2.py3-none-any.whl.metadata (23 kB)
-Collecting pexpect>4.6 (from ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting pexpect>4.6 (from ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading pexpect-4.9.0-py2.py3-none-any.whl.metadata (2.5 kB)
-Collecting prompt_toolkit<3.1.0,>=3.0.41 (from ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting prompt_toolkit<3.1.0,>=3.0.41 (from ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading prompt_toolkit-3.0.53-py3-none-any.whl.metadata (6.4 kB)
-Collecting pygments>=2.14.0 (from ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting pygments>=2.14.0 (from ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
-Collecting stack_data>=0.6.0 (from ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting stack_data>=0.6.0 (from ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
-Collecting wcwidth>=0.1.4 (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting wcwidth>=0.1.4 (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading wcwidth-0.8.2-py3-none-any.whl.metadata (43 kB)
-Collecting widgetsnbextension~=4.0.16 (from ipywidgets>=7.5.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting widgetsnbextension~=4.0.16 (from ipywidgets>=7.5.1->passagemath-repl->ore_algebra==0.5)
   Downloading widgetsnbextension-4.0.16-py3-none-any.whl.metadata (1.6 kB)
-Collecting jupyterlab_widgets~=3.0.17 (from ipywidgets>=7.5.1->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting jupyterlab_widgets~=3.0.17 (from ipywidgets>=7.5.1->passagemath-repl->ore_algebra==0.5)
   Downloading jupyterlab_widgets-3.0.17-py3-none-any.whl.metadata (20 kB)
-Collecting parso<0.9.0,>=0.8.6 (from jedi>=0.18.2->ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting parso<0.9.0,>=0.8.6 (from jedi>=0.18.2->ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading parso-0.8.7-py2.py3-none-any.whl.metadata (8.2 kB)
-Collecting ptyprocess>=0.5 (from pexpect>4.6->ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting ptyprocess>=0.5 (from pexpect>4.6->ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
-Collecting executing>=1.2.0 (from stack_data>=0.6.0->ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting executing>=1.2.0 (from stack_data>=0.6.0->ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading executing-2.2.1-py2.py3-none-any.whl.metadata (8.9 kB)
-Collecting asttokens>=2.1.0 (from stack_data>=0.6.0->ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting asttokens>=2.1.0 (from stack_data>=0.6.0->ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading asttokens-3.0.2-py3-none-any.whl.metadata (5.7 kB)
-Collecting pure-eval (from stack_data>=0.6.0->ipython>=8.9.0->passagemath-repl->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting pure-eval (from stack_data>=0.6.0->ipython>=8.9.0->passagemath-repl->ore_algebra==0.5)
   Downloading pure_eval-0.2.3-py3-none-any.whl.metadata (6.3 kB)
-Collecting passagemath-flint~=10.8.9.0 (from passagemath-singular->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-flint~=10.8.9.0 (from passagemath-singular->ore_algebra==0.5)
   Using cached passagemath_flint-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.0 kB)
-Collecting passagemath-ntl~=10.8.9.0 (from passagemath-flint~=10.8.9.0->passagemath-singular->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-ntl~=10.8.9.0 (from passagemath-flint~=10.8.9.0->passagemath-singular->ore_algebra==0.5)
   Using cached passagemath_ntl-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (7.2 kB)
-Collecting passagemath-gsl~=10.8.9.0 (from passagemath-symbolics->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting passagemath-gsl~=10.8.9.0 (from passagemath-symbolics->ore_algebra==0.5)
   Downloading passagemath_gsl-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
-Collecting sympy<2.0,>=1.6 (from passagemath-symbolics->ore_algebra @ git+https://github.com/mkauers/ore_algebra.git->ore_algebra[passagemath] @ git+https://github.com/mkauers/ore_algebra.git)
+Collecting sympy<2.0,>=1.6 (from passagemath-symbolics->ore_algebra==0.5)
   Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
 Downloading fpylll-0.6.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (41.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.6/41.6 MB 220.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.6/41.6 MB 56.9 MB/s  0:00:00
 Downloading passagemath_combinat-10.8.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.8/20.8 MB 219.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.8/20.8 MB 55.3 MB/s  0:00:00
 Using cached gmpy2-2.4.0a1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
 Using cached memory_allocator-0.1.4-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (540 kB)
 Using cached passagemath_categories-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (46.6 MB)
@@ -254,48 +170,48 @@ Using cached packaging-26.3-py3-none-any.whl (129 kB)
 Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
 Using cached cython-3.2.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
 Downloading passagemath_graphs-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (36.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.8/36.8 MB 221.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.8/36.8 MB 70.1 MB/s  0:00:00
 Using cached passagemath_modules-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (80.0 MB)
 Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
 Downloading passagemath_pari-10.8.9-cp312-cp312-manylinux_2_28_x86_64.whl (85.4 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 MB 60.2 MB/s  0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 MB 73.0 MB/s  0:00:01
 Downloading conway_polynomials-0.10-py3-none-any.whl (212 kB)
 Downloading passagemath_plot-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (19.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.6/19.6 MB 233.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.6/19.6 MB 73.0 MB/s  0:00:00
 Downloading matplotlib-3.11.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (10.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 300.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 88.9 MB/s  0:00:00
 Downloading contourpy-1.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (362 kB)
 Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
 Downloading fonttools-4.63.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.0/5.0 MB 159.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.0/5.0 MB 49.7 MB/s  0:00:00
 Downloading kiwisolver-1.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 242.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 43.6 MB/s  0:00:00
 Using cached numpy-2.5.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 318.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 64.3 MB/s  0:00:00
 Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
 Downloading scipy-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 240.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 69.2 MB/s  0:00:00
 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
 Downloading jupyter_threejs_sage-130-py3-none-any.whl (979 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.1/979.1 kB 192.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.1/979.1 kB 18.4 MB/s  0:00:00
 Downloading passagemath_repl-10.8.9-py3-none-any.whl (624 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 625.0/625.0 kB 112.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 625.0/625.0 kB 53.8 MB/s  0:00:00
 Downloading ipykernel-7.3.0-py3-none-any.whl (120 kB)
 Downloading comm-0.2.3-py3-none-any.whl (7.3 kB)
 Downloading debugpy-1.8.21-cp312-cp312-manylinux_2_34_x86_64.whl (4.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 343.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 30.6 MB/s  0:00:00
 Downloading ipython-9.16.1-py3-none-any.whl (625 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 626.0/626.0 kB 124.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 626.0/626.0 kB 2.4 MB/s  0:00:00
 Downloading prompt_toolkit-3.0.53-py3-none-any.whl (392 kB)
 Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl (8.1 kB)
 Downloading ipywidgets-8.1.9-py3-none-any.whl (140 kB)
 Downloading jupyterlab_widgets-3.0.17-py3-none-any.whl (217 kB)
 Downloading widgetsnbextension-4.0.16-py3-none-any.whl (2.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 301.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 30.1 MB/s  0:00:00
 Downloading jedi-0.20.0-py2.py3-none-any.whl (4.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 348.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 94.3 MB/s  0:00:00
 Downloading parso-0.8.7-py2.py3-none-any.whl (107 kB)
 Downloading jupyter_client-8.9.1-py3-none-any.whl (109 kB)
 Downloading jupyter_core-5.9.1-py3-none-any.whl (29 kB)
@@ -306,9 +222,9 @@ Using cached platformdirs-4.11.3-py3-none-any.whl (23 kB)
 Downloading psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl (155 kB)
 Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 246.8 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 19.4 MB/s  0:00:00
 Downloading pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (840 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 841.0/841.0 kB 191.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 841.0/841.0 kB 4.6 MB/s  0:00:00
 Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
 Downloading asttokens-3.0.2-py3-none-any.whl (28 kB)
 Downloading executing-2.2.1-py2.py3-none-any.whl (28 kB)
@@ -316,135 +232,28 @@ Downloading tornado-6.5.8-cp39-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.many
 Downloading traitlets-5.16.1-py3-none-any.whl (86 kB)
 Downloading wcwidth-0.8.2-py3-none-any.whl (323 kB)
 Downloading passagemath_singular-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (32.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 32.0/32.0 MB 64.7 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 32.0/32.0 MB 70.4 MB/s  0:00:00
 Using cached passagemath_flint-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (48.7 MB)
 Using cached passagemath_ntl-10.8.9-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (17.5 MB)
 Downloading passagemath_symbolics-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (43.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 70.4 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 48.6 MB/s  0:00:00
 Downloading passagemath_gsl-10.8.9-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 165.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 46.4 MB/s  0:00:00
 Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 321.3 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 71.4 MB/s  0:00:00
 Downloading pure_eval-0.2.3-py3-none-any.whl (11 kB)
 Building wheels for collected packages: ore_algebra
   Building wheel for ore_algebra (pyproject.toml): started
-  Building wheel for ore_algebra (pyproject.toml): finished with status 'error'
-  error: subprocess-exited-with-error
-  
-  × Building wheel for ore_algebra (pyproject.toml) did not run successfully.
-  │ exit code: 1
-  ╰─> [99 lines of output]
-      running bdist_wheel
-      running build
-      running build_py
-      creating build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/__init__.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/recurrence_operator_1_1.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/ore_operator.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/dfinite_symbolic.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/differential_operator_1_1.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/generalized_series.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/guessing.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/ore_operator_mult.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/q_operator_1_1.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/ore_operator_1_1.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/dfinite_function.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/tools.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/nullspace.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/ideal.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      copying src/ore_algebra/ore_algebra.py -> build/lib.linux-x86_64-cpython-312/ore_algebra
-      creating build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/__init__.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/complex_optimistic_field.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/monodromy.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/dac_sum.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/differential_operator.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/stokes.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/ui.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/shiftless.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/borel_laplace.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/geometry.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/naive_sum.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/analytic_continuation.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/singularity_analysis.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/safe_cmp.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/rectangular_splitting.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/bounds.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/polynomial_approximation.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/deform.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/polynomial_root.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/linear_algebra.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/function.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/utilities.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/factorization.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/accuracy.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/context.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/local_solutions.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/path.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      copying src/ore_algebra/analytic/binary_splitting.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic
-      creating build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      copying src/ore_algebra/analytic/examples/__init__.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      copying src/ore_algebra/analytic/examples/iint.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      copying src/ore_algebra/analytic/examples/ssw.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      copying src/ore_algebra/analytic/examples/misc.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      copying src/ore_algebra/analytic/examples/facto.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      copying src/ore_algebra/analytic/examples/fcc.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/examples
-      creating build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/periods.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/__init__.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/iint.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/ssw.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/ct.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/pseudoconstants.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/fcc.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/polya.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/stdfun.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/kontsevitch_odesskii.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      copying src/ore_algebra/examples/cbt.py -> build/lib.linux-x86_64-cpython-312/ore_algebra/examples
-      running build_ext
-      building 'ore_algebra.analytic.binary_splitting_arb' extension
-      g++ -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -I/tmp/pip-build-env-30emmnol/overlay/lib/python3.12/site-packages/sage/libs/flint -I/tmp/pip-build-env-30emmnol/overlay/lib/python3.12/site-packages/sage/cpython -I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12 -c src/ore_algebra/analytic/binary_splitting_arb.cpp -o build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/binary_splitting_arb.o -std=c++11
-      g++ -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -shared -Wl,--rpath=/opt/hostedtoolcache/Python/3.12.13/x64/lib -Wl,--rpath=/opt/hostedtoolcache/Python/3.12.13/x64/lib build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/binary_splitting_arb.o -L/opt/hostedtoolcache/Python/3.12.13/x64/lib -lflint -lgmp -lmpfr -lgmp -o build/lib.linux-x86_64-cpython-312/ore_algebra/analytic/binary_splitting_arb.cpython-312-x86_64-linux-gnu.so
-      building 'ore_algebra.analytic.dac_sum_c' extension
-      gcc -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -I/tmp/pip-build-env-30emmnol/overlay/lib/python3.12/site-packages/sage/libs/flint -I/tmp/pip-build-env-30emmnol/overlay/lib/python3.12/site-packages/sage/cpython -I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12 -c src/ore_algebra/analytic/dac_sum_c.c -o build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/dac_sum_c.o
-      src/ore_algebra/analytic/dac_sum_c.c:1208:81: error: unknown type name ‘slong’; did you mean ‘ulong’?
-       1208 |     static inline void _oa_pitvdm_stdpts_impl(fmpz_mat_t matnum, fmpz_t matden, slong n) {
-            |                                                                                 ^~~~~
-            |                                                                                 ulong
-      src/ore_algebra/analytic/dac_sum_c.c: In function ‘__pyx_f_11ore_algebra_8analytic_9dac_sum_c_11DACUnroller_initial_accuracy_estimates’:
-      src/ore_algebra/analytic/dac_sum_c.c:12756:71: warning: variable ‘__pyx_v_cvest’ set but not used [-Wunused-but-set-variable]
-      12756 |   struct __pyx_t_11ore_algebra_8analytic_9dac_sum_c_AccuracyEstimates __pyx_v_cvest;
-            |                                                                       ^~~~~~~~~~~~~
-      src/ore_algebra/analytic/dac_sum_c.c: In function ‘__pyx_f_11ore_algebra_8analytic_9dac_sum_c_pitvdm_stdpts’:
-      src/ore_algebra/analytic/dac_sum_c.c:21864:3: warning: implicit declaration of function ‘_oa_pitvdm_stdpts_impl’ [-Wimplicit-function-declaration]
-      21864 |   _oa_pitvdm_stdpts_impl(__pyx_v_matnum, __pyx_v_matden, __pyx_v_n);
-            |   ^~~~~~~~~~~~~~~~~~~~~~
-      src/ore_algebra/analytic/dac_sum_c.c: At top level:
-      src/ore_algebra/analytic/dac_sum_c.c:22637:100: warning: ‘__pyx_f_11ore_algebra_8analytic_9dac_sum_c__make_poly’ defined but not used [-Wunused-function]
-      22637 | static struct __pyx_obj_4sage_5rings_10polynomial_22polynomial_complex_arb_Polynomial_complex_arb *__pyx_f_11ore_algebra_8analytic_9dac_sum_c__make_poly(acb_poly_struct *__pyx_v_p, struct __pyx_obj_4sage_9structure_6parent_Parent *__pyx_v_parent) {
-            |                                                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      src/ore_algebra/analytic/dac_sum_c.c:22552:100: warning: ‘__pyx_f_11ore_algebra_8analytic_9dac_sum_c__make_constant_poly’ defined but not used [-Wunused-function]
-      22552 | static struct __pyx_obj_4sage_5rings_10polynomial_22polynomial_complex_arb_Polynomial_complex_arb *__pyx_f_11ore_algebra_8analytic_9dac_sum_c__make_constant_poly(acb_srcptr __pyx_v_c, struct __pyx_obj_4sage_9structure_6parent_Parent *__pyx_v_parent) {
-            |                                                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      src/ore_algebra/analytic/dac_sum_c.c:22469:13: warning: ‘__pyx_f_11ore_algebra_8analytic_9dac_sum_c__print_solution’ defined but not used [-Wunused-function]
-      22469 | static void __pyx_f_11ore_algebra_8analytic_9dac_sum_c__print_solution(struct __pyx_t_11ore_algebra_8analytic_9dac_sum_c_Solution *__pyx_v_sol) {
-            |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      src/ore_algebra/analytic/dac_sum_c.c:7861:65: warning: ‘__pyx_f_4sage_5rings_11complex_arb_11ComplexBall__new’ defined but not used [-Wunused-function]
-       7861 | static struct __pyx_obj_4sage_5rings_11complex_arb_ComplexBall *__pyx_f_4sage_5rings_11complex_arb_11ComplexBall__new(struct __pyx_obj_4sage_5rings_11complex_arb_ComplexBall *__pyx_v_self) {
-            |                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      error: Command '['gcc', '-fno-strict-overflow', '-Wsign-compare', '-DNDEBUG', '-g', '-O3', '-Wall', '-fPIC', '-I/tmp/pip-build-env-30emmnol/overlay/lib/python3.12/site-packages/sage/libs/flint', '-I/tmp/pip-build-env-30emmnol/overlay/lib/python3.12/site-packages/sage/cpython', '-I/opt/hostedtoolcache/Python/3.12.13/x64/include/python3.12', '-c', 'src/ore_algebra/analytic/dac_sum_c.c', '-o', 'build/temp.linux-x86_64-cpython-312/src/ore_algebra/analytic/dac_sum_c.o']' returned non-zero exit status 1.
-      [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-  ERROR: Failed building wheel for ore_algebra
-Failed to build ore_algebra
-error: failed-wheel-build-for-install
+  Building wheel for ore_algebra (pyproject.toml): finished with status 'done'
+  Created wheel for ore_algebra: filename=ore_algebra-0.5-py3-none-any.whl size=625763 sha256=2a0fb60a774f63d36db5d3a34c91044e49d7498d50578096f3eacfb2dc1917a7
+  Stored in directory: /tmp/pip-ephem-wheel-cache-8s_x0f8a/wheels/16/2f/8b/653bf8c0c2611b4ac18557b1e8dc5e40c3789c2c9aeeddcbf6
+Successfully built ore_algebra
+Installing collected packages: pure-eval, ptyprocess, ore_algebra, mpmath, jupyter-threejs-sage, fpylll, widgetsnbextension, wcwidth, typing_extensions, traitlets, tornado, sympy, six, pyzmq, pyparsing, pygments, psutil, platformdirs, pillow, pexpect, parso, packaging, numpy, nest-asyncio2, kiwisolver, jupyterlab_widgets, gmpy2, fonttools, executing, debugpy, Cython, cysignals, cycler, conway-polynomials, comm, asttokens, stack_data, scipy, python-dateutil, prompt_toolkit, passagemath-objects, passagemath-environment, memory_allocator, matplotlib-inline, jupyter-core, jedi, ipython-pygments-lexers, contourpy, passagemath-categories, matplotlib, jupyter-client, ipython, passagemath-pari, passagemath-ntl, passagemath-modules, passagemath-graphs, passagemath-combinat, ipywidgets, ipykernel, passagemath-repl, passagemath-plot, passagemath-gsl, passagemath-flint, passagemath-symbolics, passagemath-singular
 
-× Failed to build installable wheels for some pyproject.toml based projects
-╰─> ore_algebra
-R17_ORE_INSTALL_EXIT_CODE=1
+Successfully installed Cython-3.2.9 asttokens-3.0.2 comm-0.2.3 contourpy-1.3.3 conway-polynomials-0.10 cycler-0.12.1 cysignals-1.12.6 debugpy-1.8.21 executing-2.2.1 fonttools-4.63.0 fpylll-0.6.4 gmpy2-2.4.0a1 ipykernel-7.3.0 ipython-9.16.1 ipython-pygments-lexers-1.1.1 ipywidgets-8.1.9 jedi-0.20.0 jupyter-client-8.9.1 jupyter-core-5.9.1 jupyter-threejs-sage-130 jupyterlab_widgets-3.0.17 kiwisolver-1.5.0 matplotlib-3.11.1 matplotlib-inline-0.2.2 memory_allocator-0.1.4 mpmath-1.3.0 nest-asyncio2-1.7.2 numpy-2.5.2 ore_algebra-0.5 packaging-26.3 parso-0.8.7 passagemath-categories-10.8.9 passagemath-combinat-10.8.9 passagemath-environment-10.8.9 passagemath-flint-10.8.9 passagemath-graphs-10.8.9 passagemath-gsl-10.8.9 passagemath-modules-10.8.9 passagemath-ntl-10.8.9 passagemath-objects-10.8.9 passagemath-pari-10.8.9 passagemath-plot-10.8.9 passagemath-repl-10.8.9 passagemath-singular-10.8.9 passagemath-symbolics-10.8.9 pexpect-4.9.0 pillow-12.3.0 platformdirs-4.11.3 prompt_toolkit-3.0.53 psutil-7.2.2 ptyprocess-0.7.0 pure-eval-0.2.3 pygments-2.21.0 pyparsing-3.3.2 python-dateutil-2.9.0.post0 pyzmq-27.1.0 scipy-1.18.0 six-1.17.0 stack_data-0.6.3 sympy-1.14.0 tornado-6.5.8 traitlets-5.16.1 typing_extensions-4.16.0 wcwidth-0.8.2 widgetsnbextension-4.0.16
+R17_ORE_SYMBOLIC_INSTALL_EXIT_CODE=0
 Traceback (most recent call last):
   File "/home/runner/work/NZ-SCCM-Theory-History/NZ-SCCM-Theory-History/semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R17_SPECTRAL_BRANCH_ORE_ANNIHILATOR_PROBE.py", line 12, in <module>
     from sage.all import QQ, PolynomialRing
-ModuleNotFoundError: No module named 'sage'
+ModuleNotFoundError: No module named 'sage.all'
 R17_BRANCH_ANNIHILATOR_EXIT_CODE=1
