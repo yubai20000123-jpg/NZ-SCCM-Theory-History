@@ -7,6 +7,7 @@ on:
       - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_TARGET_PERIOD_EXACT_AUDIT.py'
       - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_TOWER_AUDIT.py'
       - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER.py'
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE.py'
       - '.github/workflows/nzsccm_z1_r15_r13_exact_astar_audit.yml'
   workflow_dispatch:
 
@@ -16,7 +17,7 @@ permissions:
 jobs:
   exact-algebra-audits:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -33,17 +34,23 @@ jobs:
       - name: Compile explicit exact seven-radical formulas
         run: |
           set +e
-          python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER.py > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_REPORT.json 2> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_ERROR.txt
+          timeout 300 python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER.py > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_REPORT.json 2> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_ERROR.txt
           RC=$?
           echo "COMPILER_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_ERROR.txt
-          cat semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_ERROR.txt
+          exit 0
+      - name: Execute complete 112-equation circuit in recursive quadratic tower
+        run: |
+          set +e
+          timeout 600 python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE.py > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_REPORT.json 2> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_ERROR.txt
+          RC=$?
+          echo "TOWER_ENGINE_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_ERROR.txt
           exit 0
       - name: Commit exact audit reports
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_*_REPORT.json semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_SEVEN_RADICAL_FORMULA_COMPILER_ERROR.txt
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_*_REPORT.json semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_*_ERROR.txt
           if ! git diff --cached --quiet; then
-            git commit -m 'Record exact Z1 R15 R13 radical formula compilation'
+            git commit -m 'Record exact Z1 R15 R13 tower execution results'
             git push
           fi
