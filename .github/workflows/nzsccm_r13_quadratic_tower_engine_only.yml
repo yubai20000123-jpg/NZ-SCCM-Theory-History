@@ -1,0 +1,33 @@
+name: NZSCCM exact R13 quadratic tower engine only
+
+on:
+  push:
+    paths:
+      - '.github/workflows/nzsccm_r13_quadratic_tower_engine_only.yml'
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  tower:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --disable-pip-version-check 'sympy==1.14.0'
+      - name: Execute exact tower
+        run: |
+          set +e
+          timeout 600 python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE.py > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_REPORT.json 2> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_ERROR.txt
+          RC=$?
+          echo "TOWER_ENGINE_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_ERROR.txt
+          cat semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_ERROR.txt
+          exit 0
+      - name: Commit result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_*.json semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_QUADRATIC_TOWER_ENGINE_*.txt
+          if ! git diff --cached --quiet; then git commit -m 'Record exact R13 quadratic tower engine result'; git push; fi
