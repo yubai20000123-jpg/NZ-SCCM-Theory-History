@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
 **Updated:** 2026-08-19  
-**Status:** `R13_CASE21_Z6_UNBUCKLED_BRANCH_BIAS_DIAGNOSED = ACTIVE`
+**Status:** `R14_CASE21_Z6_FULL_FINITE_MATERIAL_AND_COUPLED_INVARIANCE = ACTIVE`
 
 ## Canonical current-state artifact
 
-`semantic_v2/00_index/20260819__NZSCCM__CURRENT_STATE_FULL_THREE_BRANCH_MATRIX_SPLINE_R13__INDEX.md`
+`semantic_v2/00_index/20260819__NZSCCM__CURRENT_STATE_R14_FULL_FINITE_MATERIAL_AND_COUPLED_INVARIANCE__INDEX.md`
 
 ## Mandatory governance
 
@@ -20,74 +20,91 @@ AUTO_GITHUB_CHECKPOINT_AFTER_MATERIAL_CHANGE = REQUIRED
 PROACTIVE_CHAT_LENGTH_CHECKPOINT = REQUIRED
 ```
 
-## Governing material-series correction
+## Material-series correction
 
-`semantic_v2/20_theory/20260819__NZSCCM__MATERIAL_SERIES_LAYER_REMOVAL_AND_MAINLINE_REBASE__R09.md`
+R09 removes the former true-infinite Chebyshev/material-prefix production layer.
 
-The former true-infinite Chebyshev/material-prefix production layer remains removed.
+R13 replaces the full three-branch R10 concrete tension execution by one exact global truncated-power matrix spline.
 
-## Complete replacement constructor
-
-`semantic_v2/20_theory/20260819__NZSCCM__CASE21__FULL_THREE_BRANCH_MATRIX_SPLINE_GKZ_CONSTRUCTOR__R13.md`
+R14 completes the same finite replacement for Z6 steel constituents:
 
 ```text
-GLOBAL_THREE_BRANCH_MATRIX_SPLINE = PASS
-FULL_THREE_BRANCH_SPARSE_CH_CIRCUIT = PASS
-FULL_THREE_BRANCH_MASTER_ASTAR = PASS
-MATERIAL_SERIES_REPLACEMENT = COMPLETE
+face radial cap:
+g(r) = 2 / [1 + sqrt(r) + |sqrt(r)-1|]
+
+web ideal EP:
+sigma = (|x+fy| - |x-fy|)/2
 ```
 
-## Latest execution diagnosis
+These are exact global identities of the frozen finite laws, not approximations and not spatial partitions.
 
-`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21_Z6__R13_UNBUCKLED_BRANCH_OVERPREDICTION_DIAGNOSIS.md`
+## Governing R14 execution
 
-The previous Case21 `q=0, alpha=0` calculation was a **uniform material/section stationary point**, not the plate Pu. Using `dP(D,0,0)/dD=0` suppresses the nonuniform buckling/postbuckling branch and is therefore rejected as a Pu definition.
+`semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21_Z6__R14_FULL_FINITE_MATERIAL_AND_COUPLED_INVARIANCE_EXECUTION.md`
+
+Because every new constituent map is pointwise identical to the old finite current map, the exact continuous generalized functions are identical:
+
+```text
+P_new      == P_old
+Rq_new     == Rq_old
+Ralpha_new == Ralpha_old
+Jlim_new   == Jlim_old
+```
+
+Therefore the complete coupled root set is invariant. The old material series is not used as a production backend.
+
+## Full coupled benchmark state under the finite constructors
 
 Case21:
 
 ```text
-P*_uniform = 538.273498279198 kN
-Pcr        = 407.136279059126 kN
-D(Pcr)     = 0.478843845165660
-D*_uniform = 1.083794870106547
-released coupled Pu = 366.767828685212 kN
-experiment          = 368.312749743569 kN
-uniform-vs-experiment = +46.1458 %
+D = 0.7887924801
+q = 0.0018083572562965242
+alpha = 0.002506908330448254
+Pc = 337.92303037 kN
+Ps = 28.844798318 kN
+Pu = 366.767828685 kN
+experiment = 368.312749744 kN
+error = -0.419459 %
 ```
 
-Z6 was then calculated by the same exact zero-discretization uniform-branch method while retaining the frozen Z6 concrete/face/web current laws:
+Z6:
 
 ```text
-web yield D       = 0.920936195308814
-face radial-cap D = 0.939442186454484
-uniform stationary D* = 0.999995310340506
-Pc,eff   = 43.6158967880144 MN
-Pfaces   = 36.1401413279875 MN
-Pweb     = 10.3944000000000 MN
-P*_uniform,Z6 = 90.1504381160020 MN
-Pcr,Z6        = 39.2880147150278 MN
-D(Pcr,Z6)     = 0.303002225781078
+D = 1.36180798
+q = 0.0264854039
+alpha = 1.8954326279510263
+Pc,eff = 22.8171044 MN
+Pface = 18.5564373 MN
+Pweb = 7.0325797 MN
+Pu = 48.4061215 MN
+Zhou error = -2.183706 %
+Winter error = -3.546283 %
 ```
 
-Post-solve comparison only:
+## Uniform-branch correction
+
+The former `q=0, alpha=0` stationary calculations are retained only as diagnostics and are explicitly rejected as Pu definitions:
 
 ```text
-vs released coupled Z6 Pu = +86.2377 %
-vs Zhou comparator         = +82.1708 %
-vs Winter comparator       = +79.6332 %
+Case21 uniform stationary = 538.273498279 kN
+Z6 uniform stationary     = 90.150438116 MN
 ```
 
-Therefore the severe overprediction is systematic for the **uniform unbuckled branch used as a surrogate for Pu**, especially when the instability scale lies far below the material section capacity. It does not establish an overprediction of the R13 finite material constructor itself.
+The high values arise because the uniform branch suppresses the nonuniform structural buckling/postbuckling mechanism. They are not evidence of bias introduced by the finite material constructors.
 
-## Correct structural limit identity
-
-The formal plate limit remains
+## Formal mainline
 
 ```text
-Rq(D,q,alpha) = 0
-Ralpha(D,q,alpha) = 0
-det(Jlim(D,q,alpha)) = 0
-Pu = P(Du,qu,alphau)
+raw specimen
+-> controlling complete representative halfwave
+-> continuous Nguyen/von-Karman second-order kinematics
+-> finite global current material constructors
+-> exact continuous P,Rq,Ralpha + same-source derivatives
+-> direct solve Rq=0, Ralpha=0, det(Jlim)=0
+-> Pu
 ```
 
-The next execution must use the full nonuniform continuous `(D,q,alpha)` system with the same R13 finite material constructor. No new material gate is created and no discrete fallback is allowed.
+No material degree N, finite-prefix convergence gate, spatial discretization, numerical quadrature, material point, or discrete oracle is part of the active theory.
+
+No new theory gate is introduced by R14.
