@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT.py'
+      - 'semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_TARGET_PERIOD_EXACT_AUDIT.py'
       - '.github/workflows/nzsccm_z1_r15_r13_exact_astar_audit.yml'
   workflow_dispatch:
 
@@ -26,12 +27,19 @@ jobs:
           python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT.py \
             > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT_REPORT.json
           cat semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT_REPORT.json
-      - name: Commit exact audit report
+      - name: Reconstruct exact target-period residue data
+        run: |
+          python semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_TARGET_PERIOD_EXACT_AUDIT.py \
+            > semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_TARGET_PERIOD_EXACT_AUDIT_REPORT.json
+          cat semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_TARGET_PERIOD_EXACT_AUDIT_REPORT.json
+      - name: Commit exact audit reports
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT_REPORT.json
+          git add \
+            semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_ASTAR_EXACT_AUDIT_REPORT.json \
+            semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R15_R13_TARGET_PERIOD_EXACT_AUDIT_REPORT.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record exact Z1 R15 R13 Astar audit result'
+            git commit -m 'Record exact Z1 R15 R13 target-period audit results'
             git push
           fi
