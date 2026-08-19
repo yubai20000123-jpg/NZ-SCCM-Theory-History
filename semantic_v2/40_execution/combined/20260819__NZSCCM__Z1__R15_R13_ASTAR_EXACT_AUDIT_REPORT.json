@@ -1,0 +1,47 @@
+{
+  "identity": "NZSCCM_Z1_R15_R13_EXACT_ASTAR_AUDIT",
+  "governance": {
+    "spatial_sampling": 0,
+    "spatial_quadrature": 0,
+    "material_points": 0,
+    "finite_prefix": 0,
+    "numerical_ode_stepping": 0,
+    "arithmetic": "exact integer/rational/symbolic only"
+  },
+  "manifest": "semantic_v2/40_execution/combined/20260819__NZSCCM__CASE21__R13__FULL_THREE_BRANCH_SPLINE_GKZ_COLUMN_MANIFEST.csv",
+  "counts": {
+    "equations": 112,
+    "variables": 115,
+    "cayley_rows": 227,
+    "cayley_columns": 403,
+    "r13_added_columns": 142,
+    "r13_equation_range": [
+      49,
+      84
+    ]
+  },
+  "exact_linear_algebra": {
+    "rank_Q": 227,
+    "nullity_Q": 176,
+    "full_row_rank": true,
+    "canonical_support_sha256": "ca2a3a12f604d8cde5f9837b0600c8e59a64047df97d75006f676e6c86e3f2f9"
+  },
+  "z1_concrete_specialization": {
+    "a_phys_mm": 12000,
+    "b_mm": 6000,
+    "tc_mm": 92,
+    "k": 1,
+    "nu_R10": "9/50",
+    "q0": "1/250",
+    "M_of_q": "5000000000000000000*pi**2*(q**2/2 + q/250)/9356245197290339",
+    "B_of_q": "115000000000000000*pi**2*q/28068735591871017",
+    "generic_identically_zero_manifest_columns": [],
+    "generic_support_preserved": true,
+    "coefficient_parse_failures": []
+  },
+  "status": {
+    "R13_ASTAR_RECONSTRUCTION": "PASS",
+    "Z1_CONCRETE_SHARED_SUPPORT": "PASS",
+    "FULL_PHYSICAL_RELATIVE_GKZ_EVALUATOR": "NOT_YET_INSTANTIATED"
+  }
+}
