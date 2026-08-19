@@ -6,43 +6,48 @@ This namespace is the **content-first, non-destructive semantic reconstruction**
 
 Use first:
 
-`20260819__NZSCCM__CURRENT_STATE_R14_FULL_FINITE_MATERIAL_AND_COUPLED_INVARIANCE__INDEX.md`
+`20260819__NZSCCM__CURRENT_STATE_R15_FULL_FROM_ZERO_CALCULATION_LEDGER__INDEX.md`
+
+## Canonical single-file ledger
+
+`../20_theory/20260819__NZSCCM__R15_FULL_FROM_ZERO_CALCULATION_LEDGER_CASE21_Z6.md`
+
+R15 is the current complete from-zero calculation specification for Case21 and Z6. It consolidates:
+
+```text
+raw specimen inputs
+-> Dx,Dy,H
+-> physical controlling halfwave
+-> continuous Nguyen/von-Karman kinematics
+-> finite global current material operators
+-> continuous P,Rq,Ralpha + same-source derivatives
+-> direct limit system
+-> Pu
+```
 
 ## Current main correction
 
 ```text
-remove the former true-infinite Chebyshev/material-prefix production layer
-restore the exact finite current material operators as the formal objects
-replace complete three-branch R10 tension by one exact global matrix spline
-replace Z6 face radial-cap and web ideal-EP series representations by exact global algebraic forms
-keep Nguyen second-order kinematics and the direct P/R/J limit system unchanged
+former true-infinite Chebyshev/material-prefix production layer = removed
+complete three-branch R10 tension = exact finite global matrix spline
+Z6 face radial cap = exact finite global algebraic function
+Z6 web ideal EP = exact finite global clip
+Nguyen second-order kinematics and direct P/R/J limit system = unchanged
+uniform q=alpha=0 stationary branch = rejected as Pu
 ```
 
-## Current material constructors
+## Physical halfwave correction
+
+R15 explicitly restores the physical geometry distinction for Case21:
 
 ```text
-Case21 concrete          -> R13 global finite matrix spline
-Case21 reinforcement     -> existing finite closed form
-Z6 concrete              -> R13 global finite matrix spline
-Z6 face steel radial cap -> R14 g(r)=2/[1+sqrt(r)+|sqrt(r)-1|]
-Z6 web/PBL ideal EP      -> R14 sigma=(|x+fy|-|x-fy|)/2
+a_phys = 2440 mm
+b = 1220 mm
+m_phys = 2
+ell = 1220 mm
 ```
 
-All are exact identities of the frozen finite current laws.
-
-## Current main chain
-
-```text
-raw specimen
--> controlling complete representative halfwave
--> continuous Nguyen/von-Karman second-order kinematics
--> finite global current material constructors
--> exact continuous P,Rq,Ralpha + same-source derivatives
--> direct solve Rq=0, Ralpha=0, det(J_lim)=0
--> Pu
-```
-
-No production material degree N or finite-prefix convergence gate exists.
+Historical files that write `a=b=ell=1220 mm, m*=1` are already in representative-halfwave coordinates.
 
 ## Mandatory governance
 
@@ -65,59 +70,48 @@ R09 — material-series removal:
 R13 — full three-branch R10 matrix-spline constructor:
 `../20_theory/20260819__NZSCCM__CASE21__FULL_THREE_BRANCH_MATRIX_SPLINE_GKZ_CONSTRUCTOR__R13.md`
 
-R14 — Case21 + Z6 full finite material constructors and exact coupled-solution invariance:
+R14 — finite material constructors and coupled-solution invariance:
 `../40_execution/combined/20260819__NZSCCM__CASE21_Z6__R14_FULL_FINITE_MATERIAL_AND_COUPLED_INVARIANCE_EXECUTION.md`
+
+R15 — canonical single-file from-zero calculation ledger:
+`../20_theory/20260819__NZSCCM__R15_FULL_FROM_ZERO_CALCULATION_LEDGER_CASE21_Z6.md`
 
 R10-R12 remain constructor provenance only.
 
-## Exact coupled invariance result
+## R15 evidence identity
 
-Because the new finite constructors are pointwise identical to the frozen finite current laws,
+R15 is complete as a **calculation specification**. Its sealed regression-target section contains the released Case21/Z6 roots and loads only for post-execution comparison.
 
-```text
-P_new      == P_old
-Rq_new     == Rq_old
-Ralpha_new == Ralpha_old
-Jlim_new   == Jlim_old
-```
+Blind re-execution must provide only Sections 0–10 to the independent executor and must hide the sealed targets until after the result is frozen.
 
-as exact continuous functionals. Hence the complete coupled root sets are unchanged without using the old material series as a production backend.
-
-Current benchmark values carried by this exact identity:
-
-```text
-Case21 Pu = 366.767828685 kN, error vs experiment = -0.419459 %
-Z6 Pu     = 48.4061215 MN, error vs Zhou = -2.183706 %, vs Winter = -3.546283 %
-```
-
-The earlier uniform `q=alpha=0` stationary values are diagnostics only and are not Pu definitions.
+R15 does not claim that this chat has already independently recomputed the full nonuniform roots with a new CAS backend.
 
 ## Execution discipline
 
-Do not deadlock on one exact representation and do not turn representation-specific inconvenience into a theory gate. Switch among mathematically equivalent mature exact representations when needed. A failed representation does not authorize discretization.
+Do not deadlock on one exact representation and do not create representation-specific theory gates. Switch among mature mathematically equivalent exact representations when needed. A failed representation never authorizes spatial or material discretization.
 
 ## Current read order
 
 1. this README;
-2. `20260819__NZSCCM__CURRENT_STATE_R14_FULL_FINITE_MATERIAL_AND_COUPLED_INVARIANCE__INDEX.md`;
-3. mandatory governance;
-4. R09;
-5. R13;
-6. R14;
-7. R10-R12 only for constructor provenance;
-8. 20260818 locked handoff + R01 errata for unchanged surrounding theory;
-9. `../../current/CURRENT_STATE.md`.
+2. `20260819__NZSCCM__CURRENT_STATE_R15_FULL_FROM_ZERO_CALCULATION_LEDGER__INDEX.md`;
+3. R15 canonical ledger;
+4. mandatory governance;
+5. R09;
+6. R13;
+7. R14;
+8. R10-R12 only for constructor provenance;
+9. 20260818 locked handoff + errata for historical provenance;
+10. `../../current/CURRENT_STATE.md`.
 
 ## Current status
 
 ```text
+R15_FULL_FROM_ZERO_CALCULATION_LEDGER = ACTIVE
 MATERIAL_TRUE_INFINITE_SERIES_LAYER = REMOVED
 CASE21_MATERIAL_SERIES_REPLACEMENT = COMPLETE
 Z6_MATERIAL_SERIES_REPLACEMENT = COMPLETE
-FULL_COUPLED_FUNCTIONAL_IDENTITY = EXACT
-CASE21_COUPLED_ROOT_INVARIANCE = PASS
-Z6_COUPLED_ROOT_INVARIANCE = PASS
 SPATIAL_DISCRETIZATION = NONE
 FINITE_PREFIX = NONE
 DISCRETE_ORACLE = NONE
+NEXT = INDEPENDENT BLIND FULL NONUNIFORM RE-EXECUTION FROM R15 SECTIONS 0-10
 ```
