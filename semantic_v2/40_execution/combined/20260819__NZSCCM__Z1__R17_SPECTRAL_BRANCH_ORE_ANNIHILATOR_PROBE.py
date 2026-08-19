@@ -97,3 +97,4 @@ print('ANN_DEGREE=',L.degree())
 print('ANNIHILATOR=',L)
 print('TOTAL_SECONDS=',time()-T0)
 print('NZSCCM_R17_SPECTRAL_BRANCH_ANNIHILATOR_PASS')
+# explicit retrigger after exact-decimal parser correction: 2026-08-19
