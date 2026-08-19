@@ -62,7 +62,7 @@ jobs:
           echo "R18_ACTUAL_MASK_OAKU_EXIT_CODE=$RC" >> semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
           tail -160 semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
           exit 0
-      - name: Commit exact input and result
+      - name: Commit exact input and result safely
         if: always()
         run: |
           git config user.name 'github-actions[bot]'
@@ -70,5 +70,6 @@ jobs:
           git add semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.rr semantic_v2/40_execution/combined/20260819__NZSCCM__Z1__R18_ACTUAL_MASK_OAKU.txt
           if ! git diff --cached --quiet; then
             git commit -m 'Record actual compactified R17 primitive mask Oaku result'
-            git push
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin HEAD:"$GITHUB_REF_NAME"
           fi
