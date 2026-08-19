@@ -1,0 +1,60 @@
+name: NZSCCM exact SM1 geometry residue integration
+
+on:
+  push:
+    paths:
+      - '.github/workflows/nzsccm_openxm_sm1_geometry_residue_exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  exact-geometry-residue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install official OpenXM backend
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget ca-certificates
+          sudo wget -q -O /etc/apt/sources.list.d/fe-deb2.list https://www.math.kobe-u.ac.jp/deb2/fe-deb2.list
+          sudo wget -q -O /usr/share/keyrings/fe-deb2-archive-keyring.gpg https://www.math.kobe-u.ac.jp/deb2/fe-deb2-archive-keyring.gpg
+          sudo apt-get update
+          touch /tmp/i-agree-with-asir-license
+          sudo -E apt-get install -y openxm
+          rm -f /tmp/i-agree-with-asir-license
+      - name: Exact D-module residue elimination for omega geometry radical
+        run: |
+          cat > /tmp/nzsccm_geometry_residue.rr <<'EOF'
+          load("sm1.rr")$
+          print("NZSCCM_GEOMETRY_RESIDUE_START")$
+          F=w^2-r*(1-r)*v*(1-v)$
+          print(F)$
+          G=sm1.genericAnn([F,[ss,w,r,v]])$
+          print("GENERIC_ANN_F_POW_S")$
+          print(G)$
+          Gm1=map(subst,G,ss,-1)$
+          print("ANN_1_OVER_F")$
+          print(Gm1)$
+          J=sm1.integration(Gm1,[w,r,v],[w])$
+          print("INTEGRATE_OUT_W")$
+          print(J)$
+          print("EXPECTED_RESIDUE_BRANCH_OPERATORS")$
+          print([2*r*(1-r)*dr+(1-2*r),2*v*(1-v)*dv+(1-2*v)])$
+          print("NZSCCM_GEOMETRY_RESIDUE_END")$
+          end$
+          EOF
+          asir -quiet -f /tmp/nzsccm_geometry_residue.rr 2>&1 | tee semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt
+      - name: Commit exact report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add semantic_v2/40_execution/combined/20260819__NZSCCM__OPENXM_SM1_GEOMETRY_RESIDUE_EXACT.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record exact SM1 geometry residue integration'
+            git push
+          fi
