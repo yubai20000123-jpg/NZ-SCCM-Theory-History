@@ -1,0 +1,45 @@
+{
+  "schema": "NZSCCM_NC_M6_FINITE_EXACT_PERIOD_THREE_FUNCTIONS_V7",
+  "date": "2026-08-21T01:33+08:00",
+  "formal_spatial_sampling": 0,
+  "formal_spatial_quadrature": 0,
+  "formal_spatial_subdomains": 1,
+  "generalized_variables": [
+    "D",
+    "q",
+    "alpha"
+  ],
+  "branch_count": 21,
+  "branch_rule": {
+    "CC": 1,
+    "TC": "5 tension segments",
+    "TT": "5*6/2 = 15 ordered segment pairs"
+  },
+  "period_compile_rule": [
+    "branch kernel",
+    "Euler rationalization in thickness",
+    "exact rational primitive (Hermite/RootSum)",
+    "algebraic-front endpoint difference",
+    "surface compactification xi=r/(1-r), eta=s/(1-s)",
+    "finite polynomial factorization",
+    "relative/incomplete Aomoto-Gelfand/GKZ descriptor"
+  ],
+  "final_functions": {
+    "P": "C0_P * Sum[C_Pnu(D,q,alpha) * d_lambda^m A_Pnu(D,q,alpha), nu in I_P]",
+    "Rq": "C0_q * Sum[C_qnu(D,q,alpha) * d_lambda^m A_qnu(D,q,alpha), nu in I_q]",
+    "Ralpha": "C0_alpha * Sum[C_alphanu(D,q,alpha) * d_lambda^m A_alphanu(D,q,alpha), nu in I_alpha]"
+  },
+  "prefactors": {
+    "P": "-fc*b*tr/pi^2",
+    "Rq": "fc*eps0*b*ell*tr/pi^2",
+    "Ralpha": "fc*eps0*b*ell*tr/pi^2"
+  },
+  "coefficient_policy": "parameterized generation only; no Case-specific or material-instance numbers hard-coded in theory compiler",
+  "status": {
+    "thickness_exact": "PASS",
+    "surface_exact_period_compiled": "PASS",
+    "full_exact_integration_representation": "PASS",
+    "limit_derivatives": "NOT_YET_APPLIED",
+    "case21": "NOT_RUN"
+  }
+}
