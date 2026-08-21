@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-21 23:35 +08:00  
+**Updated:** 2026-08-21 23:50 +08:00  
 **Status:** `MARGUERRE_AIRY_EXPLICIT + UNIFIED_MULTIAXIAL_CAPACITY_GATE = CURRENT ACTIVE LINE`
 
 ## 0. Current governing architecture
@@ -21,7 +21,7 @@ Canonical structural theory:
 
 `semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
 
-The mandatory capacity interface is now:
+Mandatory capacity interface:
 
 `semantic_v2/20_theory/20260821_2315__NZSCCM__UNIFIED_MULTIAXIAL_CAPACITY_GATE_V1.md`
 
@@ -56,9 +56,9 @@ STRUCTURE_SPECIFIC_CAPACITY_MULTIPLIER = PROHIBITED
 
 ### NC / RC
 
-Uses the ordinary-concrete Nguyen/Foster/Kupfer material identity plus explicit reinforcement phases. CC, TC/CT and TT use the NC source family. Swartz-specific correction coefficients are prohibited.
+Uses the frozen ordinary-concrete current material identity plus explicit reinforcement phases. Current NC low-parameter targets retain CC enhancement, TC/CT weakening and TT interaction. Swartz-specific correction coefficients are prohibited.
 
-Swartz specimen-specific `ft` remains source-open; therefore the previously demonstrated TC selectivity for Case1/2 is physical-direction evidence, not a frozen exact corrected Pu.
+Swartz specimen-specific `ft` remains source-open; therefore any exact specimen TC prediction whose numerical value depends on that missing property must be labelled accordingly. The project NC baseline `ft=0.10fc` may be used only with its explicit project-material identity, never inferred from panel failure load.
 
 ### UHPC
 
@@ -87,7 +87,7 @@ not `p_table/2`.
 
 Experimental `Pcr` is not used to modify stiffness or the current structural backbone. Validation priority remains trusted repeat/near-repeat design points rather than direct 24-point fitting:
 
-- Case1/2: repeat well experimentally; current pre-TC theory high by about 13%; NC-TC gate has the correct selective downward direction but exact specimen `ft` is not source-closed;
+- Case1/2: repeat well experimentally; current pre-TC theory high by about 13%; NC-TC gate has the correct selective downward direction;
 - Case9/10: same structural design, theory low; weak CC enhancement cannot fully explain Case10;
 - Case19/20: strongest repeat evidence, theory low about 10% under the current base-strength identity;
 - Case21/22: near repeat and close to current theory.
@@ -99,11 +99,15 @@ Latest diagnostics:
 - `current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_CORRECTION_PAIR_MATRIX_TC_CAPACITY_AUDIT_20260821.md`
 - `current/diagnostics/NZ_SCCM_SWARTZ_PRIMARY_SOURCE_CASTING_CURING_085_MATERIAL_IDENTITY_AUDIT_20260821.md`
 
-## 3. Steel-shell concrete Z6 — current explicit execution
+## 3. Steel-shell concrete Z6 — final UMCG result resolved
 
-Current execution:
+PRE-GATE audit:
 
 `semantic_v2/40_execution/20260821_2320__NZSCCM__Z6_CURRENT_EXPLICIT_PRE_GATE_AND_UNIFIED_GATE_AUDIT.md`
+
+Final UMCG execution:
+
+`semantic_v2/40_execution/20260821_2348__NZSCCM__Z6_FULL_UMCG_RECALCULATION_AND_FORMAL_ENDPOINT_REDUCTION.md`
 
 Source-closed Z6 whole wall:
 
@@ -141,7 +145,7 @@ G=7.4692093\times10^6\rm\ N/mm,
 J=1.2419245\times10^7\rm\ N.
 \]
 
-The existing uniaxial Z-section finite algebraic capacity gives a PRE-GATE Regime-B interior root:
+The old uniaxial Z-section capacity produced the PRE-GATE interior root
 
 \[
 q_u^{pre}=0.01380741294,
@@ -150,30 +154,102 @@ s_u^{pre}=0.298387166,
 \]
 
 \[
-\boxed{P_u^{pre}=56.37942109\rm\ MN}.
+P_u^{pre}=56.37942109\rm\ MN,
 \]
 
-Only after solution, historical comparators show this PRE-GATE value is about +13.93% versus Zhou and +12.34% versus Winter.
+but its longitudinal plastic stress allocation failed UMCG because it could not simultaneously satisfy the large Airy transverse membrane demand.
 
-At that root Airy transverse demand is
+The phase-rebalanced NC+steel UMCG calculation now resolves the first admissible capacity state at
 
 \[
-N_x^d=+2070.408\rm\ N/mm.
+\boxed{s_u=0},
 \]
 
-The unchanged Regime-B fully plastic longitudinal stress pattern fails a necessary UMCG transverse-admissibility screen: with the current tensile-face steel strip plus the project ordinary-concrete `0.10fc` tension diagnostic, available transverse tension under the unchanged pattern is only about `760.47 N/mm`, demand/capacity ratio about `2.72`.
+\[
+\boxed{q_u^{UMCG}=0.01236088015386989},
+\]
 
-Decision:
+\[
+\boxed{P_u^{UMCG}=51.34502178921372\rm\ MN}.
+\]
+
+The UMCG therefore reduces the PRE-GATE capacity by
+
+\[
+\boxed{8.92950\%}.
+\]
+
+At the governing endpoint, `m_y=0`, section curvature recovery is zero and the final state is uniform through thickness by phase. Hence the controlling root admits a formal no-thickness-quadrature reduction.
+
+NC equivalent principal coordinates:
+
+\[
+\lambda_x=1.4043063311724063,
+\qquad
+\lambda_y=-10/7.
+\]
+
+The frozen NC-M6 T5 tensile target has \(\tau=0.3\), so
+
+\[
+(-\lambda_y)(1-\tau)=1,
+\]
+
+and the compressed NC principal direction reaches the Saenz peak:
+
+\[
+\sigma_y^c=-30.4\rm\ MPa,
+\qquad
+\sigma_x^c=+0.912\rm\ MPa.
+\]
+
+External faces are on the plane-stress von-Mises radial cap:
+
+\[
+\sigma_x^s=+202.6895\rm\ MPa,
+\qquad
+\sigma_y^s=-207.2208\rm\ MPa,
+\]
+
+and the longitudinal web is at y-compression yield \(-355\rm\ MPa\).
+
+The final phase sums satisfy
+
+\[
+N_x=1730.5550\rm\ N/mm,
+\qquad
+N_y=-6158.5905\rm\ N/mm,
+\qquad
+M_y=0,
+\]
+
+which equal the structural demands at the same q.
+
+Only after fixing this root, comparison gives:
+
+\[
+\boxed{+3.75505\%\ \text{vs Zhou}},
+\]
+
+\[
+\boxed{+2.30975\%\ \text{vs Winter}}.
+\]
+
+No parameter is adjusted to remove the residual.
 
 ```text
-Z6_PRE_GATE_ROOT = SOLVED
-Z6_PRE_GATE_PU = 56.37942109 MN
-Z6_UMCG_BASELINE_STRESS_PATTERN = FAIL
-Z6_FINAL_UNIFIED_PU = OPEN
+Z6_FINAL_UMCG_ROOT = RESOLVED
+Z6_CONTROL_LOCATION = s=0
+Z6_FINAL_UMCG_PU = 51.34502178921372 MN
+Z6_GATE_EFFECT_FROM_PRE_GATE = -8.92950 percent
+Z6_FINAL_VS_ZHOU = +3.75505 percent
+Z6_FINAL_VS_WINTER = +2.30975 percent
+Z6_FORMAL_ENDPOINT_THICKNESS_QUADRATURE = 0
 Z6_STRUCTURAL_BACKBONE_MODIFICATION = NO
+COMPARATOR_IN_ROOT_SELECTION = 0
 ```
 
-Interpretation: Z6 demonstrates an applicability boundary of the simple uniaxial N-M section layer, not of the Marguerre–Airy structural backbone itself. Final Z6 requires a phase-rebalanced NC+steel UMCG section solution.
+Interpretation: Z6 validates the purpose of UMCG. The Marguerre–Airy structural backbone need not be altered; the previous error came largely from allowing a uniaxial section allocation to ignore transverse Airy demand. The common multiaxial gate moves the prediction in the correct direction without structural or material backfit.
 
 ## 4. Steel-shell UHPC — Codex integration
 
@@ -227,7 +303,7 @@ BH_OLD_32MM_PU_TABLE = HISTORICAL_GEOMETRY_MISMATCHED_COMPARATOR
 BH_CURRENT_QUANTITATIVE_VALIDATION_BASELINE = OPEN
 ```
 
-The Codex report did **not** provide a new 37-mm BH Pu table; no such values are invented here.
+The Codex report did not provide a new 37-mm BH Pu table; no such values are invented here.
 
 ## 6. Governing validation principle
 
@@ -251,7 +327,9 @@ RESIDUAL_MATERIAL_SPECIMEN_SCATTER = ACCEPTABLE_IF_EXPLICITLY_IDENTIFIED
 
 ## 7. Recommended next execution
 
-1. solve the Z6 phase-rebalanced NC+steel UMCG section to obtain the first **final unified SC Pu** without changing `Ppb`;
+The Z6 gate is now resolved. Continue the common architecture in this order:
+
+1. run the Swartz24 UMCG batch with the corrected reinforcement interpretation; preserve explicit status wherever specimen-specific tensile strength is not source-closed;
 2. formally freeze the BH net web/PBL geometry (37-mm candidate strongly indicated), then recompute BH structural coefficients/pre-gate roots;
 3. pass T120/T360 and geometry-corrected BH cases through the same UMCG, keeping UHPC TC source status explicit;
-4. use Abaqus/test values only after theoretical roots are fixed.
+4. compare RC, SC and SUHPC only after each theoretical root is fixed.
