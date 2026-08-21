@@ -1,9 +1,9 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 00:18 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT + UMCG_ARCHITECTURE_ACTIVE / FINAL_STRICT_POST_ENVELOPE_CLOSURE_OPEN`
+**Updated:** 2026-08-22 01:10 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT + SINGLE_OPERATOR_UMCG_ACTIVE / LITERAL_NGUYEN_HISTORY_OVERLAY_REJECTED`
 
-## 0. Governing architecture
+## 0. Governing structure
 
 The structural backbone remains frozen:
 
@@ -21,211 +21,219 @@ Canonical structural theory:
 
 `semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
 
-Unified material-capacity architecture:
+Common UMCG architecture:
 
 `semantic_v2/20_theory/20260821_2315__NZSCCM__UNIFIED_MULTIAXIAL_CAPACITY_GATE_V1.md`
 
-Mandatory common interface:
+After the 2026-08-22 source-continuation audit, the production interpretation is:
 
 \[
 \boxed{
 \text{structural resultants}
 \to
-\text{phase stress recovery}
+\text{phase-compatible stress recovery}
 \to
-\text{current material map}
+\mathcal M_r(\varepsilon)
 \to
-\text{hard material surfaces / state transition}
+\text{operator-internal branch/domain admissibility}
 \to
-\text{admissible section continuation}
+\text{section equilibrium/fold}
 }
 \]
+
+Each material phase gets one production current operator. A separate historical source state machine is not overlaid at runtime on top of that operator.
 
 ```text
 STRUCTURAL_BACKBONE = FROZEN
 UMCG_ARCHITECTURE = RETAINED
+UMCG_INTERPRETATION = SINGLE_PRODUCTION_OPERATOR_PER_PHASE
 UMCG_DIMENSION = PLANE_STRESS_2D
 SIGMA_Z_RECOVERY = NOT_ACTIVATED
 RITZ_ORDER = NONE
 LOAD_PATH_TRACKING = NOT_REQUIRED AT STRUCTURAL LEVEL
 FORMAL_SPATIAL_QUADRATURE = 0
+FORMAL_MATERIAL_POINTS = 0
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
 STRUCTURE_SPECIFIC_CAPACITY_MULTIPLIER = PROHIBITED
 ```
 
-## 1. Strict-hard-surface correction
+## 1. Nguyen/Foster source-envelope role corrected
 
-Latest audit:
+Preceding literal hard-envelope audit:
 
 `semantic_v2/40_execution/20260822_0015__NZSCCM__STRICT_HARD_ADMISSIBILITY_CASE1_CASE2_Z6_AUDIT.md`
 
-The ordinary-concrete Nguyen/Foster/Kupfer hard envelopes are now explicitly distinguished from the smooth NC-M6 current map.
+Latest post-envelope execution:
 
-A literal execution of
+`semantic_v2/40_execution/20260822_0105__NZSCCM__NGUYEN_POST_ENVELOPE_CONTINUATION_CASE1_CASE2_Z6_AUDIT.md`
 
-\[
-\sigma=\mathcal M(\varepsilon),
-\qquad
-F_{CC},F_{TC},F_{TT}\le0,
-\qquad
-F_{VM}^{steel}\le0
-\]
-
-without adding any new projection/capping law was performed for Swartz Case1/2 and Z6.
-
-Critical finding:
+The latest audit explicitly tested the proposed continuation:
 
 \[
-\boxed{\text{first hard-envelope contact is a material state-transition event, not automatically global collapse.}}
+\text{NC-M6 pre-event}
+\to
+\text{Nguyen envelope contact}
+\to
+\text{Nguyen TC/TT/CC/TCX point-history continuation}.
 \]
 
-Nguyen's source model permits cracked/crushed continuation after envelope contact. Therefore neither of the following is yet the final strict production theory:
+Result:
 
-1. smooth NC-M6 current-map section fold with no hard transition surface;
-2. member termination at the first hard-envelope touch.
+```text
+POST_ENVELOPE_SOURCE_CONTINUATION_AUDIT = EXECUTED
+LITERAL_NGUYEN_POINT_HISTORY_OVERLAY = REJECTED_FOR_FORMAL_PRODUCTION
+```
 
-The final strict UMCG requires a source-grounded admissible post-envelope continuation.
+The reason is theoretical, not comparator-driven:
 
-## 2. Swartz Case1/2 status correction
+1. Nguyen TC/TT/CC/TCX states carry crack/crush event histories such as `eps_cr`, `f_cr`, peak stress and peak strain;
+2. postbuckled through-thickness sections generate moving cracked/crushed fronts with spatially varying history fields;
+3. the recovered NSC state ledger already marks the general history states as not admissible as a full formal zero-quadrature state;
+4. discrete material-point continuation turns a zero-measure first crack into a finite resultant jump and gives resolution-sensitive audit localizers;
+5. Nguyen's later approximate initial-imperfection route is explicitly limited against out-of-plane bending cracks, whereas the present ultimate section can develop them.
 
-Mandatory source mapping remains
+Therefore the modified Kupfer/Foster envelope is retained as:
+
+```text
+SOURCE_STRENGTH_TARGET
+MATERIAL_QUALIFICATION_ANCHOR
+STATE_MECHANISM_REFERENCE
+```
+
+and is **not** an additional terminal runtime cap on top of NC-M6.
+
+This also prevents an invalid transfer to UHPC: an initial TT/TC envelope must not globally clip fibre-bridged post-cracking hardening.
+
+## 2. Ordinary concrete production identity
+
+NC-M6 remains the current ordinary-concrete memoryless production current operator. It already contains bounded TC/TT/CC mechanisms and post-cracking/post-peak continuation in one current-state map.
+
+Its source relationship to Nguyen remains explicit:
+
+- Nguyen/Saenz uniaxial compression anchors;
+- Foster-style tension stiffening anchors;
+- Nguyen/Kupfer CC/TC/TT strength/mechanism targets;
+- project memoryless regularization removes the literal material history field.
+
+This approximation is a declared project modeling choice and must not be hidden.
+
+Swartz specimen-specific tensile strength remains source-open. The project-wide `ft=0.10fc` ordinary-concrete value is a common material identity, not a specimen-fitted input.
+
+## 3. Swartz Case1/2 identities
+
+Correct source reinforcement interpretation remains
 
 \[
 \rho_x=\rho_y=p_{table}.
 \]
 
-The prior numbers must be separated by identity:
+The distinct numerical objects remain:
 
-|Object|Case1 kN|Case2 kN|Status|
+|Object|Case1 kN|Case2 kN|Identity|
 |---|---:|---:|---|
 |corrected-reinforcement uniaxial N-M candidate|567.712|561.638|PRE-GATE|
-|earlier separate TC-contact diagnostic|495.989|501.025|MECHANISM SENSITIVITY ONLY|
-|smooth current-map UMCG fold|604.450|597.732|AUDIT-ONLY, NON-STRICT|
-|literal current-map + hard-envelope first event|588.598|584.545|STRICT FIRST EVENT, NOT FINAL ULTIMATE|
+|old separate TC contact|495.989|501.025|MECHANISM SENSITIVITY ONLY|
+|Nguyen/Foster first-contact overlay|588.598|584.545|SOURCE-ENVELOPE EVENT DIAGNOSTIC|
+|NC-M6 phase-compatible UMCG fold|604.450|597.732|CURRENT COMMON-MATERIAL UMCG DIAGNOSTIC|
 
-The consistent literal strict events occur at \(s=1\):
+The attempted literal Nguyen post-envelope point-history continuation does not define a resolution-independent formal Pu. Audit localizers remained only a few kN above the first-contact events and depended on thickness-state resolution.
 
-\[
-P_{hard,1}=588.598156\rm\ kN,
-\]
-
-\[
-P_{hard,2}=584.544674\rm\ kN.
-\]
-
-Post-solution errors are approximately
-
-\[
-+20.075\%,\qquad +15.374\%.
-\]
-
-Therefore the earlier statement that the unified strict gate naturally reduces Case1/2 to about the experiment is **superseded**. The `495.989/501.025 kN` values came from a different uniaxial-state TC diagnostic and are not the unified strict solution.
-
-Swartz specimen-specific \(f_t\) remains source-open. No specimen-specific correction factor is authorized.
-
-## 3. Z6 status correction
-
-PRE-GATE uniaxial N-M candidate:
-
-\[
-P_u^{pre}=56.37942109\rm\ MN.
-\]
-
-Smooth current-map phase-rebalanced UMCG fold previously reported:
-
-\[
-P^{map-fold}=51.34502179\rm\ MN.
-\]
-
-That value is now downgraded from `FINAL` to
+Therefore:
 
 ```text
-Z6_51P345_MN = CURRENT_MAP_UMCG_FOLD_CANDIDATE
+CASE1_2_495_501_AS_UNIFIED_STRICT = SUPERSEDED
+CASE1_2_588_584_AS_MEMBER_ULTIMATE = NO
+CASE1_2_LITERAL_NGUYEN_HISTORY_PU = NOT DEFINED
+CASE1_2_NC_M6_UMCG_BIAS = EXPLICITLY RETAINED
+SWARTZ_SPECIFIC_K = PROHIBITED
 ```
 
-because the Nguyen hard concrete surface was not simultaneously retained as a transition constraint.
+The Case1/2 repeat pair remains a real high-bias design point under the common NC-M6 material identity. That residual is not removed by a panel-specific correction.
 
-The literal hard-envelope first-event search over the control coordinate gives
+## 4. Swartz24 common-material diagnostic
+
+Latest common-material batch:
+
+`current/diagnostics/NZ_SCCM_SWARTZ24_UMCG_BATCH_AUDIT_LOCALIZER_20260821.md`
+
+With corrected reinforcement mapping and common NC-M6 material identity:
 
 \[
-\boxed{s_{hard}\approx0.452284},
+\text{mean signed error}\approx+0.759\%,
 \]
 
 \[
-\boxed{q_{hard}=0.0111245993274},
+\text{MAE}\approx11.153\%,\qquad \text{RMSE}\approx13.583\%.
+\]
+
+The near-zero global signed mean is not treated as calibration success because group/pair biases remain. Trusted repeat-pair interpretation remains primary.
+
+## 5. Steel-shell concrete Z6
+
+Frozen explicit structural coefficients remain:
+
+\[
+P_{cr}=39.2880147150\ \mathrm{MN},
 \]
 
 \[
-\boxed{P_{hard}=47.20955472\rm\ MN}.
+C=86071.5974582\ \mathrm{MN},
+\quad
+G=7.4692093263\times10^6\ \mathrm{N/mm},
+\quad
+J=1.2419245217\times10^7\ \mathrm{N}.
 \]
 
-The active point is at the concrete-core face \(z=-61\rm\ mm\), in TC, with approximately
-
-\[
-\sigma_1=+0.990248\rm\ MPa,
-\qquad
-\sigma_2=-27.099174\rm\ MPa,
-\]
-
-and the tensile TC hard-envelope equality active.
-
-Only after fixing that event, comparison gives
-
-\[
--4.602\%\quad\text{vs Zhou},
-\]
-
-\[
--5.931\%\quad\text{vs Winter}.
-\]
-
-Thus treating first TC-envelope contact as the member ultimate makes Z6 too conservative and does **not** naturally yield
-
-\[
-P_{Zhou}<P_{NZ-SCCM}<P_{Winter}.
-\]
-
-The Zhou--Winter bracket remains a post-solution desirability observation only and is prohibited as a root condition.
-
-Current Z6 identities:
+Numerical identities:
 
 ```text
 Z6_56P379_MN = UNIAXIAL_PRE_GATE
-Z6_51P345_MN = CURRENT_MAP_UMCG_FOLD_CANDIDATE
-Z6_47P210_MN = LITERAL_FIRST_HARD_ENVELOPE_EVENT
-Z6_FINAL_STRICT_POST_ENVELOPE_PU = OPEN
+Z6_47P210_MN = NGUYEN/FOSTER FIRST-CONTACT DIAGNOSTIC
+Z6_51P345_MN = CURRENT NC-M6 PHASE-COMPATIBLE UMCG FOLD PREDICTION
+LITERAL_NGUYEN_HISTORY_OVERLAY_Z6_FINAL_PU = NOT DEFINED
 ```
 
-## 4. What the strict audit proves
+The attempted NC-M6 -> Nguyen TC/TCX history overlay at the first-contact control section `s≈0.452284` produced audit-localizer continuation values near `47.3–47.5 MN` for 20/40/80 thickness-state resolutions, with no convergent formal sequence. It is not promoted.
 
-The current theory has now bracketed the missing physics from two sides:
-
-- ignoring the hard transition surface can leave too much post-envelope current-map capacity;
-- terminating the member at first envelope contact is too severe because Nguyen permits cracked/post-peak redistribution.
-
-Therefore the missing object is not a scale factor. It is
+Under the current single-operator UMCG identity, the retained Z6 prediction is therefore the NC-M6 phase-rebalanced section fold
 
 \[
-\boxed{
-\text{one transferable source-grounded post-envelope continuation under the same UMCG architecture}
-}
+\boxed{P_{u,Z6}^{NC-M6\ UMCG}=51.3450217892\ \mathrm{MN}}.
 \]
 
-for ordinary concrete, followed later by the corresponding UHPC continuation.
+Only after that theoretical root is fixed, historical comparators are:
 
-This continuation must preserve:
+\[
+P_{Zhou}=49.48676675\ \mathrm{MN},
+\qquad
+P_{Winter}=50.18585413\ \mathrm{MN}.
+\]
 
-- common NC--SC--SUHPC architecture;
-- no experiment/FEM in root selection;
-- no structure-specific multiplier;
-- phase compatibility and equilibrium;
-- steel von-Mises/yield admissibility;
-- hard material transitions rather than silent surface crossing.
+Thus the retained current prediction is approximately
 
-## 5. Steel-shell UHPC status
+\[
++3.755\%\ \text{vs Zhou},
+\qquad
++2.310\%\ \text{vs Winter}.
+\]
 
-Codex geometry/material audit remains active:
+The desirable `Zhou < NZ-SCCM < Winter` bracket is **not** achieved and is **not** used as a root condition. The residual is retained rather than fitted away.
+
+## 6. Steel and UHPC transfer
+
+Steel runtime yield/von-Mises constraints remain active because they are part of the steel production operator itself, not a second incompatible post-yield model.
+
+UHPC must use the same UMCG architecture but its own material current operator:
+
+- fibre-bridged tension/hardening/softening;
+- UHPC CC enhancement;
+- UHPC-specific TC regularization;
+- no transfer of NC `alpha2=0.3`, Saenz compression or NC shear-retention numbers as production law.
+
+## 7. Steel-shell UHPC geometry status
+
+Codex integration remains:
 
 `current/audits/NZ_SCCM_STEEL_SHELL_UHPC_CODEX_R02_DAMAGE_GEOMETRY_INTEGRATION_20260821.md`
 
@@ -238,27 +246,36 @@ BH_37MM_FINAL_CONTRACT = PENDING_FORMAL_FREEZE
 BH_CURRENT_QUANTITATIVE_VALIDATION_BASELINE = OPEN
 ```
 
-T120/T360 existing web-included values remain working scale checks, not verified strict-UMCG predictions.
+T120/T360 existing web-included values remain working scale checks, not verified geometry/material-matched predictions.
 
-## 6. Governance
+## 8. Governing validation principle
+
+\[
+\boxed{
+\text{transferable NC--SC--SUHPC mechanics with explainable residual error}
+>
+\text{dataset-specific fitting}
+}
+\]
 
 ```text
 SWARTZ_SPECIFIC_K = PROHIBITED
 SC_GLOBAL_SCALE_FACTOR = PROHIBITED
 SUHPC_EMPIRICAL_CONFINEMENT_MULTIPLIER = PROHIBITED
 STRUCTURAL_PU_BACKFIT_TO_MATERIAL = PROHIBITED
-Z6_51P345_FINAL_STATUS = SUPERSEDED
-CASE1_2_495_501_AS_UNIFIED_STRICT = SUPERSEDED
-FIRST_HARD_EVENT_AS_GLOBAL_ULTIMATE = NOT GENERALLY AUTHORIZED
-POST_ENVELOPE_SOURCE_CONTINUATION = CURRENT PRIMARY OPEN GAP
+NGUYEN_HISTORY_OVERLAY = REJECTED_FOR_FORMAL_PRODUCTION
+SOURCE_ENVELOPE_AS_OFFLINE_QUALIFICATION = RETAINED
+RESIDUAL_MATERIAL_SPECIMEN_SCATTER = ACCEPTABLE_IF_EXPLICITLY_IDENTIFIED
 ```
 
-## 7. Recommended next execution
+## 9. Recommended next execution
 
-Before extending strict UMCG to T120/T360/BH, close the ordinary-concrete post-envelope continuation in one unified form. The immediate validation set should remain only:
+The ordinary-concrete post-envelope history question is now closed negatively: literal Nguyen point-history continuation is not the formal route.
 
-1. Swartz Case1/2 — to test TC/cracking continuation;
-2. Z6 — to test TC + steel multiaxial redistribution;
-3. only after those two are coherent, expand to Swartz24 and steel-shell UHPC.
+The next admissible system-level execution is:
 
-No attempt should be made to force Case1/2 to zero error or Z6 into the Zhou--Winter interval.
+1. freeze the corrected BH/PBL geometry contract, with 37-mm net web height currently strongly indicated;
+2. regenerate BH structural coefficients and NC/UHPC/steel phase geometry from that one contract;
+3. apply the same single-operator UMCG to T120/T360 and corrected BH cases using the UHPC current operator, without importing the NC hard-envelope state machine;
+4. compare RC / SC / SUHPC residual biases only after theoretical roots are fixed;
+5. separately investigate Swartz ordinary-concrete tensile-strength source identity if a common NC material-input refinement is needed, never by fitting Case1/2 failure loads.
