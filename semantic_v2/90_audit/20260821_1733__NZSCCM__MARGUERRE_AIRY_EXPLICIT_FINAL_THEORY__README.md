@@ -1,0 +1,1 @@
+This directory checkpoint groups the same-session explicit final-theory derivation. Authoritative status will be assigned only to the completed ledger; placeholder/working-note files are non-authoritative.
