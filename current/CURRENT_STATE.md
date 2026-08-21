@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-21 23:50 +08:00  
+**Updated:** 2026-08-21 23:58 +08:00  
 **Status:** `MARGUERRE_AIRY_EXPLICIT + UNIFIED_MULTIAXIAL_CAPACITY_GATE = CURRENT ACTIVE LINE`
 
 ## 0. Current governing architecture
@@ -75,7 +75,7 @@ External faces and any two-dimensional steel phase must satisfy the steel plane-
 
 A uniaxial fully plastic section pattern cannot be assumed to carry arbitrary transverse Airy membrane force without rebalancing its longitudinal stress.
 
-## 2. Swartz RC current diagnostic status
+## 2. Swartz RC — UMCG batch executed as common-material diagnostic
 
 Mandatory source correction remains:
 
@@ -85,16 +85,61 @@ Mandatory source correction remains:
 
 not `p_table/2`.
 
-Experimental `Pcr` is not used to modify stiffness or the current structural backbone. Validation priority remains trusted repeat/near-repeat design points rather than direct 24-point fitting:
-
-- Case1/2: repeat well experimentally; current pre-TC theory high by about 13%; NC-TC gate has the correct selective downward direction;
-- Case9/10: same structural design, theory low; weak CC enhancement cannot fully explain Case10;
-- Case19/20: strongest repeat evidence, theory low about 10% under the current base-strength identity;
-- Case21/22: near repeat and close to current theory.
+Experimental `Pcr` is not used to modify stiffness or the current structural backbone. Validation priority remains trusted repeat/near-repeat design points rather than direct 24-point fitting.
 
 Primary-source audit confirms each panel had companion 28-day cylinders; the historical `0.85 fcyl` belongs to the Swartz/Nguyen analysis material identity and is not authorized for arbitrary replacement by another universal constant.
 
-Latest diagnostics:
+Latest UMCG batch:
+
+`current/diagnostics/NZ_SCCM_SWARTZ24_UMCG_BATCH_AUDIT_LOCALIZER_20260821.md`
+
+Identity:
+
+```text
+SWARTZ24_UMCG_AUDIT_BATCH = 24/24 RESOLVED
+MATERIAL_IDENTITY = COMMON NC-M6 WITH PROJECT ft=0.10fc
+SPECIMEN_SPECIFIC_FT = SOURCE OPEN
+FORMAL_RC_UMCG_THICKNESS_PRIMITIVE = NOT YET INSTANTIATED
+NUMERICAL_BATCH_IDENTITY = AUDIT_ONLY_UMCG_LOCALIZER
+```
+
+The current batch retains \(s_u=1\) for all 24 panels. It raises the corrected-reinforcement PRE-GATE capacities by about `0.5–10.4%`.
+
+All-24 statistics:
+
+\[
+\boxed{\text{mean signed error}=+0.759\%},
+\]
+
+\[
+\boxed{\text{MAE}=11.153\%,\qquad RMSE=13.583\%}.
+\]
+
+Historical thickness-group statistics:
+
+- Cases1–8: mean signed `+10.536%`, MAE `14.016%`, RMSE `16.245%`;
+- Cases9–16: mean signed `-4.110%`, MAE `10.122%`, RMSE `12.744%`;
+- Cases17–24: mean signed `-4.149%`, MAE `9.321%`, RMSE `11.278%`.
+
+Trusted-pair interpretation:
+
+- Case1/2: experimental repeat remains strong, theory pair difference remains small, but common UMCG pair mean is now about `+20.64%`; the present unified current-map fold does not reproduce the earlier separate hard-TC diagnostic reduction;
+- Case9/10: direction remains correct and pair low bias improves to about `-15.76%` mean;
+- Case19/20: repeat trend remains good and pair mean low bias improves to about `-7.57%`;
+- Case21/22: pair remains close, mean error about `-1.71%`.
+
+Decision:
+
+```text
+SWARTZ_SPECIFIC_CORRECTION = NOT AUTHORIZED
+GLOBAL_ZERO_MEAN_ERROR = NOT TREATED AS CALIBRATION SUCCESS
+CASE1_2_RESIDUAL = EXPLICIT MATERIAL/SPECIMEN IDENTITY GAP
+PAIR_BASED_VALIDATION_PRIORITY = RETAINED
+```
+
+The common gate reduces overall negative bias modestly but does not collapse specimen scatter. This is acceptable under the current transferable-mechanics principle; no specimen-specific weakening factor is introduced.
+
+Other supporting diagnostics:
 
 - `current/diagnostics/NZ_SCCM_SWARTZ24_SOURCE_CORRECTION_PAIR_MATRIX_TC_CAPACITY_AUDIT_20260821.md`
 - `current/diagnostics/NZ_SCCM_SWARTZ_PRIMARY_SOURCE_CASTING_CURING_085_MATERIAL_IDENTITY_AUDIT_20260821.md`
@@ -159,7 +204,7 @@ P_u^{pre}=56.37942109\rm\ MN,
 
 but its longitudinal plastic stress allocation failed UMCG because it could not simultaneously satisfy the large Airy transverse membrane demand.
 
-The phase-rebalanced NC+steel UMCG calculation now resolves the first admissible capacity state at
+The phase-rebalanced NC+steel UMCG calculation resolves the first admissible capacity state at
 
 \[
 \boxed{s_u=0},
@@ -327,9 +372,10 @@ RESIDUAL_MATERIAL_SPECIMEN_SCATTER = ACCEPTABLE_IF_EXPLICITLY_IDENTIFIED
 
 ## 7. Recommended next execution
 
-The Z6 gate is now resolved. Continue the common architecture in this order:
+Z6 final UMCG and the Swartz24 common-material UMCG diagnostic are now executed. Continue in this order:
 
-1. run the Swartz24 UMCG batch with the corrected reinforcement interpretation; preserve explicit status wherever specimen-specific tensile strength is not source-closed;
-2. formally freeze the BH net web/PBL geometry (37-mm candidate strongly indicated), then recompute BH structural coefficients/pre-gate roots;
+1. formally freeze the BH net web/PBL geometry; current evidence strongly indicates the 37-mm net-core steel height rather than the historical 32-mm value;
+2. recompute BH structural coefficients and PRE-GATE roots from that single geometry contract;
 3. pass T120/T360 and geometry-corrected BH cases through the same UMCG, keeping UHPC TC source status explicit;
-4. compare RC, SC and SUHPC only after each theoretical root is fixed.
+4. compare RC, SC and SUHPC only after theoretical roots are fixed;
+5. separately instantiate the finite RC UMCG thickness primitives if Swartz24 is to be promoted from diagnostic localizer to formal zero-quadrature production values.
