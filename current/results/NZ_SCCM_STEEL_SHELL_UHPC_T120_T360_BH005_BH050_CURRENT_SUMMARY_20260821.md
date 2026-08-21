@@ -1,327 +1,233 @@
-# NZ-SCCM — 钢壳-UHPC T120/T360 与 BH005–BH050 当前计算汇总
+# NZ-SCCM — 钢壳-UHPC T120/T360 与 BH005–BH050 当前状态（Codex复核后）
 
-**时间：2026-08-21**  
-**状态：CURRENT WORKING SUMMARY / NON-CALIBRATING**
+**Updated:** 2026-08-21 23:30 +08:00  
+**Status:** CURRENT WORKING SUMMARY / CONTRACT-AUDITED / NON-CALIBRATING
 
-本文件用于同步近期钢壳-UHPC计算，避免 `20260821_1824__...T120_T360.md` 中的旧无腹板结果继续被误用。
+## 0. Current theory interface
+
+Structure layer remains
+
+\[
+\boxed{\text{Marguerre--Airy explicit postbuckling}+\text{finite algebraic control candidates}}.
+\]
+
+Capacity now must pass
+
+\[
+\boxed{
+\text{structural resultants}
+\to
+\text{phase stress recovery}
+\to
+\text{material admissibility}
+\to
+\text{section capacity}
+}
+\]
+
+as formalized in
+
+`semantic_v2/20_theory/20260821_2315__NZSCCM__UNIFIED_MULTIAXIAL_CAPACITY_GATE_V1.md`.
+
+No SUHPC-specific empirical confinement multiplier is permitted.
 
 ---
 
-## 1. 当前统一理论身份
+## 1. T120 / T360 retained working values
 
-结构层：
+The old values that omitted internal longitudinal webs are superseded:
 
-\[
-\boxed{\text{Marguerre–Airy 显式后屈曲}+\text{显式截面 }N-M\text{ 容量}}
-\]
+- T120: `11.7073 MN`;
+- T360: `11.0538 MN`.
 
-并保留局部钢面来源分支。无加载路径追踪、无Ritz阶数、无正式空间数值积分、无试验值选根。
-
----
-
-## 2. 钢壳-UHPC完整截面组成修正
-
-当前正确力学对象：
+The later web-included working values remain:
 
 \[
-\boxed{\text{上外钢面}+\text{内部纵向钢腹板/PBL}+\text{UHPC核心}+\text{下外钢面}}
+\boxed{P_{u,T120}^{work}=12.34799984\rm\ MN},
 \]
-
-旧 `UHPC+两外钢面` 截面遗漏内部纵向钢腹板，已 superseded。
-
-腹板钢率定义：
 
 \[
-\rho_w=\frac{A_{w,net}}{bt_c}.
+\boxed{P_{u,T360}^{work}=11.29784021\rm\ MN}.
 \]
 
-UHPC 与腹板钢进行相体积守恒，不能重复占据核心体积。
-
----
-
-## 3. 材料参数
-
-UHPC当前工作参数：
+Existing Abaqus R02 peaks in the Codex audit are:
 
 \[
-f_c=141.1\rm\ MPa,\quad E_c=43.4\rm\ GPa,\quad \varepsilon_{c0}=0.0035,\quad \nu_c=0.20.
+P_{R02,T120}=12.6378\rm\ MN,
 \]
-
-钢材：
 
 \[
-E_s=206\rm\ GPa,\quad f_y=355\rm\ MPa,\quad \nu_s=0.30.
+P_{R02,T360}=10.9688\rm\ MN,
 \]
 
-UHPC单轴压缩 backbone：
+which correspond to approximately +2.35% and -2.91% FEM-theory differences respectively.
+
+These are **scale agreements only**, not VERIFIED theory validation, because the audited contracts are not identical:
+
+- theory UHPC `nu=0.20` versus FEM UC141 `nu=0.30`;
+- theory tensile/cracking anchor about `9.77 MPa` versus FEM tensile onset about `5.57 MPa`;
+- current theory steel post-yield treatment differs from FEM Q355 segmented hardening;
+- analytic and R02/R03 boundary/contact contracts differ.
+
+### T120 mode label
+
+Canonical geometry is approximately
 
 \[
-\sigma_c=f_c\frac{n\xi-\xi^2}{1+(n-2)\xi},\quad \xi=\varepsilon/\varepsilon_{c0},\quad n=E_c\varepsilon_{c0}/f_c.
+b=1600\rm\ mm,\qquad a_{phys}=3000\rm\ mm.
 \]
 
-钢面屈服前可使用当前 R-O 上升支，达到 `fy` 后平台；宽局部板按云露来源局部屈后平均应力分支。
-
----
-
-## 4. T120 / T360 当前 web-corrected 结果
-
-旧无腹板结果：
-
-- T120 `11.7073 MN`；
-- T360 `11.0538 MN`。
-
-统一标记：
+The R02 imperfection has two longitudinal halfwaves. The old text label `m*=1` is therefore classified as a likely documentation error; the audited numerical branch is consistent with `m*=2`.
 
 ```text
-SUPERSEDED / INCOMPLETE SECTION COMPOSITION
-```
-
-当前补入内部纵向腹板后的工作钢率：
-
-\[
-\rho_{w,T120}\approx5.506\%,\qquad \rho_{w,T360}\approx1.982\%.
-\]
-
-### T120
-
-\[
-q_u\approx0.0016696764,\qquad c_u\approx75.8216\rm\ mm,
-\]
-
-\[
-\boxed{P_{u,T120}=12.34799984\rm\ MN}.
-\]
-
-控制截面单位宽度轴力分项约：
-
-- UHPC `4269.64 N/mm`；
-- web steel `817.71 N/mm`；
-- two faces `2577.17 N/mm`；
-- total `7664.53 N/mm`。
-
-### T360
-
-360-mm 局部钢面采用云露局部屈后平均应力分支。
-
-\[
-q_u\approx0.00144967365,\qquad c_u\approx74.56125\rm\ mm,
-\]
-
-\[
-\boxed{P_{u,T360}=11.29784021\rm\ MN}.
-\]
-
-单位宽度轴力分项约：
-
-- UHPC `4400.94 N/mm`；
-- web steel `293.89 N/mm`；
-- two faces `2337.19 N/mm`；
-- total `7032.01 N/mm`。
-
-比值：
-
-\[
-\boxed{P_{u,T360}/P_{u,T120}\approx0.914953}
-\]
-
-即 T360 当前约低 `8.50%`。
-
-### T120/T360二维预检查
-
-当前诊断恢复：
-
-- T120 压侧约 `(-141.1,-6.67) MPa` 为 CC；另一侧约 `(-67.5,+8.06) MPa` 为 TC；
-- T360 压侧约 `(-141.1,-7.74) MPa` 为 CC；另一侧约 `(-66.1,+7.27) MPa` 为 TC。
-
-UHPC当前首裂拉应力锚点约：
-
-\[
-f_{t,cr}\approx9.7677\rm\ MPa.
-\]
-
-上述横向拉应力低于该门槛，因此当前二维预检查未提前截断 T120/T360 Pu。
-
-身份：
-
-```text
-T120_T360 = WEB-CORRECTED
-2D_MULTIAXIAL_PRECHECK = PASS
-FULL_MULTIAXIAL_PRODUCTION_CLOSURE = NOT_YET_FINAL
+T120_T360_WORKING_PU = RETAINED_FOR_PROVENANCE_AND_SCALE_CHECK
+T120_T360_VERIFICATION = ANALYZED_NOT_VERIFIED
+T120_MSTAR_TEXT_LABEL = SUSPECT_REPAIR_REQUIRED
+FULL_UMCG_UHPC_TC_CLOSURE = OPEN
 ```
 
 ---
 
-## 5. BH005–BH050 当前几何合同
+## 2. BH geometry contract: 32 mm revoked as current validation geometry
 
-|Case|B/H|B mm|L mm|H mm|q0 amplitude B/400 mm|
-|---|---:|---:|---:|---:|---:|
-|BH005|5|250|500|50|0.625|
-|BH010|10|500|1000|50|1.250|
-|BH020|20|1000|2000|50|2.500|
-|BH032|32|1600|3200|50|4.000|
-|BH050|50|2500|5000|50|6.250|
+BH family nominal external dimensions remain:
 
-统一：
-
-\[
-L=2B,\quad t_s=4\rm\ mm,\quad t_c=42\rm\ mm,\quad q_0=1/400=0.0025.
-\]
-
-当前参数化模型内部纵向 PBL/web：上5 + 下4 =9道，连续/无孔。
-
-直接当前拓扑用于 BH 的有效腹板高度：
-
-\[
-h_w=32\rm\ mm.
-\]
-
-因此
-
-\[
-A_{w,total}=9\times4\times32=1152\rm\ mm^2,
-\]
-
-\[
-\rho_w=\frac{1152}{42B}.
-\]
-
-对应：
-
-- BH005 `10.9714%`；
-- BH010 `5.4857%`；
-- BH020 `2.7429%`；
-- BH032 `1.7143%`；
-- BH050 `1.0971%`。
-
-**注意：** BH 的32-mm直接拓扑高度不得与 T120/T360 历史修正中采用的其它有效腹板口径无证据混用。
-
----
-
-## 6. BH PBL拓扑与局部宽度
-
-上侧归一化 rib positions：
-
-\[
-0.05,\ 0.275,\ 0.5,\ 0.725,\ 0.95.
-\]
-
-下侧：
-
-\[
-0.1625,\ 0.3875,\ 0.6125,\ 0.8375.
-\]
-
-当前公共控制局部宽度：
-
-\[
-\boxed{B_s=0.225B}.
-\]
-
-中央控制区约为
-
-\[
-r\in[0.3875,0.5]\quad\text{或}\quad[0.5,0.6125],
-\]
-
-其中：
-
-\[
-\bar s\approx0.97931094,\qquad \overline{s^2}\approx0.95939052.
-\]
-
----
-
-## 7. BH 全局显式系数
-
-由于 `L=2B`，当前全部 BH 工况整数候选均给：
-
-\[
-\boxed{m_*=2},\qquad \ell=B,\qquad \alpha=\beta=\pi/B.
-\]
-
-|Case|Pcr MN|C MN|G N/mm|J N|
+|Case|B/H|B mm|L mm|H mm|
 |---|---:|---:|---:|---:|
-|BH005|196.414|1165.181|5.2171e6|6.6572e7|
-|BH010|98.0387|2239.329|4.7552e6|3.2271e7|
-|BH020|48.9773|4386.471|4.5243e6|1.5882e7|
-|BH032|30.6010|6962.673|4.4377e6|9.8669e6|
-|BH050|19.5808|10826.814|4.3857e6|6.2920e6|
+|BH005|5|250|500|50|
+|BH010|10|500|1000|50|
+|BH020|20|1000|2000|50|
+|BH032|32|1600|3200|50|
+|BH050|50|2500|5000|50|
 
----
+with
 
-## 8. BH 局部钢面分支
+\[
+L=2B,\qquad t_s=4\rm\ mm,\qquad t_c=42\rm\ mm,
+\qquad q_0=1/400.
+\]
 
-以 `Bs=0.225B`：
+The previous BH theory used nine longitudinal webs/PBL with effective height
 
-|Case|Bs mm|elastic local sigcr MPa|当前分支|
-|---|---:|---:|---|
-|BH005|56.25|10044.97|屈服先于局部屈曲|
-|BH010|112.5|2511.24|屈服先于局部屈曲|
-|BH020|225|627.81|屈服先于局部屈曲|
-|BH032|360|245.24|云露局部屈后|
-|BH050|562.5|100.45|云露局部屈后|
+\[
+h_w=32\rm\ mm,
+\]
 
-当前 BH032 局部平均有效上限约 `295.42 MPa`；BH050约 `250.07 MPa`。
+so
 
----
+\[
+A_{w,32}=9\times4\times32=1152\rm\ mm^2.
+\]
 
-## 9. BH 当前第一版极限结果
+The Codex geometry audit shows that the canonical PBL height is about 41 mm and the shell thickness is 4 mm; the net added steel height inside the core is therefore closer to
 
-|Case|qu|B qu mm|cu mm|Pu MN|
-|---|---:|---:|---:|---:|
-|BH005|3.070058e-5|0.007675|283.827|2.382928|
-|BH010|1.179192e-4|0.058960|185.258|4.417320|
-|BH020|4.974237e-4|0.497424|110.892|8.139798|
-|BH032|0.001412373|2.259797|73.0123|11.110053|
-|BH050|0.004999402|12.498506|51.5788|13.594607|
+\[
+\boxed{h_w\approx37\rm\ mm}.
+\]
 
-单位宽度轴力分项：
-
-|Case|Nc UHPC|Nw web|Ns faces|total n N/mm|
-|---|---:|---:|---:|---:|
-|BH005|5055.13|1635.84|2840.00|9530.97|
-|BH010|5174.08|817.92|2840.00|8832.00|
-|BH020|4904.60|408.90|2814.92|8128.43|
-|BH032|4377.18|248.62|2281.06|6906.86|
-|BH050|3675.58|141.79|1419.03|5236.40|
-
-当前身份：
+The old 32-mm value likely double-deducted a gap/clearance. Accordingly:
 
 ```text
-BH005_BH050 = FIRST-PASS WEB-CORRECTED N-M RESULTS
-FULL_MULTIAXIAL_GATE = NOT YET EXECUTED
+BH_32MM_WEB_HEIGHT = SUPERSEDED_AS_CURRENT_VALIDATION_GEOMETRY
+BH_37MM_WEB_HEIGHT = STRONGLY_INDICATED_REBASE_CANDIDATE
+BH_37MM_FINAL_GEOMETRY_CONTRACT = PENDING_FORMAL_FREEZE
+```
+
+For reference only, a 37-mm candidate would give
+
+\[
+A_{w,37}=9\times4\times37=1332\rm\ mm^2
+\]
+
+and candidate web ratios:
+
+|Case|rho_w at 32 mm|rho_w at 37 mm candidate|
+|---|---:|---:|
+|BH005|10.9714%|12.6857%|
+|BH010|5.4857%|6.3429%|
+|BH020|2.7429%|3.1714%|
+|BH032|1.7143%|1.9821%|
+|BH050|1.0971%|1.2686%|
+
+No new 37-mm Pu is frozen in this document because the uploaded Codex report did not provide a recalculated 37-mm Pu table; it flagged the geometry inconsistency while its theory-vs-Abaqus table still used the old 32-mm theory values.
+
+---
+
+## 3. Old BH 32-mm results: provenance only
+
+The following values are retained only as the old geometry-mismatched comparator:
+
+|Case|old 32-mm theory Pu / MN|Abaqus value in Codex audit / MN|reported FEM-theory|
+|---|---:|---:|---:|
+|BH005|2.382928|2.3558|-1.14%|
+|BH010|4.417320|4.3043|-2.56%|
+|BH020|8.139798|8.0076|-1.62%|
+|BH032|11.110053|10.9905|-1.08%|
+|BH050*|13.594607|12.2198|-10.11%|
+
+`*` BH050 is from a different diagnostic model family and is not an equal-contract validation point.
+
+These close values may contain geometry/material/boundary error cancellation and therefore must not be used as evidence to preserve the 32-mm theory contract.
+
+```text
+BH005_BH050_OLD_PU = HISTORICAL_32MM_COMPARATOR
+BH_CURRENT_QUANTITATIVE_VALIDATION_BASELINE = OPEN_PENDING_GEOMETRY_REBASE
 ```
 
 ---
 
-## 10. BH Airy多轴诊断优先级
+## 4. Damage/mode evidence from Codex audit
 
-当前根处横向膜力 `Nx` 约：
+The existing ODB mapping indicates:
 
-- BH005 `0.634 N/mm`；
-- BH010 `2.536`；
-- BH020 `11.618`；
-- BH032 `38.632`；
-- BH050 `213.747`。
+- T120 UHPC-core damage is the closest to the global `m=2` wave;
+- T360 and BH032 longitudinal damage positions are compatible with the global `m=2` antinode, while transverse position is affected by local plate/boundary effects;
+- BH005/BH010 are predominantly side/end damage controlled at peak;
+- BH020 shows mixed side/end and global-wave damage;
+- maximum steel-shell PEEQ in unified R02 cases lies at `x=±B/2`, so the global Marguerre wave alone is not a complete local steel failure descriptor;
+- a unique local-panel coordinate/identity is still required for a quantitative theory–PEEQ local-mode comparison.
 
-因此多轴 UHPC effect 随 B/H 增大明显增强，BH050 应是下一步多轴门禁优先试件。
+Therefore:
+
+```text
+MODE_AGREEMENT = QUALITATIVE_PARTIAL
+VERIFICATION_LEVEL = ANALYZED_NOT_VERIFIED
+```
 
 ---
 
-## 11. 当前不能混淆的结果版本
+## 5. Unified multiaxial capacity status
 
-`semantic_v2/40_execution/20260821_1824__NZSCCM__EXPLICIT_THEORY_CASE21_TUTORIAL_AND_UHPC_T120_T360.md` 中 T120=11.7073MN、T360=11.0538MN 是**漏内部腹板的历史执行值**；该文件保留为 provenance，不再作为 current capacity baseline。
+Previous T120/T360 plane-stress screening found mixed CC/TC states but did not trigger the old theoretical UHPC tensile anchor. This remains a useful working screen only.
 
-当前工作比较值为：
-
-\[
-\boxed{P_{u,T120}=12.3480\rm\ MN},
-\]
+The new UMCG requires the same sequence as NC and steel-shell concrete:
 
 \[
-\boxed{P_{u,T360}=11.2978\rm\ MN},
+\text{Airy/section resultants}
+\to
+\text{UHPC + face steel + web steel stress recovery}
+\to
+\text{UHPC/steel admissibility}
+\to
+\text{capacity root}.
 \]
 
-以及 BH005–BH050 上表第一版结果。
+UHPC is not allowed to use the NC TC numerical law. UHPC TC must remain source-specific; the currently available Liu compression-softening subbranch is not yet a complete arbitrary-path vector material operator.
 
-任何后续 Codex/独立比较必须明确结果身份，不得将历史无腹板值和当前 web-corrected 值混合统计。
+```text
+T120_T360_2D_PRECHECK = RETAINED_AS_WORKING_SCREEN
+BH_UMCG_EXECUTION = BLOCKED_BY_GEOMETRY_REBASE
+UHPC_FULL_TC_VECTOR_CLOSURE = PARTIAL_OPEN
+TRIAXIAL_SIGMA_Z_GATE = NOT_ACTIVATED_IN_CURRENT_PLANE_STRESS_THEORY
+```
+
+---
+
+## 6. Current next action
+
+1. freeze the canonical BH net web/PBL geometry from the source model (37-mm candidate currently strongly indicated);
+2. recompute BH elastic/extensional coefficients and pre-gate roots from that frozen geometry;
+3. pass T120/T360/BH through the same UMCG architecture used for NC and SC;
+4. keep Abaqus peaks/damage maps as post-solution validation evidence only.
+
+No theoretical parameter is to be adjusted to recover the existing R02 peaks.
