@@ -1,0 +1,29 @@
+{
+  "id": "P0-10",
+  "title": "BUCKLING OF REINFORCED CONCRETE WALLS",
+  "authors": [
+    "M.M. Attard"
+  ],
+  "year": 1994,
+  "journal": "UNICIV Report R-339, UNSW",
+  "volume": "R-339",
+  "issue": "",
+  "pages": "22 (23 PDF pages including cover)",
+  "doi": "",
+  "publisher_url": "https://vm.civeng.unsw.edu.au/uniciv/R-339.pdf",
+  "fulltext_source_url": "https://vm.civeng.unsw.edu.au/uniciv/R-339.pdf",
+  "source_type": "institutional_repository",
+  "open_access": true,
+  "license": "Public UNSW institutional report; no separate licence text displayed; committed as public institutional source",
+  "pdf_committed": true,
+  "pdf_commit_restriction_reason": "",
+  "retrieved_at": "2026-08-23",
+  "sha256": "d59001991ddc450a0e112b01f2b3cdc1d0caddaa6bbb3da850b94d48f0ff6488",
+  "file_size_bytes": 3842103,
+  "full_text_verified": true,
+  "status": "FULL_TEXT_ACQUIRED",
+  "failure_reason": "",
+  "preliminary_only": true,
+  "likely_class": "C",
+  "notes": "Official UNSW PDF opens and has 23 pages including cover; scan text extraction is sparse, so verification relied on official report title/date and page structure."
+}
