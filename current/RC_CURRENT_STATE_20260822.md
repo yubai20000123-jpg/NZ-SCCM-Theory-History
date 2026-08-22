@@ -1,9 +1,9 @@
 # RC CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 20:04 +08:00
+**Updated:** 2026-08-22 21:30 +08:00
 
 ```text
-RC_PRIORITY = NC_M6_2D_TC_CRACK_FRONT_CURRENT_MAP
+RC_PRIORITY = NC_M6_REINFORCEMENT_DEPENDENT_POSTCRACK_TENSION
 EXPLICIT_STRUCTURAL_PATH = LOCKED_UNCHANGED
 OBSERVED_NONSTANDARD_WAVEFORM = PRESCRIBED_INPUT / NOT_PREDICTED
 SELF_GROWN_WAVEFORM = OFF
@@ -16,33 +16,59 @@ FORMAL_SPATIAL_QUADRATURE = 0
 FORMAL_MATERIAL_POINTS = 0
 Pf_IN_ROOT_SELECTION = 0
 
+NC_M6_2D_TC_CRACK_FRONT = EXECUTED_DIAGNOSTIC_PASS
+EXACT_SECTION_PRIMITIVE = PASS
+SAME_LAW_JACOBIAN = PASS
 VC_GAMMA_10_OVER_17 = SOURCE_CORRECT
-REPLACE_GAMMA_ONLY = NOT_JUSTIFIED
+VC_GAMMA_ACTIVE_AT_M6_F03_TERMINALS = NO_ALL_3
 TC_ENVELOPE_ROLE = CRACKING_STATE_TRANSITION_NOT_TERMINAL_Pu
-CURRENT_FIXED_UNIAXIAL_TC_CRACK_FRONT = INCOMPLETE
+CURRENT_FIXED_UNIAXIAL_TC_CRACK_FRONT = SUPERSEDED_FOR_M6_DIAGNOSTIC
 
-PANEL1_FIRST_SOURCE_TC_CRACK_TRANSITION = 341.912 kN
-PANEL14_FIRST_SOURCE_TC_CRACK_TRANSITION = 476.375 kN
-PANEL21_FIRST_SOURCE_TC_CRACK_TRANSITION = 128.249 kN
+PANEL1_M6_F03_EVENT = CURRENT_MAP_SECTION_FOLD
+PANEL1_M6_F03_EVENT_LOAD = 462.6313 kN
+PANEL1_M6_F03_ERROR_VS_Pf = -5.623%
+PANEL1_M6_INTERPRETATION = 2D_TC_CRACK_FRONT_CORRECTION_MATERIAL_AND_NECESSARY
+
+PANEL14_M6_F03_EVENT = LOWER_Y_REBAR_COMPRESSION_YIELD_ACTIVESET_TERMINAL
+PANEL14_M6_F03_EVENT_LOAD = 770.7674 kN
+PANEL14_M6_F03_ERROR_VS_Pf = +7.624%
+PANEL14_STEEL_ACTIVESET = STILL_OPEN
+
+PANEL21_M6_F03_EVENT = CURRENT_MAP_SECTION_FOLD
+PANEL21_M6_F03_EVENT_LOAD = 180.1593 kN
+PANEL21_M6_F03_ERROR_VS_Pf = -51.085%
+PANEL21_M6_INTERPRETATION = REINFORCEMENT_DEPENDENT_POSTCRACK_TENSION_STILL_MISSING
+PANEL21_TT_AT_EQUILIBRATED_TERMINAL = NO
 
 FOSTER_ALPHA2_DEPENDENCE = SOURCE_REAL_BUT_NO_DETERMINISTIC_RHO_RULE_RECOVERED
-ALPHA2_0P3_TO_0P7_SWEEP = SENSITIVITY_ONLY
-BH04_POSTCRACK_SHAPE = PROMISING_DIAGNOSTIC_NOT_PRODUCTION
-BH04_PLUS_BARE_STEEL_PANEL1 = 529.948 kN
-BH04_PLUS_BARE_STEEL_PANEL21 = 375.039 kN
-BH04_PLUS_EMBEDDED_STEEL_PANEL1 = 528.582 kN
-BH04_PLUS_EMBEDDED_STEEL_PANEL21 = 303.412 kN
+ALPHA2_M6_F03_PANEL1 = 462.631 kN
+ALPHA2_M6_F05_PANEL1 = 475.216 kN
+ALPHA2_M6_F07_PANEL1 = 494.749 kN
+ALPHA2_M6_PANEL14 = APPROX_770.76 kN_ALL
+PANEL21_CONNECTED_FOLD_CONTINUATION = SMOOTH_TO_ALPHA2_APPROX_0.464
+PANEL21_CONNECTED_FOLD_LOST_OR_TOPOLOGY_CHANGED_BY_ALPHA2_APPROX_0.466
+ALPHA2_SELECTION_BY_Pf = PROHIBITED
+
+BH04_FIXED_FRONT_DIAGNOSTIC = HISTORICAL_ONLY
+BH04_COUPLED_TC_EXACT_PRIMITIVE = NOT_YET_DERIVED
+BH04_NUMERICAL_THICKNESS_QUADRATURE = PROHIBITED
 
 NC_CC_REOPEN = NO_FIRST_PRIORITY
 NC_TT_REOPEN = NO_FIRST_PRIORITY
-PANEL14_STEEL_ACTIVESET = STILL_OPEN
 Z6_ACTIVESET_PROOF = DEPRIORITIZED_BY_USER
 
-NEXT_NC_CANDIDATE = NC_M6_2D_TC_CRACK_FRONT
-NEXT_RC_TASK = BUILD_EXACT_COUPLED_TC_CURRENT_MAP_AND_RERUN_PANEL1_14_21
+NEXT_RC_TASK = SOURCE_CLOSE_REINFORCEMENT_DEPENDENT_POSTCRACK_TENSION_WITHIN_NC_M6_EXACT_PRIMITIVE
 ```
 
-Detailed source/material audit:
+Latest NC-M6 execution:
+
+`semantic_v2/40_execution/20260822_2130__NZSCCM__NC_M6_2D_TC_CRACK_FRONT_EXECUTION_R01.md`
+
+Reproduction script:
+
+`semantic_v2/40_execution/rc/20260822_2130__NZSCCM__NC_M6_2D_TC_CRACK_FRONT_EXACT_SECTION.py`
+
+Previous source/material audit:
 
 `semantic_v2/40_execution/20260822_2004__NZSCCM__NC_TC_CRACK_TRIGGER_AND_TENSION_STIFFENING_SOURCE_AUDIT_R01.md`
 
@@ -50,32 +76,20 @@ Previous full two-slope execution:
 
 `semantic_v2/40_execution/20260822_1927__NZSCCM__PANEL1_14_21_TWO_SLOPE_FULL2D_MATERIAL_LIMIT_DIAGNOSTIC.md`
 
-Reproduction baseline:
+## Current interpretation
 
-`semantic_v2/40_execution/rc/20260822_1927__NZSCCM__PANEL1_14_21_TWO_SLOPE_FULL2D_SECTION_DIAGNOSTIC.py`
+The NC-M6 2D TC crack front has now been inserted without modifying the frozen explicit source-wave structural operator or the full two-slope section kinematics. The active Foster-type TC branch remains exactly integrable through thickness and its cross-coupled Jacobian is derived from the same current law.
 
-## Current corrected interpretation
+The correction materially improves Panel1: the previous fixed-front fold at 589.08 kN moves to 462.63 kN, leaving a post-solution difference of -5.62% relative to the measured failure load. This occurs without structural-path change or Pf-based material identification.
 
-The 19:27 diagnosis `TC compression degradation begins too late because gamma does not activate` was too coarse. Nguyen/Vecchio–Collins Eq. (3.43) itself implies the `10/17` tensile-strain threshold after the cap `gamma<=1`; that part of the current formula is source-correct.
+Panel14 remains controlled by the lower longitudinal reinforcement compression-yield active-set boundary at about 770.77 kN, so it is still not a clean concrete-material discriminator.
 
-The more fundamental omission is earlier in the material architecture. Nguyen's biaxial TC envelope defines the tensile peak at which an undamaged element changes to the cracked TC branch. Under simultaneous compression this cracking stress can be substantially below the uniaxial `ft`. The current scalar reduction instead keeps a fixed crack front `eps_cr=ft/E0` independent of simultaneous compression.
+Panel21 moves in the opposite direction: its tension-controlled fold decreases from 192.69 kN to 180.16 kN. The corrected early TC cracking therefore reinforces rather than removes the evidence that the current universal postcrack tension-stiffening representation is too weak for the Panel21 reinforcement state.
 
-Direct source-wave/full-section calculations locate the first TC-envelope crossings at approximately 341.9 kN for Panel1, 476.4 kN for Panel14 and 128.25 kN for Panel21. These are not ultimate loads. Treating them as terminal capacities would grossly underpredict the tests. They must therefore be represented as explicit current-branch transition events followed by continued cracked-TC response.
+Foster alpha2 sensitivity on the coupled crack-front map cannot be converted into a calibrated rule. Panel1 rises from about 462.6 to 475.2 and 494.7 kN as alpha2 goes from 0.3 to 0.5 and 0.7, while the Panel21 connected stationary fold changes topology and is no longer continuously recovered beyond alpha2 approximately 0.466. No alternative root is selected by proximity to Pf.
 
-Foster `alpha2` sensitivity confirms that reinforcement dependence matters: raising `alpha2` from 0.3 to 0.5/0.7 delays the premature Panel21 tensile fold from 192.7 kN to about 324.1/333.5 kN, but simultaneously increases the Panel1 event from 589.1 kN to about 607.9/637.3 kN. No source-closed unique `alpha2(rho)` law has been recovered, so a Swartz-based interpolation is not promoted.
-
-A Belarbi–Hsu `0.4` postcrack power-shape diagnostic, attached to the present source anchors, gives about 529.95 kN for Panel1 and 375.04 kN for Panel21 with bare EPP steel. This is promising but cannot be promoted while the TC crack-trigger layer is still wrong. A paired embedded-steel diagnostic lowers Panel21 to about 303.4 kN, so the apparently excellent bare-steel match must not be selected merely by closeness to experiment.
+The earlier BH04 fixed-anchor diagnostic is not promoted into NC-M6 because the coupled current crack front makes fcr vary with compression through thickness. The direct BH04 composition therefore leaves the present finite rational/affine primitive family; numerical thickness quadrature remains prohibited.
 
 ## Next material layer
 
-Build `NC-M6` as a genuinely coupled memoryless TC current map while preserving the explicit structural path. The source TC envelope supplies the current biaxial crack front. For undamaged compressive stress magnitude `p0`, use the source-equivalent tensile peak
-
-\[
-f_{cr}^{TC}(p_0)=
-\begin{cases}
-f_t(1-p_0/(2f_c)),&0\le p_0/f_c\le0.8,\\
-3f_t(1-p_0/f_c),&0.8<p_0/f_c\le1.
-\end{cases}
-\]
-
-and `eps_cr_TC=f_cr_TC/E0`. Retain the literal Vecchio–Collins gamma first, then compare finite postcrack tension families without using `Pf` to identify coefficients. The new TC stress field and its same-law Jacobian must still admit finite exact section primitives with zero formal quadrature.
+Keep the explicit structural path locked. The next task is source closure of the reinforcement-dependent postcrack tensile branch inside NC-M6 while preserving finite exact section primitives and the same-law Jacobian. Do not reopen CC or TT first and do not identify coefficients from the Swartz failure loads.
