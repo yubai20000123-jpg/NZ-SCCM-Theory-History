@@ -1,0 +1,31 @@
+{
+  "id": "P0-01",
+  "title": "Ultimate strength of stiffened plates subjected to compression",
+  "authors": [
+    "Y. Fujita",
+    "T. Nomoto",
+    "O. Niho"
+  ],
+  "year": 1977,
+  "journal": "Journal of the Society of Naval Architects of Japan",
+  "volume": "1977",
+  "issue": "141",
+  "pages": "190-197",
+  "doi": "10.2534/jjasnaoe1968.1977.190",
+  "publisher_url": "https://www.jstage.jst.go.jp/article/jjasnaoe1968/1977/141/1977_141_190/_pdf/-char/en",
+  "fulltext_source_url": "https://www.jstage.jst.go.jp/article/jjasnaoe1968/1977/141/1977_141_190/_pdf/-char/en",
+  "source_type": "publisher",
+  "open_access": true,
+  "license": "J-STAGE Journal Free Access; no separate CC text displayed; committed under OA-source policy",
+  "pdf_committed": true,
+  "pdf_commit_restriction_reason": "",
+  "retrieved_at": "2026-08-23",
+  "sha256": "996cefde5feec20b28cb7f307f9107d8d44292a158749240e1a6c1570acf1541",
+  "file_size_bytes": 1291026,
+  "full_text_verified": true,
+  "status": "FULL_TEXT_ACQUIRED",
+  "failure_reason": "",
+  "preliminary_only": true,
+  "likely_class": "B",
+  "notes": "J-STAGE PDF opens and has 8 pages; first-page English title/authors verified. Japanese text extraction is imperfect because of legacy encoding."
+}
