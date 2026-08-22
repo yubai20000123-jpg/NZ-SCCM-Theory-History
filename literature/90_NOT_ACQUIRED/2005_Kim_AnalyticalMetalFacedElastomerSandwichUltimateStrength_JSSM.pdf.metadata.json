@@ -1,0 +1,30 @@
+{
+  "id": "P0-05",
+  "title": "Analytical Solution for the Ultimate Strength of Metal-faced Elastomer-cored Sandwich Panels under In-plane Edge Compression and Lateral Pressure",
+  "authors": [
+    "B.J. Kim",
+    "O.F. Hughes"
+  ],
+  "year": 2005,
+  "journal": "Journal of Sandwich Structures & Materials",
+  "volume": "7",
+  "issue": "5",
+  "pages": "363-394",
+  "doi": "10.1177/1099636205051318",
+  "publisher_url": "https://journals.sagepub.com/doi/10.1177/1099636205051318",
+  "fulltext_source_url": "https://journals.sagepub.com/doi/10.1177/1099636205051318",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; redistribution licence not established",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "C",
+  "notes": "Official SAGE record and DOI verified; no legally redistributable public PDF located."
+}
