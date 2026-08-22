@@ -1,0 +1,31 @@
+{
+  "id": "P0-11",
+  "title": "Finite element analysis of out-of-plane buckling of reinforced concrete walls",
+  "authors": [
+    "M.M. Attard",
+    "N.G. Minh",
+    "S.J. Foster"
+  ],
+  "year": 1996,
+  "journal": "Computers & Structures",
+  "volume": "61",
+  "issue": "6",
+  "pages": "1037-1042",
+  "doi": "10.1016/0045-7949(96)00179-4",
+  "publisher_url": "https://www.sciencedirect.com/science/article/pii/0045794996001794",
+  "fulltext_source_url": "https://www.sciencedirect.com/science/article/pii/0045794996001794",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; redistribution licence not established",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "D",
+  "notes": "Official ScienceDirect issue listing and UNSW author publication list verify authors, volume, pages and DOI; no legally redistributable public PDF located. User-provided 'Nguyen' is corrected to official author N.G. Minh."
+}
