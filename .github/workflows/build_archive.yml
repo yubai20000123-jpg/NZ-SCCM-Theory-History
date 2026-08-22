@@ -35,7 +35,14 @@ jobs:
           r=pathlib.Path('.')
           m=json.loads((r/'MANIFEST.json').read_text())
           out=r/'archive/NZ_SCCM_MA_ORIGIN_RECOVERY_20260823.zip'
-          files=['README.md','RECOVERY_SCOPE_LOCK.md','MANIFEST.json']
+          files=[
+            'README.md',
+            'RECOVERY_SCOPE_LOCK.md',
+            'ARCHITECTURE_POSITIONING_LOCK.md',
+            'RESEARCH_OVERLAP_AUDIT_CRITERIA.md',
+            'KNOWN_GAPS_AND_INTENTIONAL_OMISSIONS.md',
+            'MANIFEST.json',
+          ]
           files += [x['destination'] for x in m['payload']]
           files += [str(p) for p in sorted((r/'audit_programs').glob('*.py'))]
           files += [str(p) for p in sorted((r/'audit').glob('*')) if p.is_file()]
@@ -52,10 +59,13 @@ jobs:
           
           All four independent supervisor programs passed in GitHub Actions:
           
-          1. completeness / six requested historical categories;
-          2. purity / no unmanifested payload and no forbidden wrong-detour tokens;
+          1. completeness / six requested historical categories, canonical cross-stage references, and governance locks;
+          2. purity / one canonical physical payload per preserved historical blob, no unmanifested payload, and no forbidden wrong-detour tokens in historical payload;
           3. provenance / exact Git blob hash equality plus SHA-256 inventory;
           4. branch-scope / canonical isolated branch identity.
+          
+          Archive-construction completeness is PASS.
+          Historical-continuity completeness remains PARTIAL as documented in `audit/HISTORICAL_CONTINUITY_AUDIT_20260823.md` and `KNOWN_GAPS_AND_INTENTIONAL_OMISSIONS.md`.
           
           Generated archive: `archive/NZ_SCCM_MA_ORIGIN_RECOVERY_20260823.zip`.
           EOF
