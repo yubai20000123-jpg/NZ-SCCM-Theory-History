@@ -1,23 +1,26 @@
 # RC CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-23 02:46 +08:00
+**Updated:** 2026-08-23 03:22 +08:00
 
 ```text
-RC_PRIORITY = MARGUERRE_AIRY_GLOBAL_MATERIAL_CLOSURE
+RC_PRIORITY = MARGUERRE_AIRY_TERMINAL_CAPACITY_RECALC_P1_P14_P21
 STRUCTURAL_MAINLINE = MARGUERRE_AIRY_EXPLICIT_RETAINED
 AIRY_FUNCTION = RETAINED
-MATERIAL_SHAPE_ENRICHMENT = PAUSED_PENDING_STRUCTURAL_REGRESSION
 EXPLICIT_ANALYTIC_PHILOSOPHY = RETAIN
 FORMAL_SPATIAL_QUADRATURE = 0
 FORMAL_MATERIAL_POINTS = 0
 Pf_IN_ROOT_SELECTION = 0
 
 MA_V1_POSTBUCKLING_LAW = Pcr*q/(q+q0) + C*q*(q+2*q0)
-MA_V1_GLOBAL_FOLD_CONDITION = dPpb_dq_EQ_0
-MA_V1_GEOMETRIC_GLOBAL_FOLD = PROVEN_ABSENT_FOR_q_GE_0
-MA_V1_REASON = Pcr*q0/(q+q0)^2 + 2*C*(q+q0) > 0
-DELETE_LOCAL_TERMINAL_WITHOUT_GLOBAL_MATERIAL_DEGRADATION = NO_FINITE_Pu
-LOCAL_detJsec_AS_PRIMARY_PLATE_Pu = NOT_ACCEPTED
+MA_V1_MONOTONICITY_PROOF = RETAINED
+MA_V1_GLOBAL_FOLD_REQUIRED_FOR_Pu = FALSE
+MA_V1_Pu_ARCHITECTURE = AIRY_GLOBAL_DEMAND_THEN_TERMINAL_RESULTANT_CAPACITY
+CURRENT_MATERIAL_IN_AIRY_COMPATIBILITY = NO
+NONLINEAR_CURRENT_MATERIAL_GLOBAL_WORK_CLOSURE = RETRACTED
+
+UNIAXIAL_TERMINAL = N_M_CAPACITY_CONTACT
+BIAXIAL_TERMINAL = LONGITUDINAL_PLUS_TRANSVERSE_RESULTANT_CAPACITY
+LOCAL_detJsec_AS_PRIMARY_PLATE_Pu = REJECTED
 
 PANEL21_GEOMETRY_AUDIT = PASS
 PANEL21_FULL_LENGTH = 2440 mm
@@ -44,9 +47,8 @@ PANEL21_MA_V1_mSTAR = 2
 PANEL21_MA_V1_ell = 1220 mm
 PANEL21_MA_V1_Pcr = 407.136279059 kN
 PANEL21_MA_V1_C = 608339.560103 kN
-PANEL21_MA_V1_G = 498638.983691 N/mm
-PANEL21_MA_V1_GLOBAL_FOLD = NONE
-PANEL21_MA_V1_FINITE_Pu_WITHOUT_MATERIAL_TERMINAL = NOT_DEFINED
+PANEL21_MA_V1_MONOTONE_Ppb = TRUE
+PANEL21_MA_V1_NO_GLOBAL_FOLD = TRUE_BUT_NOT_A_Pu_FAILURE
 
 A_GLOBAL_IDEAL_M2_STATUS = HISTORICAL_BLIND_BASELINE_CONFIRMED
 A_GLOBAL_IDEAL_M2_HALFWAVE = 1220 mm
@@ -58,75 +60,74 @@ A2_INDEPENDENT_GLOBAL_CASE21_Pu = 365.607776 kN
 
 B_LOCAL_IDEAL_M2_STATUS = EXECUTED_CURRENT_NC_M6_F03
 B_LOCAL_IDEAL_M2_CRITERION = SECTION_EQUILIBRIUM_PLUS_detJsec_EQ_0
-B_LOCAL_IDEAL_M2_u = 0.25 / 0.75_SYMMETRIC
-B_LOCAL_IDEAL_M2_q = 0.001531925676
 B_LOCAL_IDEAL_M2_P = 160.778280 kN
-B_LOCAL_IDEAL_M2_ERROR_VS_Pf_POSTCHECK = -56.3473 percent
-
 D_LOCAL_SOURCE_WAVE_STATUS = REPRODUCED
 D_LOCAL_SOURCE_WAVE_CRITERION = SECTION_EQUILIBRIUM_PLUS_detJsec_EQ_0
-D_LOCAL_SOURCE_WAVE_u = 0.3559087784
-D_LOCAL_SOURCE_WAVE_q = 0.001347589965
 D_LOCAL_SOURCE_WAVE_P = 173.209915 kN
-D_LOCAL_SOURCE_WAVE_ERROR_VS_Pf_POSTCHECK = -52.9721 percent
-
-B_TO_D_SOURCE_WAVE_EFFECT = +12.431635 kN / +7.732 percent
-A_TO_B_COLLAPSE = -207.411057 kN / -56.333 percent
-A_TO_D_COLLAPSE = -194.979422 kN / -52.956 percent
 
 WAVELENGTH_ERROR_AS_PANEL21_CAUSE = REJECTED
 SOURCE_WAVEFORM_DETAIL_AS_PRIMARY_COLLAPSE_CAUSE = REJECTED
-LOCAL_SECTION_FOLD_ARCHITECTURE = PRIMARY_STRUCTURAL_REGRESSION_SUSPECT
-A_MINUS_B_100_PERCENT_ATTRIBUTABLE_TO_CRITERION = NOT_YET_PROVEN
-A_VS_B_MATERIAL_REPRESENTATION_CONFOUND = PRESENT
+LOCAL_SECTION_FOLD_ARCHITECTURE = REJECTED_AS_PRIMARY_PLATE_Pu
 
-OLD_CELL_C_GLOBAL_SOURCE_WAVE_RqL = PAUSED_AFTER_STRUCTURAL_MAINLINE_IDENTITY_CORRECTION
-OLD_CELL_C_NUMERICAL_VALUE = NOT_INVENTED
-OLD_D15_GLOBAL_RqL = HISTORICAL_ACCURATE_BASELINE_NOT_CURRENT_MA_OPERATOR
-
-NC_M6_2D_TC_CRACK_FRONT = RETAIN_AS_MATERIAL_DIAGNOSTIC
+NC_M6_2D_TC_CRACK_FRONT = RETAIN_AS_TERMINAL_MATERIAL_CANDIDATE
+TWO_INDEPENDENT_AFFINE_SLOPE_SECTION_INTERFACE = RETAIN
 EXACT_SECTION_PRIMITIVE = RETAIN
-SAME_LAW_JACOBIAN = RETAIN
+SAME_LAW_JACOBIAN = RETAIN_FOR_MATERIAL_MAP_AUDIT_NOT_Pu_TERMINAL
 VC_GAMMA_10_OVER_17 = SOURCE_CORRECT
 NC_CC_REOPEN = NO
 BH04_OR_OTHER_POSTCRACK_TUNING = PAUSED
 
-NEXT_RC_TASK = DERIVE_NONLINEAR_CURRENT_MATERIAL_GLOBAL_WORK_CLOSURE_UNDER_MARGUERRE_AIRY
-NEXT_GATE_1 = AIRY_MEMBRANE_EQUILIBRIUM_RETAINED
-NEXT_GATE_2 = CURRENT_MATERIAL_PARTICIPATES_IN_GLOBAL_RESIDUAL_AND_TANGENT
-NEXT_GATE_3 = SAME_LAW_JACOBIAN
-NEXT_GATE_4 = ZERO_FORMAL_SPATIAL_QUADRATURE
-NEXT_GATE_5 = PANEL21_PURE_M2_REDUCTION_CHECK
+NEXT_RC_TASK = RECOMPUTE_PANEL1_PANEL14_PANEL21_WITH_MA_DEMAND_PLUS_M6_TERMINAL_CAPACITY
+NEXT_GATE_1 = AIRY_STRUCTURAL_DEMAND_UNCHANGED
+NEXT_GATE_2 = NC_M6_ONLY_IN_TERMINAL_CAPACITY_LAYER
+NEXT_GATE_3 = UNIAXIAL_N_M_OR_BIAXIAL_RESULTANT_CAPACITY_CONTACT
+NEXT_GATE_4 = NO_detJsec_AS_PLATE_Pu
+NEXT_GATE_5 = ZERO_FORMAL_SPATIAL_QUADRATURE
 NEXT_GATE_6 = NO_Pf_IN_OPERATOR_OR_ROOT_SELECTION
-NEXT_DECISION = OLD_RqL_DETERMINANT_MAY_REAPPEAR_ONLY_AS_GENERIC_GLOBAL_LIMIT_IDENTITY_NOT_AS_OLD_STRUCTURAL_PATH_IMPORT
 ```
 
-## Latest Marguerre–Airy global-limit gate
+## Governing structural theory
 
-`semantic_v2/40_execution/20260823_0246__NZSCCM__MARGUERRE_AIRY_GLOBAL_LIMIT_GATE_PANEL21_R01.md`
+`semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
 
-Reproduction driver:
+The governing V1 already separates the roles correctly:
 
-`semantic_v2/40_execution/rc/20260823_0246__NZSCCM__PANEL21_MARGUERRE_AIRY_GLOBAL_FOLD_GATE.py`
+\[
+\boxed{
+\text{Airy/Galerkin structural demand}
+\to
+\text{terminal material/resultant-capacity contact}
+\to
+P_u
+}
+\]
 
-## Prior regression audit retained
+For the original uniaxial RC reduction,
+
+\[
+F_N(q,s,c)=n_d(s,q)-n_u(c)=0,
+\]
+
+\[
+F_M(q,s,c)=m_d(s,q)-m_u(c)=0,
+\]
+
+and for an interior controller,
+
+\[
+F_S(q,s,c)=0.
+\]
+
+Thus `P=P_pb(q)` is obtained from Airy first; material does not enter Airy compatibility.  The monotonicity `Ppb'(q)>0` was intentionally used in V1 to eliminate path tracking, not as evidence that a finite `Pu` cannot exist.
+
+## Architecture correction
+
+`semantic_v2/40_execution/20260823_0322__NZSCCM__MARGUERRE_AIRY_TERMINAL_CAPACITY_ARCHITECTURE_CORRECTION.md`
+
+The 20260823_0246 audit is retained only for its correct monotonicity proof.  Its proposal to derive a nonlinear current-material Airy closure is superseded.
+
+## Prior Panel21 regression evidence
 
 `semantic_v2/40_execution/20260823_0058__NZSCCM__PANEL21_GLOBAL_VS_LOCAL_LIMIT_REGRESSION_AUDIT_R01.md`
 
-Controlled B/D reproduction driver:
-
-`semantic_v2/40_execution/rc/20260823_0058__NZSCCM__PANEL21_ABCD_REGRESSION_BD_DRIVER.py`
-
-## Current interpretation
-
-The structural mainline is the existing Marguerre–Airy explicit V1, not a newly invented old-D15 replacement.  Its Airy compatibility and membrane-equilibrium field are retained.
-
-A direct exact gate now proves that the reduced V1 postbuckling law is strictly monotone for every admissible q>=0 because Pcr>0, C>0 and q0>0.  Therefore merely deleting the local section terminal condition and asking the unchanged V1 backbone for a global fold cannot produce a finite Pu.  Panel21 reproduces m*=2, ell=1220 mm, Pcr=407.136279 kN and C=608339.560103 kN, but dPpb/dq never vanishes.
-
-The physical missing ingredient is global participation of the current material law in the residual/tangent.  Material degradation was previously confined to the terminal/capacity layer while the V1 Airy/Galerkin backbone retained fixed elastic A and D.  The next task is therefore to derive a nonlinear current-material global work closure that retains Airy membrane equilibrium, same-law tangent and zero formal spatial quadrature.
-
-The generic two-coordinate global limit determinant
-
-L = P_,D Rq_,q - P_,q Rq_,D = 0
-
-may reappear as a mathematical load-limit identity once a current-material global residual Rq(D,q) exists.  Its determinant form alone does not reinstate the old D15 structural derivation.
+The key regression conclusion retained is that the later local current-section singularity `det Jsec=0` is not an acceptable automatic plate-ultimate criterion.
