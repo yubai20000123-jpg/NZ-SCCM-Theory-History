@@ -1,14 +1,23 @@
 # RC CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-23 01:08 +08:00
+**Updated:** 2026-08-23 02:46 +08:00
 
 ```text
-RC_PRIORITY = PANEL21_GLOBAL_VS_LOCAL_LIMIT_REGRESSION
+RC_PRIORITY = MARGUERRE_AIRY_GLOBAL_MATERIAL_CLOSURE
+STRUCTURAL_MAINLINE = MARGUERRE_AIRY_EXPLICIT_RETAINED
+AIRY_FUNCTION = RETAINED
 MATERIAL_SHAPE_ENRICHMENT = PAUSED_PENDING_STRUCTURAL_REGRESSION
 EXPLICIT_ANALYTIC_PHILOSOPHY = RETAIN
 FORMAL_SPATIAL_QUADRATURE = 0
 FORMAL_MATERIAL_POINTS = 0
 Pf_IN_ROOT_SELECTION = 0
+
+MA_V1_POSTBUCKLING_LAW = Pcr*q/(q+q0) + C*q*(q+2*q0)
+MA_V1_GLOBAL_FOLD_CONDITION = dPpb_dq_EQ_0
+MA_V1_GEOMETRIC_GLOBAL_FOLD = PROVEN_ABSENT_FOR_q_GE_0
+MA_V1_REASON = Pcr*q0/(q+q0)^2 + 2*C*(q+q0) > 0
+DELETE_LOCAL_TERMINAL_WITHOUT_GLOBAL_MATERIAL_DEGRADATION = NO_FINITE_Pu
+LOCAL_detJsec_AS_PRIMARY_PLATE_Pu = NOT_ACCEPTED
 
 PANEL21_GEOMETRY_AUDIT = PASS
 PANEL21_FULL_LENGTH = 2440 mm
@@ -25,6 +34,19 @@ PANEL21_CORRECT_RHO_X = 0.00375
 PANEL21_CORRECT_RHO_Y = 0.00375
 PANEL21_STEEL_LAYER_Z = 0
 SOURCE_WAVE_1751_REBAR_MAPPING = SUPERSEDED_DOUBLE_COUNT
+
+PANEL21_MA_V1_A11 = 416762.965327 N/mm
+PANEL21_MA_V1_A12 = 72411.833759 N/mm
+PANEL21_MA_V1_A66 = 164938.065784 N/mm
+PANEL21_MA_V1_Dx = 12581716.557892 N*mm
+PANEL21_MA_V1_H = 12581716.557892 N*mm
+PANEL21_MA_V1_mSTAR = 2
+PANEL21_MA_V1_ell = 1220 mm
+PANEL21_MA_V1_Pcr = 407.136279059 kN
+PANEL21_MA_V1_C = 608339.560103 kN
+PANEL21_MA_V1_G = 498638.983691 N/mm
+PANEL21_MA_V1_GLOBAL_FOLD = NONE
+PANEL21_MA_V1_FINITE_Pu_WITHOUT_MATERIAL_TERMINAL = NOT_DEFINED
 
 A_GLOBAL_IDEAL_M2_STATUS = HISTORICAL_BLIND_BASELINE_CONFIRMED
 A_GLOBAL_IDEAL_M2_HALFWAVE = 1220 mm
@@ -58,9 +80,9 @@ LOCAL_SECTION_FOLD_ARCHITECTURE = PRIMARY_STRUCTURAL_REGRESSION_SUSPECT
 A_MINUS_B_100_PERCENT_ATTRIBUTABLE_TO_CRITERION = NOT_YET_PROVEN
 A_VS_B_MATERIAL_REPRESENTATION_CONFOUND = PRESENT
 
-C_GLOBAL_SOURCE_WAVE_STATUS = NOT_YET_OPERATOR_CLOSED
-C_NUMERICAL_VALUE = NOT_INVENTED
-C_REQUIREMENT = GENERALIZE_OLD_GLOBAL_Rq_L_OPERATOR_TO_FINITE_Phi_WITH_OLD_MATERIAL_UNCHANGED
+OLD_CELL_C_GLOBAL_SOURCE_WAVE_RqL = PAUSED_AFTER_STRUCTURAL_MAINLINE_IDENTITY_CORRECTION
+OLD_CELL_C_NUMERICAL_VALUE = NOT_INVENTED
+OLD_D15_GLOBAL_RqL = HISTORICAL_ACCURATE_BASELINE_NOT_CURRENT_MA_OPERATOR
 
 NC_M6_2D_TC_CRACK_FRONT = RETAIN_AS_MATERIAL_DIAGNOSTIC
 EXACT_SECTION_PRIMITIVE = RETAIN
@@ -69,15 +91,25 @@ VC_GAMMA_10_OVER_17 = SOURCE_CORRECT
 NC_CC_REOPEN = NO
 BH04_OR_OTHER_POSTCRACK_TUNING = PAUSED
 
-NEXT_RC_TASK = DERIVE_AND_EXECUTE_CELL_C_GLOBAL_FINITE_WAVE_Rq_L
-NEXT_GATE_1 = RECOVER_GLOBAL_WORK_CONJUGATE_IDENTITY_WITH_FINITE_Phi
-NEXT_GATE_2 = ZERO_SPATIAL_QUADRATURE
-NEXT_GATE_3 = OLD_GLOBAL_MATERIAL_UNCHANGED
-NEXT_GATE_4 = NO_Pf_IN_OPERATOR_OR_ROOT_SELECTION
-NEXT_DECISION = LOCAL_detJsec_MAY_ONLY_BE_SECONDARY_GATE_UNLESS_EQUIVALENCE_TO_GLOBAL_LIMIT_IS_PROVEN
+NEXT_RC_TASK = DERIVE_NONLINEAR_CURRENT_MATERIAL_GLOBAL_WORK_CLOSURE_UNDER_MARGUERRE_AIRY
+NEXT_GATE_1 = AIRY_MEMBRANE_EQUILIBRIUM_RETAINED
+NEXT_GATE_2 = CURRENT_MATERIAL_PARTICIPATES_IN_GLOBAL_RESIDUAL_AND_TANGENT
+NEXT_GATE_3 = SAME_LAW_JACOBIAN
+NEXT_GATE_4 = ZERO_FORMAL_SPATIAL_QUADRATURE
+NEXT_GATE_5 = PANEL21_PURE_M2_REDUCTION_CHECK
+NEXT_GATE_6 = NO_Pf_IN_OPERATOR_OR_ROOT_SELECTION
+NEXT_DECISION = OLD_RqL_DETERMINANT_MAY_REAPPEAR_ONLY_AS_GENERIC_GLOBAL_LIMIT_IDENTITY_NOT_AS_OLD_STRUCTURAL_PATH_IMPORT
 ```
 
-## Latest regression audit
+## Latest Marguerre–Airy global-limit gate
+
+`semantic_v2/40_execution/20260823_0246__NZSCCM__MARGUERRE_AIRY_GLOBAL_LIMIT_GATE_PANEL21_R01.md`
+
+Reproduction driver:
+
+`semantic_v2/40_execution/rc/20260823_0246__NZSCCM__PANEL21_MARGUERRE_AIRY_GLOBAL_FOLD_GATE.py`
+
+## Prior regression audit retained
 
 `semantic_v2/40_execution/20260823_0058__NZSCCM__PANEL21_GLOBAL_VS_LOCAL_LIMIT_REGRESSION_AUDIT_R01.md`
 
@@ -87,10 +119,14 @@ Controlled B/D reproduction driver:
 
 ## Current interpretation
 
-Panel21 already had a fresh blind global prediction of `368.189337 kN` using the same `1220 mm` ideal two-halfwave scale and the correct `0.00375` directional steel ratio, with experiment read only afterward. An independent fresh Case21 run gave `365.607776 kN`. Therefore the later approximately 50% low result cannot be blamed on halfwave selection.
+The structural mainline is the existing Marguerre–Airy explicit V1, not a newly invented old-D15 replacement.  Its Airy compatibility and membrane-equilibrium field are retained.
 
-The controlled B/D calculation now holds current NC-M6/F03 material, corrected steel mapping, full two-slope section kinematics and the local `det Jsec=0` criterion fixed while changing only the longitudinal waveform. Returning from the prescribed multi-harmonic source waveform to the ideal pure `m=2` waveform does not recover capacity; it lowers the local fold from `173.209915 kN` to `160.778280 kN`. The source-wave detail therefore is not the mechanism that produced the historical-to-current collapse.
+A direct exact gate now proves that the reduced V1 postbuckling law is strictly monotone for every admissible q>=0 because Pcr>0, C>0 and q0>0.  Therefore merely deleting the local section terminal condition and asking the unchanged V1 backbone for a global fold cannot produce a finite Pu.  Panel21 reproduces m*=2, ell=1220 mm, Pcr=407.136279 kN and C=608339.560103 kN, but dPpb/dq never vanishes.
 
-The main unresolved change is the replacement of the old plate-level global limit definition `Rq=0, L=0` by a local section-equilibrium singularity `det Jsec=0`, together with a material-representation change. Because A and B do not yet use the same material map, the full `207.4 kN` A-to-B loss cannot be assigned solely to the criterion. Nevertheless the local-fold architecture is now the primary structural regression suspect and material tuning is paused.
+The physical missing ingredient is global participation of the current material law in the residual/tangent.  Material degradation was previously confined to the terminal/capacity layer while the V1 Airy/Galerkin backbone retained fixed elastic A and D.  The next task is therefore to derive a nonlinear current-material global work closure that retains Airy membrane equilibrium, same-law tangent and zero formal spatial quadrature.
 
-Cell C is intentionally not assigned a value. It requires the old global work-conjugate `Rq,L` operator to be generalized to the prescribed finite `Phi(y)` without replacing it by the later local section system. The next task is to derive that generalized finite-wave global operator with the old global material law unchanged and zero formal spatial quadrature.
+The generic two-coordinate global limit determinant
+
+L = P_,D Rq_,q - P_,q Rq_,D = 0
+
+may reappear as a mathematical load-limit identity once a current-material global residual Rq(D,q) exists.  Its determinant form alone does not reinstate the old D15 structural derivation.
