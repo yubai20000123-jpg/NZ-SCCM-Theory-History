@@ -1,1 +1,0 @@
-Working note: explicit derivation in progress. This file is intentionally non-authoritative and will be superseded by the completed ledger in this session.

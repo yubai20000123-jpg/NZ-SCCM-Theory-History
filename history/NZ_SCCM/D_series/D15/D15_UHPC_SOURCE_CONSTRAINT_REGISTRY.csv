@@ -1,7 +1,0 @@
-index,id,scope,source,constraint,matrix_action,status
-0,UHPC-L0-COMP,UHPC_L0,Hu Wenxu / locked UCFT material module,"sigma_c/fc=(n*xi-xi^2)/(1+(n-2)*xi), 0<=xi<=1; sigma_c/fc=xi/[2(xi-1)^2+xi], xi>1",calibrate a3..a6 only from material curve; no panel-load fitting,SOURCE_LOCKED
-1,UHPC-L0-TENS,UHPC_L0,Hu Wenxu / locked UCFT material module,sigma_t=fct*exp(1/mt)*xi_t*exp[-xi_t^mt/mt],material-only calibration and certification of a3..a6,SOURCE_LOCKED
-2,UHPC-L0-BOUNDARY,UHPC_L0,Current locked Layer-0 contract,beta11=beta21=beta31=beta02=beta12=beta03=0,no biaxial/confinement enhancement in Layer 0,PROJECT_LOCKED
-3,UHPC-L1-DP,UHPC_L1_OPTIONAL,Zhou Jun 2023,tau_oct^u/fc=0.00995+1.394*(sigma_oct^u/fc),material-level calibration/validation of beta coefficients only,SOURCE_OPTIONAL
-4,UHPC-L1-WW,UHPC_L1_OPTIONAL,Wang Shunan et al. 2024,"Willam-Warnke meridians with a0=b0=0.1775,a1=-1.4554,a2=-0.1576,b1=-0.7806,b2=-0.1763; fiber factors kc,kt",material-level calibration/validation of beta coefficients only,SOURCE_OPTIONAL
-5,FHWA-TENSION-QUAL,UHPC_MATERIAL_QUALIFICATION,FHWA 2024 workshop manual / AASHTO UHPC guide context,"direct-tension interface: f_t,cr; f_t,loc; epsilon_t,loc; AASHTO T397 testing",optional material-data replacement for project tensile curve,EXTERNAL_PRIMARY

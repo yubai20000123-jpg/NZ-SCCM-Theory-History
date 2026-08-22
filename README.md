@@ -1,21 +1,26 @@
-# NZ-SCCM Theory History
+# NZ-SCCM Marguerre–Airy origin recovery archive
 
-本仓库是“轴压稳定矩阵理论推导 / NZ-SCCM”的长期工作仓库。
+Canonical branch: `archive/ma-origin-recovery-20260823`
 
-## 只从两个入口开始
+This is a deliberately isolated historical recovery package. It preserves the source chain requested by the user and is not a "latest theory" branch.
 
-1. `START_HERE.md` — 新对话/新工作入口。
-2. `current/CURRENT_STATE.md` — 当前理论、当前 Case21 状态、当前未闭合项。
+## Recovered scope
 
-## 四个工作层
+1. Airy literature discovery / research process and formalization.
+2. First explicit trial calculations.
+3. Combined reinforced-concrete + steel-shell-concrete explicit calculation stage.
+4. Corrected-geometry steel-shell-UHPC stage.
+5. Normal-concrete constitutive research.
+6. UHPC constitutive research.
 
-- `current/`：当前仍有效、会直接影响下一步计算/推导的文件。
-- `governance/`：证据等级、恢复、同步、来源摘录和项目优先级规则。
-- `evidence/`：原始来源定位、有效原文摘录、材料证据、来源数据与审计台账。
-- `history/`：被替代、失败、回滚、历史求解器、D/G/R/UCFT 路线与原始历史/恢复定位。
+## Architecture identity preserved
 
-迁移期全文镜像、旧 checkpoint、R2 snapshot 等已从当前 `main` 删除，避免 GitHub 搜索污染；如确需恢复，使用 `history/recovery/PRE_CLEAN_REPOSITORY_POINTER.md` 指向的历史 commit。
+The historical Marguerre–Airy route separates two layers:
 
-## 使用原则
+`geometry / elastic A,D -> Marguerre–Airy structural demand -> material / section capacity constraint -> Pu`
 
-后续工作不要全仓加载。先读 `START_HERE.md`，再按当前任务最小化读取。文献事实以原始 PDF/正式来源为最高证据；项目历史以原始用户—助手对话/原始执行工件为最高证据。结构承载力不得用于反标材料参数。
+Nonlinear concrete/UHPC constitutive laws are terminal capacity/failure constraints; they are not inserted back into the Airy compatibility operator.
+
+The later 2026-08-23 detour that attempted to interpret `dPpb/dq=0` as the ultimate condition, or to insert nonlinear current material into the Airy global residual, is intentionally excluded from this archive.
+
+See `RECOVERY_SCOPE_LOCK.md` and `MANIFEST.json` for the binding scope and provenance rules.

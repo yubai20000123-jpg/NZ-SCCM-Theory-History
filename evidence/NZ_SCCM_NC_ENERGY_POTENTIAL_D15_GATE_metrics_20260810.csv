@@ -1,4 +1,0 @@
-potential_max_abs,potential_p95_abs,stress_max_abs_fc,stress_p95_abs_fc,tangent_max_abs_normalized,tangent_p95_abs_normalized,max_spurious_tension_in_compression_fc,max_spurious_compression_in_tension_fc,compression_overshoot_beyond_fc,potential_degree_N,max_invariant_monomials_before_D15
-135.055197,126.124869,105.476529,93.058239,86.766694,71.986324,105.185120,0.682103,53.236538,8,25
-4.144058,3.491604,5.723855,4.761838,9.910178,8.354566,5.533162,0.748071,4.331491,10,36
-0.231823,0.166272,0.879333,0.405728,9.918593,5.441321,0.328363,0.810240,0.083387,12,49

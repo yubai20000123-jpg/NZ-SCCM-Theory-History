@@ -1,6 +1,0 @@
-case,D_peak_quadratic,P_NZ_peak_MN,P_Zhou_lower_MN,NZ_minus_Zhou_pct,lambda_Zhou,identity
-S0_Z6,0.7051,37.50942609,49.6724359,-24.486437,1.4341068510119812,accepted current degree-32 a/500 local-progressive-cap engineering diagnostic
-S1_a8000,0.6668604227110648,40.77320836287494,50.250137,-18.859508,1.3782443508427495,engineering peak estimate from degree-20 connected Rq branch locators; degree-32 checkpoint confirms max neighborhood
-S2_b10000,0.6995952922169723,37.000192007573546,44.130467,-16.157262,1.2400424061895594,engineering peak estimate from degree-20 connected Rq branch locators; degree-32 checkpoint confirms max neighborhood
-S3_a8000_b10000,0.6470428007086144,39.60800742084011,44.684656,-11.361056,1.215388248168341,engineering peak estimate from degree-20 connected Rq branch locators; degree-32 checkpoint confirms max neighborhood
-S4_minus5pct,0.6504999036676207,38.16740797866629,47.946569,-20.395956,1.3625149364994724,engineering peak estimate from degree-20 connected Rq branch locators; degree-32 checkpoint confirms max neighborhood

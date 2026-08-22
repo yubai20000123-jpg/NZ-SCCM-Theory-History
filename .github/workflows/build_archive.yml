@@ -1,0 +1,69 @@
+name: Build isolated MA origin archive
+on:
+  push:
+    branches: ["archive/ma-origin-recovery-20260823"]
+    paths-ignore:
+      - "archive/NZ_SCCM_MA_ORIGIN_RECOVERY_20260823.zip"
+      - "audit/PROVENANCE_SHA256.json"
+      - "AUDIT_REPORT.md"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit-and-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: archive/ma-origin-recovery-20260823
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Independent audit 1 - completeness
+        run: python audit_programs/audit_01_completeness.py
+      - name: Independent audit 2 - purity
+        run: python audit_programs/audit_02_purity_scope.py
+      - name: Independent audit 3 - provenance hashes
+        run: python audit_programs/audit_03_provenance_hash.py
+      - name: Independent audit 4 - branch scope
+        run: python audit_programs/audit_04_branch_scope_guard.py
+      - name: Build deterministic recovery ZIP
+        run: |
+          mkdir -p archive
+          python - <<'PY'
+          import json,pathlib,zipfile
+          r=pathlib.Path('.')
+          m=json.loads((r/'MANIFEST.json').read_text())
+          out=r/'archive/NZ_SCCM_MA_ORIGIN_RECOVERY_20260823.zip'
+          files=['README.md','RECOVERY_SCOPE_LOCK.md','MANIFEST.json']
+          files += [x['destination'] for x in m['payload']]
+          files += [str(p) for p in sorted((r/'audit_programs').glob('*.py'))]
+          files += [str(p) for p in sorted((r/'audit').glob('*')) if p.is_file()]
+          with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
+            for f in files:
+              z.write(f,f)
+          PY
+      - name: Post-ZIP completeness audit
+        run: python audit_programs/audit_01_completeness.py --post-zip
+      - name: Write audit report
+        run: |
+          cat > AUDIT_REPORT.md <<'EOF'
+          # AUDIT REPORT
+          
+          All four independent supervisor programs passed in GitHub Actions:
+          
+          1. completeness / six requested historical categories;
+          2. purity / no unmanifested payload and no forbidden wrong-detour tokens;
+          3. provenance / exact Git blob hash equality plus SHA-256 inventory;
+          4. branch-scope / canonical isolated branch identity.
+          
+          Generated archive: `archive/NZ_SCCM_MA_ORIGIN_RECOVERY_20260823.zip`.
+          EOF
+      - name: Commit generated archive and reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add archive/NZ_SCCM_MA_ORIGIN_RECOVERY_20260823.zip audit/PROVENANCE_SHA256.json AUDIT_REPORT.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Build audited Marguerre-Airy origin recovery archive"
+          git push origin HEAD:archive/ma-origin-recovery-20260823
