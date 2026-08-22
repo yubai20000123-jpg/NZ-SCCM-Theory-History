@@ -1,7 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 13:40 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / SUHPC_2D_RESOLVED / NC_TC_R1_MEMORYLESS_CANDIDATE / Z6_S0_ENDPOINT_RESOLVED / Z_GENERAL_S_FINAL_PU_OPEN / CONSTITUTIVE_PIVOT_GATED / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-22 14:40 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / SUHPC_2D_RESOLVED / NC_TC_R1_GENERAL_S_RETIRED / NC_TC_R2_COMPACT_CANDIDATE / Z6_S0_AND_S0PLUS_LIMIT_RESOLVED / STEEL_ACTIVESET_GATE / Z_GLOBAL_PU_OPEN / USER_ACCEPTANCE_PENDING`
 
 ## 0. Governing structural mainline
 
@@ -17,11 +17,9 @@ The governing sequence remains
 \to
 \text{Airy 2D membrane demand}
 \to
-\text{finite 2D material-capacity/current judgment}
+\text{finite 2D phase/material current-capacity judgment}
 }
 \]
-
-and not a second material-point/history solver.
 
 ```text
 N_formal_spatial_sampling = 0
@@ -39,9 +37,9 @@ USER_ACCEPTANCE = PENDING
 
 ---
 
-## 1. Current material source-of-truth chain
+## 1. Current source-of-truth chain
 
-Existing seven-gate chain:
+Material seven-gate chain:
 
 1. `semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
 2. `semantic_v2/20_theory/20260822_1240__NZSCCM__UHPC_ZHANG_BACKBONE_AND_LIU_CC_CONTINUOUS_SOURCE_MIN_GATE.md`
@@ -49,17 +47,21 @@ Existing seven-gate chain:
 4. `semantic_v2/20_theory/20260822_1315__NZSCCM__NC_UHPC_7GATE_MATERIAL_CERTIFICATE_V1.md`
 5. `semantic_v2/20_theory/20260822_1320__NZSCCM__NC_CC_EQ317_PRINTED_TYPO_VS_FIG32_APPENDIXB_RESOLUTION.md`
 
-New postcrack-TC candidate audit:
+Superseded postcrack candidate audit retained for provenance:
 
 6. `semantic_v2/20_theory/20260822_1338__NZSCCM__NC_TC_MEMORYLESS_REDUCTION_R1_AND_ALTERNATIVE_MODEL_AUDIT.md`
 
-Current endpoint execution:
+Current NC postcrack/compactness audit:
 
-7. `semantic_v2/40_execution/20260822_1340__NZSCCM__Z6_TC_R1_ENDPOINT_EXECUTION_AND_PIVOT_DECISION.md`
+7. `semantic_v2/20_theory/20260822_1440__NZSCCM__NC_TC_R1_COMPACTNESS_FAIL_TC_R2_REDUCTION_AND_STEEL_ACTIVESET_AUDIT.md`
 
-Reproducible endpoint solver:
+Current Z6 execution:
 
-8. `semantic_v2/40_execution/steel_shell/20260822_1340__NZSCCM__Z6_TC_R1_DIRECT_ENDPOINT_SOLVER.py`
+8. `semantic_v2/40_execution/20260822_1440__NZSCCM__Z6_TC_R2_S0_AND_GENERAL_S_STEEL_ACTIVESET_DIAGNOSTIC.md`
+
+Direct no-quadrature reproduction:
+
+9. `semantic_v2/40_execution/steel_shell/20260822_1440__NZSCCM__Z6_TC_R2_DIRECT_ENDPOINT_AND_S0PLUS_LIMIT_SOLVER.py`
 
 Current result summary:
 
@@ -67,26 +69,58 @@ Current result summary:
 
 ---
 
-## 2. NC: literal Nguyen vs TC-R1
-
-Nguyen Ch.3/App.B postcrack TC/TCX stores crack-event and historical peak quantities such as `eps_cr`, `f_cr`, precrack shear modulus, softened peak stress/strain and crushing state. Therefore:
+## 2. Normal concrete axis/source identities
 
 ```text
-LITERAL_NGUYEN_POSTCRACK_TC_SOURCE_FIDELITY = ORACLE_PASS
-LITERAL_NGUYEN_POSTCRACK_TC_G6 = FAIL
-LITERAL_NGUYEN_POSTCRACK_TC = OFF_MAINLINE
+NC_COMPRESSION_BACKBONE = SAENZ_RETAINED_FOR_SWARTZ_RANGE
+NC_SWARTZ_COMPRESSION_STRENGTH = 0.85_FCYL_SOURCE_IN_SITU_PANEL_STRENGTH
+NC_SWARTZ_SPECIMEN_FT = SOURCE_OPEN
+NC_CC_CAPACITY = NGUYEN/FOSTER-KUPFER SOURCE ENVELOPE / PASS_G6
+NC_TC_CRACKING_BOUNDARY = NGUYEN_EQ318_319 / SOURCE TRANSITION MARKER
+LITERAL_NGUYEN_POSTCRACK_TC = OFF_MAINLINE_ORACLE
 ```
 
-The active project candidate is the source-constrained memoryless reduction `TC-R1`:
+The Nguyen TC envelope remains a cracking/state-transition marker and is not treated as the final steel-shell ultimate cap.
 
-- T5 current tension;
-- Poisson-free material-coordinate transverse tension;
-- Nguyen/Vecchio–Collins current compression softening;
-- Saenz with the current softened peak;
-- bounded source-style postcrush continuation;
-- no crack-event or TCX history variable.
+---
 
-The key excess/material-coordinate tension is
+## 3. TC-R1 compactness result
+
+The prior memoryless TC-R1 local map is no longer the current general-s production candidate.
+
+For affine through-thickness material coordinates:
+
+- T5 contributes an [8/8] rational function in z;
+- the TC-R1 shifted-peak Saenz branch reduces symbolically to a rational function with numerator degree 5 and denominator degree 8 in z.
+
+An exact section implementation would therefore require an opaque eighth-degree root/primitive compiler.
+
+```text
+TC_R1_LOCAL_MEMORYLESS_MAP = HISTORICAL_PASS_CANDIDATE
+TC_R1_GENERAL_S_COMPACTNESS = FAIL
+TC_R1_GENERAL_S_PRODUCTION = RETIRED
+TC_R1_OLD_Z6_S0_50_22069 = HISTORICAL_PROVENANCE_ONLY
+```
+
+---
+
+## 4. Current NC TC candidate = TC-R2
+
+TC-R2 uses a smaller source-transparent current law:
+
+### Tension
+
+Finite Foster/Nguyen piecewise tension with
+
+\[
+\alpha_1=10,
+\qquad
+\alpha_2=0.3
+\]
+
+where `alpha2=0.3` is declared as the conservative project choice within the source range, not a structural Pu fit.
+
+### Compression softening
 
 \[
 \widehat\varepsilon_t
@@ -94,159 +128,73 @@ The key excess/material-coordinate tension is
 =\varepsilon_0\lambda_t,
 \]
 
-and
-
 \[
 \gamma_c(\lambda_t)
 =\min\left(1,\frac1{0.8+0.34\lambda_t}\right).
 \]
 
-Pure uniaxial compression gives `lambda_t=0 -> gamma_c=1`, preventing false Poisson-induced softening.
+### Compression current law
 
-```text
-NC_TC_R1_MATERIAL_7GATE = PASS_CANDIDATE
-NC_TC_R1_PRODUCTION_FREEZE = NOT_YET
-```
-
-All previously solved Z TC-transition coordinates lie far below `lambda_t=10/17`, so TC-R1 connects continuously to the current pretransition T5+Saenz map without storing a crack event.
-
----
-
-## 3. NC source-transition status remains distinct
-
-Nguyen Eqs. (3.18)–(3.19) remain the source-identified TC cracking/state-transition boundary, not the final steel-shell ultimate hard cap.
-
-|Case|P_TC-transition / MN|
-|---|---:|
-|Z0|27.033151885|
-|Z1|17.093528920|
-|Z2|27.033151885|
-|Z3|36.744639968|
-|Z4|56.203522296|
-|Z5|10.747333454|
-|Z6|23.832330467|
-
-```text
-Z0_Z6_NC_TC_TRANSITION = SOLVED
-TC_ENVELOPE_AS_FINAL_SC_PU = REJECTED
-OLD_Z6_51_345 = SUPERSEDED
-```
-
----
-
-## 4. Z6 TC-R1 direct endpoint result
-
-At `s=0`, bending demand vanishes and every phase is uniform through thickness. The current finite algebraic phase-equilibrium system plus the longitudinal-web compression-yield active boundary gives:
+The fixed uniaxial NC compression backbone is scaled directly:
 
 \[
-\lambda_t\approx0.7249185,
+\boxed{
+\sigma_c^{TC}(\lambda_t,\lambda_c)
+=\gamma_c(\lambda_t)\sigma_{c0}(\lambda_c).
+}
+\]
+
+This is a declared `PROJECT-DERIVED CURRENT-STRENGTH REDUCTION`, not literal Nguyen.
+
+For
+
+\[
+\lambda_t(z)=\lambda_{t0}+\nu_c\chi z,
 \qquad
-\lambda_c\approx-0.7904509,
+\lambda_c(z)=\lambda_{c0}+\chi z,
 \]
 
-\[
-q\approx0.01202893,
-\]
-
-\[
-\boxed{P_{Z6,s=0}^{TC-R1}\approx50.22069\ \mathrm{MN}}.
-\]
-
-At that point:
-
-\[
-\gamma_c\approx0.95559147,
-\]
-
-concrete is approximately
-
-\[
-(\sigma_x^c,\sigma_y^c)=(+0.913890,-28.338086)\ \mathrm{MPa},
-\]
-
-both outer steel faces are on the plane-stress radial cap, and the equivalent longitudinal web reaches
-
-\[
-\sigma_y^w=-355\ \mathrm{MPa}.
-\]
-
-A one-sided active-set derivative audit shows that this is a terminal complementarity kink of the **s=0 finite system**.
-
-Only after solving, its difference is about `+1.483%` vs Zhou and `+0.069%` vs Winter. Neither comparator entered the calculation.
+all material fronts are affine in z. Required concrete/web primitives reduce to polynomial, linear/quadratic rational, factored linear×quadratic rational, logarithmic and arctangent forms.
 
 ```text
-Z6_TC_R1_S0_ENDPOINT = RESOLVED_CANDIDATE
-Z6_TC_R1_S0_P = 50.22069 MN
+NC_TC_R2_MATERIAL_7GATE = PASS_CANDIDATE
+TC_R2_GENERAL_S_CONCRETE_WEB_COMPACTNESS = PASS
+NC_TC_R2_PRODUCTION_FREEZE = PENDING_STEEL_PHASE_GATE
 ```
 
 ---
 
-## 5. Why final Z6/Z0–Z6 Pu is still open
+## 5. Selected Swartz RC working status
 
-For `s>0`, nonzero bending makes longitudinal strain vary through thickness. A formal TC-R1 integration then requires finite branch-front primitives for:
+No specimen-specific Swartz tensile data were found in the current source set, so the selected RC numerical table remains a working diagnostic under the transparent common `ft` assumption rather than specimen-source-closed production values.
 
-- rational T5;
-- softened Saenz;
-- plane-stress steel radial cap;
-- partially yielded web.
+|Case|1D / kN|2D working / kN|Pf / kN|
+|---:|---:|---:|---:|
+|1|567.712|495.989|490.194|
+|2|561.638|501.025|506.652|
+|9|515.424|515.424|625.865|
+|10|534.711|534.711|696.147|
+|19|339.177|339.177|377.654|
+|20|335.013|335.013|372.761|
+|21|350.460|350.460|368.313|
+|22|351.679|351.679|355.858|
 
-A numerical thickness-integration scan was used only as an **off-mainline diagnostic** and suggests that the controlling location may shift a small distance away from exactly `s=0`. Since formal spatial/thickness quadrature is prohibited, the diagnostic value is not adopted.
-
-```text
-Z6_TC_R1_GENERAL_S_DIAGNOSTIC = OFF_MAINLINE_ONLY
-Z6_TC_R1_GENERAL_S_FORMAL_CERTIFICATE = OPEN
-Z0_Z6_FINAL_POSTCRACK_2D_PU = OPEN
-```
-
-The project will not automatically build a large opaque primitive/compiler layer merely to preserve Nguyen lineage.
+TC-R2 has not yet been propagated through this RC table; no old RC value is silently relabelled as a TC-R2 result.
 
 ---
 
-## 6. Constitutive replacement gate
-
-Alternative literature models were screened in parallel:
-
-### Cedolin–Mulas 1984
-
-Very strong G4/G6 architecture: total explicit biaxial stress–strain law, explicit plane-stress transverse-strain elimination, only three material parameters. Current recovered source scope is, however, up to peak; a source-closed post-transverse-crack TC continuation is not yet established.
-
-```text
-CEDOLIN_MULAS_1984 = FIRST_REPLACEMENT_CANDIDATE
-DROP_IN_POSTCRACK_TC_REPLACEMENT = NOT_YET_PROVEN
-```
-
-### Bažant–Tsubaki 1980
-
-Algebraic total-strain core with peak, strain softening and dilatancy, but the source domain is plain concrete free of continuous cracks. Use as a postpeak total-strain oracle unless cracked-TC domain equivalence is demonstrated.
-
-```text
-BAZANT_TSUBAKI_1980 = POSTPEAK_TOTAL_STRAIN_ORACLE
-```
-
-Darwin–Pecknold remains a biaxial reference/oracle; full softened-membrane models are richer but currently too state/path/reinforcement-heavy for the production G6 role.
-
-The explicit pivot rule is now:
-
-```text
-IF TC_R1 general-s closure cannot be written with a small auditable finite primitive set
-OR branch/admissibility certification fails,
-THEN switch the NC production audit first to Cedolin-Mulas 1984,
-without using structural Pu to identify coefficients.
-```
-
----
-
-## 7. UHPC remains unchanged by this NC step
+## 6. UHPC current state — unchanged
 
 ```text
 UHPC_COMPRESSION_BACKBONE = ZHANG_2023
+HU_WENXU = HISTORICAL_UNIAXIAL_COMPARATOR_ONLY
 UHPC_TENSION_BACKBONE = HIEW_2024
 UHPC_CC_CAPACITY = LIU2024_SOURCE_MIN_PROJECT_REDUCTION
 UHPC_TC_CT_CAPACITY = LIU2024_SEQUENTIAL_CONSERVATIVE_ENVELOPE
 UHPC_TT_CAPACITY = LIU2024_UNIAXIAL_TENSILE_CAP
 ```
 
-Current post-7gate values remain:
+Current post-7gate results remain:
 
 |Case|Current 2D / MN|
 |---|---:|
@@ -258,4 +206,115 @@ Current post-7gate values remain:
 |BH032|11.21046|
 |BH050|12.77154|
 
-No UHPC parameter or result was changed in the present NC TC-R1 step.
+---
+
+## 7. Z0–Z6 Nguyen-source TC transitions remain solved
+
+|Case|P_TC-transition / MN|
+|---|---:|
+|Z0|27.033151885|
+|Z1|17.093528920|
+|Z2|27.033151885|
+|Z3|36.744639968|
+|Z4|56.203522296|
+|Z5|10.747333454|
+|Z6|23.832330467|
+
+These remain source cracking markers, not final Pu.
+
+---
+
+## 8. Z6 TC-R2 direct finite results
+
+### Symmetric s=0 endpoint
+
+Uniform section + web compression-yield boundary gives
+
+\[
+\lambda_t=0.72375111146,
+\quad
+\lambda_c=-0.79066099525,
+\]
+
+\[
+q=0.012018755437,
+\]
+
+\[
+\boxed{P_{Z6,s=0}^{TC-R2}=50.1863826545\ \mathrm{MN}}.
+\]
+
+### Asymmetric s→0+ face-yield limit
+
+A separate uniform, no-quadrature limiting system gives
+
+\[
+\lambda_t\approx0.53638962,
+\quad
+\lambda_c\approx-0.63294763,
+\]
+
+\[
+q\approx0.01163665,
+\]
+
+\[
+\boxed{P_{Z6,s\to0^+}^{face-yield}=48.9055510040\ \mathrm{MN}}.
+\]
+
+At this limit the face elastic trial state has \(\sigma_{VM}=355\) MPa and the equivalent web remains elastic.
+
+A local implicit-function audit gives
+
+\[
+P_{terminal}(s)
+=48.9055510+4.68s+O(s^2)\ \mathrm{MN}
+\]
+
+as \(s\to0^+\), so the asymmetric terminal family exists locally and rises from the limit.
+
+```text
+Z6_TC_R2_S0_ENDPOINT = RESOLVED_CANDIDATE
+Z6_TC_R2_S0PLUS_LOCAL_LIMIT = RESOLVED_CANDIDATE
+Z6_TC_R2_GLOBAL_S_MINIMUM = OPEN
+```
+
+---
+
+## 9. New current blocker = steel phase active-set topology
+
+An explicitly off-mainline numerical-through-thickness diagnostic was used only to diagnose general-s topology. It is not a formal integration method and its spatially integrated values are not adopted as Pu.
+
+It shows that for finite \(s>0\), one face can be capped while the second remains elastic. When the second face reaches the radial cap, the assumed doubly-capped continuation may point immediately back across the active surface. As \(s\to0^+\), this terminal family approaches `48.905551 MN`, whereas the exactly symmetric `s=0` doubly-capped branch can continue to the later web-yield endpoint `50.186383 MN`.
+
+```text
+STEEL_FACE_CURRENT_LAW = MEMORYLESS PLANE-STRESS ELASTIC-PERFECTLY-PLASTIC RADIAL CAP
+STEEL_FACE_ACTIVESET_NONUNIFORM_LIMIT = IDENTIFIED
+GENERAL_S_FINAL_Z_PU = OPEN
+```
+
+Changing the NC concrete law again does not remove this steel-phase obstruction.
+
+---
+
+## 10. Constitutive pivot governance
+
+Cedolin–Mulas remains an NC alternative, but is deferred because the concrete primitive problem is now compact under TC-R2 while the active blocker is the steel phase.
+
+Next hard gate:
+
+\[
+\boxed{\text{STEEL-FACE SOURCE CONSTITUTIVE AUDIT}.}
+\]
+
+Required decision:
+
+1. if the governing steel source supports a monotonic hardening/deformation-theory current law, derive it explicitly and re-audit the active set without fitting any structural comparator;
+2. if the source is genuinely ideal elastic-perfectly-plastic, retain it and treat the nonuniform limit as an explicit theoretical limitation/feature rather than inventing hardening;
+3. do not select Ramberg–Osgood or bilinear hardening parameters from Z6/Zhou/Winter/FEM/experiment.
+
+```text
+CEDOLIN_MULAS_1984 = DEFERRED_NC_ALTERNATIVE
+NEXT_TASK = STEEL_FACE_SOURCE_AUDIT
+Z0_Z6_FINAL_POSTCRACK_2D_PU = OPEN
+```
