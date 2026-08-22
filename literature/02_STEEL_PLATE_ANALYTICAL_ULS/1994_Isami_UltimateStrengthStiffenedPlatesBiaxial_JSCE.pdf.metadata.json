@@ -1,0 +1,29 @@
+{
+  "id": "P0-02",
+  "title": "A Prediction Method of Ultimate Strength for Stiffened Plates under Biaxial In-plane Forces",
+  "authors": [
+    "Hidenori Isami"
+  ],
+  "year": 1994,
+  "journal": "Structural Engineering / Earthquake Engineering, JSCE",
+  "volume": "11",
+  "issue": "1",
+  "pages": "23s-31s",
+  "doi": "",
+  "publisher_url": "https://www.jstage.jst.go.jp/article/jscej1984/1994/489/1994_489_49/_pdf",
+  "fulltext_source_url": "https://www.jstage.jst.go.jp/article/jscej1984/1994/489/1994_489_49/_pdf",
+  "source_type": "publisher",
+  "open_access": true,
+  "license": "J-STAGE Journal Free Access; no separate CC text displayed; committed under OA-source policy",
+  "pdf_committed": true,
+  "pdf_commit_restriction_reason": "",
+  "retrieved_at": "2026-08-23",
+  "sha256": "e9431e7ba714139679eaa68b0153175edc303b14855c644e3090477aa62d6ba8",
+  "file_size_bytes": 1093246,
+  "full_text_verified": true,
+  "status": "FULL_TEXT_ACQUIRED",
+  "failure_reason": "",
+  "preliminary_only": true,
+  "likely_class": "B",
+  "notes": "J-STAGE PDF opens and has 9 pages; first page title, author and abstract verified. DOI was not displayed in the retrieved bibliographic record and is left blank pending Crossref/JSCE audit."
+}
