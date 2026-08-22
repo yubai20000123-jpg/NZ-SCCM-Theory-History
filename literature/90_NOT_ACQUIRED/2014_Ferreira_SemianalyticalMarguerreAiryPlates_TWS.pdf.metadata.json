@@ -1,0 +1,30 @@
+{
+  "id": "P0-06",
+  "title": "Semi-analytical models for the post-buckling analysis and ultimate strength prediction of isotropic and orthotropic plates under uniaxial compression with the unloaded edges free from stresses",
+  "authors": [
+    "P.S. Ferreira",
+    "F.B.E. Virtuoso"
+  ],
+  "year": 2014,
+  "journal": "Thin-Walled Structures",
+  "volume": "82",
+  "issue": "",
+  "pages": "82-94",
+  "doi": "10.1016/j.tws.2014.04.003",
+  "publisher_url": "https://doi.org/10.1016/j.tws.2014.04.003",
+  "fulltext_source_url": "https://doi.org/10.1016/j.tws.2014.04.003",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; redistribution licence not established",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "A",
+  "notes": "DOI and bibliographic record verified; public abstract/metadata only. Institution access may be required."
+}
