@@ -1,11 +1,11 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 12:05 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / EXPLICIT_1D_TO_2D_MATERIAL_JUDGMENT / MATERIAL_REORGANIZATION_7GATE_PARTIAL / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-22 13:15 +09:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / MATERIAL_FORM_7GATE_CERTIFIED / STRUCTURAL_RERUN_NOT_YET_PERFORMED / USER_ACCEPTANCE_PENDING`
 
-## 0. Current mainline
+## 0. Governing structural mainline remains unchanged
 
-The current structural backbone is the finite explicit Marguerre–Airy formulation:
+Current structural theory remains the finite explicit Marguerre–Airy formulation:
 
 \[
 P_{pb}(q)=P_{cr}\frac{q}{q+q_0}+Cq(q+2q_0),
@@ -17,7 +17,7 @@ n(s;q)=\frac{P_{pb}(q)}b+Gq(q+2q_0)(1-2s^2),
 m(s;q)=Jqs,
 \]
 
-with the Airy transverse membrane resultant
+with
 
 \[
 N_x=-\frac{\alpha^2b^2\Delta_A}{8A_{22}}q(q+2q_0)\cos(2\beta y),
@@ -28,11 +28,13 @@ Canonical structural theory:
 
 `semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
 
-Latest acceptance package:
+Pre-material-reorganization 1D/2D acceptance baseline:
 
 `semantic_v2/40_execution/20260822_0745__NZSCCM__EXPLICIT_1D_2D_ASSESSMENT_RC_Z0Z6_SUHPC.md`
 
-The current interpretation is deliberately narrow:
+That package and its RC / Z0–Z6 / steel-shell-UHPC result tables remain the last executed structural results. They have **not** been silently overwritten by the material work below.
+
+The formal execution architecture is still:
 
 \[
 \boxed{
@@ -44,8 +46,6 @@ The current interpretation is deliberately narrow:
 }
 \]
 
-Materials are judgment/capacity objects inside the explicit path, not a second structural solver.
-
 ```text
 N_formal_spatial_sampling = 0
 N_formal_spatial_quadrature = 0
@@ -56,189 +56,222 @@ HISTORY_STATE_MACHINE = OFF_MAINLINE
 HARD_ENVELOPE_HISTORY_OVERLAY = OFF_MAINLINE_DIAGNOSTIC
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
-CURRENT_ASSESSMENT = EXPLICIT_1D_TO_2D_MATERIAL_JUDGMENT
-USER_ACCEPTANCE = PENDING
-```
-
-## 1. Off-mainline diagnostic branches
-
-The following 2026-08-22 branches are retained only as diagnostics/provenance and are not part of the current explicit acceptance path:
-
-- `semantic_v2/40_execution/20260822_0015__NZSCCM__STRICT_HARD_ADMISSIBILITY_CASE1_CASE2_Z6_AUDIT.md`
-- `semantic_v2/40_execution/20260822_0105__NZSCCM__NGUYEN_POST_ENVELOPE_CONTINUATION_CASE1_CASE2_Z6_AUDIT.md`
-
-They must not introduce material points, moving history fronts, post-envelope state machines, or extra runtime hard caps into the current calculation package.
-
-## 2. Selected Swartz RC — current acceptance table
-
-Correct reinforcement source interpretation:
-
-\[
-\rho_x=\rho_y=p_{table}.
-\]
-
-The current 2D RC judgment uses the already-derived finite TC capacity criterion with the common project ordinary-concrete input \(f_t=0.10f_c\). Because Swartz did not report specimen-specific tensile strength, Case1/2 2D values are working common-material predictions, not specimen-specific tensile calibration.
-
-|Case|1D Pu kN|2D Pu kN|Pf kN|1D error|2D error|
-|---:|---:|---:|---:|---:|---:|
-|1|567.712|495.989|490.194|+15.814%|+1.182%|
-|2|561.638|501.025|506.652|+10.853%|−1.111%|
-|9|515.424|515.424|625.865|−17.646%|−17.646%|
-|10|534.711|534.711|696.147|−23.190%|−23.190%|
-|19|339.177|339.177|377.654|−10.188%|−10.188%|
-|20|335.013|335.013|372.761|−10.127%|−10.127%|
-|21|350.460|350.460|368.313|−4.847%|−4.847%|
-|22|351.679|351.679|355.858|−1.174%|−1.174%|
-
-Interpretation remains for user acceptance: the 2D judgment selectively re-cuts Case1/2 and leaves the other selected 1D biases visible.
-
-## 3. Z0–Z6 — current explicit 1D/2D comparison
-
-The values below are freshly regenerated with the current 2026-08-21 Marguerre–Airy explicit formulation. They supersede use of the older AR2 `31.99/20.02/...` numbers as the current 1D column.
-
-|Case|1D Pu MN|2D Pu MN|Zhou MN|Winter MN|ordering|
-|---|---:|---:|---:|---:|---|
-|Z0|37.8257|37.8257|36.9455|41.5008|Zhou < 2D < Winter|
-|Z1|24.7141|24.7141|23.7214|26.1001|Zhou < 2D < Winter|
-|Z2|42.9590|42.9590|41.2134|45.7333|Zhou < 2D < Winter|
-|Z3|46.4949|46.4949|44.3203|49.0469|Zhou < 2D < Winter|
-|Z4|70.2657|70.2657|69.3399|79.3861|Zhou < 2D < Winter|
-|Z5|14.1182|14.1182|14.6816|14.6816|2D < Zhou = Winter|
-|Z6|56.3794|51.3450|49.4868|50.1859|Zhou < Winter < 2D|
-
-Z6 is the only current Z case whose explicit 2D judgment materially changes the 1D root:
-
-\[
-56.3794\to51.3450\ \mathrm{MN},
-\]
-
-or \(-8.9295\%\). It remains `+2.310%` above Winter and is not adjusted to enter the Zhou–Winter bracket.
-
-## 4. Steel-shell UHPC — corrected geometry acceptance table
-
-T120/T360 retain the current web-corrected geometry/results.
-
-For BH005–BH050, the current geometry rebase uses the 37-mm net web height indicated by the Codex geometry audit:
-
-\[
-A_{w,total}=9\times4\times37=1332\ \mathrm{mm^2},
-\qquad
-\rho_w=1332/(42B).
-\]
-
-Fresh corrected-geometry 1D explicit values and finite 2D precheck:
-
-|Case|1D Pu MN|2D Pu MN|Abaqus MN|2D status|
-|---|---:|---:|---:|---|
-|T120|12.3480|12.3480|12.6378|PASS / unchanged|
-|T360|11.2978|11.2978|10.9688|PASS / unchanged|
-|BH005|2.41999|2.41999|2.3558|PASS / unchanged|
-|BH010|4.45287|4.45287|4.3043|PASS / unchanged|
-|BH020|8.17466|8.17466|8.0076|PASS / unchanged|
-|BH032|11.14350|11.14350|10.9905|PASS / unchanged|
-|BH050|13.61827|TRIGGERED / unique Pu OPEN|12.2198*|UHPC transverse-tension criterion active|
-
-Current UHPC tensile judgment anchor:
-
-\[
-f_{t,cr}=9.7677\ \mathrm{MPa}.
-\]
-
-Approximate maximum transverse UHPC tensile stresses at the 1D candidates:
-
-- T120: 8.06 MPa;
-- T360: 7.27 MPa;
-- BH005: −0.52 MPa;
-- BH010: 1.26 MPa;
-- BH020: 4.62 MPa;
-- BH032: 7.34 MPa;
-- BH050: 11.69 MPa.
-
-Thus BH050 is the only current corrected-geometry SUHPC case whose 1D candidate is rejected by the finite 2D tensile judgment. The stripped explicit path does not yet contain a unique finite UHPC TC re-cut formula, so no replacement Pu is invented.
-
-`*` BH050 Abaqus comparator belongs to a different diagnostic model family and has lower validation confidence.
-
-## 5. Decision state before material reorganization
-
-No theory expansion is authorized by the result tables above. They remain retained as the pre-reorganization acceptance baseline and are not silently overwritten by the material-source work below.
-
-```text
-SELECTED_RC_1D_2D_TABLE = EXECUTED
-Z0_Z6_1D_2D_ZHOU_WINTER_TABLE = EXECUTED
-SUHPC_37MM_1D_2D_ABAQUS_TABLE = EXECUTED
-HISTORY_DETOUR = EXCLUDED_FROM_CURRENT_MAINLINE
-USER_ACCEPTANCE = PENDING
-```
-
-## 6. 2026-08-22 11:51–12:05 — NC/UHPC seven-gate material reorganization checkpoint
-
-Material-only reports:
-
-- `semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
-- `semantic_v2/20_theory/20260822_1205__NZSCCM__NC_TC_APPENDIXB_SOURCE_CORRECTION_ADDENDUM.md`
-
-These reports preserve the structural backbone and recover finite source-level 2D capacity objects without material points or loading-history state machines.
-
-### NC
-
-Nguyen/Foster–Kupfer source recovery establishes:
-
-- CC: Nguyen Eq. (3.17) gives a finite rational ray gate and passes G6.
-- TC/CT major tensile peak: Nguyen Eqs. (3.18)–(3.19) reduce to two straight finite branches meeting at `(p/fc,t/ft)=(0.8,0.6)`.
-- Direct Appendix-B audit shows the same TC route also computes a separate minor-compressive peak branch:
-
-\[
-\sigma_{2p}
-=
-\begin{cases}
-\dfrac{1-3.28\alpha}{(1-\alpha)^2}f_c,&\alpha>-0.2,\\[2mm]
-0.5375f_c,&\alpha\le-0.2.
-\end{cases}
-\]
-
-This extra branch is itself finite/G6-compatible, but the combined physical admissibility meaning of the two directional peak quantities must be source-audited before declaring the complete TC peak-pair capacity gate closed.
-
-The old project `c*=c(1-tau)` and low-parameter CC interaction remain demoted from source identity and retained only as historical project reductions.
-
-```text
-NC_CC_SOURCE_CAPACITY_GATE = PASS
-NC_TC_EQ318_319_TENSILE_PEAK_GATE = PASS_G6
-NC_TC_APPENDIXB_COMPRESSIVE_PEAK_BRANCH = RECOVERED_G6
-NC_TC_COMPLETE_PEAK_PAIR_CAPACITY_INTERPRETATION = SOURCE_AUDIT_PENDING
-NC_FULL_INCREMENTAL_NGUYEN = ORACLE_ONLY
-```
-
-### UHPC
-
-Liu 2024 full biaxial source was recovered far enough to establish:
-
-- CC final proposed piecewise ellipse/parabola Eq. (4): finite G6 ray reduction exists;
-- TT conservative capacity: biaxial tensile capacity taken as uniaxial tensile strength;
-- TC/CT conservative sequential-loading piecewise capacity: finite direct re-cut exists;
-- Hiew remains the tensile-backbone source; Diab/Ferche current-strain TC softening remains a G6-compatible component candidate.
-
-A source-level CC issue remains before full lock:
-
-- Table 5 fitted ellipse coefficient: `c=1.33`;
-- final Eq. (4) machine-readable ellipse coefficient: `1.49`;
-- literal Eq. (4) ellipse/parabola pieces do not meet continuously at the stated `f1/f2=0.5` transition (about 9.12% difference in normalized major compression capacity).
-
-No coefficient is altered to hide this source issue, and no structural comparator is used to resolve it.
-
-```text
-MATERIAL_REORGANIZATION_7GATE = EXECUTED_PARTIAL
 STRUCTURAL_BACKBONE_CHANGED = FALSE
-NC_CC_SOURCE_FINITE_GATE = PASS
-NC_TC_SOURCE_FINITE_COMPONENTS = PASS_G6
-NC_TC_COMPLETE_CAPACITY_INTERPRETATION = OPEN
-UHPC_CC_SOURCE_FORM = RECOVERED
-UHPC_CC_G6_FINITE_REDUCTION = PASS
-UHPC_CC_INTERNAL_JOIN_C0 = PENDING_SOURCE_RECONCILIATION
-UHPC_TC_CT_CAPACITY_GATE = PASS_G6
-UHPC_TT_CAPACITY_GATE = PASS_G6
-UHPC_COMPRESSION_BACKBONE_FINAL_SELECTION = OPEN
-UHPC_FULL_7GATE = NOT_YET_LOCKED
-STRUCTURAL_PU_RERUN = NOT_AUTHORIZED
+STRUCTURAL_PU_RERUN = NOT_YET_PERFORMED
+USER_ACCEPTANCE = PENDING
 ```
 
-The next allowed action is material-only: (1) reconcile the Nguyen Appendix-B TC peak-pair interpretation, (2) reconcile the Liu 2024 CC source join, and (3) freeze one UHPC uniaxial compression backbone. Structural Pu tables stay frozen until the resulting material certificate passes.
+## 1. 2026-08-22 material reorganization chain
+
+Current material chain, in order:
+
+1. `semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
+2. `semantic_v2/20_theory/20260822_1205__NZSCCM__NC_TC_APPENDIXB_SOURCE_CORRECTION_ADDENDUM.md`
+3. `semantic_v2/20_theory/20260822_1240__NZSCCM__UHPC_ZHANG_BACKBONE_AND_LIU_CC_CONTINUOUS_SOURCE_MIN_GATE.md`
+4. `semantic_v2/20_theory/20260822_1255__NZSCCM__NC_TC_FAILURE_ENVELOPE_VS_APPENDIXB_CONSTITUTIVE_PEAK_RESOLUTION.md`
+5. `semantic_v2/20_theory/20260822_1315__NZSCCM__NC_UHPC_7GATE_MATERIAL_CERTIFICATE_V1.md`
+
+The 13:15 certificate is the current consolidated material source of truth. Earlier temporary `OPEN` statuses are superseded where explicitly resolved below.
+
+## 2. Seven-gate contract
+
+\[
+\begin{array}{ll}
+G_1:&\text{uniaxial compression reduction and parameter identity}\\
+G_2:&\text{uniaxial tension reduction}\\
+G_3:&CC/TC/CT/TT\text{ source support}\\
+G_4:&\text{plane-stress / Poisson consistency}\\
+G_5:&\text{same-source stress derivative or capacity-gradient closure}\\
+G_6:&\text{finite direct algebraic/analytic calculation}\\
+G_7:&\text{no structural Pu backfit}
+\end{array}
+\]
+
+`G6` remains the hard production constraint.
+
+## 3. NC — current material identity
+
+### 3.1 Swartz parameter identity
+
+For Swartz panels:
+
+- `fcyl` and `eps0` are panel-specific companion-cylinder measured anchors;
+- Nguyen explicitly uses
+
+\[
+\boxed{f_c=0.85f'_{cyl}}
+\]
+
+as the panel in-situ analysis strength to account for the difference from standard cylinders;
+- `E0` belongs to the same source lineage as an approximately derived modulus rather than a third independent measured panel property;
+- specimen-specific Swartz tensile strength was not reported, so `ft=0.10fc` remains a transparent common project assumption where a tensile input is required.
+
+```text
+NC_SWARTZ_COMPRESSION_STRENGTH = 0.85_FCYL_SOURCE_IN_SITU_PANEL_STRENGTH
+NC_SWARTZ_SPECIMEN_FT = SOURCE_OPEN
+```
+
+### 3.2 NC stress backbones
+
+```text
+NC_COMPRESSION_BACKBONE = SAENZ_RETAINED_FOR_SWARTZ_RANGE
+NC_TENSION_BACKBONE = T5_FOSTER_PROJECT_REDUCTION_RETAINED
+```
+
+No new single-axis model is selected merely to improve structural error.
+
+### 3.3 NC finite 2D capacity gates
+
+CC from Nguyen/Foster–Kupfer Eq. (3.17):
+
+\[
+K_{CC}^{NC}(a)=\frac{1+3.65a}{(1+a)^2},
+\qquad a=p_m/p_M,
+\]
+
+\[
+\lambda_{CC}^{NC}=\frac{f_cK_{CC}^{NC}(a)}{p_M^d}.
+\]
+
+TC/CT from Nguyen failure-envelope Eqs. (3.18)–(3.19):
+
+\[
+\frac{p}{f_c}+\frac{t}{3f_t}=1
+\]
+
+and
+
+\[
+\frac{p}{2f_c}+\frac{t}{f_t}=1,
+\]
+
+meeting at
+
+\[
+(p/f_c,t/f_t)=(0.8,0.6).
+\]
+
+The Appendix-B extra minor-compressive `sig2p` branch is now resolved as a constitutive equivalent-uniaxial peak/modulus object, not a second replacement capacity envelope.
+
+TT keeps the previously source-qualified finite T5-based project reduction; the current task did not identify a new TT coefficient.
+
+```text
+NC_CC_CAPACITY = NGUYEN_EQ317 / PASS_G6
+NC_TC_CT_CAPACITY = NGUYEN_EQ318_319 / PASS_G6
+NC_TC_SOURCE_KINK = RETAINED
+NC_TT = RETAINED_SOURCE_QUALIFIED_PROJECT_REDUCTION
+NC_FULL_INCREMENTAL_NGUYEN = ORACLE_ONLY
+NC_MATERIAL_FORM_7GATE = PASS
+```
+
+## 4. UHPC — current material identity
+
+### 4.1 Compression backbone
+
+The current production UHPC compression backbone is now Zhang 2023:
+
+\[
+g_a(x)=\frac{rx}{r-1+x^r},
+\qquad
+r=\frac{E_c}{E_c-f_c/\varepsilon_{c0}},
+\]
+
+with zero-confinement postpeak
+
+\[
+g_d(x)=0.18+\frac{0.82}{1+\frac23(x-1)^2}.
+\]
+
+Current material-level values:
+
+\[
+f_c=141.1\ \mathrm{MPa},
+\quad E_c=43.4\ \mathrm{GPa},
+\quad \varepsilon_{c0}=0.0035,
+\quad \nu=0.20,
+\quad V_f=2\%.
+\]
+
+Only `fc=141.1 MPa` is user-immutable; the other values were retained after material-source review.
+
+Finite analytic section primitives exist for both Zhang branches, so this choice does not introduce formal quadrature.
+
+```text
+UHPC_COMPRESSION_BACKBONE = ZHANG_2023
+HU_WENXU = HISTORICAL_UNIAXIAL_COMPARATOR_ONLY
+UHPC_ZHANG_G6 = PASS
+```
+
+### 4.2 Tension backbone
+
+```text
+UHPC_TENSION_BACKBONE = HIEW_2024
+```
+
+The fibre-bridged monotonic sequence remains elastic -> strain hardening -> peak -> localization -> pull-out softening.
+
+### 4.3 UHPC finite 2D capacity gates
+
+CC: Liu 2024 source curves are retained without modifying coefficients. Because the literal published/preprint Eq. (4) switch gives a value discontinuity, the project capacity gate uses the conservative lower envelope of Liu's own two source curves:
+
+\[
+K_E(r)=\frac1{\sqrt{r^2-1.49r+1}},
+\]
+
+\[
+K_P(r)=\frac{r+7.98}{(r+1.85)^2},
+\]
+
+\[
+\boxed{K_{CC,U}(r)=\min[K_E(r),K_P(r)].}
+\]
+
+Unique crossover:
+
+\[
+r_*=0.576358545117484,
+\qquad K(r_*)=1.45337946681509.
+\]
+
+The value is continuous; one finite capacity-gradient cusp remains and is handled as a finite branch event rather than hidden by an arbitrary smoothing width.
+
+TC/CT: Liu 2024 conservative sequential-loading envelope is the capacity gate. An optional current-stress softening component may use only excess transverse tension
+
+\[
+\varepsilon_{t,ex}=\max(0,\varepsilon_t+\nu\varepsilon_c),
+\]
+
+so pure Poisson expansion under uniaxial compression does not activate TC softening.
+
+TT: Liu 2024 conservative biaxial tensile capacity equals the uniaxial tensile capacity, while Hiew remains the tensile stress backbone.
+
+```text
+UHPC_CC_CAPACITY = LIU2024_SOURCE_MIN_PROJECT_REDUCTION / PASS_G6
+UHPC_CC_VALUE_CONTINUITY = PASS
+UHPC_CC_C1 = FINITE_SOURCE_MIN_CUSP
+UHPC_TC_CT_CAPACITY = LIU2024_SEQUENTIAL_CONSERVATIVE_ENVELOPE / PASS_G6
+UHPC_TT_CAPACITY = LIU2024_UNIAXIAL_TENSILE_CAP / PASS_G6
+UHPC_TC_CURRENT_SOFTENING = EXCESS_TENSION_ONLY
+UHPC_MATERIAL_FORM_7GATE = PASS_WITH_DECLARED_FINITE_CC_CAPACITY_CUSP
+```
+
+## 5. Combined material certificate
+
+```text
+MATERIAL_FORM_7GATE_CERTIFICATE = PASS_WITH_DECLARED_SOURCE_KINKS_AND_PARAMETER_CAVEATS
+
+NC_MATERIAL_FORM_7GATE = PASS
+NC_SWARTZ_SPECIMEN_FT = SOURCE_OPEN
+
+UHPC_MATERIAL_FORM_7GATE = PASS_WITH_DECLARED_FINITE_CC_CAPACITY_CUSP
+
+N_formal_spatial_sampling = 0
+N_formal_spatial_quadrature = 0
+N_material_points = 0
+LOAD_PATH_TRACKING = 0
+HISTORY_STATE_MACHINE = OFF_MAINLINE
+EXPERIMENT_IN_ROOT_SELECTION = 0
+FEM_IN_ROOT_SELECTION = 0
+```
+
+The explicit material-form gate is now complete enough to **permit** the next structural 1D -> Airy 2D -> finite capacity re-evaluation. That structural re-evaluation has not yet been performed in this state file and must not use experimental/fem values to choose material parameters or roots.
