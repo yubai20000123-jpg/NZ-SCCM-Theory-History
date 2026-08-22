@@ -1,0 +1,31 @@
+{
+  "id": "P0-04",
+  "title": "Large deflection orthotropic plate approach to develop ultimate strength formulations for stiffened panels under combined biaxial compression/tension and lateral pressure",
+  "authors": [
+    "J.K. Paik",
+    "A.K. Thayamballi",
+    "B.J. Kim"
+  ],
+  "year": 2001,
+  "journal": "Thin-Walled Structures",
+  "volume": "39",
+  "issue": "3",
+  "pages": "215-246",
+  "doi": "10.1016/S0263-8231(00)00059-8",
+  "publisher_url": "https://www.sciencedirect.com/science/article/pii/S0263823100000598",
+  "fulltext_source_url": "https://www.sciencedirect.com/science/article/pii/S0263823100000598",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; redistribution licence not established",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "B",
+  "notes": "ScienceDirect official record and DOI verified; publisher page indicates access through organization/purchase and no public manuscript was located."
+}
