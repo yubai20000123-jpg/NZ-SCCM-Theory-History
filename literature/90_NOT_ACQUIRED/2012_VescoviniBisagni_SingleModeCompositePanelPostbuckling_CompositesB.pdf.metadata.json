@@ -1,0 +1,30 @@
+{
+  "id": "P0-08",
+  "title": "Single-mode solution for post-buckling analysis of composite panels with elastic restraints loaded in compression",
+  "authors": [
+    "R. Vescovini",
+    "C. Bisagni"
+  ],
+  "year": 2012,
+  "journal": "Composites Part B: Engineering",
+  "volume": "43",
+  "issue": "3",
+  "pages": "1258-1274",
+  "doi": "10.1016/j.compositesb.2011.08.029",
+  "publisher_url": "https://doi.org/10.1016/j.compositesb.2011.08.029",
+  "fulltext_source_url": "https://www.sciencedirect.com/science/article/pii/S1359835X11002780",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; redistribution licence not established",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "A",
+  "notes": "DOI and official publisher record verified; no legally redistributable public PDF located."
+}
