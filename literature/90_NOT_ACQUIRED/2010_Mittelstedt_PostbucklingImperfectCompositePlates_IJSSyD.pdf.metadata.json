@@ -1,0 +1,30 @@
+{
+  "id": "P0-07",
+  "title": "Postbuckling of Compressively Loaded Imperfect Composite Plates: Closed-Form Approximate Solutions",
+  "authors": [
+    "C. Mittelstedt",
+    "K.-U. Schröder"
+  ],
+  "year": 2010,
+  "journal": "International Journal of Structural Stability and Dynamics",
+  "volume": "10",
+  "issue": "4",
+  "pages": "761-778",
+  "doi": "10.1142/S0219455410003725",
+  "publisher_url": "https://doi.org/10.1142/S0219455410003725",
+  "fulltext_source_url": "https://publications.rwth-aachen.de/record/42134",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; no redistributable manuscript located",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "A",
+  "notes": "RWTH Publications record and DOI verified; record did not expose an openly downloadable manuscript."
+}
