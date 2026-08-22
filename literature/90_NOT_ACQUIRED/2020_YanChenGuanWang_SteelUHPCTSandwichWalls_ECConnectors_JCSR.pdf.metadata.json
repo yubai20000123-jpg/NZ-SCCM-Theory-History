@@ -1,0 +1,32 @@
+{
+  "id": "P0-12",
+  "title": "Compressive behaviours of steel-UHPC-steel sandwich composite walls using novel EC connectors",
+  "authors": [
+    "Jia-Bao Yan",
+    "Anzhen Chen",
+    "Huining Guan",
+    "Tao Wang"
+  ],
+  "year": 2020,
+  "journal": "Journal of Constructional Steel Research",
+  "volume": "173",
+  "issue": "",
+  "pages": "106244",
+  "doi": "10.1016/j.jcsr.2020.106244",
+  "publisher_url": "https://www.sciencedirect.com/science/article/pii/S0143974X20307963",
+  "fulltext_source_url": "https://www.sciencedirect.com/science/article/pii/S0143974X20307963",
+  "source_type": "library_subscription",
+  "open_access": false,
+  "license": "Publisher subscription; redistribution licence not established",
+  "pdf_committed": false,
+  "pdf_commit_restriction_reason": "PDF_NOT_COMMITTED_LICENSE_RESTRICTED / FULL_TEXT_NOT_ACQUIRED",
+  "retrieved_at": "2026-08-23",
+  "sha256": "",
+  "file_size_bytes": null,
+  "full_text_verified": false,
+  "status": "FULL_TEXT_NOT_ACQUIRED",
+  "failure_reason": "No legally redistributable public full text located in the current search pass; publisher/institution access may require subscription or interactive login.",
+  "preliminary_only": true,
+  "likely_class": "E",
+  "notes": "Official ScienceDirect record verifies title and DOI; author list includes Huining Guan in addition to the three names in the initial target list. No legally redistributable public PDF located."
+}
