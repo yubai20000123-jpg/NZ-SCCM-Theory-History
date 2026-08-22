@@ -1,7 +1,7 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 07:55 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / EXPLICIT_1D_TO_2D_MATERIAL_JUDGMENT / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-22 11:51 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / EXPLICIT_1D_TO_2D_MATERIAL_JUDGMENT / MATERIAL_REORGANIZATION_7GATE_PARTIAL / USER_ACCEPTANCE_PENDING`
 
 ## 0. Current mainline
 
@@ -158,9 +158,9 @@ Thus BH050 is the only current corrected-geometry SUHPC case whose 1D candidate 
 
 `*` BH050 Abaqus comparator belongs to a different diagnostic model family and has lower validation confidence.
 
-## 5. Decision state
+## 5. Decision state before material reorganization
 
-No theory expansion is authorized by this state file. The three result groups above are now presented for user judgment.
+No theory expansion is authorized by the result tables above. They remain retained as the pre-reorganization acceptance baseline and are not silently overwritten by the material-source work below.
 
 ```text
 SELECTED_RC_1D_2D_TABLE = EXECUTED
@@ -169,3 +169,58 @@ SUHPC_37MM_1D_2D_ABAQUS_TABLE = EXECUTED
 HISTORY_DETOUR = EXCLUDED_FROM_CURRENT_MAINLINE
 USER_ACCEPTANCE = PENDING
 ```
+
+## 6. 2026-08-22 11:51 — NC/UHPC seven-gate material reorganization checkpoint
+
+New material-only report:
+
+`semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
+
+This report preserves the structural backbone and recovers finite source-level 2D capacity gates without material points or loading-history state machines.
+
+### NC
+
+Nguyen/Foster–Kupfer source envelope was reduced exactly to finite capacity gates:
+
+- CC: Nguyen Eq. (3.17) -> rational ray gate;
+- TC/CT: Nguyen Eq. (3.18)–(3.19) -> two straight capacity segments meeting at `(p/fc,t/ft)=(0.8,0.6)`;
+- the old project `c*=c(1-tau)` and low-parameter CC interaction are demoted from source identity and retained only as historical project reductions.
+
+```text
+NC_CC_SOURCE_CAPACITY_GATE = PASS
+NC_TC_CT_SOURCE_CAPACITY_GATE = PASS
+NC_FULL_INCREMENTAL_NGUYEN = ORACLE_ONLY
+```
+
+### UHPC
+
+Liu 2024 full biaxial source was recovered far enough to establish:
+
+- CC final proposed piecewise ellipse/parabola Eq. (4): finite G6 ray reduction exists;
+- TT conservative capacity: biaxial tensile capacity taken as uniaxial tensile strength;
+- TC/CT conservative sequential-loading piecewise capacity: finite direct re-cut exists;
+- Hiew remains the tensile-backbone source; Diab/Ferche current-strain TC softening remains a G6-compatible component candidate.
+
+A source-level CC issue remains before full lock:
+
+- Table 5 fitted ellipse coefficient: `c=1.33`;
+- final Eq. (4) machine-readable ellipse coefficient: `1.49`;
+- literal Eq. (4) ellipse/parabola pieces do not meet continuously at the stated `f1/f2=0.5` transition (about 9.12% difference in normalized major compression capacity).
+
+No coefficient is altered to hide this source issue, and no structural comparator is used to resolve it.
+
+```text
+MATERIAL_REORGANIZATION_7GATE = EXECUTED_PARTIAL
+STRUCTURAL_BACKBONE_CHANGED = FALSE
+NC_CC_TC_SOURCE_FINITE_GATE = PASS
+UHPC_CC_SOURCE_FORM = RECOVERED
+UHPC_CC_G6_FINITE_REDUCTION = PASS
+UHPC_CC_INTERNAL_JOIN_C0 = PENDING_SOURCE_RECONCILIATION
+UHPC_TC_CT_CAPACITY_GATE = PASS_G6
+UHPC_TT_CAPACITY_GATE = PASS_G6
+UHPC_COMPRESSION_BACKBONE_FINAL_SELECTION = OPEN
+UHPC_FULL_7GATE = NOT_YET_LOCKED
+STRUCTURAL_PU_RERUN = NOT_AUTHORIZED
+```
+
+The next allowed action is material-only: reconcile the Liu 2024 CC source join and freeze one UHPC uniaxial compression backbone, then rerun the full NC/UHPC material certificate. Structural Pu tables stay frozen until that gate passes.
