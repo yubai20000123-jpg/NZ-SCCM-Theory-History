@@ -1,6 +1,6 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 11:51 +08:00  
+**Updated:** 2026-08-22 12:05 +08:00  
 **Status:** `MARGUERRE_AIRY_EXPLICIT / EXPLICIT_1D_TO_2D_MATERIAL_JUDGMENT / MATERIAL_REORGANIZATION_7GATE_PARTIAL / USER_ACCEPTANCE_PENDING`
 
 ## 0. Current mainline
@@ -170,25 +170,41 @@ HISTORY_DETOUR = EXCLUDED_FROM_CURRENT_MAINLINE
 USER_ACCEPTANCE = PENDING
 ```
 
-## 6. 2026-08-22 11:51 — NC/UHPC seven-gate material reorganization checkpoint
+## 6. 2026-08-22 11:51–12:05 — NC/UHPC seven-gate material reorganization checkpoint
 
-New material-only report:
+Material-only reports:
 
-`semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
+- `semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
+- `semantic_v2/20_theory/20260822_1205__NZSCCM__NC_TC_APPENDIXB_SOURCE_CORRECTION_ADDENDUM.md`
 
-This report preserves the structural backbone and recovers finite source-level 2D capacity gates without material points or loading-history state machines.
+These reports preserve the structural backbone and recover finite source-level 2D capacity objects without material points or loading-history state machines.
 
 ### NC
 
-Nguyen/Foster–Kupfer source envelope was reduced exactly to finite capacity gates:
+Nguyen/Foster–Kupfer source recovery establishes:
 
-- CC: Nguyen Eq. (3.17) -> rational ray gate;
-- TC/CT: Nguyen Eq. (3.18)–(3.19) -> two straight capacity segments meeting at `(p/fc,t/ft)=(0.8,0.6)`;
-- the old project `c*=c(1-tau)` and low-parameter CC interaction are demoted from source identity and retained only as historical project reductions.
+- CC: Nguyen Eq. (3.17) gives a finite rational ray gate and passes G6.
+- TC/CT major tensile peak: Nguyen Eqs. (3.18)–(3.19) reduce to two straight finite branches meeting at `(p/fc,t/ft)=(0.8,0.6)`.
+- Direct Appendix-B audit shows the same TC route also computes a separate minor-compressive peak branch:
+
+\[
+\sigma_{2p}
+=
+\begin{cases}
+\dfrac{1-3.28\alpha}{(1-\alpha)^2}f_c,&\alpha>-0.2,\\[2mm]
+0.5375f_c,&\alpha\le-0.2.
+\end{cases}
+\]
+
+This extra branch is itself finite/G6-compatible, but the combined physical admissibility meaning of the two directional peak quantities must be source-audited before declaring the complete TC peak-pair capacity gate closed.
+
+The old project `c*=c(1-tau)` and low-parameter CC interaction remain demoted from source identity and retained only as historical project reductions.
 
 ```text
 NC_CC_SOURCE_CAPACITY_GATE = PASS
-NC_TC_CT_SOURCE_CAPACITY_GATE = PASS
+NC_TC_EQ318_319_TENSILE_PEAK_GATE = PASS_G6
+NC_TC_APPENDIXB_COMPRESSIVE_PEAK_BRANCH = RECOVERED_G6
+NC_TC_COMPLETE_PEAK_PAIR_CAPACITY_INTERPRETATION = SOURCE_AUDIT_PENDING
 NC_FULL_INCREMENTAL_NGUYEN = ORACLE_ONLY
 ```
 
@@ -212,7 +228,9 @@ No coefficient is altered to hide this source issue, and no structural comparato
 ```text
 MATERIAL_REORGANIZATION_7GATE = EXECUTED_PARTIAL
 STRUCTURAL_BACKBONE_CHANGED = FALSE
-NC_CC_TC_SOURCE_FINITE_GATE = PASS
+NC_CC_SOURCE_FINITE_GATE = PASS
+NC_TC_SOURCE_FINITE_COMPONENTS = PASS_G6
+NC_TC_COMPLETE_CAPACITY_INTERPRETATION = OPEN
 UHPC_CC_SOURCE_FORM = RECOVERED
 UHPC_CC_G6_FINITE_REDUCTION = PASS
 UHPC_CC_INTERNAL_JOIN_C0 = PENDING_SOURCE_RECONCILIATION
@@ -223,4 +241,4 @@ UHPC_FULL_7GATE = NOT_YET_LOCKED
 STRUCTURAL_PU_RERUN = NOT_AUTHORIZED
 ```
 
-The next allowed action is material-only: reconcile the Liu 2024 CC source join and freeze one UHPC uniaxial compression backbone, then rerun the full NC/UHPC material certificate. Structural Pu tables stay frozen until that gate passes.
+The next allowed action is material-only: (1) reconcile the Nguyen Appendix-B TC peak-pair interpretation, (2) reconcile the Liu 2024 CC source join, and (3) freeze one UHPC uniaxial compression backbone. Structural Pu tables stay frozen until the resulting material certificate passes.
