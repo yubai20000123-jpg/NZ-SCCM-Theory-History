@@ -1,34 +1,46 @@
 # RC CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 16:56 +08:00
+**Updated:** 2026-08-22 17:12 +08:00
 
 ```text
-RC_PRIORITY = WAVEFORM / HALFWAVE EFFECT
+RC_PRIORITY = WAVELENGTH CONSISTENCY / WAVEFORM REPRESENTATION
 CURRENT_EXPLICIT_METHOD = UNCHANGED
-CASES_1_16_SOURCE_HALFWAVE = ell=2440 mm
-CASES_17_24_SOURCE_HALFWAVE = ell=1220 mm
-SELECTED_8_OBSERVED_WAVEFORM_1D_RERUN = EXECUTED
-WAVEFORM_CONDITIONED_2D_PROPAGATION = PENDING
+PANELS_1_16_NGUYEN_CLASS = APPROXIMATE ONE-HALF-WAVE
+PANELS_17_24_NGUYEN_CLASS = TWO-HALF-WAVE
+PANELS_1_16_EXACT_ELL_2440 = WITHDRAWN
+PANELS_17_24_EXACT_ELL_1220_PANEL_BY_PANEL = NOT_PROVEN
+20260822_1656_RERUN = ENDPOINT_SENSITIVITY_ONLY
+WAVEFORM_CONDITIONED_2D_PROPAGATION = PAUSED
 MATERIAL_RETUNING = OFF
 Z6_ACTIVESET_PROOF = DEPRIORITIZED_BY_USER
 ```
 
-Current execution:
+Superseding correction:
 
-`semantic_v2/40_execution/20260822_1656__NZSCCM__SWARTZ_RC_OBSERVED_HALFWAVE_CONDITIONED_EXPLICIT_RERUN.md`
+`semantic_v2/40_execution/20260822_1712__NZSCCM__SWARTZ_RC_WAVELENGTH_BINARY_ASSUMPTION_CORRECTION.md`
 
 Current result card:
 
 `current/results/NZ_SCCM_SWARTZ_RC_OBSERVED_HALFWAVE_CURRENT_20260822.md`
 
-## Main result
+## Current source-level conclusion
 
-- Case9/10: imposing the source one-half-wave form changes the current explicit 1D errors from approximately `-17.65/-23.19%` to `-6.54/-13.41%`.
-- Case1/2: the same structural change raises 1D errors from approximately `+15.81/+10.85%` to `+40.57/+32.91%`.
-- Case19-22: source already has two half-waves, therefore unchanged.
+Nguyen's wording for Panels1-16 is `approximate one half sinusoidal wave`, not an exact 2440-mm half-wave identity. Panels17-24 are classified as two half-waves, but exact equal 1220-mm local wavelength is not established specimen-by-specimen. Swartz experimental bulge locations and shapes are not strictly identical within the nominal groups.
 
-This establishes waveform selection as a major structural variable, but not a universal correction.
+## Mathematical consequence
 
-The old Case1/2 `495.989/501.025 kN` m=2 TC-sensitivity values are not transferable to the m=1 rerun.
+An intermediate physical/effective wavelength cannot simply be inserted into the same full-panel one-term Navier sine while preserving exact simply-supported end conditions. It may represent a localized bulge, unequal local half-waves, or a finite mixture of admissible integer modes.
 
-Next RC step: propagate the fixed 2D material constraint through the regenerated m=1 structural demand, then construct a tangent-stiffness mode gate so production does not require experimental waveform input.
+## Next RC step
+
+Before any further 1D/2D ultimate-load rerun:
+
+1. recover/measure source-supported per-panel bulge/nodal locations where possible;
+2. construct a wavelength/effective-shape ledger with `ell_obs/b` or bounded intervals;
+3. test within-pair and within-group consistency;
+4. decide whether the formal representation should remain a discrete Navier mode, use a finite mode mixture, or define a source-closed local representative half-wave;
+5. only then rerun capacity.
+
+```text
+NEXT_RC_TASK = PER_PANEL_WAVELENGTH_CONSISTENCY_AND_REPRESENTATION_AUDIT
+```
