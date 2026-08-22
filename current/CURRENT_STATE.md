@@ -1,25 +1,13 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / POST_7GATE_STRUCTURAL_RERUN_EXECUTED_PARTIAL / SUHPC_2D_UPDATED / Z0_Z6_FINAL_POSTCRACK_2D_PU_OPEN / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-22 13:40 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / SUHPC_2D_RESOLVED / NC_TC_R1_MEMORYLESS_CANDIDATE / Z6_S0_ENDPOINT_RESOLVED / Z_GENERAL_S_FINAL_PU_OPEN / CONSTITUTIVE_PIVOT_GATED / USER_ACCEPTANCE_PENDING`
 
 ## 0. Governing structural mainline
 
-The governing structural theory remains:
+The structural theory remains unchanged:
 
 `semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
-
-Current post-seven-gate structural execution:
-
-`semantic_v2/40_execution/20260822_1315__NZSCCM__POST_7GATE_STRUCTURAL_RERUN_SUHPC_AND_Z_NC_TC_SOURCE_ROLE_AUDIT.md`
-
-Current result summary:
-
-`current/results/NZ_SCCM_POST_7GATE_STRUCTURAL_RERUN_CURRENT_20260822.md`
-
-Z0–Z6 finite source-transition reproduction:
-
-`semantic_v2/40_execution/steel_shell/20260822_1315__NZSCCM__Z0_Z6_NC_TC_SOURCE_TRANSITION_REPRO.py`
 
 The governing sequence remains
 
@@ -29,7 +17,7 @@ The governing sequence remains
 \to
 \text{Airy 2D membrane demand}
 \to
-\text{finite 2D material-capacity / transition judgment}
+\text{finite 2D material-capacity/current judgment}
 }
 \]
 
@@ -46,7 +34,6 @@ HARD_ENVELOPE_HISTORY_OVERLAY = OFF_MAINLINE_DIAGNOSTIC
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
 STRUCTURAL_BACKBONE_CHANGED = FALSE
-STRUCTURAL_PU_RERUN = EXECUTED_PARTIAL
 USER_ACCEPTANCE = PENDING
 ```
 
@@ -54,222 +41,221 @@ USER_ACCEPTANCE = PENDING
 
 ## 1. Current material source-of-truth chain
 
+Existing seven-gate chain:
+
 1. `semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
-2. `semantic_v2/20_theory/20260822_1205__NZSCCM__NC_TC_APPENDIXB_SOURCE_CORRECTION_ADDENDUM.md`
-3. `semantic_v2/20_theory/20260822_1240__NZSCCM__UHPC_ZHANG_BACKBONE_AND_LIU_CC_CONTINUOUS_SOURCE_MIN_GATE.md`
-4. `semantic_v2/20_theory/20260822_1255__NZSCCM__NC_TC_FAILURE_ENVELOPE_VS_APPENDIXB_CONSTITUTIVE_PEAK_RESOLUTION.md`
-5. `semantic_v2/20_theory/20260822_1315__NZSCCM__NC_UHPC_7GATE_MATERIAL_CERTIFICATE_V1.md`
-6. `semantic_v2/20_theory/20260822_1320__NZSCCM__NC_CC_EQ317_PRINTED_TYPO_VS_FIG32_APPENDIXB_RESOLUTION.md`
+2. `semantic_v2/20_theory/20260822_1240__NZSCCM__UHPC_ZHANG_BACKBONE_AND_LIU_CC_CONTINUOUS_SOURCE_MIN_GATE.md`
+3. `semantic_v2/20_theory/20260822_1255__NZSCCM__NC_TC_FAILURE_ENVELOPE_VS_APPENDIXB_CONSTITUTIVE_PEAK_RESOLUTION.md`
+4. `semantic_v2/20_theory/20260822_1315__NZSCCM__NC_UHPC_7GATE_MATERIAL_CERTIFICATE_V1.md`
+5. `semantic_v2/20_theory/20260822_1320__NZSCCM__NC_CC_EQ317_PRINTED_TYPO_VS_FIG32_APPENDIXB_RESOLUTION.md`
 
-```text
-MATERIAL_FORM_7GATE_CERTIFICATE = PASS_WITH_DECLARED_SOURCE_KINKS_AND_PARAMETER_CAVEATS
-NC_MATERIAL_FORM_7GATE = PASS
-UHPC_MATERIAL_FORM_7GATE = PASS_WITH_DECLARED_FINITE_CC_CAPACITY_CUSP
-```
+New postcrack-TC candidate audit:
 
-Important distinction introduced by the structural rerun:
+6. `semantic_v2/20_theory/20260822_1338__NZSCCM__NC_TC_MEMORYLESS_REDUCTION_R1_AND_ALTERNATIVE_MODEL_AUDIT.md`
 
-```text
-NC_TC_SOURCE_FORM_G6 = PASS
-NC_TC_SOURCE_ROLE = CRACKING / STATE-TRANSITION BOUNDARY
-NC_TC_AS_STEEL_SHELL_FINAL_ULTIMATE_CLOSURE = OPEN
-```
+Current endpoint execution:
 
-A source-closed finite transition boundary is not automatically a source-closed final post-crack ultimate law.
+7. `semantic_v2/40_execution/20260822_1340__NZSCCM__Z6_TC_R1_ENDPOINT_EXECUTION_AND_PIVOT_DECISION.md`
+
+Reproducible endpoint solver:
+
+8. `semantic_v2/40_execution/steel_shell/20260822_1340__NZSCCM__Z6_TC_R1_DIRECT_ENDPOINT_SOLVER.py`
+
+Current result summary:
+
+`current/results/NZ_SCCM_POST_7GATE_STRUCTURAL_RERUN_CURRENT_20260822.md`
 
 ---
 
-## 2. Normal concrete (NC)
+## 2. NC: literal Nguyen vs TC-R1
 
-### 2.1 Current axis backbones and parameter identity
+Nguyen Ch.3/App.B postcrack TC/TCX stores crack-event and historical peak quantities such as `eps_cr`, `f_cr`, precrack shear modulus, softened peak stress/strain and crushing state. Therefore:
 
 ```text
-NC_COMPRESSION_BACKBONE = SAENZ_RETAINED_FOR_SWARTZ_RANGE
-NC_TENSION_BACKBONE = T5_FOSTER_PROJECT_REDUCTION_RETAINED
-NC_SWARTZ_COMPRESSION_STRENGTH = 0.85_FCYL_SOURCE_IN_SITU_PANEL_STRENGTH
-NC_SWARTZ_SPECIMEN_FT = SOURCE_OPEN
+LITERAL_NGUYEN_POSTCRACK_TC_SOURCE_FIDELITY = ORACLE_PASS
+LITERAL_NGUYEN_POSTCRACK_TC_G6 = FAIL
+LITERAL_NGUYEN_POSTCRACK_TC = OFF_MAINLINE
 ```
 
-For Swartz, panel-specific companion-cylinder `fcyl` and `eps0` remain measured anchors; `ft=0.10fc` remains a transparent project assumption when required because specimen-specific tensile strength was not reported.
+The active project candidate is the source-constrained memoryless reduction `TC-R1`:
 
-### 2.2 NC CC
+- T5 current tension;
+- Poisson-free material-coordinate transverse tension;
+- Nguyen/Vecchio–Collins current compression softening;
+- Saenz with the current softened peak;
+- bounded source-style postcrush continuation;
+- no crack-event or TCX history variable.
 
-Accepted source form:
-
-\[
-K_{CC}^{NC}(a)=\frac{1+3.65a}{(1+a)^2},\qquad a=p_m/p_M.
-\]
-
-The printed Nguyen Eq. (3.17) denominator `1+alpha^2` remains recorded as a thesis typesetting inconsistency; Figure 3.2 and Appendix-B consistently use `(1+alpha)^2`, which is the accepted source implementation.
-
-### 2.3 NC TC/CT
-
-Current source failure/state-transition envelope:
+The key excess/material-coordinate tension is
 
 \[
-\frac{p}{f_c}+\frac{t}{3f_t}=1
+\widehat\varepsilon_t
+=\frac{\varepsilon_t+\nu\varepsilon_c}{1-\nu^2}
+=\varepsilon_0\lambda_t,
 \]
 
 and
 
 \[
-\frac{p}{2f_c}+\frac{t}{f_t}=1,
+\gamma_c(\lambda_t)
+=\min\left(1,\frac1{0.8+0.34\lambda_t}\right).
 \]
 
-joining at
+Pure uniaxial compression gives `lambda_t=0 -> gamma_c=1`, preventing false Poisson-induced softening.
 
-\[
-(p/f_c,t/f_t)=(0.8,0.6).
-\]
+```text
+NC_TC_R1_MATERIAL_7GATE = PASS_CANDIDATE
+NC_TC_R1_PRODUCTION_FREEZE = NOT_YET
+```
 
-Nguyen source-role audit establishes that breaching this envelope changes the concrete state and causes cracking. The Appendix-B extra `sig2p` and post-crack modified-compression-field response remain constitutive-oracle material, not a second runtime history solver.
+All previously solved Z TC-transition coordinates lie far below `lambda_t=10/17`, so TC-R1 connects continuously to the current pretransition T5+Saenz map without storing a crack event.
 
 ---
 
-## 3. Selected Swartz RC current numerical status
+## 3. NC source-transition status remains distinct
 
-The post-seven-gate run did not identify a new specimen-specific `ft`, so the previously executed selected-set TC results remain **working diagnostics**, not newly specimen-source-closed values:
+Nguyen Eqs. (3.18)–(3.19) remain the source-identified TC cracking/state-transition boundary, not the final steel-shell ultimate hard cap.
 
-|Case|1D / kN|2D working / kN|Pf / kN|
-|---:|---:|---:|---:|
-|1|567.712|495.989|490.194|
-|2|561.638|501.025|506.652|
-|9|515.424|515.424|625.865|
-|10|534.711|534.711|696.147|
-|19|339.177|339.177|377.654|
-|20|335.013|335.013|372.761|
-|21|350.460|350.460|368.313|
-|22|351.679|351.679|355.858|
+|Case|P_TC-transition / MN|
+|---|---:|
+|Z0|27.033151885|
+|Z1|17.093528920|
+|Z2|27.033151885|
+|Z3|36.744639968|
+|Z4|56.203522296|
+|Z5|10.747333454|
+|Z6|23.832330467|
 
 ```text
-RC_SELECTED_NUMERICAL_STATUS = RETAINED_WORKING_DIAGNOSTIC
-RC_SWARTZ_SPECIMEN_FT_SOURCE = OPEN
+Z0_Z6_NC_TC_TRANSITION = SOLVED
+TC_ENVELOPE_AS_FINAL_SC_PU = REJECTED
+OLD_Z6_51_345 = SUPERSEDED
 ```
 
 ---
 
-## 4. UHPC current production working material identity
+## 4. Z6 TC-R1 direct endpoint result
+
+At `s=0`, bending demand vanishes and every phase is uniform through thickness. The current finite algebraic phase-equilibrium system plus the longitudinal-web compression-yield active boundary gives:
+
+\[
+\lambda_t\approx0.7249185,
+\qquad
+\lambda_c\approx-0.7904509,
+\]
+
+\[
+q\approx0.01202893,
+\]
+
+\[
+\boxed{P_{Z6,s=0}^{TC-R1}\approx50.22069\ \mathrm{MN}}.
+\]
+
+At that point:
+
+\[
+\gamma_c\approx0.95559147,
+\]
+
+concrete is approximately
+
+\[
+(\sigma_x^c,\sigma_y^c)=(+0.913890,-28.338086)\ \mathrm{MPa},
+\]
+
+both outer steel faces are on the plane-stress radial cap, and the equivalent longitudinal web reaches
+
+\[
+\sigma_y^w=-355\ \mathrm{MPa}.
+\]
+
+A one-sided active-set derivative audit shows that this is a terminal complementarity kink of the **s=0 finite system**.
+
+Only after solving, its difference is about `+1.483%` vs Zhou and `+0.069%` vs Winter. Neither comparator entered the calculation.
+
+```text
+Z6_TC_R1_S0_ENDPOINT = RESOLVED_CANDIDATE
+Z6_TC_R1_S0_P = 50.22069 MN
+```
+
+---
+
+## 5. Why final Z6/Z0–Z6 Pu is still open
+
+For `s>0`, nonzero bending makes longitudinal strain vary through thickness. A formal TC-R1 integration then requires finite branch-front primitives for:
+
+- rational T5;
+- softened Saenz;
+- plane-stress steel radial cap;
+- partially yielded web.
+
+A numerical thickness-integration scan was used only as an **off-mainline diagnostic** and suggests that the controlling location may shift a small distance away from exactly `s=0`. Since formal spatial/thickness quadrature is prohibited, the diagnostic value is not adopted.
+
+```text
+Z6_TC_R1_GENERAL_S_DIAGNOSTIC = OFF_MAINLINE_ONLY
+Z6_TC_R1_GENERAL_S_FORMAL_CERTIFICATE = OPEN
+Z0_Z6_FINAL_POSTCRACK_2D_PU = OPEN
+```
+
+The project will not automatically build a large opaque primitive/compiler layer merely to preserve Nguyen lineage.
+
+---
+
+## 6. Constitutive replacement gate
+
+Alternative literature models were screened in parallel:
+
+### Cedolin–Mulas 1984
+
+Very strong G4/G6 architecture: total explicit biaxial stress–strain law, explicit plane-stress transverse-strain elimination, only three material parameters. Current recovered source scope is, however, up to peak; a source-closed post-transverse-crack TC continuation is not yet established.
+
+```text
+CEDOLIN_MULAS_1984 = FIRST_REPLACEMENT_CANDIDATE
+DROP_IN_POSTCRACK_TC_REPLACEMENT = NOT_YET_PROVEN
+```
+
+### Bažant–Tsubaki 1980
+
+Algebraic total-strain core with peak, strain softening and dilatancy, but the source domain is plain concrete free of continuous cracks. Use as a postpeak total-strain oracle unless cracked-TC domain equivalence is demonstrated.
+
+```text
+BAZANT_TSUBAKI_1980 = POSTPEAK_TOTAL_STRAIN_ORACLE
+```
+
+Darwin–Pecknold remains a biaxial reference/oracle; full softened-membrane models are richer but currently too state/path/reinforcement-heavy for the production G6 role.
+
+The explicit pivot rule is now:
+
+```text
+IF TC_R1 general-s closure cannot be written with a small auditable finite primitive set
+OR branch/admissibility certification fails,
+THEN switch the NC production audit first to Cedolin-Mulas 1984,
+without using structural Pu to identify coefficients.
+```
+
+---
+
+## 7. UHPC remains unchanged by this NC step
 
 ```text
 UHPC_COMPRESSION_BACKBONE = ZHANG_2023
-HU_WENXU = HISTORICAL_UNIAXIAL_COMPARATOR_ONLY
 UHPC_TENSION_BACKBONE = HIEW_2024
 UHPC_CC_CAPACITY = LIU2024_SOURCE_MIN_PROJECT_REDUCTION
 UHPC_TC_CT_CAPACITY = LIU2024_SEQUENTIAL_CONSERVATIVE_ENVELOPE
 UHPC_TT_CAPACITY = LIU2024_UNIAXIAL_TENSILE_CAP
 ```
 
-Current material-level values remain
+Current post-7gate values remain:
 
-\[
-f_c=141.1\ \mathrm{MPa},\quad E_c=43.4\ \mathrm{GPa},\quad
-\varepsilon_{c0}=0.0035,\quad \nu=0.20,\quad V_f=2\%.
-\]
-
-Only `fc=141.1 MPa` is user-immutable; other retained values remain material-source choices rather than structural-load fits.
-
----
-
-## 5. SUHPC post-seven-gate structural results
-
-| Case | Zhang 1D / MN | Current 2D / MN | status |
-|---|---:|---:|---|
-|T120|12.41101|**12.22252**|Liu TC active / finite re-cut|
-|T360|11.36533|**11.36533**|2D gate inactive|
-|BH005|2.42351|**2.42351**|2D gate inactive|
-|BH010|4.46632|**4.46632**|2D gate inactive|
-|BH020|8.21925|**8.21925**|2D gate inactive|
-|BH032|11.21046|**11.21046**|2D gate inactive|
-|BH050|13.67770|**12.77154**|Liu TC active / finite re-cut|
-
-The former BH050 status `TRIGGERED / unique Pu OPEN` is closed under the current Liu finite-capacity architecture.
-
-```text
-SUHPC_POST_7GATE_RERUN = EXECUTED
-SUHPC_CURRENT_2D_TABLE = RESOLVED
-BH050_CURRENT_2D_PU = 12.77154 MN
-```
-
-The old `current/results/NZ_SCCM_STEEL_SHELL_UHPC_T120_T360_BH005_BH050_CURRENT_SUMMARY_20260821.md` has been explicitly marked superseded and now points here.
-
----
-
-## 6. Z0–Z6 NC source-transition execution
-
-The old material-reorganization-preceding Z table had 1D roots:
-
-|Case|1D Pu / MN|
+|Case|Current 2D / MN|
 |---|---:|
-|Z0|37.82571|
-|Z1|24.71413|
-|Z2|42.95901|
-|Z3|46.49489|
-|Z4|70.26572|
-|Z5|14.11819|
-|Z6|56.37942|
+|T120|12.22252|
+|T360|11.36533|
+|BH005|2.42351|
+|BH010|4.46632|
+|BH020|8.21925|
+|BH032|11.21046|
+|BH050|12.77154|
 
-The old Z6 2D value `51.3450217892 MN` used the historical project TC reduction `c*=c(1-tau)`. That reduction is no longer the current NC source identity, and the old Z6 concrete state violates the newly frozen Nguyen TC source envelope. Therefore:
-
-```text
-OLD_Z6_51_345 = SUPERSEDED_BY_CURRENT_NC_SOURCE_ROLE
-```
-
-### 6.1 Finite compatible s=0 TC transition roots
-
-Using bonded physical strains, Saenz/T5 NC axis maps, plane-stress steel radial cap, web y-clip, Airy `Nx`, and the Nguyen source TC equality gives:
-
-|Case|q_TC|P_TC-transition / MN|segment|p/fc|t/ft|
-|---|---:|---:|---|---:|---:|
-|Z0|0.002007624998|27.033151885|B|0.7587838|0.6206081|
-|Z1|0.002653115864|17.093528920|B|0.6150531|0.6924735|
-|Z2|0.002007624998|27.033151885|B|0.7587838|0.6206081|
-|Z3|0.003023358231|36.744639968|B|0.7285937|0.6357031|
-|Z4|0.001755102366|56.203522296|A|0.8269272|0.5192183|
-|Z5|0.000194052923|10.747333454|A|0.8492317|0.4523048|
-|Z6|0.004014855283|23.832330467|B|0.4061203|0.7969399|
-
-These values are source transition/cracking loads, **not final post-crack Pu**.
-
-If the Nguyen TC transition envelope is incorrectly treated as a terminal steel-shell ultimate hard cap, all Z cases collapse 20–58% below their 1D roots. The source itself does not justify this terminal interpretation: after envelope breach it enters a cracked constitutive continuation.
-
-Therefore:
-
-```text
-Z0_Z6_NC_TC_TRANSITION = SOLVED
-TC_FULL_FAILURE_ENVELOPE_AS_SC_ULTIMATE_HARD_CAP = REJECTED
-Z0_Z6_FINAL_POSTCRACK_2D_PU = OPEN
-```
-
-A later Z6 A-segment mathematical intersection near `48.63 MN` is diagnostic only and must not be promoted because reaching it requires continuation beyond the earlier cracking transition. Comparator proximity is not a root-selection rule.
-
----
-
-## 7. Current stop/go decision
-
-### Closed
-
-- material-form seven-gate certificate;
-- NC CC and TC/CT source envelopes as finite source boundaries;
-- UHPC Zhang compression / Hiew tension / Liu finite capacity architecture;
-- SUHPC post-seven-gate structural rerun, including finite T120 and BH050 re-cuts;
-- Z0–Z6 finite NC-TC transition equations and source-role diagnosis.
-
-### Open
-
-\[
-\boxed{\text{Z0--Z6 final post-crack 2D ultimate capacity}}
-\]
-
-because the source-required post-TC-transition continuation has not yet been reduced to a monotonic, history-free, finite G6-compatible operator.
-
-### Next task
-
-Extract from the Nguyen post-crack TC continuation a source-grounded reduced operator that:
-
-1. connects continuously at the TC transition boundary;
-2. represents post-crack compression softening / tensile bridging sufficiently for ultimate capacity;
-3. remains finite and directly integrable/solvable with zero formal spatial quadrature and zero material points;
-4. transfers across RC and steel-shell NC without Z-specific factors;
-5. uses no structural Pu/comparator data for material identification.
-
-Until this is source-closed, Z0–Z6 final post-crack 2D Pu remains explicitly `OPEN` rather than being filled by a later mathematical intersection or comparator-nearest root.
+No UHPC parameter or result was changed in the present NC TC-R1 step.
