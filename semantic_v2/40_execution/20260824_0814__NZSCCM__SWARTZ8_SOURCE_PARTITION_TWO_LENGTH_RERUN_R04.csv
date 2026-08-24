@@ -1,0 +1,16 @@
+case,source_table2_location,partition_role,ell_mm,q_u,Pu_kN,Pf_kN,error_pct,active_branch,source_status
+4,Bottom 1/3,reported_fraction,813.3333333333,0.00203475106621,595.536028933,534.231415993,11.47529163,T=Fs,Table2 explicitly reports Bottom 1/3
+4,Bottom 1/3,full_length_complement,1626.6666666667,0.00304249163505,679.190439899,534.231415993,27.13412569,T=0,Arithmetic complement of reported 1/3; not separately named as second bulge
+5,Top 2/3 and bottom 1/3,reported_fraction_top,1626.6666666667,0.00338694541855,650.215131412,623.640670460,4.26118151,T=0,Table2 explicitly reports Top 2/3
+5,Top 2/3 and bottom 1/3,reported_fraction_bottom,813.3333333333,0.00221468636673,568.597641936,623.640670460,-8.82608065,T=Fs,Table2 explicitly reports Bottom 1/3
+6,Top 1/3,reported_fraction,813.3333333333,0.00289816149262,621.074068332,691.698461173,-10.21028625,T=Fs,Table2 explicitly reports Top 1/3
+6,Top 1/3,full_length_complement,1626.6666666667,0.00480759107684,717.180728844,691.698461173,3.68401393,T=0,Arithmetic complement of reported 1/3; not separately named as second bulge
+8,Top 1/4,reported_fraction,610.0000000000,0.00141102618660,521.237416033,455.053071241,14.54431339,T=Fs,Table2 explicitly reports Top 1/4
+8,Top 1/4,full_length_complement,1830.0000000000,0.00328691383038,623.192969211,455.053071241,36.94951394,T=0,Arithmetic complement of reported 1/4; not separately named as second bulge
+9,Top 1/3,reported_fraction,813.3333333333,0.00140511666843,592.150218501,625.864781267,-5.38687649,T=0,Table2 explicitly reports Top 1/3
+9,Top 1/3,full_length_complement,1626.6666666667,0.00186289900362,650.922006240,625.864781267,4.00361639,T=0,Arithmetic complement of reported 1/3; not separately named as second bulge
+14,Middle,single_full_length_group_mode,2440.0000000000,0.000957853902036,766.429814635,716.163680057,7.01880533,T=0,Table2 says Middle; 2440 comes from Nguyen approximate one-halfwave group/Fig5.8 interpretation not a Table2 fraction
+21,Top 1/2 and bottom 1/2,reported_fraction_top,1220.0000000000,0.00959073120435,408.081198666,368.312749744,10.79746736,T=0,Table2 explicitly reports Top 1/2; same numerical length as bottom half
+21,Top 1/2 and bottom 1/2,reported_fraction_bottom,1220.0000000000,0.00959073120435,408.081198666,368.312749744,10.79746736,T=0,Table2 explicitly reports Bottom 1/2; duplicate numerical calculation
+23,Top 1/3,reported_fraction,813.3333333333,0.00366500169787,367.810587360,346.961285990,6.00911462,T=0,Table2 explicitly reports Top 1/3
+23,Top 1/3,full_length_complement,1626.6666666667,0.00786947183521,482.938846005,346.961285990,39.19098917,T=0,Arithmetic complement of reported 1/3; not separately named as second bulge
