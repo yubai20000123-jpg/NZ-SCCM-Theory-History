@@ -1,337 +1,244 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-22 14:50 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / SUHPC_2D_RESOLVED / NC_TC_R1_GENERAL_S_RETIRED / NC_TC_R2_COMPACT_CANDIDATE / Z6_S0_AND_S0PLUS_LIMIT_RESOLVED / STEEL_SOURCE_AUDIT_NO_HARDENING / Z_GLOBAL_PU_OPEN / GENERAL_S_ACTIVESET_CERT_NEXT / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-24  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R11_FHWA_EXACT_COMPRESSION_COMPLETE / R12_UHPC_TENSION_INACTIVE / PRIMARY6_LOW_BIAS_PERSISTS / TC_SOFTENING_DEFERRED / R13_FHWA_DESIGN_VS_PHYSICAL_ROLE_GATE_NEXT / USER_ACCEPTANCE_PENDING`
 
-## 0. Governing structural mainline
+> This file supersedes the 2026-08-22 14:50 current-state entry. The Aug-22 TC-R2 general-s certificate is no longer the repository-wide next task. It remains historical/provenance material for the ordinary-concrete branch.
 
-The structural theory remains unchanged:
-
-`semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
-
-The governing sequence remains
-
-\[
-\boxed{
-\text{1D explicit structural/capacity root}
-\to
-\text{Airy 2D membrane demand}
-\to
-\text{finite 2D phase/material current-capacity judgment}
-}
-\]
+## 0. Governing structural mainline — frozen
 
 ```text
-N_formal_spatial_sampling = 0
-N_formal_spatial_quadrature = 0
-N_material_points = 0
+STRUCTURAL_FRONT = FULL_2D_MARGUERRE_AIRY
+TERMINAL_OBJECT = AXIAL_Y_NORMAL_Ny_My
+Nx_Mx_IN_STRUCTURAL_FIELD = YES
+Nx_Mx_HARD_TERMINAL_ON_Y_CUT = NO
+FORMAL_SPATIAL_QUADRATURE = 0
+THICKNESS_QUADRATURE = 0
+MATERIAL_POINTS = 0
 RITZ_ORDER = NONE
 LOAD_PATH_TRACKING = 0
-HISTORY_STATE_MACHINE = OFF_MAINLINE
-HARD_ENVELOPE_HISTORY_OVERLAY = OFF_MAINLINE_DIAGNOSTIC
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
 STRUCTURAL_BACKBONE_CHANGED = FALSE
-USER_ACCEPTANCE = PENDING
 ```
+
+The current production-development sequence is
+
+\[
+\boxed{
+\text{full 2D Marguerre--Airy demand}
+\rightarrow
+\text{finite control-location audit}
+\rightarrow
+\text{strain-compatible }N_y-M_y\text{ section terminal}
+\rightarrow
+P_u.
+}
+\]
+
+Do not reopen the structural front merely because a terminal material/capacity representation changes.
 
 ---
 
 ## 1. Current source-of-truth chain
 
-Material seven-gate chain:
+### R09 — cross-family resultant diagnosis
 
-1. `semantic_v2/20_theory/20260822_1151__NZSCCM__NC_UHPC_7GATE_EXPLICIT_MATERIAL_REORGANIZATION_V1.md`
-2. `semantic_v2/20_theory/20260822_1240__NZSCCM__UHPC_ZHANG_BACKBONE_AND_LIU_CC_CONTINUOUS_SOURCE_MIN_GATE.md`
-3. `semantic_v2/20_theory/20260822_1255__NZSCCM__NC_TC_FAILURE_ENVELOPE_VS_APPENDIXB_CONSTITUTIVE_PEAK_RESOLUTION.md`
-4. `semantic_v2/20_theory/20260822_1315__NZSCCM__NC_UHPC_7GATE_MATERIAL_CERTIFICATE_V1.md`
-5. `semantic_v2/20_theory/20260822_1320__NZSCCM__NC_CC_EQ317_PRINTED_TYPO_VS_FIG32_APPENDIXB_RESOLUTION.md`
+`semantic_v2/40_execution/20260824_0950__NZSCCM__CROSS_FAMILY_NY_MY_RESULTANT_DIAGNOSIS_R09.md`
 
-Superseded postcrack candidate audit retained for provenance:
+Decision:
 
-6. `semantic_v2/20_theory/20260822_1338__NZSCCM__NC_TC_MEMORYLESS_REDUCTION_R1_AND_ALTERNATIVE_MODEL_AUDIT.md`
+```text
+MARGUERRE_AIRY_STRUCTURAL_FRONT = RETAIN
+Ny_My_TERMINAL_IDENTITY = RETAIN
+POINTWISE_MATERIAL_OPERATOR = DO_NOT_REOPEN
+NEXT_RESEARCH_OBJECT = RESULTANT_CAPACITY_LAW
+```
 
-Current NC postcrack/compactness audit:
+### R10 — UHPC compression-block source gate
 
-7. `semantic_v2/20_theory/20260822_1440__NZSCCM__NC_TC_R1_COMPACTNESS_FAIL_TC_R2_REDUCTION_AND_STEEL_ACTIVESET_AUDIT.md`
+`semantic_v2/40_execution/20260824__NZSCCM__UHPC_RESULTANT_COMPRESSION_BLOCK_SOURCE_GATE_R10.md`
 
-Current Z6 execution:
+The R08 full-`fc` UHPC rectangle was demoted to upper-bound diagnostic. FHWA `alpha_u=0.85` was introduced as a source-specified design compression reduction, not fitted to panel loads.
 
-8. `semantic_v2/40_execution/20260822_1440__NZSCCM__Z6_TC_R2_S0_AND_GENERAL_S_STEEL_ACTIVESET_DIAGNOSTIC.md`
+R10-A rigid `0.85fc` screening block, primary six higher-confidence steel-shell UHPC cases:
 
-Direct no-quadrature reproduction:
+```text
+mean signed = -0.668 percent
+MAE = 2.534 percent
+RMSE = 2.597 percent
+```
 
-9. `semantic_v2/40_execution/steel_shell/20260822_1440__NZSCCM__Z6_TC_R2_DIRECT_ENDPOINT_AND_S0PLUS_LIMIT_SOLVER.py`
+R10-A is a high-value screening baseline, not the final physical section law.
 
-Current steel source audit:
+### R11 — exact FHWA strain-compatible compression section
 
-10. `semantic_v2/20_theory/20260822_1450__NZSCCM__Z_STEEL_FACE_SOURCE_IDENTITY_AND_HARDENING_GATE.md`
+Report:
 
-Current result summary:
+`semantic_v2/40_execution/20260824_1040__NZSCCM__FHWA_EXACT_STRAIN_COMPATIBLE_NY_MY_ENVELOPE_R11.md`
 
-`current/results/NZ_SCCM_POST_7GATE_STRUCTURAL_RERUN_CURRENT_20260822.md`
+Reproducer:
+
+`semantic_v2/40_execution/steel_shell/20260824_1040__NZSCCM__FHWA_EXACT_STRAIN_COMPATIBLE_NY_MY_R11.py`
+
+R11 replaces the rigid compression rectangle by one exact plane-section strain field:
+
+\[
+\varepsilon(y)=\varepsilon_{cu}-\kappa y,
+\qquad \varepsilon_{cu}=0.0035,
+\]
+
+with FHWA UHPC compression `elastic -> 0.85fc plateau`, elastic-perfectly-plastic steel, retained Yun compression caps where applicable, and exact finite through-thickness primitives.
+
+All seven current cases control at `s=1`; no earlier admissible interior stationary root was found.
+
+### R12 — UHPC tensile-resultant activation gate
+
+Report:
+
+`semantic_v2/40_execution/20260824__NZSCCM__UHPC_TENSION_ACTIVATION_GATE_R12.md`
+
+Reproducer:
+
+`semantic_v2/40_execution/steel_shell/20260824__NZSCCM__UHPC_TENSION_ACTIVATION_GATE_R12.py`
+
+Results:
+
+`semantic_v2/40_execution/steel_shell/20260824__NZSCCM__UHPC_TENSION_ACTIVATION_GATE_R12_RESULTS.csv`
+
+Hiew 2024 remains the admissible UHPC direct-tension source, but no Hiew fibre-family selection is required at the present roots because the entire UHPC core is still in compression.
 
 ---
 
-## 2. Normal concrete axis/source identities
+## 2. R12 exact activation result
+
+For the R11 section geometry,
+
+\[
+\kappa_t
+=\frac{\varepsilon_{cu}}{t_c}
+=\frac{0.0035}{42}
+=8.333333333333\times10^{-5}\ \mathrm{mm}^{-1}
+\]
+
+is the first possible UHPC tensile-activation curvature.
+
+Every controlling curvature satisfies
+
+\[
+\kappa_u<\kappa_t,
+\]
+
+with strictly positive bottom-core strain.
+
+|Case|R12 Pu / MN|Comparator / MN|error|UHPC tension at root?|
+|---|---:|---:|---:|---|
+|T120|11.78605439|12.6378|-6.740%|NO|
+|T360|10.65015268|10.9688|-2.905%|NO|
+|BH005|2.25203558|2.3558|-4.405%|NO|
+|BH010|4.13093221|4.3043|-4.028%|NO|
+|BH020|7.66340795|8.0076|-4.298%|NO|
+|BH032|10.66798371|10.9905|-2.935%|NO|
+|BH050|13.25612091|12.2198*|+8.481%|NO|
+
+`*` BH050 comparator retains its lower-confidence identity.
+
+Primary six:
+
+\[
+\boxed{\text{mean signed}=-4.218\%},
+\qquad
+\boxed{MAE=4.218\%},
+\qquad
+\boxed{RMSE=4.408\%}.
+\]
+
+Therefore:
 
 ```text
-NC_COMPRESSION_BACKBONE = SAENZ_RETAINED_FOR_SWARTZ_RANGE
+R12_ROOTS_DIFFER_FROM_R11 = NO
+UHPC_TENSION_OMISSION_EXPLAINS_R11_LOW_BIAS = REJECTED_FOR_CURRENT_7_CASES
+```
+
+---
+
+## 3. Hiew source role after R12
+
+Hiew 2024 remains the high-priority source for monotonic UHPC direct tension:
+
+```text
+elastic -> strain hardening -> peak -> localisation -> fibre-pullout softening
+```
+
+The 2% SL, HL and SL-HL series have materially different tensile strain coordinates. They may not be selected by matching T120/T360/BH structural ultimate loads.
+
+For the current seven roots this ambiguity is dormant because the tensile branch contributes exactly zero.
+
+---
+
+## 4. TC compression softening — retained physically, deferred as next correction
+
+Liu/Leutbecher evidence for UHPC tension-compression softening remains valid source evidence.
+
+However, it is **not** the next error-correction step for the present steel-shell UHPC baseline because the primary six R11/R12 predictions are already systematically low. Applying another compression reduction before resolving the compression-model source role would move the bias in the wrong direction.
+
+```text
+LIU_LEUTBECHER_TC_PHYSICAL_EVIDENCE = RETAIN
+TC_SOFTENING_AS_IMMEDIATE_ERROR_CORRECTION = NO
+TC_SOFTENING_FORMAL_GATE = DEFERRED
+```
+
+---
+
+## 5. Ordinary-concrete and RC branches
+
+The Aug-22 NC/RC material-source audits remain retained as branch-specific provenance. They are not deleted or relabelled.
+
+Important carried-forward identities include:
+
+```text
 NC_SWARTZ_COMPRESSION_STRENGTH = 0.85_FCYL_SOURCE_IN_SITU_PANEL_STRENGTH
-NC_SWARTZ_SPECIMEN_FT = SOURCE_OPEN
-NC_CC_CAPACITY = NGUYEN/FOSTER-KUPFER SOURCE ENVELOPE / PASS_G6
-NC_TC_CRACKING_BOUNDARY = NGUYEN_EQ318_319 / SOURCE TRANSITION MARKER
-LITERAL_NGUYEN_POSTCRACK_TC = OFF_MAINLINE_ORACLE
-```
-
-The Nguyen TC envelope remains a cracking/state-transition marker and is not treated as the final steel-shell ultimate cap.
-
----
-
-## 3. TC-R1 compactness result
-
-The prior memoryless TC-R1 map is retired for general-s production.
-
-For affine through-thickness material coordinates:
-
-- T5 contributes an [8/8] rational function in z;
-- the TC-R1 shifted-peak Saenz branch reduces symbolically to a rational function with numerator degree 5 and denominator degree 8 in z.
-
-An exact implementation would therefore require an opaque eighth-degree root/primitive compiler.
-
-```text
-TC_R1_LOCAL_MEMORYLESS_MAP = HISTORICAL_PASS_CANDIDATE
-TC_R1_GENERAL_S_COMPACTNESS = FAIL
-TC_R1_GENERAL_S_PRODUCTION = RETIRED
-TC_R1_OLD_Z6_S0_50_22069 = HISTORICAL_PROVENANCE_ONLY
-```
-
----
-
-## 4. Current NC TC candidate = TC-R2
-
-TC-R2 uses a smaller source-transparent current law.
-
-### Tension
-
-Finite Foster/Nguyen piecewise tension with
-
-\[
-\alpha_1=10,
-\qquad
-\alpha_2=0.3
-\]
-
-where `alpha2=0.3` is a declared conservative project choice within the Foster source range, not a structural-load fit.
-
-### Compression softening
-
-\[
-\widehat\varepsilon_t
-=\frac{\varepsilon_t+\nu\varepsilon_c}{1-\nu^2}
-=\varepsilon_0\lambda_t,
-\]
-
-\[
-\gamma_c(\lambda_t)
-=\min\left(1,\frac1{0.8+0.34\lambda_t}\right).
-\]
-
-### Compression current law
-
-\[
-\boxed{
-\sigma_c^{TC}(\lambda_t,\lambda_c)
-=\gamma_c(\lambda_t)\sigma_{c0}(\lambda_c).
-}
-\]
-
-This is a declared `PROJECT-DERIVED CURRENT-STRENGTH REDUCTION`, not literal Nguyen.
-
-For
-
-\[
-\lambda_t(z)=\lambda_{t0}+\nu_c\chi z,
-\qquad
-\lambda_c(z)=\lambda_{c0}+\chi z,
-\]
-
-all material fronts are affine in z. Required concrete/web primitives reduce to polynomial, linear/quadratic rational, factored linear×quadratic rational, logarithmic and arctangent forms.
-
-```text
-NC_TC_R2_MATERIAL_7GATE = PASS_CANDIDATE
-TC_R2_GENERAL_S_CONCRETE_WEB_COMPACTNESS = PASS
-NC_TC_R2_PRODUCTION_FREEZE = PENDING_GLOBAL_SECTION_CERTIFICATE
-```
-
----
-
-## 5. Selected Swartz RC working status
-
-No specimen-specific Swartz tensile data were found in the current source set, so the selected RC numerical table remains a working diagnostic under the transparent common ft assumption rather than specimen-source-closed production values.
-
-|Case|1D / kN|2D working / kN|Pf / kN|
-|---:|---:|---:|---:|
-|1|567.712|495.989|490.194|
-|2|561.638|501.025|506.652|
-|9|515.424|515.424|625.865|
-|10|534.711|534.711|696.147|
-|19|339.177|339.177|377.654|
-|20|335.013|335.013|372.761|
-|21|350.460|350.460|368.313|
-|22|351.679|351.679|355.858|
-
-TC-R2 has not yet been propagated through this RC table; no old RC value is silently relabelled as a TC-R2 result.
-
----
-
-## 6. UHPC current state — unchanged
-
-```text
-UHPC_COMPRESSION_BACKBONE = ZHANG_2023
-HU_WENXU = HISTORICAL_UNIAXIAL_COMPARATOR_ONLY
-UHPC_TENSION_BACKBONE = HIEW_2024
-UHPC_CC_CAPACITY = LIU2024_SOURCE_MIN_PROJECT_REDUCTION
-UHPC_TC_CT_CAPACITY = LIU2024_SEQUENTIAL_CONSERVATIVE_ENVELOPE
-UHPC_TT_CAPACITY = LIU2024_UNIAXIAL_TENSILE_CAP
-```
-
-Current post-7gate results remain:
-
-|Case|Current 2D / MN|
-|---|---:|
-|T120|12.22252|
-|T360|11.36533|
-|BH005|2.42351|
-|BH010|4.46632|
-|BH020|8.21925|
-|BH032|11.21046|
-|BH050|12.77154|
-
----
-
-## 7. Z0–Z6 Nguyen-source TC transitions remain solved
-
-|Case|P_TC-transition / MN|
-|---|---:|
-|Z0|27.033151885|
-|Z1|17.093528920|
-|Z2|27.033151885|
-|Z3|36.744639968|
-|Z4|56.203522296|
-|Z5|10.747333454|
-|Z6|23.832330467|
-
-These remain source cracking markers, not final Pu.
-
----
-
-## 8. Z6 TC-R2 direct finite results
-
-### Symmetric s=0 endpoint
-
-Uniform section + web compression-yield boundary gives
-
-\[
-\lambda_t=0.72375111146,
-\quad
-\lambda_c=-0.79066099525,
-\]
-
-\[
-q=0.012018755437,
-\]
-
-\[
-\boxed{P_{Z6,s=0}^{TC-R2}=50.1863826545\ \mathrm{MN}}.
-\]
-
-### Asymmetric s→0+ face-yield limit
-
-A separate uniform, no-quadrature limiting system gives
-
-\[
-\lambda_t\approx0.53638962,
-\quad
-\lambda_c\approx-0.63294763,
-\]
-
-\[
-q\approx0.01163665,
-\]
-
-\[
-\boxed{P_{Z6,s\to0^+}^{face-yield}=48.9055510040\ \mathrm{MN}}.
-\]
-
-At this limit the face elastic trial state has \(\sigma_{VM}=355\) MPa and the equivalent web remains elastic.
-
-A local implicit-function audit gives
-
-\[
-P_{terminal}(s)
-=48.9055510+4.68s+O(s^2)\ \mathrm{MN}
-\]
-
-as \(s\to0^+\).
-
-```text
-Z6_TC_R2_S0_ENDPOINT = RESOLVED_CANDIDATE
-Z6_TC_R2_S0PLUS_LOCAL_LIMIT = RESOLVED_CANDIDATE
-Z6_TC_R2_GLOBAL_S_MINIMUM = OPEN
-```
-
----
-
-## 9. Steel source audit — completed
-
-The current Z source chain supplies
-
-\[
-E_s,\quad \nu_s,\quad f_y
-\]
-
-but no post-yield tangent, ultimate stress/strain curve or Ramberg–Osgood parameters.
-
-The historical successful Z6 nonlinear steel current map itself is:
-
-- external faces: plane-stress elastic trial + path-independent von-Mises radial cap;
-- equivalent web: one-dimensional elastic-perfectly-plastic clip.
-
-No hardening parameter is present.
-
-Related audited UCFT Abaqus `Q355-355` also contains only one plastic row `(355 MPa, 0 plastic strain)`, so it supplies first yield but no positive hardening slope. It is not the governing Zhou Z-source, but confirms there is no hidden measured hardening table in the currently audited project material inventory.
-
-Historical provisional R–O values `p=0.0005, n=10` are explicitly documented as engineering assumptions to be used only when actual parameters are absent. They are therefore not admissible as a source-grounded repair of Z6.
-
-```text
+NC_CC_CAPACITY = NGUYEN/FOSTER-KUPFER SOURCE ENVELOPE
+NC_TC_CRACKING_BOUNDARY = NGUYEN_EQ318_319 SOURCE TRANSITION MARKER
 Z_STEEL_SOURCE_HARDENING = NOT_AVAILABLE
 Z_FACE_CURRENT_MAP = MEMORYLESS_IDEAL_PLASTIC_RADIAL_CAP
 Z_WEB_CURRENT_MAP = IDEAL_PLASTIC_CLIP
-INVENT_HARDENING_TO_REMOVE_ACTIVESET_LIMIT = PROHIBITED
 ```
 
-Hence changing the NC concrete law again or introducing an arbitrary small hardening modulus is not justified by the current source chain.
+Z6 remains a visible ordinary-concrete steel-shell outlier and is not silently repaired by UHPC terminal choices.
 
 ---
 
-## 10. Current blocker and next action
+## 6. Current blocker and next action
 
-An off-mainline numerical-through-thickness diagnostic identified a nonuniform active-set limit: for finite s>0 the second-face radial-yield terminal family approaches `48.905551 MN` as s→0+, while the exactly symmetric s=0 doubly-capped branch can continue to the later web-yield endpoint `50.186383 MN`.
+R12 falsified the proposed missing-tension explanation. The strongest unresolved source-role question is now the status of the FHWA `alpha_u=0.85` compression reduction.
 
-The s→0+ value itself is already a direct finite no-quadrature root; what remains unproven is whether the corresponding terminal family is the global minimum over the entire continuous interval `0<s<=1`.
+FHWA supplies a **design** compression model. The current comparators are physical Abaqus/structural-response values. Before adding another physical reduction, the project must establish whether the R11 terminal mixes design resistance and physical material response.
 
-Therefore the next task is no longer another constitutive-model search. It is:
+Next task:
 
 \[
-\boxed{\text{formal TC-R2 general-s active-set envelope + global-minimum certificate}.}
+\boxed{
+\text{R13 = FHWA }\alpha_u\text{ DESIGN-vs-PHYSICAL TERMINAL ROLE GATE}
+}
 \]
 
-This certificate must use the compact TC-R2 primitive family and finite active-set equations; no formal spatial grid or quadrature is permitted.
+R13 execution contract:
+
+1. do not reopen full 2D Marguerre-Air y;
+2. do not reopen `Ny-My` terminal identity;
+3. distinguish design resistance from physical constitutive/capacity response;
+4. audit comparator identity before interpreting error sign;
+5. if a physical compression law is required, insert a source-supported UHPC uniaxial compression law into the same exact strain-compatible section envelope;
+6. no specimen-level calibration, no root selection from comparators;
+7. formal spatial quadrature = 0;
+8. thickness quadrature = 0;
+9. material points = 0.
 
 ```text
-STEEL_SOURCE_AUDIT = CLOSED_NO_HARDENING
-CEDOLIN_MULAS_1984 = DEFERRED_NC_ALTERNATIVE
-NEXT_TASK = GENERAL_S_ACTIVESET_ENVELOPE_AND_GLOBAL_MINIMUM_CERTIFICATE
-Z0_Z6_FINAL_POSTCRACK_2D_PU = OPEN
+CURRENT_RECOMMENDED_NEXT_TASK = R13_FHWA_ALPHA_U_DESIGN_VS_PHYSICAL_TERMINAL_ROLE_GATE
+STRUCTURAL_FRONT_REOPEN = NO
+Ny_My_TERMINAL_REOPEN = NO
+NEW_FITTED_FACTOR = NO
+USER_ACCEPTANCE = PENDING
 ```
