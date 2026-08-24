@@ -1,9 +1,9 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-24  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R11_FHWA_EXACT_COMPRESSION_COMPLETE / R12_UHPC_TENSION_INACTIVE / PRIMARY6_LOW_BIAS_PERSISTS / TC_SOFTENING_DEFERRED / R13_FHWA_DESIGN_VS_PHYSICAL_ROLE_GATE_NEXT / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-24 11:51 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R13_FHWA_DESIGN_ROLE_CLOSED / R14_ZHANG_PHYSICAL_PEAK_COMPLETE / PRIMARY6_MEAN_PLUS1P392 / ZERO_THICKNESS_QUADRATURE / BLANKET_TC_NOT_AUTHORIZED / TC_ACTIVATION_AUDIT_NEXT / USER_ACCEPTANCE_PENDING`
 
-> This file supersedes the 2026-08-22 14:50 current-state entry. The Aug-22 TC-R2 general-s certificate is no longer the repository-wide next task. It remains historical/provenance material for the ordinary-concrete branch.
+> This entry supersedes the earlier 2026-08-24 R12 entry. The repository-wide mainline has now advanced through the FHWA design-vs-physical source-role audit and the Zhang peak-anchored strain-compatible `Ny-My` rerun.
 
 ## 0. Governing structural mainline — frozen
 
@@ -17,12 +17,13 @@ THICKNESS_QUADRATURE = 0
 MATERIAL_POINTS = 0
 RITZ_ORDER = NONE
 LOAD_PATH_TRACKING = 0
+HISTORY_STATE_MACHINE = OFF_MAINLINE
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
 STRUCTURAL_BACKBONE_CHANGED = FALSE
 ```
 
-The current production-development sequence is
+Current production-development sequence:
 
 \[
 \boxed{
@@ -36,7 +37,7 @@ P_u.
 }
 \]
 
-Do not reopen the structural front merely because a terminal material/capacity representation changes.
+Do not reopen the structural front merely because the material/capacity representation of the terminal changes.
 
 ---
 
@@ -46,7 +47,7 @@ Do not reopen the structural front merely because a terminal material/capacity r
 
 `semantic_v2/40_execution/20260824_0950__NZSCCM__CROSS_FAMILY_NY_MY_RESULTANT_DIAGNOSIS_R09.md`
 
-Decision:
+Locked decision:
 
 ```text
 MARGUERRE_AIRY_STRUCTURAL_FRONT = RETAIN
@@ -55,13 +56,11 @@ POINTWISE_MATERIAL_OPERATOR = DO_NOT_REOPEN
 NEXT_RESEARCH_OBJECT = RESULTANT_CAPACITY_LAW
 ```
 
-### R10 — UHPC compression-block source gate
+### R10 — FHWA `alpha_u=0.85` screening block
 
 `semantic_v2/40_execution/20260824__NZSCCM__UHPC_RESULTANT_COMPRESSION_BLOCK_SOURCE_GATE_R10.md`
 
-The R08 full-`fc` UHPC rectangle was demoted to upper-bound diagnostic. FHWA `alpha_u=0.85` was introduced as a source-specified design compression reduction, not fitted to panel loads.
-
-R10-A rigid `0.85fc` screening block, primary six higher-confidence steel-shell UHPC cases:
+Primary six higher-confidence cases:
 
 ```text
 mean signed = -0.668 percent
@@ -69,9 +68,9 @@ MAE = 2.534 percent
 RMSE = 2.597 percent
 ```
 
-R10-A is a high-value screening baseline, not the final physical section law.
+R10-A remains a high-value design/screening baseline, not the current physical material law.
 
-### R11 — exact FHWA strain-compatible compression section
+### R11 — exact FHWA strain-compatible compression design section
 
 Report:
 
@@ -81,164 +80,159 @@ Reproducer:
 
 `semantic_v2/40_execution/steel_shell/20260824_1040__NZSCCM__FHWA_EXACT_STRAIN_COMPATIBLE_NY_MY_R11.py`
 
-R11 replaces the rigid compression rectangle by one exact plane-section strain field:
+Primary six:
 
-\[
-\varepsilon(y)=\varepsilon_{cu}-\kappa y,
-\qquad \varepsilon_{cu}=0.0035,
-\]
+```text
+mean signed = -4.218 percent
+MAE = 4.218 percent
+RMSE = 4.408 percent
+```
 
-with FHWA UHPC compression `elastic -> 0.85fc plateau`, elastic-perfectly-plastic steel, retained Yun compression caps where applicable, and exact finite through-thickness primitives.
-
-All seven current cases control at `s=1`; no earlier admissible interior stationary root was found.
-
-### R12 — UHPC tensile-resultant activation gate
-
-Report:
+### R12 — UHPC tension activation gate
 
 `semantic_v2/40_execution/20260824__NZSCCM__UHPC_TENSION_ACTIVATION_GATE_R12.md`
 
+All seven R11 roots remain fully compressive through the UHPC core. Hiew tension is therefore inactive and cannot explain the R11 low bias.
+
+### R13 — FHWA design-vs-physical source-role gate
+
+`semantic_v2/40_execution/20260824_1151__NZSCCM__FHWA_DESIGN_VS_PHYSICAL_COMPRESSION_ROLE_GATE_R13.md`
+
+Official FHWA-HRT-23-077 identity:
+
+- `alpha_u` is a source-supported reduction for UHPC compressive-response nonlinearity;
+- Article 1.4.2.4.3 is explicitly a **Compression Design Model**;
+- the elastic-to-`alpha_u f'c` plateau is retained as a design idealization;
+- it is not assigned the stronger identity of the unique measured physical peak constitutive curve for nonlinear test/FEM peak comparison.
+
+Decision:
+
+```text
+FHWA_R11_R12 = RETAIN_AS_DESIGN_BASELINE
+FHWA_R11_R12_AS_PHYSICAL_PRODUCTION_TERMINAL = REJECT
+ZHANG_PHYSICAL_REINSERTION = AUTHORIZED
+```
+
+### R14 — Zhang peak-anchored exact strain-compatible `Ny-My`
+
+Report:
+
+`semantic_v2/40_execution/20260824_1151__NZSCCM__ZHANG_PEAK_STRAIN_COMPATIBLE_NY_MY_R14.md`
+
 Reproducer:
 
-`semantic_v2/40_execution/steel_shell/20260824__NZSCCM__UHPC_TENSION_ACTIVATION_GATE_R12.py`
+`semantic_v2/40_execution/steel_shell/20260824_1151__NZSCCM__ZHANG_PEAK_STRAIN_COMPATIBLE_NY_MY_R14.py`
 
 Results:
 
-`semantic_v2/40_execution/steel_shell/20260824__NZSCCM__UHPC_TENSION_ACTIVATION_GATE_R12_RESULTS.csv`
+`semantic_v2/40_execution/steel_shell/20260824_1151__NZSCCM__ZHANG_PEAK_STRAIN_COMPATIBLE_NY_MY_R14_RESULTS.csv`
 
-Hiew 2024 remains the admissible UHPC direct-tension source, but no Hiew fibre-family selection is required at the present roots because the entire UHPC core is still in compression.
+R14 uses the source-registered Zhang-2023 zero-confinement ascending compression backbone with one common plane-section strain field and the extreme UHPC compression fibre anchored at
+
+\[
+\varepsilon_{top}=\varepsilon_{c0}=0.0035.
+\]
+
+This is a first-attainment-of-material-peak terminal. Zhang post-peak continuation is source-retained but not silently activated because the current mainline has no load-path/post-peak continuation state machine.
 
 ---
 
-## 2. R12 exact activation result
+## 2. Current R14 steel-shell UHPC results
 
-For the R11 section geometry,
+|Case|R14 Pu / MN|Comparator / MN|Error|
+|---|---:|---:|---:|
+|T120|12.25216|12.6378|-3.051%|
+|T360|11.13326|10.9688|+1.499%|
+|BH005|2.42237|2.3558|+2.826%|
+|BH010|4.46204|4.3043|+3.665%|
+|BH020|8.15535|8.0076|+1.845%|
+|BH032|11.16306|10.9905|+1.570%|
+|BH050|13.65045|12.2198*|+11.708%|
 
-\[
-\kappa_t
-=\frac{\varepsilon_{cu}}{t_c}
-=\frac{0.0035}{42}
-=8.333333333333\times10^{-5}\ \mathrm{mm}^{-1}
-\]
-
-is the first possible UHPC tensile-activation curvature.
-
-Every controlling curvature satisfies
-
-\[
-\kappa_u<\kappa_t,
-\]
-
-with strictly positive bottom-core strain.
-
-|Case|R12 Pu / MN|Comparator / MN|error|UHPC tension at root?|
-|---|---:|---:|---:|---|
-|T120|11.78605439|12.6378|-6.740%|NO|
-|T360|10.65015268|10.9688|-2.905%|NO|
-|BH005|2.25203558|2.3558|-4.405%|NO|
-|BH010|4.13093221|4.3043|-4.028%|NO|
-|BH020|7.66340795|8.0076|-4.298%|NO|
-|BH032|10.66798371|10.9905|-2.935%|NO|
-|BH050|13.25612091|12.2198*|+8.481%|NO|
-
-`*` BH050 comparator retains its lower-confidence identity.
+`*` BH050 retains its lower-confidence comparator identity and is excluded from primary-six statistics.
 
 Primary six:
 
 \[
-\boxed{\text{mean signed}=-4.218\%},
-\qquad
-\boxed{MAE=4.218\%},
-\qquad
-\boxed{RMSE=4.408\%}.
+\boxed{\text{mean signed}=+1.392\%},
 \]
 
-Therefore:
+\[
+\boxed{MAE=2.409\%,\qquad RMSE=2.544\%}.
+\]
 
-```text
-R12_ROOTS_DIFFER_FROM_R11 = NO
-UHPC_TENSION_OMISSION_EXPLAINS_R11_LOW_BIAS = REJECTED_FOR_CURRENT_7_CASES
-```
-
----
-
-## 3. Hiew source role after R12
-
-Hiew 2024 remains the high-priority source for monotonic UHPC direct tension:
-
-```text
-elastic -> strain hardening -> peak -> localisation -> fibre-pullout softening
-```
-
-The 2% SL, HL and SL-HL series have materially different tensile strain coordinates. They may not be selected by matching T120/T360/BH structural ultimate loads.
-
-For the current seven roots this ambiguity is dormant because the tensile branch contributes exactly zero.
+This removes the R11/R12 systematic low bias while keeping the structural front unchanged and using no comparator in parameter/root selection.
 
 ---
 
-## 4. TC compression softening — retained physically, deferred as next correction
-
-Liu/Leutbecher evidence for UHPC tension-compression softening remains valid source evidence.
-
-However, it is **not** the next error-correction step for the present steel-shell UHPC baseline because the primary six R11/R12 predictions are already systematically low. Applying another compression reduction before resolving the compression-model source role would move the bias in the wrong direction.
+## 3. R14 exactness and control-location status
 
 ```text
-LIU_LEUTBECHER_TC_PHYSICAL_EVIDENCE = RETAIN
-TC_SOFTENING_AS_IMMEDIATE_ERROR_CORRECTION = NO
-TC_SOFTENING_FORMAL_GATE = DEFERRED
+R14_FORMAL_SPATIAL_QUADRATURE = 0
+R14_THICKNESS_QUADRATURE = 0
+R14_MATERIAL_POINTS = 0
+R14_UHPC_ASCENDING_PRIMITIVES = FINITE_HYPERGEOMETRIC_ENDPOINTS
+R14_STEEL_PRIMITIVES = FINITE_CLIPPED_AFFINE
+R14_CONTROL_s = 1 FOR ALL 7
+R14_INTERIOR_STATIONARY_ROOT_PRECEDENCE = NONE_FOUND
+R14_UHPC_TENSION = INACTIVE_AT_ALL 7 ROOTS
 ```
+
+All `s=0` pure-axial candidates occur after the `s=1` roots.
 
 ---
 
-## 5. Ordinary-concrete and RC branches
-
-The Aug-22 NC/RC material-source audits remain retained as branch-specific provenance. They are not deleted or relabelled.
-
-Important carried-forward identities include:
+## 4. Material-role identities now locked
 
 ```text
-NC_SWARTZ_COMPRESSION_STRENGTH = 0.85_FCYL_SOURCE_IN_SITU_PANEL_STRENGTH
-NC_CC_CAPACITY = NGUYEN/FOSTER-KUPFER SOURCE ENVELOPE
-NC_TC_CRACKING_BOUNDARY = NGUYEN_EQ318_319 SOURCE TRANSITION MARKER
-Z_STEEL_SOURCE_HARDENING = NOT_AVAILABLE
-Z_FACE_CURRENT_MAP = MEMORYLESS_IDEAL_PLASTIC_RADIAL_CAP
-Z_WEB_CURRENT_MAP = IDEAL_PLASTIC_CLIP
+UHPC_PHYSICAL_UNIAXIAL_COMPRESSION_BACKBONE = ZHANG_2023
+UHPC_FHWA_085_COMPRESSION = DESIGN_BASELINE / SCREENING ROLE
+UHPC_TENSION_SOURCE = HIEW_2024
+UHPC_TC_CT_SOURCE_EVIDENCE = LIU / LEUTBECHER FAMILY
+UHPC_ZHANG_POSTPEAK = SOURCE_RETAINED / OFF_MAINLINE_CONTINUATION
+HU_WENXU = HISTORICAL_UNIAXIAL_COMPARATOR_ONLY
 ```
 
-Z6 remains a visible ordinary-concrete steel-shell outlier and is not silently repaired by UHPC terminal choices.
+The R14 peak terminal does not abolish the Zhang descending branch; it only prevents a post-peak continuation from being silently imported into a no-load-path theory.
 
 ---
 
-## 6. Current blocker and next action
+## 5. Ordinary-concrete branch status
 
-R12 falsified the proposed missing-tension explanation. The strongest unresolved source-role question is now the status of the FHWA `alpha_u=0.85` compression reduction.
+The Aug-22 NC TC-R2 and Z6 active-set work remains retained as ordinary-concrete branch provenance. It is not the repository-wide next task and does not override R14.
 
-FHWA supplies a **design** compression model. The current comparators are physical Abaqus/structural-response values. Before adding another physical reduction, the project must establish whether the R11 terminal mixes design resistance and physical material response.
+No NC material law is reopened by R13/R14.
 
-Next task:
+---
+
+## 6. Next task
+
+A blanket TC compression-softening multiplier is not authorized.
+
+Reason:
+
+- R14 primary-six mean is already only `+1.392%`;
+- T120 is already low by `-3.05%`;
+- other primary cases are modestly high by about `+1.5%` to `+3.7%`.
+
+A universal TC reduction would therefore mix physically different states and would worsen at least T120.
+
+The next task is a **source/state activation audit**, not coefficient fitting:
 
 \[
 \boxed{
-\text{R13 = FHWA }\alpha_u\text{ DESIGN-vs-PHYSICAL TERMINAL ROLE GATE}
+\text{transverse Marguerre--Airy state}
+\rightarrow
+\text{is a Liu/Leutbecher TC reduction physically active at the R14 control section?}
 }
 \]
 
-R13 execution contract:
-
-1. do not reopen full 2D Marguerre-Air y;
-2. do not reopen `Ny-My` terminal identity;
-3. distinguish design resistance from physical constitutive/capacity response;
-4. audit comparator identity before interpreting error sign;
-5. if a physical compression law is required, insert a source-supported UHPC uniaxial compression law into the same exact strain-compatible section envelope;
-6. no specimen-level calibration, no root selection from comparators;
-7. formal spatial quadrature = 0;
-8. thickness quadrature = 0;
-9. material points = 0.
+This gate must be evaluated case by case using the existing Airy transverse demand/state. It may activate no TC reduction for some cases and a finite source-supported reduction for others. No structural-load calibration is permitted.
 
 ```text
-CURRENT_RECOMMENDED_NEXT_TASK = R13_FHWA_ALPHA_U_DESIGN_VS_PHYSICAL_TERMINAL_ROLE_GATE
+NEXT_TASK = TRANSVERSE_AIRY_STATE_TO_TC_ACTIVATION_AUDIT
+BLANKET_TC_SOFTENING = PROHIBITED
+NEW_FITTED_FACTOR = PROHIBITED
 STRUCTURAL_FRONT_REOPEN = NO
-Ny_My_TERMINAL_REOPEN = NO
-NEW_FITTED_FACTOR = NO
 USER_ACCEPTANCE = PENDING
 ```
