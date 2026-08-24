@@ -1,9 +1,9 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-24 12:28 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R14_ZHANG_PHYSICAL_PEAK_COMPLETE / R15_STATIC_ULTIMATE_CAP_EQUIVALENCE_CLOSED / PRECAP_EVOLUTION_OPEN / TC_ROUTE_WITHDRAWN / STEEL_SHELL_PROGRESSIVE_EFFECTIVE_AREA_SOURCE_GATE_NEXT / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-24 13:10 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R14_ZHANG_PHYSICAL_PEAK_COMPLETE / R15_STATIC_CAP_EQUIVALENCE_CLOSED / R16_LOCAL_SUBPANEL_SOURCE_GATE_COMPLETE / Z_200MM_YUN_ELASTIC_ROUTE_INACTIVE / T360_BH032_BH050_PROGRESSIVE_CANDIDATE / BH_GEOMETRY_PROVENANCE_OPEN / R07_R14_UNCHANGED / TC_ROUTE_WITHDRAWN / USER_ACCEPTANCE_PENDING`
 
-> This entry supersedes the 2026-08-24 11:51 R14 entry only in next-task governance. R07 ordinary-concrete results and R14 steel-shell UHPC results remain numerically unchanged. R15 introduces no fitted correction and changes no production `Pu`.
+> R16 executes the R15 local-subpanel geometry/progressive-effective-area source gate. It changes no production `Pu`. Its main new result is a mechanism separation: the Z family cannot activate the same **pre-yield Yun elastic local-subpanel** mechanism as T360/BH032/BH050 because Zhou's source-closed local chamber width is only 200 mm at `t_s=4 mm`.
 
 ## 0. Frozen architecture
 
@@ -20,6 +20,7 @@ HISTORY_STATE_MACHINE = OFF_MAINLINE
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
 POINTWISE_MATERIAL_OPERATOR = DO_NOT_REOPEN
+TC_CC_TT_ROUTE = OFF_MAINLINE
 STRUCTURAL_BACKBONE_CHANGED = FALSE
 ```
 
@@ -36,11 +37,11 @@ Current chain:
 }
 \]
 
-`TC/CC/TT` concrete-state classification is not part of the current `Pu` solver.
+Material/local-buckling source laws may be used only to construct the finite section/resultant envelope. They do not reintroduce a pointwise material-state solver.
 
 ---
 
-## 1. Current numerical baselines
+## 1. Current production numerical baselines — unchanged
 
 ### RC — Swartz8 R05
 
@@ -62,7 +63,7 @@ Z5 14.118193577 MN
 Z6 56.379421090 MN
 ```
 
-Against Zhou: mean `+3.877%`, MAE `4.973%`. Z6 remains the visible high-end outlier at `+13.93%`.
+Against Zhou: mean `+3.877%`, MAE `4.973%`; Z6 remains the visible high-end residual at `+13.93%`.
 
 ### Steel-shell UHPC — Zhang R14 physical peak terminal
 
@@ -78,166 +79,269 @@ BH050 13.650448214 MN   error +11.708 percent [lower-confidence comparator]
 
 Primary six: mean `+1.392%`, MAE `2.409%`, RMSE `2.544%`.
 
-R14 remains the current physical steel-shell UHPC terminal.
+```text
+R07_NC_PRODUCTION = RETAIN
+R14_UHPC_PRODUCTION = RETAIN
+PRODUCTION_Pu_CHANGED_IN_R16 = NO
+```
 
 ---
 
-## 2. R15 — local-buckling cap vs effective-width/resultant gate
+## 2. R15 retained result — static cap is not the missing progressive law
 
-Report:
+R15 report:
 
 `semantic_v2/40_execution/20260824_1228__NZSCCM__STEEL_SHELL_LOCAL_BUCKLING_CAP_VS_EFFECTIVE_WIDTH_NM_GATE_R15.md`
 
+At the ultimate reference stress,
+
+\[
+\boxed{b_e/b=f_{c,s}/f_y}
+\]
+
+makes a static effective width exactly equivalent to a static face force cap in the present `Ny-My` cut.
+
+Thus another constant `b_e/b` would remain the same capacity class. The only potentially non-redundant extension is the **pre-cap/progressive local-postbuckling evolution** of the steel resultant.
+
+---
+
+## 3. R16 report and reproducibility files
+
+Report:
+
+`semantic_v2/40_execution/20260824_1310__NZSCCM__STEEL_SHELL_LOCAL_SUBPANEL_SOURCE_CLOSURE_AND_PROGRESSIVE_NM_GATE_R16.md`
+
 Reproducer:
 
-`semantic_v2/40_execution/steel_shell/20260824_1228__NZSCCM__STEEL_SHELL_STATIC_EFFECTIVE_WIDTH_EQUIVALENCE_R15.py`
+`semantic_v2/40_execution/steel_shell/20260824_1310__NZSCCM__LOCAL_SUBPANEL_YUN_ELASTIC_GATE_R16.py`
 
 Diagnostic CSV:
 
-`semantic_v2/40_execution/steel_shell/20260824_1228__NZSCCM__STEEL_SHELL_STATIC_EFFECTIVE_WIDTH_EQUIVALENCE_R15_RESULTS.csv`
-
-### 2.1 Exact boundary of the static-equivalence result
-
-For one external steel face, at the ultimate reference stress `fy`, a static effective width gives
-
-\[
-N_{s,e}^{max}=b_e t_s f_y,
-\qquad M_{s,e}^{max}=z_f b_e t_s f_y.
-\]
-
-A scalar compressive face cap gives
-
-\[
-N_{s,cap}^{max}=b t_s f_{c,s},
-\qquad M_{s,cap}^{max}=z_f b t_s f_{c,s}.
-\]
-
-Thus the **ultimate face-resultant capacities** are identical when
-
-\[
-\boxed{b_e/b=f_{c,s}/f_y}.
-\]
-
-But the full evolution is not identical:
-
-```text
-STATIC ULTIMATE FACE-CAP EQUIVALENCE = EXACT
-PRE-CAP / PROGRESSIVE POSTBUCKLING EVOLUTION = NOT IDENTICAL
-```
-
-The existing R14 stress clip retains the gross face until its cap is reached; a progressive effective-area law can reduce the average compressive face resultant as local buckling develops and can therefore change the shape of the strain-compatible `Ny-My` envelope.
-
-### 2.2 R14 cap-equivalent ultimate effective-width fractions
-
-With `fy=355 MPa`:
-
-```text
-T120   eta=1.00000   ultimate face loss= 0.00 percent
-T360   eta=0.85034   ultimate face loss=14.97 percent
-BH005  eta=1.00000   ultimate face loss= 0.00 percent
-BH010  eta=1.00000   ultimate face loss= 0.00 percent
-BH020  eta=1.00000   ultimate face loss= 0.00 percent
-BH032  eta=0.83217   ultimate face loss=16.78 percent
-BH050  eta=0.70442   ultimate face loss=29.56 percent
-```
-
-BH050 remains high despite an ultimate face force cap already equivalent to nearly 30% effective-width loss. A still smaller constant `be/b` would remain the same static-cap class and cannot be adopted from the comparator.
+`semantic_v2/40_execution/steel_shell/20260824_1310__NZSCCM__LOCAL_SUBPANEL_YUN_ELASTIC_GATE_R16_RESULTS.csv`
 
 ---
 
-## 3. Source-supported direction
+## 4. R16 geometry provenance
 
-### Yun Lu
+### 4.1 Z0--Z6 — source closed
 
-Yun supports large-deflection/postbuckling membrane redistribution and effective-width treatment for one-side-constrained steel plates. The source reports Bridge et al. Eq. (5-13) and derives a large-deflection effective-width equation. Yun's later fitted `0.74` correction is not imported.
-
-### Sun Lipeng
-
-Sun gives a one-side-constrained effective-width law and, for PBL-stiffened walls,
+Zhou Table 5.3 gives
 
 \[
-\boxed{b_e=\sum_i\rho_i b_i},
+\boxed{B_s=l_s=200\ \mathrm{mm}},\qquad
+\boxed{t_s=4\ \mathrm{mm}},\qquad
+\boxed{f_y=355\ \mathrm{MPa}}.
+\]
+
+The repeated chamber relation is `b=n_s l_s`, so the local chamber/subpanel width is not the gross Marguerre--Airy wall width.
+
+```text
+Z_LOCAL_Bs = 200 mm
+Z_LOCAL_Bs_OVER_ts = 50
+Z_LOCAL_GEOMETRY_PROVENANCE = PRIMARY_SOURCE_CLOSED
+```
+
+### 4.2 T120 / T360 — current project contract, provenance partial
+
+```text
+T120 local B_s = 120 mm
+T360 local B_s = 360 mm
+```
+
+These are retained as the current project geometry contract. Native CAE audits independently close the gross 1600 x 50 x 3000 mm steel shell and the T120/T360 topology difference, but do not yet fully reconstruct the original feature-selection causality that independently proves the 120/360-mm local widths.
+
+### 4.3 BH — working geometry, primary provenance open
+
+Current working relation:
+
+\[
+\boxed{B_s=0.225B}
+\]
+
+produces `56.25, 112.5, 225, 360, 562.5 mm` for BH005--BH050. This remains a conditional working geometry until independent primary geometry provenance closes it.
+
+```text
+BH_LOCAL_WIDTH_PRIMARY_SOURCE_PROVENANCE = OPEN
+OLD_32MM_WEB_HEIGHT = NOT_REINTRODUCED
+```
+
+---
+
+## 5. R16 absolute Yun elastic pre-yield gate
+
+For the current one-side-constrained elastic local-plate family,
+
+\[
+\boxed{k_{cr,\min}=32/3}.
+\]
+
+Hence
+
+\[
+\sigma_{cr,\min}
+=
+\frac{32}{3}
+\frac{\pi^2E_s}{12(1-\nu_s^2)}
+\left(\frac{t_s}{B_s}\right)^2.
+\]
+
+With `E_s=206000 MPa`, `nu_s=0.30`, `f_y=355 MPa`,
+
+\[
+\boxed{(B_s/t_s)_{transition}=74.79496253}.
+\]
+
+Therefore, if `B_s/t_s < 74.79496253`, **no local aspect ratio in this Yun elastic family can buckle before steel yield**.
+
+|Case|`B_s/t_s`|`sigma_cr,min` MPa|Elastic local before yield?|
+|---|---:|---:|---|
+|Z0--Z6|50.000|794.389|NO|
+|T120|30.000|2206.635|NO|
+|T360|90.000|245.182|POSSIBLE|
+|BH005|14.0625|10042.642|NO, conditional on working geometry|
+|BH010|28.125|2510.660|NO, conditional|
+|BH020|56.250|627.665|NO, conditional|
+|BH032|90.000|245.182|POSSIBLE, conditional|
+|BH050|140.625|100.426|POSSIBLE, conditional|
+
+`POSSIBLE` is only a necessary-condition pass. Actual local longitudinal length/aspect ratio and restraint identity remain to be closed.
+
+---
+
+## 6. Major mechanism split after R16
+
+### Z6
+
+Because the primary-source local chamber is `200 x 4 mm`, even the minimum Yun elastic local-buckling stress is
+
+\[
+\boxed{794.389\ \mathrm{MPa}>355\ \mathrm{MPa}}.
+\]
+
+Therefore:
+
+```text
+Z6_YUN_ELASTIC_PROGRESSIVE_LOCAL_AREA_ROUTE = CLOSED_INACTIVE
+Z6_COMMON_PREYIELD_YUN_MECHANISM_WITH_BH050 = REJECT
+```
+
+This does not reject local instability in general. Any relevant Z6 local mechanism would have to be an elastoplastic/yield-interaction local mechanism or another sectional/global resultant mechanism. No choice between those alternatives is made yet.
+
+### T360 / BH032 / BH050
+
+The current local widths pass the lower-bound eligibility gate for elastic local buckling before yield. These remain the only current candidates for a Yun amplitude-dependent progressive steel resultant.
+
+T120 and BH005--BH020 are robustly outside that pre-yield elastic-local route under their current local-width contracts.
+
+---
+
+## 7. Candidate progressive resultant kernel — not yet production
+
+The current Yun-type average-stress path is amplitude dependent:
+
+\[
+\widehat\sigma_Y(A)=
+\left[
+ k_{crx}\frac{A}{A+A_0}
+ +k_p(1-\nu_s^2)\frac{2A_0A+A^2}{t_s^2}
+\right]
+\frac{\pi^2E_st_s^2}{12(1-\nu_s^2)B_s^2}.
+\]
+
+The project formula-mapping register also contains
+
+\[
+\widehat\varepsilon_\ell(A)
+=
+\frac{\widehat\sigma_Y(A)}{E_s}
++C_\varepsilon(2A_0A+A^2),
 \qquad
-\boxed{A_e=b_e t+\sum A_{se}}.
+C_\varepsilon=\frac{3m^2\pi^2}{2a_\ell^2}.
 \]
 
-The thesis explicitly carries the local-buckling-reduced effective steel section into axial and compression-bending `N-M` capacity calculations. This supports a resultant-level extension without reopening concrete material states.
+The architecture-compatible candidate is therefore an algebraic elimination:
+
+\[
+\widehat\varepsilon_\ell(A)=\varepsilon_f
+\Rightarrow A=A(\varepsilon_f)
+\Rightarrow \bar\sigma_f(\varepsilon_f)=\widehat\sigma_Y[A(\varepsilon_f)].
+\]
+
+Then the local steel contribution can in principle enter
+
+\[
+N_{s,f}=\sum_iB_{s,i}t_s\bar\sigma_{f,i},
+\qquad
+M_{s,f}=\sum_i z_{f,i}B_{s,i}t_s\bar\sigma_{f,i}.
+\]
+
+`A` would be a finite current algebraic internal coordinate, not a tracked material history and not a new gross structural Ritz mode.
+
+Production use is still blocked because:
+
+```text
+T_BH_LOCAL_LONGITUDINAL_LENGTHS = NOT FULLY SOURCE_CLOSED
+BH_Bs_PROVENANCE = OPEN
+A(eps_f)_MONOTONE_UNIQUE_BRANCH = NOT YET PROVED
+R14_4MM_FACE_EXACT_THICKNESS_MAPPING_TO_LOCAL_AVERAGE_LAW = NOT YET CLOSED
+LOCAL_GLOBAL_DOUBLE_COUNTING_PROOF = NOT YET COMPLETE FOR T_BH
+```
+
+No centroidal thin-face replacement or ad-hoc width multiplier is authorized.
 
 ---
 
-## 4. Geometry guard
-
-The Marguerre–Airy `b` is the **gross wall/panel width**. Local effective-width theory requires the **unsupported subpanel width** `b_i` between actual restraints/stiffeners.
+## 8. Current decisions
 
 ```text
-GROSS_MARGUERRE_AIRY_b == LOCAL_EFFECTIVE_WIDTH_bi -> NOT ASSUMED
-```
+R16_EXECUTION = COMPLETE
 
-The archived Zhou Table-5.1 screen has local spacing `200 mm` and `t_s=4 mm`, i.e. local ratio `50`, despite gross Z widths of 2000–12000 mm. Therefore gross Z width cannot be inserted into a local effective-width equation.
-
-The same source closure is required for web/PBL/stud/core restraint in the UHPC family.
-
----
-
-## 5. Deep-postbuckling signal retained
-
-```text
-Z6:
-  q_u = 0.0138074
-  b*q_u = 165.689 mm
-  b*(q_u+q0)/ts = 53.42
-  postbuckling P term = 25.9165 MN
-  error vs Zhou = +13.93 percent
-
-BH050:
-  q_u = 0.00504574
-  b*q_u = 12.614 mm
-  b*(q_u+q0)/ts = 4.716
-  current ultimate eta_cap = 0.70442
-  error = +11.708 percent [lower-confidence comparator]
-```
-
-This is a validation signal, not a fitted threshold. It makes a progressive postbuckling steel-shell effectiveness law a more relevant next object than another constant cap.
-
----
-
-## 6. Withdrawn route
-
-The former
-
-```text
-NEXT_TASK = TRANSVERSE_AIRY_STATE_TO_TC_ACTIVATION_AUDIT
-```
-
-is formally withdrawn. It is inconsistent with the current resultant-only route and is not the first-priority explanation of the cross-family steel-shell residuals.
-
----
-
-## 7. Current next task
-
-```text
-NEXT_TASK = STEEL_SHELL_LOCAL_SUBPANEL_GEOMETRY_AND_PROGRESSIVE_EFFECTIVE_AREA_NM_SOURCE_GATE
-```
-
-Required before changing production `Pu`:
-
-1. actual external-face subpanel widths `b_i`;
-2. local plate aspect ratios and `k_cr`;
-3. restraint identity/stiffness of webs, PBL, studs and core contact;
-4. mother-plate overall vs between-stiffener subpanel buckling identity;
-5. source-supported `rho_i(lambda)` / effective-area law;
-6. proof of no double counting with gross Marguerre–Airy;
-7. regeneration of only the steel contribution of the same `Ny-My` envelope.
-
-```text
-TC_ACTIVATION_AUDIT_NEXT = WITHDRAWN
 MARGUERRE_AIRY = RETAIN
-Ny_My = RETAIN
-R07_NC = RETAIN
-R14_UHPC = RETAIN
-STATIC_EFFECTIVE_WIDTH_ULTIMATE_CAP = SAME CAPACITY CLASS AS fcs
-PRECAP_PROGRESSIVE_EFFECTIVE_AREA = OPEN SOURCE GATE
+Ny_My_RESULTANT_TERMINAL = RETAIN
+TC_ACTIVATION_ROUTE = WITHDRAWN
+POINTWISE_MATERIAL_STATE_CLASSIFICATION = OFF_MAINLINE
+
+Z_LOCAL_GEOMETRY_SOURCE_GATE = PASS
+Z_YUN_ELASTIC_PREYIELD_GATE = INACTIVE
+Z6_YUN_PROGRESSIVE_ELASTIC_AREA = REJECT
+
+T120_YUN_ELASTIC_PREYIELD_GATE = INACTIVE
+T360_YUN_ELASTIC_PREYIELD_GATE = POSSIBLE
+BH005_BH020_YUN_ELASTIC_PREYIELD_GATE = INACTIVE_CONDITIONAL
+BH032_BH050_YUN_ELASTIC_PREYIELD_GATE = POSSIBLE_CONDITIONAL
+
+YUN_AMPLITUDE_TO_NM_ALGEBRAIC_ELIMINATION = CANDIDATE_ONLY
+YUN_PROGRESSIVE_NM_PRODUCTION = NOT_YET_AUTHORIZED
 NEW_FITTED_FACTOR = NO
-PRODUCTION_Pu_CHANGED_IN_R15 = NO
+PRODUCTION_Pu_CHANGED = NO
+```
+
+---
+
+## 9. Next task
+
+Primary next task:
+
+```text
+NEXT_TASK = T360_BH032_BH050_LOCAL_GEOMETRY_PROVENANCE_AND_ALGEBRAIC_YUN_TO_NM_CLOSURE
+```
+
+Required deliverables:
+
+1. source-close local longitudinal lengths/aspect ratios and restraint identities for T360/BH032/BH050;
+2. close or reject the BH `B_s=0.225B` provenance;
+3. prove the current branch `A(eps_f)` exists uniquely/monotonically over the relevant domain;
+4. map the local average steel law into the exact 4-mm external-face `Ny-My` resultant without thickness quadrature;
+5. prove no double counting with the gross Marguerre--Airy mode;
+6. only then rerun T360/BH032/BH050.
+
+Z6 is now on a separate mechanism track:
+
+```text
+Z6_NEXT = ELASTOPLASTIC_LOCAL_OR_OTHER_RESULTANT_MECHANISM_DIAGNOSIS
+Z6_DO_NOT_USE_YUN_ELASTIC_PROGRESSIVE_AREA = TRUE
+```
+
+```text
 USER_ACCEPTANCE = PENDING
 ```
