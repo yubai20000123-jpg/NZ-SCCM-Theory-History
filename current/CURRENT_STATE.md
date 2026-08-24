@@ -1,146 +1,223 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-24 23:05 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / AXIAL_Y_NORMAL_Ny_My_TERMINAL / R20_0_GOVERNANCE_FROZEN / R20_1_SOURCE_CLOSURE_FAIL_EXACT / R19_KINEMATIC_SCALING_COORDINATE_BRIDGE_RETAINED / R19_GLOBAL_VIRTUAL_WORK_HANDOFF_SUPERSEDED / D15_NEXT_SUPERSEDED / YUN_ALWAYS_ON / DIRECT_YUN_INPLANE_TO_TERMINAL_PROJECTION_MISSING / DIRECT_TERMINAL_TO_D_ALPHA_CLOSURE_MISSING / R20_2_Z1_Z4_BLOCKED / R20_3_FULL_BATCH_HOLD`
+**Updated:** 2026-08-25 01:30 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT_UNCHANGED / GLOBAL_ULTIMATE_STATE_UNCHANGED / SSNC_R01_EFFECTIVE_AREA_REJECTED / SSNC_R02_PBL_2D_FULL_RESULTANT_GATE_PASS / FULL_STEEL_AREA / FULL_SKIN_Ds / BIAXIAL_NORMAL_POSTBUCKLING / FINITE_AIRY_HARMONICS / YUN_UNIAXIAL_DEGENERATION_PASS / SHEAR_POSTBUCKLING_OPEN / Pu_NOT_CALCULATED_IN_R02 / NEXT_CONNECT_TO_NC_FIXED_TERMINAL`
 
-> R20-0 and R20-1 have been executed under the user-approved direct architecture. R20-1 found an exact source/interface blocker rather than a numerical failure. Existing sources do not uniquely map the historical 2026-08-18 current Yun in-plane strip field to the later work-conjugate y-normal terminal resultants without introducing a new homogenization/section law; additionally the historical current Yun strain still requires `(D,alpha)`, which are not determined by the accepted fixed Airy-demand terminal variables after the global material virtual-work closure is removed. Per the R20-0 fail-fast rule, no new Z1/Z4 `Pu` is fabricated.
+> Current work is no longer governed by the historical R20 numbering. The user explicitly fixed the architecture: the steel-shell model is only a replaceable explicit submodule; it may not change the existing Marguerre–Airy structural path or the already-selected global ultimate-state criterion. The SSNC-R01 effective-width/effective-strength production interpretation is rejected because it removes physical steel-shell bending contribution. SSNC-R02 instead retains the full steel area and full steel-skin bending matrix and builds a finite two-direction PBL postbuckling operator.
 
-## 0. Frozen architecture
+## 0. Hard architecture
 
 ```text
-STRUCTURAL_FRONT = FULL_2D_MARGUERRE_AIRY
-TERMINAL_OBJECT = AXIAL_Y_NORMAL_Ny_My
-AIRY_DEMAND_TO_TERMINAL_CAPACITY = ACTIVE
-GLOBAL_VIRTUAL_WORK_RJ_AS_R20_STRUCTURAL_MAINLINE = NO
-D15_AS_R20_NEXT_ROUTE = NO
+GLOBAL_STRUCTURAL_FRONT = FULL_2D_MARGUERRE_AIRY / UNCHANGED
+AIRY_FUNCTION = RETAINED
+GLOBAL_ULTIMATE_STATE_CRITERION = UNCHANGED
+STEEL_SHELL = SUBMODULE_ONLY
+D15 = NO
+GLOBAL_MATERIAL_VIRTUAL_WORK_RJ = NO
 FORMAL_SPATIAL_QUADRATURE = 0
-THICKNESS_QUADRATURE = 0
 MATERIAL_POINTS = 0
 LOAD_PATH_TRACKING = 0
 HISTORY_STATE_MACHINE = OFF_MAINLINE
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
-YUN_STEEL_SHELL_MODULE = ALWAYS_ON
-SIGMA_CR_OVER_FY = DIAGNOSTIC_ONLY
-YIELD_ORDERING = DIAGNOSTIC_ONLY
-R20_3_FULL_BATCH = HOLD
+EFFECTIVE_WIDTH_OR_AREA_AS_PRODUCTION = PROHIBITED
+FORMAL_Z_COMPARATORS = ZHOU_SIMING + WINTER ONLY
 ```
 
-Structural demand remains
+The existing global Marguerre–Airy demand, generalized coordinates and ultimate-state equations remain authoritative. R02 calculates no `Pu`.
+
+## 1. SSNC-R01 supersession
+
+Historical R01 artifacts remain in the repository for audit only:
+
+- `semantic_v2/40_execution/steel_shell/20260825_0030__NZSCCM__SSNC_R01_YUN_HOMOGENIZED_NC_EXACT_AIRY_TERMINAL.py`
+- `semantic_v2/40_execution/20260825_0030__NZSCCM__SSNC_R01_YUN_HOMOGENIZED_NC_EXACT_AIRY_TERMINAL.md`
+
+Current identity:
+
+```text
+SSNC_R01_YUN_EFFECTIVE_AREA_PRODUCTION = REJECTED
+SSNC_R01_Pu = DO_NOT_PROMOTE
+SSNC_R01_INTERNAL_COMPARATORS = NOT_FORMAL_Z_COMPARATORS
+```
+
+Retain only reusable Airy/NC exact-section implementation pieces; replace the reduced steel-shell terminal.
+
+## 2. SSNC-R02 source and executable
+
+Report:
+
+`semantic_v2/40_execution/steel_shell/20260825_0130__NZSCCM__SSNC_R02_PBL_2D_FULL_RESULTANT_GATE.md`
+
+Executable:
+
+`semantic_v2/40_execution/steel_shell/20260825_0130__NZSCCM__SSNC_R02_PBL_2D_FULL_RESULTANT_GATE.py`
+
+The production candidate uses the PBL local mode
 
 \[
-P_{pb}(q)=P_{cr}\frac{q}{q+q_0}+Cq(q+2q_0),
+\phi=(1-\cos k_xx)(1-\cos k_yy),
 \]
 
+with stress-free initial coefficient `A0` and current total coefficient `U`.
+
+The exact compatibility source is a finite seven-harmonic field, so local Airy redistribution is closed without spatial quadrature.
+
+## 3. Full-area biaxial-normal steel operator
+
+For
+
 \[
-n_d(s;q)=\frac{P_{pb}(q)}b+Gq(q+2q_0)(1-2s^2),
+\Delta=U^2-A_0^2,
+\]
+
+exact mean geometric shortenings are
+
+\[
+g_x=\frac38k_x^2\Delta,
 \qquad
-m_d(s;q)=J_yqs.
+g_y=\frac38k_y^2\Delta.
 \]
 
-## 1. R20-0 completed
-
-Governance report:
-
-`semantic_v2/40_execution/20260824_2250__NZSCCM__R20_0_DIRECT_AIRY_YUN_NYMY_GOVERNANCE_AND_INTERFACE_FREEZE.md`
-
-Retained from R19 only:
-- canonical Marguerre--Airy y-strain basis and physical scaling;
-- nested coordinate `x_g=iB_s+x_i`;
-- derivative audit.
-
-Superseded for R20:
-- `D15_DIRECT_YUN_COMPILE_NEXT`;
-- global direct material virtual-work `R,J` as the structural mainline.
-
-## 2. R20-1 completed with exact source-closure failure
-
-Gate report:
-
-`semantic_v2/40_execution/20260824_2305__NZSCCM__R20_1_DIRECT_YUN_TO_NYMY_SOURCE_CLOSURE_GATE.md`
-
-Historical current Yun field:
+Mean compression-positive steel stresses are
 
 \[
-\sigma_{s,i}=\operatorname{clip}(E_s\varepsilon_{s,i},-f_y,+f_y),
+\bar\sigma_x=\frac{E}{1-\nu^2}[(e_x-g_x)+\nu(e_y-g_y)],
 \]
 
 \[
-R_{A_i}=C_\sigma\left[k_{cr}A_i+H(2A_{0i}A_i+A_i^2)(A_i+A_{0i})\right]
--\bar\sigma_{c,i}(A_i+A_{0i})=0,
+\bar\sigma_y=\frac{E}{1-\nu^2}[(e_y-g_y)+\nu(e_x-g_x)].
 \]
 
-with
+The full physical steel membrane resultants are
 
 \[
-\bar\sigma_{c,i}=-\frac1{\Omega_i}\int_{\Omega_i}\sigma_{s,i}\,d\Omega.
+\boxed{N_x=t_s\bar\sigma_x,\quad N_y=t_s\bar\sigma_y,\quad N_{xy}=t_sG\gamma_{xy}}.
 \]
 
-The same historical branch reports steel phase force through an area integral. The later projected-moment terminal, in contrast, defines work-conjugate resultants from a finite control-section thickness field.
+No effective width or area multiplier is used.
 
-No frozen source selects a unique bridge among point-cut, subpanel-average, effective-width homogenization, phase-average, or another localization operator.
+The current local amplitude is the finite algebraic solution of
 
-Therefore
+\[
+\boxed{B_3U^3+B_1U+B_0=0},
+\]
+
+solved by Cardano/trigonometric real-root formulas. No incremental local loading is required.
+
+## 4. Full steel-shell bending retained
+
+The skin own bending matrix is unchanged:
 
 \[
 \boxed{
-\{\sigma_{s,i}(x_i,y)\}
-\not\xRightarrow[\text{current frozen sources}]{\text{unique}}
-\{N_y^{s,Yun},M_\parallel^{s,Yun}\}_{terminal}.
+\mathbf D_s=
+\begin{bmatrix}
+D_s&\nu D_s&0\\
+\nu D_s&D_s&0\\
+0&0&(1-\nu)D_s/2
+\end{bmatrix},
+\qquad
+D_s=\frac{Et_s^3}{12(1-\nu^2)}.
 }
 \]
 
-Second missing identity:
+For the existing gross/global curvature input,
+
+\[
+\mathbf m_s^g=\mathbf D_s\boldsymbol\kappa^g.
+\]
+
+Local high-frequency PBL curvature is retained in pointwise surface stress and Mises. Its exact cell average is zero:
+
+\[
+\langle\phi_{,xx}\rangle=
+\langle\phi_{,yy}\rangle=
+\langle\phi_{,xy}\rangle=0,
+\]
+
+so it does not generate an artificial extra mean gross moment and does not reduce `Ds`.
+
+For two faces:
+
+\[
+\mathbf N_s=\mathbf N_s^++\mathbf N_s^-,
+\]
 
 \[
 \boxed{
-q\not\xRightarrow[\text{accepted R20 terminal architecture}]{\text{unique}}(D,\alpha),
+\mathbf M_s=z_+\mathbf N_s^+ + z_-\mathbf N_s^- + \mathbf m_s^{g,+}+\mathbf m_s^{g,-}.
 }
 \]
 
-although `(D,alpha)` are required by the historical ideal-EP Yun current strain field.
+## 5. Exact Yun uniaxial degeneration
 
-## 3. Projected-moment result retained
-
-The 2026-08-23 finite 2D terminal audit remains valid for its own thickness-section domain. For one frozen Airy bending mode,
+The derived Airy membrane-energy polynomial exactly reproduces the historical Yun `kp` numerator. For arbitrary local aspect ratio `r=Ly/Lx`, the R02 coefficients satisfy
 
 \[
-\boxed{M_\parallel=d_xM_x+d_yM_y}
+\frac{K_b}{2t_sc_yC_\sigma}=k_{cr}^{Yun},
 \]
 
-is the unique work-conjugate bending terminal; `M_perp` is not an independent equilibrium equation.
+and
 
-This does not itself define the missing Yun in-plane-to-section projection.
+\[
+\frac{2EK_A}{c_y}=C_\sigma H^{Yun}.
+\]
 
-## 4. Current execution status
-
-```text
-R20_0 = COMPLETE
-R20_1 = COMPLETE / SOURCE_CLOSURE_FAIL_EXACT
-R20_2_Z1_Z4 = NOT_EXECUTED / BLOCKED_BY_R20_1
-R20_3_FULL_BATCH = HOLD
-
-NEW_Pu_Z1 = NONE
-NEW_Pu_Z4 = NONE
-HISTORICAL_Z1_14P44689544_MN = REGRESSION_ONLY
-HISTORICAL_Z4_52P43155584_MN = REGRESSION_ONLY
-NEW_FITTED_FACTOR = NO
-NEW_HOMOGENIZATION_ASSUMPTION = NO
-NEW_SECTION_LAW = NO
-```
-
-## 5. Reopen choices requiring user authorization
-
-R20-2 can be reopened only after one architecture choice is explicitly approved:
+Executed errors over `r={0.5,0.75,1,1.5,2}`:
 
 ```text
-OPTION_H = derive/freeze a source-backed Yun homogenized terminal law
-           from Yun Ch.2/Ch.5 + Sun effective-area precedent,
-           while retaining fixed Airy demand.
-
-OPTION_G = retain the historical current Yun (D,q,alpha,A_i) state closure
-           and global equilibrium, then recover Ny/My after solving;
-           this reopens the global equilibrium route superseded by R20-0.
+yun_kcr_abs = 3.552713678801e-15
+yun_nonlinear_abs = 8.526512829121e-14
 ```
 
-No option is selected automatically.
+Thus the biaxial-normal operator recovers the Yun PBL uniaxial source while adding the transverse work and finite two-direction Airy redistribution.
+
+## 6. R02 executed gates
+
+```text
+SSNC_R02_PBL_2D_FULL_RESULTANT_GATE = PASS
+X_Y_SYMMETRY = PASS
+ZERO_LOAD_U_EQUALS_A0 = PASS
+SMALL_DEFLECTION_FULL_A_MATRIX = PASS
+FULL_SKIN_Ds = PASS
+YUN_UNIAXIAL_Kcr = PASS
+YUN_UNIAXIAL_Kp = PASS
+FINITE_AIRY_HARMONICS = PASS
+POINTWISE_2D_MISES = PASS
+MEAN_LOCAL_HIGH_FREQUENCY_BENDING = EXACT_ZERO
+TOP_BOTTOM_FULL_RESULTANT_ASSEMBLY = PASS
+Pu_CALCULATED_IN_R02 = NO
+```
+
+Observed machine errors are all zero to machine precision except the two Yun coefficient comparisons above, which are `O(1e-14)`.
+
+## 7. Explicit open boundary
+
+```text
+BIAXIAL_NORMAL_POSTBUCKLING = SOURCE-CLOSED CANDIDATE
+MEAN_SHEAR_STRESS = ACTIVE
+SHEAR_IN_2D_MISES = ACTIVE
+SHEAR_POSTBUCKLING = NOT_SOURCE_CLOSED
+UNIVERSAL_ARBITRARY_SHEAR_6COMP_PLATE_OPERATOR = NOT_CLAIMED
+POST_FIRST_YIELD_2D_PLASTIC_REDISTRIBUTION = NOT_YET_FROZEN
+```
+
+The current Z axial family has `Nxy=0` in the existing symmetric Marguerre–Airy demand, so the shear-buckling gap does not by itself block the Z-specific next interface. If the fixed global ultimate-state equations require continuation beyond first local steel yield, that continuation must be source-closed **inside the steel submodule only**; it may not alter the global structure or ultimate criterion.
+
+## 8. Exact next task
+
+```text
+NEXT = CONNECT SSNC_R02 FULL-RESULTANT STEEL SHELL
+       + EXISTING ORDINARY-CONCRETE EXACT SECTION
+       + EXISTING MARGUERRE-AIRY STRUCTURAL DEMAND
+       + EXISTING FIXED ULTIMATE-STATE EQUATIONS
+
+FIRST_GATE = DETERMINE WHETHER THE FIXED TERMINAL ROOTS REQUIRE
+             POST-FIRST-YIELD 2D STEEL CONTINUATION
+
+IF NO  -> SOLVE Z0-Z6 DIRECTLY
+IF YES -> SOURCE-CLOSE STEEL-ONLY POST-YIELD SUBGATE, THEN SOLVE
+
+FORMAL RESULT TABLE AFTER SOLVE = CURRENT THEORY vs ZHOU vs WINTER ONLY
+```
