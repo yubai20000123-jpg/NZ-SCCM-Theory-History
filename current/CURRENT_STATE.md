@@ -1,9 +1,9 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-24 15:28 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R18_DIRECT_MA_TO_YUN_RESIDUAL_JACOBIAN_IMPLEMENTED / ANALYTIC_JACOBIAN_VERIFIED / NO_ABD_INTERMEDIATE / YUN_ALWAYS_ON / R07_R14_PRE_YUN_BASELINES / MULTI_UHPC_RERUN_NEXT / TC_ROUTE_WITHDRAWN / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-24 16:12 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R19_CANONICAL_MA_UV_YUN_BRIDGE_SOURCE_CLOSED / R18_MANUFACTURED_COORDINATE_SCALING_BRIDGE_SUPERSEDED / DIRECT_SIGMA_ET_TO_RESIDUAL_JACOBIAN / NO_ABD_INTERMEDIATE / YUN_ALWAYS_ON / D15_DIRECT_YUN_COMPILE_NEXT / R07_R14_PRE_YUN_BASELINES / TC_ROUTE_WITHDRAWN / USER_ACCEPTANCE_PENDING`
 
-> R18 executes the direct coupling requested after R17. The steel-shell path is now explicitly `Marguerre–Airy deformation -> steel strain -> Yun/Karman steel state -> sigma_s, Et,s -> equilibrium residual/Jacobian`. The previously introduced prerequisite `Yun -> current A/B/D -> equilibrium` is withdrawn. No specimen-level Yun activation gate exists.
+> R19 closes the exact upstream Marguerre--Airy/Yun interface that remained unresolved after R18. The production `A_y=B_A^y` basis, physical \(\varepsilon_0\)/\(k^2\) scaling, sine coordinates, and strip-local-to-global coordinate map are now explicit and derivative-audited. R18 remains a useful scaffold calculus test but its manufactured `B_A^y` and diagnostic coordinate/scaling form are not production theory.
 
 ## 0. Frozen architecture
 
@@ -19,6 +19,7 @@ EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
 TC_CC_TT_ROUTE = OFF_MAINLINE
 YUN_STEEL_SHELL_MODULE = ALWAYS_ON
+SIGMA_CR_OVER_FY = DIAGNOSTIC_ONLY
 A_B_D_INTERMEDIATE_BEFORE_EQUILIBRIUM = NO
 ```
 
@@ -26,208 +27,149 @@ Current chain:
 
 \[
 \boxed{
-(q,\alpha,\ldots)
-\xrightarrow{\text{Marguerre--Airy explicit deformation}}
+(D,q,\alpha,\{A_i^\pm\})
+\xrightarrow{\text{canonical Marguerre--Airy UV}}
 \varepsilon_s
-\xrightarrow{\text{Yun steel shell}}
-(\sigma_s,E_{t,s},A_i)
+\xrightarrow{\text{always-on Yun/Karman}}
+(\sigma_s,E_{t,s})
 \xrightarrow{\text{direct virtual work}}
-\mathbf R,\mathbf J
+(\mathbf R,\mathbf J)
 \rightarrow
 (N_y,M_y)
 \rightarrow P_u.
 }
 \]
 
-No width/thickness ratio, `sigma_cr/f_y`, concrete `CC/TC/TT`, experiment, FEM or comparator is allowed to decide whether Yun is active.
+## 1. R19 canonical Marguerre--Airy y-strain
 
----
+Sources:
 
-## 1. R18 implementation
+`semantic_v2/20_theory/20260820_2358__NZSCCM__NGUYEN_KINEMATICS_EXPLICIT_UV_AND_NC_M6_VIRTUAL_WORK_SYSTEM.md`
 
-Report:
+`semantic_v2/40_execution/steel_shell/20260818_1421__NZSCCM__Z1_Z4__UNIFIED_YUN_IDEAL_EP_LOCAL_AMPLITUDE_FULL_RECALC.md`
 
-`semantic_v2/40_execution/20260824_1528__NZSCCM__DIRECT_MA_STRAIN_TO_YUN_RESIDUAL_JACOBIAN_R18.md`
-
-Executable:
-
-`semantic_v2/40_execution/steel_shell/20260824_1528__NZSCCM__DIRECT_MA_STRAIN_TO_YUN_RESIDUAL_JACOBIAN_R18.py`
-
-Verification CSV:
-
-`semantic_v2/40_execution/steel_shell/20260824_1528__NZSCCM__DIRECT_MA_STRAIN_TO_YUN_RESIDUAL_JACOBIAN_R18_RESULTS.csv`
-
-The recovered historical Marguerre--Airy axial field is retained in the direct interface:
+Use
 
 \[
-e_y=-D+M(q)(u^2-u^2v^2)+\alpha B_A^y(u,v)+B(q)uv\zeta,
+X=\pi x/b,\qquad Y=\pi y/\ell,\qquad k=b/\ell,
 \]
 
 \[
-M(q)=\pi^2\left(q_0q+\frac12q^2\right),\qquad B(q)=2\pi^2q.
+F_y=\sin^2X(1-\sin^2Y),\qquad H_s=\sin X\sin Y,
 \]
-
-The exact project `B_A^y` basis is supplied upstream; R18 does not invent or refit it.
-
-The historical Yun/Karman steel strain is inserted directly:
-
-\[
-\varepsilon_s
-=
-\varepsilon_y^g
-+A(w_{0,y}^g+\Delta w_{,y}^g)\phi_y
-+A_0\Delta w_{,y}^g\phi_y
-+\left(A_0A+\frac12A^2\right)\phi_y^2.
-\]
-
-Current minimal steel law:
-
-\[
-\sigma_s=\operatorname{clip}(E_s\varepsilon_s,-f_y,+f_y),
-\qquad
-E_{t,s}=\frac{d\sigma_s}{d\varepsilon_s}.
-\]
-
-Yielding changes the current steel constitutive state but does not delete Yun geometry or the local amplitude row.
-
----
-
-## 2. Direct steel residual and Jacobian
-
-For any global generalized coordinate `eta_i`, R18 now assembles the steel-shell contribution directly as
 
 \[
 \boxed{
-R_i^s=t_s\int_{\Omega_s}\sigma_s\varepsilon_{s,i}\,d\Omega
-}.
+A_y=
+\frac{\nu}{4}
+-\frac{k^2}{2}\sin^2X
+-\frac{\nu}{2}\sin^2Y
++k^2\sin^2X\sin^2Y.
+}
 \]
 
-The exact current Jacobian is
+Then
 
 \[
 \boxed{
-K_{ij}^s
-=t_s\int_{\Omega_s}
-\left[
-E_{t,s}\varepsilon_{s,i}\varepsilon_{s,j}
-+\sigma_s\varepsilon_{s,ij}
-\right]d\Omega
-}.
+e_y=
+-D+\alpha A_y
++\frac{\pi^2k^2}{\varepsilon_0}
+\left(q_0q+\frac12q^2\right)F_y
++\frac{\pi^2t_rk^2}{2\varepsilon_0b}qH_s\zeta.
+}
+\]
+
+The project `B_A^y` blocker is therefore closed.
+
+## 2. Nested Yun strip coordinate map
+
+Historical Yun strips use local \(x_i\) in \(\phi_i\), while global Marguerre--Airy fields must retain their global face coordinate. R19 uses
+
+\[
+\boxed{x_g=iB_s+x_i,\qquad 0\le x_i\le B_s.}
 \]
 
 Therefore:
 
 ```text
-CURRENT_A_B_D_MATRIX_AS_PREREQUISITE = REMOVED
-DIRECT_SIGMA_TO_EQUILIBRIUM = IMPLEMENTED
-DIRECT_ET_TO_JACOBIAN = IMPLEMENTED
-CURRENT_STRESS_GEOMETRIC_TERM = IMPLEMENTED
+GLOBAL_MA_FIELD_COORDINATE = x_g
+LOCAL_YUN_SHAPE_COORDINATE = x_i
+RESET_GLOBAL_X_TO_ZERO_EACH_STRIP = NO
 ```
 
-The Yun local-amplitude equation is retained and coupled through the same current steel stress:
+Z1: 30 × 200 mm strips cover exactly 0--6000 mm.  
+Z4: 40 × 200 mm strips cover exactly 0--8000 mm.
 
-\[
-R_A=C_\sigma[k_{cr}A+H(2A_0A+A^2)(A+A_0)]-\bar\sigma_c(A+A_0)=0.
-\]
+## 3. R19 executable and audit
 
-Its derivatives with respect to global coordinates and `A` are included analytically.
+Report:
 
----
+`semantic_v2/40_execution/20260824_1612__NZSCCM__CANONICAL_MA_UV_TO_YUN_RESIDUAL_JACOBIAN_R19.md`
 
-## 3. R18 verification result
+Executable:
 
-High-order Gauss-Legendre integration is used only as a numerical derivative/oracle check. Formal production spatial quadrature remains zero.
+`semantic_v2/40_execution/steel_shell/20260824_1612__NZSCCM__CANONICAL_MA_UV_TO_YUN_RESIDUAL_JACOBIAN_R19.py`
 
-### Entire strip elastic
+Results:
+
+`semantic_v2/40_execution/steel_shell/20260824_1612__NZSCCM__CANONICAL_MA_UV_TO_YUN_RESIDUAL_JACOBIAN_R19_RESULTS.csv`
+
+Executed audit:
 
 ```text
-relative Jacobian error      = 8.379031701877e-11
-max scaled entry error       = 4.753291751317e-08
-global-global symmetry error = 2.201989822615e-18
-PASS = TRUE
+POINTWISE_FIRST_DERIV_MAX_ABS_ERR = 2.659429e-12
+POINTWISE_SECOND_DERIV_MAX_ABS_ERR = 2.140954e-12
+DIAGNOSTIC_RA_JAC_MAX_ABS_ERR = 1.653234e-08
+DIAGNOSTIC_RA_JAC_MAX_REL_ERR = 8.276635e-10
+R19_CANONICAL_MA_TO_YUN_JACOBIAN_AUDIT = PASS
 ```
 
-### Entire strip compressive-yielded
+High-order Gauss-Legendre appears only in the diagnostic finite-difference/oracle check, not in the formal operator.
+
+## 4. R18 supersession
+
+Retain R18 architecture:
+- direct \(\sigma_s\to R\);
+- direct \(E_{t,s}\to J\);
+- current stress geometric tangent;
+- always-on \(R_{A_i}\);
+- no A/B/D prerequisite.
+
+Supersede R18 production placeholders:
+```text
+MANUFACTURED_BAy = SUPERSEDED
+u=x/b, v=y/ell EXECUTABLE PLACEHOLDER = SUPERSEDED
+COSINE_REPORT_SHORTHAND = SUPERSEDED
+MISSING_eps0_k2_PHYSICAL_SCALING = SUPERSEDED
+```
+
+## 5. Baseline status
+
+R07 and R14 numerical values remain **PRE-YUN-REWIRE regression baselines only**.
+
+Historical 2026-08-18 Z1/Z4 unified-Yun numbers remain **historical regression targets only**.
 
 ```text
-relative Jacobian error      = 8.946410968662e-10
-max scaled entry error       = 2.883829551726e-09
-elastic fraction             = 0
-global steel Jacobian norm   = 6625.932107842
-PASS = TRUE
+PRODUCTION_Pu_CHANGED_IN_R19 = NO
 ```
-
-The yielded test proves the intended structural rule: even when ideal-EPP gives `Et=0`, the Yun steel shell remains in the equilibrium/Jacobian because the current-stress term
-
-\[
-\sigma_s\varepsilon_{s,ij}
-\]
-
-survives.
-
-```text
-ANALYTIC_JACOBIAN_VS_FINITE_DIFFERENCE = PASS
-YIELDING_DELETES_YUN_GEOMETRY = NO
-YIELDING_DELETES_STEEL_GEOMETRIC_TANGENT = NO
-```
-
----
-
-## 4. Production baselines and scope
-
-R07 ordinary-concrete steel-shell and R14 UHPC steel-shell values remain available only as **PRE-YUN-REWIRE regression baselines**. R18 has not changed any production `Pu` yet.
-
-```text
-R07_PRE_YUN_BASELINE = RETAIN_FOR_REGRESSION_ONLY
-R14_PRE_YUN_BASELINE = RETAIN_FOR_REGRESSION_ONLY
-PRODUCTION_Pu_CHANGED_IN_R18 = NO
-```
-
-The direct steel kernel is now implemented; the remaining production work is to insert the exact existing project Marguerre--Airy basis/slopes, compile the finite analytic direct-steel terms with D15, and then solve the full coupled system.
-
----
-
-## 5. UHPC adapter policy
-
-Under the **same always-on Yun structural front**, the following existing UHPC core functions are to be tested in parallel:
-
-```text
-R08  full-fc block
-R10A 0.85fc block
-R11  FHWA strain-compatible
-R12  R11 + Hiew tension
-R14  Zhang peak strain-compatible
-```
-
-Two criteria are kept separate:
-
-```text
-IMPLEMENTATION_EASE != PHYSICAL_SUITABILITY
-```
-
-R10A is expected to be the simplest adapter; R14 remains the strongest current physical candidate. Neither is selected by implementation convenience or by test-value fitting.
-
----
 
 ## 6. Next task
 
 ```text
 NEXT_TASK =
-PROJECT_EXACT_MARGUERRE_AIRY_FIELD_ADAPTER
-+ D15_COMPILE_DIRECT_YUN_STEEL_RESIDUAL_JACOBIAN
+D15_COMPILE_CANONICAL_DIRECT_YUN_STEEL_RESIDUAL_JACOBIAN
 + HISTORICAL_Z1_Z4_REGRESSION
 + Z0_Z6_RERUN
 + R08_R10A_R11_R12_R14_UHPC_ADAPTER_RERUN
 ```
 
 Required order:
-
-1. plug the exact project `B_A^y`, global slopes and generalized derivatives into the R18 operator;
-2. D15-compile the direct steel residual/Jacobian so formal spatial quadrature remains zero;
-3. reproduce historical Yun Z1/Z4 states as regression checks;
-4. rerun Z0--Z6;
-5. rerun T120/T360/BH under the same Yun front while switching only the UHPC core adapter;
-6. report convergence/implementation complexity and physical prediction separately.
+1. compile the source-closed R19 trigonometric steel strain and derivatives into the finite D15/moment representation;
+2. preserve ideal-EP/Yun current stress semantics without giving numerical spatial quadrature formal identity;
+3. reproduce historical Z1/Z4 unified-Yun states as regression checks;
+4. solve the current coupled Marguerre--Airy/Yun branch;
+5. then rerun Z0--Z6 and UHPC adapter families with comparators closed during solve.
 
 ```text
 USER_ACCEPTANCE = PENDING
