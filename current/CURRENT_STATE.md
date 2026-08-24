@@ -1,15 +1,20 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-24 16:12 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT / Ny_My_RESULTANT_TERMINAL / R19_CANONICAL_MA_UV_YUN_BRIDGE_SOURCE_CLOSED / R18_MANUFACTURED_COORDINATE_SCALING_BRIDGE_SUPERSEDED / DIRECT_SIGMA_ET_TO_RESIDUAL_JACOBIAN / NO_ABD_INTERMEDIATE / YUN_ALWAYS_ON / D15_DIRECT_YUN_COMPILE_NEXT / R07_R14_PRE_YUN_BASELINES / TC_ROUTE_WITHDRAWN / USER_ACCEPTANCE_PENDING`
+**Updated:** 2026-08-24 22:50 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT / AXIAL_Y_NORMAL_Ny_My_TERMINAL / R20_0_DIRECT_AIRY_YUN_GOVERNANCE_FROZEN / R19_KINEMATIC_SCALING_COORDINATE_BRIDGE_RETAINED / R19_GLOBAL_VIRTUAL_WORK_HANDOFF_SUPERSEDED / D15_NEXT_SUPERSEDED / YUN_ALWAYS_ON / R20_1_DIRECT_NYMY_CLOSURE_ACTIVE / R20_2_Z1_Z4_AUTHORIZED_AFTER_CLOSURE / R20_3_FULL_BATCH_HOLD`
 
-> R19 closes the exact upstream Marguerre--Airy/Yun interface that remained unresolved after R18. The production `A_y=B_A^y` basis, physical \(\varepsilon_0\)/\(k^2\) scaling, sine coordinates, and strip-local-to-global coordinate map are now explicit and derivative-audited. R18 remains a useful scaffold calculus test but its manufactured `B_A^y` and diagnostic coordinate/scaling form are not production theory.
+> R20-0 is the user-approved governance correction after R19. R19 remains authoritative for the canonical Marguerre--Airy y-strain basis, physical scaling, local-to-global strip coordinate map and derivative audit. Its pending `D15_DIRECT_YUN_COMPILE_NEXT` and global direct-virtual-work residual/Jacobian handoff are not the accepted R20 structural route. R20 restores the already-frozen architecture `Airy structural demand -> direct axial y-normal Ny-My terminal -> Pu` and inserts the always-on Yun steel-shell mechanism on the terminal-capacity side.
 
 ## 0. Frozen architecture
 
 ```text
 STRUCTURAL_FRONT = FULL_2D_MARGUERRE_AIRY
 TERMINAL_OBJECT = AXIAL_Y_NORMAL_Ny_My
+MA_V1_MONOTONE_POSTBUCKLING = TRUE
+GLOBAL_GEOMETRIC_FOLD_REQUIRED = FALSE
+CURRENT_MATERIAL_INTO_AIRY_COMPATIBILITY = NO
+GLOBAL_VIRTUAL_WORK_RJ_AS_R20_STRUCTURAL_MAINLINE = NO
+D15_AS_R20_NEXT_ROUTE = NO
 FORMAL_SPATIAL_QUADRATURE = 0
 THICKNESS_QUADRATURE = 0
 MATERIAL_POINTS = 0
@@ -17,160 +22,136 @@ LOAD_PATH_TRACKING = 0
 HISTORY_STATE_MACHINE = OFF_MAINLINE
 EXPERIMENT_IN_ROOT_SELECTION = 0
 FEM_IN_ROOT_SELECTION = 0
-TC_CC_TT_ROUTE = OFF_MAINLINE
 YUN_STEEL_SHELL_MODULE = ALWAYS_ON
 SIGMA_CR_OVER_FY = DIAGNOSTIC_ONLY
-A_B_D_INTERMEDIATE_BEFORE_EQUILIBRIUM = NO
+YIELD_ORDERING = DIAGNOSTIC_ONLY
+R20_3_FULL_BATCH = HOLD
 ```
 
-Current chain:
+Current production architecture:
 
 \[
 \boxed{
-(D,q,\alpha,\{A_i^\pm\})
-\xrightarrow{\text{canonical Marguerre--Airy UV}}
-\varepsilon_s
-\xrightarrow{\text{always-on Yun/Karman}}
-(\sigma_s,E_{t,s})
-\xrightarrow{\text{direct virtual work}}
-(\mathbf R,\mathbf J)
-\rightarrow
-(N_y,M_y)
-\rightarrow P_u.
+q
+\xrightarrow{\text{Marguerre--Airy}}
+\{P_{pb}(q),n_d(s;q),m_d(s;q)\}
+\longrightarrow
+\text{direct }(N_y,M_y)\text{ terminal contact}
+\longleftarrow
+\{\text{concrete/core resultants},\text{Yun steel resultants}\}
+\rightarrow P_u=P_{pb}(q).
 }
 \]
 
-## 1. R19 canonical Marguerre--Airy y-strain
+## 1. Structural demand retained
 
-Sources:
+Primary architecture correction:
 
-`semantic_v2/20_theory/20260820_2358__NZSCCM__NGUYEN_KINEMATICS_EXPLICIT_UV_AND_NC_M6_VIRTUAL_WORK_SYSTEM.md`
+`semantic_v2/40_execution/20260823_0322__NZSCCM__MARGUERRE_AIRY_TERMINAL_CAPACITY_ARCHITECTURE_CORRECTION.md`
+
+Z-family direct resultant baseline:
+
+`semantic_v2/40_execution/20260824_0918__NZSCCM__Z0_Z6_NY_MY_RESULTANT_RECALCULATION_R07.md`
+
+\[
+P_{pb}(q)=P_{cr}\frac{q}{q+q_0}+Cq(q+2q_0),
+\]
+
+\[
+n_d(s;q)=\frac{P_{pb}(q)}b+Gq(q+2q_0)(1-2s^2),
+\qquad
+m_d(s;q)=J_yqs.
+\]
+
+The full 2D Airy field is retained. `Nx`/`Mx` are not hard terminal equalities on the selected symmetric y-normal cut.
+
+## 2. R19 bridge retained but role restricted
+
+Retain the R19 canonical basis and scaling:
+
+\[
+A_y=\frac{\nu}{4}-\frac{k^2}{2}\sin^2X-\frac{\nu}{2}\sin^2Y+k^2\sin^2X\sin^2Y,
+\]
+
+\[
+e_y=-D+\alpha A_y
++\frac{\pi^2k^2}{\varepsilon_0}\left(q_0q+\frac12q^2\right)F_y
++\frac{\pi^2t_rk^2}{2\varepsilon_0b}qH_s\zeta,
+\]
+
+and
+
+\[
+\boxed{x_g=iB_s+x_i}.
+\]
+
+```text
+R19_KINEMATIC_SCALING_COORDINATE_BRIDGE = RETAIN
+R19_DERIVATIVE_AUDIT = RETAIN
+R19_GLOBAL_VIRTUAL_WORK_CLOSURE_AS_R20_MAINLINE = SUPERSEDED
+R19_D15_NEXT_HANDOFF = SUPERSEDED
+```
+
+## 3. Always-on Yun steel-shell mechanism
+
+Historical direct source:
 
 `semantic_v2/40_execution/steel_shell/20260818_1421__NZSCCM__Z1_Z4__UNIFIED_YUN_IDEAL_EP_LOCAL_AMPLITUDE_FULL_RECALC.md`
 
-Use
-
 \[
-X=\pi x/b,\qquad Y=\pi y/\ell,\qquad k=b/\ell,
+\sigma_s=\operatorname{clip}(E_s\varepsilon_s,-f_y,+f_y),
 \]
 
 \[
-F_y=\sin^2X(1-\sin^2Y),\qquad H_s=\sin X\sin Y,
+R_{A_i}=C_\sigma\left[k_{cr}A_i+H(2A_{0i}A_i+A_i^2)(A_i+A_{0i})\right]
+-\bar\sigma_{c,i}(A_i+A_{0i})=0.
 \]
+
+```text
+YUN_LOCAL_KARMAN_GEOMETRY = ACTIVE
+LOCAL_Ai = FINITE_CURRENT_ALGEBRAIC_COORDINATE
+LOCAL_Ai_AS_GROSS_RITZ_MODE = NO
+LOCAL_Ai_HISTORY_STATE = NO
+WHOLE_FACE_Et_ZERO_SWITCH = NO
+```
+
+## 4. R20-0 governance report
+
+`semantic_v2/40_execution/20260824_2250__NZSCCM__R20_0_DIRECT_AIRY_YUN_NYMY_GOVERNANCE_AND_INTERFACE_FREEZE.md`
+
+R20-0 calculates no new `Pu`.
+
+Historical R07/R14 values and the 2026-08-18 Z1/Z4 Yun values remain regression/reference values only.
+
+## 5. Exact active next task
+
+```text
+R20_1 = SOURCE-CLOSE DIRECT YUN STEEL -> y-NORMAL Ny,My RESULTANT MAPPING
+        + NO-DOUBLE-COUNTING GATE
+        + BUILD DIRECT TERMINAL EQUATIONS
+
+R20_2 = AFTER R20_1 PASS, SOLVE ONLY Z1 AND Z4
+        WITH HISTORICAL 14.44689544 / 52.43155584 MN CLOSED DURING SOLVE
+
+R20_3 = HOLD
+```
+
+R20-1 formal target:
 
 \[
-\boxed{
-A_y=
-\frac{\nu}{4}
--\frac{k^2}{2}\sin^2X
--\frac{\nu}{2}\sin^2Y
-+k^2\sin^2X\sin^2Y.
-}
+F_N=N_y^{cap}-n_d=0,
+\qquad
+F_M=M_y^{cap}-m_d=0,
+\qquad
+R_{A_i}=0,
 \]
 
-Then
+with
 
 \[
-\boxed{
-e_y=
--D+\alpha A_y
-+\frac{\pi^2k^2}{\varepsilon_0}
-\left(q_0q+\frac12q^2\right)F_y
-+\frac{\pi^2t_rk^2}{2\varepsilon_0b}qH_s\zeta.
-}
+N_y^{cap}=N_y^c+N_y^{s,Yun}+N_y^{web},
+\qquad
+M_y^{cap}=M_y^c+M_y^{s,Yun}+M_y^{web}.
 \]
 
-The project `B_A^y` blocker is therefore closed.
-
-## 2. Nested Yun strip coordinate map
-
-Historical Yun strips use local \(x_i\) in \(\phi_i\), while global Marguerre--Airy fields must retain their global face coordinate. R19 uses
-
-\[
-\boxed{x_g=iB_s+x_i,\qquad 0\le x_i\le B_s.}
-\]
-
-Therefore:
-
-```text
-GLOBAL_MA_FIELD_COORDINATE = x_g
-LOCAL_YUN_SHAPE_COORDINATE = x_i
-RESET_GLOBAL_X_TO_ZERO_EACH_STRIP = NO
-```
-
-Z1: 30 × 200 mm strips cover exactly 0--6000 mm.  
-Z4: 40 × 200 mm strips cover exactly 0--8000 mm.
-
-## 3. R19 executable and audit
-
-Report:
-
-`semantic_v2/40_execution/20260824_1612__NZSCCM__CANONICAL_MA_UV_TO_YUN_RESIDUAL_JACOBIAN_R19.md`
-
-Executable:
-
-`semantic_v2/40_execution/steel_shell/20260824_1612__NZSCCM__CANONICAL_MA_UV_TO_YUN_RESIDUAL_JACOBIAN_R19.py`
-
-Results:
-
-`semantic_v2/40_execution/steel_shell/20260824_1612__NZSCCM__CANONICAL_MA_UV_TO_YUN_RESIDUAL_JACOBIAN_R19_RESULTS.csv`
-
-Executed audit:
-
-```text
-POINTWISE_FIRST_DERIV_MAX_ABS_ERR = 2.659429e-12
-POINTWISE_SECOND_DERIV_MAX_ABS_ERR = 2.140954e-12
-DIAGNOSTIC_RA_JAC_MAX_ABS_ERR = 1.653234e-08
-DIAGNOSTIC_RA_JAC_MAX_REL_ERR = 8.276635e-10
-R19_CANONICAL_MA_TO_YUN_JACOBIAN_AUDIT = PASS
-```
-
-High-order Gauss-Legendre appears only in the diagnostic finite-difference/oracle check, not in the formal operator.
-
-## 4. R18 supersession
-
-Retain R18 architecture:
-- direct \(\sigma_s\to R\);
-- direct \(E_{t,s}\to J\);
-- current stress geometric tangent;
-- always-on \(R_{A_i}\);
-- no A/B/D prerequisite.
-
-Supersede R18 production placeholders:
-```text
-MANUFACTURED_BAy = SUPERSEDED
-u=x/b, v=y/ell EXECUTABLE PLACEHOLDER = SUPERSEDED
-COSINE_REPORT_SHORTHAND = SUPERSEDED
-MISSING_eps0_k2_PHYSICAL_SCALING = SUPERSEDED
-```
-
-## 5. Baseline status
-
-R07 and R14 numerical values remain **PRE-YUN-REWIRE regression baselines only**.
-
-Historical 2026-08-18 Z1/Z4 unified-Yun numbers remain **historical regression targets only**.
-
-```text
-PRODUCTION_Pu_CHANGED_IN_R19 = NO
-```
-
-## 6. Next task
-
-```text
-NEXT_TASK =
-D15_COMPILE_CANONICAL_DIRECT_YUN_STEEL_RESIDUAL_JACOBIAN
-+ HISTORICAL_Z1_Z4_REGRESSION
-+ Z0_Z6_RERUN
-+ R08_R10A_R11_R12_R14_UHPC_ADAPTER_RERUN
-```
-
-Required order:
-1. compile the source-closed R19 trigonometric steel strain and derivatives into the finite D15/moment representation;
-2. preserve ideal-EP/Yun current stress semantics without giving numerical spatial quadrature formal identity;
-3. reproduce historical Z1/Z4 unified-Yun states as regression checks;
-4. solve the current coupled Marguerre--Airy/Yun branch;
-5. then rerun Z0--Z6 and UHPC adapter families with comparators closed during solve.
-
-```text
-USER_ACCEPTANCE = PENDING
-```
+**Fail-fast gate:** numerical R20-2 is forbidden until repository sources uniquely close the mapping from the historical Yun strip/area stress field to the work-conjugate y-normal cut resultants `Ny,My` without double counting the gross Airy mode. No new section law may be invented to bypass this gate.
