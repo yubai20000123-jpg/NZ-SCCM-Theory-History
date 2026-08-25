@@ -1,7 +1,7 @@
 # CURRENT STATE — Steel-Shell UHPC
 
-**Updated:** 2026-08-25 15:50 +08:00  
-**Status:** `RC_SSNC_MILESTONE_ANCHORED / CORE_NM_SUBSTITUTION_ONLY / COMMON_R06_INHERITED / T360_BH032_R06_SUPERSEDE_R01`
+**Updated:** 2026-08-25 16:22 +08:00  
+**Status:** `RC_SSNC_MILESTONE_ANCHORED / CORE_NM_SUBSTITUTION_ONLY / COMMON_R06_INHERITED / SEVEN_CASE_R06_COMPLETE`
 
 Canonical parent:
 
@@ -11,198 +11,178 @@ Canonical SSUHPC core substitution:
 
 `semantic_v2/20_theory/20260825_1330__NZSCCM__SSUHPC_FROM_RC_SSNC_MILESTONE_CORE_NM_SUBSTITUTION_V1.md`
 
-Canonical common steel-shell state:
-
-`current/STEEL_SHELL_COMMON_R02_R04_STATE_20260825.md`
-
 Canonical common R06 theory:
 
 `semantic_v2/20_theory/20260825_1530__NZSCCM__STEEL_SHELL_COMMON_R06_LOCAL_YIELD_RESULTANT_GATE_V1.md`
 
-Canonical R06 blind execution:
+Prior R06 control execution:
 
 `semantic_v2/40_execution/steel_shell/20260825_1550__NZSCCM__STEEL_SHELL_COMMON_R06_Z6_NONREGRESSION_T360_BH032_BLIND_EXECUTION_R01.md`
 
+Current complete SSUHPC seven-case execution:
+
+`semantic_v2/40_execution/steel_shell/20260825_1622__NZSCCM__STEEL_SHELL_COMMON_R06_SSUHPC_7CASE_BH050_FULL_EXECUTION_R01.md`
+
 ---
 
-## 0. Theory identity remains unchanged
+## 0. Theory identity
 
 \[
-\boxed{
-SSUHPC
-=
-SSNC_{20260825}
--\mathcal C_c^{NC}
-+\mathcal C_c^{UHPC}.
-}
+\boxed{SSUHPC=SSNC_{20260825}-\mathcal C_c^{NC}+\mathcal C_c^{UHPC}.}
 \]
-
-The common steel-shell operator is inherited from SSNC. R06 is therefore **not** an UHPC-specific repair.
 
 ```text
 AIRY = unchanged
 UHPC N-M = unchanged
 WEB = unchanged
 R02 = unchanged
-R04 = retained as yield-first branch
-R06 = common local-buckling-first face gate
+R04 = retained as exact yield-first degeneration
+R06 = common local-buckling-first steel-face gate
 R03 Pu gate = NO
+formal spatial sampling = 0
 formal spatial quadrature = 0
 material points = 0
 effective width/area = 0
+comparator in root solve = 0
+```
+
+UHPC unit remains frozen:
+
+```text
+fc=141.1 MPa; Ec=43.4 GPa; epsc0=0.0035; nu_c=0.20
+fct=4.513133983249735 MPa; epst0=0.001; mt=0.4418
 ```
 
 ---
 
-## 1. UHPC core remains frozen
+## 1. Common R06 branch rule
 
 ```text
-fc    = 141.1 MPa
-Ec    = 43.4 GPa
-epsc0 = 0.0035
-nu_c  = 0.20
-fct   = 4.513133983249735 MPa
-epst0 = 0.001
-mt    = 0.4418
-```
+sigma_cr^E >= fy:
+    R06 == R04 exactly
 
-The exact x/y UHPC N-M primitives and first compressed-face contact at `-epsc0` remain unchanged. No UHPC parameter was altered during R06.
-
----
-
-## 2. Common R06 branch rule inherited by SSUHPC
-
-```text
-if sigma_cr^E >= fy:
-    exact R04 yield-first branch
-
-if sigma_cr^E < fy:
-    R02 local-buckling-first
+sigma_cr^E < fy:
+    retain R02 local postbuckling field
     -> finite-algebraic local Mises maximum
     -> first radial local-yield boundary
-    -> full-area R02 mean face resultant at that boundary
+    -> whole-width R02 mean face resultant at that boundary
 ```
 
-The activation variable is the **local steel-shell state**, not the core material label.
+The activation variable is the local steel-shell state, not NC/UHPC label.
 
 ---
 
-## 3. R06 results now authoritative where executed
+## 2. Current authoritative seven-case results
 
-### T360
+| Case | sigma_cr,s / MPa | R06 branch | current Pu / MN | Abaqus / MN | error |
+|---|---:|---|---:|---:|---:|
+| T120 | 2206.635 | yield-first = R04 | **12.76914369** | 12.6378 | **+1.0393%** |
+| T360 | 245.795 | local-buckling-first | **10.81837778** | 10.9688 | **-1.3714%** |
+| BH005 | 10044.967 | yield-first = R04 | **2.46233215** | 2.3558 | **+4.5221%** |
+| BH010 | 2511.242 | yield-first = R04 | **4.58337285** | 4.3043 | **+6.4836%** |
+| BH020 | 627.810 | yield-first = R04 | **8.55797773** | 8.0076 | **+6.8732%** |
+| BH032 | 245.238 | local-buckling-first | **10.94053451** | 10.9905 | **-0.4546%** |
+| BH050 | 100.450 | local-buckling-first | **13.35637635** | 12.2198 | **+9.3011%** |
 
-Previous R01/R04 result:
+All seven:
 
 ```text
-Pu = 12.18255684307 MN
-Abaqus post-check error = +11.0655%
+mean signed error = +3.7705%
+MAE               = 4.2922%
+RMSE              = 5.3373%
 ```
 
-Common R06 blind root, fixed before reopening Abaqus:
+Historical primary six excluding the lower-confidence BH050 comparator:
 
 ```text
-q = 0.00134518627955957
-Pu = 10.8183777809815 MN
-upper face = R02 local-elastic, max local VM = 303.5620 MPa
-lower face = R06 local-yield, eta_y = 0.419889652186
-lower boundary U = 1.541807734687 mm
-lower boundary mean stress = (-57.1317,-277.9291,0) MPa
-finite-algebraic max local VM = 355.000000004 MPa
-```
-
-Only after the root was frozen:
-
-```text
-Abaqus R02 = 10.9688 MN
-R06 error = -1.3714%
-```
-
-Therefore:
-
-```text
-T360_R01_R04_Pu = SUPERSEDED
-T360_CURRENT_Pu = 10.8183777809815 MN
-```
-
-### BH032
-
-Previous R01/R04 result:
-
-```text
-Pu = 12.35286994754 MN
-Abaqus post-check error = +12.3959%
-```
-
-Common R06 blind root:
-
-```text
-q = 0.00137889961633743
-Pu = 10.9405345132294 MN
-upper face = R02 local-elastic, max local VM = 317.2372 MPa
-lower face = R06 local-yield, eta_y = 0.425379325768
-lower boundary U = 1.518650391337 mm
-lower boundary mean stress = (-58.0156,-278.0801,0) MPa
-finite-algebraic max local VM = 355.000000002 MPa
-```
-
-Only after root fixation:
-
-```text
-Abaqus R02 = 10.9905 MN
-R06 error = -0.4546%
-```
-
-Therefore:
-
-```text
-BH032_R01_R04_Pu = SUPERSEDED
-BH032_CURRENT_Pu = 10.9405345132294 MN
+mean signed error = +2.8487%
+MAE               = 3.4574%
+RMSE              = 4.3377%
 ```
 
 ---
 
-## 4. Z6 parent non-regression protects the common architecture
+## 3. BH050 current root
 
-The common Z6 control has
-
-```text
-sigma_cr = 794.3886717 MPa > fy = 355 MPa
-```
-
-so R06 degenerates exactly to R04 and retains
+BH050 is now actually rerun, not carried over from R01.
 
 ```text
-Z6 Pu = 49.45439833719624 MN
+b = 2500 mm
+a = 5000 mm
+local cell = 562.5 x 555.5555556 x 4 mm
+A0 = 0.3515625 mm
+sigma_cr = 100.4496675 MPa < 355 MPa
+branch = R06_LOCAL_BUCKLING_FIRST
+q = 0.004772819645833164
+Pu = 13.3563763545430 MN
 ```
 
-This is the mandatory proof that R06 does not blindly penalize all steel-shell members.
+Current section state:
+
+```text
+eps_x0 = +2.820431413e-5
+kappa_x = 4.402758337803803e-5 1/mm
+eps_y0 = -0.00213545799
+kappa_y = 6.497819104663830e-5 1/mm
+active UHPC contact: eps_y(-21 mm) = -0.0035
+```
+
+Upper steel face:
+
+```text
+strain = (+0.001040838732,-0.000640959594)
+U = 0.169266885792 mm
+max finite-algebraic local VM = 239.8727015 MPa < 355
+whole-width mean stress = (+190.7746,-75.7434) MPa
+```
+
+Lower steel face:
+
+```text
+full strain = (-0.000984430104,-0.003629956382)
+full unprojected R02 local max VM = 960.3177033 MPa
+eta_y = 0.384465068379632
+R02 amplitude at local yield = 2.939845914478 mm
+whole-width mean stress at local yield = (-62.4713,-222.0556) MPa
+finite-algebraic global max local VM = 355.000000000001 MPa
+active candidate = v=-1, u=0.757308975358
+```
+
+Four resultant balances close to about `1e-11` or better.
+
+Only after this root was frozen was the existing comparator reopened:
+
+```text
+Abaqus = 12.2198 MN
+error = +9.3011%
+previous R04 error = +28.4602%
+```
 
 ---
 
-## 5. Remaining SSUHPC cases
+## 4. Common-parent non-regression
 
-The earlier R01 values remain frozen **only for cases not yet rerun under R06**:
+Z6 remains protected by the common rule:
 
-| Case | R01 Pu / MN | local sigma_cr / MPa | current status |
-|---|---:|---:|---|
-| T120 | 12.76914369 | 2206.635 | R06 not rerun; yield-first expected to degenerate to R04 |
-| BH005 | 2.46233215 | 10044.967 | R06 not rerun; yield-first expected to degenerate to R04 |
-| BH010 | 4.58337285 | 2511.242 | R06 not rerun; yield-first expected to degenerate to R04 |
-| BH020 | 8.55797773 | 627.810 | R06 not rerun; yield-first expected to degenerate to R04 |
-| BH050 | 15.69757377 | 100.450 | R06 not rerun; severe local-buckling-first validation still pending |
+```text
+sigma_cr = 794.3886717 MPa > fy
+R06 == R04
+Pu = 49.45439833719624 MN
+```
 
-No numerical value in this table is allowed to be silently changed until its R06 rerun is actually performed.
+Thus R06 does not impose a generic strength reduction on stocky/yield-first shells.
 
 ---
 
-## 6. Current decision boundary
+## 5. Current decision boundary
 
 ```text
-COMMON_R06 = PROMOTED FOR CURRENT AXIAL TERMINAL SCOPE
+COMMON_R06_CURRENT_AXIAL_TERMINAL_SCOPE = PROMOTED
+SSUHPC_SEVEN_CASE_R06_BATCH = COMPLETE
 SSUHPC_ONLY_R06 = PROHIBITED
 UHPC_RETUNING = PROHIBITED
 EFFECTIVE_WIDTH_AREA = PROHIBITED
 COMPARATOR_BASED_BRANCH_OR_ROOT_SELECTION = PROHIBITED
 ```
 
-The next useful execution is a validation batch of T120/BH005/BH010/BH020 strict non-regression plus BH050 local-buckling-first prediction. That batch may validate R06 but may not refit it.
+BH050 remains the largest positive discrepancy and retains its prior lower-confidence/different-model-family comparator status. No post-comparator repair has been introduced.
