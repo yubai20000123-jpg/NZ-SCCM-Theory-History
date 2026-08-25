@@ -1,0 +1,112 @@
+{
+  "status": "DIAGNOSIS_ONLY",
+  "theory_modified": false,
+  "abaqus_rerun": false,
+  "strain_contract": {
+    "measure": "LE logarithmic total strain",
+    "steel_longitudinal_component": "LE22 in local shell axes; local 2 aligns global z on horizontal faces",
+    "UHPC_longitudinal_component": "LE33",
+    "z_f_mm": 23.0,
+    "eps_y0_definition": "(eps_upper+eps_lower)/2",
+    "kappa_y_definition": "(eps_upper-eps_lower)/(2*z_f)",
+    "chi_y_definition": "z_f*abs(kappa_y)/abs(eps_y0)"
+  },
+  "BH032": {
+    "P_LY_theory_MN": 7.43075,
+    "P_first_available_postLY_MN": 7.518816,
+    "P_peak_FEM_MN": 10.99048,
+    "n_postLY_frames": 79,
+    "section_z_mm": 800.0,
+    "max_abs_closure_error_pct": 3.15,
+    "peak_closure_error_pct": 1.28,
+    "first": {
+      "eps_upper": -0.00122884854433102,
+      "eps_lower": -0.00133080089832458,
+      "eps_y0": -0.0012798247213278,
+      "kappa_y_per_mm": 2.21635552159911e-6,
+      "chi_y": 0.0398305925391817,
+      "sigma_upper_MPa": -245.367810929023,
+      "sigma_lower_MPa": -279.140357236451,
+      "Ny_UHPC_N_per_mm": -2501.33884322534,
+      "Ny_steel_N_per_mm": -2108.60785454424,
+      "Ny_web_N_per_mm": -244.216323982265
+    },
+    "peak": {
+      "eps_upper": -0.00250958449188211,
+      "eps_lower": -0.00266990869088572,
+      "eps_y0": -0.00258974659138391,
+      "kappa_y_per_mm": 3.4853086739916e-6,
+      "chi_y": 0.0309536461090463,
+      "sigma_upper_MPa": -292.614231379508,
+      "sigma_lower_MPa": -198.100192263898,
+      "Ny_UHPC_N_per_mm": -4531.58980401679,
+      "Ny_steel_N_per_mm": -1972.75152387369,
+      "Ny_web_N_per_mm": -311.039395928739
+    },
+    "stress_turning_points": {
+      "lower_most_compressive_approx": {"P_MN": 9.415963, "lambda": 0.5576864, "sigma_lower_MPa": -349.4675},
+      "upper_most_compressive_approx": {"P_MN": 9.867754, "lambda": 0.6846036, "sigma_upper_MPa": -314.0306}
+    },
+    "interpretation": "LOW_CURVATURE_MEMBRANE_DOMINATED_REDISTRIBUTION"
+  },
+  "BH050": {
+    "P_LY_theory_MN": 8.83278,
+    "P_first_available_postLY_MN": 8.909772,
+    "P_peak_FEM_MN": 12.21981,
+    "n_postLY_frames": 44,
+    "section_z_mm": 1250.0,
+    "max_abs_closure_error_pct": 4.10,
+    "peak_closure_error_pct": -3.16,
+    "first": {
+      "eps_upper": -0.000917392648168231,
+      "eps_lower": -0.000991790124203795,
+      "eps_y0": -0.000954591386186013,
+      "kappa_y_per_mm": 1.61733643555574e-6,
+      "chi_y": 0.0389682313878887,
+      "sigma_upper_MPa": -180.017641350255,
+      "sigma_lower_MPa": -193.319902089514,
+      "Ny_UHPC_N_per_mm": -2084.55490242736,
+      "Ny_steel_N_per_mm": -1498.15163189135,
+      "Ny_web_N_per_mm": -124.154272112869
+    },
+    "peak": {
+      "eps_upper": -0.00143803667796643,
+      "eps_lower": -0.00172566618484642,
+      "eps_y0": -0.00158185143140642,
+      "kappa_y_per_mm": 6.25281536695627e-6,
+      "chi_y": 0.0909154618345723,
+      "sigma_upper_MPa": -254.446346828615,
+      "sigma_lower_MPa": -231.594112548092,
+      "Ny_UHPC_N_per_mm": -2904.7049790446,
+      "Ny_steel_N_per_mm": -1950.4127569691,
+      "Ny_web_N_per_mm": -187.272162563948,
+      "eps_UHPC_mean": -0.0020576147401914,
+      "eps_UHPC_min": -0.00295853661373258
+    },
+    "theory_terminal_reference": {
+      "eps_y0": -0.00213545799,
+      "kappa_y_per_mm": 6.49781910466383e-5,
+      "chi_y": 0.700,
+      "eps_upper": -0.000640959594,
+      "eps_lower": -0.003629956382,
+      "sigma_upper_MPa": -75.7434,
+      "sigma_lower_MPa": -222.0556
+    },
+    "postLY_increment_share_pct": {
+      "UHPC": 61.4,
+      "steel_total": 33.9,
+      "upper_steel": 22.4,
+      "lower_steel": 11.5,
+      "web": 4.7
+    },
+    "interpretation": "UPPER_AND_LOWER_STEEL_REMAIN_MORE_COMPRESSIVE_TO_FEM_PEAK"
+  },
+  "diagnosis": {
+    "primary": "H1_STRUCTURAL_SECTION_STRAIN_CURVATURE_PATH_MISMATCH",
+    "confidence": "HIGH",
+    "H2_primary_status": "REJECTED_FOR_BH050_UPPER_FACE",
+    "first_layer_to_audit": "MARGUERRE_AIRY_DEMAND_TO_SECTION_NM_EQUILIBRIUM_TO_EPS_Y0_KAPPA_Y",
+    "reason": "BH050 upper-face LE22 and mean longitudinal stress both become more compressive, whereas frozen theory tends toward upper-face unloading. FEM chi_y at peak is 0.0909 versus frozen theory terminal about 0.700; therefore the face-strain/curvature state diverges upstream of the steel current resultant operator.",
+    "theory_full_continuation_path_available": false
+  }
+}
