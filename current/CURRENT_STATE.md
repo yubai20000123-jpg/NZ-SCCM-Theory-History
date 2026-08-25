@@ -1,17 +1,20 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-25 07:46 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT_UNCHANGED / GLOBAL_ULTIMATE_STATE_UNCHANGED / SSNC_R01_EFFECTIVE_AREA_REJECTED / SSNC_R02_FULL_RESULTANT_PASS / SSNC_R03_ELASTIC_POSTBUCKLING_CURRENT_6X6_TANGENT_PASS / CURRENT_ANISOTROPIC_A_B_D / OWN_SKIN_D_ELASTIC_ONLY_BEFORE_FIRST_YIELD / POST_FIRST_YIELD_2D_PLASTIC_TANGENT_OPEN / SHEAR_POSTBUCKLING_OPEN / Pu_NOT_CALCULATED`
+**Updated:** 2026-08-25 08:51 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT_RETAINED / AIRY_USES_INITIAL_FULL_COMPOSITE_ABD / STEEL_OFFSET_STIFFNESS_LOCKED / SSNC_R02_FULL_RESULTANT_RETAINED / SSNC_R03_CURRENT_6X6_TANGENT_DIAGNOSTIC_ONLY / SSNC_R04_IDEAL_EP_2D_TERMINAL_GATE_PASS / POST_YIELD_TANGENT_NOT_A_Pu_GATE / Pu_NOT_YET_RECALCULATED`
 
-> The active correction is now sharper than R02: zero mean local high-frequency bending moment does **not** imply unchanged gross steel-shell bending tangent. Elastic local postbuckling condenses the local amplitude and reduces the plate-level membrane tangent; the gross section bending tangent then changes through the steel-face lever-arm terms `z_f^2 A_f^tan`. Only the skin's own material `Et^3/12` term remains elastic before first material yield.
+> Architecture correction: the accepted explicit Marguerre–Airy production route requires the **initial elastic full-section** `A0,B0,D0` to generate the structural demand family. Current postbuckling/yield tangent degradation is not fed back into the Airy compatibility/Galerkin operator. Steel nonlinearity acts at the terminal resultant-capacity layer. Therefore the R03 current 6x6 tangent remains mechanically valid but is no longer a prerequisite for `Pu`.
 
 ## 0. Hard architecture
 
 ```text
-GLOBAL_STRUCTURAL_FRONT = FULL_2D_MARGUERRE_AIRY / UNCHANGED
+STRUCTURAL_FRONT = FULL_2D_MARGUERRE_AIRY
 AIRY_FUNCTION = RETAINED
+AIRY_STIFFNESS = INITIAL_FULL_COMPOSITE_ABD
+CURRENT_MATERIAL_TANGENT_INTO_AIRY = NO
 GLOBAL_ULTIMATE_STATE_CRITERION = UNCHANGED
-STEEL_SHELL = SUBMODULE_ONLY
+TERMINAL_OBJECT = CURRENT/CAPACITY RESULTANTS
+
 D15 = NO
 GLOBAL_MATERIAL_VIRTUAL_WORK_RJ = NO
 FORMAL_SPATIAL_QUADRATURE = 0
@@ -24,269 +27,263 @@ EFFECTIVE_WIDTH_OR_AREA_AS_PRODUCTION = PROHIBITED
 FORMAL_Z_COMPARATORS = ZHOU_SIMING + WINTER ONLY
 ```
 
-No Z0–Z6 `Pu` is calculated or promoted at R03.
+No new Z0–Z6 `Pu` has yet been promoted after the R04 correction.
 
-## 1. Active steel-shell artifacts
+## 1. Correct role separation
 
-R02 full-resultant stress/resultant gate:
+The steel shell enters the theory twice, in different roles:
 
-- report: `semantic_v2/40_execution/steel_shell/20260825_0130__NZSCCM__SSNC_R02_PBL_2D_FULL_RESULTANT_GATE.md`
-- executable: `semantic_v2/40_execution/steel_shell/20260825_0130__NZSCCM__SSNC_R02_PBL_2D_FULL_RESULTANT_GATE.py`
+```text
+ROLE A — STRUCTURAL DEMAND
+initial elastic steel stiffness
++ initial concrete/core stiffness
+-> full composite A0,B0,D0
+-> explicit Marguerre–Airy demand Ppb(q), N, M
 
-R03 current tangent/resultant gate:
+ROLE B — TERMINAL CAPACITY
+R02 biaxial PBL postbuckling trial stress/resultants
++ simplified ideal-EP 2D steel cap
++ concrete/core terminal resultants
+-> terminal resultant intersection
+-> Pu
+```
 
-- report: `semantic_v2/40_execution/steel_shell/20260825_0746__NZSCCM__SSNC_R03_CURRENT_6X6_TANGENT_GATE.md`
-- executable: `semantic_v2/40_execution/steel_shell/20260825_0746__NZSCCM__SSNC_R03_CURRENT_6X6_TANGENT_GATE.py`
+These roles are not double counting.
 
-R01 effective-area/effective-strength production remains rejected and historical only.
+## 2. Initial steel-face offset stiffness is mandatory
 
-## 2. R02 stress/resultant kernel retained
-
-For the PBL local mode
+For a uniform layer centered at `z_c`,
 
 \[
-\phi=(1-\cos k_xx)(1-\cos k_yy),
+\mathbf A=\mathbf Q t,
 \qquad
-\Delta=U^2-A_0^2,
+\mathbf B=\mathbf Q t z_c,
 \]
 
 \[
-g_x=c_x\Delta,
-\qquad
-g_y=c_y\Delta,
-\qquad
-c_x=\frac38k_x^2,
-\quad c_y=\frac38k_y^2.
+\boxed{
+\mathbf D=\mathbf Q\left(tz_c^2+\frac{t^3}{12}\right).
+}
 \]
 
-Mean compression-positive stresses are
+For the two external steel faces at `z_+=+z_f`, `z_-=-z_f`,
 
 \[
-\bar\sigma_x=Q[(e_x-g_x)+\nu(e_y-g_y)],
+\boxed{
+\mathbf D_s^0
+=2\mathbf Q_s\left(t_sz_f^2+\frac{t_s^3}{12}\right).
+}
+\]
+
+The offset/parallel-axis term
+
+\[
+\boxed{2\mathbf Q_st_sz_f^2}
+\]
+
+is therefore included exactly in the initial Airy bending stiffness.
+
+For a symmetric shell,
+
+\[
+\mathbf B_s^0=0,
+\]
+
+but this cancellation of `B` does **not** remove the large offset contribution to `D`.
+
+### Executed offset gate
+
+Using the source-audited reduced DSCW gate geometry (`h=130 mm`, `ts=4 mm`, `zf=63 mm`) gives
+
+```text
+B0_sym_abs                    = 0.000000000000e+00
+Dsteel_parallel_axis_abs      = 4.768371582031e-07
+Dsteel_direct_integral_abs    = 9.536743164062e-07
+Dsteel11_full_Nmm             = 7.190230036630e+09
+Dsteel11_offset_Nmm           = 7.187815384615e+09
+Dsteel11_own_skin_Nmm         = 2.414652014652e+06
+offset_fraction_of_steel_D11  = 9.996641759718e-01
+steel_fraction_of_total_D11   = 5.839512724645e-01
+```
+
+Thus roughly `99.9664%` of the steel-face `D11` in this gate state comes from physical offset rather than the own-skin `t_s^3/12` term.
+
+Any coefficient generator that retains only `Et_s^3/12` for the external faces is invalid.
+
+## 3. SSNC-R02 retained role
+
+R02 remains the active pre-yield/current steel-shell stress/resultant kernel:
+
+- full physical steel area;
+- biaxial normal coupling;
+- finite local PBL amplitude equation;
+- finite Airy harmonic redistribution;
+- pointwise 2D Mises diagnostic;
+- exact Yun uniaxial `kcr/kp` degeneration.
+
+Artifact:
+
+`semantic_v2/40_execution/steel_shell/20260825_0130__NZSCCM__SSNC_R02_PBL_2D_FULL_RESULTANT_GATE.md`
+
+## 4. SSNC-R03 role is downgraded from Pu gate to diagnostic
+
+R03 proved the exact elastic-material postbuckling current tangent
+
+\[
+\mathbf A_{pb}^{tan}
+=\mathbf A_e-\frac{\mathbf h\mathbf h^{\mathsf T}}{k_U},
+\]
+
+and the two-face current 6x6 tangent with
+
+\[
+\mathbf D_s^{current}
+=z_+^2\mathbf A_+^{pb}+z_-^2\mathbf A_-^{pb}
++\mathbf D_{skin,e}^++\mathbf D_{skin,e}^-.
+\]
+
+This remains a valid mechanics result and useful future/current-stability diagnostic.
+
+However, under the accepted explicit Airy architecture:
+
+```text
+R03_CURRENT_6X6_TANGENT_AS_Pu_GATE = NO
+R03_CURRENT_6X6_TANGENT_AS_DIAGNOSTIC = YES
+POST_FIRST_YIELD_6X6_TANGENT_REQUIRED_BEFORE_Z_Pu = NO
+```
+
+Artifact:
+
+`semantic_v2/40_execution/steel_shell/20260825_0746__NZSCCM__SSNC_R03_CURRENT_6X6_TANGENT_GATE.md`
+
+## 5. SSNC-R04 simplified ideal-EP 2D terminal
+
+The user-authorized simplification is now frozen for the terminal steel layer.
+
+### 5.1 No through-thickness plastic partition
+
+Each external steel face is treated as one homogenized membrane layer at its physical centroid `z_f`.
+
+The terminal gross bending resultant is
+
+\[
+\boxed{\mathbf M_f=z_f\mathbf N_f}.
+\]
+
+The own-skin `Et_s^3/12` term is retained in the initial Airy `D0`, but no separate through-thickness plastic bending block is introduced at the terminal.
+
+### 5.2 2D Mises cap
+
+For a trial mean plane-stress state
+
+\[
+\boldsymbol\sigma^{tr}=(\sigma_x^{tr},\sigma_y^{tr},\tau_{xy}^{tr})^T,
 \]
 
 \[
-\bar\sigma_y=Q[(e_y-g_y)+\nu(e_x-g_x)],
-\]
-
-\[
-\bar\tau_{xy}=G\gamma_{xy}.
-\]
-
-The local total amplitude remains the explicit finite algebraic solution of
-
-\[
-B_3U^3+B_1U+B_0=0.
-\]
-
-R02's finite seven-harmonic Airy redistribution, full physical steel area and exact Yun `kcr/kp` uniaxial degeneration remain valid in the **elastic-material postbuckling** domain.
-
-## 3. R03 exact condensed current membrane tangent
-
-From the same R02 condensed potential,
-
-\[
-\mathbf A_e
-=t
-\begin{bmatrix}
-Q&\nu Q&0\\
-\nu Q&Q&0\\
-0&0&G
-\end{bmatrix}.
+\sigma_{vm}^{tr}
+=\sqrt{(\sigma_x^{tr})^2-\sigma_x^{tr}\sigma_y^{tr}
++(\sigma_y^{tr})^2+3(\tau_{xy}^{tr})^2}.
 \]
 
 Define
 
 \[
-\mathbf h
-=-2tQU
-\begin{bmatrix}
-c_x+\nu c_y\\
-c_y+\nu c_x\\
-0
-\end{bmatrix},
-\]
-
-\[
-k_U=\Pi_{,UU}=3B_3U^2+B_1.
-\]
-
-For a smooth stable selected root `k_U>0`, the current PBL plate tangent is
-
-\[
 \boxed{
-\mathbf A_{pb}^{tan}
-=\mathbf A_e-\frac{\mathbf h\mathbf h^{\mathsf T}}{k_U}.
-}
-\]
-
-This is a Schur complement of the physical local amplitude; it is not an effective-width or effective-area rule.
-
-Generally,
-
-\[
-\boxed{A_{11}^{pb}\ne A_{22}^{pb}}
-\]
-
-for a nonsquare PBL cell. The shear channel stays `A66=tG` only for the present normal-buckling mode before material yield; arbitrary shear postbuckling is not claimed.
-
-## 4. Correct current 6×6 steel-face and two-face tangent
-
-For one steel face at offset `z_f`,
-
-\[
-\boldsymbol\varepsilon_f
-=\boldsymbol\varepsilon_0+z_f\boldsymbol\kappa.
-\]
-
-Before first steel material yield, its own material bending matrix is still
-
-\[
-\mathbf D_{skin,e}
-=
-\begin{bmatrix}
-D&\nu D&0\\
-\nu D&D&0\\
-0&0&(1-\nu)D/2
-\end{bmatrix},
+\lambda=\min\left(1,\frac{f_y}{\sigma_{vm}^{tr}}\right),
 \qquad
-D=\frac{Et^3}{12(1-\nu^2)}.
-\]
-
-But its gross current tangent is
-
-\[
-\boxed{
-\mathbf K_f^{tan}
-=
-\begin{bmatrix}
-\mathbf A_f^{pb}&z_f\mathbf A_f^{pb}\\
-z_f\mathbf A_f^{pb}&z_f^2\mathbf A_f^{pb}+\mathbf D_{skin,e}
-\end{bmatrix}.
+\boldsymbol\sigma^{cap}=\lambda\boldsymbol\sigma^{tr}.
 }
 \]
 
-For top and bottom faces,
+Then
 
 \[
 \boxed{
-\mathbf K_s^{tan}=\mathbf K_+^{tan}+\mathbf K_-^{tan}.
+\mathbf N_f=t_s\boldsymbol\sigma^{cap},
+\qquad
+\mathbf M_f=z_f\mathbf N_f.
 }
 \]
 
-Thus
+This is exact for the uniaxial ideal-perfectly-plastic degeneration and `x<->y` symmetric. For general biaxial/shear post-yield states it is explicitly classified as a **proportional-loading analytical approximation**, not a full history-dependent associated-J2 return map.
+
+### 5.3 Post-yield tangent convention
+
+Theory:
 
 \[
-\mathbf A_s=\mathbf A_+^{pb}+\mathbf A_-^{pb},
+E_t=0.
 \]
+
+Optional numerical regularization only if a solver requires it:
 
 \[
-\mathbf B_s=z_+\mathbf A_+^{pb}+z_-\mathbf A_-^{pb},
+E_t=\eta E_s,
+\qquad \eta\sim10^{-8}\text{--}10^{-6}.
 \]
+
+This tangent is not fed into Airy. Yielded steel stress/resultants remain finite; only incremental tangent vanishes.
+
+### Executed R04 gate
+
+```text
+SSNC_R04_IDEAL_EP_2D_TERMINAL_RESULTANT_GATE = PASS
+AIRY_USES_INITIAL_ABD_ONLY = True
+INITIAL_STEEL_OFFSET_STIFFNESS_INCLUDED = True
+CURRENT_TANGENT_FEEDBACK_TO_AIRY = False
+THROUGH_THICKNESS_PLASTIC_PARTITION = False
+POST_YIELD_TANGENT_THEORY = 0.0
+trial_vm_MPa = 374.032084185301
+plastic_scale_lambda = 0.949116439498
+capped_vm_MPa = 355.000000000000
+uniaxial_capped_sy_MPa = 355.000000000000
+xy_sym_abs = 0.000000000000e+00
+```
+
+Artifacts:
+
+- report: `semantic_v2/40_execution/steel_shell/20260825_0851__NZSCCM__SSNC_R04_IDEAL_EP_2D_TERMINAL_RESULTANT_GATE.md`
+- executable: `semantic_v2/40_execution/steel_shell/20260825_0851__NZSCCM__SSNC_R04_IDEAL_EP_2D_TERMINAL_RESULTANT_GATE.py`
+
+## 6. Offset term is present in both stiffness and terminal moment, without double counting
+
+Initial structural stiffness:
 
 \[
-\boxed{
-\mathbf D_s^{current}
-=z_+^2\mathbf A_+^{pb}+z_-^2\mathbf A_-^{pb}
-+\mathbf D_{skin,e}^++\mathbf D_{skin,e}^-.
-}
+\mathbf D_f^0
+=\mathbf Q_s\left(t_sz_f^2+\frac{t_s^3}{12}\right).
 \]
 
-This is the current steel-shell `[A,B,D]` contribution to the unchanged global Marguerre–Airy equations.
-
-## 5. Executed R03 gates
-
-```text
-SSNC_R03_CURRENT_6X6_TANGENT_GATE = PASS
-small_deflection_A_abs        = 0.000000000000e+00
-full_skin_D_preyield_abs      = 0.000000000000e+00
-xy_U_abs                      = 0.000000000000e+00
-xy_A_abs                      = 0.000000000000e+00
-postbuckling_anisotropy_ratio = 3.466188846419e-01
-A_tangent_fd_rel              = 9.595929051176e-09
-uniaxial_U_abs                = 2.220446049250e-16
-uniaxial_tangent_abs_MPa      = 5.820766091347e-11
-uniaxial_tangent_ratio_E      = 7.031662269129e-01
-uniaxial_mean_stress_MPa      = 2.755713456187e+02
-two_face_K_sym_abs            = 0.000000000000e+00
-Dx_current_over_elastic       = 7.918419815200e-01
-Dy_current_over_elastic       = 5.175593619368e-01
-K6_fd_rel                     = 9.595929051176e-09
-```
-
-The verification geometries/states are gate states only, not Z-family predictions.
-
-Key demonstrated consequences:
-
-```text
-POSTBUCKLING_A11_NE_A22 = YES
-GLOBAL_DX_DY_STATE_DEPENDENCE = YES
-UNAXIAL_YUN-COEFFICIENT-CONSISTENT_TANGENT = PASS
-TWO_FACE_6X6_CONSISTENT_JACOBIAN = PASS
-```
-
-## 6. Post-first-yield source boundary
-
-The source audit now establishes:
-
-1. Yun's large-deflection PBL analytical theory is elastic; the thesis explicitly leaves steel plastic constitutive treatment as future work.
-2. Ishibashi et al. use elastic large-deflection response plus Mises yield/collapse judgment; they do not provide the required post-first-yield current tangent continuation.
-3. Ueda–Rashed–Paik combined-load papers are valuable buckling/ultimate interaction checks but are not the required current `strain -> resultant -> tangent` law.
-4. Inoue & Kato (1983) directly derive finite, biaxial-stress-dependent out-of-plane flexural rigidities of yielded steel plates using von Mises + Reuss incremental plasticity. Their strain-hardening treatment is orthotropic and direction-dependent. This is the primary source family for the remaining plastic subgate.
-5. Inoue & Kato (1993) further address plastic shear/twisting rigidity; retain for the later arbitrary-shear subgate.
-
-## 7. Why `E -> Et` is NOT accepted as the post-yield closure
-
-R02's finite Airy field comes from the homogeneous elastic compatibility equation
+Terminal resisting moment:
 
 \[
-\nabla^4F=E\Delta(\phi_{xy}^2-\phi_{xx}\phi_{yy}).
+\mathbf M_f^{cap}=z_f\mathbf N_f^{cap}.
 \]
 
-Once pointwise yielding begins, the local tangent becomes
+The former is an elastic derivative used to generate the Airy demand path. The latter is the physical force lever arm in the terminal resistance state. They are different objects and both are required.
 
-\[
-\mathbf C^{ep}(x,y,z;\boldsymbol\sigma),
-\]
+## 7. Current stopping point
 
-with possible loading/unloading regions through the plate and thickness. Therefore the fixed elastic seven-harmonic coefficients and `K_A` cannot be assumed unchanged by a scalar or two-scalar substitution `E -> Et_x,Et_y` without a new source-consistent derivation.
-
-This shortcut is prohibited.
-
-## 8. Exact current stopping point
-
-Closed now:
+Closed:
 
 ```text
-biaxial-normal strain
--> explicit U
--> finite Airy postbuckling stress/resultants
--> exact condensed A_pb^tan
--> exact face current [A,B,D]
--> exact top+bottom 6x6 [N,M] tangent
--> pointwise 2D Mises first-yield diagnostic
+initial full composite ABD including steel-face offset
+-> explicit Airy structural demand
+
+R02 biaxial PBL trial stress/resultants
+-> R04 ideal-EP 2D Mises terminal cap
+-> top/bottom face terminal N,M with physical lever arms
 ```
 
-Open now:
+Still to execute before new Z0–Z6 results are promoted:
 
 ```text
-POST-FIRST-YIELD ONLY:
-spatially nonuniform biaxial elastoplastic membrane tangent
-+ through-thickness bending/loading-unloading rigidity
-+ consistency with the PBL large-deflection amplitude/Airy redistribution
+1. regenerate/audit each Z specimen's initial Airy coefficients with the explicit full-section ABD formula;
+2. connect the R02 trial steel resultants to the R04 ideal-EP terminal cap;
+3. combine with the unchanged NC terminal resultants;
+4. solve the unchanged Airy demand/resultant-capacity intersection;
+5. only after predictions are fixed, open Zhou/Winter comparators.
 ```
 
-Therefore the steel-shell work has moved from a generic `tangent missing` gap to a single sharply defined **post-first-yield plastic continuation** gap.
-
-## 9. Next task
-
-```text
-NEXT = SSNC-R04 STEEL-ONLY POST-FIRST-YIELD SOURCE CLOSURE
-
-PRIMARY SOURCE FAMILY = INOUE-KATO BIAXIAL PLASTIC PLATE RIGIDITY
-REQUIRE = CURRENT MEMBRANE + BENDING/UNLOADING + PBL LARGE-DEFLECTION CONSISTENCY
-DO NOT = MODIFY GLOBAL MARGUERRE-AIRY
-DO NOT = MODIFY FIXED ULTIMATE-STATE CRITERION
-DO NOT = USE EFFECTIVE WIDTH/AREA
-DO NOT = CALCULATE Z0-Z6 Pu BEFORE THIS GATE PASSES
-```
+No post-first-yield 6x6 tangent derivation is required as a prerequisite.
