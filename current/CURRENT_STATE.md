@@ -1,9 +1,9 @@
 # CURRENT STATE — NZ-SCCM
 
-**Updated:** 2026-08-25 08:51 +08:00  
-**Status:** `MARGUERRE_AIRY_EXPLICIT_RETAINED / AIRY_USES_INITIAL_FULL_COMPOSITE_ABD / STEEL_OFFSET_STIFFNESS_LOCKED / SSNC_R02_FULL_RESULTANT_RETAINED / SSNC_R03_CURRENT_6X6_TANGENT_DIAGNOSTIC_ONLY / SSNC_R04_IDEAL_EP_2D_TERMINAL_GATE_PASS / POST_YIELD_TANGENT_NOT_A_Pu_GATE / Pu_NOT_YET_RECALCULATED`
+**Updated:** 2026-08-25 09:10 +08:00  
+**Status:** `MARGUERRE_AIRY_EXPLICIT_RETAINED / AIRY_USES_INITIAL_FULL_COMPOSITE_ABD / Z0-Z6_INITIAL_OFFSET_AUDIT_PASS / R07_AIRY_COEFFICIENTS_RETAIN_NO_DOUBLE_COUNT / SSNC_R02_AVAILABLE / SSNC_R04_IDEAL_EP_TERMINAL_AVAILABLE / R02-R04_DIRECT_INTERFACE_BLOCKED_AT_FACE_STRAIN_MAP / Pu_NOT_RECALCULATED`
 
-> Architecture correction: the accepted explicit Marguerre–Airy production route requires the **initial elastic full-section** `A0,B0,D0` to generate the structural demand family. Current postbuckling/yield tangent degradation is not fed back into the Airy compatibility/Galerkin operator. Steel nonlinearity acts at the terminal resultant-capacity layer. Therefore the R03 current 6x6 tangent remains mechanically valid but is no longer a prerequisite for `Pu`.
+> The Z0–Z6 stiffness audit is now complete: the archived/current Airy front already contains the external steel-face parallel-axis term `t_s z_f^2` for every Z specimen. No additional offset correction is permitted. The remaining obstacle to a new R02+R04 Z batch is not stiffness or post-yield tangent; it is the missing production identity from total Airy terminal demand to the current steel-face mean strain state required by R02.
 
 ## 0. Hard architecture
 
@@ -27,263 +27,206 @@ EFFECTIVE_WIDTH_OR_AREA_AS_PRODUCTION = PROHIBITED
 FORMAL_Z_COMPARATORS = ZHOU_SIMING + WINTER ONLY
 ```
 
-No new Z0–Z6 `Pu` has yet been promoted after the R04 correction.
+## 1. Steel offset stiffness — Z0–Z6 audit complete
 
-## 1. Correct role separation
-
-The steel shell enters the theory twice, in different roles:
-
-```text
-ROLE A — STRUCTURAL DEMAND
-initial elastic steel stiffness
-+ initial concrete/core stiffness
--> full composite A0,B0,D0
--> explicit Marguerre–Airy demand Ppb(q), N, M
-
-ROLE B — TERMINAL CAPACITY
-R02 biaxial PBL postbuckling trial stress/resultants
-+ simplified ideal-EP 2D steel cap
-+ concrete/core terminal resultants
--> terminal resultant intersection
--> Pu
-```
-
-These roles are not double counting.
-
-## 2. Initial steel-face offset stiffness is mandatory
-
-For a uniform layer centered at `z_c`,
+For a symmetric external steel face pair,
 
 \[
-\mathbf A=\mathbf Q t,
-\qquad
-\mathbf B=\mathbf Q t z_c,
-\]
-
-\[
-\boxed{
-\mathbf D=\mathbf Q\left(tz_c^2+\frac{t^3}{12}\right).
-}
-\]
-
-For the two external steel faces at `z_+=+z_f`, `z_-=-z_f`,
-
-\[
-\boxed{
 \mathbf D_s^0
-=2\mathbf Q_s\left(t_sz_f^2+\frac{t_s^3}{12}\right).
-}
+=
+2\mathbf Q_s
+\left(
+t_sz_f^2+\frac{t_s^3}{12}
+\right),
+\qquad
+\mathbf B_s^0=0.
 \]
 
-The offset/parallel-axis term
+The 2026-08-25 09:10 execution independently reconstructed the archived scalar bending rigidity with
 
 \[
-\boxed{2\mathbf Q_st_sz_f^2}
+D_{EI}^{calc}
+=
+E_c\frac{t_c^3}{12}
++
+E_s
+\left(
+2t_sz_f^2+2\frac{t_s^3}{12}
+\right).
 \]
 
-is therefore included exactly in the initial Airy bending stiffness.
-
-For a symmetric shell,
-
-\[
-\mathbf B_s^0=0,
-\]
-
-but this cancellation of `B` does **not** remove the large offset contribution to `D`.
-
-### Executed offset gate
-
-Using the source-audited reduced DSCW gate geometry (`h=130 mm`, `ts=4 mm`, `zf=63 mm`) gives
+Results:
 
 ```text
-B0_sym_abs                    = 0.000000000000e+00
-Dsteel_parallel_axis_abs      = 4.768371582031e-07
-Dsteel_direct_integral_abs    = 9.536743164062e-07
-Dsteel11_full_Nmm             = 7.190230036630e+09
-Dsteel11_offset_Nmm           = 7.187815384615e+09
-Dsteel11_own_skin_Nmm         = 2.414652014652e+06
-offset_fraction_of_steel_D11  = 9.996641759718e-01
-steel_fraction_of_total_D11   = 5.839512724645e-01
+Case  zf mm  offset/steel-D   steel/total-D   Dcalc - Darch [N mm]
+Z0     63     0.999664176      0.570900588      0
+Z1     48     0.999421631      0.643043649     -9.54e-7
+Z2     63     0.999664176      0.570900588      0
+Z3     63     0.999664176      0.545733716      0
+Z4     98     0.999861188      0.452288592      0
+Z5     63     0.999664176      0.570900588      0
+Z6     63     0.999664176      0.570900588      0
 ```
 
-Thus roughly `99.9664%` of the steel-face `D11` in this gate state comes from physical offset rather than the own-skin `t_s^3/12` term.
+Hence
 
-Any coefficient generator that retains only `Et_s^3/12` for the external faces is invalid.
+```text
+Z0_Z6_INITIAL_OFFSET_D = PASS
+R07_AIRY_OFFSET_CORRECTION_NEEDED = NO
+ADD_STEEL_OFFSET_AGAIN = PROHIBITED_DOUBLE_COUNTING
+```
 
-## 3. SSNC-R02 retained role
+Z6's source-closed initial `A11,A22,A12,A66` is also reproduced to `2.51e-7 N/mm` maximum absolute error.
 
-R02 remains the active pre-yield/current steel-shell stress/resultant kernel:
+Therefore the existing current R07 structural coefficients `Pcr,C,G,Jy` are retained.
 
-- full physical steel area;
-- biaxial normal coupling;
-- finite local PBL amplitude equation;
-- finite Airy harmonic redistribution;
-- pointwise 2D Mises diagnostic;
-- exact Yun uniaxial `kcr/kp` degeneration.
+Artifacts:
 
-Artifact:
+- executable: `semantic_v2/40_execution/steel_shell/20260825_0910__NZSCCM__Z0_Z6_INITIAL_ABD_OFFSET_AUDIT_AND_R02_R04_INTERFACE_GATE.py`
+- report: `semantic_v2/40_execution/steel_shell/20260825_0910__NZSCCM__Z0_Z6_INITIAL_ABD_OFFSET_AUDIT_AND_R02_R04_INTERFACE_GATE.md`
 
-`semantic_v2/40_execution/steel_shell/20260825_0130__NZSCCM__SSNC_R02_PBL_2D_FULL_RESULTANT_GATE.md`
+## 2. R03 remains diagnostic only
 
-## 4. SSNC-R03 role is downgraded from Pu gate to diagnostic
+The exact elastic-postbuckling current 6x6 tangent derived in R03 remains mechanically valid.
 
-R03 proved the exact elastic-material postbuckling current tangent
-
-\[
-\mathbf A_{pb}^{tan}
-=\mathbf A_e-\frac{\mathbf h\mathbf h^{\mathsf T}}{k_U},
-\]
-
-and the two-face current 6x6 tangent with
-
-\[
-\mathbf D_s^{current}
-=z_+^2\mathbf A_+^{pb}+z_-^2\mathbf A_-^{pb}
-+\mathbf D_{skin,e}^++\mathbf D_{skin,e}^-.
-\]
-
-This remains a valid mechanics result and useful future/current-stability diagnostic.
-
-However, under the accepted explicit Airy architecture:
+However:
 
 ```text
 R03_CURRENT_6X6_TANGENT_AS_Pu_GATE = NO
-R03_CURRENT_6X6_TANGENT_AS_DIAGNOSTIC = YES
 POST_FIRST_YIELD_6X6_TANGENT_REQUIRED_BEFORE_Z_Pu = NO
 ```
 
-Artifact:
+No further post-yield stiffness derivation is needed for the current explicit Airy production path.
 
-`semantic_v2/40_execution/steel_shell/20260825_0746__NZSCCM__SSNC_R03_CURRENT_6X6_TANGENT_GATE.md`
+## 3. R04 simplified terminal remains accepted
 
-## 5. SSNC-R04 simplified ideal-EP 2D terminal
+Each external steel face is a homogenized membrane layer at its physical centroid `z_f`.
 
-The user-authorized simplification is now frozen for the terminal steel layer.
-
-### 5.1 No through-thickness plastic partition
-
-Each external steel face is treated as one homogenized membrane layer at its physical centroid `z_f`.
-
-The terminal gross bending resultant is
+For trial mean plane stress
 
 \[
-\boxed{\mathbf M_f=z_f\mathbf N_f}.
-\]
-
-The own-skin `Et_s^3/12` term is retained in the initial Airy `D0`, but no separate through-thickness plastic bending block is introduced at the terminal.
-
-### 5.2 2D Mises cap
-
-For a trial mean plane-stress state
-
-\[
-\boldsymbol\sigma^{tr}=(\sigma_x^{tr},\sigma_y^{tr},\tau_{xy}^{tr})^T,
+\boldsymbol\sigma^{tr}
+=
+(\sigma_x^{tr},\sigma_y^{tr},\tau_{xy}^{tr})^T,
 \]
 
 \[
 \sigma_{vm}^{tr}
-=\sqrt{(\sigma_x^{tr})^2-\sigma_x^{tr}\sigma_y^{tr}
-+(\sigma_y^{tr})^2+3(\tau_{xy}^{tr})^2}.
+=
+\sqrt{
+(\sigma_x^{tr})^2
+-\sigma_x^{tr}\sigma_y^{tr}
++(\sigma_y^{tr})^2
++3(\tau_{xy}^{tr})^2
+},
 \]
 
-Define
-
 \[
-\boxed{
-\lambda=\min\left(1,\frac{f_y}{\sigma_{vm}^{tr}}\right),
+\lambda
+=
+\min\left(1,\frac{f_y}{\sigma_{vm}^{tr}}\right),
 \qquad
-\boldsymbol\sigma^{cap}=\lambda\boldsymbol\sigma^{tr}.
-}
+\boldsymbol\sigma^{cap}
+=
+\lambda\boldsymbol\sigma^{tr}.
 \]
 
 Then
 
 \[
-\boxed{
 \mathbf N_f=t_s\boldsymbol\sigma^{cap},
 \qquad
 \mathbf M_f=z_f\mathbf N_f.
-}
 \]
 
-This is exact for the uniaxial ideal-perfectly-plastic degeneration and `x<->y` symmetric. For general biaxial/shear post-yield states it is explicitly classified as a **proportional-loading analytical approximation**, not a full history-dependent associated-J2 return map.
+No through-thickness plastic front is introduced.
 
-### 5.3 Post-yield tangent convention
+Theory post-yield tangent is `Et=0`; optional tiny numerical regularization is allowed only if a solver requires it and is never fed back into Airy.
 
-Theory:
+## 4. Exact remaining interface blocker
 
-\[
-E_t=0.
-\]
+R02's active face operator is strain-driven:
 
-Optional numerical regularization only if a solver requires it:
-
-\[
-E_t=\eta E_s,
-\qquad \eta\sim10^{-8}\text{--}10^{-6}.
-\]
-
-This tangent is not fed into Airy. Yielded steel stress/resultants remain finite; only incremental tangent vanishes.
-
-### Executed R04 gate
-
-```text
-SSNC_R04_IDEAL_EP_2D_TERMINAL_RESULTANT_GATE = PASS
-AIRY_USES_INITIAL_ABD_ONLY = True
-INITIAL_STEEL_OFFSET_STIFFNESS_INCLUDED = True
-CURRENT_TANGENT_FEEDBACK_TO_AIRY = False
-THROUGH_THICKNESS_PLASTIC_PARTITION = False
-POST_YIELD_TANGENT_THEORY = 0.0
-trial_vm_MPa = 374.032084185301
-plastic_scale_lambda = 0.949116439498
-capped_vm_MPa = 355.000000000000
-uniaxial_capped_sy_MPa = 355.000000000000
-xy_sym_abs = 0.000000000000e+00
+```python
+solve_total_amplitude(cell, ex, ey, gamma)
+face_resultants(cell, ex, ey, gamma, kappa)
 ```
 
-Artifacts:
-
-- report: `semantic_v2/40_execution/steel_shell/20260825_0851__NZSCCM__SSNC_R04_IDEAL_EP_2D_TERMINAL_RESULTANT_GATE.md`
-- executable: `semantic_v2/40_execution/steel_shell/20260825_0851__NZSCCM__SSNC_R04_IDEAL_EP_2D_TERMINAL_RESULTANT_GATE.py`
-
-## 6. Offset term is present in both stiffness and terminal moment, without double counting
-
-Initial structural stiffness:
+Hence R02 requires
 
 \[
-\mathbf D_f^0
-=\mathbf Q_s\left(t_sz_f^2+\frac{t_s^3}{12}\right).
+(e_x,e_y,\gamma_{xy})_f.
 \]
 
-Terminal resisting moment:
+The accepted reduced Airy production front supplies
 
 \[
-\mathbf M_f^{cap}=z_f\mathbf N_f^{cap}.
+q,s
+\to
+(N_x^d,N_y^d,N_{xy}^d,M_x^d,M_y^d,M_{xy}^d),
 \]
 
-The former is an elastic derivative used to generate the Airy demand path. The latter is the physical force lever arm in the terminal resistance state. They are different objects and both are required.
+i.e. **total composite demand resultants**.
 
-## 7. Current stopping point
+No currently frozen production identity uniquely maps these total resultants to the top/bottom steel-face strain triples while simultaneously closing the concrete/core terminal redistribution.
+
+Therefore:
+
+```text
+R02_R04_COMPONENTS = AVAILABLE
+R02_R04_DIRECT_Z_Pu_INTERFACE = BLOCKED
+MISSING_IDENTITY =
+  AIRY total terminal demand
+  -> common current terminal section strains
+  -> steel-face (ex,ey,gamma)
+  -> R02 trial steel state
+NEW_Pu_Z0_Z6 = NOT CALCULATED
+```
+
+This reproduces the same class of interface issue already identified in the earlier direct-current-Yun terminal audit; the 09:10 execution now shows that offset stiffness is **not** the cause.
+
+## 5. Shortcuts not silently activated
+
+The following could be made executable but are new modelling choices and are therefore not silently promoted:
+
+```text
+A. initial-elastic ABD inversion all the way to nonlinear terminal strains
+B. promote the earlier affine 2D projected-moment diagnostic terminal to production
+C. return to the superseded global material residual/current-tangent route
+D. use effective width/effective area
+```
+
+`C` and `D` remain prohibited by the current architecture. `A` or `B` would require an explicit production decision plus one-dimensional degeneration and no-double-counting checks.
+
+## 6. Exact current stopping point
 
 Closed:
 
 ```text
-initial full composite ABD including steel-face offset
--> explicit Airy structural demand
-
-R02 biaxial PBL trial stress/resultants
--> R04 ideal-EP 2D Mises terminal cap
--> top/bottom face terminal N,M with physical lever arms
+raw Z geometry/material
+-> initial full composite ABD
+-> steel-face offset stiffness verified for Z0-Z6
+-> existing Airy structural coefficients retained
+-> explicit Airy demand
+-> R02 PBL operator available
+-> R04 ideal-EP 2D cap available
 ```
 
-Still to execute before new Z0–Z6 results are promoted:
+Open:
 
 ```text
-1. regenerate/audit each Z specimen's initial Airy coefficients with the explicit full-section ABD formula;
-2. connect the R02 trial steel resultants to the R04 ideal-EP terminal cap;
-3. combine with the unchanged NC terminal resultants;
-4. solve the unchanged Airy demand/resultant-capacity intersection;
-5. only after predictions are fixed, open Zhou/Winter comparators.
+ONE COMMON TERMINAL STRAIN/RESULTANT BRIDGE
 ```
 
-No post-first-yield 6x6 tangent derivation is required as a prerequisite.
+Only after this bridge is frozen should the new Z0–Z6 `Pu` batch be solved and Zhou/Winter reopened for post-solution validation.
+
+## 7. Next task
+
+```text
+NEXT =
+FREEZE ONE PRODUCTION COMMON-SECTION STRAIN BRIDGE
+THAT RETURNS STEEL-FACE (ex,ey,gamma) FROM THE AIRY TERMINAL STATE,
+WITHOUT CURRENT-TANGENT FEEDBACK, EFFECTIVE WIDTH, OR GLOBAL MATERIAL RJ;
+
+THEN CONNECT R02 -> R04 -> NC TERMINAL AND SOLVE Z0-Z6.
+```
