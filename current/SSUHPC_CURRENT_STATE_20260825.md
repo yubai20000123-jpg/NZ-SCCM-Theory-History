@@ -1,7 +1,7 @@
 # CURRENT STATE — Steel-Shell UHPC
 
-**Updated:** 2026-08-25 14:35 +08:00  
-**Status:** `RC_SSNC_MILESTONE_ANCHORED / CORE_NM_SUBSTITUTION_ONLY / THEORY_CLOSED / SEVEN_CASE_BLIND_EXECUTED / ABAQUS_POSTCHECK_COMPLETE / NO_REPAIR`
+**Updated:** 2026-08-25 15:15 +08:00  
+**Status:** `RC_SSNC_MILESTONE_ANCHORED / CORE_NM_SUBSTITUTION_ONLY / THEORY_CLOSED / SEVEN_CASE_BLIND_EXECUTED / ABAQUS_POSTCHECK_COMPLETE / R02_R04_ROOT_CAUSE_IDENTIFIED / NO_PRODUCTION_REPAIR_YET`
 
 Canonical parent:
 
@@ -14,6 +14,10 @@ Canonical SSUHPC theory:
 Canonical closure/execution report:
 
 `semantic_v2/40_execution/steel_shell/20260825_1435__NZSCCM__SSUHPC_MILESTONE_CORE_NM_CLOSURE_7CASE_BLIND_ABAQUS_POSTCHECK_R01.md`
+
+Canonical steel-face overprediction diagnosis:
+
+`semantic_v2/40_execution/steel_shell/20260825_1515__NZSCCM__R02_R04_LOCAL_YIELD_RESULTANT_OVERPREDICTION_DIAGNOSIS_R01.md`
 
 ---
 
@@ -37,7 +41,7 @@ INITIAL_FULL_COMPOSITE_ABD = RETAIN
 INTEGER_HALFWAVE_SELECTION = RETAIN
 COMMON_TERMINAL_STRAIN/RESULTANT_ARCHITECTURE = RETAIN
 R02_PBL_YUN_FACE = RETAIN
-R04_IDEAL_EP_MISES_FACE_CAP = RETAIN
+R04_IDEAL_EP_MISES_FACE_CAP = RETAIN AS CURRENT PRODUCTION UNTIL R06 PASSES
 LONGITUDINAL_WEB = RETAIN
 STEEL_FACE_OFFSET = INCLUDED_ONCE_ONLY
 R03_AS_Pu_GATE = NO
@@ -120,7 +124,7 @@ No earlier admissible interior contact was found.
 
 ---
 
-## 4. Seven blind results
+## 4. Seven blind results — current production values remain frozen pending R06
 
 All roots below were fixed before Abaqus peak loads were opened.
 
@@ -187,35 +191,163 @@ R02 U_top    = 0.775204046541 mm
 R02 U_bottom = 2.866479922145 mm
 bottom trial Mises = 549.20835057 MPa
 R04 lambda_bottom = 0.646384927748
-final bottom Mises = 355 MPa
+final bottom mean Mises = 355 MPa
 ```
 
 All four normal resultants close against the unchanged Airy demand to approximately 1e-10 or better at retained precision. Full arithmetic is in the canonical closure report.
 
 ---
 
-## 7. Current diagnosis — recorded, not repaired
+## 7. New source-level diagnosis: the current plastic cap is applied after local-field homogenization
 
-The comparison pattern is now clear enough to record:
+Yun's source uses the postbuckling mean-stress path only as the **average resultant path**. Ultimate is obtained by reconstructing the nonuniform local membrane stress field and finding the first amplitude at which the maximum local axial stress reaches `fy`; the corresponding average stress is the resultant capacity.
 
-```text
-T120 (no shell local buckling): +1.04%
-T360 (shell local buckling):   +11.07%
-BH032 (shell local buckling):  +12.40%
-BH050* (very slender shell):   +28.46%, lower-confidence comparator
-```
-
-Therefore the milestone-derived SSUHPC theory is algebraically and mechanically closed, but the remaining positive bias is strongly associated with shell-local/boundary resultant capacity after local buckling.
-
-This run does NOT authorize:
+Current R02 already contains both:
 
 ```text
-UHPC CC/TC/TT repair chain
-Zhang/Liu/FHWA replacement
-fc retuning
-effective-width/effective-area repair
-FEM/test calibration
-R03 reopening
+mean_compression_stress = full-area mean postbuckling stress
+airy_fluctuation_tension = finite-harmonic local stress redistribution
+local_mises = local diagnostic
 ```
 
-If further research is authorized, the next question is whether current R02/R04 full-area steel-face resultants sufficiently degrade the complete face N-M capacity under severe local buckling/boundary localisation.
+But current production R04 is applied only to the R02 **mean** trial stress. Therefore it checks
+
+\[
+\sigma_{VM}(\bar\sigma)=f_y
+\]
+
+instead of retaining the local postbuckling stress concentration in the capacity check.
+
+Direct T360 audit at the fixed current root:
+
+```text
+upper mean VM = 347.61 MPa < 355, so current R04 does not cap it
+upper R02 local membrane max VM ≈ 374.58 MPa > 355
+
+lower R02 mean trial = (-87.59,-587.74) MPa
+lower current R04 mean cap = (-56.62,-379.91) MPa, mean VM = 355
+lower R02 local membrane max VM before mean cap ≈ 919.89 MPa
+lower max local axial compression ≈ 865 MPa
+```
+
+Thus first local steel yielding occurs substantially earlier than the current mean-Mises terminal.
+
+A diagnostic proportional-strain continuation gives first-local-yield scales approximately:
+
+```text
+upper: eta ≈ 0.951635, U ≈ 0.733832 mm, mean stress ≈ (+79.59,-284.06) MPa
+lower: eta ≈ 0.419237, U ≈ 1.59139 mm, mean stress ≈ (-67.80,-276.15) MPa
+```
+
+The independent Yun scalar cell check gives an ultimate average axial stress near `297.87 MPa` for the T360 360x375x4 mm local panel, versus the current lower-face retained axial mean magnitude `379.91 MPa`.
+
+Therefore:
+
+\[
+\boxed{
+PRIMARY\_OVERPREDICTION\_CAUSE
+= \text{mean-stress plastic cap applied after R02 local-field homogenization}.
+}
+\]
+
+The problem is not absence of local buckling in R02; it is loss of the local buckling stress concentration before the terminal strength cap.
+
+---
+
+## 8. Why this diagnosis matches the seven-case pattern
+
+Diagnostic correlations only; not a calibration law:
+
+\[
+\mathrm{corr}(b/t,error)\approx0.897
+\]
+
+for all seven and about `0.840` for the primary six.
+
+More directly,
+
+\[
+\mathrm{corr}(1/\sigma_{cr},error)\approx0.976
+\]
+
+for all seven and about `0.893` for the primary six.
+
+This supports a steel-shell local-resultant issue rather than reopening UHPC material physics.
+
+---
+
+## 9. R06 concept — source-consistent local-yield resultant gate, not yet production
+
+Retain R02 completely. Do not use effective width.
+
+With
+
+\[
+u=\cos(k_xx),\qquad v=\cos(k_yy),
+\]
+
+the R02 finite harmonic field makes the normal stresses finite polynomials in `(u,v)` and gives
+
+\[
+\tau=\sqrt{1-u^2}\sqrt{1-v^2}P_\tau(u,v).
+\]
+
+Hence
+
+\[
+\Phi(u,v)=\sigma_x^2-\sigma_x\sigma_y+\sigma_y^2+3\tau^2
+\]
+
+is a finite polynomial over `[-1,1]^2`.
+
+The exact local-yield maximum can therefore be obtained from a finite algebraic candidate set:
+
+```text
+interior: dPhi/du = dPhi/dv = 0
+edges: one-variable stationary roots
+corners: four finite values
+```
+
+so the future formal gate can retain
+
+```text
+FORMAL_SPATIAL_SAMPLING = 0
+FORMAL_SPATIAL_QUADRATURE = 0
+MATERIAL_POINTS = 0
+EFFECTIVE_WIDTH = 0
+```
+
+Candidate architecture:
+
+```text
+R02 amplitude + finite local harmonic field
+-> exact max local Mises admissibility
+-> full-area mean face resultant at the local-yield boundary
+-> source-justified plastic reserve only where needed
+```
+
+Yun indicates plastic reserve mainly matters for stockier `b/t < 70`; the problematic T360/BH032/BH050 are `b/t = 90/80/125`. Therefore the first-local-yield resultant is a particularly relevant source-supported candidate for these slender cases, but it must not be blindly imposed on stocky T120/BH005/BH010/BH020.
+
+---
+
+## 10. Next gate
+
+```text
+NEXT = R06 FINITE-ALGEBRAIC LOCAL-YIELD RESULTANT GATE
+STEP 1 = implement exact finite extrema of Phi(u,v), no spatial grid
+STEP 2 = x-y symmetry and zero-buckling degeneration checks
+STEP 3 = blind T360 + BH032 rerun
+STEP 4 = stocky-case non-regression
+STEP 5 = only after roots fixed reopen Abaqus
+```
+
+Until R06 passes:
+
+```text
+CURRENT_SEVEN_CASE_Pu = FROZEN AS R01 RESULTS
+R04 = CURRENT PRODUCTION CAP
+R06 = DIAGNOSTIC/CANDIDATE ONLY
+NO EFFECTIVE WIDTH
+NO UHPC RETUNING
+NO COMPARATOR-BASED CORRECTION
+```
