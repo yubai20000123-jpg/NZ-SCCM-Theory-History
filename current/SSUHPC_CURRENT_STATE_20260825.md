@@ -1,204 +1,221 @@
 # CURRENT STATE — Steel-Shell UHPC
 
-**Updated:** 2026-08-25 13:30 +08:00  
-**Status:** `RC_SSNC_MILESTONE_ANCHORED / SSNC_PARENT_RETAINED / CORE_NM_SUBSTITUTION_ONLY / NUMERICAL_EXECUTION_PENDING`
+**Updated:** 2026-08-25 14:35 +08:00  
+**Status:** `RC_SSNC_MILESTONE_ANCHORED / CORE_NM_SUBSTITUTION_ONLY / THEORY_CLOSED / SEVEN_CASE_BLIND_EXECUTED / ABAQUS_POSTCHECK_COMPLETE / NO_REPAIR`
 
 Canonical parent:
 
 `current/MILESTONE_RC_SSNC_FINAL_THEORY_20260825.md`
 
-Canonical SSUHPC derivation:
+Canonical SSUHPC theory:
 
 `semantic_v2/20_theory/20260825_1330__NZSCCM__SSUHPC_FROM_RC_SSNC_MILESTONE_CORE_NM_SUBSTITUTION_V1.md`
 
----
+Canonical closure/execution report:
 
-## 0. Supersession correction
-
-The earlier 13:00 artifact
-
-`semantic_v2/20_theory/20260825_1300__NZSCCM__STEEL_SHELL_UHPC_HU_EARLY_REPLACEMENT_THEORY_V1.md`
-
-is **not** the current theory anchor. It overinterpreted the historical UHPC dialogue as permission to reconstruct an independent early-Hu branch.
-
-Correct interpretation:
-
-```text
-HISTORICAL_UHPC_DIALOGUE_ROLE = MATERIAL_UNIT_MEMORY_ONLY
-```
-
-It may be retained as an audit artifact, but it is superseded for current-theory purposes by the 13:30 file above.
+`semantic_v2/40_execution/steel_shell/20260825_1435__NZSCCM__SSUHPC_MILESTONE_CORE_NM_CLOSURE_7CASE_BLIND_ABAQUS_POSTCHECK_R01.md`
 
 ---
 
-## 1. Unique parent theory
+## 0. Unique theory identity
 
 ```text
 ANCHOR = RC–SSNC Unified Terminal-Capacity Milestone, 2026-08-25
-PARENT = SSNC section of that milestone
+PARENT = milestone SSNC
+ONLY THEORY SUBSTITUTION = NC core longitudinal/transverse N-M -> UHPC core longitudinal/transverse N-M
 ```
 
-SSUHPC can only be formed by replacing the ordinary-concrete core terminal resultants:
-
-\[
-\boxed{
-NC\ core:\ \mathcal C_c^{NC}(N_x,M_x;N_y,M_y)
-\rightarrow
-UHPC\ core:\ \mathcal C_c^{UHPC}(N_x,M_x;N_y,M_y)
-}
-\]
-
-Everything else remains SSNC milestone theory.
+The earlier 13:00 independent early-Hu reconstruction is not a current anchor. Historical UHPC dialogue is material-unit memory only.
 
 ---
 
-## 2. Retained without modification
+## 1. Retained milestone structure and steel
 
 ```text
 FULL_2D_MARGUERRE_AIRY = RETAIN
-INITIAL_FULL_COMPOSITE_ABD_FORM = RETAIN
-CONTROL_HALFWAVE_LOGIC = RETAIN
+INITIAL_FULL_COMPOSITE_ABD = RETAIN
+INTEGER_HALFWAVE_SELECTION = RETAIN
 COMMON_TERMINAL_STRAIN/RESULTANT_ARCHITECTURE = RETAIN
-R02_STEEL_FACE = RETAIN
-R04_STEEL_FACE_CAP = RETAIN
+R02_PBL_YUN_FACE = RETAIN
+R04_IDEAL_EP_MISES_FACE_CAP = RETAIN
 LONGITUDINAL_WEB = RETAIN
-STEEL_FACE_OFFSET = RETAIN_ONCE_ONLY
+STEEL_FACE_OFFSET = INCLUDED_ONCE_ONLY
 R03_AS_Pu_GATE = NO
 CURRENT_MATERIAL_TANGENT_INTO_AIRY = NO
 FORMAL_SPATIAL_QUADRATURE = 0
 MATERIAL_POINTS = 0
+EFFECTIVE_WIDTH_PRODUCTION = NO
 COMPARATOR_IN_ROOT_SELECTION = 0
 ```
 
-Changing NC to UHPC changes the core elastic constants inserted into the same initial ABD formula; it does not create a new structural front.
-
 ---
 
-## 3. UHPC material unit recovered from history
-
-Current historical material memory for the core:
+## 2. UHPC material unit and exact N-M closure
 
 ```text
 fc    = 141.1 MPa
 Ec    = 43.4 GPa
 epsc0 = 0.0035
 nu_c  = 0.20
+fct   = 4.513133983249735 MPa
+epst0 = 0.001
+mt    = 0.4418
 ```
 
-Compression backbone:
+Compression uses the recovered Hu-source curve
 
 \[
-\sigma_c=
-\begin{cases}
-f_c\dfrac{n\xi-\xi^2}{1+(n-2)\xi}, & \xi\le1,\\[8pt]
-f_c\dfrac{\xi}{2(\xi-1)^2+\xi}, & \xi>1,
-\end{cases}
-\qquad
-\xi=|\varepsilon|/\varepsilon_{c0},
-\qquad
-n=E_c\varepsilon_{c0}/f_c.
+\sigma_c=-f_c\frac{n_h\xi-\xi^2}{1+(n_h-2)\xi},
+\qquad \xi=-\varepsilon/\varepsilon_{c0},\quad 0\le\xi\le1.
 \]
 
-If a section direction develops a tensile zone, use only the historical Hu-source UHPC tensile branch with its actual source/specimen parameters. Do not replace it with NC tension and do not invent missing UHPC tensile parameters.
+Tension uses the recovered Hu-source tensile unit
+
+\[
+\sigma_t=f_{ct}e^{1/m_t}\xi_t
+\exp[-\xi_t^{m_t}/m_t].
+\]
+
+Compression and tension both have exact stress/moment primitives. For affine directional strain
+
+\[
+\varepsilon_i(z)=A_i+B_i z,
+\qquad i=x,y,
+\]
+
+UHPC longitudinal and transverse resultants are finite endpoint evaluations of the exact primitives. Thus
+
+```text
+UHPC_NM_X = CLOSED
+UHPC_NM_Y = CLOSED
+UHPC_THICKNESS_QUADRATURE = 0
+CC_TC_TT_POINTWISE_STATE_MACHINE = 0
+```
+
+The terminal envelope is first UHPC compressed-face contact with \(-\varepsilon_{c0}\); post-peak compression does not extend Pu.
 
 ---
 
-## 4. Only changed terminal object
+## 3. Closed terminal system
 
-For `i=x,y`, retain the milestone section kinematics
-
-\[
-\varepsilon_i(z)=\varepsilon_i^0+z\kappa_i.
-\]
-
-Then generate the UHPC core resultant relation
+For each fixed finite station, solve the four normal resultant balances plus one finite active UHPC peak condition in
 
 \[
-N_i^{UHPC}
-=(1-\rho_w)\int_{-t_c/2}^{t_c/2}
-\sigma_U[\varepsilon_i(z)]\,dz,
+(q,\varepsilon_x^0,\kappa_x,\varepsilon_y^0,\kappa_y).
 \]
+
+All seven current physical first-contact roots are controlled at
 
 \[
-M_i^{UHPC}
-=(1-\rho_w)\int_{-t_c/2}^{t_c/2}
-z\sigma_U[\varepsilon_i(z)]\,dz.
+\boxed{s=1}
 \]
 
-Thus the only theory substitution is
+with
 
-```text
-NC longitudinal N-M -> UHPC longitudinal N-M
-NC transverse N-M   -> UHPC transverse N-M
-```
+\[
+\boxed{\varepsilon_y(-t_c/2)=-0.0035.}
+\]
 
-No independent CC/TC/TT state machine is added.
+No earlier admissible interior contact was found.
 
 ---
 
-## 5. Phase assembly remains milestone SSNC
+## 4. Seven blind results
 
-\[
-N_x^{sec}=N_x^{UHPC}+N_{x,+}^{face}+N_{x,-}^{face}+N_x^{web},
-\]
+All roots below were fixed before Abaqus peak loads were opened.
 
-\[
-M_x^{sec}=M_x^{UHPC}+M_{x,+}^{face}+M_{x,-}^{face}+M_x^{web},
-\]
-
-\[
-N_y^{sec}=N_y^{UHPC}+N_y^{web}+N_{y,+}^{face}+N_{y,-}^{face},
-\]
-
-\[
-M_y^{sec}=M_y^{UHPC}+M_y^{web}+M_{y,+}^{face}+M_{y,-}^{face}.
-\]
-
-Use the SSNC milestone web identity; if its longitudinal web has no x-resultant role, then `Nx_web=Mx_web=0`.
-
-General terminal contact remains
-
-\[
-N_x^{sec}=N_x^d,\quad
-M_x^{sec}=M_x^d,\quad
-N_y^{sec}=N_y^d,\quad
-M_y^{sec}=M_y^d,
-\]
-
-with the milestone endpoint/active-set degenerations applied only when independently justified for the specimen.
+| Case | blind Pu / MN | local steel sigma_cr / MPa | shell local buckling before fy? |
+|---|---:|---:|---|
+| T120 | **12.76914369** | 2206.635 | NO |
+| T360 | **12.18255684** | 245.795 | **YES** |
+| BH005 | **2.46233215** | 10044.967 | NO |
+| BH010 | **4.58337285** | 2511.242 | NO |
+| BH020 | **8.55797773** | 627.810 | NO |
+| BH032 | **12.35286995** | 245.238 | **YES** |
+| BH050 | **15.69757377** | 100.450 | **YES** |
 
 ---
 
-## 6. Historical dialogue exclusions
+## 5. Abaqus post-check
 
-Do not import from historical UHPC calculations:
+| Case | theory / MN | Abaqus R02 / MN | theory/Abaqus - 1 |
+|---|---:|---:|---:|
+| T120 | 12.76914369 | 12.6378 | +1.0393% |
+| T360 | 12.18255684 | 10.9688 | +11.0655% |
+| BH005 | 2.46233215 | 2.3558 | +4.5221% |
+| BH010 | 4.58337285 | 4.3043 | +6.4836% |
+| BH020 | 8.55797773 | 8.0076 | +6.8732% |
+| BH032 | 12.35286995 | 10.9905 | +12.3959% |
+| BH050* | 15.69757377 | 12.2198 | +28.4602% |
 
-```text
-old structural panel length/mode
-old Airy coefficients
-32/37 mm web rebase choices
-old R-O/Yun-only steel terminal
-old T120/T360/BH Pu values as targets
-Zhang/Liu/FHWA/R08 later repair chains
-```
+BH050 comparator remains lower-confidence/different model family and is excluded from the primary statistics.
 
-Those records are evidence for the UHPC material unit only.
+Primary six:
+
+\[
+\boxed{\text{mean signed}=+7.0633\%,\quad MAE=7.0633\%,\quad RMSE=8.0303\%.}
+\]
+
+No post-comparison retuning was performed.
 
 ---
 
-## 7. Next task
+## 6. T360 full-worked-case identity
+
+T360 is the canonical worked shell-buckling example for this state:
 
 ```text
-NEXT = BUILD/VERIFY UHPC CORE LONGITUDINAL + TRANSVERSE N-M RELATIONS
-       INSIDE THE MILESTONE SSNC TERMINAL ASSEMBLY
-THEN = RECOMPUTE SELECTED STEEL-SHELL UHPC CASES
-COMPARATORS = CLOSED UNTIL ROOTS ARE FIXED
+b = 1600 mm
+a_phys = 3000 mm
+tc = 42 mm
+ts = 4 mm
+m* = 2
+ell = 1500 mm
+Pcr = 30.7519466757 MN
+local Bs = 360 mm
+local sigma_cr = 245.7948984 MPa < fy = 355 MPa
+qu = 0.00162329439722115
+Pu = 12.18255684307 MN
+Abaqus R02 = 10.9688 MN
+post-check error = +11.0655%
 ```
 
-Current gate:
+At terminal:
 
 ```text
-SSUHPC_PARENT_ANCHOR = PASS
-CORE_NM_SUBSTITUTION_DEFINITION = PASS
-NUMERICAL_RESULTS = NOT YET GENERATED UNDER THIS CORRECTED THEORY
+R02 U_top    = 0.775204046541 mm
+R02 U_bottom = 2.866479922145 mm
+bottom trial Mises = 549.20835057 MPa
+R04 lambda_bottom = 0.646384927748
+final bottom Mises = 355 MPa
 ```
+
+All four normal resultants close against the unchanged Airy demand to approximately 1e-10 or better at retained precision. Full arithmetic is in the canonical closure report.
+
+---
+
+## 7. Current diagnosis — recorded, not repaired
+
+The comparison pattern is now clear enough to record:
+
+```text
+T120 (no shell local buckling): +1.04%
+T360 (shell local buckling):   +11.07%
+BH032 (shell local buckling):  +12.40%
+BH050* (very slender shell):   +28.46%, lower-confidence comparator
+```
+
+Therefore the milestone-derived SSUHPC theory is algebraically and mechanically closed, but the remaining positive bias is strongly associated with shell-local/boundary resultant capacity after local buckling.
+
+This run does NOT authorize:
+
+```text
+UHPC CC/TC/TT repair chain
+Zhang/Liu/FHWA replacement
+fc retuning
+effective-width/effective-area repair
+FEM/test calibration
+R03 reopening
+```
+
+If further research is authorized, the next question is whether current R02/R04 full-area steel-face resultants sufficiently degrade the complete face N-M capacity under severe local buckling/boundary localisation.
