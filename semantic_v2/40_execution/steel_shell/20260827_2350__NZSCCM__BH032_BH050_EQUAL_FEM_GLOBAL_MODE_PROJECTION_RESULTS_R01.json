@@ -1,0 +1,104 @@
+{
+  "git_start_head": "8980f8690012c8e327f53d17ab91a5dec9aa0fc5",
+  "diagnostic_only": true,
+  "theory_modified": false,
+  "odb_read_only": true,
+  "cases": {
+    "BH032": {
+      "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_PARAMETRIC_CANONICAL_V1\\artifacts\\manual_review\\BH_LT50_EXPLICIT_R02_GRID_PENALTY\\BH_LT50_EXPLICIT_R02_GRID_PENALTY_DT2E6\\BH032_EXPLICIT_R02_GRID_B400.odb",
+      "odb_size_bytes": 3496526140,
+      "step": "EXPLICIT_LOADING",
+      "instance": "C-S-SHELL-1",
+      "peak_frame": 262,
+      "peak_time_s": 2.6200008392333984,
+      "peak_load_MN": 10.990480,
+      "b_mm": 1600.0,
+      "a_mm": 3200.0,
+      "mstar": 2,
+      "q0_theory": 0.0025,
+      "paired_nodes": 1071,
+      "Lx_FE_mm": 1600.0,
+      "Lz_FE_mm": 3200.0,
+      "initial": {
+        "W0_FE_mm": 3.999999876356029,
+        "q0_FE": 0.002499999922722518,
+        "q0_error_pct": -0.00000309109928764428,
+        "R2": 0.9999999999998633,
+        "NRMS": 1.321261547789948e-7,
+        "RMS_mm": 5.285046027793767e-7,
+        "kappa_x_FE_geom_per_mm": 1.5421256400015762e-5,
+        "kappa_y_FE_geom_per_mm": 1.5421256400015762e-5
+      },
+      "peak": {
+        "Wd_FE_mm": 4.842375252788389,
+        "q_FE": 0.003026484532992743,
+        "kappa_x_FE_geom_per_mm": 1.866887816665878e-5,
+        "kappa_y_FE_geom_per_mm": 1.866887816665878e-5,
+        "R2": 0.536620493962936,
+        "NRMS": 0.3321793445931228,
+        "RMS_mm": 1.6085370377452044,
+        "q_theory_same_load": 0.0013886422347494445,
+        "Wd_theory_same_load_mm": 2.22182757559911,
+        "kappa_theory_same_load_per_mm": 8.56584344476355e-6,
+        "q_same_load_ratio": 2.17945591546754,
+        "q_same_load_error_pct": 117.945591546754,
+        "q_u": 0.00137889961633743,
+        "q_terminal_ratio": 2.1948548662531,
+        "q_terminal_error_pct": 119.48548662531
+      }
+    },
+    "BH050_EQUAL_CONTRACT": {
+      "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_PARAMETRIC_CANONICAL_V1\\artifacts\\manual_review\\BH050_EQUAL_CONTRACT_R02_GRID_PENALTY_DT2E6\\BH050\\BH050_EQUAL_CONTRACT_R02_GRID_B400.odb",
+      "odb_size_bytes": 3496526132,
+      "step": "EXPLICIT_LOADING",
+      "instance": "C-S-SHELL-1",
+      "peak_frame": 212,
+      "peak_time_s": 2.1200006008148193,
+      "peak_load_MN": 12.591227,
+      "b_mm": 2500.0,
+      "a_mm": 5000.0,
+      "mstar": 2,
+      "q0_theory": 0.0025,
+      "paired_nodes": 1071,
+      "Lx_FE_mm": 2500.0,
+      "Lz_FE_mm": 5000.0,
+      "initial": {
+        "W0_FE_mm": 6.250000119282435,
+        "q0_FE": 0.002500000047712974,
+        "q0_error_pct": 0.00000190851894288357,
+        "R2": 0.9999999999999376,
+        "NRMS": 8.927839502407167e-8,
+        "RMS_mm": 5.579899795497923e-7,
+        "kappa_x_FE_geom_per_mm": 9.869604589452627e-6,
+        "kappa_y_FE_geom_per_mm": 9.869604589452627e-6
+      },
+      "peak": {
+        "Wd_FE_mm": 12.005278060528953,
+        "q_FE": 0.004802111224211581,
+        "kappa_x_FE_geom_per_mm": 1.895797522919969e-5,
+        "kappa_y_FE_geom_per_mm": 1.895797522919969e-5,
+        "R2": 0.7843295379730328,
+        "NRMS": 0.1874569006700125,
+        "RMS_mm": 2.2504722169084563,
+        "q_theory_same_load": 0.004117589557476763,
+        "Wd_theory_same_load_mm": 10.2939738936919,
+        "kappa_theory_same_load_per_mm": 1.62555920073409e-5,
+        "q_same_load_ratio": 1.166243297730308,
+        "q_same_load_error_pct": 16.6243297730308,
+        "q_u": 0.004772819645833164,
+        "Wd_u_mm": 11.9320491146,
+        "q_terminal_ratio": 1.006137164307892,
+        "q_terminal_error_pct": 0.613716430789291
+      }
+    }
+  },
+  "conclusion": {
+    "q_as_dominant_global_coordinate": "PARTIAL",
+    "same_direction_systematic_bias": false,
+    "single_mode_representation_deficiency": true,
+    "BH032_projection": "COMPLETED",
+    "BH050_equal_projection": "COMPLETED",
+    "FEM_in_theory_root_selection": false
+  }
+}
+

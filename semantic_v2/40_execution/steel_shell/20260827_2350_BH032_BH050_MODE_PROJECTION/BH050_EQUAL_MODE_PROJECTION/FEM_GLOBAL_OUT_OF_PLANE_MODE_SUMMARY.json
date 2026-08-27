@@ -1,0 +1,70 @@
+{
+  "contract": {
+    "FE_X": "theory_x", 
+    "FE_Y": "out_of_plane", 
+    "FE_Z": "theory_y_loading", 
+    "field_subset": "U.getSubset(region=C-S-SHELL-1)", 
+    "incremental_w": "U2", 
+    "mode_sign": "from_initial_imperfection", 
+    "rigid_terms_removed": [
+      "1", 
+      "X", 
+      "Z"
+    ]
+  }, 
+  "diagnostic_only": true, 
+  "formal_structural_spatial_quadrature": 0, 
+  "initial": {
+    "W_mm": 6.250000119282435, 
+    "c0": 2.631734178760721e-16, 
+    "cx": -8.068178649387858e-17, 
+    "cz": 8.496110481814867e-08, 
+    "kappa_x_FE_geom_per_mm": 9.869604589452627e-06, 
+    "kappa_y_FE_geom_per_mm": 9.869604589452627e-06, 
+    "modal_R2_after_plane": 0.9999999999999376, 
+    "nrms_residual_over_absW": 8.927839502407167e-08, 
+    "q0_FE": 0.002500000047712974, 
+    "q0_ratio_FE_over_theory": 1.0000000190851894, 
+    "q0_theory": 0.0025, 
+    "rms_residual_mm": 5.579899795497923e-07
+  }, 
+  "instance": "C-S-SHELL-1", 
+  "material_points": 0, 
+  "mesh": {
+    "Lx_FE_mm": 2500.0, 
+    "Lx_FE_over_b": 1.0, 
+    "Lz_FE_mm": 5000.0, 
+    "Lz_FE_over_a": 1.0, 
+    "n_pairs": 1071, 
+    "pair_tol_mm": 0.005, 
+    "xmax": 1250.0, 
+    "xmin": -1250.0, 
+    "zmax": 5000.0, 
+    "zmin": 0.0
+  }, 
+  "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_PARAMETRIC_CANONICAL_V1\\artifacts\\manual_review\\BH050_EQUAL_CONTRACT_R02_GRID_PENALTY_DT2E6\\BH050\\BH050_EQUAL_CONTRACT_R02_GRID_B400.odb", 
+  "peak": {
+    "W_mm": 12.005278060528953, 
+    "c0": -0.2399662656207564, 
+    "cx": -0.026323591523924387, 
+    "cz": 0.7795429133235352, 
+    "frame_index": 212, 
+    "kappa_x_FE_geom_per_mm": 1.895797522919969e-05, 
+    "kappa_y_FE_geom_per_mm": 1.895797522919969e-05, 
+    "modal_R2_after_plane": 0.7843295379730328, 
+    "n_pairs": 1071, 
+    "nrms_residual_over_absW": 0.1874569006700125, 
+    "q_FE": 0.004802111224211581, 
+    "rms_residual_mm": 2.2504722169084563, 
+    "time_s": 2.1200006008148193
+  }, 
+  "status": "PEAK_FEM_GLOBAL_MODE_PROJECTION_EXECUTED", 
+  "step": "EXPLICIT_LOADING", 
+  "theory": {
+    "a_mm": 5000.0, 
+    "b_mm": 2500.0, 
+    "mstar": 2, 
+    "q0": 0.0025
+  }, 
+  "theory_modified": false
+}

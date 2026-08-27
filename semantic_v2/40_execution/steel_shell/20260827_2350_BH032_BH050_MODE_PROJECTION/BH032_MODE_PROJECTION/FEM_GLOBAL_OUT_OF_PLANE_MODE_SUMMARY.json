@@ -1,0 +1,70 @@
+{
+  "contract": {
+    "FE_X": "theory_x", 
+    "FE_Y": "out_of_plane", 
+    "FE_Z": "theory_y_loading", 
+    "field_subset": "U.getSubset(region=C-S-SHELL-1)", 
+    "incremental_w": "U2", 
+    "mode_sign": "from_initial_imperfection", 
+    "rigid_terms_removed": [
+      "1", 
+      "X", 
+      "Z"
+    ]
+  }, 
+  "diagnostic_only": true, 
+  "formal_structural_spatial_quadrature": 0, 
+  "initial": {
+    "W_mm": 3.999999876356029, 
+    "c0": 8.473221862999482e-17, 
+    "cx": -3.919508790090843e-17, 
+    "cz": 5.4943729566048205e-09, 
+    "kappa_x_FE_geom_per_mm": 1.5421256400015762e-05, 
+    "kappa_y_FE_geom_per_mm": 1.5421256400015762e-05, 
+    "modal_R2_after_plane": 0.9999999999998633, 
+    "nrms_residual_over_absW": 1.321261547789948e-07, 
+    "q0_FE": 0.002499999922722518, 
+    "q0_ratio_FE_over_theory": 0.9999999690890071, 
+    "q0_theory": 0.0025, 
+    "rms_residual_mm": 5.285046027793767e-07
+  }, 
+  "instance": "C-S-SHELL-1", 
+  "material_points": 0, 
+  "mesh": {
+    "Lx_FE_mm": 1600.0, 
+    "Lx_FE_over_b": 1.0, 
+    "Lz_FE_mm": 3200.0, 
+    "Lz_FE_over_a": 1.0, 
+    "n_pairs": 1071, 
+    "pair_tol_mm": 0.0031999999999999997, 
+    "xmax": 800.0, 
+    "xmin": -800.0, 
+    "zmax": 3200.0, 
+    "zmin": 0.0
+  }, 
+  "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_PARAMETRIC_CANONICAL_V1\\artifacts\\manual_review\\BH_LT50_EXPLICIT_R02_GRID_PENALTY\\BH_LT50_EXPLICIT_R02_GRID_PENALTY_DT2E6\\BH032_EXPLICIT_R02_GRID_B400.odb", 
+  "peak": {
+    "W_mm": 4.842375252788389, 
+    "c0": 0.2452720051267185, 
+    "cx": -0.00020933623043924626, 
+    "cz": 0.6238071781532906, 
+    "frame_index": 262, 
+    "kappa_x_FE_geom_per_mm": 1.866887816665878e-05, 
+    "kappa_y_FE_geom_per_mm": 1.866887816665878e-05, 
+    "modal_R2_after_plane": 0.536620493962936, 
+    "n_pairs": 1071, 
+    "nrms_residual_over_absW": 0.3321793445931228, 
+    "q_FE": 0.003026484532992743, 
+    "rms_residual_mm": 1.6085370377452044, 
+    "time_s": 2.6200008392333984
+  }, 
+  "status": "PEAK_FEM_GLOBAL_MODE_PROJECTION_EXECUTED", 
+  "step": "EXPLICIT_LOADING", 
+  "theory": {
+    "a_mm": 3200.0, 
+    "b_mm": 1600.0, 
+    "mstar": 2, 
+    "q0": 0.0025
+  }, 
+  "theory_modified": false
+}
