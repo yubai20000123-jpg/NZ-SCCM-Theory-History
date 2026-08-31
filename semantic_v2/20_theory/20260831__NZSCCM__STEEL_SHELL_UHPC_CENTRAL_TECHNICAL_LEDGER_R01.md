@@ -3,608 +3,481 @@
 **Date:** 2026-08-31  
 **Repository:** `yubai20000123-jpg/NZ-SCCM-Theory-History`  
 **Working branch:** `diagnostic/bh032-bh050-mode-projection-20260827`  
-**Production main:** unchanged.  
-**Production calculation baseline:** `MARGUERRE_AIRY_EXPLICIT_Z_CAPACITY_V1`  
+**Document role:** `CENTRAL_TECHNICAL_LEDGER / THEORY–PARAMETER–ALGORITHM–CODE MAPPING / TRANSFER BASELINE`  
+**Production main:** unchanged by this document.  
 **Formal spatial quadrature:** `0`  
-**Load-step/path tracking:** `0`  
-**Newton/Solver structural iteration:** `0`  
-**Comparator/test/FEM in coefficient identification or root selection:** `0`
+**Material-point grid:** `0`  
+**Effective-width/effective-area repair:** prohibited.  
+**Comparator/test/FEM in parameter calibration or root selection:** `0`.
 
 ---
 
-# 0. Locked scope
+# 0. Locked theory identity
 
-本总账只保留钢壳–UHPC 显式 V1 极限承载力生产链：
+本总账只记录当前钢壳–UHPC 完整显式理论本体，不再把 20260821 早期 `Z-section m_u(n)` 简化容量面替换成当前截面理论，也不把后续 diagnostic 的变量解释问题反向删掉已经建立的 R02/R06/UHPC 模块。
+
+当前母链唯一写成：
 
 ```text
-raw specimen parameters
--> A/D
--> integer m*
--> Pcr, C, G, J
--> Ppb(q)
--> explicit Z N-M capacity Regime A/B
--> finite algebraic control candidates
--> all polynomial roots
--> qu = minimum positive admissible q
--> Pu = Ppb(qu)
+raw geometry/material
+-> initial composite A/D
+-> integer global mode
+-> Marguerre–Airy Pcr,C,Kx,G,Jx,Jy
+-> q and Q=q(q+2q0)
+-> Airy generalized N/M demand
+-> UHPC continuous-thickness section operator
++ upper/lower steel-face R02
+-> R06 local-yield resultant return when active
++ longitudinal web constituent
+-> total section S = SU + Ss,+ + Ss,- + Sw
+-> explicit section/global closure
 ```
 
-理论来源：
-`semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md`
-(blob `968f3ba1b6990bfc7a52e21de6a0047ea0866042`).
+当前 source-audited BH050 capacity-contact regression target remains
 
-后续 R02/R06、Zhang/Liu exact current-section 与 same-q diagnostic 属于独立研究/增强模块；除非未来另行冻结新的 terminal rule，它们不替代、不阻断本 V1 显式 Pu 生产算子。
+```text
+q = 0.004772819645833164
+P = 13.3563763545430 MN
+terminal rule = FORCE_FIRST_CAPACITY_CONTACT_R01
+output identity = AIRY_NM_CAPACITY_CONTACT_PREDICTION
+```
 
-BH050 的 `13.3563763545430 MN` 属于后来的 historical Airy N-M capacity-contact closure，不是 V1 Z-section Excel 的回归目标。
+`17.1449738 MN` belongs to the older 20260821 simplified Z-section capacity model and is **not** a regression target of this ledger.
 
----
-
-# 1. Raw inputs
-
-正式输入：
-
-\[
-\{b,a_{phys},t_c,t_s,A_{0g},A_w,E_s,\nu_s,f_y,E_c,\nu_c,f_c\}.
-\]
-
-派生量：
-
-\[
-q_0=A_{0g}/b,
-\qquad
-\rho_w=A_w/(bt_c).
-\]
-
-统一使用 N–mm–MPa。
+The later same-q deformation-compatible endpoint remains a separate research correction of curvature ownership; it is not allowed to erase or silently replace the above source-audited capacity-contact map.
 
 ---
 
-# 2. Initial A/D stiffness
+# 1. Source chain
 
-定义：
+1. `semantic_v2/20_theory/20260821_1733__NZSCCM__MARGUERRE_AIRY_EXPLICIT_LIMIT_THEORY_V1.md` — global geometry, initial composite stiffness, integer mode and Airy coefficient derivation only.
+2. `semantic_v2/20_theory/20260822_1240__NZSCCM__UHPC_ZHANG_BACKBONE_AND_LIU_CC_CONTINUOUS_SOURCE_MIN_GATE.md` — UHPC compression/tension/current-section source and exact primitives.
+3. `semantic_v2/20_theory/20260825_1530__NZSCCM__STEEL_SHELL_COMMON_R06_LOCAL_YIELD_RESULTANT_GATE_V1.md` — common R06 local-yield resultant gate.
+4. `semantic_v2/20_theory/20260827_1623__NZSCCM__R02_NONNEGATIVE_AMPLITUDE_ACTIVESET_COMPLETION_R01.md` — R02 constrained active set.
+5. `20260827_1135__NZSCCM__UNIFIED_Q_U_EXPLICIT_KINEMATIC_LEDGER_AND_GENERALIZED_WORK_R01.md` — verified local geometry/harmonic bookkeeping; qU generalized-work closure variants are not automatically reactivated.
+6. `semantic_v2/40_execution/steel_shell/20260825_1622__NZSCCM__STEEL_SHELL_COMMON_R06_SSUHPC_7CASE_BH050_FULL_EXECUTION_R01.md` — BH050 source-audited full execution and 13.3563763545430 MN regression.
+7. `semantic_v2/40_execution/steel_shell/20260827_2052__NZSCCM__BH050_BH032_CLASSICAL_W_KAPPA_EPS_KINEMATIC_RECONSTRUCTION_R01.md` — separates geometric curvature from historical capacity coordinates and records qU production retirement.
 
+No source below may be replaced by the older simplified Z-section capacity surface merely because that older route produces a lower-degree q polynomial.
+
+---
+
+# 2. Units, coordinates and ownership
+
+Use N–mm–MPa.  
+`x`: transverse; `y`: axial; `z`: through thickness, positive to upper face.
+
+Global geometry:
 \[
-K_s=\frac{E_s}{1-\nu_s^2},\qquad
-K_c=\frac{E_c}{1-\nu_c^2},
+0\le x\le b,\qquad0\le y\le a_{phys}.
 \]
 
+Global mode:
 \[
-G_s=\frac{E_s}{2(1+\nu_s)},\qquad
-G_c=\frac{E_c}{2(1+\nu_c)},
+\psi=\sin(\alpha x)\sin(\beta y),\qquad
+\alpha=\pi/b,\qquad \beta=m\pi/a_{phys}.
 \]
 
+Initial/current deflection:
 \[
-z_f=\frac{t_c}{2}+\frac{t_s}{2}.
+w_0=bq_0\psi,\qquad w=b(q_0+q)\psi,\qquad w_d=bq\psi,
+\]
+\[
+\boxed{Q(q)=q(q+2q_0)}.
 \]
 
-面内刚度：
-
+Actual geometric curvature is owned by q:
 \[
-A_{11}=2t_sK_s+(1-\rho_w)t_cK_c,
+\kappa_x^{geo}=bq\alpha^2\psi,\qquad
+\kappa_y^{geo}=bq\beta^2\psi.
+\]
+Historical R4/J4 affine capacity coordinates are not to be renamed as these geometric curvatures.
+
+---
+
+# 3. Initial composite A/D and global mode
+
+Plane-stress phase constants:
+\[
+K_s=E_s/(1-\nu_s^2),\qquad K_c=E_c/(1-\nu_c^2),
+\]
+\[
+G_s=E_s/[2(1+\nu_s)],\qquad G_c=E_c/[2(1+\nu_c)].
 \]
 
+With distributed longitudinal-web ratio
 \[
-A_{22}=A_{11}+\rho_wt_cE_s,
+\rho_w=A_w/(bt_c),
 \]
-
+and face centroid
 \[
-A_{12}=2t_s\nu_sK_s+(1-\rho_w)t_c\nu_cK_c,
+z_f=t_c/2+t_s/2,
 \]
+current BH-family initial ABD is compiled from the two steel faces, UHPC volume reduced by the distributed web volume, and the actual longitudinal-web steel contribution. The BH050 audited target is
 
-\[
-A_{66}=2t_sG_s+(1-\rho_w)t_cG_c.
-\]
+```text
+A11=3.685652010989011e6 N/mm
+A22=3.795408810989011e6 N/mm
+A12=9.182293032967034e5 N/mm
+A66=1.383711353846154e6 N/mm
+Dx =1.236003299827839e9 Nmm
+Dy =1.252137549427839e9 Nmm
+Dmu=3.432434438483517e8 Nmm
+D66=4.463799279897436e8 Nmm
+H  =1.236003299827839e9 Nmm
+```
 
-弯曲分量：
-
-\[
-D_f=2K_s\left(\frac{t_s^3}{12}+t_sz_f^2\right),
-\]
-
-\[
-D_c=(1-\rho_w)K_c\frac{t_c^3}{12},
-\]
-
-\[
-D_{w,y}=\rho_wE_s\frac{t_c^3}{12}.
-\]
-
-因此：
-
-\[
-D_x=D_f+D_c,
-\qquad
-D_y=D_x+D_{w,y},
-\]
-
-\[
-D_\mu=\nu_sD_f+\nu_cD_c,
-\]
-
-\[
-D_{66}=2G_s\left(\frac{t_s^3}{12}+t_sz_f^2\right)
-+(1-\rho_w)G_c\frac{t_c^3}{12},
-\]
-
+Orthotropic convention:
 \[
 \boxed{H=D_\mu+2D_{66}}.
 \]
 
----
-
-# 3. Integer mode and Airy coefficients
-
-对正整数 \(m\)：
-
+Integer mode:
 \[
-\alpha=\frac{\pi}{b},
-\qquad
-\beta_m=\frac{m\pi}{a_{phys}},
-\qquad
-\ell_m=\frac{a_{phys}}{m}.
-\]
-
-\[
-N_{cr,m}
-=
+N_{cr,m}=
 \frac{D_x\alpha^4+2H\alpha^2\beta_m^2+D_y\beta_m^4}{\beta_m^2},
+\qquad P_{cr,m}=bN_{cr,m}.
+\]
+Choose the minimum admissible integer mode without comparator information.
+
+BH050:
+\[
+\boxed{m_*=2},\qquad \ell=2500\text{ mm},\qquad
+\boxed{P_{cr}=19.5818772367311\text{ MN}}.
 \]
 
+---
+
+# 4. Marguerre–Airy compiled demand
+
+For the selected mode, compile
 \[
-P_{cr,m}=bN_{cr,m}.
+P_{cr},\;C,\;K_x,\;G,\;J_x,\;J_y
 \]
+from geometry and initial A/D only.
 
+Runtime:
 \[
-\boxed{m_*=\arg\min_{m\in\mathbb N^+}P_{cr,m}},
+\boxed{P^A(q)=P_{cr}\frac{q}{q+q_0}+C Q(q)},
 \]
-
-随后固定 \(\beta=\beta_{m_*}\)、\(\ell=\ell_{m_*}\)、\(P_{cr}=P_{cr,m_*}\)。
-
-定义：
-
 \[
-\Delta_A=A_{11}A_{22}-A_{12}^2,
+N_T^A=K_xQ(q)\cos(2\beta y),
 \]
-
 \[
-\bar A_{11}=\frac{A_{22}}{\Delta_A},
+N_L^A=-\left[P^A(q)/b+GQ(q)(1-2\sin^2\alpha x)\right],
+\]
+\[
+M_T^A=J_xq\sin\alpha x\sin\beta y,
 \qquad
-\bar A_{22}=\frac{A_{11}}{\Delta_A}.
+M_L^A=J_yq\sin\alpha x\sin\beta y.
 \]
 
-Airy 系数：
-
-\[
-K_x=\frac{b^2\alpha^2}{8\bar A_{11}},
-\]
-
-\[
-G=\frac{b^2\beta^2}{8\bar A_{22}},
-\]
-
-\[
-C=
-\frac{b^3\Delta_A}{16\beta^2}
-\left(
-\frac{\alpha^4}{A_{22}}
-+
-\frac{\beta^4}{A_{11}}
-\right),
-\]
-
-\[
-J_x=b(D_x\alpha^2+D_\mu\beta^2),
-\]
-
-\[
-\boxed{J=J_y=b(D_\mu\alpha^2+D_y\beta^2)}.
-\]
-
----
-
-# 4. Explicit postbuckling demand
-
-\[
-Q(q)=q(q+2q_0).
-\]
-
-\[
-\boxed{
-P_{pb}(q)
-=P_{cr}\frac{q}{q+q_0}+Cq(q+2q_0)
-}.
-\]
-
-加载方向局部膜力与弯矩需求：
-
-\[
-\boxed{
-n(s;q)
-=\frac{P_{pb}(q)}{b}
-+Gq(q+2q_0)(1-2s^2)
-},
-\]
-
-\[
-\boxed{m(s;q)=Jqs},
-\qquad 0\le s\le1.
-\]
-
-对 \(q\ge0,q_0>0,P_{cr}>0,C>0\)：
-
-\[
-\frac{dP_{pb}}{dq}
-=
-\frac{P_{cr}q_0}{(q+q_0)^2}+2C(q+q_0)>0.
-\]
-
-所以不需要加载路径追踪。
-
----
-
-# 5. Explicit Z-section capacity
-
-定义：
-
-\[
-h_c=\frac{t_c}{2},
-\]
-
-\[
-N_0=[(1-\rho_w)f_c+\rho_wf_y]t_c,
-\]
-
-\[
-N_p=N_0+2f_yt_s.
-\]
-
-## 5.1 Regime A: 0 <= n <= N0
-
-定义：
-
-\[
-D_A=(1-\rho_w)f_c+2\rho_wf_y,
-\]
-
-\[
-A_A=(1-\rho_w)f_ch_c.
-\]
-
-\[
-\boxed{
-m_u^A(n)
-=
-\frac{D_Ah_c^2}{2}
--
-\frac{(A_A-n)^2}{2D_A}
-+
-2f_yt_s\left(h_c+\frac{t_s}{2}\right)
-}.
-\]
-
-写成
-\[
-m_u^A(n)=u_2^An^2+u_1^An+u_0^A,
-\]
-其中
-
-\[
-u_2^A=-\frac1{2D_A},
-\qquad
-u_1^A=\frac{A_A}{D_A},
-\]
-
-\[
-u_0^A
-=
-\frac{D_Ah_c^2}{2}
--
-\frac{A_A^2}{2D_A}
-+
-2f_yt_s\left(h_c+\frac{t_s}{2}\right).
-\]
-
-## 5.2 Regime B: N0 <= n <= Np
-
-\[
-\delta=\frac{N_p-n}{2f_y},
-\]
-
-\[
-\boxed{
-m_u^B(n)=f_y\delta[2(h_c+t_s)-\delta]
-}.
-\]
-
-写成
-\[
-m_u^B(n)=u_2^Bn^2+u_1^Bn+u_0^B,
-\]
-其中
-
-\[
-u_2^B=-\frac1{4f_y},
-\]
-
-\[
-u_1^B=\frac{N_p}{2f_y}-(h_c+t_s),
-\]
-
-\[
-u_0^B=(h_c+t_s)N_p-\frac{N_p^2}{4f_y}.
-\]
-
-若 \(n>N_p\)，则为 squash boundary/failure。
-
----
-
-# 6. Fixed-s q polynomial
-
-在任一固定 \(s\) 与固定 Regime 中，定义
-
-\[
-H_s=\frac{C}{b}+G(1-2s^2).
-\]
-
-清除 \(q+q_0\) 分母后，定义
-
-\[
-N(q)=n(s;q)(q+q_0)
-=n_3q^3+n_2q^2+n_1q,
-\]
-其中
-
-\[
-n_3=H_s,
-\qquad
-n_2=3H_sq_0,
-\]
-
-\[
-n_1=\frac{P_{cr}}{b}+2H_sq_0^2.
-\]
-
-容量接触方程为
-
-\[
-\boxed{
-F(q)
-=u_2N(q)^2
-+u_1N(q)(q+q_0)
-+u_0(q+q_0)^2
--Jsq(q+q_0)^2
-=0
-}.
-\]
-
-其次数不超过 6。显式系数：
-
-\[
-c_6=u_2n_3^2,
-\]
-
-\[
-c_5=2u_2n_2n_3,
-\]
-
-\[
-c_4=u_2(n_2^2+2n_1n_3)+u_1n_3,
-\]
-
-\[
-c_3=2u_2n_1n_2+u_1(n_2+n_3q_0)-Js,
-\]
-
-\[
-c_2=u_2n_1^2+u_1(n_1+n_2q_0)+u_0-2Jsq_0,
-\]
-
-\[
-c_1=u_1n_1q_0+2u_0q_0-Jsq_0^2,
-\]
-
-\[
-c_0=u_0q_0^2.
-\]
-
-因此
-
-\[
-\boxed{c_6q^6+c_5q^5+c_4q^4+c_3q^3+c_2q^2+c_1q+c_0=0}.
-\]
-
----
-
-# 7. Finite control candidates
-
-在固定 Regime 中：
-
-\[
-\Phi_Z(s,q)=m_u[n(s;q)]-Jqs.
-\]
-
-它对 \(s\) 为
-
-\[
-\boxed{
-\Phi_Z=A_4s^4+A_2s^2+A_1s+A_0
-},
-\]
-
-其中
-
-\[
-A_4=u_2n_b^2,
-\]
-
-\[
-A_2=-2u_2n_an_b-u_1n_b,
-\]
-
-\[
-A_1=-Jq,
-\]
-
-\[
-A_0=u_2n_a^2+u_1n_a+u_0,
-\]
-
-\[
-n_a=\frac{P_{pb}(q)}b+GQ(q),
-\qquad
-n_b=2GQ(q).
-\]
-
-内部控制点满足
-
-\[
-\boxed{4A_4s^3+2A_2s+A_1=0}.
-\]
-
-正式有限候选集合只包含：
-
-1. \(s=0\)；
-2. \(s=1\)；
-3. 上述三次式在 \(0<s<1\) 的全部实根；
-4. \(n=N_0\) 的 Regime A/B 边界；
-5. \(n=N_p\) 的 squash 边界。
-
-内部候选通过 \(\Phi_Z=0\) 与 \(\partial\Phi_Z/\partial s=0\) 的 resultant/discriminant 一次性消元得到有限 \(q\) 多项式根集。
-
-对每个候选根必须重新检查：
-
-\[
-q>0,
-\qquad
-0\le s\le1,
-\]
-
-以及对应 Regime 的
-
-\[
-0\le n\le N_0
-\quad\text{或}\quad
-N_0\le n\le N_p.
-\]
-
----
-
-# 8. Ultimate root rule
-
-汇总全部合法有限代数候选：
-
-\[
-\mathcal Q
-=
-\{q_k>0:\ q_k\text{ satisfies contact and branch admissibility}\}.
-\]
-
-\[
-\boxed{q_u=\min\mathcal Q}.
-\]
-
-\[
-\boxed{P_u=P_{pb}(q_u)}.
-\]
-
-如果 \(\mathcal Q\) 为空，返回
-`NO_ADMISSIBLE_CAPACITY_ROOT_IN_V1_DOMAIN`，不得改参数、不得使用试验/FEM 选择根。
-
----
-
-# 9. Polynomial all-root backend
-
-正式理论身份是：
+BH050 audited coefficients:
 
 ```text
-FINITE_ALGEBRAIC_ALL_ROOT
-```
-
-允许使用：
-
-- polynomial Root/RootOf object；
-- resultant/discriminant；
-- companion-matrix all-root evaluation；
-- 其他一次性全根代数后端。
-
-不允许使用：
-
-- Newton structural iteration；
-- Excel Goal Seek / Solver；
-- load stepping / path continuation；
-- spatial discretization；
-- comparator-proximity root selection。
-
-Excel R04 中，所有结构方程和多项式系数都由普通 worksheet 公式显式生成；仅最后的一般高次多项式全根提取使用 Excel 365 `PY()`/NumPy `roots` 作为 companion all-root evaluator。它不改变理论方程，也不参与参数标定或路径迭代。
-
----
-
-# 10. BH050 V1 audit point
-
-输入：
-
-```text
-b=2500 mm
-a_phys=5000 mm
-tc=42 mm
-ts=4 mm
-A0g=6.25 mm
-Aw=1332 mm2
-Es=206000 MPa
-nu_s=0.30
-fy=355 MPa
-Ec=43400 MPa
-nu_c=0.20
-fc=141.1 MPa
-```
-
-自动恢复：
-
-```text
-m*=2
-ell=2500 mm
-Pcr=19.5818772367311 MN
 Kx=4.272925966136171e6 N/mm
-G=4.400171479082513e6 N/mm
-C=1.0841371806523354e10 N
+G =4.400171479082513e6 N/mm
+C =1.0841371806523354e10 N
 Jx=6.234616244717026e6 N
-J=6.298311709061200e6 N
+Jy=6.298311709061200e6 N
 ```
-
-V1 Z-section 全根计算的 governing candidate：
-
-```text
-q_u = 0.0097504617131234
-s_u = 1
-regime = B
-n_u = 6225.14008391775 N/mm
-P_u = 17.1449738007645 MN
-```
-
-`13.3563763545430 MN` 属于后来的 historical Airy N-M capacity-contact closure，不能作为 V1 Z-section Excel 的目标或根选择依据。
 
 ---
 
-# 11. Standalone status
+# 5. R02 local steel-face operator
+
+Local cell:
+\[
+0\le\xi\le L_x,\qquad0\le\eta\le L_y,
+\]
+\[
+\phi=(1-\cos k_x\xi)(1-\cos k_y\eta),
+\qquad k_x=2\pi/L_x,\quad k_y=2\pi/L_y.
+\]
+
+Exact local averages:
+\[
+\boxed{c_x=3k_x^2/8},\qquad
+\boxed{c_y=3k_y^2/8},\qquad
+\langle\phi_x\phi_y\rangle=0.
+\]
+
+Local plate stiffness:
+\[
+D_s=E_st_s^3/[12(1-\nu_s^2)],
+\]
+\[
+\boxed{K_b^\ell=D_s[\tfrac34(k_x^4+k_y^4)+\tfrac12k_x^2k_y^2]}.
+\]
+
+For the retained production qU-off common-R06 baseline, the LL variables are
+\[
+d=U^2-A_0^2,
+\]
+and the cell-mean membrane terms follow the frozen execution sign convention used by the source-audited BH050 regression. Any GL/qU sensitivity terms must remain off unless their own version is explicitly selected.
+
+LL Airy compatibility:
+\[
+\nabla^4F_{LL}=-E_sd(\phi_{xx}\phi_{yy}-\phi_{xy}^2).
+\]
+Exactly seven harmonics occur:
+\[
+(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1)
+\]
+with coefficients
+\[
+1/2,-1/2,1/2,-1,1/2,-1/2,1/2.
+\]
+
+Exact energy coefficient:
+\[
+K_A=k_x^4k_y^4\left[
+\frac{17}{256k_y^4}+\frac{17}{256k_x^4}
++\frac1{8(k_x^2+k_y^2)^2}
++\frac1{32(k_x^2+4k_y^2)^2}
++\frac1{32(4k_x^2+k_y^2)^2}
+\right].
+\]
+
+R02 condensation:
+\[
+\boxed{U^*=\arg\min_{U\ge0}\Pi_{R02}(U)}.
+\]
+Because \(\Pi_{R02}\) is quartic in U, \(d\Pi/dU\) is cubic. The candidate set is exactly
+\[
+\{U=0\}\cup\{\text{all positive real cubic stationary roots}\}.
+\]
+No Newton path is part of the formal R02 definition.
+
+---
+
+# 6. R06 local-yield resultant gate
+
+Local elastic classification:
+\[
+\sigma_{cr,s}^{E}=
+\frac{\pi^2E_st_s^2}{12(1-\nu_s^2)L_x^2}
+\,k_{cr}(L_y/L_x),
+\]
+\[
+k_{cr}=\frac{4(3r^4+2r^2+3)}{3r^2},\qquad r=L_y/L_x.
+\]
+
+If \(\sigma_{cr,s}^{E}\ge f_y\), use yield-first parent treatment.  
+If \(\sigma_{cr,s}^{E}< f_y\), use `R06_LOCAL_BUCKLING_FIRST`.
+
+For local-buckling-first, along the generalized face-strain ray
+\[
+\varepsilon_f(\eta)=\eta\varepsilon_f,\qquad0<\eta\le1,
+\]
+R02 is re-condensed and the exact LL local field is reconstructed. The first local yield satisfies
+\[
+\boxed{\max_{[-1,1]^2}\sigma_{VM}(\eta_y)=f_y}.
+\]
+The section receives the whole-width R02 mean resultant at that projected state; no effective width/area and no pointwise clipping are allowed.
+
+BH050:
+\[
+\sigma_{cr,s}^{E}=100.449667483867\text{ MPa}<355\text{ MPa},
+\]
+therefore `R06_LOCAL_BUCKLING_FIRST`.
+
+---
+
+# 7. UHPC current material and exact thickness section operator
+
+Compression magnitude
+\[
+x=|\varepsilon_c|/\varepsilon_{c0},
+\]
+\[
+\kappa_U=E_c\varepsilon_{c0}/f_c,
+\qquad
+r=\frac{E_c}{E_c-f_c/\varepsilon_{c0}}.
+\]
+
+Ascending branch:
+\[
+\boxed{g_a(x)=\frac{rx}{r-1+x^r}},\qquad0\le x\le1.
+\]
+
+For the source-audited 2% fibre descending branch:
+\[
+\boxed{g_d(x)=0.18+\frac{0.82}{1+(2/3)(x-1)^2}},\qquad x\ge1.
+\]
+
+Affine through-thickness strain:
+\[
+\varepsilon_i(z)=\varepsilon_i^0+\kappa_i z.
+\]
+
+UHPC resultants:
+\[
+N_i^U=(1-\rho_w)\int_{-t_c/2}^{t_c/2}\sigma_U(\varepsilon_i^0+\kappa_i z)\,dz,
+\]
+\[
+M_i^U=(1-\rho_w)\int_{-t_c/2}^{t_c/2}z\sigma_U(\varepsilon_i^0+\kappa_i z)\,dz.
+\]
+
+These are evaluated by exact endpoint primitives; formal thickness Gauss points are zero.
+
+---
+
+# 8. Section assembly
+
+Face centroids:
+\[
+z_\pm=\pm(t_c/2+t_s/2).
+\]
+
+Total generalized section resultant:
+\[
+\boxed{
+\mathbf S=[N_x,M_x,N_y,M_y]^T
+=\mathbf S_U+\mathbf S_{s,+}+\mathbf S_{s,-}+\mathbf S_w
+}.
+\]
+
+Every constituent ledger must remain available before summation. A total load alone is not an adequate audit output.
+
+---
+
+# 9. Current source-audited capacity-contact closure
+
+Historical/source-audited state:
+\[
+\mathbf x=[\varepsilon_x^0,\kappa_x^{cap},\varepsilon_y^0,\kappa_y^{cap}]^T.
+\]
+
+Airy demand:
+\[
+\mathbf D^A(q)=[N_x^A,M_x^A,N_y^A,M_y^A]^T.
+\]
+
+Section residual:
+\[
+\boxed{\mathbf R_4(\mathbf x,q)=\mathbf S(\mathbf x,q)-\mathbf D^A(q)=0}.
+\]
+
+For `FORCE_FIRST_CAPACITY_CONTACT_R01`, the fifth terminal equation used by BH050 is
+\[
+\boxed{\varepsilon_y(-t_c/2)=-\varepsilon_{c0}}.
+\]
+
+This closure is reproducible and is the calculation identity that gives the frozen BH050 13.3563763545430 MN checkpoint. Its capacity-coordinate curvatures must not be relabelled as global geometric curvature.
+
+---
+
+# 10. BH050 source-audited terminal checkpoint
+
+Input:
 
 ```text
-RAW_INPUT_TO_A_D = EXPLICIT
-A_D_TO_MODE = EXPLICIT
-MODE_TO_AIRY = EXPLICIT
-POSTBUCKLING_P_OF_q = EXPLICIT
-Z_NM_CAPACITY = EXPLICIT
-FIXED_s_q_POLYNOMIAL_DEGREE = <= 6
-CONTROL_LOCATION = FINITE_ALGEBRAIC
-ULTIMATE_ROOT_RULE = MINIMUM_POSITIVE_ADMISSIBLE_q
-RAW_INPUT_TO_Pu = EXPLICIT_FINITE_ALGEBRAIC
-PARAMETER_EDIT_RECOMPUTES_Pu = YES
-GENERAL_POLYNOMIAL_ALL_ROOT_BACKEND_REQUIRED = YES
-NEWTON_REQUIRED = NO
-SOLVER_REQUIRED = NO
-LOAD_PATH_REQUIRED = NO
-FORMAL_SPATIAL_QUADRATURE = 0
-EXPERIMENT_OR_FEM_IN_ROOT_SELECTION = 0
-DEFAULT_OUTPUT = EXPLICIT_Z_V1_PREDICTION
+b=2500 mm, a_phys=5000 mm, tc=42 mm, ts=4 mm
+Aw=1332 mm2, rho_w=0.0126857142857143
+q0=0.0025
+Es=206000 MPa, nu_s=0.30, fy=355 MPa
+Ec=43400 MPa, nu_c=0.20, fc=141.1 MPa, eps_c0=0.0035
+Lx=562.5 mm, Ly=555.555555555556 mm, A0=0.3515625 mm
 ```
 
-**END OF CENTRAL TECHNICAL LEDGER R01**
+Terminal root:
+\[
+\boxed{q=0.004772819645833164},
+\]
+\[
+\varepsilon_x^0=2.820431413\times10^{-5},
+\]
+\[
+\kappa_x^{cap}=4.402758337803803\times10^{-5}\;\mathrm{mm^{-1}},
+\]
+\[
+\varepsilon_y^0=-0.00213545799,
+\]
+\[
+\kappa_y^{cap}=6.497819104663830\times10^{-5}\;\mathrm{mm^{-1}}.
+\]
+
+Airy load:
+\[
+\boxed{P=13.3563763545430\;\mathrm{MN}}.
+\]
+
+Demand at the terminal point:
+
+```text
+Nx_d=+199.305955403735 N/mm
+Ny_d=-5137.30935871948 N/mm
+Mx_d=29756.6988970160 N
+My_d=30060.7058605883 N
+```
+
+Constituent totals close to the same values to numerical roundoff. This is the compulsory regression gate for any repaired Excel implementation of the current capacity-contact theory.
+
+---
+
+# 11. Zero-iteration implementation rule
+
+The user's current execution rule is now locked as follows:
+
+1. Where a subproblem is a finite polynomial, do **not** use Newton, Goal Seek or Solver. Enumerate all real roots explicitly and apply the same physical/active-set admissibility rules.
+2. R02 is quartic-energy/cubic-stationarity and therefore must use `U=0 + all real cubic roots`.
+3. Finite local Mises extrema must use finite edge/interior algebraic candidate equations, not spatial sampling.
+4. No load stepping or path continuation is part of the formal theory.
+5. The exact UHPC thickness operator remains the source-identical analytic operator. It must not be replaced by the older simplified `m_u(n)` Z-section surface merely to reduce the terminal equations to a sixth-degree q polynomial.
+6. An Excel workbook may evaluate every explicit formula and every polynomial all-root block directly. A new-specimen full terminal root may be claimed only when the complete source-identical section closure has also been compiled without changing the above physics.
+
+Thus `NO_ITERATION` changes the **root backend**, not the **mechanical model**.
+
+---
+
+# 12. Same-q research correction boundary
+
+The later kinematic correction owns actual curvature by q:
+\[
+q\rightarrow w_d\rightarrow\kappa_x^{geo}(q),\kappa_y^{geo}(q).
+\]
+This is retained as a research correction of the physical interpretation of historical capacity coordinates. It does not authorize deletion of R02/R06/UHPC or replacement by the old simplified Z capacity surface.
+
+`DEFORMATION_COMPATIBLE_STRUCTURAL_TERMINAL` remains `NOT_FROZEN` until a complete same-q structural terminal is derived and independently accepted.
+
+---
+
+# 13. Minimum audit output
+
+Every current-theory calculation must retain:
+
+```text
+raw inputs
+m*, ell, alpha, beta
+A/D and Pcr,C,Kx,G,Jx,Jy
+R02 cubic coefficients, all candidate roots/energies, selected U
+R06 classification and, when active, eta_y + certified max Mises
+UHPC face strains/active branches and exact N/M
+upper/lower steel-face resultants
+web resultants
+section total S
+Airy demand D^A
+four raw N/M residuals
+terminal equation residual
+terminal-rule ID
+q and P
+```
+
+---
+
+# 14. Repair verdict
+
+```text
+CURRENT_FORMAL_CHAIN = AIRY + R02 + R06 + EXACT_UHPC + WEB + SECTION_CLOSURE
+BH050_CAPACITY_CONTACT_REGRESSION = 13.3563763545430 MN
+OLD_V1_Z_SECTION_17.1449738_MN = HISTORICAL_SIMPLIFIED_MODEL_ONLY
+R02_NEWTON = PROHIBITED
+EXCEL_SOLVER_AS_FORMAL_ROOT_METHOD = PROHIBITED
+LOAD_STEPPING = PROHIBITED
+FORMAL_SPATIAL_QUADRATURE = 0
+COMPARATOR_IN_ROOT_SELECTION = 0
+PHYSICAL_SAME_Q_TERMINAL = NOT_FROZEN
+```
+
+**END OF REPAIRED CENTRAL TECHNICAL LEDGER R01**
