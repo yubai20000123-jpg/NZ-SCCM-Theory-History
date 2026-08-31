@@ -1,0 +1,293 @@
+NZ-SCCM STEEL-SHELL–UHPC PREDICTION TRANSFER CONTRACT R01
+DATE=2026-08-31
+ROLE=STANDALONE_IMPLEMENTATION_INSTRUCTIONS_FOR_EXCEL_OR_UNFAMILIAR_AI
+UNITS=N-mm-MPa
+FORMAL_SPATIAL_QUADRATURE=0
+MATERIAL_POINT_GRID=0
+EFFECTIVE_WIDTH=PROHIBITED
+COMPARATOR_IN_CALIBRATION_OR_ROOT_SELECTION=0
+
+======================================================================
+A. READINESS / CLAIM BOUNDARY
+======================================================================
+CALCULATION_STATE_OPERATOR_REPRODUCIBLE=YES
+EXCEL_IMPLEMENTATION_FEASIBLE=YES_WITH_SOLVER_OR_VBA_OR_OFFICE_SCRIPT
+STRANGER_AI_TRANSFER_FEASIBLE=YES_WITH_COMPLETE_REQUIRED_INPUTS
+PHYSICAL_ULTIMATE_CAPACITY_RULE_FROZEN=NO
+DEFAULT_OUTPUT_LABEL=CANDIDATE_LIMIT_STATE
+
+Do not claim physical ultimate capacity unless a future frozen structural terminal rule is supplied. A historical/candidate terminal rule can be reproduced deterministically if its identifier is explicitly selected.
+
+======================================================================
+B. REQUIRED FILES / DATA
+======================================================================
+1. This contract.
+2. Central technical ledger R01.
+3. Specimen parameter file following the accompanying XLSX/CSV schema.
+4. Any non-inferable local-cell/PBL registration table.
+5. A selected TERMINAL_RULE_ID.
+
+If a required value is missing: STOP_WITH_MISSING_INPUT. Do not invent, infer from test/FEM, or fit.
+
+======================================================================
+C. REQUIRED INPUT GROUPS
+======================================================================
+[GROSS_GEOMETRY]
+specimen_id
+b_mm
+a_phys_mm
+tc_mm
+ts_mm
+global_A0g_mm OR q0
+web_count
+web_thickness_mm
+web_net_height_mm
+Aw_mm2 OR enough geometry to derive it
+
+[LOCAL_R02_CELL]
+cell_id
+face
+Lx_mm
+Ly_mm
+A0_local_mm
+x0_mm
+y0_mm
+face_sign
+multiplicity
+whole_width_weight
+
+If x0/y0 are not explicitly supplied, a deterministic pitch/offset generation rule must be supplied. Gross b/a alone is not enough for a GL-active local model.
+
+[STEEL]
+Es_MPa
+nu_s
+fy_MPa
+web_steel_law_id
+
+[UHPC]
+fc_MPa
+Ec_MPa
+eps_c0
+nu_c
+Vf
+tension_backbone_id
+fct_MPa
+eps_t0
+tension_parameters_as_required
+2D_capacity_gate_id
+
+[SOLVER]
+m_min
+m_max
+terminal_rule_id
+root_tol
+equilibrium_tol
+active_set_tol
+branch_continuation_policy
+calculation_mode = FULL_DERIVATION_MODE or FROZEN_COEFFICIENT_MODE
+
+======================================================================
+D. GLOBAL MODE / AIRY
+======================================================================
+ell_m = a_phys / m
+alpha = pi / b
+beta_m = m*pi/a_phys = pi/ell_m
+psi = sin(alpha*x)*sin(beta*y)
+q0 = A0g / b
+w0 = b*q0*psi
+w = b*(q0+q)*psi
+wd = b*q*psi
+Q(q) = q*(q+2*q0)
+kappa_x_geo = b*q*alpha^2*psi
+kappa_y_geo = b*q*beta^2*psi
+At modal antinode and ell=b: kappa_x_geo = kappa_y_geo = pi^2*q/b
+
+Ncr_m = [Dx*alpha^4 + 2*H*alpha^2*beta_m^2 + Dy*beta_m^4] / beta_m^2
+Pcr_m = b*Ncr_m
+Select m_star as minimum Pcr_m without comparator information.
+
+Runtime Airy:
+P(q) = Pcr*q/(q+q0) + C*Q(q)
+NT = Kx*Q(q)*cos(2*beta*y)
+NL = -[P(q)/b + G*Q(q)*(1-2*sin(alpha*x)^2)]
+MT = Jx*q*sin(alpha*x)*sin(beta*y)
+ML = Jy*q*sin(alpha*x)*sin(beta*y)
+
+C,Kx,G,Jx,Jy must be compiled from the audited Airy derivation or supplied as audited coefficients. They are not fitted parameters.
+
+======================================================================
+E. R02 LOCAL STEEL FACE
+======================================================================
+kx = 2*pi/Lx
+ky = 2*pi/Ly
+phi = (1-cos(kx*xi))*(1-cos(ky*eta))
+cx = 3*kx^2/8
+cy = 3*ky^2/8
+Ds = Es*ts^3/[12*(1-nu_s^2)]
+Kb = Ds * [3/4*(kx^4+ky^4) + 1/2*kx^2*ky^2]
+d = U^2 - A0^2
+Delta = face_sign*b*[(q0+q)*U - q0*A0]
+mx = ex - cx*d - hx*Delta
+my = ey - cy*d - hy*Delta
+mg = gamma - hgamma*Delta
+
+hx,hy,hgamma must be obtained from exact cell registration integrals or supplied as precompiled audited coefficients.
+
+LL harmonics:
+(0,1): +1/2
+(0,2): -1/2
+(1,0): +1/2
+(1,1): -1
+(1,2): +1/2
+(2,0): -1/2
+(2,1): +1/2
+Lambda_pq = [(p*kx)^2+(q*ky)^2]^2
+
+KA = kx^4*ky^4 * [17/(256*ky^4)+17/(256*kx^4)+1/(8*(kx^2+ky^2)^2)+1/(32*(kx^2+4*ky^2)^2)+1/(32*(4*kx^2+ky^2)^2)]
+
+GL frequencies are finite:
+lambda in {+/-alpha, +/-alpha +/- kx}
+mu in {+/-beta, +/-beta +/- ky}
+KdDelta and KDeltaDelta are exact finite harmonic-energy sums; no sampling.
+
+Qs = Es/(1-nu_s^2)
+Gs = Es/[2*(1+nu_s)]
+Pi_R02(U) =
+0.5*Kb*(U-A0)^2
++0.5*ts*Qs*(mx^2+my^2+2*nu_s*mx*my)
++0.5*ts*Gs*mg^2
++ts*Es*KA*d^2
++2*ts*Es*KdDelta*d*Delta
++ts*Es*KDeltaDelta*Delta^2
+
+Pi is quartic. dPi/dU is cubic.
+AUTHORITATIVE ACTIVE SET:
+U_star = argmin_{U>=0} Pi_R02(U)
+Candidate set = U=0 + every positive real stationary root.
+Never impose U>=A0. Never select largest/closest-to-test root.
+
+======================================================================
+F. R06 LOCAL-YIELD GATE
+======================================================================
+sigma_cr_E = pi^2*Es*ts^2/[12*(1-nu_s^2)*Lx^2] * kcr(Ly/Lx)
+For BH/Yun: r=Ly/Lx; kcr=4*(3*r^4+2*r^2+3)/(3*r^2)
+
+IF sigma_cr_E >= fy: branch=YIELD_FIRST, retain parent ideal-EP/R04 terminal operator.
+IF sigma_cr_E < fy: branch=LOCAL_BUCKLING_FIRST, use R02/R06.
+
+For local-buckling-first:
+epsilon_face(eta) = eta*epsilon_face
+q(eta) = eta*q under the frozen q/U-augmented R06 contract
+q0 and A0 remain initial imperfection data
+
+FOR EACH trial eta in (0,1]:
+    re-build R02 at eta
+    solve U_star(eta)=argmin_{U>=0} Pi(U;eta)
+    reconstruct complete LL+GL local stress field
+    find exact finite-algebraic global maximum Mises
+eta_y = first eta satisfying max_local_Mises(eta_y)=fy
+Return whole-width mean R02 resultant at eta_y.
+
+PROHIBITED: pointwise stress clipping; effective width/area; simple post-hoc scaling of fluctuation stress about frozen mean; frozen U while solving eta; comparator-dependent eta.
+
+======================================================================
+G. UHPC
+======================================================================
+x = abs(eps_c)/eps_c0
+kappa_U = Ec*eps_c0/fc
+r = Ec/(Ec-fc/eps_c0)
+Ascending 0<=x<=1: g_a = r*x/(r-1+x^r), sigma=fc*g_a
+Descending source-audited 2%-fibre zero-confinement: g_d=0.18+0.82/[1+(2/3)*(x-1)^2]
+
+Through thickness eps(z)=eps0+kappa*z
+N_U=(1-rho_w)*integral sigma(eps(z)) dz
+M_U=(1-rho_w)*integral z*sigma(eps(z)) dz
+Use analytic primitives / exact branch segmentation; formal thickness quadrature is not required.
+
+UHPC CC capacity:
+KE(r)=1/sqrt(r^2-1.49*r+1)
+KP(r)=(r+7.98)/(r+1.85)^2
+KCC=min(KE,KP)
+lambda_CC=fc*KCC/pM_d
+Do not smooth the declared source-min cusp with an arbitrary fitting width.
+
+======================================================================
+H. SECTION ASSEMBLY
+======================================================================
+S=[Nx,Mx,Ny,My]^T
+S_total=S_UHPC+S_steel_upper+S_steel_lower+S_web
+Retain all constituent ledgers separately.
+z_plus=+(tc/2+ts/2); z_minus=-(tc/2+ts/2)
+
+======================================================================
+I. TERMINAL RULE REGISTRY
+======================================================================
+TERMINAL_RULE_ID=FORCE_FIRST_CAPACITY_CONTACT_R01
+Meaning: reproduce historical Airy-N/M capacity-contact solve.
+BH050 historical fifth equation: eps_y(-tc/2)=-eps_c0
+Output label: AIRY_NM_CAPACITY_CONTACT_PREDICTION
+
+TERMINAL_RULE_ID=J4_FIRST_FOLD_DIAGNOSTIC
+Meaning: first J4 section-mapping fold as diagnostic candidate.
+Output label: J4_FOLD_CANDIDATE
+Do not call it proved physical Pu.
+
+TERMINAL_RULE_ID=DEFORMATION_COMPATIBLE_STRUCTURAL_TERMINAL
+Status: NOT_FROZEN
+If requested today, STOP with RESEARCH_OPEN unless a newer frozen source is supplied.
+
+======================================================================
+J. EXCEL IMPLEMENTATION
+======================================================================
+Pure formulas are suitable for geometry, material constants, mode table, Pcr, Q(q), supplied Airy coefficients, R02 geometric constants, energy evaluation, UHPC branches and residual tables.
+Robust full solve should use Solver/VBA/Office Script for cubic-root enumeration + active-set comparison, continuation, R06 nested eta solve with R02 re-condensation, finite-algebraic Mises event enumeration, coupled section equilibrium and terminal event handling.
+
+======================================================================
+K. MINIMUM OUTPUT/AUDIT
+======================================================================
+Report input_version/source_paths; m_star/ell/alpha/beta; Pcr; C,Kx,G,Jx,Jy; R02 coefficients; all R02 candidate roots/energies and selected U; R06 branch/eta_y/U(eta_y)/certified maximum local Mises; UHPC face strains/branches; constituent Nx,Ny,Mx,My; total section and demand; raw residuals; terminal_rule_id; q_terminal; P_terminal; output_status_label.
+
+======================================================================
+L. BH050 SOURCE-AUDITED REGRESSION INPUT
+======================================================================
+specimen_id=BH050
+b_mm=2500
+a_phys_mm=5000
+tc_mm=42
+ts_mm=4
+zf_mm=23
+web_count=9
+web_net_height_mm=37
+Aw_mm2=1332
+rho_w=0.0126857142857143
+q0=0.0025
+A0g_mm=6.25
+Es_MPa=206000
+nu_s=0.30
+fy_MPa=355
+Ec_MPa=43400
+nu_c=0.20
+fc_MPa=141.1
+eps_c0=0.0035
+Vf=0.02
+fct_MPa=4.513133983249735
+eps_t0=0.001
+mt=0.4418
+Lx_mm=562.5
+Ly_mm=555.555555555556
+A0_local_mm=0.3515625
+m_star=2
+ell_mm=2500
+Pcr_MN=19.5818772367311
+Kx_N_per_mm=4.272925966136171e6
+G_N_per_mm=4.400171479082513e6
+C_N=1.0841371806523354e10
+Jx_N=6.234616244717026e6
+Jy_N=6.298311709061200e6
+
+Historical capacity-contact regression only:
+q_terminal=0.004772819645833164
+P_terminal_MN=13.3563763545430
+output_status=AIRY_NM_CAPACITY_CONTACT_REGRESSION_CHECK
+
+END CONTRACT
