@@ -31,26 +31,27 @@ Artifact:
 
 `NZSCCM_钢壳UHPC_R12_通用参数化_无试件预存_20260901.xlsx`
 
-SHA-256:
+Final SHA-256:
 
-`41bde1f68467b5fe542ce80193a7bf63d01775924e5cad17f116961a5819c023`
+`e3fab3f5e3b186d99ee346d776bde1e6f6cde1520ea7d5fcbe64a2feb803f6a2`
 
 The workbook contains one active input set only.
 
-Audit results:
+Final exported-file audit:
 
 ```text
 reference specimen name scan = 0 matches
-specimen_id dependency in engine = 0 matches
+specimen_id dependency in embedded engine = NONE
 reference Pu lookup = NONE
 formula error scan = 0 matches
+embedded PY augmented-assignment parser risk = 0
 ```
 
 `specimen_id=USER_DEFINED` is a label only. The engine does not read `01_INPUT!B5`.
 
 ## 3. Exact integer global-mode selection
 
-The generic workbook no longer uses a fixed mode scan such as 1..12 or 1..40.
+The final generic workbook does not use a fixed mode scan such as 1..12 or 1..40.
 
 It computes
 
@@ -64,7 +65,7 @@ Because `Pcr(m)=A/m^2+constant+B*m^2`, this is the exact positive-integer minimu
 
 ## 4. Generic R06 implementation
 
-The workbook no longer hard-codes the previously audited `v=-1` active edge.
+The workbook does not hard-code the previously audited `v=-1` active edge.
 
 For every R06 face state it reconstructs the full two-dimensional LL polynomial Mises field over `(u,v) in [-1,1]^2`.
 
@@ -154,6 +155,7 @@ PARAMETER_PROPAGATION = PASS
 R04_GENERIC_INPUT = PASS
 R06_GENERIC_INPUT = PASS
 GENERIC_FULL_2D_R06 = PASS_EXECUTION_EVALUATOR
+EXACT_INTEGER_MODE_SELECTION = PASS
 SELF_CONTAINED_LEDGER = PASS
 ```
 
