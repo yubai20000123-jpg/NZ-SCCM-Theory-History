@@ -257,13 +257,13 @@ Historical capacity-contact section coordinates \(\kappa_x,\kappa_y\) remain sec
 
 ```text
 b        panel width
- a_phys  physical axial length
- tc      UHPC core thickness
- ts      each steel-face thickness
- A0g     global initial-imperfection amplitude
- Aw      total longitudinal web steel area represented in the core
- Lx,Ly   local steel-face cell dimensions
- A0local local initial-imperfection amplitude
+a_phys   physical axial length
+tc       UHPC core thickness
+ts       each steel-face thickness
+A0g      global initial-imperfection amplitude
+Aw       total longitudinal web steel area represented in the core
+Lx,Ly    local steel-face cell dimensions
+A0local  local initial-imperfection amplitude
 ```
 
 Derived:
@@ -320,9 +320,9 @@ Derived polynomial shape parameter:
 The active tensile law is defined by source-derived anchors:
 
 ```text
-eps_t_cr,  f_t_cr
-eps_t_peak,f_t_peak
-eps_t_loc, f_t_loc
+eps_t_cr,   f_t_cr
+eps_t_peak, f_t_peak
+eps_t_loc,  f_t_loc
 eps_t_lim
 ```
 
@@ -332,22 +332,38 @@ with terminal stress
 f_t(\varepsilon_{t,lim})=0.
 \]
 
-Current project representative default inherited from G16R:
+The Hiew 2024 source-series model parameters retained in the project evidence include:
+
+| source series | eps_t_cr | f_t_cr MPa | eps_t_peak | f_t_peak MPa | eps_t_loc | f_t_loc MPa | eps_t_lim |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| SL-2.0 | 0.00040 | 10.0 | 0.00380 | 11.7 | 0.00624 | 9.9 | 0.00759 |
+| HL-2.0 | 0.00042 | 10.3 | 0.00674 | 11.1 | 0.00872 | 10.8 | 0.01000 |
+| SL-HL-2.0 | 0.00042 | 10.1 | 0.00380 | 11.0 | 0.00690 | 10.7 | 0.00741 |
+
+The current project representative default inherited from G16R is:
 
 ```text
-eps_t_cr   = 0.000420
-f_t_cr     = 9.767718 MPa
+eps_t_cr    = 0.000420
+f_t_cr      = 9.767718 MPa
 
-eps_t_peak = 0.003800
-f_t_peak   = 10.734818 MPa
+eps_t_peak  = 0.003800
+f_t_peak    = 10.734818 MPa
 
-eps_t_loc  = 0.006900
-f_t_loc    = 10.347978 MPa
+eps_t_loc   = 0.006900
+f_t_loc     = 10.347978 MPa
 
-eps_t_lim  = 0.007590
+eps_t_lim   = 0.007590
 ```
 
 These values are a **project representative 2%-fibre anchor set**, not a claim that all 2% UHPC fibre systems have identical tensile strain capacity.
+
+The effective-cracking point is treated as a source anchor. R11 does **not** impose the false identity
+
+\[
+f_{t,cr}=E_c\varepsilon_{t,cr},
+\]
+
+because the Hiew/AASHTO effective-cracking strain has an offset-based testing meaning. The first cubic interval is precisely what allows the material to preserve the common origin tangent \(E_c\) while also passing through the effective-cracking anchor.
 
 If the actual fibre system is known, source-specific Hiew SL-2.0 / HL-2.0 / hybrid anchors take precedence over the representative set. No structural Pu may be used to choose among them.
 
@@ -698,8 +714,8 @@ Trial Mises stress:
 \boxed{
 \sigma_{VM}^{tr}
 =\sqrt{(\sigma_x^{tr})^2-
-\sigma_x^{tr}\sigma_y^{tr}+(
-\sigma_y^{tr})^2+3(\tau_{xy}^{tr})^2}}.
+\sigma_x^{tr}\sigma_y^{tr}+
+(\sigma_y^{tr})^2+3(\tau_{xy}^{tr})^2}}.
 \]
 
 Radial ideal-EP cap:
@@ -750,14 +766,15 @@ The section receives the whole-width R02 mean resultant at the projected state. 
 
 Current family classification retained from the source-audited geometry:
 
-```text
-BH005  -> R04_YIELD_FIRST
-BH010  -> R04_YIELD_FIRST
-BH020  -> R04_YIELD_FIRST
-BH032  -> R06_LOCAL_BUCKLING_FIRST
-BH050  -> R06_LOCAL_BUCKLING_FIRST
-T360   -> R06_LOCAL_BUCKLING_FIRST
-```
+| specimen | sigma_cr,s^E MPa | fy MPa | branch |
+|---|---:|---:|---|
+| BH005 | 10044.966748 | 355 | R04_YIELD_FIRST |
+| BH010 | 2511.241687 | 355 | R04_YIELD_FIRST |
+| BH020 | 627.810422 | 355 | R04_YIELD_FIRST |
+| BH032 | 245.238446 | 355 | R06_LOCAL_BUCKLING_FIRST |
+| BH050 | 100.449667 | 355 | R06_LOCAL_BUCKLING_FIRST |
+
+T360 is also retained as an R06 local-buckling-first regression specimen under its registered local geometry.
 
 ---
 
@@ -1112,44 +1129,26 @@ This is a finite cubic polynomial in every source interval.
 
 ### 10.4.3 Current representative numerical cubic coefficients
 
-Using the current G16R representative anchor set:
-
-\[
-(\varepsilon_1,s_1)=(0.00042,9.767718),
-\]
-
-\[
-(\varepsilon_2,s_2)=(0.00380,10.734818),
-\]
-
-\[
-(\varepsilon_3,s_3)=(0.00690,10.347978),
-\]
-
-\[
-(\varepsilon_4,s_4)=(0.00759,0),
-\]
-
-and \(E_c=43400\) MPa, the deterministic node slopes are approximately
+Using the current G16R representative anchor set exactly as displayed in Section 5.4 and \(E_c=43400\) MPa, the deterministic node slopes are
 
 ```text
-m0 = +43400.000000 MPa
-m1 =   +757.079040 MPa
-m2 =      0.000000 MPa
-m3 =   -312.670081 MPa  (rounding depends on anchor digits retained)
-m4 =      0.000000 MPa
+m0 = +43400.000000000 MPa
+m1 =   +757.094372739 MPa
+m2 =      0.000000000 MPa
+m3 =   -312.701361245 MPa
+m4 =      0.000000000 MPa
 ```
 
-Using the rounded anchor values shown above, the normalized-u cubics are approximately:
+The corresponding normalized-u cubics are:
 
 Interval 0, \(0\le\varepsilon\le0.00042\):
 
 \[
 \boxed{
 \sigma_t
-=18.228000u
--7.470815u^2
--0.989467u^3\ \mathrm{MPa}}.
+=18.228000000000u
+-7.470825636550u^2
+-0.989456363450u^3\ \mathrm{MPa}}.
 \]
 
 Interval 1, \(0.00042\le\varepsilon\le0.00380\):
@@ -1157,10 +1156,10 @@ Interval 1, \(0.00042\le\varepsilon\le0.00380\):
 \[
 \boxed{
 \sigma_t
-=9.767718
-+2.558927u
--2.216613u^2
-+0.624786u^3\ \mathrm{MPa}}.
+=9.767718000000
++2.558978979857u
+-2.216657959715u^2
++0.624778979857u^3\ \mathrm{MPa}}.
 \]
 
 Interval 2, \(0.00380\le\varepsilon\le0.00690\):
@@ -1168,9 +1167,9 @@ Interval 2, \(0.00380\le\varepsilon\le0.00690\):
 \[
 \boxed{
 \sigma_t
-=10.734818
--0.191145u^2
--0.195695u^3\ \mathrm{MPa}}.
+=10.734818000000
+-0.191145780142u^2
+-0.195694219858u^3\ \mathrm{MPa}}.
 \]
 
 Interval 3, \(0.00690\le\varepsilon\le0.00759\):
@@ -1178,13 +1177,13 @@ Interval 3, \(0.00690\le\varepsilon\le0.00759\):
 \[
 \boxed{
 \sigma_t
-=10.347978
--0.215742u
--30.61243u^2
-+20.48019u^3\ \mathrm{MPa}}.
+=10.347978000000
+-0.215763939259u
+-30.612406121482u^2
++20.480192060741u^3\ \mathrm{MPa}}.
 \]
 
-The implementation shall generate these coefficients from the anchor/slopes equations rather than store them as specimen-specific magic constants. The displayed numbers are only an audit example for the current representative anchor set.
+The implementation shall generate these coefficients from the anchor/slopes equations rather than store them as specimen-specific magic constants. The displayed numbers are an audit example for the current representative anchor set.
 
 ### 10.4.4 Continuity and source role
 
