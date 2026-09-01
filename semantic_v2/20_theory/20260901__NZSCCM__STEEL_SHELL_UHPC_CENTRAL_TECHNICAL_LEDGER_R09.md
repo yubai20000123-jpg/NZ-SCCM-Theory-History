@@ -4,11 +4,11 @@
 **Branch:** `diagnostic/bh032-bh050-mode-projection-20260827`  
 **Production main:** unchanged
 
-This file is intentionally replaced by a tombstone. Its original 1162-line content remains recoverable from Git history at commit `9b8b59128d921eea751cfb2574d2322da67c282c`.
+This file is intentionally retained as a tombstone. Its original 1162-line content remains recoverable from Git history at commit `9b8b59128d921eea751cfb2574d2322da67c282c`.
 
 ## Why deprecated
 
-R09 introduced implementation devices that were not part of the previously accepted steel-shell–UHPC theory:
+R09 introduced implementation devices that were not part of the accepted steel-shell–UHPC mechanics:
 
 ```text
 33 fixed eta nodes
@@ -28,13 +28,16 @@ The original R06 theory remains the finite-algebraic local-yield definition in
 
 Use:
 
-`20260901__NZSCCM__STEEL_SHELL_UHPC_CENTRAL_TECHNICAL_LEDGER_R10_SIMPLE_MATERIAL.md`
+`20260901__NZSCCM__STEEL_SHELL_UHPC_CENTRAL_TECHNICAL_LEDGER_R11_POLYNOMIAL_UHPC.md`
 
-R10 restores the accepted structural calculation chain and simplifies only the UHPC scalar material law to a piecewise-polynomial design-oriented compression model with zero tensile contribution for the axial capacity terminal.
+R10 was an intermediate material simplification and has itself been deprecated because it made UHPC compression elastic-perfectly-plastic and set UHPC tension to zero.
+
+R11 retains the accepted structural calculation chain and uses finite polynomial UHPC material pieces with exact thickness primitives.
 
 ```text
 R09_FORMAL_STATUS = DEPRECATED_IMPLEMENTATION_DETOUR
 33_POINT_ETA = PROHIBITED_AS_FORMAL_THEORY
 8_LEVEL_TERMINAL_REFINEMENT = PROHIBITED_AS_FORMAL_THEORY
-CURRENT_TRANSFER_BASELINE = R10_SIMPLE_MATERIAL
+R10_SIMPLE_MATERIAL = DEPRECATED_OVERSIMPLIFIED_UHPC
+CURRENT_TRANSFER_BASELINE = R11_POLYNOMIAL_UHPC
 ```
