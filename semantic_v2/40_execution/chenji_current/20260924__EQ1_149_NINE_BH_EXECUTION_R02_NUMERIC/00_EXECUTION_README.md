@@ -1,3 +1,7 @@
+# STATUS OVERRIDE — REJECTED AS FORMAL Eq.(1)–(149) RESULT
+
+Per user instruction on 2026-09-24, the H5 Ritz/Galerkin closure and all x/y/z Gauss quadrature used in R02 are **not admissible as the formal eight-object Eq.(1)–(149) solution**. The 64 algebraic unknowns were an unauthorized finite-dimensional approximation of four continuous fields; the Gauss points were an unauthorized numerical quadrature backend for the requested strict execution. R02 is retained only as historical/diagnostic evidence and must not be cited as the formal nine-BH root set.
+
 # Eq.(1)–(149) nine-BH numerical execution — R02
 
 Date: 2026-09-24
