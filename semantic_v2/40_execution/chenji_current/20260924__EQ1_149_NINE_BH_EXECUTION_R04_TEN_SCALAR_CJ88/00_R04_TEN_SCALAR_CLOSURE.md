@@ -1,3 +1,7 @@
+# STATUS OVERRIDE — R04 24-point quadrature results withdrawn
+
+Per user instruction on 2026-09-24, all 24x24 / 16 / 14 Gauss-point evaluations in R04 are withdrawn and must not be used as formal results, initialization evidence, precision evidence, or convergence evidence for the Eq.(1)–(149) calculation. The 10-scalar equation count is retained; only the spatial quadrature backend is rejected.
+
 # Eq.(1)–(149) R04 — 10-scalar Chen-Ji §8.8 closure
 
 Date: 2026-09-24
