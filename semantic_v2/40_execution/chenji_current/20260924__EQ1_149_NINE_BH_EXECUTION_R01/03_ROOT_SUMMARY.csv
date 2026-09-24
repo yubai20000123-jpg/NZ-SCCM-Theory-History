@@ -1,0 +1,10 @@
+case,strict_eq1_149_compiled,numeric_root_status,Pu_root_MN,Delta_root_mm,q_root,Aplus_root_mm,Aminus_root_mm,d2P_dDelta2,blocker,FEM_peak_MN
+BH005,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",2.297254
+BH010,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",4.330169
+BH020,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",7.908734
+BH032,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",10.884984
+BH050,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",12.572657
+BH060,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",13.090110
+BH070,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",13.194333
+BH085,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",14.163914
+BH100,YES,BLOCKED_C1_TENSION_FT2_UNRESOLVED,,,,,,,"formal signed-C1 source still has ft2 := 'ft2'; BH032 strain range enters tension so tension branch cannot be bypassed",15.454080
