@@ -131,22 +131,11 @@ Further full Newton updates reduce the error:
 -> 3.80491324e-7
 -> 1.231340e-13.
 
-## Relation to Eq.(128)–(149)
+## Locked scope correction
 
-Fixed-Delta Newton requires only the original equilibrium equations. Eq.(128)–(143) are the exact path-sensitivity equations. In the ten-scalar closure they become
-J s + R_,Delta = 0,
-s=dX/dDelta.
+The previous text below this heading introduced 21-scalar and 11-scalar direct-stationary systems. Those were not authorized by the user and are withdrawn. They are not part of R05.
 
-The stationary load condition Eq.(147) becomes
-s_P=dP/dDelta=0.
+R05 is locked to exactly ten scalar unknowns at prescribed Delta:
+q, Aplus, Aminus, epsx_bar, epsy_bar, ex_alpha, ey_beta, Fx, Fy, P.
 
-Expanded direct stationary solve:
-unknowns {X(10), s(10), Delta}: 21 scalars;
-equations {R=0 (10), J s+R_,Delta=0 (10), s_P=0 (1)}.
-
-Equivalent condensed form:
-unknowns {X(10),Delta}: 11 scalars;
-equations R=0 plus
-g(X,Delta)=e_P^T[-J^{-1}R_,Delta]=0.
-
-Eq.(148)–(149) then classify the stationary point as a local maximum when d2P/dDelta2<0.
+Peak search is performed only by continuation in prescribed Delta and locating the maximum P on that connected ten-scalar branch. No additional sensitivity unknowns, no 11-scalar direct-peak system, and no 21-scalar augmented system are allowed in R05.
