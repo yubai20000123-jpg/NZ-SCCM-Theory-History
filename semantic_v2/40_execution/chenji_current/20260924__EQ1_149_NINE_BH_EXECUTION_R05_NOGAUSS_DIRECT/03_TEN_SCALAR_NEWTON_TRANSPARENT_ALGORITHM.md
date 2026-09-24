@@ -139,3 +139,30 @@ R05 is locked to exactly ten scalar unknowns at prescribed Delta:
 q, Aplus, Aminus, epsx_bar, epsy_bar, ex_alpha, ey_beta, Fx, Fy, P.
 
 Peak search is performed only by continuation in prescribed Delta and locating the maximum P on that connected ten-scalar branch. No additional sensitivity unknowns, no 11-scalar direct-peak system, and no 21-scalar augmented system are allowed in R05.
+
+
+## 2026-09-24 correction: residual scales S1...S10 withdrawn from formal R05
+
+The numerical scales S1...S10 previously used in the trace are NOT derived from Eq.(1)-(149), Chen Ji Chapter 8, or the ten governing equations. They were implementation choices introduced only to condition a Newton residual norm. Their specific values (1e4, Es*ts*b*1e-3, Ec*tc*b*1e-3, etc.) therefore have no theoretical status.
+
+For formal R05, these scales are withdrawn. The governing root remains the unscaled system R(X;Delta)=0. Any numerical solver scaling is implementation-only and must not appear as a theory equation or alter root selection.
+
+The same applies to Xscale: it is not a physical or theoretical parameter.
+
+## Exact algebraic elimination available without changing the theory
+
+From R_Delta=0:
+epsy_bar = [pi^2 b^2/(4 a_h)*(q^2+2 q0 q)-Delta]/(2 a_h).
+
+From R4=0:
+P = -b <Ny>.
+
+From R5=0:
+Fx = - b^2/(2 pi^2) <Ny cos(2 pi x/b)>.
+
+From R3=0:
+Fy = - a_h^2/(2 pi^2) <Nx cos(2 pi y/a_h)>.
+
+Thus four of the ten unknowns can be exactly eliminated after evaluating the current resultants. This is exact algebraic substitution, not a model reduction. The remaining coupled nonlinear equations are R1=0, R2=0, R6=0, R_Aplus=0, R_Aminus=0, R_q=0 in the six variables q,Aplus,Aminus,epsx_bar,ex_alpha,ey_beta.
+
+This elimination does not imply a closed-form solution of the remaining six nonlinear equations.
