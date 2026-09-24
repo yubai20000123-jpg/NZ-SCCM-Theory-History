@@ -31,3 +31,30 @@ The negative local-amplitude states above are mathematical roots of the current 
 BH050/BH060 direct solves at the attempted larger dbar states did not finish within the current execution window; no root is recorded for them in this file. Nothing is inferred from the timeout.
 
 No quadrature-order or accuracy judgment is made here.
+
+
+## 7. Branch-selection correction after explicit Newton audit
+
+A full ten-variable Newton audit was run for BH020 with zero spatial Gauss.
+
+Cold single-target start at dbar=0.0042 used:
+q=1e-7, Aplus=Aminus=0, epsx_bar=0.000756, epsy_bar=-0.0042, ex_alpha=ey_beta=Fx=Fy=0, P=15.4870094 MN.
+
+At the very first undamped Newton update, this jumped to:
+q=8.301038e-4, Aplus=-0.274142 mm, Aminus=-0.193741 mm,
+so A0+Aplus=-0.133517 mm and A0+Aminus=-0.053116 mm.
+
+It then converged to the previously reported negative-amplitude root. Therefore that state is now reclassified as a **remote mathematical root obtained by an inappropriate cold start**, not a connected physical-path result.
+
+By contrast, using the converged dbar=0.0016 state as the predictor for dbar=0.0018 and advancing only epsy_bar by the shortening increment, the same ten-variable Newton system converged in four full Newton updates while preserving positive total local amplitudes:
+A0+Aplus: 0.350925 -> 0.414859 -> 0.406686 -> 0.406592 mm,
+A0+Aminus: 0.333268 -> 0.401429 -> 0.391299 -> 0.391141 mm.
+
+Continuation to dbar=0.0020 and 0.0022 also retained positive total amplitudes. Therefore the earlier BH020/BH032 negative-amplitude entries must not be used as evidence that Eq.(114)/(119) inherently drives reversal until connected-path continuation demonstrates it.
+
+This audit changes the execution rule:
+1. never solve a large target shortening from the generic cold initial guess;
+2. start near zero load;
+3. use each converged ten-variable state as the next predictor;
+4. reduce the path increment when the tangent becomes difficult;
+5. only after a connected continuation reaches a sign change may unilateral admissibility be discussed as a physical issue.
