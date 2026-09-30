@@ -57,3 +57,7 @@ First complete the missing steel in-plane production reduction:
 after exact M5 thickness integration, derive a human-reproducible y-direction analytic/deterministic reduction for steel residuals and tangents such that the complete steel plate integral leaves at most one deterministic 1D integral, consistent with the current no-2D-Gauss theory contract.
 
 Then run the BH005 candidate-wise A0=0 forced-response branches.
+
+
+## 20261001_031500 外部方法恢复暂停点
+当前 UCFT 主体系继续暂停。本轮仅恢复外部 El-Metwally–Chen 既有 nonlinear equilibrium-path method；不改变 UCFT 理论。已确认原始 1990 column paper 的核心是 incremental deflection / specified-deflection load inversion，可追踪 post-peak softening branch；1990 wall paper 使用 Newmark + equivalent-column 并明确获得 ascending/descending branches。完整公式恢复已保存为 current/外部第二种方法_El-Metwally全过程公式恢复.md。其 specified-deflection Newton residual/Jacobian 是对文献算法的等价透明重写，不冒充原文逐字符号。
