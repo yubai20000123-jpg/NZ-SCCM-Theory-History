@@ -1,0 +1,14 @@
+index,check,status,metric,note
+0,zero-load kinematics,PASS,0.0,"q=0,A±=0,xi=0,P=0 gives zero loading-induced strain/curvature; q0,A0 remain stress-free geometry"
+1,linear-elastic Chen-Ji/C1 uniqueness,PASS,17484593.29338972,H-block positive; Hx=Hy=0 unique in the linear benchmark
+2,q->0 regular imperfect branch,PASS,3.999787132148997e-06,"P/q approaches finite analytic limit because q0>0; Bx,By=O(q)"
+3,A->0 kinematic reduction,PASS,0.0,"for A0=0, local extra strain/curvature vanish at A=0; RA need not vanish once q develops because global-local interaction can drive A"
+4,TOP/BOTTOM parity,PASS,5.421010862427522e-20,global-local odd and local-local even parity verified
+5,raw S-family boundary work,CORRECTED,0.057897819224193,odd-odd raw Sy has nonzero uniform-traction work; exact traction-orthogonal basis applied
+6,traction-orthogonal S-family mean edge work,PASS,7.500000620552781e-11,mean edge axial displacement removed without changing compatible subspace/root set
+7,external potential derivatives,PASS,4.2620740159824417e-10,"Ey, q and raw Sy external generalized forces match one common load potential"
+8,virtual-work Jacobian finite difference,PASS,3.862824956364547e-06,nonlinear surrogate includes qA/A² second-kinematic terms and one corrected S pair
+9,physics-shaped Schur equivalence outer,PASS,2.273736754432321e-13,same residual root/update as full Newton
+10,dimension/unit scaling,CORRECTED,4.440892098500626e-16,raw mixed-unit condition number is not invariant; use scaled Jacobian condition number only
+11,active-set branch continuity contract,PASS-CONDITIONAL,0.0,requires production polynomials to be stress-continuous at declared interfaces; tangent continuity is not required
+12,P_eq vs P_report peak criterion,CORRECTED,0.0,final Pu must maximize P_report when chi_w reaction correction is used; dP_eq/dq alone is not the final peak condition
