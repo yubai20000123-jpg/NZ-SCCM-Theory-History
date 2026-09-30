@@ -165,3 +165,42 @@ M2 post-backup GitHub commits：
 - backups/20260930_152314/output/UCFT_低维全过程半解析理论_备份清单.md — initial a2682552548d8e7a0bd5f251e9507d919d620693; final mirror synchronized after this ledger update.
 
 - current-state metadata/numbering final normalization: stable commit 05dc1445f662bd7315a954342e8b5c5bdfe04621; final post-backup mirror f7e70dad0ec2e1db52e900818aeedbf4713b535d.
+
+
+## 2026-09-30 16:36 +08:00 — M5
+
+### input / pre-backup
+- 指示词(4).md — Library /UCFT_backups/20260930_163600/input/指示词(4).md
+- GitHub pre-backups:
+  - CURRENT_STATE commit bea1c50bc0311d57082e96c6fbab249ff201c3df
+  - nonlinear membrane derivation commit 6d01f817ae64fc55ff05a24d3656cc477f7fbcd3
+  - execution log commit bd61bb40932321535670e482b632e99d4a8a298d
+  - backup manifest commit 1f14d62da098c8b9ea9a6fd195f3f2be9a2b015d
+
+### generated output / SHA256
+Library directory: /UCFT_backups/20260930_163600/output/
+
+| filename | SHA256 | description |
+|---|---|---|
+| UCFT_M5_steel_deformation_theory_active_set.md | 667ca5b9916df9100cd892a4926d3305e11270c9ec42ae90a4858a6dc519282f | full M5 derivation |
+| UCFT_M5_steel_Mises_deformation_active_set_kernel.py | 81234ac05e61c025d89cc5ce455d24c7f642bbf6b9a688aee138a4fd14d7e0aa | production analytic kernel |
+| UCFT_M5_ChenJi泊松切换连续性审计.csv | 264dac6b135dcb151b1a5f1baaa5dda61bfdbd29ab867efb7daa3c95e36be819 | literal splice failure audit |
+| UCFT_M5_一致性与连续性审计摘要.csv | af4b0c9bc39f151b5fac741de7e116e524bca71a69e4f0e9d1f8ea02250a9d0 | first audit summary |
+| UCFT_M5_解析厚度积分_vs_数值积分验证.csv | 3a1bf08503ad9bc6949c919fe8f8a5875694d8515f058e775da9e3db771420c5 | literal-kernel check |
+| UCFT_M5_屈服边界二次根验证.csv | 2bc1995b1567f43d8d7d2faaff607b78d902370aee3da2f3a2d0a6159615793d | literal root check |
+| UCFT_M5_材料一致切线有限差分验证.csv | cb0c1666820e0f680d6d5130600ff86959cb3ebb8ae08454a146b85b6cee77ad | literal tangent check |
+| UCFT_M5_一致变形理论_解析厚度积分_vs_数值验证.csv | 0f745d04e793eddaf5c746cc0a25465db3abf45c8291d88742985542bd0eee6a | corrected exact-resultant check |
+| UCFT_M5_一致变形理论_屈服二次根验证.csv | 02dca7769386e31f2c063933b7111eb771a34469cd5f55d902809132f867b2ab | corrected root check |
+| UCFT_M5_一致变形理论_材料切线验证.csv | 55897a9e5ed4968878997f0a4ea03f6104a0b222fd63bf1959bcd4efec6b5dc4 | corrected tangent check |
+| UCFT_M5_一致变形理论_Mises等效应力验证.csv | e8c55b4f0c4375b611a0c1caa56b92a635743028618f0f19d08ea5c5e637beba | Mises-polynomial identity check |
+| UCFT_M5_nu05退化到陈骥验证.csv | d3f47b41812ee58433ed40fa2cbdb1c03d246e8755b1fd47f1924432f2ec2f66 | exact Chen-Ji special-case reduction |
+| UCFT_M5_一致变形理论_屈服连续性验证.csv | f2b6e328a2dfdd06dea6435906dac4a9bfa1e52dd1f21b577c2a7fc53bc43e91 | corrected yield continuity |
+| UCFT_M5_最终一致性验证摘要.csv | 5fc21e510ed17751b5fac741de7e116e524bca71a69e4f0e9d1f8ea02250a9d0 | final M5 validation summary |
+
+### stable GitHub
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M5_steel_deformation_theory_active_set.md
+  - commit aee49e8a6aecd7d12368302ed0bf3410f071042e
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_当前状态.md
+  - commit 7601a49002e558785f90831b95ab9a3939d40c21
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_执行日志.md
+  - commit 1e99dca8af9216de9f8b697222e167a2cd1fabac
