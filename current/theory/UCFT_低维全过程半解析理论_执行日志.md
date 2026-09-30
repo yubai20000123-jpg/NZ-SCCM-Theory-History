@@ -329,3 +329,155 @@ M2 要正式给出 C0/C1 \(P(q)\) 路径，但正式 residual 不能由二维 Ga
 \]
 
 替换临时二维 Gauss verification，然后重跑同一 C0/C1 \(q\)-path，并正式裁决 Gate 2。
+
+
+---
+
+## 2026-09-30 14:06 +08:00 — M2 formal semi-analytic kernel advance
+
+### task
+
+把 M2 临时二维面内 Gauss verification 替换为合同允许的 semi-analytic active-set residual。
+
+### completed
+
+对固定 \(X\) 证明：
+
+\[
+e_{\alpha m}
+=
+\mathcal A_\alpha+\mathcal B_\alpha\cos2Y,
+\qquad
+\chi_\alpha=\mathcal D_\alpha\sin Y.
+\]
+
+令 \(s=\sin Y\) 后，所有厚度表面材料阈值都变成二次方程，因此 active-set boundaries 可显式求根。
+
+厚度方向采用 exact polynomial primitives：
+
+\[
+N_j
+=
+\frac{F_j(e_b)-F_j(e_a)}{\chi},
+\]
+
+\[
+M_j
+=
+\frac{J_j(e_b)-J_j(e_a)-e_m[F_j(e_b)-F_j(e_a)]}{\chi^2}.
+\]
+
+在固定 active pattern 中，\(N,M\) 成为有限 \(\sin^pY\) Laurent polynomial，最低 \(p=-2\)。
+
+使用：
+
+\[
+I_{-1}=\ln\tan(Y/2),
+\qquad
+I_{-2}=-\cot Y
+\]
+
+及正整数递推，\(Y\) 方向完全解析积分。
+
+最终只保留：
+
+\[
+X\in[0,\pi/2]
+\]
+
+一个一维 adaptive definite integral。
+
+因此正式 M2 residual 不再依赖二维/三维 Gauss points。
+
+### single-state formal cross-check
+
+BH060：
+
+\[
+b=a_h=3000\ {\rm mm},
+\quad q=0.001.
+\]
+
+semi-analytic C0：
+
+\[
+P=4.762006709\ {\rm MN}.
+\]
+
+semi-analytic C1：
+
+\[
+P=4.762008362\ {\rm MN}.
+\]
+
+\[
+H_x=-1.35053\times10^{-7},
+\qquad
+H_y=6.18794\times10^{-8}.
+\]
+
+与此前 18×18 面内 Gauss independent verification 基本完全一致。
+
+所以：
+
+\[
+\boxed{
+\text{formal semi-analytic kernel single-state cross-check = PASS}
+}
+\]
+
+### code
+
+created:
+
+current/code/UCFT_nonlinear_membrane_condensation_solver.py
+
+commit:
+
+427d6e88779d0bfa3925c2ed2ced98546b63bd65
+
+### performance finding
+
+连续多点 semi-analytic trace 的首次执行出现运行时间过长。
+
+profile 结论：
+
+- 4×4 / 6×6 solve 不是瓶颈；
+- 同一 residual evaluation 对不同分量重复执行 \(X\) adaptive integral 是主要成本；
+- finite-difference Jacobian 进一步重复这些积分。
+
+按路线合同，当前不引入大型矩阵算法。
+
+最小等价加速：
+
+1. vector-valued \(X\) quadrature；
+2. residual component 共用 active-set / Laurent expansion；
+3. consistent Jacobian 或至少复用 active-set 的差分 Jacobian。
+
+### algorithm literature check
+
+已检索 semismooth Newton / active-set literature。
+
+结论：
+
+semismooth Newton 对 piecewise / active-set nonlinear equations 有严谨基础，但当前根本瓶颈是 quadrature/Jacobian 重复计算，而不是 active-set nondifferentiability。
+
+所以当前：
+
+\[
+\boxed{\text{不引入 semismooth Newton；只记录为后备。}}
+\]
+
+### Gate status
+
+- M0 PASS
+- Gate 1 PASS
+- M2 single-state semi-analytic kernel PASS
+- Gate 2 full path PENDING
+- Gate 3 NOT RUN
+
+### NEXT_ACTION
+
+保持 M2：
+
+把 outer \(X\) integration 向量化，使一次 X sweep 同时返回全部 residual components，并减少 Jacobian 的重复积分；随后跑完 BH060、BH100 pre-tensile-peak C0/C1 连续 q-path，正式判定 Gate 2。
