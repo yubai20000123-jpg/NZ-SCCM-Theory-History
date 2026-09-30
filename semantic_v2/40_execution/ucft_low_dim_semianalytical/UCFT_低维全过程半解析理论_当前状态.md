@@ -4,7 +4,7 @@
 
 ## 1. 最高层级合同
 
-当前最高优先级路线合同：用户上传《指示词(2).md》。
+当前最高优先级路线合同：用户上传《指示词(3).md》。
 
 理论身份：
 
@@ -271,6 +271,57 @@ Steel：
 - final steel deformation-theory elastic/plastic active-set 尚待 M5；
 - finite current stress 与 tangent 必须分离。
 
+
+## 7. M4 / UHPC production analytic active-set
+
+PASS。
+
+在 C1 directional mapping 下，固定 X 后 UHPC 顶/底面材料输入严格化为
+
+\[
+e^\pm(X,s)=A(X)+B(X)+C^\pm(X)s-2B(X)s^2,\qquad s=\sin Y,
+\]
+
+故任一材料阈值 \(e_j\) 的面内 moving boundary 由二次方程
+
+\[
+-2Bs^2+C^\pm s+A+B-e_j=0
+\]
+
+显式给出。厚度方向继续使用 M2 的解析 active-set，并进一步构造全局累计原函数
+
+\[
+\mathcal F'(e)=\sigma(e),\qquad \mathcal H'(e)=e\sigma(e),
+\]
+
+使
+
+\[
+N^U=\frac{\mathcal F(e^+)-\mathcal F(e^-)}{\chi},
+\]
+
+\[
+M^U=\frac{\mathcal H(e^+)-\mathcal H(e^-)-e_m[\mathcal F(e^+)-\mathcal F(e^-)]}{\chi^2}.
+\]
+
+固定 X 后，Y 向 active intervals 内的结果为有限 Laurent polynomial，利用 \(s=\sin Y\) 的闭式 primitives 完成 Y 解析积分；production 仅保留一个 X 向 deterministic integral。
+
+独立一致性核验：
+- cumulative primitive vs 显式 z_j 排序 active-set：最大相对差 \(1.722389\times10^{-8}\)；
+- 解析 Y + 一维 X vs 80×120 二维 Gauss diagnostic：最大相对差 \(2.720307\times10^{-7}\)，平均绝对相对差 \(2.269048\times10^{-8}\)。
+
+因此：
+
+\[
+\boxed{\mathrm{M4\ analytic\ active\mbox{-}set\ kernel}=\mathrm{PASS}}.
+\]
+
+正式 UHPC tensile polynomial 的具体 \(e_{tp},e_{tu}\) 与系数仍未冻结；M2 central family 仅用于算法等价性 benchmark，未升级为生产材料输入。该输入在 M8 前冻结，不阻塞 M5。
+
+正式文件：
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M4_UHPC_active_set_analytic_partition.md
+- Library /UCFT_backups/20260930_152314/output/UCFT_M4_UHPC_active_set_analytic_partition.md
+
 ## 7. M3 正式文件
 
 GitHub：
@@ -301,12 +352,17 @@ Library：
 - 人为负刚度制造下降段；
 - PBL 经验弹簧。
 
-## 10. NEXT_ACTION
+## 11. NEXT_ACTION
 
-严格进入 M4：
+严格进入 M5：
 
 \[
-\boxed{\text{UHPC tension/compression polynomial active-set 的 production 面内解析分区}}
+\boxed{
+\text{steel Mises deformation theory}
++\text{equivalent uniaxial polynomial}
++E_{sec}/E_{tan}
++\text{analytic elastic/plastic thickness active-set}
+}
 \]
 
-保持 M2 已完成 thickness closed form，显式求面内材料边界，优先化为解析分区；若不能完全初等闭式，最多保留一个低维确定积分。二维/三维 Gauss 只能用于独立验证。
+保持 \(\varepsilon_i^2=C_2\zeta^2+C_1\zeta+C_0\)，屈服边界由二次方程解析求根、排序、分区积分；finite current stress 与 tangent 严格分离。
