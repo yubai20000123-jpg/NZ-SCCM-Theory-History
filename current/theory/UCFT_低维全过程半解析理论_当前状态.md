@@ -1,10 +1,10 @@
 # UCFT 低维全过程半解析理论 — 当前状态
 
-**更新时间：2026-09-30 13:31 +08:00**  
+**更新时间：2026-09-30 14:06 +08:00**  
 **最高层路线合同：用户上传《指示词.md》**  
-**当前主攻方向：nonlinear membrane condensation**
+**当前主攻方向：M2 nonlinear membrane condensation / formal semi-analytic active-set path**
 
-## 1. 当前结构级变量
+## 1. 结构级变量
 
 路径参数：
 
@@ -12,15 +12,15 @@
 q.
 \]
 
-每个给定 \(q\) 的外层未知量：
+给定 \(q\) 后外层未知：
 
 \[
 P,\qquad A^+,\qquad A^-.
 \]
 
-统一端缩 \(\Delta\) 不再是路径控制量。端部位移、平均端缩和 RP 位移均在平衡后恢复。
+统一端缩 \(\Delta\) 不作为路径控制量；端部位移在平衡后恢复。
 
-## 2. 当前整体几何
+## 2. 整体几何
 
 \[
 W_0=bq_0\sin\frac{\pi x}{b}\sin\frac{\pi y}{a_h},
@@ -34,38 +34,7 @@ W=b(q_0+q)\sin\frac{\pi x}{b}\sin\frac{\pi y}{a_h},
 Q(q)=q^2+2q_0q.
 \]
 
-## 3. steel-local
-
-\[
-W_s^+=W+(A_0^++A^+)\psi_\ell^+,
-\]
-
-\[
-W_s^-=W-(A_0^-+A^-)\psi_\ell^-.
-\]
-
-后续必须保留 \(qA\)、\(A^2\) 及初始缺陷交叉项。
-
-## 4. PBL / 加劲肋
-
-不作为独立轴向力、弹簧、自由度或材料模块。
-
-\[
-\chi_w
-=
-1+\frac{A_w}{bt_c}
-\left(\frac{E_s}{E_c}-1\right),
-\]
-
-\[
-P_{\rm report}
-=
-\chi_wP_c+P_s^++P_s^-.
-\]
-
-该项是 engineering reaction correction，不反向定义 \(q,A^\pm\)。
-
-## 5. C0 / C1 membrane condensation
+## 3. C0 / C1
 
 ### C0
 
@@ -85,19 +54,7 @@ E_y-C_q\frac{b^2}{a_h^2}\cos2X+B_y\cos2Y,
 \gamma_{xy}^0=0,\qquad N_{xy}=0.
 \]
 
-inner variables：
-
-\[
-E_x,E_y,B_x,B_y.
-\]
-
 ### C1
-
-增加：
-
-\[
-H_x,H_y,
-\]
 
 \[
 \varepsilon_x^0
@@ -119,23 +76,18 @@ E_y-C_q\frac{b^2}{a_h^2}\cos2X+B_y\cos2Y+H_y\cos2X\cos2Y,
 \right)\sin2X\sin2Y.
 \]
 
-inner residual：
-
-\[
-G_{E_x},G_{E_y},G_{B_x},G_{B_y},G_{H_x},G_{H_y}=0.
-\]
-
-## 6. Gate 状态
+## 4. Gate 状态
 
 ### M0 — PASS
 
-- C0/C1 compatible displacement basis 已建立；
-- compatibility identity 已解析验证；
-- 六个 inner residual 已建立。
+- compatible displacement basis：完成；
+- strain basis：完成；
+- compatibility identity：解析 PASS；
+- C0/C1 generalized residual：完成。
 
 ### Gate 1 / M1 — PASS
 
-在线弹性、\(A^+=A^-=0\) 下解析证明：
+在线弹性且 \(A^+=A^-=0\) 下：
 
 \[
 H_x=H_y=0
@@ -143,120 +95,254 @@ H_x=H_y=0
 
 为 C1 shear 子系统唯一解，并严格恢复 Chen–Ji/Airy \(N_{xy}=0\) 分离解。
 
-### Gate 2 / M2 — 未正式通过，但已取得明确中间结论
+### M2 — 正式实现中
 
-解析证明：
+已解析证明：
 
-只要 UHPC normal law 非线性且 \(q\neq0\)，厚度 nonlinear bending-membrane coupling 一般会产生：
+\[
+q\neq0,\quad f''(e)\neq0
+\]
+
+时，UHPC nonlinear thickness integration 一般会产生：
 
 \[
 \cos2X\cos2Y
 \]
 
-mixed resultant，因此：
+mixed resultant，因此 C1 channel 一般被激活。
 
-\[
-\widehat G_{H_x},\widehat G_{H_y}
-\]
+但预峰值独立核验表明其量级很小。
 
-一般不再严格为零。
+## 5. M2 semi-analytic active-set kernel
 
-也就是说：
-
-\[
-\boxed{\text{material nonlinearity generically activates the C1 channel.}}
-\]
-
-但独立数值核验（exact thickness active-set + 临时 18×18 面内 Gauss，只用于验证、不是正式 residual）显示，在 pre-tensile-peak 参考区间 C1 correction 很小。
-
-BH060：
-- \(q=0.001\)：C0/C1 \(P\) 相对差 \(3.46\times10^{-5}\%\)；
-- 接近 tensile peak：相对差 \(-0.002406\%\)；
-- \(|H|\) 约 \(10^{-7}\sim10^{-6}\)。
-
-BH100：
-- \(q=0.001\)：相对差 \(-2.08\times10^{-4}\%\)；
-- 接近 tensile peak：相对差 \(-0.002157\%\)；
-- \(|H|\) 约 \(10^{-7}\sim10^{-6}\)。
-
-因此当前证据：
+已经正式构造：
 
 \[
 \boxed{
-\text{C1 被激活，但 pre-peak 很弱；C0 很可能是有效降阶。}
+\text{analytic material-boundary roots}
++
+\text{exact thickness integration}
++
+\text{exact }Y\text{ integration}
++
+\text{one-dimensional }X\text{ integral}
 }
 \]
 
-正式 Gate 2 仍为：
+对固定 \(X\)：
 
 \[
-\boxed{\text{PENDING}}
+e_{\alpha m}
+=
+\mathcal A_\alpha+\mathcal B_\alpha\cos2Y,
 \]
-
-唯一原因是正式 residual 必须将临时二维 Gauss 面积分替换成合同要求的 semi-analytic active-set area integration。
-
-### Gate 3 / M3 — 未执行
-
-必须等正式 Gate 2 闭合后，再打开 \(A^\pm\) 做 mixed-harmonic omitted residual spectrum。
-
-## 7. M2 reference UHPC law
-
-压缩：
 
 \[
-E_c=43.4\ {\rm GPa},
-\quad
-f_c=141.1\ {\rm MPa},
-\quad
-\varepsilon_{c0}=0.0035,
+\chi_\alpha
+=
+\mathcal D_\alpha\sin Y.
 \]
 
-采用当前六次多项式。
+令 \(s=\sin Y\)，任意表面材料阈值：
 
-独立 Gate 2 前峰值核验的拉伸 reference：
+\[
+e_{\alpha,\pm}=e_j
+\]
+
+严格变成二次方程：
+
+\[
+2\mathcal B_\alpha s^2
+\mp\frac{t_c}{2}\mathcal D_\alpha s
+-
+(\mathcal A_\alpha+\mathcal B_\alpha-e_j)=0.
+\]
+
+因此 active-set boundary 为显式根。
+
+厚度积分：
+
+\[
+N_j
+=
+\frac{F_j(e_b)-F_j(e_a)}{\chi},
+\]
+
+\[
+M_j
+=
+\frac{
+J_j(e_b)-J_j(e_a)
+-e_m[F_j(e_b)-F_j(e_a)]
+}{\chi^2}.
+\]
+
+固定 \(X\) 后，\(Y\) 积分退化为有限 Laurent polynomial 的：
+
+\[
+I_p=\int\sin^pY\,dY,
+\]
+
+最低只需要 \(p=-2\)，可完全解析。
+
+最终正式 residual：
+
+\[
+G_i
+=
+\frac{4ba_h}{\pi^2}
+\int_0^{\pi/2}\mathcal G_i(X)\,dX.
+\]
+
+因此正式理论已经不需要二维或三维 Gauss points。
+
+## 6. semi-analytic 单状态交叉核验
+
+BH060：
+
+\[
+b=a_h=3000\ {\rm mm},
+\qquad q=0.001.
+\]
+
+semi-analytic：
+
+\[
+P_{C0}=4.762006709\ {\rm MN},
+\]
+
+\[
+P_{C1}=4.762008362\ {\rm MN},
+\]
+
+\[
+H_x=-1.35053\times10^{-7},
+\qquad
+H_y=6.18794\times10^{-8}.
+\]
+
+对应 C0 omitted residual：
+
+\[
+\widehat G_{H_x}=1.26319\times10^6\ {\rm N\,mm},
+\]
+
+\[
+\widehat G_{H_y}=-6.71489\times10^3\ {\rm N\,mm}.
+\]
+
+与之前仅用于独立验证的 18×18 面内 Gauss 结果在 \(P\)、\(H_x\)、\(H_y\) 上一致到远小于工程相关量级。
+
+结论：
+
+\[
+\boxed{
+\text{semi-analytic active-set kernel 的单状态实现已交叉验证通过。}
+}
+\]
+
+## 7. Gate 2 当前状态
+
+还不能正式 PASS。
+
+原因只剩：
+
+\[
+\boxed{
+\text{必须用同一 formal semi-analytic kernel 跑完连续 }q\text{-path。}
+}
+\]
+
+目前已经不是理论积分缺口，而是执行性能问题。
+
+当前 prototype 的瓶颈：
+
+1. 每个 residual component 重复执行同一个一维 \(X\) adaptive integral；
+2. finite-difference Jacobian 重复这些积分；
+3. 4×4 / 6×6 小矩阵求解本身不是瓶颈。
+
+## 8. 当前代码
+
+已创建：
+
+current/code/UCFT_nonlinear_membrane_condensation_solver.py
+
+功能：
+
+- M2 pre-peak UHPC polynomial reference；
+- active-set threshold roots；
+- exact thickness primitives；
+- exact \(Y\) Laurent integration；
+- one-dimensional \(X\) residual；
+- C0/C1 residual framework。
+
+commit：
+
+427d6e88779d0bfa3925c2ed2ced98546b63bd65
+
+## 9. 当前 UHPC reference
+
+M2 前峰值核验：
 
 \[
 f_t=7.2\ {\rm MPa},
 \qquad
-\varepsilon_{tp}=0.000200.
+\varepsilon_{tp}=0.000200,
 \]
 
-采用满足原点斜率 \(E_c\)、峰值应力和峰值零切线的 cubic Hermite polynomial，并在任一点达到 \(\varepsilon_{tp}\) 时停止；因此没有在 M2 中人为发明峰后软化。
+使用满足：
 
-该 reference 仅用于 Gate 2，不等于最终 M8 材料定稿。
+\[
+\sigma_t(0)=0,\quad
+\sigma_t'(0)=E_c,\quad
+\sigma_t(\varepsilon_{tp})=f_t,\quad
+\sigma_t'(\varepsilon_{tp})=0
+\]
 
-## 8. steel 当前材料合同
+的 cubic Hermite polynomial。
 
-正式主线仍是：
+任何材料点达到 \(\varepsilon_{tp}\) 即停止 M2 pre-peak reference path，因此 M2 没有人工发明 tensile softening。
 
-Chen–Ji-style Mises deformation theory  
-+ equivalent uniaxial polynomial  
-+ \(E_{\rm sec}/E_{\rm tan}\).
+## 10. 计算算法检索结论
 
-M2 为隔离 UHPC material nonlinearity，关闭 steel-local 并保持两层钢壳线弹性。
+已按最高层合同检查 active-set / nonsmooth Newton 相关方法。
 
-## 9. 已记录但不阻塞的边界审计
-
-当前最低阶 C0/C1 displacement basis 与 Chen–Ji straight-edge 退化一致。
-
-由于最终理论不允许统一端缩作为外部控制，后续 nonlinear Gate 2/3 应监测 end-warping omitted residual；只有显著时才增加 compatible enrichment。
-
-## 10. 当前唯一 NEXT_ACTION
-
-不进入 M3。
-
-先完成正式 Gate 2 所依赖的最小 semi-analytic active-set kernel：
+semismooth Newton / active-set 方法确实适合分段材料状态切换，但当前 profile 显示：
 
 \[
 \boxed{
-\text{显式材料分区}
-+
-\text{exact thickness integration}
-+
-\text{最多一维确定积分}
+\text{当前首要瓶颈不是 nonsmooth root，而是重复的一维外积分和 finite-difference Jacobian。}
 }
 \]
 
-并用它替换临时 18×18 面内 Gauss verification，再重新计算 C0/C1 \(P(q)\)、\(H_x,H_y\) 和 omitted residual。
+所以暂不为了“算法先进”引入 semismooth framework。
 
-完成后才正式裁决 Gate 2。
+优化优先级保持：
+
+\[
+\boxed{
+\text{vector-valued outer integration}
+\rightarrow
+\text{common-expression reuse}
+\rightarrow
+\text{consistent Jacobian}
+}
+\]
+
+只有 active-set 切换真正导致 Newton 抖动时，再启用 semismooth Newton。
+
+## 11. 唯一 NEXT_ACTION
+
+保持 M2，不进入 M3。
+
+将当前 solver 改为：
+
+\[
+\boxed{
+\text{一次 }X\text{ sweep 同时返回全部 residual components}
+}
+\]
+
+并减少 finite-difference Jacobian 对外层积分的重复调用。
+
+然后用 formal semi-analytic kernel 完整计算 BH060、BH100 的 pre-tensile-peak C0/C1 连续 \(q\)-path，正式裁决 Gate 2。
