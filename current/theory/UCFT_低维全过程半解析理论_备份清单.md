@@ -74,3 +74,42 @@ M2 当前新增内容：
 - 不覆盖唯一原件；
 - 第三方未授权论文不上传公开仓库；
 - 后续含 LaTeX 的 GitHub text write 必须使用 raw string，避免反斜杠 escape。
+
+
+## 2026-09-30 14:16:59 +08:00 — M2 formal semi-analytic kernel post-backup
+
+Stable updates before backup:
+
+- UCFT_nonlinear_membrane_condensation_当前推导.md
+  - semi-analytic M2 commit: e592e710ce71fa34020285fbe56c73d752552a25
+
+- UCFT_低维全过程半解析理论_当前状态.md
+  - state commit: 0b6b5960e6284c540a1f58e067851edf203e56b2
+
+- UCFT_低维全过程半解析理论_执行日志.md
+  - log commit: 2157fc82fd210aeb9443eccb950d86e6fb341451
+
+- UCFT_nonlinear_membrane_condensation_solver.py
+  - first code commit: 427d6e88779d0bfa3925c2ed2ced98546b63bd65
+
+Timestamp output backups:
+
+- history/UCFT/backups/20260930_141659/output/UCFT_nonlinear_membrane_condensation_当前推导.md
+  - commit: 1b7374c326b93192d471a1fc77de14680df91820
+
+- history/UCFT/backups/20260930_141659/output/UCFT_低维全过程半解析理论_当前状态.md
+  - commit: 8922918071c55c864036ab91ebec7f221ae400e5
+
+- history/UCFT/backups/20260930_141659/output/UCFT_低维全过程半解析理论_执行日志.md
+  - commit: 728b71b94a00d01887dd67bb6689ea099fccf375
+
+- history/UCFT/backups/20260930_141659/output/UCFT_nonlinear_membrane_condensation_solver.py
+  - commit: 5dc99249dd107055eab8ec2fc38c32d00cf0f41d
+
+本次备份对应状态：
+
+- M0 PASS；
+- Gate 1 PASS；
+- M2 semi-analytic active-set single-state kernel cross-check PASS；
+- Gate 2 full path PENDING；
+- NEXT：向量化唯一剩余的一维 X integration，并跑 BH060/BH100 continuous q-path。
