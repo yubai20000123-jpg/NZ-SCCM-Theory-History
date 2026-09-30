@@ -13,3 +13,31 @@
 Repository: yubai20000123-jpg/NZ-SCCM-Theory-History  
 Branch: main  
 Visibility: private
+
+
+## 2026-09-30 14:17 +08:00 — M2
+
+M2 前稳定状态已保存到：
+- backups/20260930_141737/input/UCFT_低维全过程半解析理论_当前状态.md
+- backups/20260930_141737/input/UCFT_nonlinear_membrane_condensation_当前推导.md
+- backups/20260930_141737/input/UCFT_低维全过程半解析理论_执行日志.md
+- backups/20260930_141737/input/UCFT_低维全过程半解析理论_备份清单.md
+
+本轮上传路线合同：
+- 原始快照：Library /UCFT_backups/20260930_141737/input/指示词(1).md
+- GitHub 文本镜像：backups/20260930_141737/input/指示词(1).md
+
+M2 原始计算产物已持久化到 Library：
+- /UCFT_backups/20260930_141737/output/UCFT_M2_BH050_C0_C1_诊断路径.csv
+- /UCFT_backups/20260930_141737/output/UCFT_M2_UHPC拉伸多项式敏感性.csv
+- /UCFT_backups/20260930_141737/output/UCFT_M2_面积求积独立核验.csv
+- /UCFT_backups/20260930_141737/output/UCFT_M2_nonlinear_membrane_诊断计算器.py
+
+稳定推导 post-M2 commit：
+67e4d7fb852dc432233fc6c644cb1bedbf549b74
+
+稳定状态 post-M2 commit：
+247ff99cf34959f16f717a9a00fab49ccf8d994d
+
+稳定执行日志 post-M2 commit：
+801575e9ec1bf078a25eeadd8dfc10ea41cbe9af
