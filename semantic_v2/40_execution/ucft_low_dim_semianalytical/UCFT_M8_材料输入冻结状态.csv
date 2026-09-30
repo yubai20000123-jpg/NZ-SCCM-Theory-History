@@ -1,0 +1,15 @@
+index,material,parameter,value,unit,status,provenance
+0,steel,E_s,206000,MPa,LOCKED_RECOVERED,project archived solver/state
+1,steel,nu_s,0.30,1,LOCKED_RECOVERED,project archived solver/state
+2,steel,f_y,355,MPa,LOCKED_RECOVERED,project archived solver/state
+3,steel,post-yield equivalent law,P_s(e_bar)=f_y,MPa,LOCKED_PROJECT_NATIVE_BASELINE,older locked layer-0 steel law: ideal elastic-perfectly plastic; compatible with M5 as degree-0 polynomial
+4,steel,E_tan plastic,0,MPa,LOCKED_PROJECT_NATIVE_BASELINE,"physical tangent; solver regularization, if any, is numerical only"
+5,UHPC,E_c,43400,MPa,LOCKED_RECOVERED,project archived solver/state
+6,UHPC,nu_c,0.20,1,LOCKED_RECOVERED,project archived solver/state
+7,UHPC,f_c,141.1,MPa,LOCKED_RECOVERED,project archived solver/state
+8,UHPC,epsilon_c0,0.0035,1,LOCKED_RECOVERED,project archived solver/state
+9,UHPC,tensile_peak,~7,MPa,LOCKED_TARGET_RANGE,current route contract; old ~10 MPa PCHIP forbidden
+10,UHPC,tension Pt1/Pt2 coefficients,,,UNRESOLVED_PRODUCTION_INPUT,no unique current project coefficients recovered
+11,UHPC,epsilon_t_peak,,1,UNRESOLVED_PRODUCTION_INPUT,not uniquely recovered for project material
+12,UHPC,epsilon_t_terminal,,1,UNRESOLVED_PRODUCTION_INPUT,not uniquely recovered for project material
+13,PBL,A_w,1332,mm^2,LOCKED_RECOVERED,project archived solver/state
