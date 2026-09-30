@@ -4,7 +4,7 @@
 
 ## 1. 最高层级合同
 
-当前最高优先级路线合同：用户上传《指示词(3).md》。
+当前最高优先级路线合同：用户上传《指示词(4).md》。
 
 理论身份：
 
@@ -352,17 +352,91 @@ Library：
 - 人为负刚度制造下降段；
 - PBL 经验弹簧。
 
-## 11. NEXT_ACTION
+## 11. M5 / steel deformation-theory active-set
 
-严格进入 M5：
+PASS after one internal constitutive-interface correction.
+
+Literal splice audit:
+- elastic plane-stress nu_s=0.30 -> Chen-Ji plastic simplification nu_p=0.50 at eps_i=fy/Es produced up to 40% finite stress-tensor jump;
+- elastic Mises/fy on that literal strain threshold ranged 0.714286~1.153846;
+- therefore literal abrupt splice was rejected as materially discontinuous.
+
+Production M5 uses the minimum consistent generalization:
+\[
+\mathbf C_0=\frac1{1-\nu_s^2}
+\begin{bmatrix}
+1&\nu_s&0\\
+\nu_s&1&0\\
+0&0&(1-\nu_s)/2
+\end{bmatrix},
+\quad
+\mathbf H_\nu=\mathbf C_0^T\mathbf W\mathbf C_0,
+\]
+\[
+\bar\varepsilon_i=\sqrt{\boldsymbol\varepsilon^T\mathbf H_\nu\boldsymbol\varepsilon}
+=\sigma_{VM}^{elastic}/E_s.
+\]
+Plastic equivalent law and dual modulus:
+\[
+\sigma_i=P_s(\bar\varepsilon_i),\quad
+E_{sec}=P_s/\bar\varepsilon_i,\quad
+E_{tan}=dP_s/d\bar\varepsilon_i.
+\]
+Finite stress:
+\[
+\boldsymbol\sigma=E_{sec}\mathbf C_0\boldsymbol\varepsilon.
+\]
+Tangent:
+\[
+\mathbf C_t=
+E_{sec}\mathbf C_0+
+\frac{E_{tan}-E_{sec}}{\bar\varepsilon_i^2}
+(\mathbf C_0\boldsymbol\varepsilon)\otimes
+(\mathbf H_\nu\boldsymbol\varepsilon).
+\]
+At nu_s=0.5 this reduces exactly to the Chen-Ji simplified Mises deformation-theory form.
+
+For affine steel thickness strain:
+\[
+\bar\varepsilon_i^2=C_2\zeta^2+C_1\zeta+C_0,
+\]
+so yield boundaries remain quadratic and all elastic/plastic intervals are analytically sorted. Finite polynomial Ps gives elementary/asinh-recursive closed-form thickness resultants; no thickness Gauss points define production.
+
+Validation:
+- exact thickness resultants vs numerical diagnostic: 7.727093e-14 max relative error;
+- yield root error: 2.168404e-19;
+- tangent vs finite difference: 2.568376e-10;
+- finite Mises vs Ps target: 1.601223e-16;
+- nu=0.5 Chen-Ji reduction: exact;
+- corrected yield-interface finite stress jump: 0.
+
+Production file:
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M5_steel_deformation_theory_active_set.md
+- Library /UCFT_backups/20260930_163600/output/UCFT_M5_steel_deformation_theory_active_set.md
+- Library /UCFT_backups/20260930_163600/output/UCFT_M5_steel_Mises_deformation_active_set_kernel.py
+
+Formal Q355 plastic polynomial coefficients are not yet frozen. Diagnostic plateau/cubic laws are algorithm tests only. Freeze from actual material data before M8; do not fit Pu.
+
+## 12. 九试件进度
+
+尚未进入 M8。M5 没有使用 FEM target 求根或调参。
+
+## 13. NEXT_ACTION
+
+严格进入 M6：
 
 \[
 \boxed{
-\text{steel Mises deformation theory}
-+\text{equivalent uniaxial polynomial}
-+E_{sec}/E_{tan}
-+\text{analytic elastic/plastic thickness active-set}
+\text{M4 UHPC analytic operator}
++
+\text{M5 steel consistent secant-Mises operator}
++
+\text{M3 C/S/B inner enrichment}
 }
 \]
 
-保持 \(\varepsilon_i^2=C_2\zeta^2+C_1\zeta+C_0\)，屈服边界由二次方程解析求根、排序、分区积分；finite current stress 与 tangent 严格分离。
+组装 inner membrane residual 与 outer
+\[
+R_q=0,\qquad R_{A^+}=0,\qquad R_{A^-}=0,
+\]
+并建立一致 Schur-condensed Jacobian。M6 不跑九试件，不拟合 FEM。
