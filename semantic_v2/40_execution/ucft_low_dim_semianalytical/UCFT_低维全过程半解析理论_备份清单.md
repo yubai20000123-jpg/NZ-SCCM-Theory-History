@@ -41,3 +41,10 @@ M2 原始计算产物已持久化到 Library：
 
 稳定执行日志 post-M2 commit：
 801575e9ec1bf078a25eeadd8dfc10ea41cbe9af
+
+
+M2 post-backup GitHub commits：
+- backups/20260930_141737/output/UCFT_nonlinear_membrane_condensation_当前推导.md : 846b995b9152fadb58e5911de6a748615bbc616a
+- backups/20260930_141737/output/UCFT_低维全过程半解析理论_当前状态.md : 56819e1a9b4e8136a604605bdbd4dd07773d9443
+- backups/20260930_141737/output/UCFT_低维全过程半解析理论_执行日志.md : 868b5f9f22341f4910b1ab776ca514481af4127b
+- backups/20260930_141737/output/UCFT_低维全过程半解析理论_备份清单.md : e7862d4818d719c12b4dadc02cc57a5b71a00dbc（首次 post-M2 镜像；随后同步最终清单内容）
