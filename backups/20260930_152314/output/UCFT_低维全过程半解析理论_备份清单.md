@@ -155,3 +155,11 @@ M2 post-backup GitHub commits：
 - UCFT_M4_厚度全局原函数_vs_显式active_set验证.csv : 43d85617ab2e32152b08f11d51b3003b3e92f9c01c827572d16ba5ad05cb72e3
 - UCFT_M4_解析材料边界示例.csv : dc0d40206c11c5b86efb248ee56ed9dff1731130b58d080dbfd11cc50f9acf8f
 - UCFT_M4_面内解析分区_vs_二维Gauss验证.csv : 0907dcb94a7f8fbd24753046d361495bb7abded6f88f1c1cbc607a1bcfd55f8b
+
+
+### M4 post-backup GitHub commits
+- backups/20260930_152314/output/UCFT_M4_UHPC_active_set_analytic_partition.md — 66256197b2160328152a0433372469616994d6e1
+- backups/20260930_152314/output/UCFT_M4_UHPC_analytic_partition_kernel.py — 3db381768ba2da0cbf1fda36fd4f4f89e64689a2
+- backups/20260930_152314/output/UCFT_低维全过程半解析理论_当前状态.md — af76dc1dfb12395a0030a1685b1704952c546600
+- backups/20260930_152314/output/UCFT_低维全过程半解析理论_执行日志.md — df68953ed7f7cf8ac6b56de9bb9f47ee9d30a558
+- backups/20260930_152314/output/UCFT_低维全过程半解析理论_备份清单.md — initial a2682552548d8e7a0bd5f251e9507d919d620693; final mirror synchronized after this ledger update.
