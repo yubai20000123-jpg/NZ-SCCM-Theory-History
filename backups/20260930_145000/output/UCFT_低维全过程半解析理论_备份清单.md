@@ -102,3 +102,13 @@ M2 post-backup GitHub commits：
   - commit 7677964d9c28941de565181e7782aa1a679aba32
 - backups/20260930_145000/output/UCFT_低维全过程半解析理论_备份清单.md
   - initial post-backup commit dd2c98d72c6f0a5a6f0977d01d194466dcd07c7b
+
+
+### M3 artifact SHA256
+- UCFT_M3_N4_m4_归一化残量谱.csv : 67839c795ceccc24905faca8d968b8f23dfc9c87ce36ff0f06c69dbf84a8835c
+- UCFT_M3_mixed_harmonic_解析谱计算器.py : b2e3ac8232bc8c36acdafd7453dc805da434e89cdf050b04b44fb88f24d7e7b9
+- UCFT_M3_qA_A2_解析频谱.csv : 5aaeab59f20c7a75cd82911f1f9840be081cdfb92a5833d30737347c84ec5ab4
+- UCFT_M3_steel_local_mixed_harmonic_audit.md : 84ae990327bc7f3c173f393145fe8f9e60ed1c58fd7868360181fa340b2097f6
+- UCFT_M3_频谱审计摘要.csv : 41ecb7f7ef019f032e2c496e177a01686567995431873318b3a8293c4917fc72
+- UCFT_M3_频谱审计结果.txt : c440a0f60d89eb8ec75eab191ea67dfe80a8f69889f638cf7688cb0b8884ac02
+- UCFT_M3_频谱鲁棒性扫描.csv : a1ebcc676f521ba7246d9ca9dbc73c6faddf14975c338ef053c6e30f7b7c1397
