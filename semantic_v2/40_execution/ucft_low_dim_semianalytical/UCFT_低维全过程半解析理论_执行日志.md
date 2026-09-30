@@ -171,3 +171,115 @@ M3 NOT STARTED
 
 ### NEXT_ACTION
 M3：打开 A+/A−，不预增 membrane modes；完整展开 qA/A² steel-local mixed-harmonic frequency set，计算 omitted generalized residual spectrum，仅激活显著 compatible pairs。
+
+
+## 2026-09-30 14:50 +08:00 — M3 steel-local mixed-harmonic audit
+
+### recovered
+读取当前 CURRENT_STATE / nonlinear membrane derivation / execution log / backup manifest，并完整读取新上传《指示词(2).md》。M0/M1/M2 均已完成，因此按合同直接进入 M3。
+
+### pre-backup
+GitHub：
+- backups/20260930_145000/input/UCFT_低维全过程半解析理论_当前状态.md
+  commit 1dc7f249425b08490cb29bbee75574c31ff5231b
+- backups/20260930_145000/input/UCFT_nonlinear_membrane_condensation_当前推导.md
+  commit 38b92ce8061e5f60c52e6ed665a1e6ab608fc0d3
+- backups/20260930_145000/input/UCFT_低维全过程半解析理论_执行日志.md
+  commit 5d4ad2b633ac6c203c643fd0ea66f1eb3922518b
+- backups/20260930_145000/input/UCFT_低维全过程半解析理论_备份清单.md
+  commit 2299e70eb2f633818c821741dd50cc4e1fe791ed
+
+原始《指示词(2).md》已原名保存至：
+Library /UCFT_backups/20260930_145000/input/指示词(2).md
+libfile_cbb9afffcb3481919e6df40ddfe46893。
+
+GitHub 大文本镜像尝试被工具安全检查阻止，未伪称成功；Library exact copy 为本轮原件备份。
+
+### formulas / findings
+从 whole-face local geometry 精确展开 qA 与 A²。
+
+qA：
+- normal = sin-sin odd-odd；
+- shear = cos-cos odd-odd；
+- generic \(N,m\ge2\) exact mixed pairs：
+  \((2N\pm1,1)\)、\((1,2m\pm1)\)、\((2N\pm1,2m\pm1)\)。
+- 现有 C-family 对此 parity 不适用。
+- 新增严格 compatible S-family：
+\[
+\Delta\varepsilon_x=S_x\sin kX\sin lY,\quad
+\Delta\varepsilon_y=S_y\sin kX\sin lY,
+\]
+\[
+\Delta\gamma
+=
+-\left[
+\frac{lb}{ka_h}S_x+\frac{ka_h}{lb}S_y
+\right]\cos kX\cos lY.
+\]
+已符号验证 compatibility contribution = 0。
+
+A²：
+- mixed C-family：
+  \((2N,2m),(2N,4m),(4N,2m),(4N,4m)\)；
+- 同时产生 1-D companion：
+  \((0,2m),(0,4m),(2N,0),(4N,0)\)。
+- 1-D 项不是格式细节；必须进入 candidate ledger。
+
+线弹性 steel plane-stress normalized mixed residual：
+\[
+\widehat g_x
+=
+a+\nu b-\frac{1-\nu}{2}\frac{l(b/a_h)}{k}c,
+\]
+\[
+\widehat g_y
+=
+b+\nu a-\frac{1-\nu}{2}\frac{k}{l(b/a_h)}c.
+\]
+
+### dimensionless spectrum audit
+扫描：
+\[
+\nu_s=0.30,\ N,m=2..12,\ b/a_h=0.5..2.
+\]
+无 FEM target。
+
+qA：
+- four edge share: 74.8746%–98.7147%
+- six dominant share: 95.3120%–99.8324%, mean 99.1172%
+- two off-diagonal high-high modes each max 2.3440%
+
+A²：
+- mixed (2N,4m)/(4N,2m) max 38.1537%
+- mixed (2N,2m) ~9.24%
+- mixed (4N,4m) max 4.7142%
+- 1-D (0,4m)/(4N,0) max 42.5647%
+- 1-D (0,2m)/(2N,0) max 6.8198%
+
+### gate
+M3 geometric spectrum audit = PASS.
+
+但：
+原单一 C1 (2,2) pair 覆盖全部 steel-local = FAIL。
+
+分类：NEEDS_MINIMAL_COMPATIBLE_ENRICHMENT；非路线级失败。结构级仍只有 q,A+,A−。采用 finite frequency-generated C/S/B inner active-set；实际 statewise 激活由 omitted residual 决定。
+
+### files
+GitHub full M3 report：
+semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M3_steel_local_mixed_harmonic_audit.md
+commit 33cdac0d9ef87c56ac1fc0c873baac91f07daaaa
+
+Current state updated:
+commit 032028166e95d2e47f2a795302bd437708195983
+
+Library output：
+- UCFT_M3_steel_local_mixed_harmonic_audit.md
+- UCFT_M3_qA_A2_解析频谱.csv
+- UCFT_M3_N4_m4_归一化残量谱.csv
+- UCFT_M3_频谱鲁棒性扫描.csv
+- UCFT_M3_频谱审计摘要.csv
+- UCFT_M3_频谱审计结果.txt
+- UCFT_M3_mixed_harmonic_解析谱计算器.py
+
+### NEXT_ACTION
+M4：完成 UHPC tension/compression polynomial active-set 的 production 面内解析分区；保留 M2 thickness closed form，二维/三维 Gauss 不得定义 production residual。
