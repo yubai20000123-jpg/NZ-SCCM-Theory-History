@@ -462,3 +462,38 @@ Formal production Q355 plastic polynomial coefficients Ps are not frozen. Diagno
 
 ### NEXT_ACTION
 M6: assemble M4 UHPC analytic operator + M5 steel consistent secant-Mises operator + M3 C/S/B frequency-generated inner enrichment into inner membrane residual, outer Rq/RA+/RA-, and exact Schur-condensed Jacobian. No nine-specimen run yet.
+
+
+## 2026-09-30 17:05 +08:00 — M6
+
+task: unified M3/M4/M5 residual and Jacobian assembly; exact Schur condensation.
+
+created:
+- UCFT_M6_inner_outer_residual_Schur_condensation.md
+- UCFT_M6_residual_schur_assembler.py
+- UCFT_M6_Schur凝聚等价性验证.csv
+- UCFT_M6_steel_local运动学导数验证.csv
+
+closed:
+- full steel-local qA and A2 kinematics connected to M5 affine thickness strain;
+- inner G and outer Rq / RA+ / RA-;
+- full block Jacobian Gxi/Gz/Rxi/Rz;
+- exact condensed Newton RHS when inner residual is nonzero;
+- q-continuation condensed sensitivity;
+- moving active-boundary tangent rule under continuous finite stress.
+
+checks:
+- Schur/full Newton outer max diff: 1.110223e-16
+- Schur/full Newton inner max diff: 1.110223e-16
+- q-sensitivity outer max diff: 1.665335e-16
+- q-sensitivity inner max diff: 4.163336e-17
+- steel-local kinematic derivative max relative error: 1.390166e-10
+
+status: M6 PASS.
+
+open before M8:
+- freeze production UHPC tensile polynomial;
+- freeze production Q355 equivalent uniaxial polynomial;
+- keep equilibrium generalized P distinct from P_report under chi_w report correction.
+
+NEXT_ACTION: M7 theory self-audit only.
