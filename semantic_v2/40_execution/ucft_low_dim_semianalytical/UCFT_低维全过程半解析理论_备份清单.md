@@ -310,3 +310,23 @@ Post-M7 stable commits:
 - corrected M6 theory: b89bc1164ac18c4a6a77b359f2ebcccf2e7b2c7d
 - M7 audit: 9e043d4d375d681e38ca8f9203541c3971a98875
 - M7 summary: 4a12bb022777b94af49bb28dc923bd820ef61c04
+
+
+## 2026-09-30 19:01 +08:00
+
+- original filename: 指示词(7).md
+  - source: conversation upload
+  - Library backup: /UCFT_backups/20260930_190100/input/指示词(7).md
+  - GitHub text mirror: backups/20260930_190100/input/指示词(7).md
+  - GitHub commit: b017f29eed0d44b3958fff6daa0c1ee20a26690b
+- pre-backup stable state/log/manifest/M7/M6 saved under backups/20260930_190100/input/
+- output:
+  - /UCFT_backups/20260930_190100/output/UCFT_M8_production_input_freeze.md
+  - /UCFT_backups/20260930_190100/output/UCFT_M8_九试件输入清单.csv
+  - /UCFT_backups/20260930_190100/output/UCFT_M8_材料输入冻结状态.csv
+  - /UCFT_backups/20260930_190100/output/UCFT_M8_material_geometry_contract.py
+- GitHub stable M8 outputs:
+  - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M8_production_input_freeze.md
+  - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M8_九试件输入清单.csv
+  - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M8_材料输入冻结状态.csv
+  - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M8_material_geometry_contract.py
