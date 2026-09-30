@@ -91,3 +91,14 @@ M2 post-backup GitHub commits：
   - commit 032028166e95d2e47f2a795302bd437708195983
 - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_执行日志.md
   - commit 10353ad4f91839cd8a70f60879698db0ceb3e2ae
+
+
+### M3 post-backup
+- backups/20260930_145000/output/UCFT_M3_steel_local_mixed_harmonic_audit.md
+  - commit 0e4f0611defcea5101bee3467769c2bb38bdbfe7
+- backups/20260930_145000/output/UCFT_低维全过程半解析理论_当前状态.md
+  - commit 1f52003d79b01e0e8a3b789eeac797eb1d5ed467
+- backups/20260930_145000/output/UCFT_低维全过程半解析理论_执行日志.md
+  - commit 7677964d9c28941de565181e7782aa1a679aba32
+- backups/20260930_145000/output/UCFT_低维全过程半解析理论_备份清单.md
+  - initial post-backup commit dd2c98d72c6f0a5a6f0977d01d194466dcd07c7b
