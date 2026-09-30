@@ -278,3 +278,35 @@ Post-backup stable snapshots:
 - current derivation output backup commit: 049805f11984f2878f691975f49d5cf063d23c66
 - execution log output backup commit: 46ffe4d6ac769f5acdb3c0d56b6b061217f0bd6a
 - manifest output snapshot commit (pre-final-manifest): 4bf84534c699334640b450b38f35dcf4b5790be6
+
+
+## 20260930_181500 — M7
+
+| original filename | source | backup path | version/commit | description |
+|---|---|---|---|---|
+| 指示词(6).md | user upload | backups/20260930_181500/input/指示词(6).md | a01ae12173654b284d90d6abe4e3f7b211515306 | original route contract backup |
+| UCFT_低维全过程半解析理论_当前状态.md | GitHub stable | backups/20260930_181500/input/UCFT_低维全过程半解析理论_当前状态.md | 5335cda20bc7b6f15c3c201894c51fb085e0c243 | pre-M7 state |
+| UCFT_nonlinear_membrane_condensation_当前推导.md | GitHub stable | backups/20260930_181500/input/UCFT_nonlinear_membrane_condensation_当前推导.md | 9965c9319f311d6d4deccd94b14ac1d395175de9 | pre-M7 derivation |
+| UCFT_低维全过程半解析理论_执行日志.md | GitHub stable | backups/20260930_181500/input/UCFT_低维全过程半解析理论_执行日志.md | e0f1a0e24a15fba2765c4e3362e8549715044156 | pre-M7 log |
+| UCFT_低维全过程半解析理论_备份清单.md | GitHub stable | backups/20260930_181500/input/UCFT_低维全过程半解析理论_备份清单.md | 33a709d62f1890571fde73fb95231f113d2a0c68 | pre-M7 manifest |
+| UCFT_M6_inner_outer_residual_Schur_condensation.md | GitHub stable | backups/20260930_181500/input/UCFT_M6_inner_outer_residual_Schur_condensation.md | 2c289b1a4cd7c344c717ae9fb900f9bbaf330b7a | pre-M7 M6 theory |
+| UCFT_M6_residual_schur_assembler.py | GitHub stable | backups/20260930_181500/input/UCFT_M6_residual_schur_assembler.py | 7356a85f573abca365d0e998c485073d285b9052 | pre-M7 assembler |
+| UCFT_M7_theory_self_audit.md | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_theory_self_audit.md | Library libfile_f5b762299c5c8191ab094a1c2bab243f; GitHub 9e043d4d375d681e38ca8f9203541c3971a98875 | full M7 audit in Library, stable audit in GitHub |
+| UCFT_M7_理论自检摘要.csv | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_理论自检摘要.csv | Library libfile_7c2c46d42f3c8191851c38293f1ac22f; GitHub 4a12bb022777b94af49bb28dc923bd820ef61c04 | M7 verdict summary |
+| UCFT_M7_branch_continuity条件.csv | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_branch_continuity条件.csv | Library libfile_14729a7d805481919d9df61b7cee40fb | production material continuity conditions |
+| UCFT_M7_Jacobian尺度化检查.csv | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_Jacobian尺度化检查.csv | Library libfile_fa372d41428c8191885b180198b2a64f | unit/scaling audit |
+| UCFT_M7_完整虚功Jacobian有限差分检查.csv | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_完整虚功Jacobian有限差分检查.csv | Library libfile_3fd7ec1f84ac8191a26dd510b8ddaa7d | Jacobian finite-difference audit |
+| UCFT_M7_物理结构Schur与Jacobian检查.csv | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_物理结构Schur与Jacobian检查.csv | Library libfile_deda385bb03c8191a9c11d37a6bf37fe | physics-shaped Schur check |
+| UCFT_M7_S族边界外功检查.csv | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_S族边界外功检查.csv | Library libfile_bb19fe97a448819183f726d47af47987 | S-family boundary work audit |
+| UCFT_M6_inner_outer_residual_Schur_condensation.md | M7 corrected | /UCFT_backups/20260930_181500/output/UCFT_M6_inner_outer_residual_Schur_condensation.md | Library libfile_e3671089ac58819183139e86b05c9837; GitHub b89bc1164ac18c4a6a77b359f2ebcccf2e7b2c7d | M7 errata appended |
+| UCFT_M6_residual_schur_assembler.py | M7 corrected | /UCFT_backups/20260930_181500/output/UCFT_M6_residual_schur_assembler.py | Library libfile_50426bcc33108191b925953443e759b3; GitHub bb197bcbcbcee367c34f45ba8c6465446ce3a284 | traction-orthogonal S basis |
+| UCFT_M7_theory_selfcheck.py | generated | /UCFT_backups/20260930_181500/output/UCFT_M7_theory_selfcheck.py | Library libfile_9278dfeb48e08191bb0f5e8617d863b0 | reproducible M7 checks |
+
+Post-M7 stable commits:
+- CURRENT_STATE: 6e9d7a1fc7e73c0612ac6aa79c13d1f13bd17f79
+- current derivation: 7edb4c181b90e09a0d9fc038ef89bd141539f2bb
+- execution log: 5a7c2d804586b9f8b215ba602a9931a6aefa9632
+- corrected M6 assembler: bb197bcbcbcee367c34f45ba8c6465446ce3a284
+- corrected M6 theory: b89bc1164ac18c4a6a77b359f2ebcccf2e7b2c7d
+- M7 audit: 9e043d4d375d681e38ca8f9203541c3971a98875
+- M7 summary: 4a12bb022777b94af49bb28dc923bd820ef61c04
