@@ -1019,3 +1019,586 @@ s=\sin Y,
 用解析分区 + exact thickness integration + 最多一维确定积分，替换本轮 18×18 Gauss verification，然后重新计算同一 C0/C1 \(q\)-path。
 
 只有这样才能正式判定 Gate 2。
+
+
+---
+
+# M2 正式 active-set kernel：厚度闭式 + 内层 Y 闭式 + 外层 X 一维积分
+
+## 15. 方向性 UHPC 应变的固定-\(X\) 结构
+
+对 C1：
+
+\[
+\varepsilon_x^0
+=
+E_x+B_x\cos2X-C_q\cos2Y+H_x\cos2X\cos2Y,
+\]
+
+\[
+\varepsilon_y^0
+=
+E_y-C_q\frac{b^2}{a_h^2}\cos2X+B_y\cos2Y+H_y\cos2X\cos2Y.
+\]
+
+采用方向性材料输入：
+
+\[
+e_x
+=
+\frac{\varepsilon_x^U+\nu_c\varepsilon_y^U}{1-\nu_c^2},
+\]
+
+\[
+e_y
+=
+\frac{\varepsilon_y^U+\nu_c\varepsilon_x^U}{1-\nu_c^2}.
+\]
+
+任意厚度点：
+
+\[
+e_\alpha=e_{\alpha m}+z\chi_\alpha.
+\]
+
+对固定 \(X\)，均可写成：
+
+\[
+\boxed{
+e_{\alpha m}(X,Y)
+=
+\mathcal A_\alpha(X)
++
+\mathcal B_\alpha(X)\cos2Y
+}
+\]
+
+以及：
+
+\[
+\boxed{
+\chi_\alpha(X,Y)
+=
+\mathcal D_\alpha(X)\sin Y
+}
+\]
+
+其中：
+
+\[
+\mathcal A_x
+=
+\frac{
+E_x+B_x\cos2X
++\nu_c
+\left(
+E_y-C_q\frac{b^2}{a_h^2}\cos2X
+\right)
+}{
+1-\nu_c^2
+},
+\]
+
+\[
+\mathcal B_x
+=
+\frac{
+-C_q+H_x\cos2X
++\nu_c(B_y+H_y\cos2X)
+}{
+1-\nu_c^2
+},
+\]
+
+\[
+\mathcal A_y
+=
+\frac{
+E_y-C_q\frac{b^2}{a_h^2}\cos2X
++\nu_c(E_x+B_x\cos2X)
+}{
+1-\nu_c^2
+},
+\]
+
+\[
+\mathcal B_y
+=
+\frac{
+B_y+H_y\cos2X
++\nu_c(-C_q+H_x\cos2X)
+}{
+1-\nu_c^2
+},
+\]
+
+\[
+\mathcal D_x
+=
+\frac{\pi^2q}{b(1-\nu_c^2)}
+\left(
+1+\nu_c\frac{b^2}{a_h^2}
+\right)
+\sin X,
+\]
+
+\[
+\mathcal D_y
+=
+\frac{\pi^2q}{b(1-\nu_c^2)}
+\left(
+\frac{b^2}{a_h^2}+\nu_c
+\right)
+\sin X.
+\]
+
+---
+
+## 16. 每一个 active-set boundary 都退化为二次方程
+
+固定 \(X\)，令：
+
+\[
+s=\sin Y,\qquad 0\le Y\le\frac{\pi}{2},
+\]
+
+利用：
+
+\[
+\cos2Y=1-2s^2.
+\]
+
+UHPC 上、下厚度表面：
+
+\[
+z=\pm\frac{t_c}{2}
+\]
+
+处的方向性材料输入为：
+
+\[
+e_{\alpha,\pm}
+=
+\mathcal A_\alpha
++
+\mathcal B_\alpha(1-2s^2)
+\pm
+\frac{t_c}{2}\mathcal D_\alpha s.
+\]
+
+任意材料阈值：
+
+\[
+e_{\alpha,\pm}=e_j
+\]
+
+严格变成：
+
+\[
+\boxed{
+2\mathcal B_\alpha s^2
+\mp
+\frac{t_c}{2}\mathcal D_\alpha s
+-
+\left(
+\mathcal A_\alpha+\mathcal B_\alpha-e_j
+\right)
+=0
+}
+\]
+
+所以每一个：
+
+- tension/compression boundary；
+- tensile peak boundary；
+- compression peak boundary；
+- 未来任何分段多项式 threshold；
+
+在固定 \(X\) 上最多产生两个 \(s\in[0,1]\) 根。
+
+因此：
+
+\[
+\boxed{
+\text{active-set boundary 是解析根，不是 Gauss-point if 判定。}
+}
+\]
+
+由于当前场关于 \(Y=\pi/2\) 对称，只需：
+
+\[
+0\le Y\le\frac{\pi}{2}
+\]
+
+求根、排序，再乘以 2 恢复完整 \(Y\) 区域。
+
+---
+
+## 17. 厚度积分严格闭式
+
+在任意固定 active interval 中：
+
+\[
+\sigma_j(e)
+=
+a_{j1}e+a_{j2}e^2+\cdots+a_{jn}e^n.
+\]
+
+定义：
+
+\[
+F_j(e)
+=
+\frac{a_{j1}}2e^2
++
+\frac{a_{j2}}3e^3
++\cdots+
+\frac{a_{jn}}{n+1}e^{n+1},
+\]
+
+\[
+J_j(e)
+=
+\frac{a_{j1}}3e^3
++
+\frac{a_{j2}}4e^4
++\cdots+
+\frac{a_{jn}}{n+2}e^{n+2}.
+\]
+
+若：
+
+\[
+e=e_m+z\chi,
+\]
+
+则任意同一材料分支厚度区间 \(z_a\le z\le z_b\)：
+
+\[
+\boxed{
+N_j
+=
+\frac{
+F_j(e_b)-F_j(e_a)
+}{
+\chi
+}
+}
+\]
+
+\[
+\boxed{
+M_j
+=
+\frac{
+J_j(e_b)-J_j(e_a)
+-e_m\left[F_j(e_b)-F_j(e_a)\right]
+}{
+\chi^2
+}
+}
+\]
+
+其中：
+
+\[
+e_a=e_m+\chi z_a,\qquad
+e_b=e_m+\chi z_b.
+\]
+
+当 \(\chi\to0\) 时使用该式的连续极限。
+
+如果厚度跨过：
+
+\[
+e=0,
+\]
+
+则：
+
+\[
+z_0=-\frac{e_m}{\chi}
+\]
+
+显式确定，压、拉两边分别调用自己的多项式，再把两段 \(N,M\) 相加。
+
+没有厚度 Gauss 积分。
+
+---
+
+## 18. 为什么固定 \(X\) 后，整个 \(Y\) 积分仍然可以闭式
+
+在一个 active pattern 不变的 \(Y\) 区间中：
+
+\[
+e_m
+=
+a_0+a_2s^2,
+\]
+
+\[
+\chi=Ds.
+\]
+
+厚度表面应变：
+
+\[
+e_\pm
+=
+a_0\pm d_1s+a_2s^2.
+\]
+
+把它们代入有限阶 \(F_j,J_j\) 后，\(N_j(Y)\)、\(M_j(Y)\) 只会成为：
+
+\[
+s^p
+\]
+
+的有限 Laurent polynomial。
+
+由于所有材料多项式都满足：
+
+\[
+\sigma(0)=0,
+\]
+
+当前 tension/compression crossing 下所需最低幂只到：
+
+\[
+p=-2.
+\]
+
+因此固定 \(X\) 的全部内层 \(Y\) 积分只需要：
+
+\[
+I_p(Y_a,Y_b)
+=
+\int_{Y_a}^{Y_b}\sin^pY\,dY.
+\]
+
+基本原函数：
+
+\[
+I_0=Y,
+\]
+
+\[
+I_1=-\cos Y,
+\]
+
+\[
+I_{-1}
+=
+\ln\tan\frac Y2,
+\]
+
+\[
+I_{-2}
+=
+-\cot Y.
+\]
+
+对正整数 \(p\ge2\)：
+
+\[
+\boxed{
+I_p
+=
+-\frac{\sin^{p-1}Y\cos Y}{p}
++
+\frac{p-1}{p}I_{p-2}
+}
+\]
+
+按上下限取差即可。
+
+所以：
+
+\[
+\boxed{
+\text{固定 }X\text{ 后，所有 }Y\text{ active intervals 均可解析积分。}
+}
+\]
+
+---
+
+## 19. 正式残量最终只剩一个 \(X\) 方向确定积分
+
+利用 \(X=\pi/2\) 对称性：
+
+\[
+\int_0^\pi(\cdots)dX
+=
+2\int_0^{\pi/2}(\cdots)dX.
+\]
+
+因此所有 C0/C1 residual 都可严格降到：
+
+\[
+\boxed{
+G_i
+=
+\frac{4ba_h}{\pi^2}
+\int_0^{\pi/2}
+\mathcal G_i(X)\,dX
+}
+\]
+
+其中：
+
+\[
+\mathcal G_i(X)
+\]
+
+已经包含：
+
+- 显式 active-set root；
+- exact thickness integration；
+- exact \(Y\)-integration。
+
+最终只保留一个：
+
+\[
+X\in[0,\pi/2]
+\]
+
+的一维确定积分。
+
+这满足最高层合同：
+
+\[
+\boxed{
+\text{analytic active set}
++
+\text{exact thickness}
++
+\text{exact one in-plane direction}
++
+\text{one-dimensional outer integral}.
+}
+\]
+
+正式理论不再需要二维/三维 Gauss points。
+
+---
+
+## 20. 半解析 kernel 的首次正式数值核验
+
+已按上述结构实现 prototype：
+
+- \(z\)：解析 active-set + polynomial primitive；
+- \(Y\)：解析根分区 + Laurent polynomial primitive；
+- \(X\)：仅保留一维 adaptive definite integral；
+- Newton：求 C0/C1 inner + \(q\) generalized equilibrium。
+
+BH060：
+
+\[
+b=a_h=3000\ {\rm mm},
+\qquad
+q=0.001.
+\]
+
+semi-analytic C0：
+
+\[
+\boxed{
+P_{C0}=4.762006709\ {\rm MN}
+}
+\]
+
+semi-analytic C1：
+
+\[
+\boxed{
+P_{C1}=4.762008362\ {\rm MN}
+}
+\]
+
+\[
+\boxed{
+H_x=-1.35053\times10^{-7},
+\qquad
+H_y=6.18794\times10^{-8}
+}
+\]
+
+C0 omitted residual：
+
+\[
+\widehat G_{H_x}
+=
+1.26319\times10^6\ {\rm N\,mm},
+\]
+
+\[
+\widehat G_{H_y}
+=
+-6.71489\times10^3\ {\rm N\,mm}.
+\]
+
+与上一轮只作验证的 18×18 面内 Gauss 结果：
+
+\[
+P_{C0}=4.762006642\ {\rm MN},
+\]
+
+\[
+P_{C1}=4.762008289\ {\rm MN}
+\]
+
+相比，差别仅为数十牛级，且 \(H_x,H_y\) 基本完全一致。
+
+因此：
+
+\[
+\boxed{
+\text{semi-analytic active-set kernel 的单状态实现已通过独立交叉核验。}
+}
+\]
+
+但完整 Gate 2 仍需同一 semi-analytic kernel 跑完连续 \(q\)-path，而不能用单点替代全过程。
+
+---
+
+## 21. 当前实际计算瓶颈
+
+当前 4×4、6×6 小矩阵求解不是瓶颈。
+
+profile 显示当前原型的主要成本来自：
+
+1. 每一次 residual evaluation 对不同 residual component 重复执行同一个外层 \(X\) adaptive integral；
+2. finite-difference Jacobian 会重复调用这些一维积分；
+3. active-set root / Laurent expansion 本身成本次之。
+
+因此下一步优化不应使用“大型矩阵算法”。
+
+最直接的保持同一方程组的加速是：
+
+\[
+\boxed{
+\text{vector-valued outer quadrature}
++
+\text{common-expression reuse}
++
+\text{consistent active-set Jacobian}
+}
+\]
+
+必要时在 active-set 切换点再考虑 semismooth Newton；目前不应因为算法名称先进而引入。
+
+---
+
+## 22. 唯一 NEXT_ACTION 更新
+
+在不改变任何物理方程的前提下：
+
+\[
+\boxed{
+\text{把 semi-analytic kernel 改成一次 }X\text{ 积分同时返回全部 residual components，}
+}
+\]
+
+并用解析/一致 Jacobian 或至少复用 active-set 的差分 Jacobian，消除当前重复积分瓶颈。
+
+然后用该正式 semi-analytic kernel 跑完 BH060、BH100 的 pre-tensile-peak C0/C1 连续 \(q\)-path，正式裁决 Gate 2。
