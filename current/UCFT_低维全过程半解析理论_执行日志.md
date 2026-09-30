@@ -47,3 +47,11 @@ No new theory gate has been introduced.
 
 NEXT_ACTION:
 derive and implement the missing steel in-plane production reduction after exact M5 thickness integration, leaving at most one deterministic 1D integral and preserving human reproducibility; only then start the 144 candidate BH005 perfect-geometry forced-response branches.
+
+
+## 20261001_031500 外部 El-Metwally 方法公式恢复
+- 用户明确要求只恢复外部既有方法，不混入 UCFT。
+- 已检索并核验 1989 section paper、1990 slender-column paper、1990 wall paper、Newmark 1943，以及 Chen-Lui 1991 同研究线技术展开。
+- 已生成/备份：current/外部第二种方法_El-Metwally全过程公式恢复.md。
+- 关键链：nonlinear material section -> M-phi-P -> Newmark/conjugate-beam or FDM -> prescribed deflection -> solve P -> pointwise complete load-deflection curve -> peak -> descending branch.
+- 注：无法直接获取 1990 两篇付费全文的全部逐字符号；对 section tangent/Newmark station equations 使用同研究线公开展开，对指定挠度 Newton Jacobian使用等价残量化恢复，并明确标注来源等级。
