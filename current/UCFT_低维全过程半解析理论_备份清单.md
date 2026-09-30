@@ -43,3 +43,15 @@ backups/20261001_013200/output/
 
 ## Unique NEXT_ACTION
 Complete the steel in-plane production reduction to at most one deterministic 1D integral, then execute BH005 candidate-wise perfect-geometry forced-response paths.
+
+
+## 20261001_031500 — El-Metwally 外部既有方法公式恢复
+- pre-backup: backups/20261001_031500/input/
+- output: backups/20261001_031500/output/外部第二种方法_El-Metwally全过程公式恢复.md
+  commit: 7385c7d4ae3e8d72a3e938cb0521687bfa8d9279
+- current: current/外部第二种方法_El-Metwally全过程公式恢复.md
+  commit: 3f34c4942dba4d92803c599535d277f981d1412b
+- state log after reconstruction:
+  current/UCFT_低维全过程半解析理论_当前状态.md commit c4118154c6c987a9295d5dc46c87750eed9d4bb9
+  current/UCFT_低维全过程半解析理论_执行日志.md commit 1e8240d58afb6a968f93eff3f165b3b02bc894f3
+- note: 1990 publisher full-text equations were not all directly accessible; exact source hierarchy is preserved in the report: original-paper verified statements / same-research-line equations / transparent equivalent residual formulation / later modified implementations.
