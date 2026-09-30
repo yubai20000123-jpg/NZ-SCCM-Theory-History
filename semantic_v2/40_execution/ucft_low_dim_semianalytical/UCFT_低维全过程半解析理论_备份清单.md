@@ -215,3 +215,59 @@ Library directory: /UCFT_backups/20260930_163600/output/
   - commit 8268177a0920ef81b37a63d088fd8939815511c2
 - backups/20260930_163600/output/UCFT_低维全过程半解析理论_备份清单.md
   - initial post-backup commit be7c081b41fc74e4f3c0797932dd17e0e81b2aa0
+
+
+## 2026-09-30 17:05 +08:00 — M6
+
+- original filename: 指示词(5).md
+  - source: user upload
+  - backup path: backups/20260930_170500/input/指示词(5).md
+  - commit: 4e6cfa272e5db5f23baffa159d68165936066d0c
+  - description: highest-priority route contract for this round
+
+- original filename: UCFT_低维全过程半解析理论_当前状态.md
+  - source: GitHub current state before M6
+  - backup path: backups/20260930_170500/input/UCFT_低维全过程半解析理论_当前状态.md
+  - commit: c75b210e4d2543f8e1bd45305f90afec60d2d573
+
+- original filename: UCFT_nonlinear_membrane_condensation_当前推导.md
+  - source: GitHub current derivation before M6
+  - backup path: backups/20260930_170500/input/UCFT_nonlinear_membrane_condensation_当前推导.md
+  - commit: 08a26cab7b5953b2da75e31ff35bbcc93f5aa88c
+
+- original filename: UCFT_低维全过程半解析理论_执行日志.md
+  - source: GitHub execution log before M6
+  - backup path: backups/20260930_170500/input/UCFT_低维全过程半解析理论_执行日志.md
+  - commit: 4024ae43add540ba22285583d7b67736120faf65
+
+- original filename: UCFT_低维全过程半解析理论_备份清单.md
+  - source: GitHub manifest before M6
+  - backup path: backups/20260930_170500/input/UCFT_低维全过程半解析理论_备份清单.md
+  - commit: 014e6f385dab1f6e5531bfee35661eef60d0aa26
+
+- generated filename: UCFT_M6_inner_outer_residual_Schur_condensation.md
+  - persistent GitHub path: semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M6_inner_outer_residual_Schur_condensation.md
+  - GitHub commit: 42b10107c33f9201829f26f52617e6c112eb5fc4
+  - GitHub backup path: backups/20260930_170500/output/UCFT_M6_inner_outer_residual_Schur_condensation.md
+  - backup commit: 3620683b6ef8859ec9762ec89412d9c856e9d3e5
+  - Library path: /UCFT_backups/20260930_170500/output/UCFT_M6_inner_outer_residual_Schur_condensation.md
+
+- generated filename: UCFT_M6_residual_schur_assembler.py
+  - persistent GitHub path: semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M6_residual_schur_assembler.py
+  - GitHub commit: fe27672786f3c0a7613329e6cb20be39e857f194
+  - GitHub backup path: backups/20260930_170500/output/UCFT_M6_residual_schur_assembler.py
+  - backup commit: 9b4d67fd53069fb9a9a6d546a84c02c350d42396
+
+- generated filename: UCFT_M6_Schur凝聚等价性验证.csv
+  - Library path: /UCFT_backups/20260930_170500/output/UCFT_M6_Schur凝聚等价性验证.csv
+
+- generated filename: UCFT_M6_steel_local运动学导数验证.csv
+  - Library path: /UCFT_backups/20260930_170500/output/UCFT_M6_steel_local运动学导数验证.csv
+
+- stable state updates:
+  - derivation commit: 5e4a1320aa3b8f1ec47f7bcfd94613fff07a1ee1
+  - current state commit: 404de3726d701e1607b5c4ee75e8f2b8a7e7f28f
+  - execution log commit: c673cd0245fb26a2ea9c058ba815c8334c11f250
+
+M6 status: PASS.
+NEXT_ACTION: M7 theory self-audit only.
