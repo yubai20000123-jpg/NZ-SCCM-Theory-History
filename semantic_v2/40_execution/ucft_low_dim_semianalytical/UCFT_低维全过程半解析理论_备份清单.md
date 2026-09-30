@@ -271,3 +271,10 @@ Library directory: /UCFT_backups/20260930_163600/output/
 
 M6 status: PASS.
 NEXT_ACTION: M7 theory self-audit only.
+
+
+Post-backup stable snapshots:
+- CURRENT_STATE output backup commit: 6cde63d9646c90f9171df50b60725ddc3fd38398
+- current derivation output backup commit: 049805f11984f2878f691975f49d5cf063d23c66
+- execution log output backup commit: 46ffe4d6ac769f5acdb3c0d56b6b061217f0bd6a
+- manifest output snapshot commit (pre-final-manifest): 4bf84534c699334640b450b38f35dcf4b5790be6
