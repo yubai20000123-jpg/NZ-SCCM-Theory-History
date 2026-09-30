@@ -48,3 +48,46 @@ M2 post-backup GitHub commits：
 - backups/20260930_141737/output/UCFT_低维全过程半解析理论_当前状态.md : 56819e1a9b4e8136a604605bdbd4dd07773d9443
 - backups/20260930_141737/output/UCFT_低维全过程半解析理论_执行日志.md : 868b5f9f22341f4910b1ab776ca514481af4127b
 - backups/20260930_141737/output/UCFT_低维全过程半解析理论_备份清单.md : e7862d4818d719c12b4dadc02cc57a5b71a00dbc（首次 post-M2 镜像；随后同步最终清单内容）
+
+
+## 2026-09-30 14:50 +08:00 — M3
+
+### input / pre-backup
+- 原始用户文件：Library /UCFT_backups/20260930_145000/input/指示词(2).md
+  - library id: libfile_cbb9afffcb3481919e6df40ddfe46893
+  - SHA256: 224e46926dceb3d308581b8e34290df90949688fbfd6f5d20afadd82c889d524
+  - GitHub 大文本镜像尝试被工具安全检查阻止；未宣称成功。
+- backups/20260930_145000/input/UCFT_低维全过程半解析理论_当前状态.md
+  - commit 1dc7f249425b08490cb29bbee75574c31ff5231b
+- backups/20260930_145000/input/UCFT_nonlinear_membrane_condensation_当前推导.md
+  - commit 38b92ce8061e5f60c52e6ed665a1e6ab608fc0d3
+- backups/20260930_145000/input/UCFT_低维全过程半解析理论_执行日志.md
+  - commit 5d4ad2b633ac6c203c643fd0ea66f1eb3922518b
+- backups/20260930_145000/input/UCFT_低维全过程半解析理论_备份清单.md
+  - commit 2299e70eb2f633818c821741dd50cc4e1fe791ed
+
+### M3 generated output in Library
+目录：/UCFT_backups/20260930_145000/output/
+
+- UCFT_M3_steel_local_mixed_harmonic_audit.md
+  - libfile libfile_5c007999fa7c8191b21aa8d8a960adc2
+- UCFT_M3_qA_A2_解析频谱.csv
+  - libfile libfile_9e8b0cc0b2188191b7b0bc1d0b64f4be
+- UCFT_M3_N4_m4_归一化残量谱.csv
+  - libfile libfile_bbe13bc410d481918c2bfc9b5cd961d4
+- UCFT_M3_频谱鲁棒性扫描.csv
+  - libfile libfile_8445f22e48588191b2a0ca0ea2665d35
+- UCFT_M3_频谱审计摘要.csv
+  - libfile libfile_64f78769b38081918c2a013ba2c25690
+- UCFT_M3_频谱审计结果.txt
+  - libfile libfile_5696d3b85e00819190a60cb01fdfbece
+- UCFT_M3_mixed_harmonic_解析谱计算器.py
+  - libfile libfile_9a5683de54e4819187dc4a1ab04e24f4
+
+### GitHub stable output
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M3_steel_local_mixed_harmonic_audit.md
+  - commit 33cdac0d9ef87c56ac1fc0c873baac91f07daaaa
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_当前状态.md
+  - commit 032028166e95d2e47f2a795302bd437708195983
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_执行日志.md
+  - commit 10353ad4f91839cd8a70f60879698db0ceb3e2ae
