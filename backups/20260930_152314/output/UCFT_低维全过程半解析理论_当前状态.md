@@ -1,6 +1,6 @@
 # UCFT 低维全过程半解析理论 当前状态
 
-更新时间：2026-09-30 14:50 +08:00
+更新时间：2026-09-30 15:23 +08:00
 
 ## 1. 最高层级合同
 
@@ -264,7 +264,7 @@ UHPC：
 - tension/compression 分开 polynomial / piecewise polynomial；
 - thickness active-set 已闭式；
 - current contract 只锁定 tensile peak ~7 MPa 量级；
-- production 面内 active-set 尚待 M4。
+- production 面内 active-set 已由 M4 完成：解析 z + 解析 Y + 单一 X 确定积分。
 
 Steel：
 - M3 只用 linear plane-stress tangent 做 harmonic mechanism audit；
@@ -322,7 +322,7 @@ M^U=\frac{\mathcal H(e^+)-\mathcal H(e^-)-e_m[\mathcal F(e^+)-\mathcal F(e^-)]}{
 - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M4_UHPC_active_set_analytic_partition.md
 - Library /UCFT_backups/20260930_152314/output/UCFT_M4_UHPC_active_set_analytic_partition.md
 
-## 7. M3 正式文件
+## 8. M3 正式文件
 
 GitHub：
 - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M3_steel_local_mixed_harmonic_audit.md
@@ -337,11 +337,11 @@ Library：
 - /UCFT_backups/20260930_145000/output/UCFT_M3_频谱审计结果.txt
 - /UCFT_backups/20260930_145000/output/UCFT_M3_mixed_harmonic_解析谱计算器.py
 
-## 8. 九试件进度
+## 9. 九试件进度
 
-尚未进入 M8。M3 没有使用 FEM target 求根或调参。
+尚未进入 M8。M4 没有使用 FEM target 求根或调参；M2 central tensile family 仅用于积分算法 benchmark。
 
-## 9. 已排除/禁止
+## 10. 已排除/禁止
 
 继续禁止：
 - 31/41/57DOF 主理论回归；
