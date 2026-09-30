@@ -112,3 +112,46 @@ M2 post-backup GitHub commits：
 - UCFT_M3_频谱审计摘要.csv : 41ecb7f7ef019f032e2c496e177a01686567995431873318b3a8293c4917fc72
 - UCFT_M3_频谱审计结果.txt : c440a0f60d89eb8ec75eab191ea67dfe80a8f69889f638cf7688cb0b8884ac02
 - UCFT_M3_频谱鲁棒性扫描.csv : a1ebcc676f521ba7246d9ca9dbc73c6faddf14975c338ef053c6e30f7b7c1397
+
+
+## 2026-09-30 15:23 +08:00 — M4
+
+### input / pre-backup
+- 原始用户文件：Library /UCFT_backups/20260930_152314/input/指示词(3).md
+  - library id: libfile_6fff8727f600819186371e8094c7725f
+  - SHA256: 224e46926dceb3d308581b8e34290df90949688fbfd6f5d20afadd82c889d524
+- backups/20260930_152314/input/UCFT_低维全过程半解析理论_当前状态.md — commit 55541ff5dd081bd9e192ae85cdd048a52d4bb07a
+- backups/20260930_152314/input/UCFT_nonlinear_membrane_condensation_当前推导.md — commit 7d561ffb6f1dcb19eb42e1974badf86fa11e0eeb
+- backups/20260930_152314/input/UCFT_低维全过程半解析理论_执行日志.md — commit 2c76fc21e85db184949a75aebf08fa10f79b3845
+- backups/20260930_152314/input/UCFT_低维全过程半解析理论_备份清单.md — commit f088ae47fd75b13dc47210f358257d5339cd2e4a
+
+### Library output
+目录：/UCFT_backups/20260930_152314/output/
+- UCFT_M4_UHPC_active_set_analytic_partition.md — libfile_a9a8eb64c6dc819195b2823b07e86186
+- UCFT_M4_UHPC_analytic_partition_kernel.py — libfile_a09d5b18be4c8191a54299cb95e0c52c
+- UCFT_M4_一致性验证摘要.csv — libfile_fa92abdba54c8191ad9cc97122cd88ea
+- UCFT_M4_厚度全局原函数_vs_显式active_set验证.csv — libfile_2a5ebb5eee1481919cb365d81219485d
+- UCFT_M4_解析材料边界示例.csv — libfile_43c274ff9c008191a9d2d1decf8ed529
+- UCFT_M4_面内解析分区_vs_二维Gauss验证.csv — libfile_204daabb48c881918c6c80fb21a170e2
+
+### GitHub stable output
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M4_UHPC_active_set_analytic_partition.md
+  - commit af80c6e12161ae111a735c40a81a6b1706337ac8
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M4_UHPC_analytic_partition_kernel.py
+  - commit b770faa0204ab6fdac9247060beb73fb0fed9fdd
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_当前状态.md
+  - commit 20b695d701b6c321e8fc0c92e7918d70fb762147
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_执行日志.md
+  - commit 32449e1a233a613fa9e3b13cbbf2183685fc31ad
+
+### validation
+- cumulative primitive vs explicit z_j active-set: max relative error 1.722389e-08
+- analytic Y + 1D X vs diagnostic 80x120 2D Gauss: max relative difference 2.720307e-07; mean abs relative difference 2.269048e-08
+
+### artifact SHA256
+- UCFT_M4_UHPC_active_set_analytic_partition.md : 7ba100f0c35e5d76d2457b657a3bdf557fccdaa03a93401bfcfc1b1bd3117077
+- UCFT_M4_UHPC_analytic_partition_kernel.py : 5586f5f5af2d3491349f2c37525ce22cff09580fe0ea7d12e1978341f90288a5
+- UCFT_M4_一致性验证摘要.csv : 6e23ee0d368fe7fd8a2d3db9613d536379f4e6b2e95dd579753e410e68d6a299
+- UCFT_M4_厚度全局原函数_vs_显式active_set验证.csv : 43d85617ab2e32152b08f11d51b3003b3e92f9c01c827572d16ba5ad05cb72e3
+- UCFT_M4_解析材料边界示例.csv : dc0d40206c11c5b86efb248ee56ed9dff1731130b58d080dbfd11cc50f9acf8f
+- UCFT_M4_面内解析分区_vs_二维Gauss验证.csv : 0907dcb94a7f8fbd24753046d361495bb7abded6f88f1c1cbc607a1bcfd55f8b
