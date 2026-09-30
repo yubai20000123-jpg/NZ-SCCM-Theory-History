@@ -204,3 +204,14 @@ Library directory: /UCFT_backups/20260930_163600/output/
   - commit 7601a49002e558785f90831b95ab9a3939d40c21
 - semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_低维全过程半解析理论_执行日志.md
   - commit 1e99dca8af9216de9f8b697222e167a2cd1fabac
+
+
+### M5 post-backup GitHub commits
+- backups/20260930_163600/output/UCFT_M5_steel_deformation_theory_active_set.md
+  - commit 36622950335153c747ce766937502c952ecaf4cd
+- backups/20260930_163600/output/UCFT_低维全过程半解析理论_当前状态.md
+  - commit 63cfe24b9df33b7208fb951b0dc598fc699c0163
+- backups/20260930_163600/output/UCFT_低维全过程半解析理论_执行日志.md
+  - commit 8268177a0920ef81b37a63d088fd8939815511c2
+- backups/20260930_163600/output/UCFT_低维全过程半解析理论_备份清单.md
+  - initial post-backup commit be7c081b41fc74e4f3c0797932dd17e0e81b2aa0
