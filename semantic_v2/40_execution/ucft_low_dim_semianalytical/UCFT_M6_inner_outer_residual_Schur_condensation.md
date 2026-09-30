@@ -2738,3 +2738,108 @@ A^\pm\rightarrow0
 \]
 
 M7 不跑九试件正式全过程；只有 M7 通过以后才进入 M8。
+
+---
+
+# 34. M7 自检回写：S-family loading-edge work 的 exact basis correction
+
+原始
+\[
+\mathbf B_{S_y^{kl}}^{raw}
+=
+[0,\sin kX\sin lY,-k/(lr)\cos kX\cos lY]^T
+\]
+对应
+\[
+v_{S_y}^{raw}
+=
+-\frac{a_h}{l\pi}S_{y,kl}\sin kX\cos lY.
+\]
+因此 loading-edge 平均轴向位移系数为
+\[
+\boxed{
+c_{kl}
+=
+\frac{[1-(-1)^k][1-(-1)^l]}{kl\pi^2}.
+}
+\]
+qA 的 S-family 为 odd-odd pair，故
+\[
+c_{kl}=4/(kl\pi^2)\neq0.
+\]
+raw residual 必须含
+\[
++P_{eq}a_hc_{kl}.
+\]
+
+由于 \(E_y\) 已存在，production 采用精确 basis transform
+\[
+\boxed{
+\widetilde{\mathbf B}_{S_y^{kl}}
+=
+\mathbf B_{S_y^{kl}}^{raw}
+-c_{kl}\mathbf B_{E_y}.
+}
+\]
+即
+\[
+\widetilde{\mathbf B}_{S_y^{kl}}
+=
+[0,\sin kX\sin lY-c_{kl},-k/(lr)\cos kX\cos lY]^T.
+\]
+它仍严格 compatible，且平均 loading-edge displacement 为零。对应
+\[
+G_{\widetilde S_y}
+=
+G_{S_y}^{raw}-c_{kl}G_{E_y}.
+\]
+因此 root set、M3 candidate spectrum、single-q 结构与 Schur 方程均不变，只修正 inner basis / external-work bookkeeping。
+
+---
+
+# 35. M7 自检回写：\(P_{eq}\) 与 \(P_{report}\) 分离
+
+M6 outer unknown 统一改记
+\[
+\boxed{P_{eq}}
+\]
+表示 reduced equilibrium system 的 generalized axial load。
+
+PBL/web 仍只作 report correction：
+\[
+P_{report}
+=
+\chi_wP_c+P_s^++P_s^-.
+\]
+
+从 M8 起最终输出记号锁定为
+\[
+\boxed{P(q)\equiv P_{report}(q)}.
+\]
+因此 M6 Schur sensitivity 第一分量是
+\[
+dP_{eq}/dq,
+\]
+而最终极限必须由
+\[
+\boxed{
+\frac{dP_{report}}{dq}
+=
+\chi_w\frac{dP_c}{dq}
++\frac{dP_s^+}{dq}
++\frac{dP_s^-}{dq}
+}
+\]
+确定。每个 constituent derivative 由同一
+\[
+\xi_{,q},\ z_{,q}
+\]
+链式求导，不增加自由度。
+
+故
+\[
+\boxed{
+P_u=\max_qP_{report}(q)
+}
+\]
+；只有 \(\chi_w=1\) 时，\(dP_{eq}/dq=0\) 才可直接作为最终峰值条件。
