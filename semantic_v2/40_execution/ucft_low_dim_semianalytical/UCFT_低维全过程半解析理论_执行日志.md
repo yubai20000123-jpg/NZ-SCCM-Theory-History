@@ -545,3 +545,36 @@ unresolved issue:
 
 NEXT_ACTION:
 - recover formal M8 material/geometric input from Project/Library/repository and run connected q-path.
+
+
+## 2026-09-30 19:01 +08:00 — M8 production input freeze audit
+
+Task:
+- 恢复并冻结 M8 九试件 production material/geometry inputs；
+- 不使用 FEM target，不拟合 Pu。
+
+Files read:
+- 指示词(7).md；
+- latest CURRENT_STATE / execution log / manifest / M7；
+- project/library historical solvers and material documents；
+- public UHPC tensile literature for source audit.
+
+Results:
+- common steel/UHPC/thickness/q0/Aw inputs recovered；
+- steel M5 equivalent law frozen as project-native ideal elastic-perfectly plastic；
+- nine b and a_h=2b recovered；chi_w calculated；
+- archived A0_strip=0.225b/1600 recovered as provenance only；
+- exact whole-face N±,m±,A0± not uniquely recovered；
+- exact ~7 MPa UHPC Pt1/Pt2, e_tp, e_tu not uniquely recovered.
+
+Gate/status:
+- M8_INPUT_FREEZE = PARTIAL；
+- M8_FULL_PATH = NOT STARTED；
+- no solver failure and no theory-route failure.
+
+Unresolved:
+1. UHPC production tension law；
+2. whole-face local mode discrete mapping/selection.
+
+NEXT_ACTION:
+- close these two production input interfaces, then immediately run nine connected q-paths.
