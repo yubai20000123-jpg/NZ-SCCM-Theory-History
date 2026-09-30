@@ -1135,3 +1135,87 @@ P_{\rm report}=\chi_wP_c+P_s^++P_s^-.
 M6 equilibrium generalized \(P\) 与最终 report reaction 必须在 M8 输出中明确区分，不新增自由度。
 
 NEXT_ACTION：M7 theory self-audit only；检查 zero-load、linear elastic、q→0、A→0、top/bottom symmetry、dimensional、virtual-work/Jacobian consistency、branch continuity。不得提前跑九试件。
+
+
+# M7：M0–M6 统一理论自检
+
+更新时间：2026-09-30 18:15 +08:00。
+
+M7 最重要的新增结论有两项。
+
+第一，M3 qA 产生的 raw odd-odd \(S_y\) compatible mode 具有非零 loading-edge mean axial displacement：
+\[
+c_{kl}
+=
+\frac{[1-(-1)^k][1-(-1)^l]}{kl\pi^2}.
+\]
+对 qA S-family：
+\[
+c_{kl}=\frac4{kl\pi^2}.
+\]
+因此 raw residual 应含 \(+P_{eq}a_hc_{kl}\)。
+
+由于 \(E_y\) 已在 inner space 中，production 使用完全等价的 traction-orthogonal basis：
+\[
+\widetilde B_{S_y}=B_{S_y}^{raw}-c_{kl}B_{E_y}.
+\]
+这样 loading-edge mean displacement 严格为零，而且
+\[
+G_{\widetilde S_y}=G_{S_y}^{raw}-c_{kl}G_{E_y},
+\]
+所以 compatibility、root set、M3 omitted spectrum、Schur condensation 与结构级 \(q,A^+,A^-\) 均不变。
+
+第二，equilibrium system 的 axial load 改记 \(P_{eq}\)，PBL/web correction 后的最终输出为
+\[
+P_{report}=\chi_wP_c+P_s^++P_s^-.
+\]
+从 M8 起：
+\[
+P(q)\equiv P_{report}(q),
+\qquad
+P_u=\max_qP_{report}(q).
+\]
+M6 Schur 第一分量给的是 \(dP_{eq}/dq\)；最终峰值需计算
+\[
+\frac{dP_{report}}{dq}
+=
+\chi_w\frac{dP_c}{dq}
++\frac{dP_s^+}{dq}
++\frac{dP_s^-}{dq}.
+\]
+
+其余 M7 检查：
+- zero-load：PASS；
+- linear elastic Chen-Ji/Airy：PASS；
+- \(q\to0\)：PASS；
+- \(A\to0\) kinematic reduction：PASS；
+- TOP/BOTTOM parity：PASS；
+- dimensional consistency：PASS；
+- virtual-work/Jacobian：PASS；
+- full Newton / exact Schur：PASS；
+- branch continuity：PASS at theory level。
+
+Jacobian 从 M8 起必须使用 dimensionless scaling 后的 condition/singular values，不能解释 raw mixed-unit condition number。
+
+UHPC production polynomial 在 M8 前必须满足 finite-stress continuity：
+\[
+P_c(0)=P_{t1}(0)=0,
+\quad
+P_{t1}(e_{tp})=P_{t2}(e_{tp})=f_t,
+\]
+若 terminal 后设零应力：
+\[
+P_{t2}(e_{tu})=0,
+\quad
+P_c(e_z)=0.
+\]
+Steel：
+\[
+P_s(f_y/E_s)=f_y.
+\]
+
+\[
+\boxed{\mathrm{M7}=PASS}.
+\]
+
+NEXT_ACTION：从现有 Project/Library 恢复并冻结 M8 正式材料与九试件几何输入，然后直接运行 connected q-path。
