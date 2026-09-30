@@ -1034,3 +1034,104 @@ eq0.
 先不增加任何额外 membrane modes。
 
 必须从现有 whole-face multiwave steel-local 几何完整展开 qA 与 A² 的 mixed-harmonic 频谱，对 C0/C1 当前 basis 计算 omitted generalized residual spectrum；只有显著频率才允许激活对应 compatible ((H_{x,kl},H_{y,kl})) pair。
+
+
+# M6：inner membrane + outer residual + exact Schur condensation
+
+更新时间：2026-09-30 17:05 +08:00
+
+M6 已完成并 PASS。
+
+给定 q，外层仍只有：
+\[
+\mathbf z=[P,A^+,A^-]^T.
+\]
+
+inner membrane state：
+\[
+\boldsymbol\xi=[E_x,E_y,B_x,B_y,H_x,H_y,\text{statewise active C/S/B enrichments}]^T
+\]
+只作为 compatible condensation variables，不是新的结构级自由度。
+
+钢壳完整 thickness strain 已锁定为：
+\[
+\boldsymbol\varepsilon^{s,\pm}(\zeta)
+=
+\boldsymbol\varepsilon^0
++\Delta\boldsymbol\varepsilon^{\ell,\pm}
++(z_s^\pm+\zeta)\boldsymbol\kappa^g
++\zeta\boldsymbol\kappa^{\ell,\pm}.
+\]
+
+其中 local geometric strain 显式保留：
+\[
+q_0A^\pm+qA_0^\pm+qA^\pm,
+\qquad
+(A^\pm)^2+2A_0^\pm A^\pm.
+\]
+
+outer residual：
+\[
+R_q=0,\qquad R_{A^+}=0,\qquad R_{A^-}=0
+\]
+均由 finite current stress 直接虚功建立；M5 tangent 只进入 Jacobian。
+
+完整 Newton block：
+\[
+\mathbf J_{\rm full}
+=
+\begin{bmatrix}
+\mathbf G_\xi & \mathbf G_z\\
+\mathbf R_\xi & \mathbf R_z
+\end{bmatrix}.
+\]
+
+exact Schur：
+\[
+\mathbf K_{\rm cond}
+=
+\mathbf R_z-\mathbf R_\xi\mathbf G_\xi^{-1}\mathbf G_z.
+\]
+
+若 inner residual 尚未完全为零，凝聚 Newton 右端必须使用：
+\[
+\mathbf K_{\rm cond}\Delta\mathbf z
+=
+-\mathbf R+\mathbf R_\xi\mathbf G_\xi^{-1}\mathbf G.
+\]
+只有在 \(\mathbf G=0\) 后才能简化为 \(-\mathbf R\)。
+
+q-continuation 一致灵敏度：
+\[
+\overline{\mathbf R}_q
+=
+\mathbf R_q^\partial
+-\mathbf R_\xi\mathbf G_\xi^{-1}\mathbf G_q,
+\]
+\[
+\frac{d\mathbf z}{dq}
+=
+-\mathbf K_{\rm cond}^{-1}\overline{\mathbf R}_q.
+\]
+因此 regular q branch 上的 \(dP/dq\) 可直接由一致灵敏度得到。
+
+active-set moving boundary 在 finite stress 连续时，其 Leibniz 边界项严格相消；Jacobian 可直接分区积分 current tangent，不必求 material-boundary motion force。active topology 切换点按 event localization / semismooth 处理。
+
+独立验证：
+- exact Schur Newton vs full Newton：\(\Delta z\) 最大差 \(1.110223\times10^{-16}\)；
+- inner update 最大差 \(1.110223\times10^{-16}\)；
+- q sensitivity outer 最大差 \(1.665335\times10^{-16}\)；
+- q sensitivity inner 最大差 \(4.163336\times10^{-17}\)；
+- steel-local \(q,A,qA,AA\) kinematic derivatives vs central finite difference：最大相对差 \(1.390166\times10^{-10}\)。
+
+正式文件：
+- \`UCFT_M6_inner_outer_residual_Schur_condensation.md\`
+- \`UCFT_M6_residual_schur_assembler.py\`
+
+PBL/web correction 继续只作 report mapping：
+\[
+P_{\rm report}=\chi_wP_c+P_s^++P_s^-.
+\]
+M6 equilibrium generalized \(P\) 与最终 report reaction 必须在 M8 输出中明确区分，不新增自由度。
+
+NEXT_ACTION：M7 theory self-audit only；检查 zero-load、linear elastic、q→0、A→0、top/bottom symmetry、dimensional、virtual-work/Jacobian consistency、branch continuity。不得提前跑九试件。
