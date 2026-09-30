@@ -606,3 +606,42 @@ Schur 第一分量 \(dP_{eq}/dq\) 不再在 \(\chi_w\neq1\) 时直接定义最�
 - 九试件 geometry、\(N^\pm,m^\pm,A_0^\pm\)、PBL reaction-correction inputs。
 
 若现有资料已经包含这些输入，不再询问用户，直接恢复并运行 connected q-path。
+
+
+## 16. M8 / production input freeze（2026-09-30 19:01 +08:00）
+
+状态：
+
+\[
+\boxed{\mathrm{M8\_INPUT\_FREEZE}=\mathrm{PARTIAL}}
+\]
+
+已恢复并冻结：
+- steel: Es=206000 MPa, nu_s=0.30, fy=355 MPa；
+- steel equivalent uniaxial post-yield law 正式采用项目原生 ideal elastic-perfectly plastic，作为 M5 degree-0 polynomial branch：
+  \[
+  P_s(\bar\varepsilon_i)=f_y,\quad E_{sec}=f_y/\bar\varepsilon_i,\quad E_{tan}=0;
+  \]
+- UHPC compression: Ec=43400 MPa, nu_c=0.20, fc=141.1 MPa, eps_c0=0.0035；
+- tc=42 mm, ts=4 mm, Aw=1332 mm2, q0=0.0025；
+- 九件宽度 b=250,500,1000,1600,2500,3000,3500,4250,5000 mm，a_h=2b；
+- 已逐件计算 chi_w；
+- 历史 local strip imperfection scale A0_strip=0.225b/1600 已恢复，但未偷换成 current whole-face A0±。
+
+尚未唯一冻结：
+1. 当前约 7 MPa UHPC 的 production tension law：Pt1/Pt2、e_tp、e_tu；
+2. current whole-face steel local mode 的 N±,m±,A0± 正式映射/选择规则。
+
+外部/Library 检索只用于输入来源核验，没有用 FEM Pu 选参数。Hiew 2024 的 2% fibre tensile peak 约 11 MPa，不能直接作为当前约 7 MPa project material；胡文旭材料（fc,axial=136.9 MPa, ft=7.2 MPa, E=45.1 GPa, Vf=2%）是近邻证据，但尚不足以唯一恢复当前 production Pt1/Pt2。
+
+因此九试件正式 connected q-path 尚未启动；阻塞原因是不可替代 production input 尚未唯一闭合，不是求解器失败。
+
+正式文件：
+- UCFT_M8_production_input_freeze.md
+- UCFT_M8_九试件输入清单.csv
+- UCFT_M8_材料输入冻结状态.csv
+- UCFT_M8_material_geometry_contract.py
+
+## 17. NEXT_ACTION
+
+继续 M8 input freeze：恢复/构造有明确来源的约 7 MPa UHPC production tensile polynomial，并从 current whole-face steel-local 历史推导中恢复 N±,m±,A0± 的正式选择规则；闭合后立即启动九试件 connected q-path。
