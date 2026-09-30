@@ -382,3 +382,83 @@ Library output folder /UCFT_backups/20260930_152314/output/：
 
 ### NEXT_ACTION
 M5：steel Mises deformation theory + equivalent uniaxial polynomial + E_sec/E_tan + analytic elastic/plastic thickness active-set；保持 \(\varepsilon_i^2=C_2\zeta^2+C_1\zeta+C_0\)，屈服边界解析求根、排序、分区积分，并严格区分 finite current stress 与 tangent。
+
+
+## 2026-09-30 16:36 +08:00 — M5 steel deformation-theory active-set
+
+### recovered
+读取最新 CURRENT_STATE / nonlinear membrane derivation / execution log / backup manifest，并读取新上传《指示词(4).md》。确认 M0-M4 已完成，NEXT_ACTION=M5。
+
+### pre-backup
+- 原始《指示词(4).md》按原名保存至 Library /UCFT_backups/20260930_163600/input/指示词(4).md
+- GitHub pre-backup commits:
+  - CURRENT_STATE: bea1c50bc0311d57082e96c6fbab249ff201c3df
+  - nonlinear membrane derivation: 6d01f817ae64fc55ff05a24d3656cc477f7fbcd3
+  - execution log: bd61bb40932321535670e482b632e99d4a8a298d
+  - backup manifest: 1f14d62da098c8b9ea9a6fd195f3f2be9a2b015d
+
+### source audit
+读取项目 ChenJi Chapter8 archive，确认 Chen-Ji 8.9 deformation theory：
+- secant/tangent moduli separated;
+- plastic simplification uses nu_p=0.5;
+- equivalent strain = 2/sqrt(3)*sqrt(ex^2+ey^2+ex*ey+gamma^2/4).
+
+### first implementation / failure
+Literal UCFT splice used actual elastic plane-stress nu_s=0.30 then switched to Chen-Ji nu_p=0.50 at eps_i=fy/Es. Direction scan:
+- max finite stress tensor jump = 0.400000;
+- elastic Mises/fy at the same literal strain threshold = 0.714286~1.153846.
+Classification: NEEDS_CORRECTION; not route-fatal.
+
+### minimal correction
+Define normalized elastic plane-stress operator C0, Mises metric W, Hnu=C0^T W C0, and:
+ebar_i=sqrt(epsilon^T Hnu epsilon)=elastic_trial_Mises/Es.
+Use:
+sigma_i=Ps(ebar_i);
+Esec=Ps/ebar_i;
+Etan=dPs/debar_i;
+finite sigma=Esec*C0*epsilon.
+Consistent tangent:
+Ct=Esec*C0+(Etan-Esec)/ebar_i^2*(C0 epsilon) tensor (Hnu epsilon).
+At nu_s=0.5, C0=Hnu exactly equals the Chen-Ji simplified Mises deformation matrix.
+
+### analytic thickness active-set
+For affine steel thickness strain:
+ebar_i^2=C2*zeta^2+C1*zeta+C0.
+Yield boundaries remain quadratic. Finite polynomial Ps gives exact thickness resultants through elementary/asinh quadratic-power primitives. No thickness Gauss defines production.
+
+### numerical consistency
+Es=206000 MPa, nu_s=0.30, fy=355 MPa, ts=4 mm; ideal plateau and diagnostic cubic only as algorithm benchmarks:
+- exact thickness resultants vs adaptive numerical diagnostic: 7.727093e-14
+- yield root absolute ebar error: 2.168404e-19
+- consistent tangent vs FD: 2.568376e-10
+- finite Mises vs polynomial target: 1.601223e-16
+- nu=0.5 Chen-Ji reduction: exact
+- yield-interface stress jump after correction: 0
+- yield-interface Mises/fy deviation: 3.330669e-16
+
+### gate
+Literal abrupt splice = FAIL.
+Corrected consistent secant-Mises deformation-theory operator = PASS.
+
+### files
+Stable GitHub report:
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M5_steel_deformation_theory_active_set.md
+- commit aee49e8a6aecd7d12368302ed0bf3410f071042e
+
+Library exact artifacts under:
+- /UCFT_backups/20260930_163600/output/
+
+Key files:
+- UCFT_M5_steel_deformation_theory_active_set.md
+- UCFT_M5_steel_Mises_deformation_active_set_kernel.py
+- UCFT_M5_最终一致性验证摘要.csv
+- first-failure audit and corrected validation CSVs.
+
+CURRENT_STATE updated:
+- commit 7601a49002e558785f90831b95ab9a3939d40c21
+
+### unresolved
+Formal production Q355 plastic polynomial coefficients Ps are not frozen. Diagnostic plateau/cubic are not material calibration. Freeze actual material input before M8, not from Pu fitting.
+
+### NEXT_ACTION
+M6: assemble M4 UHPC analytic operator + M5 steel consistent secant-Mises operator + M3 C/S/B frequency-generated inner enrichment into inner membrane residual, outer Rq/RA+/RA-, and exact Schur-condensed Jacobian. No nine-specimen run yet.
