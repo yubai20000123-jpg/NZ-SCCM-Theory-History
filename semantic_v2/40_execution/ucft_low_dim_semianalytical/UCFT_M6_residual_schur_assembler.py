@@ -59,12 +59,32 @@ def C_family_basis(X,Y,r,k,l):
         f"Cy_{k}_{l}": np.array([0.0,cx*cy,-(k/(l*r))*sx*sy]),
     }
 
-def S_family_basis(X,Y,r,k,l):
+def S_axial_mean_coefficient(k,l):
+    return ((1-(-1)**int(k))*(1-(-1)**int(l)))/(k*l*math.pi**2)
+
+
+def raw_S_family_basis(X,Y,r,k,l):
     sx=math.sin(k*X); sy=math.sin(l*Y)
     cx=math.cos(k*X); cy=math.cos(l*Y)
     return {
         f"Sx_{k}_{l}": np.array([sx*sy,0.0,-(l*r/k)*cx*cy]),
         f"Sy_{k}_{l}": np.array([0.0,sx*sy,-(k/(l*r))*cx*cy]),
+    }
+
+
+def S_family_basis(X,Y,r,k,l):
+    """
+    Traction-orthogonal production S-family.
+    The raw S_y mode has nonzero mean loading-edge axial displacement
+    for odd k,l. Since E_y already spans the uniform axial mode, use the
+    exact basis transform S_y_tilde = S_y_raw - c_kl E_y.
+    """
+    sx=math.sin(k*X); sy=math.sin(l*Y)
+    cx=math.cos(k*X); cy=math.cos(l*Y)
+    c=S_axial_mean_coefficient(k,l)
+    return {
+        f"Sx_{k}_{l}": np.array([sx*sy,0.0,-(l*r/k)*cx*cy]),
+        f"Sy_{k}_{l}": np.array([0.0,sx*sy-c,-(k/(l*r))*cx*cy]),
     }
 
 def Bx_family_basis(X,k):
