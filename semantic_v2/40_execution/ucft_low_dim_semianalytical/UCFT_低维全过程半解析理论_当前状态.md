@@ -1,10 +1,10 @@
 # UCFT 低维全过程半解析理论 当前状态
 
-更新时间：2026-09-30 17:05 +08:00
+更新时间：2026-09-30 18:15 +08:00
 
 ## 1. 最高层级合同
 
-当前最高优先级路线合同：用户上传《指示词(5).md》。
+当前最高优先级路线合同：用户上传《指示词(6).md》。
 
 理论身份：
 
@@ -467,6 +467,142 @@ Formal M6 files:
 
 尚未进入 M8。M6 没有使用 FEM target 求根或调参。
 
-## 15. NEXT_ACTION
 
-严格进入 M7：zero-load、linear elastic、q→0、A→0、TOP/BOTTOM symmetry、dimensional、virtual-work/Jacobian、branch continuity 自检；不使用 FEM 拟合，不提前进入九试件全过程。
+## 15. M7 / theory self-audit
+
+PASS after two exact internal corrections.
+
+### M7-1 zero-load / linear / q->0 / A->0 / symmetry
+
+- zero-load loading-induced strain/curvature max = 0；
+- linear C1 H-block positive, benchmark minimum eigenvalue \(1.748459\times10^7\)，故 \(H_x=H_y=0\) 唯一；
+- \(q\to0\) imperfect branch regular，\(P/q\) analytic-limit benchmark relative error \(3.999787\times10^{-6}\)；
+- \(A_0=0,A=0\) 时 local finite strain/curvature 严格消失；\(R_A\) 在 \(q>0\) 可被 global-local interaction 驱动，不要求恒零；
+- TOP/BOTTOM global-local odd、local-local even、local curvature antisymmetry，max parity error \(5.421011\times10^{-20}\)。
+
+### M7-2 raw S-family loading-edge work correction
+
+raw odd-odd \(S_y\) compatible mode 的 loading-edge mean displacement coefficient：
+\[
+c_{kl}
+=
+\frac{[1-(-1)^k][1-(-1)^l]}{kl\pi^2}.
+\]
+qA S-family 均为 odd-odd，因此 \(c_{kl}=4/(kl\pi^2)\neq0\)。
+
+production 采用 exact traction-orthogonal basis：
+\[
+\widetilde B_{S_y}
+=
+B_{S_y}^{raw}
+-c_{kl}B_{E_y}.
+\]
+于是 mean edge displacement = 0，且
+\[
+G_{\widetilde S_y}
+=
+G_{S_y}^{raw}-c_{kl}G_{E_y},
+\]
+故 root set、M3 spectrum、structural variables 与 Schur system 不变。
+
+对应 M6 assembler 已修正。
+
+### M7-3 virtual work / Jacobian / Schur
+
+- common external-potential derivative benchmark max relative error \(4.262074\times10^{-10}\)；
+- full nonlinear surrogate residual/Jacobian finite-difference max scaled relative error \(3.862825\times10^{-6}\)；
+- physics-shaped Schur/full Newton inner difference \(4.054916\times10^{-17}\)；
+- outer difference \(2.273737\times10^{-13}\)。
+
+### M7-4 dimensional scaling
+
+\[
+[G_\xi]=FL,\qquad [R_q]=FL,\qquad [R_A]=F.
+\]
+raw mixed-unit Jacobian condition number 不再作为 branch diagnostic。
+
+正式使用：
+\[
+\widehat J=S_F^{-1}JS_x
+\]
+以及 scaled \(\widehat G_\xi,\widehat K_{cond}\) condition/singular values。
+
+单位变换 benchmark dimensionless matrix difference \(4.440892\times10^{-16}\)。
+
+### M7-5 branch continuity
+
+M8 production material inputs 必须满足 finite-stress continuity：
+
+UHPC：
+\[
+P_c(0)=P_{t1}(0)=0,
+\]
+\[
+P_{t1}(e_{tp})=P_{t2}(e_{tp})=f_t,
+\]
+若 terminal 后设零应力：
+\[
+P_{t2}(e_{tu})=0,\qquad P_c(e_z)=0.
+\]
+
+Steel：
+\[
+P_s(f_y/E_s)=f_y.
+\]
+
+tangent continuity 不要求；event localization / semismooth Newton 处理 topology switch。
+
+### M7-6 equilibrium load 与 report load
+
+M6 equilibrium unknown 统一改记：
+\[
+P_{eq}.
+\]
+
+PBL/web 当前仍为 report-only reaction correction：
+\[
+P_{report}
+=
+\chi_wP_c+P_s^++P_s^-.
+\]
+
+从 M8 起项目最终输出定义：
+\[
+P(q)\equiv P_{report}(q).
+\]
+
+因此：
+\[
+P_u=\max_qP_{report}(q),
+\]
+regular q branch 上用：
+\[
+dP_{report}/dq=0.
+\]
+
+Schur 第一分量 \(dP_{eq}/dq\) 不再在 \(\chi_w\neq1\) 时直接定义最终 Pu。
+
+正式 M7 文件：
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M7_theory_self_audit.md
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M7_理论自检摘要.csv
+- Library /UCFT_backups/20260930_181500/output/
+
+\[
+\boxed{\mathrm{M7}=PASS}.
+\]
+
+## 16. 九试件进度
+
+尚未正式进入 M8 路径求解；M7 未使用 FEM target 或 Pu 拟合。
+
+## 17. NEXT_ACTION
+
+严格进入 M8 准备/执行起点：
+
+先从现有 Project/Library/仓库恢复并冻结九试件正式材料与几何输入，尤其：
+
+- UHPC \(e_{tp},e_{tu},P_{t1},P_{t2}\)；
+- Q355 production \(P_s(\bar\varepsilon_i)\) polynomial；
+- 九试件 geometry、\(N^\pm,m^\pm,A_0^\pm\)、PBL reaction-correction inputs。
+
+若现有资料已经包含这些输入，不再询问用户，直接恢复并运行 connected q-path。
