@@ -52,3 +52,10 @@ C1 由显式 u,v 生成，包含 Hx/Hy mixed/shear-compatible pair。
 
 ### NEXT_ACTION
 M2：A+=A−=0，打开 UHPC tension/compression polynomial active-set，构造 C0/C1 current composite membrane kernel，并准备 q-path 比较。
+
+
+### backup correction / exact original preservation
+- 原上传《指示词.md》已额外以原始文件快照保存到个人 Library：
+  /UCFT_backups/20260930_133100/input/指示词.md
+- library_file_id: libfile_7cfb901ec6b08191aeefe77588079d3b
+- GitHub backups/20260930_133100/input/指示词.md 为便于仓库检索的文本镜像；原始上传快照以 Library 版本为准。
