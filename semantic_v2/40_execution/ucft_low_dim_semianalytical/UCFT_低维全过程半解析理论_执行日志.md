@@ -283,3 +283,102 @@ Library output：
 
 ### NEXT_ACTION
 M4：完成 UHPC tension/compression polynomial active-set 的 production 面内解析分区；保留 M2 thickness closed form，二维/三维 Gauss 不得定义 production residual。
+
+
+## 2026-09-30 15:23 +08:00 — M4 UHPC analytic active-set partition
+
+### task
+严格执行 M4：保持 M2 thickness closed form，完成 UHPC tension/compression piecewise-polynomial active-set 的 production 面内解析分区；二维/三维 Gauss 仅作独立验证。
+
+### recovery / pre-backup
+已恢复最新 CURRENT_STATE / nonlinear membrane derivation / execution log / backup manifest / M3 report，并读取本轮上传《指示词(3).md》。M3 已完成，故直接进入 M4。
+
+pre-backup GitHub：
+- backups/20260930_152314/input/UCFT_低维全过程半解析理论_当前状态.md — 55541ff5dd081bd9e192ae85cdd048a52d4bb07a
+- backups/20260930_152314/input/UCFT_nonlinear_membrane_condensation_当前推导.md — 7d561ffb6f1dcb19eb42e1974badf86fa11e0eeb
+- backups/20260930_152314/input/UCFT_低维全过程半解析理论_执行日志.md — 2c76fc21e85db184949a75aebf08fa10f79b3845
+- backups/20260930_152314/input/UCFT_低维全过程半解析理论_备份清单.md — f088ae47fd75b13dc47210f358257d5339cd2e4a
+
+原上传《指示词(3).md》 exact copy：
+Library /UCFT_backups/20260930_152314/input/指示词(3).md；library id libfile_6fff8727f600819186371e8094c7725f。
+
+### formulas added
+固定 X 后，令 s=sinY，UHPC 顶/底面 directional strain 严格成为：
+\[
+e^\pm=A+B+C^\pm s-2Bs^2.
+\]
+任一材料阈值由：
+\[
+-2Bs^2+C^\pm s+A+B-e_j=0
+\]
+显式求 moving boundary。
+
+建立连续累计原函数：
+\[
+\mathcal F'(e)=\sigma(e),\qquad \mathcal H'(e)=e\sigma(e),
+\]
+并得到 thickness-exact：
+\[
+N^U=[\mathcal F(e^+)-\mathcal F(e^-)]/\chi,
+\]
+\[
+M^U=[\mathcal H(e^+)-\mathcal H(e^-)-e_m(\mathcal F(e^+)-\mathcal F(e^-))]/\chi^2.
+\]
+
+Y-active intervals 内形成有限 Laurent polynomial；用 J_{-2},J_{-1},J_0,J_1 及递推 J_n 完成 Y 初等闭式。production 只剩一个 X 向 deterministic integral。
+
+UHPC shear channel 保持线性：
+\[
+G_c=E_c/[2(1+\nu_c)],
+\]
+故 Nxy、Mxy 与 H/shear residual、q twisting virtual-work 均闭式，不需要 material active-set。
+
+### material lock discipline
+当前项目只锁定 UHPC tensile peak ~7 MPa，未找到唯一冻结的 production e_tp/e_tu 与 tensile polynomial coefficients。本轮 kernel 保持材料参数化；M2 central tensile family 只用于算法一致性 benchmark，不冒充最终生产材料。
+
+### independent validation
+M2 central diagnostic C1 states：q=0.005,0.010,0.015,0.020。
+
+1. 全局累计 primitive vs 显式 z_j 排序 active-set：
+- 4 q × 2 directions × 9 X × 11 Y；
+- max relative error = 1.722389e-08。
+
+2. analytic Y + one X deterministic integral vs independent 80×120 2D Gauss diagnostic：
+- 比较 8 个 N/M area moments；
+- max relative difference = 2.720307e-07；
+- mean abs relative difference = 2.269048e-08。
+
+### gate
+\[
+\boxed{\mathrm{M4\ analytic\ active\mbox{-}set\ kernel}=\mathrm{PASS}}.
+\]
+
+### theory issue
+无致命问题。未冻结 production tensile e_tp/e_tu/coefficients 属于材料输入未定，不是 M4 数学缺口；记录为 M8 前必须冻结，不阻塞 M5。
+
+### generated / persisted
+GitHub stable report：
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M4_UHPC_active_set_analytic_partition.md
+- commit af80c6e12161ae111a735c40a81a6b1706337ac8
+
+Current state post-M4：
+- commit 20b695d701b6c321e8fc0c92e7918d70fb762147
+
+Library output folder /UCFT_backups/20260930_152314/output/：
+- UCFT_M4_UHPC_active_set_analytic_partition.md — libfile_a9a8eb64c6dc819195b2823b07e86186
+- UCFT_M4_UHPC_analytic_partition_kernel.py — libfile_a09d5b18be4c8191a54299cb95e0c52c
+- UCFT_M4_一致性验证摘要.csv — libfile_fa92abdba54c8191ad9cc97122cd88ea
+- UCFT_M4_厚度全局原函数_vs_显式active_set验证.csv — libfile_2a5ebb5eee1481919cb365d81219485d
+- UCFT_M4_解析材料边界示例.csv — libfile_43c274ff9c008191a9d2d1decf8ed529
+- UCFT_M4_面内解析分区_vs_二维Gauss验证.csv — libfile_204daabb48c881918c6c80fb21a170e2
+
+### artifact SHA256
+- report: 7ba100f0c35e5d76d2457b657a3bdf557fccdaa03a93401bfcfc1b1bd3117077
+- kernel: 5586f5f5af2d3491349f2c37525ce22cff09580fe0ea7d12e1978341f90288a5
+- consistency summary: 6e23ee0d368fe7fd8a2d3db9613d536379f4e6b2e95dd579753e410e68d6a299
+- thickness validation: 43d85617ab2e32152b08f11d51b3003b3e92f9c01c827572d16ba5ad05cb72e3
+- boundary example: dc0d40206c11c5b86efb248ee56ed9dff1731130b58d080dbfd11cc50f9acf8f
+- 2D Gauss validation: 0907dcb94a7f8fbd24753046d361495bb7abded6f88f1c1cbc607a1bcfd55f8b
+
+### NEXT_ACTION
+M5：steel Mises deformation theory + equivalent uniaxial polynomial + E_sec/E_tan + analytic elastic/plastic thickness active-set；保持 \(\varepsilon_i^2=C_2\zeta^2+C_1\zeta+C_0\)，屈服边界解析求根、排序、分区积分，并严格区分 finite current stress 与 tangent。
