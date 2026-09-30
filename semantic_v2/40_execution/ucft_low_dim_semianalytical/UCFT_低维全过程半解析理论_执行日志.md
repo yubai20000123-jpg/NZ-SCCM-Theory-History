@@ -497,3 +497,51 @@ open before M8:
 - keep equilibrium generalized P distinct from P_report under chi_w report correction.
 
 NEXT_ACTION: M7 theory self-audit only.
+
+
+## 2026-09-30 18:15 +08:00 — M7
+
+task:
+- M0–M6 unified self-audit.
+
+files read:
+- 指示词(6).md
+- CURRENT_STATE / current derivation / execution log / backup manifest
+- M6 theory and assembler.
+
+files created:
+- UCFT_M7_theory_self_audit.md
+- UCFT_M7_理论自检摘要.csv
+- UCFT_M7_branch_continuity条件.csv
+- UCFT_M7_theory_selfcheck.py
+- zero-load / q->0 / TOP-BOTTOM / S-family work / dimensional / Jacobian diagnostics.
+
+files modified:
+- UCFT_M6_inner_outer_residual_Schur_condensation.md
+- UCFT_M6_residual_schur_assembler.py
+- current state / current derivation.
+
+formulas changed:
+1. raw odd-odd S_y loading-edge work identified:
+   \(c_{kl}=[1-(-1)^k][1-(-1)^l]/(kl\pi^2)\).
+2. production S_y basis replaced by exact traction-orthogonal transform
+   \(\widetilde B_{S_y}=B_{S_y}^{raw}-c_{kl}B_{E_y}\).
+3. equilibrium load renamed \(P_{eq}\); final load is \(P_{report}=\chi_wP_c+P_s^++P_s^-\).
+4. final peak criterion changed to \(dP_{report}/dq=0\).
+5. raw dimensional Jacobian condition number replaced by scaled diagnostics.
+
+numerical result:
+- zero-load max loading strain = 0;
+- TOP/BOTTOM parity error = 5.421011e-20;
+- external-work derivative error = 4.262074e-10;
+- full Jacobian FD max scaled relative error = 3.862825e-06;
+- physics-shaped Schur outer difference = 2.273737e-13.
+
+gate status:
+- M7 PASS after exact local corrections.
+
+unresolved issue:
+- production UHPC tensile polynomial values and Q355 polynomial coefficients must be recovered/frozen before M8; do not fit Pu.
+
+NEXT_ACTION:
+- recover formal M8 material/geometric input from Project/Library/repository and run connected q-path.
