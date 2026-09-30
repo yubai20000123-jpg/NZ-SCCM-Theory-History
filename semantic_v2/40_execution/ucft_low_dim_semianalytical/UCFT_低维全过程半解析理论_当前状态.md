@@ -1,10 +1,10 @@
 # UCFT 低维全过程半解析理论 当前状态
 
-更新时间：2026-09-30 15:23 +08:00
+更新时间：2026-09-30 17:05 +08:00
 
 ## 1. 最高层级合同
 
-当前最高优先级路线合同：用户上传《指示词(4).md》。
+当前最高优先级路线合同：用户上传《指示词(5).md》。
 
 理论身份：
 
@@ -421,22 +421,52 @@ Formal Q355 plastic polynomial coefficients are not yet frozen. Diagnostic plate
 
 尚未进入 M8。M5 没有使用 FEM target 求根或调参。
 
-## 13. NEXT_ACTION
 
-严格进入 M6：
+## 13. M6 / residual + Schur condensation
 
+PASS。
+
+- complete inner residual: \(\mathbf G(\boldsymbol\xi,\mathbf z;q)=0\)；
+- outer state: \(\mathbf z=[P,A^+,A^-]^T\)；
+- outer residual: \(\mathbf R=[R_q,R_{A^+},R_{A^-}]^T=0\)；
+- steel strain input includes full \(qA\) and \(A^2\) channels plus global eccentric curvature；
+- direct TOP/BOTTOM cross derivative is zero, but condensed \(A^+-A^-\) coupling generally nonzero through \(\boldsymbol\xi\)；
+- exact Schur:
 \[
-\boxed{
-\text{M4 UHPC analytic operator}
-+
-\text{M5 steel consistent secant-Mises operator}
-+
-\text{M3 C/S/B inner enrichment}
-}
+K_{\rm cond}=R_z-R_\xi G_\xi^{-1}G_z;
+\]
+- for nonzero inner residual, exact condensed Newton RHS is
+\[
+-R+R_\xi G_\xi^{-1}G;
+\]
+- q sensitivity:
+\[
+d\mathbf z/dq=-K_{\rm cond}^{-1}(R_q^\partial-R_\xi G_\xi^{-1}G_q).
 \]
 
-组装 inner membrane residual 与 outer
+Validation:
+- Schur/full Newton outer difference \(1.110223\times10^{-16}\)；
+- Schur/full Newton inner difference \(1.110223\times10^{-16}\)；
+- q sensitivity outer difference \(1.665335\times10^{-16}\)；
+- q sensitivity inner difference \(4.163336\times10^{-17}\)；
+- steel-local kinematic derivative maximum relative error \(1.390166\times10^{-10}\)。
+
+PBL/web correction remains report-only:
 \[
-R_q=0,\qquad R_{A^+}=0,\qquad R_{A^-}=0,
+P_{\rm report}=\chi_wP_c+P_s^++P_s^-.
 \]
-并建立一致 Schur-condensed Jacobian。M6 不跑九试件，不拟合 FEM。
+
+Formal M6 files:
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M6_inner_outer_residual_Schur_condensation.md
+- semantic_v2/40_execution/ucft_low_dim_semianalytical/UCFT_M6_residual_schur_assembler.py
+- Library /UCFT_backups/20260930_170500/output/UCFT_M6_inner_outer_residual_Schur_condensation.md
+- Library /UCFT_backups/20260930_170500/output/UCFT_M6_Schur凝聚等价性验证.csv
+- Library /UCFT_backups/20260930_170500/output/UCFT_M6_steel_local运动学导数验证.csv
+
+## 14. 九试件进度
+
+尚未进入 M8。M6 没有使用 FEM target 求根或调参。
+
+## 15. NEXT_ACTION
+
+严格进入 M7：zero-load、linear elastic、q→0、A→0、TOP/BOTTOM symmetry、dimensional、virtual-work/Jacobian、branch continuity 自检；不使用 FEM 拟合，不提前进入九试件全过程。
