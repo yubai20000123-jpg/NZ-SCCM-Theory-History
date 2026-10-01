@@ -1,0 +1,387 @@
+[
+  {
+    "path": ".gitattributes",
+    "bytes": 8,
+    "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+  },
+  {
+    "path": "AGGREGATION_VALIDATION.json",
+    "bytes": 479,
+    "sha256": "187cc68b71e04b588e03ef6d81baf5ae27884821919bf5af68aefd36b9e3886d"
+  },
+  {
+    "path": "DATA_NOTES.md",
+    "bytes": 2334,
+    "sha256": "ee2cebee2718513fa90224e305a8b5461debeaf34f3f0f0dfc28e44293ab1887"
+  },
+  {
+    "path": "EXCEL_VALIDATION.json",
+    "bytes": 1580,
+    "sha256": "1511673bd5421f481c7d594dce77c591f65ebd2a11ecb7a0c26453e13d3c8186"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4266,
+    "sha256": "a0bb46e362d718828168aedaee43b31f94702220113e543b60291691856945c2"
+  },
+  {
+    "path": "TABLE_INDEX.csv",
+    "bytes": 10955,
+    "sha256": "bd92aa35694d6b11d4e05829ea4b4bfbe48c4e1c894caf7af5a792d1ccb834d3"
+  },
+  {
+    "path": "TABLE_INDEX.json",
+    "bytes": 21380,
+    "sha256": "1126ae558b05c91a6bf552d9113584d78ff59be77808cea5005bfb6dee623b88"
+  },
+  {
+    "path": "tables/AllCandidateFrameStats/AllCandidateFrameStats_001.csv",
+    "bytes": 73279,
+    "sha256": "0b6dca6acc3ed78f934c7eec137085f59c954595ccb9b07d7c42a8ea040604e6"
+  },
+  {
+    "path": "tables/AllCandidateFrameStats/AllCandidateFrameStats_002.csv",
+    "bytes": 78565,
+    "sha256": "38709cce3bdc5bfe01cb0df55d87605512a58f1f089605b03cd49e5f76c25c47"
+  },
+  {
+    "path": "tables/AllPairEventTiming/AllPairEventTiming_001.csv",
+    "bytes": 111657,
+    "sha256": "9a15f63d4ba6469b91cd1538221acd7abd157c207a46b1f43f932748e2cb59c9"
+  },
+  {
+    "path": "tables/AllPairEventTiming/AllPairEventTiming_002.csv",
+    "bytes": 121616,
+    "sha256": "965154626bcd683ecf0a9df0bfe42354bf9e323ce9feb45881f739ce939d13c9"
+  },
+  {
+    "path": "tables/AllPairEventTiming/AllPairEventTiming_003.csv",
+    "bytes": 108766,
+    "sha256": "7a39c6c1e951feda4ae4e41b6ce97ef93e01cd9cb1defa6bfc0a4fab3b0989ac"
+  },
+  {
+    "path": "tables/AllPairEventTiming/AllPairEventTiming_004.csv",
+    "bytes": 120946,
+    "sha256": "c50465cd45b25d818dd89ecdd74e48c9a6a299fe1674dd91f0a42857ffd6cd84"
+  },
+  {
+    "path": "tables/AllPairEventTiming/AllPairEventTiming_005.csv",
+    "bytes": 109402,
+    "sha256": "9790e3443d81d5a8072a11eff1eb8e718283811b7f7c4588d28bee60b07ae9f8"
+  },
+  {
+    "path": "tables/AllUnloadingPoints/AllUnloadingPoints_001.csv",
+    "bytes": 41563,
+    "sha256": "cc964e4f032efd98f5042679d88850e1be92e0d7ea4d2624496a03e905e4f1c1"
+  },
+  {
+    "path": "tables/AllUnloadingPoints/AllUnloadingPoints_002.csv",
+    "bytes": 44060,
+    "sha256": "d39c10490489a0cec2d1685c529003cab0dde1948f36e6e214431a48782f4fcb"
+  },
+  {
+    "path": "tables/AllUnloadingPoints/AllUnloadingPoints_003.csv",
+    "bytes": 39213,
+    "sha256": "b7f670573a551bf6575d9ba788c23c9580d8c0a9d47d44658b045265c5f0cc6d"
+  },
+  {
+    "path": "tables/AllUnloadingPoints/AllUnloadingPoints_004.csv",
+    "bytes": 45895,
+    "sha256": "3c2815385826ab957a2346d833771dff55f9df4d81e3a310de6ad07e66370945"
+  },
+  {
+    "path": "tables/AllUnloadingPoints/AllUnloadingPoints_005.csv",
+    "bytes": 45103,
+    "sha256": "de2e0ac72e90bbc2fa18f38983f345525db9b8598a7b33b769ba54eb0f810117"
+  },
+  {
+    "path": "tables/AllUnloadingPoints/AllUnloadingPoints_006.csv",
+    "bytes": 4762,
+    "sha256": "cd26a27c39b9cefd338ce30aa3fadda75d2ecbd9dfc6e123a49efd66cdac4c7f"
+  },
+  {
+    "path": "tables/AxialDropClasses/AxialDropClasses_001.csv",
+    "bytes": 1252,
+    "sha256": "61ff869890019188d66d98295f7661ba4f5d5079f7ab6cb11342ce2c6c7b70cd"
+  },
+  {
+    "path": "tables/ConclusionAnswers/ConclusionAnswers_001.csv",
+    "bytes": 3237,
+    "sha256": "7d4deb12f01802433f83299b12d5ee4d2d414a9d8007af1f440b579134bcbafc"
+  },
+  {
+    "path": "tables/DataScope/DataScope_001.csv",
+    "bytes": 4111,
+    "sha256": "3277762f46753c3bf455506332cb95dd5ae792fdae8217b9ae67327e455557ea"
+  },
+  {
+    "path": "tables/FieldDictionary/FieldDictionary_001.csv",
+    "bytes": 14871,
+    "sha256": "687070cd3f3f712296b40852a2ea70923b83af2bdacf79ee82e2fa114ad0daf0"
+  },
+  {
+    "path": "tables/LoadHistory/LoadHistory_001.csv",
+    "bytes": 75253,
+    "sha256": "14bec26f76159aeedbc30959c14d3c3d99c0c8bb8026faaf962ba92ef4520b19"
+  },
+  {
+    "path": "tables/LoadHistory/LoadHistory_002.csv",
+    "bytes": 75301,
+    "sha256": "63cbc28d231c97c94f60d7eedd309fbcfa424be6ff499579e5bf0a0ede212340"
+  },
+  {
+    "path": "tables/LoadHistory/LoadHistory_003.csv",
+    "bytes": 425,
+    "sha256": "26bb43428ba09a335da406b1bc9785b91c6da2722c297292f46e463c33850760"
+  },
+  {
+    "path": "tables/MaterialCards/MaterialCards_001.csv",
+    "bytes": 124,
+    "sha256": "74bcfcce53969978afcd44036031f81fe601ed55fd54962371aab2eb641c524f"
+  },
+  {
+    "path": "tables/RepresentativePoints/RepresentativePoints_001.csv",
+    "bytes": 645,
+    "sha256": "1ff9b513f6d2a24483cbc4d3a97f36a3662757e0e89e6834c374ef6f7c91ed92"
+  },
+  {
+    "path": "tables/SpatialClassCounts/SpatialClassCounts_001.csv",
+    "bytes": 11054,
+    "sha256": "27e6d0916ecb2861f5fcfc1a3c85f8ef4108106be0e64f92777c5a4845d62844"
+  },
+  {
+    "path": "tables/SteelHardening/SteelHardening_001.csv",
+    "bytes": 238,
+    "sha256": "2e18a529e2b0de23ab9c345c93e8c3a6b0a33c0dbade4c35c0e64f3dcfaab047"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_001.csv",
+    "bytes": 138336,
+    "sha256": "f9e5612a842596002ef087436c4f4cf75d9d1be2ef9456dd3e947d7a967bb6e7"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_002.csv",
+    "bytes": 137607,
+    "sha256": "bceed8800c39ace06029f01b4621442e783a36678b0abeafceb2df5c08e8d923"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_003.csv",
+    "bytes": 159448,
+    "sha256": "7f2b7257fb0e2921497d85215f87c37eec6da99708e1df8d295b557c88d56f0e"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_004.csv",
+    "bytes": 169792,
+    "sha256": "0a8f69a906b301c46f4413283a554c0d53a811df5148c419f49c78c71cc87dd8"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_005.csv",
+    "bytes": 167667,
+    "sha256": "d563d52a7c0bbc5322c621ddd6fea9af43c5b9acd13b7476ce6e76a93e4dcd53"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_006.csv",
+    "bytes": 163540,
+    "sha256": "cd7c311f70efd72e0709bd61749b1263acc010c5189b0ef9a8e2e56148832fdb"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_007.csv",
+    "bytes": 160902,
+    "sha256": "702a7e1efef8e5f42446d50e8c6fabdffd1f4e48d2f3c3f50ebbcb8a1ed76cdf"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_008.csv",
+    "bytes": 137816,
+    "sha256": "3f57e80d09a53a601e7be105dc69ea18847b762be4ea84c261f2244103e85a47"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_009.csv",
+    "bytes": 135793,
+    "sha256": "9f01b5741a23e51b05d4c231f7eda247f19214a0419d07e9964793e8a285fe1c"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_010.csv",
+    "bytes": 148027,
+    "sha256": "d17cb08ef99ac46745e849fc0fd4dd89f679cc6a76548d056d57a5c82d0516d6"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_011.csv",
+    "bytes": 174220,
+    "sha256": "88357ae2b0a3a6806ba6e7a21f096c108091a3486b17174838242409a353527d"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_012.csv",
+    "bytes": 171631,
+    "sha256": "f9d2885b8c67053bae22c3b76cb42b88d5057c0bc14e4f9f07fcc585ce52d59c"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_013.csv",
+    "bytes": 168386,
+    "sha256": "9161f8935b28447a7d703547c04145be10691b17ec08aa6826243a27a1479a8e"
+  },
+  {
+    "path": "tables/SteelIncrementHistory/SteelIncrementHistory_014.csv",
+    "bytes": 163137,
+    "sha256": "f8365c3fcb22fe028b88a0272e6c83c1b13dbd9587c1ad3f2216bb0bcda81fda"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_001.csv",
+    "bytes": 188432,
+    "sha256": "d9c25f452103f03c309867ef9b9e384d2390f91777ff121ecb2344437b113843"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_002.csv",
+    "bytes": 185375,
+    "sha256": "ebbf0bf171c859533b4a5c33a9e72fd047f55cbdb9d183c8b50ae0d3e3bc4ddd"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_003.csv",
+    "bytes": 204848,
+    "sha256": "632785d6255856c526dd51931bed75cb3ede48c9d0d1f1b904acfa2124ebf407"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_004.csv",
+    "bytes": 214179,
+    "sha256": "3b88a6cd98c0c853929de9be1ca1651baadea0d7282225c2e6a607649587a3ac"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_005.csv",
+    "bytes": 214292,
+    "sha256": "18c359cc72c3dc6b3f74b98c8acaffab93e8b2618ad33a971fe5494f052601ed"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_006.csv",
+    "bytes": 214302,
+    "sha256": "81bb09368184a67f1cd03848dbbbd95f178758a3d88556bda5716a610fdefeec"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_007.csv",
+    "bytes": 214034,
+    "sha256": "4e3807f3f0742bcab4cb995f222bd650e76afcda3b2802cfb75c56ec9c3e5663"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_008.csv",
+    "bytes": 188485,
+    "sha256": "78be6e21463c1c1d583885c19e8cf9f776620a167f4504993be4a7b2b64c9885"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_009.csv",
+    "bytes": 184060,
+    "sha256": "40bcbeee320ef4cca25cac791949cda8bbc0b7a4ee9eaa3cd365b08b3f10f654"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_010.csv",
+    "bytes": 191526,
+    "sha256": "1dccfadfdc72445d0d725a33342de6ecbd539ebbaab912f0f53885bcd41a9247"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_011.csv",
+    "bytes": 213629,
+    "sha256": "5aedcd80bd9beeee27b0aacdc1847139e122566476e478eeac671fc703df6799"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_012.csv",
+    "bytes": 213599,
+    "sha256": "877769893766c69e9af6e96d479da3bc87be3e4bf334137a7bcbd1e73b705372"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_013.csv",
+    "bytes": 213568,
+    "sha256": "76aa39745832fb5439e8d09beb49e4a116db1b76facfab8c6a9e13a9ab43be75"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_014.csv",
+    "bytes": 213378,
+    "sha256": "25fdb2f5cd5f712b4cb65466e32bcd311d788e769aaed110d9ff1aeef58a4670"
+  },
+  {
+    "path": "tables/SteelPointHistory/SteelPointHistory_015.csv",
+    "bytes": 6216,
+    "sha256": "2a73d6e05bfbd89b1c6a0ec3d40c125f792f788d4df2693f4d80900806bc9694"
+  },
+  {
+    "path": "tables/Summary/Summary_001.csv",
+    "bytes": 837,
+    "sha256": "1e11e044ed88f4cbed74aee5955419e7dbf3ccf60a1650dfa151a47132d48ea4"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_001.csv",
+    "bytes": 242846,
+    "sha256": "64880414a6b21095c2bb95388584ae598bbb115120383e0894edc8a3f2045694"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_002.csv",
+    "bytes": 252414,
+    "sha256": "4acb55a1ab8a914fef13d5d57887c645e666ae99d16df1bc73aa5fb054ec15d3"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_003.csv",
+    "bytes": 245612,
+    "sha256": "5e79720c30928e066e73fed2ec093ea5a79fc6acfb092578ff74a26ea415eaf1"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_004.csv",
+    "bytes": 245170,
+    "sha256": "e71c7723455cfc68739f6d8e93f7a78ec6490e93b64b92ff2f6eb168ccfc6052"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_005.csv",
+    "bytes": 246178,
+    "sha256": "12d69e9aba979bdb6c7d3a42a027649b633addb10c24e6adba8322d111478b89"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_006.csv",
+    "bytes": 254255,
+    "sha256": "11d4dd87aca0fd01afa7df83c493909efb50beb5db236372ee3f1465a5e4a6f0"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_007.csv",
+    "bytes": 243275,
+    "sha256": "c897a0a7c00a29fe3aea018449a82761e7a8b3982e2ca5efe0547d7e15947b10"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_008.csv",
+    "bytes": 247143,
+    "sha256": "3cfaf9225e0bc7f1c2ca1200a45f8cf339bd1f08d291db55e6dc2d3f8c1aee17"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_009.csv",
+    "bytes": 242201,
+    "sha256": "82312892709de53128e0db79b5b20c67d1589d9ae0b66c9fd38eb046e0168693"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_010.csv",
+    "bytes": 245789,
+    "sha256": "aa13e03ec30c8d4cb81294d4658559a88378e199be91b08feb4cf84ed1ec67fb"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_011.csv",
+    "bytes": 246347,
+    "sha256": "009805040cd29a75a5ff8b58383bee6e2d2edf681d3356d1b526a7a1368bedda"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_012.csv",
+    "bytes": 247776,
+    "sha256": "e650e79668e4fc15ca317a5052daab02a80a72b430f6f404b36a6494775e333c"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_013.csv",
+    "bytes": 247329,
+    "sha256": "ab58546ca895720aa9b599222f11f76fdc1c2e94db6d9cfcaaac070b8666da49"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_014.csv",
+    "bytes": 249929,
+    "sha256": "0b3008e13f0d115779888fccbfa7016ed48729eb61b982cdb8b1f878fdceeef6"
+  },
+  {
+    "path": "tables/UHPCSteelHistory/UHPCSteelHistory_015.csv",
+    "bytes": 8292,
+    "sha256": "44e755f11dbb81cb951be00a5d63ea1eeb322cdaa504941f44853d4619669584"
+  },
+  {
+    "path": "UCFT_BH050_BH032_GPT_LIGHT_R01.xlsx",
+    "bytes": 5660987,
+    "sha256": "bc6faa9f186491d3c38c0d1f7a179e536b28a29b813e12f77dc2f1201bcf381d"
+  }
+]

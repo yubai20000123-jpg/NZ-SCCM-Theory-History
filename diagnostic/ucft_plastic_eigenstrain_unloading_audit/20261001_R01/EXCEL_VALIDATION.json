@@ -1,0 +1,82 @@
+[
+  {
+    "sheet": "Summary",
+    "rows": 2,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "ConclusionAnswers",
+    "rows": 16,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "AxialDropClasses",
+    "rows": 14,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "AllCandidateFrameStats",
+    "rows": 1000,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "MaterialCards",
+    "rows": 2,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "SteelHardening",
+    "rows": 8,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "LoadHistory",
+    "rows": 1002,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "RepresentativePoints",
+    "rows": 14,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "SteelPointHistory",
+    "rows": 7014,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "SteelIncrementHistory",
+    "rows": 7000,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "UHPCSteelHistory",
+    "rows": 7014,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "AllUnloadingPoints",
+    "rows": 2553,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "AllPairEventTiming",
+    "rows": 2439,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "SpatialClassCounts",
+    "rows": 159,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "FieldDictionary",
+    "rows": 114,
+    "all_values_and_types": "PASS"
+  },
+  {
+    "sheet": "DataScope",
+    "rows": 25,
+    "all_values_and_types": "PASS"
+  }
+]

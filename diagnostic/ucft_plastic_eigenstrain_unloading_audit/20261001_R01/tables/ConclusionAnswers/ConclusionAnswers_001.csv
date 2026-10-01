@@ -1,0 +1,17 @@
+case,question,answer,evidence,scope_limit
+BH050,A/B 真正弹性卸载是否存在,YES,139848 confirmed increments; 119815 neighbor-supported,Final confirmed ROI; not whole model area fraction
+BH050,C 应力下降是否全部属于卸载,NO,See AxialDropClasses: true unloading and continued plastic component drop coexist,Counts are point-frame increments above 0.5 MPa drop after ascending ~85% Pu
+BH050,D 卸载刚度是否恢复原始 Cs,YES in reliable unloading,original Cs median residual=0.00041551776741; ds median=4.4600207405e-07,"Use spatial support, nontrivial stress increment, PE freeze and current hardening yield checks"
+BH050,E 是否需要 steel damage,NOT_NEEDED,No sustained spatially coherent reduced unloading stiffness; raw negative ds retained,Not a statement that every noisy increment has zero fitted ds
+BH050,F ds 与 Ys_max / PEEQ 的相关性,NOT_ESTABLISHED,No damage law fitted; Ys/Ys_max/PEEQ histories retained,Do not infer a damage law from isolated positive ds
+BH050,G UHPC 是否稳定先于钢壳卸载,NOT_UNIVERSAL,UHPC plastic precedes at 538/1138 paired event points,Other points synchronous/later/not reached; A/V sparse
+BH050,H 特征应变路线是否得到支持,PARTIAL_DIAGNOSTIC_SUPPORT,Steel: J2 plastic history + original elastic unloading; UHPC eigenstrain bookkeeping available,Generalized Ri_star and production model have NOT been validated
+BH050,I 下一步最小历史变量,SUGGESTED_NOT_IMPLEMENTED,Steel plastic strain tensor/PEEQ; UHPC directional epsilon_star histories; original geometric modal projections,"No new modes, damage laws, parameters or production edits"
+BH032,A/B 真正弹性卸载是否存在,YES,122428 confirmed increments; 108336 neighbor-supported,Final confirmed ROI; not whole model area fraction
+BH032,C 应力下降是否全部属于卸载,NO,See AxialDropClasses: true unloading and continued plastic component drop coexist,Counts are point-frame increments above 0.5 MPa drop after ascending ~85% Pu
+BH032,D 卸载刚度是否恢复原始 Cs,YES in reliable unloading,original Cs median residual=0.000381986531105; ds median=1.01423176302e-07,"Use spatial support, nontrivial stress increment, PE freeze and current hardening yield checks"
+BH032,E 是否需要 steel damage,NOT_NEEDED,No sustained spatially coherent reduced unloading stiffness; raw negative ds retained,Not a statement that every noisy increment has zero fitted ds
+BH032,F ds 与 Ys_max / PEEQ 的相关性,NOT_ESTABLISHED,No damage law fitted; Ys/Ys_max/PEEQ histories retained,Do not infer a damage law from isolated positive ds
+BH032,G UHPC 是否稳定先于钢壳卸载,NOT_UNIVERSAL,UHPC plastic precedes at 742/1301 paired event points,Other points synchronous/later/not reached; A/V sparse
+BH032,H 特征应变路线是否得到支持,PARTIAL_DIAGNOSTIC_SUPPORT,Steel: J2 plastic history + original elastic unloading; UHPC eigenstrain bookkeeping available,Generalized Ri_star and production model have NOT been validated
+BH032,I 下一步最小历史变量,SUGGESTED_NOT_IMPLEMENTED,Steel plastic strain tensor/PEEQ; UHPC directional epsilon_star histories; original geometric modal projections,"No new modes, damage laws, parameters or production edits"

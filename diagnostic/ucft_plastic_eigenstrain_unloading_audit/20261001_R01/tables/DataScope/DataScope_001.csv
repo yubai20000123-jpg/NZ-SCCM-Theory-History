@@ -1,0 +1,26 @@
+sheet,source_path,transform
+AllCandidateFrameStats,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_UNLOADING_INCREMENT_QUALITY_AND_CONTINUITY_R01.csv,All-source population aggregation
+AllCandidateFrameStats,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_UNLOADING_INCREMENT_QUALITY_AND_CONTINUITY_R01.csv,All-source population aggregation
+LoadHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_LOAD_HISTORY_AND_FRAME_SELECTION_R01.csv,Direct retained rows
+LoadHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_LOAD_HISTORY_AND_FRAME_SELECTION_R01.csv,Direct retained rows
+RepresentativePoints,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_REPRESENTATIVE_POINTS_R01.csv,Direct retained rows
+RepresentativePoints,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_REPRESENTATIVE_POINTS_R01.csv,Direct retained rows
+SteelPointHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_REPRESENTATIVE_RAW_STEEL_HISTORY_R01.csv,Direct retained rows
+SteelPointHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_REPRESENTATIVE_RAW_STEEL_HISTORY_R01.csv,Direct retained rows
+SteelIncrementHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_REPRESENTATIVE_INCREMENT_HISTORY_R01.csv,Direct retained rows
+SteelIncrementHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_REPRESENTATIVE_INCREMENT_HISTORY_R01.csv,Direct retained rows
+UHPCSteelHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_REPRESENTATIVE_UHPC_STEEL_HISTORY_R01.csv,Direct retained rows
+UHPCSteelHistory,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_REPRESENTATIVE_UHPC_STEEL_HISTORY_R01.csv,Direct retained rows
+AllUnloadingPoints,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_TRUE_UNLOADING_POINT_STIFFNESS_R01.csv,Direct retained rows
+AllUnloadingPoints,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_TRUE_UNLOADING_POINT_STIFFNESS_R01.csv,Direct retained rows
+AllPairEventTiming,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_UNLOADING_EVENT_TIMING_R01.csv,Direct retained rows
+AllPairEventTiming,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_UNLOADING_EVENT_TIMING_R01.csv,Direct retained rows
+SpatialClassCounts,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH050\BH050_STEEL_UNLOADING_SPATIAL_FINAL_SUMMARY_R01.csv,All-source population aggregation
+SpatialClassCounts,C:\03SCI\abaqus-UCFT test\diagnostic\plastic_eigenstrain_unloading_audit\BH032\BH032_STEEL_UNLOADING_SPATIAL_FINAL_SUMMARY_R01.csv,All-source population aggregation
+SteelPointHistory,7 original selected material points per case; 501 frames each,All frames retained; remaining raw points omitted from this lightweight book
+SteelIncrementHistory,7 original selected points per case; 500 adjacent increments each,All adjacent increments retained
+AllCandidateFrameStats,BH050 1832 / BH032 1824 candidate points,"All original candidate increments counted, not representative-point statistics"
+AllCandidateFrameStats,Per-frame counts cover every frame; Summary metrics cover ascending 85pct-Pu to final frame,Filter frame_end >= manifest start_frame_85pct before comparing summed frame counts with Summary
+AllUnloadingPoints,Every point having at least one final confirmed unload,Point-level summary only; full point histories remain in archive
+SpatialClassCounts,PRE95 / PEAK / POST95 original spatial records,"Counts are IP-section-point samples, not area percentages"
+GENERAL,Existing complete Excel/CSV/ODB files unchanged,"Lightweight pack is explicitly a subset + aggregation, not full raw export"

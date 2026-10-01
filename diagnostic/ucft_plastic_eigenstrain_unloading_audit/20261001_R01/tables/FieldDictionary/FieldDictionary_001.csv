@@ -1,0 +1,115 @@
+field,unit,interpretation
+drop_audit_class,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sum_compression_drop_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+role,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+element,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+section_point,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+case,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+frame_index,identifier / count / category / field-specific,frame_index is zero-based sequence; frame_id is Abaqus increment identifier.
+time_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+q_FEM_W_over_b,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+R2_after_plane,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+frame_id,identifier / count / category / field-specific,frame_index is zero-based sequence; frame_id is Abaqus increment identifier.
+P_load_signed_N,N,Original diagnostic field retained without resampling; see source CSV and audit notes.
+P_load_abs_N,N,Original diagnostic field retained without resampling; see source CSV and audit notes.
+P_over_Pu,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+U3_load_mean_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+P_fix_signed_N,N,Original diagnostic field retained without resampling; see source CSV and audit notes.
+P_end_balance_signed_N,N,Original diagnostic field retained without resampling; see source CSV and audit notes.
+state_marker,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+A_current_normal_mm_s2,mm/s²,Original diagnostic field retained without resampling; see source CSV and audit notes.
+actual_A_available,identifier / count / category / field-specific,Actual field presence; only 21 of 501 output frames contain A/V.
+actual_V_available,identifier / count / category / field-specific,Actual field presence; only 21 of 501 output frames contain A/V.
+panel,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+median_ds_raw,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+frame_start,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+frame_end,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+time_end_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+P_end_over_Pu,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+integration_point,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_y_start_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_y_end_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+abs_sigma_y_drop_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_VM_start_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_VM_end_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+eta_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+delta_PEEQ,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+delta_PE_tensor_norm,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+classification,identifier / count / category / field-specific,"Final confirmed classification; requires prior yield, PE/PEEQ freeze and trial direction."
+d_s_raw,dimensionless (see notes for curvature),Only defined for true unloading; retain raw negative values; not a fitted damage law.
+d_s_clipped,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+unloading_residual,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+delta_sigma_norm_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+original_Cs_increment_residual,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+current_isotropic_yield_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_VM_over_current_yield,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+confirmed_prior_yield,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+spatially_supported_unloading,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+qualified_scalar_stiffness,dimensionless (see notes for curvature),"Additional signal-size and spatial-continuity qualification, not a new unloading definition."
+step_time_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+x_ip_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+y_ip_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+z_ip_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_x_transverse_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_y_axial_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+tau_xy_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+LE_x_transverse,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+LE_y_axial,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+gamma_xy_engineering,dimensionless (see notes for curvature),ODB engineering shear; no extra factor 2. Tensor shear = this value / 2.
+PE_x_transverse,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+PE_y_axial,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+PE_xy_engineering,dimensionless (see notes for curvature),ODB engineering shear; no extra factor 2. Tensor shear = this value / 2.
+PEEQ,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_VM_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+sigma_VM_over_fy,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+w_local_ref_normal_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+Y_s_MPa,MPa,"Elastic energy-type diagnostic from strain minus plastic strain, not a calibrated law."
+Y_s_max_MPa,MPa,"Elastic energy-type diagnostic from strain minus plastic strain, not a calibrated law."
+steel_element,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+steel_ip,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+steel_section_point,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+steel_sigma_VM_over_fy,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+steel_PEEQ,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+steel_w_local_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_element,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_ip,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+pair_distance_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_sigma_x_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_sigma_y_axial_MPa,MPa,Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_epsilon_x_star,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_epsilon_y_star,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_PE_x,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+uhpc_PE_y,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+PEEQT,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+PEQC,dimensionless (see notes for curvature),Unavailable compression-specific variable remains blank; never substitute zero.
+DAMAGEC,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+DAMAGET,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+SDEG,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+UHPC_epsilon_y_star_with_Poisson,dimensionless (see notes for curvature),"Full 3D elastic compliance correction, not sigma/E alone."
+UHPC_epsilon_x_star_with_Poisson,dimensionless (see notes for curvature),"Full 3D elastic compliance correction, not sigma/E alone."
+kappa_Ux_Poisson_corrected,dimensionless (see notes for curvature),"Full 3D elastic compliance correction, not sigma/E alone."
+kappa_Uy_Poisson_corrected,dimensionless (see notes for curvature),"Full 3D elastic compliance correction, not sigma/E alone."
+state,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+n_true_unload,count,Original diagnostic field retained without resampling; see source CSV and audit notes.
+n_spatially_supported,count,Original diagnostic field retained without resampling; see source CSV and audit notes.
+longest_consecutive_true_frames,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+n_qualified_scalar,count,"Additional signal-size and spatial-continuity qualification, not a new unloading definition."
+median_original_Cs_residual,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+median_scalar_residual,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+first_supported_unload_time_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+first_UHPC_PEEQ_gt1e_5_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+first_DAMAGEC_gt1e_4_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+first_DAMAGET_gt1e_4_s,s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+first_Poisson_corrected_epsstar_y_gt1e_4_s,s,"Full 3D elastic compliance correction, not sigma/E alone."
+first_local_w_gt1mm_s,mm/s,Original diagnostic field retained without resampling; see source CSV and audit notes.
+UHPC_plastic_precedes_unload,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+UHPC_epsstar_precedes_unload,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+local_w_1mm_precedes_unload,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+unload_P_over_Pu,dimensionless ratio,Original diagnostic field retained without resampling; see source CSV and audit notes.
+UHPC_PEEQ_at_unload,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+UHPC_DAMAGEC_at_unload,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+UHPC_DAMAGET_at_unload,identifier / count / category / field-specific,Original diagnostic field retained without resampling; see source CSV and audit notes.
+w_at_unload_mm,mm,Original diagnostic field retained without resampling; see source CSV and audit notes.
+q_R2_at_unload,dimensionless (see notes for curvature),Original diagnostic field retained without resampling; see source CSV and audit notes.
+n_supported_unload_increments,count,Original diagnostic field retained without resampling; see source CSV and audit notes.
+max_raw_local_w_accel_before_unload_mm_s2,mm/s²,Original diagnostic field retained without resampling; see source CSV and audit notes.

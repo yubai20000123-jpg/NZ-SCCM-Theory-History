@@ -1,0 +1,20 @@
+[
+  {
+    "case": "BH050",
+    "original_increment_rows": 916000,
+    "metrics_window_start_frame": 179,
+    "true": 139848,
+    "spatially_supported": 119815,
+    "qualified": 71484,
+    "counts_match_existing_metrics": true
+  },
+  {
+    "case": "BH032",
+    "original_increment_rows": 912000,
+    "metrics_window_start_frame": 201,
+    "true": 122428,
+    "spatially_supported": 108336,
+    "qualified": 50916,
+    "counts_match_existing_metrics": true
+  }
+]
