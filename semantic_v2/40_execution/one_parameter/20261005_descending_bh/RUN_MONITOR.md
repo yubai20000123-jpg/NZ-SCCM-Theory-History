@@ -6,12 +6,12 @@
 - 每个 (w) 独立 current-state 求值；FEM/试验不参与求根。
 - 停止规则：只在一个试件完整冻结并提交后停止，不留下半个试件的未记录状态。
 
-## 执行口径修正
-复核旧 BH100 数值链后确认，当前约 13.40 MN 的 BH100 曲线来自 **ABS/raw UC141 damage + ABS/raw plastic**，不是 formal peak-rebased 版本。为保证系列外推不偷换模型，本轮所有剩余 BH 试件统一沿用 ABS/raw 路径；该 formal-vs-execution 差异已同步写入 CURRENT_PATH_SPEC.md。
+## 执行口径
+当前约 13.40 MN 的 BH100 曲线来自 **ABS/raw UC141 damage + ABS/raw plastic**。本轮剩余 BH 试件全部保持这一 numerical path；formal peak-rebased 与 execution ABS/raw 的差异另行治理，不在系列中途切换。
 
 ## 状态
 - [x] BH100：当前路径回归门复核
-- [ ] BH085
+- [x] BH085：完整曲线 + 峰值冻结
 - [ ] BH070
 - [ ] BH060
 - [ ] BH050
@@ -20,18 +20,12 @@
 - [ ] BH010
 - [ ] BH005
 
-## BH100 回归门
-在 (b=5000) mm、(w=82) mm：
-- (ho_A=0.75441), (ho_D=0.68278), (w_P=45.2254) mm；
-- (P_U=5.00148) MN；
-- TOP predictor (A^+=4.423037) mm，trial VM = 444.887 MPa；
-- TOP corrector (e^+=1.910240) mm，VM = 355.000 MPa，(P_s^+=2.974365) MN；
-- BOTTOM (A^-=e^-=4.653450) mm，VM = 354.110 MPa，(P_s^-=5.420269) MN；
-- (P(82)=13.39611) MN（与旧保存 13.39592 MN 的差异来自积分阶次，约 0.0014%）。
-
-因此当前代码链已复现 BH100，允许进入 BH085。
+## 已冻结结果
+- BH100 gate: (P(82)=13.3961) MN；旧保存曲线峰值约 13.40 MN。
+- BH085: (w_u=66.3600852) mm，(P_u=11.41091) MN；峰值由 BOTTOM predictor 首次达到 355 MPa 的真实根形成，峰后直接下降。
 
 ## 日志
 1. 初始化监控。
-2. 复核并冻结 current numerical path；修正“formal rebase”与“实际 BH100 ABS/raw”之间的执行口径差异。
-3. 下一步：计算 BH085 完整 (P(w)) 曲线并冻结后再进入 BH070。
+2. 复核并冻结 current numerical path；记录 formal-rebase / actual-ABS 差异。
+3. BH085 完整执行完成：coarse (w=0sim105) mm，峰区 (56sim70) mm 加密，BOTTOM-yield 根求解及 nq=80/100/120/160 收敛检查完成。
+4. 下一步：BH070；完成并提交后才进入 BH060。
