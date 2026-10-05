@@ -2,10 +2,19 @@
 
 BH085-BH050 old results remain quarantined. BH032 and smaller remain paused.
 
-BH100 corrected Poisson false-cracking A/B trial completed.
+BH100 UHPC Poisson false-cracking correction trial completed, but its 15.61115 MN total result is now also provisional because the steel-shell audit found a separate whole-face plastic-corrector error.
 
-Result: wu=82.15506222 mm, Pu=15.61115 MN, PU=7.21811 MN, Ptop=2.96108 MN, Pbottom=5.43196 MN, rhoA=0.853316, rhoD=0.771535, wP=31.59680 mm.
+Steel audit at w=82.15506222 mm:
+- TOP Yun predictor mean axial stress = 251.08787 MPa
+- BOTTOM Yun predictor mean axial stress = 271.59798 MPa
+- TOP single-e Mises corrector reduces TOP whole-face mean to 148.05383 MPa
+- BOTTOM remains 271.59798 MPa
+- this single corrector event removes about 2.061 MN from the combined steel force
+- global-only exact area-mean axial stresses are about 223.793 MPa TOP and 299.077 MPa BOTTOM
+- TOP global-only outer-surface Mises first reaches 355 MPa at w about 78.688 mm; at w=82.155 mm it is about 375.43 MPa, while BOTTOM global-only max is about 337.57 MPa
 
-Corrected UHPC driver removes positive Poisson lateral strain from the tensile damage trigger by using the plane-stress equivalent-uniaxial principal strain projection. See BH100_DAMAGE_ACTIVATION_CORRECTION_SPEC.md and BH100_DAMAGE_ACTIVATION_CORRECTION_RESULT.md.
+Conclusion: the current implementation lets one controlling Mises point reduce a single recoverable amplitude for the entire steel face, which collapses the whole-face mean TOP stress and exaggerates TOP/BOTTOM asymmetry. Global yielding and local postbuckling plasticity are also conflated.
 
-Do not resume smaller BH cases until steel/global-local load partition is audited.
+Next target: BH100 only. Freeze corrected UHPC. Replace the single-e whole-face corrector by a continuous local Mises-cap operator and integrate the resulting steel stress field. Do not resume smaller BH cases before this is done.
+
+Detailed audit: AUDIT_BH100_STEEL_TOP_BOTTOM_ASYMMETRY.md
