@@ -1,129 +1,88 @@
-# BH100 corrected multiaxial UHPC damage-activation trial — result
+# BH100 corrected multiaxial UHPC damage-activation trial
 
-## Scope
-This run changes **only** the UHPC multiaxial driver used to feed the existing ABS/raw UC141 damage/plastic functions. Steel predictor/corrector, geometry, whole-face N=m=4 topology, material constants and P=PU+Ps+ + Ps- are kept as in the BH100 13.40-MN A/B path.
+Status: PROVISIONAL CORRECTED TRIAL
 
-Rejected driver:
-[
-eta_t^{old}=langlearepsilon_1angle_+,qquad
-eta_c^{old}=langle-arepsilon_2angle_+.
-]
+Only one mechanism was changed from the BH100 13.40-MN path: the multiaxial strain driver that feeds the existing ABS/raw UC141 damage and plastic functions.
+
+Old driver:
+eta_t_old = positive_part(eps1)
+eta_c_old = positive_part(-eps2)
 
 Corrected plane-stress equivalent-uniaxial driver:
-[
-oxed{eta_t^{eq}=rac{langlearepsilon_1+
-u_carepsilon_2angle_+}{1-
-u_c^2}},
-qquad
-oxed{eta_c^{eq}=rac{langle-arepsilon_2-
-u_carepsilon_1angle_+}{1-
-u_c^2}}.
-]
-For pure uniaxial compression this gives (eta_t^{eq}=0), so Poisson lateral expansion no longer creates tensile damage. For uniaxial tension/compression the original UC141 uniaxial total-strain calibration is recovered exactly.
+eta_t_eq = positive_part(eps1 + nu_c*eps2) / (1 - nu_c^2)
+eta_c_eq = positive_part(-eps2 - nu_c*eps1) / (1 - nu_c^2)
+
+This makes pure uniaxial compression give eta_t_eq = 0, so Poisson lateral expansion cannot create tensile damage. Under uniaxial tension/compression the original UC141 uniaxial total-strain calibration is recovered.
 
 ## Peak
-BOTTOM trial whole-face Mises first reaches 355 MPa at
-[
-oxed{w_u=82.15506222 {m mm}}.
-]
-Immediately before the event the total load is still increasing; immediately after the BOTTOM corrector activates and the total load decreases. Thus the first external maximum is the cusp at this real yield root:
-[
-oxed{P_u=15.61115 {m MN}}.
-]
+w_u = 82.15506222 mm
+P_u = 15.61115 MN
 
-At the peak:
-[
-P_U=7.21811 {m MN},quad
-P_s^+=2.96108 {m MN},quad
-P_s^-=5.43196 {m MN}.
-]
+Components:
+P_UHPC = 7.21811 MN
+P_TOP = 2.96108 MN
+P_BOTTOM = 5.43196 MN
 
-UHPC state:
-[
-ho_A=0.8533161,quad
-ho_D=0.7715349,quad
-w_P=31.59680 {m mm}.
-]
-Equivalent-strain extrema:
-[
-eta_{t,max}^{eq}=0.00123863,qquad
-eta_{c,max}^{eq}=0.00157270.
-]
+UHPC:
+rho_A = 0.8533161
+rho_D = 0.7715349
+w_P = 31.59680 mm
+eta_t_eq_max = 0.00123863
+eta_c_eq_max = 0.00157270
 
 TOP steel:
-[
-A^+=4.4312342 {m mm},quad
-e^+=1.8956005 {m mm},quad
-A_P^+=2.5356337 {m mm},
-]
-[
-arsigma_y^+=148.05383 {m MPa},qquad
-maxsigma_{VM}^+=355.0000 {m MPa}.
-]
-The unreduced TOP predictor would reach about 446.08 MPa.
+A_plus = 4.4312342 mm
+e_plus = 1.8956005 mm
+A_P_plus = 2.5356337 mm
+mean axial stress = 148.05383 MPa
+max Mises = 355.0000 MPa
+unreduced trial Mises = about 446.08 MPa
 
 BOTTOM steel:
-[
-A^-=4.6598346 {m mm},quad e^-=A^-,
-]
-[
-arsigma_y^-=271.59798 {m MPa},qquad
-maxsigma_{VM}^-=355.0000 {m MPa}.
-]
+A_minus = 4.6598346 mm
+e_minus = A_minus
+mean axial stress = 271.59798 MPa
+max Mises = 355.0000 MPa
 
-## Direct A/B against the rejected old strain driver at the same w
-Old principal-total-strain driver at (w=82.1551) mm:
-[
-ho_A=0.7540082,quad
-ho_D=0.6822918,quad
-w_P=45.35476 {m mm},quad
-P_U=5.00809 {m MN}.
-]
+## A/B at the same w
+Old principal-total-strain driver:
+rho_A = 0.7540082
+rho_D = 0.6822918
+w_P = 45.35476 mm
+P_UHPC = 5.00809 MN
 
 Corrected driver:
-[
-ho_A=0.8533161,quad
-ho_D=0.7715349,quad
-w_P=31.59680 {m mm},quad
-P_U=7.21811 {m MN}.
-]
+rho_A = 0.8533161
+rho_D = 0.7715349
+w_P = 31.59680 mm
+P_UHPC = 7.21811 MN
 
-Therefore the correction:
-- recovers about 9.93 percentage points of membrane-stiffness retention;
-- recovers about 8.92 percentage points of bending-stiffness retention;
-- reduces the projected plastic reference imperfection by about 30.33%;
-- raises the UHPC axial contribution at this state by about 44.13%.
+Changes:
+- membrane retention: +9.93 percentage points
+- bending retention: +8.92 percentage points
+- projected plastic reference imperfection w_P: -30.33 percent
+- UHPC axial contribution: +44.13 percent
 
-## Peak-neighborhood monotonicity
-[
-P(82.1051)=15.60666 {m MN},
-]
-[
-P(82.1451)=15.61025 {m MN},
-]
-[
-P(82.1551)=15.61115 {m MN},
-]
-[
-P(82.1651)=15.61084 {m MN},
-]
-[
-P(82.2051)=15.60960 {m MN}.
-]
-So the maximum is not produced by a coarse w-grid.
+## Peak neighborhood
+P(82.1051) = 15.60666 MN
+P(82.1451) = 15.61025 MN
+P(82.1551) = 15.61115 MN
+P(82.1651) = 15.61084 MN
+P(82.2051) = 15.60960 MN
 
-## Numerical-evaluator convergence
-At the same peak root, the continuous-integral evaluator was checked with increasing quadrature order only as an independent numerical evaluator:
-- order 80: 15.611354 MN
-- order 100: 15.611207 MN
-- order 120: 15.611129 MN
-- order 160: 15.611147 MN
-- order 200: 15.611181 MN
+## Continuous-integral evaluator convergence
+The theoretical definition remains continuous area integrals for rho_A, rho_D and w_P. These orders are only numerical evaluations of that same continuous integral:
+order 80: 15.611354 MN
+order 100: 15.611207 MN
+order 120: 15.611129 MN
+order 160: 15.611147 MN
+order 200: 15.611181 MN
 
-The theory definition remains the continuous area integrals for (ho_A,ho_D,w_P); fixed spatial integration points are not part of the constitutive/model definition. Production implementation still has to be replaced by the previously derived level-set + one-dimensional deterministic integral backend.
+The final production backend still needs the already-derived level-set plus one-dimensional deterministic integral implementation.
 
-## Post-freeze comparison only
-The already-extracted BH100 DIRECT peak is 13.486 MN. After freezing the theoretical result, the corrected trial is therefore about +15.76% high. This comparison was not used in any root or material-state calculation.
+## Post-freeze comparison
+Previously extracted BH100 DIRECT peak = 13.486 MN.
+After freezing the corrected theoretical result, the difference is +15.76 percent.
+No FEM/test value was used in any root or material-state calculation.
 
-## Interpretation
-The Poisson false-cracking diagnosis was real: correcting it materially restores UHPC stiffness and plastic-reference state. However, it also proves that the former 13.40-MN agreement with DIRECT was not a robust validation; it contained compensating errors. The next audit must therefore target load partition and the steel/global-local branch rather than re-introducing false tensile damage.
+Interpretation: the Poisson false-cracking mechanism was real. Removing it restores a large part of UHPC stiffness and reduces w_P, but it also shows that the former 13.40-MN agreement contained compensating errors. The next audit must focus on load partition and the steel global-local branch.
