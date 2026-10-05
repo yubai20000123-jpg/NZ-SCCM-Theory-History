@@ -1,3 +1,7 @@
+# RETRACTED — WRONG UHPC PATH
+
+This file is retained only as an audit artifact. It used/inherited ABS/raw UHPC damage-plastic instead of the locked PEAK-REBASED damage and plastic-initial-imperfection path. Do not use its numerical results. See RETRACTION_BH100_UHPC_PATH_REVERSION.md.
+
 # BH100 continuous local Mises-cap steel repair: recomputation result
 
 Status: PROVISIONAL MECHANICS AUDIT RESULT. Not accepted as final theory.
