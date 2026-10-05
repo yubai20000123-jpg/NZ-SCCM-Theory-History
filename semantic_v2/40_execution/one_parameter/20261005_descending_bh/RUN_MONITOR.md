@@ -2,54 +2,42 @@
 
 BH085-BH050 old results remain quarantined. BH032 and smaller remain paused.
 
-## BH100 UHPC status
-The Poisson false-cracking correction is frozen:
-eta_t_eq = positive_part(eps1 + nu_c*eps2)/(1-nu_c^2)
-eta_c_eq = positive_part(-eps2 - nu_c*eps1)/(1-nu_c^2)
+## CRITICAL RETRACTION: BH100 UHPC path
 
-## BH100 steel-shell continuous local-Mises repair
-The rejected whole-face single-e corrector has been replaced by a continuous local Mises-cap operator:
-- correct global base pointwise if its Mises trial exceeds fy;
-- add Yun/R06 local elastic increment;
-- solve the explicit local quadratic Phi(g + lambda*l)=fy^2 for lambda in [0,1];
-- integrate the resulting sigma_y field continuously over each face.
+The latest BH100 damage-activation and subsequent steel local-Mises runs are INVALID because the UHPC module was accidentally reverted from the locked PEAK-REBASED path to ABS/raw damage and ABS/raw plastic.
 
-At w=82.15506222 mm:
-- UHPC = 7.21811 MN
-- TOP = about 4.935 MN
-- BOTTOM = 5.43196 MN
-- total = about 17.585 MN
-- TOP/BOTTOM mean steel stresses are about 246.75 / 271.60 MPa, so the rejected 148 / 272 MPa whole-face split is removed.
+Locked UHPC identity to restore:
+- eta_t = positive_part(eps1)
+- eta_c = positive_part(-eps2)
+- d_hat_t = 0 for eta_t <= eps_tp
+- d_hat_c = 0 for eta_c <= eps_cp
+- post-peak damage is rebased from the peak value
+- Delta p_t = max[p_t(eta_t)-p_t,p,0]
+- Delta p_c = max[p_c(eta_c)-p_c,p,0]
+- plastic initial imperfection w_P is projected only from these peak-rebased plastic strains
+- if neither peak is crossed: rho_A=1, rho_D=1, w_P=0
 
-## Repaired branch maximum
-Refined first external maximum of this repaired numerical branch:
-- wu about 146.33 mm
-- Pu about 24.897 MN
-- PUHPC about 12.1032 MN
-- Ptop about 6.165 MN
-- Pbottom about 6.628 MN
-- steel resultant eccentricity about 0.83 mm
+The previously introduced "plane-stress equivalent-uniaxial strain" driver is NOT part of this locked path.
 
-This is NOT accepted as the final theory result.
+## Retracted numerical outputs
+Do not use:
+- BH100 Pu = 15.61115 MN damage-activation trial
+- BH100 rho_A=0.8533161, rho_D=0.7715349, w_P=31.59680 mm at w≈82.155 mm
+- BH100 continuous-local-Mises branch Pu≈24.895 MN at w≈146.32 mm
+- all load partitions derived from those wrong-UHPC runs
 
-Reason: after removing the artificial whole-face TOP collapse, the total steel force becomes far too large. At the peak the global elastic trial exceeds yield over essentially the full area of both faces. The remaining upstream issue is now the steel predictor / mean-stress identity: Yun whole-face mean is still being used as a total face mean while the global base already carries the overall axial demand. This indicates global/local mean-level double counting or an incompatible predictor closure.
-
-## Post-freeze comparison
-Previously extracted BH100 DIRECT peak: 13.486 MN at incremental deflection about 97.392 mm.
-
-The repaired branch:
-- gives about 20.875 MN already at w=97.392 mm;
-- peaks at about 24.897 MN, about 84.6 percent above DIRECT.
-
-No FEM/test value was used in the theoretical solve.
+## Steel audit status
+The qualitative diagnosis that the single-e whole-face Mises corrector can artificially collapse one face remains a useful independent steel audit. However, every quantitative steel force and total-load result must be recomputed after the correct peak-rebased UHPC state is restored.
 
 ## Decision
 Do not resume BH085-BH005.
-Next audit target: keep corrected UHPC and continuous local Mises cap, but re-derive the steel global-base / Yun-local mean compatibility so Yun does not duplicate the global axial demand.
 
-Files:
-- BH100_CONTINUOUS_LOCAL_MISES_RUN.md
-- BH100_CONTINUOUS_LOCAL_MISES_RESULT.md
-- BH100_CONTINUOUS_LOCAL_MISES_CURVE.csv
-- AUDIT_BH100_STEEL_TOP_BOTTOM_ASYMMETRY.md
-- BH100_STEEL_LOCAL_MISES_REPAIR_SPEC.md
+Next executable target:
+BH100 only, with:
+1. the locked PEAK-REBASED UHPC damage/plastic/w_P path restored exactly;
+2. the continuous local steel Mises-cap operator retained as a candidate steel correction;
+3. no FEM/test data in the solve;
+4. continuous level-set / deterministic integral backend.
+
+Detailed retraction:
+RETRACTION_BH100_UHPC_PATH_REVERSION.md
