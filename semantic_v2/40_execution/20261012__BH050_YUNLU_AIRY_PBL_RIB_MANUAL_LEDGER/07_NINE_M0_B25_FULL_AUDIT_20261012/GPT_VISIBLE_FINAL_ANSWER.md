@@ -57,6 +57,8 @@
 
 **[下载全部九试件计算、九件 FEM 曲线、18 张单件图、两张总览图以及 BH050 完整人工复算账本](sandbox:/mnt/data/UCFT_NINE_M0_B25_FULL_EXACT_AUDIT_AND_FEM_20261012.zip)**
 
+**[GitHub 完整压缩包备份](https://github.com/yubai20000123-jpg/NZ-SCCM-Theory-History/blob/research/20261012-bh050-rib-airy-manual-ledger/semantic_v2/40_execution/20261012__BH050_YUNLU_AIRY_PBL_RIB_MANUAL_LEDGER/07_NINE_M0_B25_FULL_AUDIT_20261012/UCFT_NINE_M0_B25_FULL_EXACT_AUDIT_AND_FEM_20261012.zip)** ｜ **[GitHub 可直接阅读的九试件报告](https://github.com/yubai20000123-jpg/NZ-SCCM-Theory-History/blob/research/20261012-bh050-rib-airy-manual-ledger/semantic_v2/40_execution/20261012__BH050_YUNLU_AIRY_PBL_RIB_MANUAL_LEDGER/07_NINE_M0_B25_FULL_AUDIT_20261012/README_九试件结果与复算状态.md)** ｜ **[GitHub 可直接阅读的 BH050 账本](https://github.com/yubai20000123-jpg/NZ-SCCM-Theory-History/blob/research/20261012-bh050-rib-airy-manual-ledger/semantic_v2/40_execution/20261012__BH050_YUNLU_AIRY_PBL_RIB_MANUAL_LEDGER/07_NINE_M0_B25_FULL_AUDIT_20261012/BH050_W5_00_complete_human_reproduction_readme.md)**
+
 主要可单独查看的文件：
 
 - [全部九件至 \(B/25\) 的每个理论状态](sandbox:/mnt/data/UCFT_M0_NINE_B25_20261012/01_NINE_M0_all_formula_roots_to_B25.csv)
