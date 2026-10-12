@@ -1,0 +1,1253 @@
+[
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_BASE_BOUNDARY_BH005_BH032_T120_T360\\BH032_EXPLICIT_R02_GRID_B400.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_BASE_BOUNDARY_BH005_BH032_T120_T360\\BH050_EXPLICIT_R02_GRID_B400.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_BASE_BOUNDARY_BH005_BH032_T120_T360\\BH100_EXPLICIT_R02_GRID_B400.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH005_GS_DIRECT_R01.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH010_GS_DIRECT_R01.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH020_GS_DIRECT_R01.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH032_CONFLICT_PROBE_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH032_GS_DIRECT_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH032_KWB_RESET_PROBE_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH050_GS_DIRECT_R01.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH060_GS_DIRECT_R01.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH070_GS_DIRECT_R01.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH085_GS_DIRECT_R01.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH100_GS_DIRECT_R01.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "FORMAL_DIRECT"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_BASE_BOUNDARY_BH005_BH032_T120_T360\\GS_DIRECT_R01\\BH032_EXPLICIT_R02_GRID_B400_GS_DIRECT_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_BASE_BOUNDARY_BH005_BH032_T120_T360\\GS_DIRECT_R01\\BH032_GS_DIRECT_R01_PILOT.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\REOPEN_VERIFICATION\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH005.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH010.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH020.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH032.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH050.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH060.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH070.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH085.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\BUILD_AUDIT_R03\\SOURCE_SEMANTIC_EVIDENCE\\SOURCE_EVIDENCE_BH100.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\REOPEN_VERIFICATION\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS\\TIE_REPAIR_AND_RUN_GATE_R05_20261004\\STAGING_NATIVE_REPAIR\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\ALL9_REAUDIT_R11_20261004\\CAE_INSPECTION\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\BEFORE_REPAIR_BACKUP\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\REOPEN_VERIFICATION\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH005_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 250.0,
+    "L_mm": 500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH010_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 500.0,
+    "L_mm": 1000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH020_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1000.0,
+    "L_mm": 2000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH032_S562p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH050_S360_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH060_S225_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3000.0,
+    "L_mm": 6000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH070_S112p5_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 3500.0,
+    "L_mm": 7000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH085_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 4250.0,
+    "L_mm": 8500.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_PBL_CROSS_R03_9MODELS_RUN\\PBL_HOST_COMPATIBILITY_AUDIT_R08_20261004\\STAGING\\JOB_BH100_S56p25_GS_DIRECT_PBL_CROSS_R03.inp",
+    "B_mm": 5000.0,
+    "L_mm": 10000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\BH032_REPAIR_VALIDATION_20260925\\JOB_BH032_FULL_REBUILD_PROBE_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\FAILED_ATTEMPT_ARCHIVE_BH032_20260925\\JOB_BH032_GS_DIRECT_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\FAILED_ATTEMPT_ARCHIVE_BH050_20260925\\JOB_BH050_GS_DIRECT_R01.inp",
+    "B_mm": 2500.0,
+    "L_mm": 5000.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\GS_DIRECT_POSTRUN_AUDIT_R01\\JOB_BH032_GS_DIRECT_R01_PRE_CONTACT_RESTORE.inp",
+    "B_mm": 1600.0,
+    "L_mm": 3200.0,
+    "AR": 2.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH005_LB3_EXPLICIT_R01.inp",
+    "B_mm": 250.0,
+    "L_mm": 750.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH010_LB3_EXPLICIT_R01.inp",
+    "B_mm": 500.0,
+    "L_mm": 1500.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH020_LB3_EXPLICIT_R01.inp",
+    "B_mm": 1000.0,
+    "L_mm": 3000.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH032_LB3_EXPLICIT_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 4800.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH050_LB3_EXPLICIT_R01.inp",
+    "B_mm": 2500.0,
+    "L_mm": 7500.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH060_LB3_EXPLICIT_R01.inp",
+    "B_mm": 3000.0,
+    "L_mm": 9000.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH070_LB3_EXPLICIT_R01.inp",
+    "B_mm": 3500.0,
+    "L_mm": 10500.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH085_LB3_EXPLICIT_R01.inp",
+    "B_mm": 4250.0,
+    "L_mm": 12750.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\BH100_LB3_EXPLICIT_R01.inp",
+    "B_mm": 5000.0,
+    "L_mm": 15000.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH005",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH005_LB3_EXPLICIT_R01.inp",
+    "B_mm": 250.0,
+    "L_mm": 750.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH010",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH010_LB3_EXPLICIT_R01.inp",
+    "B_mm": 500.0,
+    "L_mm": 1500.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH020",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH020_LB3_EXPLICIT_R01.inp",
+    "B_mm": 1000.0,
+    "L_mm": 3000.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH032",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH032_LB3_EXPLICIT_R01.inp",
+    "B_mm": 1600.0,
+    "L_mm": 4800.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH050",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH050_LB3_EXPLICIT_R01.inp",
+    "B_mm": 2500.0,
+    "L_mm": 7500.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH060",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH060_LB3_EXPLICIT_R01.inp",
+    "B_mm": 3000.0,
+    "L_mm": 9000.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH070",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH070_LB3_EXPLICIT_R01.inp",
+    "B_mm": 3500.0,
+    "L_mm": 10500.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH085",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH085_LB3_EXPLICIT_R01.inp",
+    "B_mm": 4250.0,
+    "L_mm": 12750.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  },
+  {
+    "case": "BH100",
+    "source": "C:\\03SCI\\abaqus-UCFT test\\_codex_lb3_git_worktree\\semantic_v2\\40_execution\\model_governance\\20260921_ucft_lb3_cleanup\\COMPUTATION_FILES\\BH100_LB3_EXPLICIT_R01.inp",
+    "B_mm": 5000.0,
+    "L_mm": 15000.0,
+    "AR": 3.0,
+    "status": "GEOMETRY_INVENTORIED",
+    "model_role": "HISTORICAL_OR_DIAGNOSTIC_NOT_MIXED",
+    "rib_status": "EXTRACTED_SEPARATELY"
+  }
+]

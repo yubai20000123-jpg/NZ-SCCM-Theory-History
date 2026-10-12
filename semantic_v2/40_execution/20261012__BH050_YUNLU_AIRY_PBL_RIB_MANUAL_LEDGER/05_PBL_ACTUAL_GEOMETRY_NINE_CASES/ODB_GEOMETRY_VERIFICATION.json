@@ -1,0 +1,200 @@
+[
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH005_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790386841.7123778, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH005_GS_DIRECT_R01.odb", 
+    "case": "BH005", 
+    "ODB_nodes": 5610, 
+    "field_or_history_read": false, 
+    "bytes": 3504374660, 
+    "max_coordinate_difference_mm": 4.982910084549985e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 5610, 
+    "PBL_elements": 2700, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH010_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790374230.0925052, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH010_GS_DIRECT_R01.odb", 
+    "case": "BH010", 
+    "ODB_nodes": 5610, 
+    "field_or_history_read": false, 
+    "bytes": 3504373052, 
+    "max_coordinate_difference_mm": 5.000000058430487e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 5610, 
+    "PBL_elements": 2700, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH020_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790366974.4498334, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH020_GS_DIRECT_R01.odb", 
+    "case": "BH020", 
+    "ODB_nodes": 5610, 
+    "field_or_history_read": false, 
+    "bytes": 3504373052, 
+    "max_coordinate_difference_mm": 4.9902343590702e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 5610, 
+    "PBL_elements": 2700, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH032_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790437078.050559, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH032_GS_DIRECT_R01.odb", 
+    "case": "BH032", 
+    "ODB_nodes": 5610, 
+    "field_or_history_read": false, 
+    "bytes": 3504376280, 
+    "max_coordinate_difference_mm": 4.978027412505526e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 5610, 
+    "PBL_elements": 2700, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH050_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790332762.2978065, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH050_GS_DIRECT_R01.odb", 
+    "case": "BH050", 
+    "ODB_nodes": 11110, 
+    "field_or_history_read": false, 
+    "bytes": 4614788768, 
+    "max_coordinate_difference_mm": 4.9963379211703796e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 11110, 
+    "PBL_elements": 5400, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH060_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790294666.746162, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH060_GS_DIRECT_R01.odb", 
+    "case": "BH060", 
+    "ODB_nodes": 11110, 
+    "field_or_history_read": false, 
+    "bytes": 4594488992, 
+    "max_coordinate_difference_mm": 4.9975586335904154e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 11110, 
+    "PBL_elements": 5400, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH070_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790284005.8192546, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH070_GS_DIRECT_R01.odb", 
+    "case": "BH070", 
+    "ODB_nodes": 16610, 
+    "field_or_history_read": false, 
+    "bytes": 5699180100, 
+    "max_coordinate_difference_mm": 4.023437440991984e-06, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 16610, 
+    "PBL_elements": 8100, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH085_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790270832.2770586, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH085_GS_DIRECT_R01.odb", 
+    "case": "BH085", 
+    "ODB_nodes": 16610, 
+    "field_or_history_read": false, 
+    "bytes": 5699230100, 
+    "max_coordinate_difference_mm": 4.023437440991984e-06, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 16610, 
+    "PBL_elements": 8100, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }, 
+  {
+    "status": "MATCH", 
+    "inp": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH100_GS_DIRECT_R01.inp", 
+    "readOnly": true, 
+    "mtime": 1790257365.9625394, 
+    "odb": "C:\\03SCI\\abaqus-UCFT test\\UCFT_GS_DIRECT_R01_11MODELS\\JOB_BH100_GS_DIRECT_R01.odb", 
+    "case": "BH100", 
+    "ODB_nodes": 22110, 
+    "field_or_history_read": false, 
+    "bytes": 6803846204, 
+    "max_coordinate_difference_mm": 4.9975586335904154e-08, 
+    "instance": "C-S-SHELL-1", 
+    "INP_nodes": 22110, 
+    "PBL_elements": 10800, 
+    "sections": [
+      "Section-ASSEMBLY_C-C-1_UHPC_ALL_CELLS", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_OUTER_SHELL_FACES", 
+      "Section-ASSEMBLY_C-S-SHELL-1_UCFT_PBL_WEB_FACES", 
+      "Section-ASSEMBLY_GS_FIX-1_GS_ALL_FACES", 
+      "Section-ASSEMBLY_GS_LOAD-1_GS_ALL_FACES"
+    ]
+  }
+]

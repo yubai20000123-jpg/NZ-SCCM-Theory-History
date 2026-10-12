@@ -1,0 +1,72 @@
+[
+  {
+    "path": "01_nine_specimens_rib_coordinates.csv",
+    "bytes": 137100,
+    "sha256": "4caae28450aed6a6abb6b068ba49f4890dba3d02ca2912326e03bd4222f19be4"
+  },
+  {
+    "path": "02_nine_specimens_rib_coordinates.md",
+    "bytes": 37973,
+    "sha256": "7711baf8c6c39a9d0568235ea790f7c61657644cba7ef916eaf743f8b743d788"
+  },
+  {
+    "path": "03_rib_spacing_and_theoretical_cells.md",
+    "bytes": 51210,
+    "sha256": "5ba88113aa4ebbe9f986d5e23df81d0f21ff3052c3ed6917632e2fb60167dd3e"
+  },
+  {
+    "path": "04_real_ribs_vs_mode_nodes.md",
+    "bytes": 29788,
+    "sha256": "4beeac94b97bd485e9ffbb698dd832ef8f95374b0c1e28b451da950024b46eb7"
+  },
+  {
+    "path": "05_sources_and_verification.md",
+    "bytes": 89724,
+    "sha256": "4e65b33a4c92a6b8490e002e02ff2fba707d7c692f4a1829030a1344fe65b7e9"
+  },
+  {
+    "path": "06_GEOMETRY_EVIDENCE.json",
+    "bytes": 1558277,
+    "sha256": "6a104326231c26d4574f8dc6242c3821c14e74141556e722b56cf64abf926403"
+  },
+  {
+    "path": "ODB_GEOMETRY_VERIFICATION.json",
+    "bytes": 7716,
+    "sha256": "0c661e092007017a1be777d99132d6efcecbff4608d34089b260eecb6355de9d"
+  },
+  {
+    "path": "scripts/build_ledgers.py",
+    "bytes": 29009,
+    "sha256": "7ce119007f7049dc92b5706df136fec64bca3e4d900aaf1afec3eafdfac12059"
+  },
+  {
+    "path": "scripts/extract_geometry.py",
+    "bytes": 12166,
+    "sha256": "1da473bbb8c38f368b134bd9a68cce76923bd8ee7742fe2521ff97aec1f1e05c"
+  },
+  {
+    "path": "scripts/inventory_versions.py",
+    "bytes": 1780,
+    "sha256": "227abf9c2c884902c7f865fb4496537bba8e16517e101561fc76c71ff430091c"
+  },
+  {
+    "path": "scripts/refresh_variants.py",
+    "bytes": 747,
+    "sha256": "ce1e88444d583a72f1b227b07e8e18d973b092a6fedbfdb99578169fb05fa72b"
+  },
+  {
+    "path": "scripts/verify_odb_geometry.py",
+    "bytes": 2013,
+    "sha256": "580d58e7be0f336703470628a3b817300ae64b99d52a8fb1c99fe02a1701a75a"
+  },
+  {
+    "path": "VERIFICATION_RESULTS.json",
+    "bytes": 7521,
+    "sha256": "fccf2664d5e7e347783640f8b07e675e52aa6a80faabb39a227ba691de0934e9"
+  },
+  {
+    "path": "VERSION_INVENTORY.json",
+    "bytes": 48852,
+    "sha256": "a29cb013172520214750ea79356d2db27fd8b8d2268299442c1c748c2afed724"
+  }
+]
