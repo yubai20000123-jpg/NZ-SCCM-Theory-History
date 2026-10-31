@@ -1,0 +1,86 @@
+{
+  "01_钢壳紫线当前锁定理论.md": {
+    "sha256": "b45ff849b4d034f59ceb18c3c5ea64128856ee00198edf28c70bc0be71c30165",
+    "bytes": 8273
+  },
+  "02_UHPC采用七点解析凝聚的可行性与数学边界.md": {
+    "sha256": "62d6dcedd3ded9ce35e7bc470d7800ac6e50d5bf02daf9e3581b14601e73e933",
+    "bytes": 7644
+  },
+  "03_运行核验.txt": {
+    "sha256": "dd4fa5d69c2b2c2dbe5c24b8db1fba6a53fa4d278678b942e0e62f8a53592a46",
+    "bytes": 1132
+  },
+  "source/README.md": {
+    "sha256": "05a23e129d0efe35a83cdfd2de48c8f864375a940d13cfb43db6f9b929be39dd",
+    "bytes": 1310
+  },
+  "source/__pycache__/fourier_exact.cpython-313.pyc": {
+    "sha256": "153fc1ef2e36a3e7afc4c101c72175e0e15c500f13d782b4301c55d572046d2e",
+    "bytes": 4487
+  },
+  "source/__pycache__/purple_projection_kernel.cpython-313.pyc": {
+    "sha256": "f1949b135744d1920c948c9ad31e05a51a98301a37c15554d9ea2ac6d02d5335",
+    "bytes": 38900
+  },
+  "source/__pycache__/rebuild_lateral.cpython-313.pyc": {
+    "sha256": "4578c99164d7d2478f72b118c8318085bc115862b1fdb2c286fba5908f7e02f6",
+    "bytes": 14395
+  },
+  "source/check_geometry_energy.py": {
+    "sha256": "e36b28ed6fe68d7e096c1a5be4b99d226364981230746d0ffbc8edd446a96b5f",
+    "bytes": 1059
+  },
+  "source/demo.log": {
+    "sha256": "7fe8e2d7dcceca6706d84722e5aa040d534f7ad7fe58791f25482e278c2d3a6b",
+    "bytes": 1561
+  },
+  "source/fourier_exact.py": {
+    "sha256": "6758e0caa433c28b50957f317edc86ec7cee703cd974d03a3525cc3736c756cc",
+    "bytes": 1459
+  },
+  "source/phase_scan_20261031.csv": {
+    "sha256": "0af9e8bd58fc51d65cef3f5cc58290db1ff6b5c786f617314c33ade902ece3c1",
+    "bytes": 11024
+  },
+  "source/purple_projection_kernel.py": {
+    "sha256": "1f7c8561f1526cb77fb7df2c6dd095ecca13cb62b95a073ead302229568f2573",
+    "bytes": 13531
+  },
+  "source/rebuild_lateral.py": {
+    "sha256": "21606016666abc145e37433d3f0a7b3cac182b5ce779fa49e5c3074af260e04f",
+    "bytes": 7029
+  },
+  "source/roots.log": {
+    "sha256": "b663fd798edf0013513b8a28e948fc2d759af055e1dfc4722cfd02f6adb7dce1",
+    "bytes": 2659
+  },
+  "source/roots_2size.csv": {
+    "sha256": "12f774fbd2d6e33394c7abeb89ccd54e4431ff8c8b6db2d1bf4b625da0c62ac8",
+    "bytes": 1825
+  },
+  "source/roots_check.py": {
+    "sha256": "f8f44cfb23cf70068945bbd4d6384ac7d1a8855e02e04732921a3041e192473e",
+    "bytes": 2082
+  },
+  "source/trial_chi_vs_strain.png": {
+    "sha256": "89d9adb7b45c6c33be95a47fb49536b6c263417ddbe176bcb08d7c2e3ca78fc2",
+    "bytes": 64687
+  },
+  "source/trial_fixed_20261031.csv": {
+    "sha256": "b50b33f527101c7a2ae503e345d8cbc38b1a16835d449df1337b45b42970a2af",
+    "bytes": 15489
+  },
+  "source/trial_force_vs_strain.png": {
+    "sha256": "ec7d5d3b4c58450f87c9aba62789f48e40eafdc4be51209709692f6bcc934cdf",
+    "bytes": 94162
+  },
+  "source/理论重建与验收.md": {
+    "sha256": "58dc7db3cd3df6412d274a335c4d9b1066f8e07a41e7a6697456ead7f62c2600",
+    "bytes": 8508
+  },
+  "source/试算结论_20261031.md": {
+    "sha256": "8b927a3f79a7cdd103d02c4b535053b5af3008246512ee02cf788806521fb4e1",
+    "bytes": 2426
+  }
+}
